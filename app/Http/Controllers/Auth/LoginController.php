@@ -94,7 +94,7 @@ class LoginController extends Controller
 
     protected function notAdmin(Request $request){
         throw ValidationException::withMessages([
-          $this->username() => ['You can not login as you are not Admin.'],
+          $this->username() => ['You can not login.'],
         ]);
       }
 }
