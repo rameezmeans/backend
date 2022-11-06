@@ -32,12 +32,12 @@
             <div class="controls">
               <input type="email" name="email" placeholder="Email" class="form-control @error('email') danger @enderror" required>
             </div>
-            @error('email')
-                <span class="danger" role="alert">
+          </div>
+          @error('email')
+                <span class="text-danger" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
-            @enderror
-          </div>
+          @enderror
           <!-- END Form Control-->
           <!-- START Form Control-->
           <div class="form-group form-group-default">
@@ -45,12 +45,12 @@
             <div class="controls">
               <input type="password" class="form-control @error('password') danger @enderror" name="password" placeholder="Credentials" required>
             </div>
-            @error('password')
-                <span class="danger" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
           </div>
+          @error('password')
+            <span class="text-danger" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+          @enderror
           <!-- START Form Control-->
           <div class="row">
             <div class="col-md-6 no-padding sm-p-l-10">
