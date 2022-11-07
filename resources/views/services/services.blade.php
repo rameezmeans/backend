@@ -45,26 +45,30 @@
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 342px;">Description</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Credits</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Date Created</th>
+                                        <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Active</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($services as $service)
                                         <tr role="row" class="redirect-click" data-redirect="{{ route('edit-service', $service->id) }}">
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$service->name}}</p>
-                                        </td>
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{ucfirst($service->type)}}</p>
-                                        </td>
-                                        <td class="v-align-middle">
-                                            <p>{{$service->description}}</p>
-                                        </td>
-                                        <td class="v-align-middle">
-                                            <p>{{$service->credits}}</p>
-                                        </td>
-                                        <td class="v-align-middle">
-                                            <p>{{$service->created_at->diffForHumans()}}</p>
-                                        </td>
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>{{$service->name}}</p>
+                                            </td>
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>{{ucfirst($service->type)}}</p>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                <p>{{$service->description}}</p>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                <p>{{$service->credits}}</p>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                <p>{{$service->created_at->diffForHumans()}}</p>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                <p><input class="active" type="checkbox" data-init-plugin="switchery" checked="checked" onclick="status_change()"/></p>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -82,21 +86,31 @@
 @section('pagespecificscripts')
 
 <script type="text/javascript">
-
     $( document ).ready(function(event) {
-        $('.redirect-click').click(function() {
-            window.location.href = $(this).data('redirect');
-            return false;
-        });
-
-        $('.redirect-click').click(function() {
-            window.location.href = $(this).data('redirect');
+        $(document).on('click','.redirect-click',function(e) {
+            if(!$(e.target).hasClass('switchery')){
+                if( e.target.nodeName !== 'SMALL') {
+                    window.location.href = $(this).data('redirect');
+                }
+            }
             return false;
         });
 
         $('table').DataTable({"ordering": false,});
-    });
 
+        let switchStatus = true;
+        $(".active").on('change', function(e) {
+            console.log(e.target);
+            if ($(this).is(':checked')) {
+                switchStatus = $(this).is(':checked');
+                console.log(switchStatus);
+            }
+            else {
+                switchStatus = $(this).is(':checked');
+                console.log(switchStatus);
+            }
+        });
+    });
 </script>
 
 @endsection
