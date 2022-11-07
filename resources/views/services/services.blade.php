@@ -17,8 +17,7 @@
                 </div>
             @endif
             @php
-              Session::flush('success')  
-        
+              Session::forget('success')
             @endphp
             <!-- START card -->
             <div class="card card-transparent m-t-40">
@@ -40,7 +39,7 @@
                             <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                                 <thead>
                                     <tr role="row">
-                                        <th class="sorting_asc" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                        <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 42px;">Type</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 342px;">Description</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Credits</th>
@@ -67,7 +66,7 @@
                                                 <p>{{$service->created_at->diffForHumans()}}</p>
                                             </td>
                                             <td class="v-align-middle">
-                                                <p><input class="active" type="checkbox" data-init-plugin="switchery" checked="checked" onclick="status_change()"/></p>
+                                                <p><input data-service_id={{$service->id}} class="active" type="checkbox" data-init-plugin="switchery" @if($service->active) checked="checked" @endif onclick="status_change()"/></p>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -96,11 +95,19 @@
             return false;
         });
 
-        $('table').DataTable({"ordering": false,});
+        $('table').DataTable({
+
+            "ordering": true,
+            columnDefs: [{
+            orderable: false,
+            targets: "sorting"
+            }]
+        });
 
         let switchStatus = true;
         $(".active").on('change', function(e) {
-            console.log(e.target);
+            let service_id = $(this).data('service_id');
+            console.log(service_id);
             if ($(this).is(':checked')) {
                 switchStatus = $(this).is(':checked');
                 console.log(switchStatus);
@@ -109,7 +116,25 @@
                 switchStatus = $(this).is(':checked');
                 console.log(switchStatus);
             }
+
+            change_status(service_id, switchStatus);
         });
+
+        function change_status(service_id, status){
+            $.ajax({
+                        url: "/change_status",
+                        type: "POST",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "service_id": service_id,
+                            "status": status,
+                        },
+                        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                        success: function(response) {
+                            
+                        }
+                    });  
+        }
     });
 </script>
 

@@ -15,7 +15,7 @@ class ServicesController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth',['except' => ['getStages', 'getOptions']]);
     }
 
     /**
@@ -103,6 +103,24 @@ class ServicesController extends Controller
         return redirect()->route('services')->with(['success' => 'Service updated, successfully.']);
     }
 
+    /**
+     * update the services to DB.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function changeStatus(Request $request)
+    {
+        $service = Service::findOrFail($request->service_id);
+        if($request->status == 'true'){
+            $service->active = true;
+        }
+        else{
+            $service->active = false;
+        }
+        $service->save();
+        return response()->json(['success' => 'status changed']);
+    }
+
      /**
      * delete the services to DB.
      *
@@ -114,5 +132,27 @@ class ServicesController extends Controller
         $service->delete();
         $request->session()->put('success', 'Service deleted, successfully.');
 
+    }
+
+    /**
+     * delete the services to DB.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getStages(Request $request)
+    {
+        $stages = Service::where('type', 'tunning')->where('active', 1)->get();
+        return response()->json(['stages' => $stages]);
+    }
+
+    /**
+     * delete the services to DB.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getOptions(Request $request)
+    {
+        $options = Service::where('type', 'option')->where('active', 1)->get();
+        return response()->json(['options' => $options]);
     }
 }
