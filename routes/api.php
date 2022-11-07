@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('get_stages', [App\Http\Controllers\ServicesController::class, 'getStages']);
+Route::get('get_options', [App\Http\Controllers\ServicesController::class, 'getOptions']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
