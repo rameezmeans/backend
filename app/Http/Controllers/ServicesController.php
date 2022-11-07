@@ -93,10 +93,12 @@ class ServicesController extends Controller
         $service->type = $request->type;
         $service->description = $request->description;
 
-        $file = $request->file('icon');
-        $fileName = $file->getClientOriginalName();
-        $file->move(public_path('icons'),$fileName);
-        $service->icon = $fileName;
+        if($request->file('icon')){
+            $file = $request->file('icon');
+            $fileName = $file->getClientOriginalName();
+            $file->move(public_path('icons'),$fileName);
+            $service->icon = $fileName;
+        }
 
         $service->save();
 

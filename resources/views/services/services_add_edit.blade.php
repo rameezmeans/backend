@@ -64,9 +64,9 @@
                           <strong>{{ $message }}</strong>
                       </span>
                     @enderror
-                    <div class="form-group form-group-default required ">
+                    <div class="form-group form-group-default @if(!isset($service)) required @endif">
                       <label>Icon</label>
-                      <input name="icon" type="file" class="form-control" required>
+                      <input name="icon" type="file" class="form-control" @if(!isset($service)) required @endif>
                     </div>
                     @error('icon')
                       <span class="text-danger" role="alert">
