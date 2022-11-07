@@ -105,7 +105,7 @@
         });
 
         let switchStatus = true;
-        $(".active").on('change', function(e) {
+        $(document).on('change', '.active', function(e) {
             let service_id = $(this).data('service_id');
             console.log(service_id);
             if ($(this).is(':checked')) {
