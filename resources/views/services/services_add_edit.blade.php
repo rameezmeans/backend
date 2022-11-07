@@ -29,7 +29,7 @@
                 </div>
                 <div class="card-body">
                   
-                  <form class="" role="form" method="POST" action="@if(isset($service)){{route('update-service')}}@else{{ route('add-service') }}@endif">
+                  <form class="" role="form" method="POST" action="@if(isset($service)){{route('update-service')}}@else{{ route('add-service') }}@endif" enctype="multipart/form-data">
                     @csrf
                     @if(isset($service))
                       <input name="id" type="hidden" value="{{ $service->id }}">
@@ -65,10 +65,10 @@
                       </span>
                     @enderror
                     <div class="form-group form-group-default required ">
-                      <label>Icon URL</label>
-                      <input value="@if(isset($service)) {{ $service->icon_url }} @else{{old('icon_url') }}@endif" name="icon_url" type="text" class="form-control" required>
+                      <label>Icon</label>
+                      <input name="icon" type="file" class="form-control" required>
                     </div>
-                    @error('icon_url')
+                    @error('icon')
                       <span class="text-danger" role="alert">
                           <strong>{{ $message }}</strong>
                       </span>
@@ -93,6 +93,19 @@
                 </div>
               </div>
               <!-- END card -->
+            </div>
+            <div class="col-lg-3">
+                @if(isset($service))
+                  <div class="card social-card share  col1" >
+                    <div class="card-header ">
+                      <h5 class="text-black pull-left">Icon Preview</h5>
+                    </div>
+                    <div class="card-description">
+                        <img src="{{ url('icons').'/'.$service->icon }}" alt="Stage 0">
+                    </div>
+                  </div>
+                @endif
+              </div>
             </div>
         </div>
       </div>

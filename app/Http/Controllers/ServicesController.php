@@ -61,10 +61,22 @@ class ServicesController extends Controller
             'name' => 'required|unique:services|max:255|min:3',
             'type' => 'required',
             'credits' => 'required',
-            'icon_url' => 'required',
+            'icon' => 'required',
             'description' => 'required',
         ]);
-        $created = Service::create($validated);
+
+        $created = new Service();
+        $created->name = $validated['name'];
+        $created->type = $validated['type'];
+        $created->credits = $validated['credits'];
+        $created->description = $validated['description'];
+
+        $file = $request->file('icon');
+        $fileName = $file->getClientOriginalName();
+        $file->move(public_path('icons'),$fileName);
+        $created->icon = $fileName;
+
+        $created->save();
 
         return redirect()->route('services')->with(['success' => 'Service added, successfully.']);
     }
@@ -79,8 +91,13 @@ class ServicesController extends Controller
         $service = Service::findOrFail($request->id);
         $service->credits = $request->credits;
         $service->type = $request->type;
-        $service->icon_url = $request->icon_url;
         $service->description = $request->description;
+
+        $file = $request->file('icon');
+        $fileName = $file->getClientOriginalName();
+        $file->move(public_path('icons'),$fileName);
+        $service->icon = $fileName;
+
         $service->save();
 
         return redirect()->route('services')->with(['success' => 'Service updated, successfully.']);
