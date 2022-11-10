@@ -30,6 +30,7 @@
     <link href="{{ url('assets/plugins/bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet" type="text/css" media="screen">
     <link href="{{ url('assets/plugins/jquery-metrojs/MetroJs.css') }}" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ url('pages/css/pages-icons.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url('assets/plugins/dropzone/css/dropzone.css')}} " rel="stylesheet" type="text/css" />
     <link class="main-stylesheet" href="{{ url('pages/css/pages.css') }}" rel="stylesheet" type="text/css" />
     @yield('pagespecificstyles')
   </head>
@@ -71,6 +72,7 @@
    <script src="{{url('assets/plugins/mapplic/js/jquery.mousewheel.js') }}"></script>
    <script src="{{url('assets/plugins/mapplic/js/mapplic.js') }}"></script>
    <script src="{{url('assets/plugins/rickshaw/rickshaw.min.js') }}"></script>
+   
    <script src="{{url('assets/plugins/jquery-metrojs/MetroJs.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/skycons/skycons.js') }}" type="text/javascript"></script>
@@ -88,7 +90,29 @@
    <!-- BEGIN PAGE LEVEL JS -->
    <script src="{{url('assets/js/dashboard.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/js/scripts.js') }}" type="text/javascript"></script>
+   <script type="text/javascript" src="{{ url('assets/plugins/dropzone/dropzone.min.js')}}"></script>
    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" type="text/javascript"></script>
+   <script type="text/javascript">
+      $( document ).ready(function(event) {
+        $(document).on('click','.redirect-click',function(e) {
+            if(!$(e.target).hasClass('switchery')){
+                if( e.target.nodeName !== 'SMALL') {
+                    window.location.href = $(this).data('redirect');
+                }
+            }
+            return false;
+        });
+
+        $('table').DataTable({
+
+            "ordering": true,
+            columnDefs: [{
+            orderable: false,
+            targets: "sorting"
+            }]
+        });
+      });
+   </script>
 
    <!-- END PAGE LEVEL JS -->
    @yield('pagespecificscripts')

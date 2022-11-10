@@ -118,11 +118,7 @@
 <script type="text/javascript">
 
     $( document ).ready(function(event) {
-        $('.redirect-click').click(function() {
-            window.location.href = $(this).data('redirect');
-            return false;
-        });
-
+        
         $('.btn-delete').click(function() {
           Swal.fire({
                 title: 'Are you sure?',

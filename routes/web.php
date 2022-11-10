@@ -30,3 +30,11 @@ Route::get('/edit_service/{id}', [App\Http\Controllers\ServicesController::class
 Route::post('/add_service', [App\Http\Controllers\ServicesController::class, 'add'])->name('add-service');
 Route::post('/update_service', [App\Http\Controllers\ServicesController::class, 'update'])->name('update-service');
 Route::post('/delete_service', [App\Http\Controllers\ServicesController::class, 'delete'])->name('delete-service');
+
+
+Route::get('/files', [App\Http\Controllers\FilesController::class, 'index'])->name('files');
+Route::get('/file/{id}', [App\Http\Controllers\FilesController::class, 'show'])->name('file');
+
+Route::get('/download/{file}', [App\Http\Controllers\FilesController::class,'download'])->name('download');
+Route::post('/file-engineers-notes', [App\Http\Controllers\FilesController::class,'fileEngineersNotes'])->name('file-engineers-notes');
+Route::post('/request-file-upload', [App\Http\Controllers\FilesController::class,'uploadFileFromEngineer'])->name('request-file-upload');

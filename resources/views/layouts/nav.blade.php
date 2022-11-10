@@ -52,6 +52,13 @@
           <span class="bg-success icon-thumbnail"><i class="pg-charts"></i></span>
         </li>
 
+        <li class="m-t-30 ">
+          <a href="{{ route('files') }}" class="detailed">
+            <span class="title">Files</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
+        </li>
+
         {{-- <li class="">
           <a href="email.html" class="detailed">
             <span class="title">Email</span>

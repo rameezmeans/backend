@@ -1594,7 +1594,7 @@
       </div>
       <!-- END PAGE CONTENT WRAPPER -->
     
-    {{-- <!-- END PAGE CONTAINER -->
+    <!-- END PAGE CONTAINER -->
     <!--START QUICKVIEW -->
     <div id="quickview" class="quickview-wrapper" data-pages="quickview">
       <!-- Nav tabs -->
@@ -2771,5 +2771,5 @@
       </div>
       <!-- END Overlay Content !-->
     </div>
-    <!-- END OVERLAY --> --}}
+    <!-- END OVERLAY --> 
 @endsection
