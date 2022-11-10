@@ -86,24 +86,7 @@
 
 <script type="text/javascript">
     $( document ).ready(function(event) {
-        $(document).on('click','.redirect-click',function(e) {
-            if(!$(e.target).hasClass('switchery')){
-                if( e.target.nodeName !== 'SMALL') {
-                    window.location.href = $(this).data('redirect');
-                }
-            }
-            return false;
-        });
-
-        $('table').DataTable({
-
-            "ordering": true,
-            columnDefs: [{
-            orderable: false,
-            targets: "sorting"
-            }]
-        });
-
+        
         let switchStatus = true;
         $(document).on('change', '.active', function(e) {
             let service_id = $(this).data('service_id');
