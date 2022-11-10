@@ -50,24 +50,30 @@
               @foreach($messages as $message)
                
                 @if(isset($message['request_file']))
-                 
-                  <div class="message clearfix">
-                    @if($message['engineer'])
-                      <div class="chat-bubble bg-primary from-me text-white">
-                    @else
-                      <div class="chat-bubble from-them bg-success">
-                    @endif
-                        File Type: {{ ucfirst($message['file_type']) }}<br>
-                        @if(isset($message['ecu_file_select']))
-                          ECU: {{ str_replace("_"," ",ucfirst($message['ecu_file_select']))}}<br>
-                        @endif
-                        @if(isset($message['gearbox_file_select']))
-                          Gearbox: {{ str_replace("_"," ",ucfirst($message['gearbox_file_select']))}}<br>
-                        @endif
-                        File Type: {{ ucfirst($message['tool_type']) }}<br>
-                        Tools: {{ ucfirst($message['master_tools']) }}<br>
-                        <div class="text-center  m-t-10"><a href="{{route('download', $message['request_file'])}}" class="text-danger">Download</a></div>
+                  @if($message['engineer'])
+                    <div class="chat-bubble bg-primary from-me text-white">
+                      File Type: {{ str_replace("_"," ", ucfirst($message['file_type'])) }}<br>
+                      <div class="text-center  m-t-10">
+                        <a href="{{route('download', $message['request_file'])}}" class="text-danger">Download</a>
+                      </div>
                     </div>
+                  @else
+                    <div class="chat-bubble from-them bg-success">
+                  
+                      File Type: {{ ucfirst($message['file_type']) }}<br>
+                      @if(isset($message['ecu_file_select']))
+                        ECU: {{ str_replace("_"," ",ucfirst($message['ecu_file_select']))}}<br>
+                      @endif
+                      @if(isset($message['gearbox_file_select']))
+                        Gearbox: {{ str_replace("_"," ",ucfirst($message['gearbox_file_select']))}}<br>
+                      @endif
+                      File Type: {{ ucfirst($message['tool_type']) }}<br>
+                      Tools: {{ ucfirst($message['master_tools']) }}<br>
+                      <div class="text-center  m-t-10"><a href="{{route('download', $message['request_file'])}}" class="text-danger">Download</a></div>
+                    </div>
+                    @endif
+                    
+                  <div class="message clearfix">
                   </div>
                   
                 @endif
