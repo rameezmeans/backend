@@ -57,6 +57,14 @@
                   <div class="card-body">
 
                     <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                      <p class="pull-left">Uploaded Time</p>
+                      <div class="pull-right">
+                        <span class="">{{\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A')}}<span>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+
+                    <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Task ID</p>
                       <div class="pull-right">
                         <span class="label label-success">Task{{$file->id}}<span>
@@ -89,6 +97,14 @@
                     </div>
 
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                      <p class="pull-left">Vin Number</p>
+                      <div class="pull-right">
+                        <span class="label label-success">{{$file->vin_number}}<span>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+
+                    <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Version</p>
                       <div class="pull-right">
                         <span class="label label-success">{{$file->version}}<span>
@@ -105,12 +121,33 @@
                     </div>
 
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                      <p class="pull-left">ECU</p>
+                      <div class="pull-right">
+                        <span class="label label-success">{{$file->ecu}}<span>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+
+                    <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Gear Box</p>
                       <div class="pull-right">
                         <span class="label label-success">{{$file->gear_box}}<span>
                       </div>
                       <div class="clearfix"></div>
                     </div>
+
+                    <h5 class="m-t-40">Reading Tool</h5>
+
+                    
+                      <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <p class="pull-left">Tool</p>
+                        <div class="pull-right">
+                            <img alt="{{$file->tool}}" width="50" height="20" data-src-retina="{{ get_dropdown_image($file->tool) }}" data-src="{{ get_dropdown_image($file->tool) }}" src="{{ get_dropdown_image($file->tool) }}">
+                            <span class="" style="top: 2px; position:relative;">{{ $file->tool }}</span>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                   
 
                     <h5 class="m-t-40">Options And Credits</h5>
 
