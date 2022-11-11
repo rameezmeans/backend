@@ -33,7 +33,7 @@ class FilesController extends Controller
      */
     public function index()
     {
-        $files = File::orderBy('created_at', 'desc')->get();
+        $files = File::orderBy('created_at', 'desc')->where('is_credited', 1)->get();
         return view('files.files', ['files' => $files]);
     }
 
