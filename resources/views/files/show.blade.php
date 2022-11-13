@@ -264,8 +264,8 @@
                         <!-- BEGIN From Them Message  !-->
                         @foreach($messages as $message)
                          
-                          @if(isset($message['request_file']))
-                            @if($message['engineer'] == 0)
+                          {{-- @if(isset($message['request_file'])) --}}
+                            {{-- @if($message['engineer'] == 0)
 
                                 <div class="chat-bubble from-them bg-success">
                               
@@ -280,12 +280,12 @@
                                   Tools: {{ ucfirst($message['master_tools']) }}<br>
                                   <div class="text-center  m-t-10"><a href="{{route('download', $message['request_file'])}}" class="text-danger">Download</a></div>
                                   </div>
-                              @endif
+                              @endif --}}
                               
-                              <div class="message clearfix">
+                              {{-- <div class="message clearfix">
                             </div>
                             
-                          @endif
+                          @endif --}}
                           @if(isset($message['egnineers_internal_notes']))
                             @if($message['engineer'])
                             <div class="message clearfix">
