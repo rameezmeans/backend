@@ -34,6 +34,7 @@ class FilesController extends Controller
     public function index()
     {
         $files = File::orderBy('created_at', 'desc')->where('is_credited', 1)->get();
+        // dd($files);
         return view('files.files', ['files' => $files]);
     }
 
