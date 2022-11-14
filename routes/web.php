@@ -38,3 +38,5 @@ Route::get('/file/{id}', [App\Http\Controllers\FilesController::class, 'show'])-
 Route::get('/download/{file}', [App\Http\Controllers\FilesController::class,'download'])->name('download');
 Route::post('/file-engineers-notes', [App\Http\Controllers\FilesController::class,'fileEngineersNotes'])->name('file-engineers-notes');
 Route::post('/request-file-upload', [App\Http\Controllers\FilesController::class,'uploadFileFromEngineer'])->name('request-file-upload');
+Route::post('/delete-request-file', [App\Http\Controllers\FilesController::class,'deleteUploadedFile'])->name('delete-request-file');
+Route::post('/delete-message', [App\Http\Controllers\FilesController::class,'deleteMessage'])->name('delete-message');

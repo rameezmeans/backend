@@ -13,6 +13,13 @@ class File extends Model
         return $this->hasMany(RequestFile::class); 
     }
 
+    public function first_engineer_file(){
+        return RequestFile::orderBy('created_at', 'desc')
+        ->where('file_id', $this->id)
+        ->where('engineer', 1)
+        ->first(); 
+    }
+
     public function engineer_file_notes(){
         return $this->hasMany(EngineerFileNote::class); 
     }
