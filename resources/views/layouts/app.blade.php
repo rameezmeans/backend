@@ -18,6 +18,7 @@
     <meta content="" name="description" />
     <meta content="" name="author" />
     <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/plugins/pace/pace-theme-flash.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/plugins/font-awesome/css/font-awesome.css') }}" rel="stylesheet" type="text/css" />
@@ -72,7 +73,7 @@
    <script src="{{url('assets/plugins/mapplic/js/jquery.mousewheel.js') }}"></script>
    <script src="{{url('assets/plugins/mapplic/js/mapplic.js') }}"></script>
    <script src="{{url('assets/plugins/rickshaw/rickshaw.min.js') }}"></script>
-   
+   {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
    <script src="{{url('assets/plugins/jquery-metrojs/MetroJs.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/skycons/skycons.js') }}" type="text/javascript"></script>
@@ -93,7 +94,12 @@
    <script type="text/javascript" src="{{ url('assets/plugins/dropzone/dropzone.min.js')}}"></script>
    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" type="text/javascript"></script>
    <script type="text/javascript">
+
+      Dropzone.autoDiscover = false;
       $( document ).ready(function(event) {
+
+       
+
         $(document).on('click','.redirect-click',function(e) {
             if(!$(e.target).hasClass('switchery')){
                 if( e.target.nodeName !== 'SMALL') {

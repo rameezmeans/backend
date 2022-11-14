@@ -7,6 +7,7 @@ use App\Models\File;
 use App\Models\RequestFile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redirect;
 
 class FilesController extends Controller
 {
@@ -34,8 +35,21 @@ class FilesController extends Controller
     public function index()
     {
         $files = File::orderBy('created_at', 'desc')->where('is_credited', 1)->get();
-        // dd($files);
         return view('files.files', ['files' => $files]);
+    }
+
+    public function deleteMessage(Request $request)
+    {
+        $note = EngineerFileNote::findOrFail($request->note_id);
+        $note->delete();
+        return response('Note deleted', 200);
+    }
+
+    public function deleteUploadedFile(Request $request)
+    {
+        $file = RequestFile::findOrFail($request->request_file_id);
+        $file->delete();
+        return response('file deleted', 200);
     }
 
     public function fileEngineersNotes(Request $request)
@@ -45,7 +59,9 @@ class FilesController extends Controller
         $file->engineer = true;
         $file->file_id = $request->file_id;
         $file->save();
-        return redirect()->back()->with('success', 'Engineer note successfully Added!');
+        return redirect()->back()
+        ->with('success', 'Engineer note successfully Added!')
+        ->with('tab','chat');
     }
 
     public function uploadFileFromEngineer(Request $request)
@@ -80,12 +96,12 @@ class FilesController extends Controller
 
         foreach($withoutTypeArray as $r) {
             $fileReq = RequestFile::findOrFail($r['id']);
-            // if($fileReq->file_feedback){
-            //     $r['type'] = $fileReq->file_feedback->type;
-            // }
+            if($fileReq->file_feedback){
+                $r['type'] = $fileReq->file_feedback->type;
+            }
             $unsortedTimelineObjects []= $r;
         } 
-
+        
         $createdTimes = [];
 
         foreach($file->files->toArray() as $t) {
