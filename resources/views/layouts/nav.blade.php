@@ -59,6 +59,13 @@
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
         </li>
 
+        <li class="m-t-30 ">
+          <a href="{{ route('vehicles') }}" class="detailed">
+            <span class="title">Vehicles</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="fa fa-car"></i></span>
+        </li>
+
         {{-- <li class="">
           <a href="email.html" class="detailed">
             <span class="title">Email</span>
