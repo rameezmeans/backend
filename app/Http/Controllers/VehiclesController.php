@@ -30,6 +30,7 @@ class VehiclesController extends Controller
     public function delete(Request $request)
     {
         $vehicle = Vehicle::findOrFail($request->id);
+        
         $vehicle->delete();
         $request->session()->put('success', 'Vehicle deleted, successfully.');
 
