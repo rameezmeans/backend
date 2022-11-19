@@ -26,7 +26,7 @@
                     </div>
                     <div class="pull-right">
                     <div class="col-xs-12">
-                        <button data-redirect="{{ route('create-service') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Servies</span>
+                        <button data-redirect="{{ route('create-service') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Service</span>
                         </button>
                         {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                     </div>

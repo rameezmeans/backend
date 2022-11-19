@@ -66,6 +66,24 @@
           <span class="bg-success icon-thumbnail"><i class="fa fa-car"></i></span>
         </li>
 
+        <li class="m-t-30 ">
+          <a href="javascript:;">
+            <span class="title">Customers</span>
+            <span class=" arrow"></span>
+          </a>
+          <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
+          <ul class="sub-menu">
+            <li class="">
+              <a href="{{ route('groups') }}">Groups</a>
+              <span class="icon-thumbnail">Gr</span>
+            </li>
+            <li class="">
+              <a href="{{route('customers')}}">Customers</a>
+              <span class="icon-thumbnail">Cu</span>
+            </li>
+          </ul>
+        </li>
+
         {{-- <li class="">
           <a href="email.html" class="detailed">
             <span class="title">Email</span>
