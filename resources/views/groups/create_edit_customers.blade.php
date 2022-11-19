@@ -54,15 +54,27 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
-                <div class="form-group form-group-default ">
-                  <label>Change Password</label>
-                  <input value=""  name="password" type="password" class="form-control">
-                </div>
-                @error('password')
-                  <span class="text-danger" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-                @enderror
+                @if(isset($customer))
+                  <div class="form-group form-group-default ">
+                    <label>Change Password</label>
+                    <input value=""  name="password" type="password" class="form-control">
+                  </div>
+                  @error('password')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+                  @else
+                  <div class="form-group form-group-default required">
+                    <label>Password</label>
+                    <input value=""  name="password" type="password" class="form-control" required>
+                  </div>
+                  @error('password')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+                @endif
                 <div class="form-group form-group-default required ">
                   <label>Phone</label>
                   <input value="@if(isset($customer)) {{ $customer->phone }} @else{{old('phone') }}@endif"  name="phone" type="text" class="form-control" required>
