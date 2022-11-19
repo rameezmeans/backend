@@ -43,5 +43,25 @@ Route::post('/delete-message', [App\Http\Controllers\FilesController::class,'del
 
 Route::get('/vehicles', [App\Http\Controllers\VehiclesController::class,'index'])->name('vehicles');
 Route::get('/vehicle/{id}', [App\Http\Controllers\VehiclesController::class,'show'])->name('vehicle');
+Route::get('/create_vehicle', [App\Http\Controllers\VehiclesController::class,'create'])->name('create-vehicle');
 Route::post('/add-vehicle', [App\Http\Controllers\VehiclesController::class,'add'])->name('add-vehicle');
 Route::post('/update-vehicle', [App\Http\Controllers\VehiclesController::class,'update'])->name('update-vehicle');
+Route::post('/delete_vehicle', [App\Http\Controllers\VehiclesController::class,'delete'])->name('delete-vehicle');
+
+Route::get('/groups', [App\Http\Controllers\GroupsController::class,'index'])->name('customer.groups');
+
+Route::get('/groups', [App\Http\Controllers\GroupsController::class,'index'])->name('groups');
+Route::get('/group/{id}', [App\Http\Controllers\GroupsController::class,'show'])->name('group');
+Route::get('/create_group', [App\Http\Controllers\GroupsController::class,'create'])->name('create-group');
+Route::get('/edit-group/{id}', [App\Http\Controllers\GroupsController::class,'edit'])->name('edit-group');
+Route::post('/add-group', [App\Http\Controllers\GroupsController::class,'add'])->name('add-group');
+Route::post('/update-group', [App\Http\Controllers\GroupsController::class,'update'])->name('update-group');
+Route::post('/delete_group', [App\Http\Controllers\GroupsController::class,'delete'])->name('delete-group');
+
+
+Route::get('/customers', [App\Http\Controllers\UsersController::class,'Customers'])->name('customers');
+Route::get('/create_customer', [App\Http\Controllers\UsersController::class,'createCustomer'])->name('create-customer');
+Route::get('/edit_customer/{id}', [App\Http\Controllers\UsersController::class,'editCustomer'])->name('edit-customer');
+Route::post('/add-customer', [App\Http\Controllers\UsersController::class,'addCustomer'])->name('add-customer');
+Route::post('/update-customer', [App\Http\Controllers\UsersController::class,'updateCustomer'])->name('update-customer');
+Route::get('/delete_customer', [App\Http\Controllers\UsersController::class,'deleteCustomer'])->name('delete-customer');

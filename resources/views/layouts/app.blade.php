@@ -98,7 +98,9 @@
       Dropzone.autoDiscover = false;
       $( document ).ready(function(event) {
 
-       
+        $('.datepicker').datepicker({
+          format: "dd/mm/yyyy",
+        });
 
         $(document).on('click','.redirect-click',function(e) {
             if(!$(e.target).hasClass('switchery')){
