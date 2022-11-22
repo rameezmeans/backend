@@ -84,6 +84,27 @@
           </ul>
         </li>
 
+        <li class="m-t-30 ">
+          <a href="{{ route('engineers') }}" class="detailed">
+            <span class="title">Engineers</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="pg-form"></i></span>
+        </li>
+
+        <li class="m-t-30 ">
+          <a href="{{ route('tools') }}" class="detailed">
+            <span class="title">Tools</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
+        </li>
+
+        <li class="m-t-30 ">
+          <a href="{{ route('numbers') }}" class="detailed">
+            <span class="title">Bosch ECU Numbers</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
+        </li>
+
         {{-- <li class="">
           <a href="email.html" class="detailed">
             <span class="title">Email</span>

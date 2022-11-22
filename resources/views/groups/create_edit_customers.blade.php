@@ -452,12 +452,42 @@
 
 <script type="text/javascript">
 
-    $( document ).ready(function(event) {
-      $(function() {
-        // $("#country").select2("val","PK");
-      });
-    });
+      $( document ).ready(function(event) {
+        
+        $('.btn-delete').click(function() {
+          Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+            if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/delete_customer",
+                        type: "POST",
+                        data: {
+                            id: $(this).data('id')
+                        },
+                        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Customer has been deleted.",
+                                type: "success",
+                                timer: 3000
+                            });
 
+                            window.location.href = '/customers';
+                        }
+                    });            
+                }
+            });
+        });
+    });
+  
 </script>
 
 @endsection

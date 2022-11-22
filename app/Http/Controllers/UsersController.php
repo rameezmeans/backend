@@ -21,6 +21,7 @@ class UsersController extends Controller
     } 
 
     public function addCustomer(Request $request){
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:255'],
@@ -111,5 +112,94 @@ class UsersController extends Controller
 
        return redirect()->route('customers')->with(['success' => 'Customer updated, successfully.']);
 
+    }
+
+    public function addEngineer(Request $request){
+        
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+
+        $engineer = new User();
+        $engineer->name = $request->name;
+        $engineer->password = Hash::make($request->password);
+        $engineer->email = $request->email;
+        $engineer->phone = $request->phone;
+        $engineer->language = "doesnot_matter";
+        $engineer->address = $request->address;
+        $engineer->zip = $request->zip;
+        $engineer->city = $request->city;
+        $engineer->country = $request->country;
+        $engineer->status ="doesnot_matter";
+        $engineer->company_name = "doesnot_matter";
+        $engineer->company_id = "doesnot_matter";
+        $engineer->is_customer = 0;
+        $engineer->is_engineer = 1;
+        $engineer->save();
+
+       return redirect()->route('engineers')->with(['success' => 'Engineer added, successfully.']);
+
+    }
+
+    public function updateEngineer(Request $request){
+        
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+        ]);
+
+        $engineer = User::findOrFail($request->id);
+        $engineer->name = $request->name;
+
+        if($request->password){
+            $engineer->password = Hash::make($request->password);
+        }
+        
+        $engineer->email = $request->email;
+        $engineer->phone = $request->phone;
+        $engineer->address = $request->address;
+        $engineer->zip = $request->zip;
+        $engineer->city = $request->city;
+        $engineer->country = $request->country;
+        $engineer->save();
+
+       return redirect()->route('engineers')->with(['success' => 'Engineer Updated, successfully.']);
+
+    }
+
+    public function createEngineer(){
+        return view('engineers.create_edit_engineers');
+    }
+
+    public function editEngineer($id){
+        $engineer = User::findOrfail($id);
+        return view('engineers.create_edit_engineers', ['engineer' => $engineer]);
+    }
+
+    public function Engineers(){
+        $engineers = User::where('is_engineer', 1)->get();
+        return view('engineers.engineers', ['engineers' => $engineers]);
+    } 
+
+    public function deleteCustomer(Request $request){
+        $customer = User::findOrFail($request->id);
+        $customer->delete();
+        $request->session()->put('success', 'Customer deleted, successfully.');
+    }
+
+    public function deleteEngineer(Request $request){
+        $engineer = User::findOrFail($request->id);
+        $engineer->delete();
+        $request->session()->put('success', 'Engineer deleted, successfully.');
     }
 }
