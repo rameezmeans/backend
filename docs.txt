@@ -1,0 +1,1 @@
+1. If I will delete engineer then I will set NULL against "assigned_to" in files table.

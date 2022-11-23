@@ -108,22 +108,72 @@
                       
                         @endif
 
-                        @if($file->first_engineer_file())
-                        
+                        @if(Auth::user()->is_admin)
+
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Response Time</p>
+                          <p class="pull-left">Assigned To</p>
                           <div class="pull-right">
-                            <span class="label label-success">{{ Carbon\Carbon::createFromFormat('Y-m-d H:s:i' ,$file->first_engineer_file()->created_at )->diffInMinutes( Carbon\Carbon::createFromFormat('Y-m-d H:s:i' ,$file->created_at ) )  }} Minutes<span>
+                            @if($file->assigned_to)
+                              <span class="label label-success">{{$file->assigned->name}}<span>
+                            @else
+                              <span class="label label-success">No One<span>
+                            @endif
                           </div>
                           <div class="clearfix"></div>
                         </div>
-                      
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Assign This File to An Engineer</p>
+                          <form action="{{route('assign-engineer')}}" method="POST">
+                            @csrf
+                            <input type="hidden" name="file_id" value="{{$file->id}}">
+                            <div class="">
+                              <select class="full-width" data-init-plugin="select2" name="assigned_to">
+                                @foreach($engineers as $engineer)
+                                  <option @if(isset($file) && $file->assigned_to == $engineer->id) selected @endif value="{{$engineer->id}}">{{$engineer->name}}</option>
+                                @endforeach
+                              </select>
+                              <div class="text-center m-t-20">                    
+                                <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Assign Engineer</span></button>
+                              </div>
+                            </div>
+                            
+                          </form>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Assigment Time</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{ \Carbon\Carbon::parse($file->assignment_time)->diffForHumans() }}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        @if($file->response_time)
+                        
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Engineer Upload Time</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{ \Carbon\Carbon::parse($file->reupload_time)->diffForHumans() }}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Response Time</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{ \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans()
+                             }}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        @endif
+
                         @endif
 
                       </div>
 
-                      
-        
                       <div class="col-lg-6">
                         <h5 class="">Vehicle Information</h5>
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">

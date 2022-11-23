@@ -45,12 +45,14 @@
           <span class="bg-success icon-thumbnail"><i class="pg-home"></i></span>
         </li>
 
+        @if(Auth::user()->is_admin)
         <li class="m-t-30 ">
           <a href="{{ route('services') }}" class="detailed">
             <span class="title">Services</span>
           </a>
           <span class="bg-success icon-thumbnail"><i class="pg-charts"></i></span>
         </li>
+        @endif
 
         <li class="m-t-30 ">
           <a href="{{ route('files') }}" class="detailed">
@@ -59,6 +61,7 @@
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
         </li>
 
+        @if(Auth::user()->is_admin)
         <li class="m-t-30 ">
           <a href="{{ route('vehicles') }}" class="detailed">
             <span class="title">Vehicles</span>
@@ -104,6 +107,7 @@
           </a>
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
         </li>
+        @endif
 
         {{-- <li class="">
           <a href="email.html" class="detailed">

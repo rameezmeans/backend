@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\RequestFile;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class FilesController extends Controller
@@ -34,7 +37,12 @@ class FilesController extends Controller
      */
     public function index()
     {
-        $files = File::orderBy('created_at', 'desc')->where('is_credited', 1)->get();
+        if(Auth::user()->is_admin){
+            $files = File::orderBy('created_at', 'desc')->where('is_credited', 1)->get();
+        }
+        else if(Auth::user()->is_engineer){
+            $files = File::orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
+        }
         return view('files.files', ['files' => $files]);
     }
 
@@ -49,7 +57,16 @@ class FilesController extends Controller
     {
         $file = RequestFile::findOrFail($request->request_file_id);
         $file->delete();
-        return response('file deleted', 200);
+        return response('File deleted', 200);
+    }
+
+    public function assignEngineer(Request $request){
+       $file = File::findOrFail($request->file_id);
+       $file->assigned_to = $request->assigned_to;
+       $file->assignment_time = Carbon::now();
+       $file->save();
+       return Redirect::back()->with(['success' => 'Engineer Assigned to File.']);
+
     }
 
     public function fileEngineersNotes(Request $request)
@@ -79,6 +96,20 @@ class FilesController extends Controller
         $engineerFile->engineer = true;
         $engineerFile->save();
 
+        $file = File::findOrFail($request->file_id);
+        
+
+        if(!$file->response_time){
+            
+            $file->reupload_time = Carbon::now();
+            $assignmentTimeInSeconds  = strtotime($file->assignment_time);
+            $reloadTimeInSeconds  = strtotime($file->reupload_time);
+            $file->response_time = $reloadTimeInSeconds - $assignmentTimeInSeconds;
+        }
+
+
+        $file->save();
+
         return response('file uploaded', 200);
     }
 
@@ -89,8 +120,14 @@ class FilesController extends Controller
      */
     public function show($id)
     {
-        $file = File::findOrFail($id);
-        // dd($file);
+        if(Auth::user()->is_admin){
+            $file = File::findOrFail($id);
+        }
+        else if(Auth::user()->is_engineer){
+            $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->first();
+        }
+
+        $engineers = User::where('is_engineer', 1)->get();
         $withoutTypeArray = $file->files->toArray();
         $unsortedTimelineObjects = [];
 
@@ -124,7 +161,6 @@ class FilesController extends Controller
         } 
 
         array_multisort($createdTimes, SORT_ASC, $unsortedTimelineObjects);
-        // dd($unsortedTimelineObjects);
-        return view('files.show', ['file' => $file, 'messages' => $unsortedTimelineObjects]);
+        return view('files.show', ['file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers]);
     }
 }
