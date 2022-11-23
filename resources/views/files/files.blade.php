@@ -27,7 +27,11 @@
                                 <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 250px;">Options</th>
                                 <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 42px;">Credits</th>
                                 <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Date Uploaded</th>
-                            </tr>
+                                @if(Auth::user()->is_admin)
+                                  <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Assigned To</th>
+                                  <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Response Time</th>
+                                @endif
+                              </tr>
                         </thead>
                         <tbody>
                           @foreach($files as $file)
@@ -62,6 +66,10 @@
                                 <td><span class="badge badge-important">{{$file->credits}}</span></td>
                                 
                                 <td>{{\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A')}}</td>
+                                @if(Auth::user()->is_admin)
+                                  <td><span class="label label-success">@if($file->assigned){{$file->assigned->name}} @else{{ "No one" }}@endif</span></td>
+                                  <td><span class="label label-success">@if( $file->response_time ) {{ \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans() }} @else {{ "Not Responded" }} @endif</span></td>
+                                @endif
                               </tr>
                           @endforeach
                         </tbody>
