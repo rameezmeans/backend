@@ -100,7 +100,7 @@ class FilesController extends Controller
         
 
         if(!$file->response_time){
-            
+
             $file->reupload_time = Carbon::now();
             $assignmentTimeInSeconds  = strtotime($file->assignment_time);
             $reloadTimeInSeconds  = strtotime($file->reupload_time);
@@ -125,6 +125,10 @@ class FilesController extends Controller
         }
         else if(Auth::user()->is_engineer){
             $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->first();
+        }
+
+        if(!$file){
+            abort(404);
         }
 
         $engineers = User::where('is_engineer', 1)->get();
