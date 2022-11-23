@@ -20,6 +20,10 @@ class File extends Model
         ->first(); 
     }
 
+    public function assigned(){
+        return $this->belongsTo(User::class, 'assigned_to', 'id');
+    }
+
     public function engineer_file_notes(){
         return $this->hasMany(EngineerFileNote::class); 
     }

@@ -96,7 +96,12 @@
    <script type="text/javascript">
 
       Dropzone.autoDiscover = false;
+
       $( document ).ready(function(event) {
+
+        // var csrf = document.querySelector('meta[name="csrf-token"]').content;
+        // var csrf_field = '<input type="hidden" name="_token" value=“'+csrf+'”>';
+        // $('form').append(csrf_field);
 
         $('.datepicker').datepicker({
           format: "dd/mm/yyyy",

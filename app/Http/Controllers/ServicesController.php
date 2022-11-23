@@ -16,6 +16,7 @@ class ServicesController extends Controller
     public function __construct()
     {
         $this->middleware('auth',['except' => ['getStages', 'getOptions']]);
+        $this->middleware('adminOnly');
     }
 
     /**
@@ -130,6 +131,9 @@ class ServicesController extends Controller
      */
     public function delete(Request $request)
     {
+        $service = Service::findOrFail($request->id);
+        $service->delete();
+        $request->session()->put('success', 'Service deleted, successfully.');
         $service = Service::findOrFail($request->id);
         $service->delete();
         $request->session()->put('success', 'Service deleted, successfully.');
