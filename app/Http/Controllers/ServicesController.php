@@ -16,7 +16,7 @@ class ServicesController extends Controller
     public function __construct()
     {
         $this->middleware('auth',['except' => ['getStages', 'getOptions']]);
-        $this->middleware('adminOnly');
+        $this->middleware('adminOnly', ['except' => ['getStages', 'getOptions']]);
     }
 
     /**
