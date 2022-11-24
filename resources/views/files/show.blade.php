@@ -123,6 +123,26 @@
                         </div>
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Status</p>
+                          <form action="{{route('change-status')}}" method="POST">
+                            @csrf
+                            <input type="hidden" name="file_id" value="{{$file->id}}">
+                            <div class="">
+                              <select class="full-width" data-init-plugin="select2" name="status">
+                                  <option @if(isset($file) && $file->status == "submitted") selected @endif value="submitted">Submitted</option>
+                                  <option @if(isset($file) && $file->status == "accepted") selected @endif value="accepted">Accepted</option>
+                                  <option @if(isset($file) && $file->status == "rejected") selected @endif value="rejected">Rejected</option>
+                              </select>
+                              <div class="text-center m-t-20">                    
+                                <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Update</span></button>
+                              </div>
+                            </div>
+                            
+                          </form>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Assign This File to An Engineer</p>
                           <form action="{{route('assign-engineer')}}" method="POST">
                             @csrf

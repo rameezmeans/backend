@@ -69,6 +69,14 @@ class FilesController extends Controller
 
     }
 
+    public function changeStatus(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+        $file->status = $request->status;
+        $file->save();
+        return Redirect::back()->with(['success' => 'File status changed.']);
+    }
+
     public function fileEngineersNotes(Request $request)
     {
         $file = new EngineerFileNote();
