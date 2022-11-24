@@ -41,6 +41,7 @@ Route::post('/request-file-upload', [App\Http\Controllers\FilesController::class
 Route::post('/delete-request-file', [App\Http\Controllers\FilesController::class,'deleteUploadedFile'])->name('delete-request-file');
 Route::post('/delete-message', [App\Http\Controllers\FilesController::class,'deleteMessage'])->name('delete-message');
 Route::post('/assign-engineer', [App\Http\Controllers\FilesController::class,'assignEngineer'])->name('assign-engineer');
+Route::post('/change-status', [App\Http\Controllers\FilesController::class,'changeStatus'])->name('change-status');
 
 
 Route::get('/vehicles', [ App\Http\Controllers\VehiclesController::class,'index'])->name('vehicles');
