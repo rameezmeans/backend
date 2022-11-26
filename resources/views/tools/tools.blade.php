@@ -28,6 +28,7 @@
                             <thead>
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Type</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
                                 </tr>
                             </thead>
@@ -36,6 +37,9 @@
                                     <tr role="row" class="redirect-click" data-redirect="{{ route('edit-tool', $tool->id) }}">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$tool->name}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{ucfirst($tool->type)}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$tool->created_at->diffForHumans()}}</p>
