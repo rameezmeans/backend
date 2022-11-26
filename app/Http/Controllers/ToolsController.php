@@ -25,7 +25,7 @@ class ToolsController extends Controller
      */
     public function index()
     {
-        $tools = Tool::orderBy('created_at', 'desc')->get();
+        $tools = Tool::orderBy('created_at', 'asc')->get();
         return view('tools.tools', ['tools' => $tools]);
     }
 
@@ -50,14 +50,16 @@ class ToolsController extends Controller
     public function add(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|unique:tools|max:255|min:3',
+            'name' => 'required|max:255|min:3',
             'label' => 'required',
             'icon' => 'required',
+            'type' => 'required',
             
         ]);
 
         $created = new Tool();
         $created->name = $validated['name'];
+        $created->type = $validated['type'];
         $created->label = $validated['label'];
 
         $file = $request->file('icon');
@@ -74,12 +76,14 @@ class ToolsController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|max:255|min:3',
-            'label' => 'required'
+            'label' => 'required',
+            'type' => 'required'
             
         ]);
 
         $created = Tool::findOrFail($request->id);
         $created->name = $validated['name'];
+        $created->type = $validated['type'];
         $created->label = $validated['label'];
 
         if($request->file('icon')){
