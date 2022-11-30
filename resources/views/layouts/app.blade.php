@@ -116,7 +116,7 @@
             return false;
         });
 
-        $('table').DataTable({
+        $('.dataTable').DataTable({
 
             "ordering": true,
             columnDefs: [{
