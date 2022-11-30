@@ -71,6 +71,24 @@
 
         <li class="m-t-30 ">
           <a href="javascript:;">
+            <span class="title">Price List</span>
+            <span class=" arrow"></span>
+          </a>
+          <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
+          <ul class="sub-menu">
+            <li class="">
+              <a href="{{ route('unit-price') }}">Unit Price</a>
+              <span class="icon-thumbnail">UP</span>
+            </li>
+            <li class="">
+              <a href="{{route('credits')}}">Credits</a>
+              <span class="icon-thumbnail">CR</span>
+            </li>
+          </ul>
+        </li>
+
+        <li class="m-t-30 ">
+          <a href="javascript:;">
             <span class="title">Customers</span>
             <span class=" arrow"></span>
           </a>
