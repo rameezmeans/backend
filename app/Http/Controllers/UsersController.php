@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Credit;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -60,6 +61,8 @@ class UsersController extends Controller
 
        $customer->save();
 
+       $this->addCredits($customer->group->bonus_credits, $customer);
+
        return redirect()->route('customers')->with(['success' => 'Customer added, successfully.']);
     }
 
@@ -76,43 +79,55 @@ class UsersController extends Controller
 
     public function updateCustomer(Request $request){
 
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:255'],
-            'language' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string', 'max:255'],
-            'zip' => ['required', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:255'],
-            'country' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'string', 'max:255'],
-            'company_name' => ['required', 'string', 'max:255'],
-            'company_id' => ['string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-        ]);
+            $validated = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'string', 'max:255'],
+                'language' => ['required', 'string', 'max:255'],
+                'address' => ['required', 'string', 'max:255'],
+                'zip' => ['required', 'string', 'max:255'],
+                'city' => ['required', 'string', 'max:255'],
+                'country' => ['required', 'string', 'max:255'],
+                'status' => ['required', 'string', 'max:255'],
+                'company_name' => ['required', 'string', 'max:255'],
+                'company_id' => ['string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255'],
+            ]);
 
-       $customer = User::findOrFail($request->id);
-       $customer->name = $request->name;
+        $customer = User::findOrFail($request->id);
+        $customer->name = $request->name;
 
-       if($request->password){
-           $customer->password = Hash::make($request->password);
-       }
+        if($request->password){
+            $customer->password = Hash::make($request->password);
+        }
 
-       $customer->email = $request->email;
-       $customer->phone = $request->phone;
-       $customer->language = $request->language;
-       $customer->address = $request->address;
-       $customer->zip = $request->zip;
-       $customer->city = $request->city;
-       $customer->country = $request->country;
-       $customer->status = $request->status;
-       $customer->company_name = $request->company_name;
-       $customer->company_id = $request->company_id;
-       $customer->group_id = $request->group_id;
+        $customer->email = $request->email;
+        $customer->phone = $request->phone;
+        $customer->language = $request->language;
+        $customer->address = $request->address;
+        $customer->zip = $request->zip;
+        $customer->city = $request->city;
+        $customer->country = $request->country;
+        $customer->status = $request->status;
+        $customer->company_name = $request->company_name;
+        $customer->company_id = $request->company_id;
+        $customer->group_id = $request->group_id;
 
-       $customer->save();
+        $customer->save();
 
-       return redirect()->route('customers')->with(['success' => 'Customer updated, successfully.']);
+        $this->addCredits($customer->group->bonus_credits, $customer);
 
+        return redirect()->route('customers')->with(['success' => 'Customer updated, successfully.']);
+
+    }
+
+    public function addCredits($credits, $customer){
+        $credit = new Credit();
+        $credit->credits = $credits;
+        $credit->user_id = $customer->id;
+        $credit->stripe_id = NULL;
+        $credit->price_payed = 0;
+        $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
+        $credit->save();
     }
 
     public function addEngineer(Request $request){
