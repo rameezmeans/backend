@@ -53,4 +53,8 @@ class User extends Authenticatable
     public function credits(){
         return $this->hasMany(Credit::class); 
     }
+
+    public function group(){
+        return $this->belongsTo(Group::class); 
+    }
 }
