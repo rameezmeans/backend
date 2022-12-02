@@ -96,7 +96,7 @@
                                     @if($credit->credits < 0)
                                         <tr role="row">
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p><span class="label label-">{{$credit->invoice_id}}</span></p>
+                                                <p><span class="label ">{{$credit->invoice_id}}</span></p>
                                             </td>
                                             <td class="v-align-middle semi-bold sorting_1">
                                                 <p><span class="label label-danger">{{-1*(int)$credit->credits}}</span></p>
@@ -106,7 +106,14 @@
                                                 <p><span class="label label-success">{{\Carbon\Carbon::parse($credit->created_at)->format('d/m/Y')}}</span></p>
                                             </td>
                                             {{-- <td><button class="btn btn-sm btn-primary"><i class="pg-printer"></i></button></td> --}}
-                                            <td><a href="{{route('file', $credit->file_id)}}" class="btn btn-sm btn-primary"><i class="fa fa-file"></i></a></td>
+                                            <td>
+                                                @if($credit->file_id)
+                                                    <a href="{{route('file', $credit->file_id)}}" class="btn btn-sm btn-primary"><i class="fa fa-file"></i></a>
+                                                @else
+                                                    <span class="label label-warning text-black">Manual Entry</span>
+
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endif
                                 @endforeach
