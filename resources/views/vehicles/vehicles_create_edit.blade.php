@@ -5,9 +5,38 @@
     <!-- START PAGE CONTENT -->
     <div class="content sm-gutter">
       <!-- START CONTAINER FLUID -->
-        <div class=" container-fluid   container-fixed-lg bg-white">
+        <div class="container-fluid   container-fixed-lg bg-white">
+
+            @if (Session::get('success'))
+            <div class="pgn-wrapper" data-position="top" style="top: 59px;">
+                <div class="pgn push-on-sidebar-open pgn-bar">
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        {{ Session::get('success') }}
+                    </div>
+                </div>
+            </div>
+          @endif
+
+          @php
+            Session::forget('success')
+          @endphp
             <div class="card card-transparent m-t-40">
-                <div class="card-header">
+
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
+                <li class="nav-item">
+                  <a href="#" class="active" data-toggle="tab" data-target="#tab-fillup1"><span>General Information</span></a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" data-toggle="tab" data-target="#tab-fillup2"><span>Options and Comments</span></a>
+                </li>
+                
+              </ul>
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab-fillup1">
+                  <div class="card-header">
                     <div class="card-title">
                       @if(isset($vehicle))
                         <img class="" style="width:40%;" src="{{$vehicle->Brand_image_URL}}">
@@ -286,9 +315,91 @@
                           </div>
                     </form>
                 </div>
+                </div>
+                <div class="tab-pane" id="tab-fillup2">
+                  <div class="card card-transparent">
+                    <div class="card-header  separator">
+                      <div class="col-xs-12">
+                        <div class="pull-right">
+                          <button data-toggle="modal" data-target="#modalSlideUp" class="btn btn-success">Add New Comments</button>
+                        </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="card-title">
+                        <h4><span class="semi-bold">Options</span> and Comments</h4>
+                      </div>
+                      
+                    </div>
+                    <div class="card-body">
+                      <div class="p-t-20">
+                        @foreach($comments as $comment)
+                          <div class="p-t-10">
+                              <img alt="{{$comment->option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}">
+                              {{$comment->option}}
+                          </div> 
+                          <p> {{$comment->comments}}</p>
+                        @endforeach
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
         </div>
     </div>
+  </div>
+</div>
+<div class="modal fade slide-up disable-scroll" id="modalSlideUp" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+          </button>
+          <h5>Options <span class="semi-bold"> and Comment</span></h5>
+          <p class="p-b-10">Please select option and add comments.</p>
+        </div>
+        <div class="modal-body">
+          <form role="form" action="{{route('add-option-comments')}}" method="POST">
+            @csrf
+            <input type="hidden" name="engine" value="{{$vehicle->Engine}}">
+            <input type="hidden" name="make" value="{{$vehicle->Make}}">
+            <input type="hidden" name="ecu" value="{{$vehicle->Engine_ECU}}">
+            <input type="hidden" name="generation" value="{{$vehicle->Generation}}">
+            <input type="hidden" name="model" value="{{$vehicle->Model}}">
+            <input type="hidden" name="id" value="{{$vehicle->id}}">
+            <div class="form-group form-group-default required ">
+              <label>Option</label>
+              <select class="full-width" data-init-plugin="select2" name="option">
+                @foreach($options as $option)
+                  @if(!in_array($option->name, $includedOptions))
+                  <option value="{{$option->name}}">{{$option->name}}</option>
+                  @endif
+                @endforeach
+              </select>
+            </div>
+            <div class="form-group-attached ">
+              <div class="row">
+                <div class="col-md-12">
+                  
+                  <div class="form-group form-group-default required">
+                    <label>Comment</label>
+                    <textarea name="comments" required style="height: 100px;" class="form-control"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+          <div class="row">
+            <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+              <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
 </div>
 @endsection
 

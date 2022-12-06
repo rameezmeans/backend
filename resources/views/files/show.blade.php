@@ -281,26 +281,31 @@
                           <div class="clearfix"></div>
                         </div>
                       @endif
-        
+                      <div class="p-b-20">
                       @if($file->options)
-                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Options</p>
-                          <div class="pull-right">
-                              {{-- <img alt="{{$file->stages}}" width="33" height="33" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}"> --}}
-                              @foreach($file->options() as $option)
-                                <span class="label label-warning-darker m-l-10" class="text-black" style="top: 2px; position:relative;">
-                                  <img alt="{{$option}}" width="20" height="20" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}">
-        
-                                  {{ $option }}
-                                </span>
-                              @endforeach
-                          </div>
-                          <div class="clearfix"></div>
+                      <div class="b b-grey p-l-20 p-r-20 p-t-10">
+                        <p class="pull-left">Options</p>
+                        <div class="clearfix"></div>
+                      </div>
+                        @foreach($file->options() as $option) 
+                        <div class="p-l-20"> 
+                          <img alt="{{$option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}">
+                          {{$option}}  
                         </div>
+
+                          @foreach($comments as $comment)
+                              @if($option == $comment->option)
+                                <div class="p-l-20 p-b-10"> 
+                                  {{$comment->comments}}
+                                </div>
+                              @endif
+                          @endforeach
+                        @endforeach
                       @endif
+
+                      </div>
                      
-                      
-                      <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                      <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left">Credits Paid</p>
                         <div class="pull-right">
                           <span class="label label-danger">{{$file->credits}}<span>
