@@ -134,9 +134,9 @@ class FilesController extends Controller
             $commentObj->where('model', $file->model);
         }
 
-        if($file->ecu){
-            $commentObj->where('ecu', $file->ecu);
-        }
+        // if($file->ecu){
+        //     $commentObj->where('ecu', $file->ecu);
+        // }
 
         if($file->generation){
             $commentObj->where('generation', $file->generation);

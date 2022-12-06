@@ -332,13 +332,17 @@
                     </div>
                     <div class="card-body">
                       <div class="p-t-20">
-                        @foreach($comments as $comment)
-                          <div class="p-t-10">
-                              <img alt="{{$comment->option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}">
-                              {{$comment->option}}
-                          </div> 
-                          <p> {{$comment->comments}}</p>
-                        @endforeach
+                        @if(!$comments->isEmpty())
+                          @foreach($comments as $comment)
+                            <div class="p-t-10">
+                                <img alt="{{$comment->option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}">
+                                {{$comment->option}}
+                            </div> 
+                            <p> {{$comment->comments}}</p>
+                          @endforeach
+                        @else
+                            <p>No Comments added.</p>
+                        @endif
                       </div>
                     </div>
                   </div>
