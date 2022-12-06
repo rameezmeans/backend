@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use App\Models\Service;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,9 +25,66 @@ class VehiclesController extends Controller
         return view('vehicles.vehicles_create_edit');
     }
 
+    public function addOptionComments(Request $request){
+
+        $comment = new Comment();
+        $comment->engine = $request->engine;
+        $comment->make = $request->make;
+        $comment->ecu = $request->ecu;
+        $comment->generation = $request->generation;
+        $comment->model = $request->model;
+        $comment->option = $request->option;
+        $comment->comments = $request->comments;
+        $comment->save();
+
+        return redirect()->route('vehicle', $request->id)->with('success',  'Comment added, successfully.');
+
+    }
+
     public function show($id){
         $vehicle = Vehicle::findOrFail($id);
-        return view('vehicles.vehicles_create_edit', ['vehicle' => $vehicle]);
+        $options = Service::where('type', 'option')->get();
+        $comments = $this->getComments($vehicle);
+
+        
+
+        $includedOptions = [];
+
+        foreach($comments as $comment){
+            $includedOptions []= $comment->option;
+        }
+
+        return view('vehicles.vehicles_create_edit', 
+        [
+            'vehicle' => $vehicle, 
+            'options' => $options,
+            'comments' => $comments,
+            'includedOptions' => $includedOptions
+        ]);
+
+    }
+
+    public function getComments($vehicle){
+
+        $commentObj = Comment::where('engine', $vehicle->Engine);
+
+        if($vehicle->Make){
+            $commentObj->where('make', $vehicle->Make);
+        }
+
+        if($vehicle->Model){
+            $commentObj->where('model', $vehicle->Model);
+        }
+
+        if($vehicle->Engine_ECU){
+            $commentObj->where('ecu', $vehicle->Engine_ECU);
+        }
+
+        if($vehicle->Generation){
+            $commentObj->where('generation', $vehicle->Generation);
+        }
+
+        return $commentObj->get();
     }
 
     public function delete(Request $request)

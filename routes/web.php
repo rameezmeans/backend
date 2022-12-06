@@ -50,6 +50,7 @@ Route::get('/create_vehicle', [App\Http\Controllers\VehiclesController::class,'c
 Route::post('/add-vehicle', [App\Http\Controllers\VehiclesController::class,'add'])->name('add-vehicle');
 Route::post('/update-vehicle', [App\Http\Controllers\VehiclesController::class,'update'])->name('update-vehicle');
 Route::post('/delete_vehicle', [App\Http\Controllers\VehiclesController::class,'delete'])->name('delete-vehicle');
+Route::post('/add-option-comments', [App\Http\Controllers\VehiclesController::class,'addOptionComments'])->name('add-option-comments');
 
 Route::get('/groups', [App\Http\Controllers\GroupsController::class,'index'])->name('customer.groups');
 

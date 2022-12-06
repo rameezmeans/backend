@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\RequestFile;
@@ -121,6 +122,29 @@ class FilesController extends Controller
         return response('file uploaded', 200);
     }
 
+    public function getComments($file){
+
+        $commentObj = Comment::where('engine', $file->engine);
+
+        if($file->brand){
+            $commentObj->where('make', $file->brand);
+        }
+
+        if($file->Model){
+            $commentObj->where('model', $file->model);
+        }
+
+        if($file->ecu){
+            $commentObj->where('ecu', $file->ecu);
+        }
+
+        if($file->generation){
+            $commentObj->where('generation', $file->generation);
+        }
+
+        return $commentObj->get();
+    }
+
      /**
      * Show the file.
      *
@@ -173,6 +197,9 @@ class FilesController extends Controller
         } 
 
         array_multisort($createdTimes, SORT_ASC, $unsortedTimelineObjects);
-        return view('files.show', ['file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers]);
+
+        $comments = $this->getComments($file);
+        
+        return view('files.show', [ 'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
     }
 }
