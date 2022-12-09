@@ -44,7 +44,7 @@ class VehiclesController extends Controller
     public function addComments($id){
 
         $vehicle = Vehicle::findOrFail($id);
-        $ecus = explode('/', $vehicle->Engine_ECU);
+        $ecus = explode(' / ', $vehicle->Engine_ECU);
 
         $trimmedECUs = [];
         foreach($ecus as $ecu){
@@ -95,7 +95,7 @@ class VehiclesController extends Controller
             $commentObj->where('model', $vehicle->Model);
         }
 
-       
+        // I need all and then I get specific through blade file.
 
         // if($vehicle->Engine_ECU){
         //     $commentObj->where('ecu', $vehicle->Engine_ECU);
