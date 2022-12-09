@@ -41,25 +41,42 @@ class VehiclesController extends Controller
 
     }
 
-    public function show($id){
+    public function addComments($id){
+
         $vehicle = Vehicle::findOrFail($id);
+        $ecus = explode('/', $vehicle->Engine_ECU);
+
+        $trimmedECUs = [];
+        foreach($ecus as $ecu){
+            $trimmedECUs []= trim($ecu);
+        }
+
         $options = Service::where('type', 'option')->get();
         $comments = $this->getComments($vehicle);
-
-        
 
         $includedOptions = [];
 
         foreach($comments as $comment){
             $includedOptions []= $comment->option;
         }
-
-        return view('vehicles.vehicles_create_edit', 
+       
+        return view('vehicles.add_comments', 
         [
             'vehicle' => $vehicle, 
+            'ecus' => $trimmedECUs, 
             'options' => $options,
             'comments' => $comments,
             'includedOptions' => $includedOptions
+        ]);
+    }
+
+    public function show($id){
+
+        $vehicle = Vehicle::findOrFail($id);
+        
+        return view('vehicles.vehicles_create_edit', 
+        [
+            'vehicle' => $vehicle
         ]);
 
     }
@@ -67,6 +84,8 @@ class VehiclesController extends Controller
     public function getComments($vehicle){
 
         $commentObj = Comment::where('engine', $vehicle->Engine);
+
+       
 
         if($vehicle->Make){
             $commentObj->where('make', $vehicle->Make);
@@ -76,9 +95,11 @@ class VehiclesController extends Controller
             $commentObj->where('model', $vehicle->Model);
         }
 
-        if($vehicle->Engine_ECU){
-            $commentObj->where('ecu', $vehicle->Engine_ECU);
-        }
+       
+
+        // if($vehicle->Engine_ECU){
+        //     $commentObj->where('ecu', $vehicle->Engine_ECU);
+        // }
 
         if($vehicle->Generation){
             $commentObj->where('generation', $vehicle->Generation);
