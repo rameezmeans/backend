@@ -24,7 +24,7 @@
             <div class="card card-transparent m-t-40">
 
               <!-- Nav tabs -->
-              <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
+              {{-- <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
                 <li class="nav-item">
                   <a href="#" class="active" data-toggle="tab" data-target="#tab-fillup1"><span>General Information</span></a>
                 </li>
@@ -32,15 +32,18 @@
                   <a href="#" data-toggle="tab" data-target="#tab-fillup2"><span>Options and Comments</span></a>
                 </li>
                 
-              </ul>
+              </ul> --}}
               <!-- Tab panes -->
-              <div class="tab-content">
-                <div class="tab-pane active" id="tab-fillup1">
+              {{-- <div class="tab-content">
+                <div class="tab-pane active" id="tab-fillup1"> --}}
                   <div class="card-header">
                     <div class="card-title">
                       @if(isset($vehicle))
                         <img class="" style="width:40%;" src="{{$vehicle->Brand_image_URL}}">
                       @endif
+                    </div>
+                    <div class="pull-right">
+                      <a class="btn btn-success" href="{{route('add-comments', $vehicle->id)}}">Add Comments</a>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -314,9 +317,9 @@
                             @endif
                           </div>
                     </form>
-                </div>
-                </div>
-                <div class="tab-pane" id="tab-fillup2">
+                {{-- </div>
+                </div> --}}
+                {{-- <div class="tab-pane" id="tab-fillup2">
                   <div class="card card-transparent">
                     <div class="card-header  separator">
                       <div class="col-xs-12">
@@ -346,12 +349,14 @@
                       </div>
                     </div>
                   </div>
-                </div>
-            </div>
+                </div> --}}
+            {{-- </div> --}}
         </div>
     </div>
   </div>
 </div>
+
+{{--
 <div class="modal fade slide-up disable-scroll" id="modalSlideUp" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog">
     <div class="modal-content-wrapper">
@@ -405,6 +410,8 @@
     <!-- /.modal-content -->
   </div>
 </div>
+
+--}}
 @endsection
 
 @section('pagespecificscripts')
