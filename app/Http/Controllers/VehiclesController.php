@@ -37,28 +37,48 @@ class VehiclesController extends Controller
         $comment->comments = $request->comments;
         $comment->save();
 
-        return redirect()->route('vehicle', $request->id)->with('success',  'Comment added, successfully.');
+        return redirect()->route('add-comments', $request->id)->with('success',  'Comment added, successfully.');
 
     }
 
     public function addComments($id){
 
         $vehicle = Vehicle::findOrFail($id);
-        $ecus = explode(' / ', $vehicle->Engine_ECU);
 
         $trimmedECUs = [];
-        foreach($ecus as $ecu){
-            $trimmedECUs []= trim($ecu);
-        }
+        $options = null;
+        $comments = null;
+        $includedOptions = null;
+        $hasECU = 0;
+        $includedOptions = [];
 
         $options = Service::where('type', 'option')->get();
         $comments = $this->getComments($vehicle);
 
-        $includedOptions = [];
+        if($vehicle->Engine_ECU){
 
-        foreach($comments as $comment){
-            $includedOptions []= $comment->option;
+            $hasECU = 1;
+            $ecus = explode(' / ', $vehicle->Engine_ECU);
+
+            $trimmedECUs = [];
+            foreach($ecus as $ecu){
+                $trimmedECUs []= trim($ecu);
+            }
+
+            foreach($trimmedECUs as $row){
+                $includedOptions [$row]=  $this->getOptions($row, $vehicle);
+            }
+
         }
+
+        // else{
+
+        //     foreach($comments as $comment){
+        //         $includedOptions []= $comment->option;
+        //     }
+        // }
+
+        // dd($includedOptions);
        
         return view('vehicles.add_comments', 
         [
@@ -66,8 +86,39 @@ class VehiclesController extends Controller
             'ecus' => $trimmedECUs, 
             'options' => $options,
             'comments' => $comments,
-            'includedOptions' => $includedOptions
+            'includedOptions' => $includedOptions,
+            'hasECU' => $hasECU,
         ]);
+    }
+
+    public function getOptions($ecu, $vehicle){
+
+        $commentObj = Comment::where('engine', $vehicle->Engine);
+
+        if($vehicle->Make){
+            $commentObj->where('make', $vehicle->Make);
+        }
+
+        if($vehicle->Model){
+            $commentObj->where('model', $vehicle->Model);
+        }
+
+        if($vehicle->Engine_ECU){
+            $commentObj->where('ecu', $ecu);
+        }
+
+        if($vehicle->Generation){
+            $commentObj->where('generation', $vehicle->Generation);
+        }
+
+        $comments = $commentObj->get();
+
+        $options = [];
+        foreach($comments as $comment){
+            $options []= $comment->option;
+        }
+
+        return $options;
     }
 
     public function show($id){

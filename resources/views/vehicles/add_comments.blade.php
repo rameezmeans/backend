@@ -11,11 +11,9 @@
                 <a class="btn btn-success pull-right" href={{route('vehicle', $vehicle->id)}}>View Vehicle</a>
               </div>
             <div class="card-body">
-               
-
+              @if($hasECU)
                 @php $first = 0; $second = 0; $third = 0; @endphp
                 <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
-                   
                     @foreach($ecus as $ecu)
                         <li class="nav-item">
                             <a href="#" class="@if($first == 0) active @endif" data-toggle="tab" data-target="#tab-fillup-{{$first}}"><span>{{$ecu}}</span></a>
@@ -23,9 +21,9 @@
                         @php $first++; @endphp
                     @endforeach 
                 </ul>
-                   
                 <div class="tab-content">
                     @foreach($ecus as $ecu)
+                    @php $third = 0; @endphp
                         <div class="tab-pane @if($second == 0) active @endif" id="tab-fillup-{{$second}}">
                             <div class="row">
                                 <div class="col-lg-6">
@@ -81,8 +79,44 @@
                                         @if($third == 0)
                                             <p>No Comments.</p>
                                         @endif
-                                    <div class="text-center"><button data-toggle="modal" data-target="#modalSlideUp-{{$second}}" class="btn btn-success">Add New Comments</button></div>
-                                </div>
+                                    {{-- <div class="text-center"><button data-toggle="modal" data-target="#modalSlideUp-{{$second}}" class="btn btn-success">Add New Comments</button></div> --}}
+                                    <form role="form" action="{{route('add-option-comments')}}" method="POST" class="m-t-40">
+                                      @csrf
+                                      <input type="hidden" name="engine" value="{{$vehicle->Engine}}">
+                                      <input type="hidden" name="make" value="{{$vehicle->Make}}">
+                                      <input type="hidden" name="ecu" value="{{$ecu}}">
+                                      <input type="hidden" name="generation" value="{{$vehicle->Generation}}">
+                                      <input type="hidden" name="model" value="{{$vehicle->Model}}">
+                                      <input type="hidden" name="id" value="{{$vehicle->id}}">
+                                      <div class="form-group form-group-default required ">
+                                        <label>Option</label>
+                                        <select class="full-width" data-init-plugin="select2" name="option">
+                                          @foreach($options as $option)
+                                            @if(!in_array($option->name, $includedOptions[$ecu]))
+                                            <option value="{{$option->name}}">{{$option->name}}</option>
+                                            @endif
+                                          @endforeach
+                                        </select>
+                                      </div>
+                                      <div class="form-group-attached ">
+                                        <div class="row">
+                                          <div class="col-md-12">
+                                            
+                                            <div class="form-group form-group-default required">
+                                              <label>Comment</label>
+                                              <textarea name="comments" required style="height: 100px;" class="form-control"></textarea>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                   
+                                    <div class="row">
+                                      <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+                                        <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
+                                      </div>
+                                    </div>
+                                  </form>
+                                  </div>
                                 </div>
                                 
                             </div>
@@ -110,7 +144,7 @@
                                         <label>Option</label>
                                         <select class="full-width" data-init-plugin="select2" name="option">
                                           @foreach($options as $option)
-                                            @if(!in_array($option->name, $includedOptions))
+                                            @if(!in_array($option->name, $includedOptions[$ecu]))
                                             <option value="{{$option->name}}">{{$option->name}}</option>
                                             @endif
                                           @endforeach
@@ -142,8 +176,8 @@
                           </div>
                         @php $second++; @endphp
                     @endforeach 
-                        
                 </div>
+              @endif
             </div>
           </div>
         </div>
