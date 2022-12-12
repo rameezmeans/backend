@@ -221,6 +221,7 @@
                   <div class="form-group form-group-default">
                     <label>Engine ECU</label>
                     <input value="@if(isset($vehicle)) {{ $vehicle->Engine_ECU }} @else{{old('Engine_ECU') }}@endif"  name="Engine_ECU" type="text" class="form-control">
+                    <p>Please add multiple ECUs with " / " seprator. Otherwise It will not work. For example, Bosch EDC16C39 / Bosch EDC16C39. (It is space slash and then space).</p>
                   </div>
                   @error('Engine_ECU')
                     <span class="text-danger" role="alert">

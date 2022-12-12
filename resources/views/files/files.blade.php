@@ -40,7 +40,7 @@
                                 <td>{{$file->name}}</td>
                                 <td>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</td>
                                 <td><span class="label label-success">{{$file->file_type}}</span></td>
-                                <td><span class="label label-success">{{$file->status}}</span></td>
+                                <td><span class="label @if($file->status == 'accepted') label-success @elseif($file->status == 'rejected') label-danger @else label-info @endif ">{{$file->status}}</span></td>
                                 <td>
                                   <div class="">
                                     @if($file->stages)
