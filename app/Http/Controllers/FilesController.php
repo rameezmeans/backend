@@ -7,6 +7,7 @@ use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\RequestFile;
 use App\Models\User;
+use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -164,6 +165,18 @@ class FilesController extends Controller
             abort(404);
         }
 
+        if($file->status == 'submitted'){
+            $file->status = 'accepted';
+            $file->save();
+        }
+
+        $vehicle = Vehicle::where('Make', $file->brand)
+        ->where('Model', $file->model)
+        ->where('Generation', $file->version)
+        ->where('Engine', $file->engine)
+        // ->where('Engine_ECU', $file->ecu)
+        ->first();
+
         $engineers = User::where('is_engineer', 1)->get();
         $withoutTypeArray = $file->files->toArray();
         $unsortedTimelineObjects = [];
@@ -201,6 +214,6 @@ class FilesController extends Controller
 
         $comments = $this->getComments($file);
         
-        return view('files.show', [ 'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
+        return view('files.show', [ 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
     }
 }

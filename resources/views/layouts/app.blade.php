@@ -118,7 +118,7 @@
 
         $('.dataTable').DataTable({
 
-            "ordering": true,
+            "ordering": false,
             columnDefs: [{
             orderable: false,
             targets: "sorting"
