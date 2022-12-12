@@ -6,6 +6,19 @@
     <div class="content sm-gutter">
       <!-- START CONTAINER FLUID -->
         <div class=" container-fluid   container-fixed-lg bg-white">
+          @if (Session::get('success'))
+                <div class="pgn-wrapper" data-position="top" style="top: 59px;">
+                    <div class="pgn push-on-sidebar-open pgn-bar">
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                            {{ Session::get('success') }}
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @php
+              Session::forget('success')
+            @endphp
           <div class="card card-transparent m-t-40">
               <div class="card-header">
                 <a class="btn btn-success pull-right" href={{route('vehicle', $vehicle->id)}}>View Vehicle</a>
@@ -64,14 +77,22 @@
                                     </div>
                                     <div class="clearfix"></div>
                                   </div>
-                                  <div class="p-b-20 p-t-40">
+                                  
+                                </div>
+                                <div class="col-lg-6">
+                                  <div class="p-l-40">
                                     <h5 class="">Comments</h5>
                                         @foreach($comments as $comment)
                                             @if($ecu == $comment->ecu)
                                                 <div class="p-t-10">
                                                     <img alt="{{$comment->option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}">
                                                     {{$comment->option}}
+                                                    <span class="m-l-20">
+                                                      <i class="fa fa-pencil-square text-success btn-edit" data-id={{$comment->id}} data-comment="{{$comment->comments}}"></i>
+                                                      <i class="pg-trash text-danger btn-delete" data-id="{{$comment->id}}"></i>
+                                                    </span>
                                                 </div> 
+
                                                 <p> {{$comment->comments}}</p>
                                                 @php $third++; @endphp
                                             @endif
@@ -79,7 +100,6 @@
                                         @if($third == 0)
                                             <p>No Comments.</p>
                                         @endif
-                                    {{-- <div class="text-center"><button data-toggle="modal" data-target="#modalSlideUp-{{$second}}" class="btn btn-success">Add New Comments</button></div> --}}
                                     <form role="form" action="{{route('add-option-comments')}}" method="POST" class="m-t-40">
                                       @csrf
                                       <input type="hidden" name="engine" value="{{$vehicle->Engine}}">
@@ -117,63 +137,11 @@
                                     </div>
                                   </form>
                                   </div>
+
                                 </div>
                                 
                             </div>
                         </div>
-                        <div class="modal fade slide-up disable-scroll" id="modalSlideUp-{{$second}}" tabindex="-1" role="dialog" aria-hidden="false">
-                            <div class="modal-dialog">
-                              <div class="modal-content-wrapper">
-                                <div class="modal-content">
-                                  <div class="modal-header clearfix text-left">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
-                                    </button>
-                                    <h5>Options <span class="semi-bold"> and Comment</span></h5>
-                                    <p class="p-b-10">Please select option and add comments.</p>
-                                  </div>
-                                  <div class="modal-body">
-                                    <form role="form" action="{{route('add-option-comments')}}" method="POST">
-                                      @csrf
-                                      <input type="hidden" name="engine" value="{{$vehicle->Engine}}">
-                                      <input type="hidden" name="make" value="{{$vehicle->Make}}">
-                                      <input type="hidden" name="ecu" value="{{$ecu}}">
-                                      <input type="hidden" name="generation" value="{{$vehicle->Generation}}">
-                                      <input type="hidden" name="model" value="{{$vehicle->Model}}">
-                                      <input type="hidden" name="id" value="{{$vehicle->id}}">
-                                      <div class="form-group form-group-default required ">
-                                        <label>Option</label>
-                                        <select class="full-width" data-init-plugin="select2" name="option">
-                                          @foreach($options as $option)
-                                            @if(!in_array($option->name, $includedOptions[$ecu]))
-                                            <option value="{{$option->name}}">{{$option->name}}</option>
-                                            @endif
-                                          @endforeach
-                                        </select>
-                                      </div>
-                                      <div class="form-group-attached ">
-                                        <div class="row">
-                                          <div class="col-md-12">
-                                            
-                                            <div class="form-group form-group-default required">
-                                              <label>Comment</label>
-                                              <textarea name="comments" required style="height: 100px;" class="form-control"></textarea>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                   
-                                    <div class="row">
-                                      <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
-                                        <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
-                                      </div>
-                                    </div>
-                                  </form>
-                                  </div>
-                                </div>
-                              </div>
-                              <!-- /.modal-content -->
-                            </div>
-                          </div>
                         @php $second++; @endphp
                     @endforeach 
                 </div>
@@ -184,6 +152,45 @@
     </div>
 </div>
 
+<div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="editModal" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form role="form" action="{{route('edit-option-comment')}}" method="POST">
+            @csrf
+            <input type="hidden" id="edit-modal-id" name="id" value="">
+            <input type="hidden" name="vehicle_id" value="{{$vehicle->id}}">
+            
+            <div class="form-group-attached ">
+              <div class="row">
+                <div class="col-md-12">
+                  
+                  <div class="form-group form-group-default required">
+                    <label>Comment</label>
+                    <textarea id="edit-modal-comments" name="comments" required style="height: 100px;" class="form-control"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+          <div class="row">
+            <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+              <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
+
 @endsection
 
 @section('pagespecificscripts')
@@ -191,8 +198,53 @@
 <script type="text/javascript">
 
     $( document ).ready(function(event) {
-       
+
+        $( document ).on('click', '.btn-edit', function(e){
+            console.log(e);
+            let id = $(this).data('id');
+            let comment = $(this).data('comment');
+            $('#edit-modal-comments').val(comment);
+            $('#edit-modal-id').val(id);
+            console.log(comment+' '+id);
+
+            $('#editModal').modal('show');
+        });
+
+
     });
+
+    $('.btn-delete').click(function() {
+          Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+            if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/delete_comment",
+                        type: "POST",
+                        data: {
+                            id: $(this).data('id')
+                        },
+                        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your Record has been deleted.",
+                                type: "success",
+                                timer: 5000
+                            });
+
+                            location.reload();
+                        }
+                    });            
+                }
+            });
+        });
 
 </script>
 

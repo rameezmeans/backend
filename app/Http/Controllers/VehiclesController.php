@@ -71,15 +71,10 @@ class VehiclesController extends Controller
 
         }
 
-        // else{
-
-        //     foreach($comments as $comment){
-        //         $includedOptions []= $comment->option;
-        //     }
-        // }
-
-        // dd($includedOptions);
-       
+        else{
+            abort('404');
+        }
+        
         return view('vehicles.add_comments', 
         [
             'vehicle' => $vehicle, 
@@ -89,6 +84,16 @@ class VehiclesController extends Controller
             'includedOptions' => $includedOptions,
             'hasECU' => $hasECU,
         ]);
+    }
+
+    public function editOptionComment(Request $request){
+
+        $comment = Comment::findOrFail($request->id);
+        $comment->comments = $request->comments;
+        $comment->save();
+
+        return redirect()->route('add-comments', $request->vehicle_id)->with('success',  'Comment updated, successfully.');
+
     }
 
     public function getOptions($ecu, $vehicle){
@@ -157,6 +162,15 @@ class VehiclesController extends Controller
         }
 
         return $commentObj->get();
+    }
+
+    public function deleteComment(Request $request)
+    {
+        $vehicle = Comment::findOrFail($request->id);
+        
+        $vehicle->delete();
+        $request->session()->put('success', 'Comment deleted, successfully.');
+
     }
 
     public function delete(Request $request)
