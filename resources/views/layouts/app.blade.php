@@ -33,6 +33,7 @@
     <link href="{{ url('pages/css/pages-icons.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ url('assets/plugins/dropzone/css/dropzone.css')}} " rel="stylesheet" type="text/css" />
     <link class="main-stylesheet" href="{{ url('pages/css/pages.css') }}" rel="stylesheet" type="text/css" />
+    <link class="main-stylesheet" href="{{ url('pages/css/style.css') }}" rel="stylesheet" type="text/css" />
     @yield('pagespecificstyles')
   </head>
   <body class="fixed-header dashboard menu-pin">
@@ -116,14 +117,15 @@
             return false;
         });
 
-        $('.dataTable').DataTable({
+        // $('.dataTable').DataTable({
 
-            "ordering": false,
-            columnDefs: [{
-            orderable: false,
-            targets: "sorting"
-            }]
-        });
+        //     "ordering": false,
+        //     columnDefs: [{
+        //     orderable: false,
+        //     targets: "sorting"
+        //     }]
+        // });
+
       });
    </script>
 
