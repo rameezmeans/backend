@@ -84,9 +84,13 @@ class FilesController extends Controller
         $file = new EngineerFileNote();
         $file->egnineers_internal_notes = $request->egnineers_internal_notes;
         $file->engineer = true;
-        $file->checked_by = 'engineer';
         $file->file_id = $request->file_id;
         $file->save();
+
+        $old = File::findOrFail($request->file_id);
+        $old->checked_by = 'engineer';
+        $old->save();
+
         return redirect()->back()
         ->with('success', 'Engineer note successfully Added!')
         ->with('tab','chat');
