@@ -26,6 +26,17 @@ class FilesController extends Controller
         $this->middleware('auth');
     }
 
+    public function editMessage(Request $request) {
+
+        $message = EngineerFileNote::findOrFail($request->id);
+        $message->egnineers_internal_notes = $request->message;
+        $message->save();
+        
+        return redirect()->back()
+        ->with('success', 'Engineer note successfully Edited!')
+        ->with('tab','chat');
+    }
+
     public function download($file_name) {
         
         $file_path = public_path('/../../portal/public/uploads/'.$file_name);

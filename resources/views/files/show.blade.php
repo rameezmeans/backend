@@ -425,8 +425,8 @@
                             <div class="message clearfix">
                               <div class="chat-bubble bg-primary from-me text-white">
                                 {{ $message['egnineers_internal_notes'] }} 
-                                <i class="pg-trash delete-message m-l-20" data-note_id="{{$message['id']}}"></i> 
-                                {{-- <i data-note_id="{{$message['id']}}" data-message="{{$message['egnineers_internal_notes']}}" class="fa fa-edit"></i>  --}}
+                                <i data-note_id="{{$message['id']}}" data-message="{{$message['egnineers_internal_notes']}}" class="fa fa-edit m-l-20"></i> 
+                                <i class="pg-trash delete-message" data-note_id="{{$message['id']}}"></i> 
                                 <br>
                               </div>
                             </div>
@@ -518,6 +518,45 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="editModal" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form role="form" action="{{route('edit-message')}}" method="POST">
+            @csrf
+            <input type="hidden" id="edit-modal-id" name="id" value="">
+            <input type="hidden" name="file_id" value="{{$file->id}}">
+            
+            <div class="form-group-attached ">
+              <div class="row">
+                <div class="col-md-12">
+                  
+                  <div class="form-group form-group-default required">
+                    <label>Message</label>
+                    <textarea id="edit-modal" name="message" required style="height: 100px;" class="form-control"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+          <div class="row">
+            <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+              <button type="submit" class="btn btn-success btn-block m-t-5">Edit Message</button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
     
 @endsection
 
@@ -525,59 +564,74 @@
   <script type="text/javascript">
   $(document).ready(function(){
 
-    $(document).on('click', '.delete-message', function(e){
+    $(document).on('click', '.fa-edit', function(e){
 
       e.preventDefault();
       let note_id = $(this).data('note_id');
+      let message = $(this).data('message');
 
-      const swalWithBootstrapButtons = Swal.mixin({
-  customClass: {
-    confirmButton: 'btn btn-success',
-    cancelButton: 'btn btn-danger'
-  },
-  buttonsStyling: false
-  })
+      console.log(note_id+ ' '+ message);
 
-  swalWithBootstrapButtons.fire({
-  title: 'Are you sure?',
-  text: "You won't be able to revert this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonText: 'Yes, delete it!',
-  cancelButtonText: 'No, cancel!',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-      
-      $.ajax({
-                url: "/delete-message",
-                type: "POST",
-                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    'note_id': note_id
-                },
-                success: function(d) {
-                  swalWithBootstrapButtons.fire(
-                    'Deleted!',
-                    'Your Message has been deleted.',
-                    'success'
-                  );
+      $('#edit-modal').val(message);
+      $('#edit-modal-id').val(note_id);
 
-                  location.reload();
-                }
-            });
+      $('#editModal').modal('show');
 
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        swalWithBootstrapButtons.fire(
-          'Cancelled',
-          'Message is safe :)',
-          'error'
-        )
-      }
     });
+
+    $(document).on('click', '.delete-message', function(e){
+
+    e.preventDefault();
+    let note_id = $(this).data('note_id');
+
+    const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+        
+        $.ajax({
+                  url: "/delete-message",
+                  type: "POST",
+                  headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                  data: {
+                      'note_id': note_id
+                  },
+                  success: function(d) {
+                    swalWithBootstrapButtons.fire(
+                      'Deleted!',
+                      'Your Message has been deleted.',
+                      'success'
+                    );
+
+                    location.reload();
+                  }
+              });
+
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Message is safe :)',
+            'error'
+          )
+        }
+      });
 
     });
 
