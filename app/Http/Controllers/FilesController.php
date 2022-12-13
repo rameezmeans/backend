@@ -137,14 +137,11 @@ class FilesController extends Controller
             $old = File::findOrFail($file->original_file_id);
             $old->checked_by = 'engineer';
             $old->save();
-
+        }
+        
             $file->checked_by = 'engineer';
             $file->save();
-        }
-        else{
-            $file->checked_by = 'engineer';
-            $file->save();
-        }
+    
 
         return response('file uploaded', 200);
     }
