@@ -177,7 +177,7 @@ class FilesController extends Controller
         }
 
         if($file->status == 'submitted'){
-            $file->status = 'accepted';
+            $file->status = 'completed';
             $file->save();
         }
 
@@ -185,7 +185,6 @@ class FilesController extends Controller
         ->where('Model', $file->model)
         ->where('Generation', $file->version)
         ->where('Engine', $file->engine)
-        // ->where('Engine_ECU', $file->ecu)
         ->first();
 
         $engineers = User::where('is_engineer', 1)->get();
