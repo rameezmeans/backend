@@ -193,6 +193,11 @@ class FilesController extends Controller
             $file->save();
         }
 
+        if($file->checked_by == 'customer'){
+            $file->checked_by = 'seen';
+            $file->save();
+        }
+
         $vehicle = Vehicle::where('Make', $file->brand)
         ->where('Model', $file->model)
         ->where('Generation', $file->version)
