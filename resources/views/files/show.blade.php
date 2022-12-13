@@ -696,7 +696,7 @@
 
     engineerFileDrop.on("complete", function(file) {
       engineerFileDrop.removeFile(file);
-      location.reload();
+      // location.reload();
     });
 
     });
