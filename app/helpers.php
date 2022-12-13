@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\File;
+
 if(!function_exists('code_to_country')){
 
     function code_to_country( $code ){
@@ -262,6 +264,14 @@ if(!function_exists('code_to_country')){
     
     }
 }
+
+if(!function_exists('count_of_files')){
+
+    function count_of_files(){
+        return File::where('checked_by', 'customer')->count();
+    }
+}
+
 
 if(!function_exists('get_dropdown_image')){
 
