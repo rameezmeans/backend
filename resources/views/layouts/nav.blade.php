@@ -58,7 +58,7 @@
           <a href="{{ route('files') }}" class="detailed">
             <span class="title">Files</span>
             @if(count_of_files() > 0)
-              <span class="label label-warning text-black">{{count_of_files()}}</span>
+              <span class="badge badge-warning text-black">{{count_of_files()}}</span>
             @endif
           </a>
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
