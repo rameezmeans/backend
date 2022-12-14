@@ -28,11 +28,13 @@
               <img class="" style="width:40%;" src="{{$vehicle->Brand_image_URL}}">
             @endif
           </div>
-        @if($vehicle->Engine_ECU)
-          <div class="pull-right">
-            <a class="btn btn-success" href="{{route('add-comments', $vehicle->id)}}">Add Comments</a>
-          </div>
-        @endif
+          @if(isset($vehicle))
+            @if($vehicle->Engine_ECU)
+              <div class="pull-right">
+                <a class="btn btn-success" href="{{route('add-comments', $vehicle->id)}}">Add Comments</a>
+              </div>
+            @endif
+          @endif
         <div class="clearfix"></div>
       </div>
       <div class="card-body">

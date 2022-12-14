@@ -117,14 +117,14 @@
             return false;
         });
 
-        // $('.dataTable').DataTable({
+        $('.dataTable').DataTable({
 
-        //     "ordering": false,
-        //     columnDefs: [{
-        //     orderable: false,
-        //     targets: "sorting"
-        //     }]
-        // });
+            "ordering": false,
+            // columnDefs: [{
+            // orderable: false,
+            // targets: "sorting"
+            // }]
+        });
 
       });
    </script>
