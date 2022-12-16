@@ -48,7 +48,11 @@ th {
                 <div class="row">
 
                     <div class="col-xl-8 col-lg-7 col-md-6 col-sm-4 align-self-center">
-                        <p class="inv-to">{{ \App\Models\User::findOrFail($engineer)->name}}'s Report</p>
+                        @if($engineer != 'all_engineers')
+                            <p class="inv-to">{{ \App\Models\User::findOrFail($engineer)->name}}'s Report</p>
+                        @else
+                            <p class="inv-to">All Engineer's Report</p>
+                        @endif
                     </div>
 
 
@@ -70,7 +74,8 @@ th {
                         <tr>
                             <th scope="col" style="width: 2%"> #</th>
                             <th scope="col" style="width: 30%;">Name</th>
-                            <th style="width: 68%;" scope="col">Stage and Options</th>
+                            <th style="width: 48%;" scope="col">Stage and Options</th>
+                            <th style="width: 20%;" scope="col">Response Time</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -90,6 +95,7 @@ th {
                                 <td class="text-right">
                                     <img class="p-r-5" alt="{{$file->stages}}" width="15" height="15" data-src="{{url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon}}" data-src-retina="{{url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon}}" src="{{url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon}}">{{$file->stages}}{!!$options!!}
                                 </td>
+                                <td>{{\Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans()}}</td>
                                 
                             </tr>
                             @php $count++; @endphp
