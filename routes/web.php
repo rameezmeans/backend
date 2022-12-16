@@ -43,6 +43,9 @@ Route::post('/delete-message', [App\Http\Controllers\FilesController::class,'del
 Route::post('/assign-engineer', [App\Http\Controllers\FilesController::class,'assignEngineer'])->name('assign-engineer');
 Route::post('/change-status', [App\Http\Controllers\FilesController::class,'changeStatus'])->name('change-status');
 Route::post('/edit-message', [App\Http\Controllers\FilesController::class,'editMessage'])->name('edit-message');
+Route::get('/reports', [App\Http\Controllers\FilesController::class,'reports'])->name('reports');
+Route::post('/get_engineers_files', [App\Http\Controllers\FilesController::class,'getEngineersFiles'])->name('get-engineers-files');
+Route::post('/get_engineers_report', [App\Http\Controllers\FilesController::class,'getEngineersReport'])->name('get-engineers-report');
 
 
 Route::get('/vehicles', [ App\Http\Controllers\VehiclesController::class,'index'])->name('vehicles');
