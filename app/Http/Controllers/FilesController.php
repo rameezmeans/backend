@@ -205,7 +205,10 @@ class FilesController extends Controller
         $end = $request->end;
         $files = $this->getReportFiles($engineer, $start, $end);
         $pdf = PDF::loadView('files.pdf', [ 'files' => $files, 'end' => $end, 'start' => $start, 'engineer' => $engineer ]);
-        return $pdf->download(User::findOrFail($engineer)->name.'.pdf');
+        if($engineer == 'all_engineers'){
+            return $pdf->download('all_engineers_report.pdf');
+        }
+        return $pdf->download(User::findOrFail($engineer)->name."_report.pdf");
     }
 
     public function getReportFiles($engineer, $start, $end){
