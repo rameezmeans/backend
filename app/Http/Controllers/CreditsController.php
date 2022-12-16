@@ -27,15 +27,11 @@ class CreditsController extends Controller
 
     public function updateCredits(Request $request) {
 
-        // dd($request->all());
-
         $customer = User::findOrFail($request->user_id);
 
         $difference = (float) $request->total_credits_updated - (float) $customer->sum();
 
-        // dd($difference);
-
-       if($difference != 0){
+        if($difference != 0){
 
         $credit = new Credit();
         $credit->credits = $difference;
@@ -59,8 +55,7 @@ class CreditsController extends Controller
     }
 
     public function unitPrice(){
-        $creditPrice = Price::where('label', 'credit_price')->first(); 
-        // dd($creditPrice->value);
+        $creditPrice = Price::where('label', 'credit_price')->first();
         return view('credits.unit_price', ['creditPrice' => $creditPrice]);
     }
 

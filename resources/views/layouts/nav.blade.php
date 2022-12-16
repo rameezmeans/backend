@@ -57,14 +57,22 @@
         <li class="m-t-30 ">
           <a href="{{ route('files') }}" class="detailed">
             <span class="title">Files</span>
-            @if(count_of_files() > 0)
-              <span class="badge badge-warning text-black">{{count_of_files()}}</span>
+            @if(Auth::user()->is_admin)
+              @if(count_of_files() > 0)
+                <span class="badge badged-warning text-black">{{count_of_files()}}</span>
+              @endif
             @endif
           </a>
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
         </li>
 
         @if(Auth::user()->is_admin)
+        <li class="m-t-30 ">
+          <a href="{{ route('reports') }}" class="detailed">
+            <span class="title">Reports</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+        </li>
         <li class="m-t-30 ">
           <a href="{{ route('vehicles') }}" class="detailed">
             <span class="title">Vehicles</span>

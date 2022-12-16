@@ -126,6 +126,8 @@
             // }]
         });
 
+        $('.datepicker').datepicker();
+
       });
    </script>
 

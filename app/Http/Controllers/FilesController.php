@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use PDF;
 
 class FilesController extends Controller
 {
@@ -50,6 +51,9 @@ class FilesController extends Controller
      */
     public function index()
     {
+
+        File::where('is_credited', 0)->delete(); // remove unneccesary NOT credited files
+
         if(Auth::user()->is_admin){
             $files = File::orderBy('created_at', 'desc')->where('is_credited', 1)->get();
         }
@@ -144,6 +148,87 @@ class FilesController extends Controller
     
 
         return response('file uploaded', 200);
+    }
+
+    public function reports(){
+
+        $engineers = User::where('is_engineer', 1)->get();
+        return view('files.reports', ['engineers' => $engineers]);
+
+    }
+
+    public function getEngineersFiles(Request $request){
+
+        $files = $this->getReportFiles($request->engineer, $request->start, $request->end);
+
+        $html = '';
+        $hasFiles = false;
+        $count = 1;
+        foreach($files as $file){
+
+            $hasFiles = true;
+            
+            if($file->assigned){
+                $assigned = $file->assigned->name;
+            }
+            else{
+                $assigned = 'By Admin';
+            }
+
+            $options = '';
+            if($file->options){
+                foreach($file->options() as $option){
+                    $options .= '<img class="p-l-10" alt="'.$option.'" width="33" height="33" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">'.$option;
+                }
+            }
+
+            $html .= '<tr class="redirect-click" data-redirect="'.route('file', $file->id).'" role="row">';
+            $html .= '<td>'. $count .'</td>';
+            $html .= '<td>'.$file->brand .$file->engine .' '. $file->vehicle()->TORQUE_standard .' '.'</td>';
+            $html .= '<td>'.$assigned.'</td>';    
+            $html .= '<td><img class="p-r-5" alt="'.$file->stages.'" width="33" height="33" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'">'.$file->stages
+            
+            .$options.'</td>';
+            $html .= '<td>'.\Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans().'</td>';
+            $html .= '<td>'.\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A').'</td>';
+            $html .= '</tr>';
+            $count++;
+        }
+
+        return response()->json(['html' =>$html, 'has_files' => $hasFiles ], 200);
+    }
+
+    public function getEngineersReport(Request $request) {
+
+        $engineer = $request->engineer;
+        $start = $request->start;
+        $end = $request->end;
+        $files = $this->getReportFiles($engineer, $start, $end);
+        $pdf = PDF::loadView('files.pdf', [ 'files' => $files, 'end' => $end, 'start' => $start, 'engineer' => $engineer ]);
+        return $pdf->download(User::findOrFail($engineer)->name.'.pdf');
+    }
+
+    public function getReportFiles($engineer, $start, $end){
+
+        $filesObject = File::whereNotNull('response_time')->where('is_credited', 1);
+
+        if($engineer != 'all_engineers'){
+            $filesObject = $filesObject->where('assigned_to', $engineer);
+        }
+
+        if($start){
+            $date = str_replace('/', '-', $start);
+            $startDate = date('Y-m-d', strtotime($date));
+            $filesObject = $filesObject->whereDate('created_at', '>=' , $startDate);
+        }
+
+        if($end){
+            $date = str_replace('/', '-', $end);
+            $endDate = date('Y-m-d', strtotime($date));
+            $filesObject = $filesObject->whereDate('created_at', '<=' , $endDate);
+        }
+        
+        return $filesObject->get();
     }
 
     public function getComments($file){

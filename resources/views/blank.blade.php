@@ -15,7 +15,6 @@
                 <div class="col-xs-12">
                     <button data-redirect="" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Blank</span>
                     </button>
-                    {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                 </div>
                 </div>
                 <div class="clearfix"></div>
@@ -36,7 +35,24 @@
 
     $( document ).ready(function(event) {
         
-       
+      $.ajax({
+                        url: "/delete_comment",
+                        type: "POST",
+                        data: {
+                            id: $(this).data('id')
+                        },
+                        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your Record has been deleted.",
+                                type: "success",
+                                timer: 5000
+                            });
+
+                            location.reload();
+                        }
+                    });
     });
 
 </script>
