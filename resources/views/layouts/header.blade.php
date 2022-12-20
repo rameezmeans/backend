@@ -11,7 +11,7 @@
       <!-- START NOTIFICATION LIST -->
       <ul class="d-lg-inline-block d-none notification-list no-margin d-lg-inline-block b-grey b-l b-r no-style p-l-30 p-r-20">
         <li class="p-r-10 inline">
-          <div class="dropdown">
+          {{-- <div class="dropdown">
             <a href="javascript:;" id="notification-center" class="header-icon pg pg-world" data-toggle="dropdown">
               <span class="bubble"></span>
             </a>
@@ -124,17 +124,17 @@
               <!-- END Notification -->
             </div>
             <!-- END Notification Dropdown -->
-          </div>
+          </div> --}}
         </li>
         <li class="p-r-10 inline">
-          <a href="#" class="header-icon pg pg-link"></a>
+          {{-- <a href="#" class="header-icon pg pg-link"></a> --}}
         </li>
         <li class="p-r-10 inline">
-          <a href="#" class="header-icon pg pg-thumbs"></a>
+          {{-- <a href="#" class="header-icon pg pg-thumbs"></a> --}}
         </li>
       </ul>
       <!-- END NOTIFICATIONS LIST -->
-      <a href="#" class="search-link d-lg-inline-block d-none" data-toggle="search"><i class="pg-search"></i>Type anywhere to <span class="bold">search</span></a>
+      {{-- <a href="#" class="search-link d-lg-inline-block d-none" data-toggle="search"><i class="pg-search"></i>Type anywhere to <span class="bold">search</span></a> --}}
     </div>
     <div class="d-flex align-items-center">
       <!-- START User Info-->
@@ -165,7 +165,7 @@
         </div>
       </div>
       <!-- END User Info-->
-      <a href="#" class="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block" data-toggle="quickview" data-toggle-element="#quickview"></a>
+      {{-- <a href="#" class="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block" data-toggle="quickview" data-toggle-element="#quickview"></a> --}}
     </div>
   </div>
   <!-- END HEADER -->

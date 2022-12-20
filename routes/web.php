@@ -23,6 +23,7 @@ Route::post('/change_status', [App\Http\Controllers\ServicesController::class, '
 Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/get_files_chart', [App\Http\Controllers\HomeController::class, 'getFilesChart'])->name('get-files-chart');
 
 Route::get('/services', [App\Http\Controllers\ServicesController::class, 'index'])->name('services');
 Route::get('/create_service', [App\Http\Controllers\ServicesController::class, 'create'])->name('create-service');
