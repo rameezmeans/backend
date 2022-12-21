@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -33,206 +34,99 @@ class HomeController extends Controller
     }
 
 
-    public function getFilesChart(Request $request)
-    {
-
+    public function getFilesChart(Request $request){
         
         $graph = [];
 
-        // if($request->engineer_files != 'all_engineers' && $request->time_files != 'all_times'){
-
-        //     $thisYearsFilesCount = File::whereYear('created_at', Carbon::now()->year)->count();
-        //     $previousYearsFilesCount = File::whereYear('created_at', now()->subYear()->year)->count();
-
-        //     $graph = [];
-        //     $graph['x_axis']= [ now()->subYear()->year , Carbon::now()->year ];
-        //     $graph['y_axis']= [ $previousYearsFilesCount , $thisYearsFilesCount ];
-        //     $graph['label']= 'Files In Years';
-
-        //     return response()->json(['graph' => $graph]);
-        // }
-
-        if( $request->engineer_files != 'all_engineers'){
-
-            if($request->time_files == 'all_times'){
-
-                $thisYearsFilesCount = File::where('assigned_to', $request->engineer_files)->whereYear('created_at', Carbon::now()->year)->count();
-                $previousYearsFilesCount = File::where('assigned_to', $request->engineer_files)->whereYear('created_at', now()->subYear()->year)->count();
-
-                $graph = [];
-                $graph['x_axis']= [ now()->subYear()->year , Carbon::now()->year ];
-                $graph['y_axis']= [ $previousYearsFilesCount , $thisYearsFilesCount ];
-                $graph['label']= 'Files In Years';
-            }
-
-            if($request->time_files == 'this_year'){
-
-                $items = File::select('id', 'created_at')->where('assigned_to', $request->engineer_files)   
-                    ->get()
-                    ->groupBy(function($date) {
-                        //return Carbon::parse($date->created_at)->format('Y'); // grouping by years
-                        return Carbon::parse($date->created_at)->format('m'); // grouping by months
-                    });
-
-                    $count = [];
-                    $countYear = [];
-                    
-                    foreach ($items as $key => $value) {
-                        $count[(int)$key] = count($value);
-                    }
-                    
-                    for($i = 1; $i <= 12; $i++){
-                        if(!empty($count[$i])){
-                            $countYear []= $count[$i];    
-                        }else{
-                            $countYear[] = 0;    
-                        }
-                    }
-                
-                $graph = [];
-                $graph['x_axis']= ['January','Fabrury','Marck','April','May',
-                'June','July','August','September','October', 'November', 'December'];
-                $graph['y_axis']= $countYear ;
-                $graph['label']= 'Files In This Year';
-            }
-
-            if($request->time_files == 'this_week') {
-                    
-                $thisWeekStart = Carbon::now()->startOfWeek();
-                $thisWeekEnd = Carbon::now()->endOfWeek();
-                $weekRange = $this->createDateRangeArray($thisWeekStart, $thisWeekEnd);
-
-                $weekCount = [];
-                foreach($weekRange as $r){
-                    $date = DateTime::createFromFormat('d/m/Y', $r);
-                    $day = $date->format('d');
-                    $month = $date->format('m');
-                    $weekCount []= File::where('assigned_to', $request->engineer_files)->whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
-                }
-                    
-                $graph = [];
-                $graph['x_axis']= $weekRange;
-                $graph['y_axis']= $weekCount ;
-                $graph['label']= 'Files In This Week';
-
-            }
-
-            if($request->time_files == 'this_month') {
-                    
-                
-                $datesMonth = [];
-                $datesMonthCount = [];
-
-                for($i = 1; $i <=  date('t'); $i++){
-                    // add the date to the dates array
-                    $datesMonth[] =  str_pad($i, 2, '0', STR_PAD_LEFT).'-'. date('M');
-                    $datesMonthCount []= File::where('assigned_to', $request->engineer_files)->whereMonth('created_at',date('m'))->whereDay('created_at',$i)->count();
-                }
-
-                $graph = [];
-                $graph['x_axis']= $datesMonth;
-                $graph['y_axis']= $datesMonthCount ;
-                $graph['label']= 'Files In This Month';
-
-            }
-
+        if(!$request->start){
+            $min = DB::table('files')->select('created_at')->orderBy('created_at', 'asc')->first();
+            $start = $min->created_at;
+        }
+        else{
+            $start = $request->start;
+            $date = str_replace('/', '-', $start);
+            $start = date('Y-m-d', strtotime($date));
         }
 
-        if($request->engineer_files == 'all_engineers' ){
-
-            if($request->time_files == 'all_times') {
-                    
-                $thisYearsFilesCount = File::whereYear('created_at', Carbon::now()->year)->count();
-                $previousYearsFilesCount = File::whereYear('created_at', now()->subYear()->year)->count();
-
-                $graph = [];
-                $graph['x_axis']= [ now()->subYear()->year , Carbon::now()->year ];
-                $graph['y_axis']= [ $previousYearsFilesCount , $thisYearsFilesCount ];
-                $graph['label']= 'Files In Years';
-
-            }
-
-            if($request->time_files == 'this_year') {
-                    
-                
-                $items = File::select('id', 'created_at')
-                    ->get()
-                    ->groupBy(function($date) {
-                        //return Carbon::parse($date->created_at)->format('Y'); // grouping by years
-                        return Carbon::parse($date->created_at)->format('m'); // grouping by months
-                    });
-
-                    $count = [];
-                    $countYear = [];
-                    
-                    foreach ($items as $key => $value) {
-                        $count[(int)$key] = count($value);
-                    }
-                    
-                    for($i = 1; $i <= 12; $i++){
-                        if(!empty($count[$i])){
-                            $countYear []= $count[$i];    
-                        }else{
-                            $countYear[] = 0;    
-                        }
-                    }
-
-                $graph = [];
-                $graph['x_axis']= ['January','Fabrury','Marck','April','May',
-                'June','July','August','September','October', 'November', 'December'];
-                $graph['y_axis']= $countYear ;
-                $graph['label']= 'Files In This Year';
-
-            }
-
-            if($request->time_files == 'this_week') {
-                    
-                $thisWeekStart = Carbon::now()->startOfWeek();
-                $thisWeekEnd = Carbon::now()->endOfWeek();
-                $weekRange = $this->createDateRangeArray($thisWeekStart, $thisWeekEnd);
-
-                $weekCount = [];
-                foreach($weekRange as $r){
-                    $date = DateTime::createFromFormat('d/m/Y', $r);
-                    $day = $date->format('d');
-                    $month = $date->format('m');
-                    $weekCount []= File::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
-                }
-                    
-                $graph = [];
-                $graph['x_axis']= $weekRange;
-                $graph['y_axis']= $weekCount ;
-                $graph['label']= 'Files In This Week';
-
-            }
-
-            if($request->time_files == 'this_month') {
-                    
-                
-                $datesMonth = [];
-                $datesMonthCount = [];
-
-                for($i = 1; $i <=  date('t'); $i++){
-                    // add the date to the dates array
-                    $datesMonth[] =  str_pad($i, 2, '0', STR_PAD_LEFT).'-'. date('M');
-                    $datesMonthCount []= File::whereMonth('created_at',date('m'))->whereDay('created_at',$i)->count();
-                }
-
-                $graph = [];
-                $graph['x_axis']= $datesMonth;
-                $graph['y_axis']= $datesMonthCount ;
-                $graph['label']= 'Files In This Month';
-
-            }
+        if(!$request->end){
+            $max = DB::table('files')->select('created_at')->orderBy('created_at', 'desc')->first();
+            $end = $max->created_at;
+        }
+        else{
+            $end = $request->end;
+            $date = str_replace('/', '-', $end);
+            $end = date('Y-m-d', strtotime($date));
         }
 
+        $weekRange = $this->createDateRangeArray($start, $end);
+
+        $weekCount = [];
+        foreach($weekRange as $r){
+            $date = DateTime::createFromFormat('d/m/Y', $r);
+            $day = $date->format('d');
+            $month = $date->format('m');
+            
+            if($request->engineer_files == "all_engineers"){
+                $weekCount []= File::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
+            }
+            else{
+                $weekCount []= File::where('assigned_to', $request->engineer_files)->whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
+            }
+        }
+        if($request->engineer_files == "all_engineers"){
+            $files = File::whereBetween('created_at', array($start, $end))->get();
+        }
+        else{
+            $files = File::where('assigned_to', $request->engineer_files)->whereBetween('created_at', array($start, $end))->get();
+        }
+
+        $count = 1;
+        $html = '';
+        $hasFiles = false;
+        foreach($files as $file){
+
+            $hasFiles = true;
+            if($file->assigned){
+                $assigned = $file->assigned->name;
+            }
+            else{
+                $assigned = 'By Admin';
+            }
+
+            $options = '';
+            if($file->options){
+                foreach($file->options() as $option){
+                    $options .= '<img class="p-l-10" alt="'.$option.'" width="33" height="33" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">'.$option;
+                }
+            }
+
+            $html .= '<tr class="redirect-click" data-redirect="'.route('file', $file->id).'" role="row">';
+            $html .= '<td>'. $count .'</td>';
+            $html .= '<td>'.$file->brand .$file->engine .' '. $file->vehicle()->TORQUE_standard .' '.'</td>';
+            $html .= '<td>'.$assigned.'</td>';    
+            $html .= '<td><img class="p-r-5" alt="'.$file->stages.'" width="33" height="33" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'">'.$file->stages
+            
+            .$options.'</td>';
+            $html .= '<td>'.\Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans().'</td>';
+            $html .= '<td>'.\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A').'</td>';
+            $html .= '</tr>';
+            $count++;
+        }
+            
+        $graph = [];
+        $graph['x_axis']= $weekRange;
+        $graph['y_axis']= $weekCount ;
+        $graph['files']= $html;
+        $graph['has_files']= $hasFiles;
+        $graph['label']= 'Files';
+        
         return response()->json(['graph' => $graph]);
     }
 
     function createDateRangeArray($strDateFrom,$strDateTo){
+
         // takes two dates formatted as YYYY-MM-DD and creates an
         // inclusive array of the dates between the from and to dates.
-    
         // could test validity of dates here but I'm already doing
         // that in the main script
     
