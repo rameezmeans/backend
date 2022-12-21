@@ -60,7 +60,7 @@
                 <canvas id="files-charts" height="696" width="1902" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
               </div>
               <div id="table-area" class="hide m-t-40">
-                <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                <table id="dataTable" class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                     <thead>
                         <tr role="row">
                             <th style="width: 2%;">#</th>
@@ -89,7 +89,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
-      // let table = $('.table').dataTable();
+      // let table = $('#dataTable').dataTable();
 
       let end = $('#end_files').val();
       let start = $('#start_files').val();
