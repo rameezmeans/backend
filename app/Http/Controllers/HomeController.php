@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Credit;
+use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\User;
 use Carbon\Carbon;
@@ -35,6 +36,50 @@ class HomeController extends Controller
         return view('home', [ 'engineers' => $engineers, 'customers' => $customers ]);
     }
 
+
+    public function getSupportChart(Request $request){
+
+        $graph = [];
+
+        if(!$request->starts){
+            $min = DB::table('engineer_file_notes')->select('created_at')->orderBy('created_at', 'asc')->first();
+            $start = $min->created_at;
+        }
+        else{
+            $start = $request->starts;
+            $date = str_replace('/', '-', $start);
+            $start = date('Y-m-d', strtotime($date));
+        }
+
+        if(!$request->ends){
+            $max = DB::table('engineer_file_notes')->select('created_at')->orderBy('created_at', 'desc')->first();
+            $end = $max->created_at;
+        }
+        else{
+            $end = $request->ends;
+            $date = str_replace('/', '-', $end);
+            $end = date('Y-m-d', strtotime($date));
+        }
+
+        $weekRange = $this->createDateRangeArray($start, $end);
+
+        $weekCount = [];
+        foreach($weekRange as $r) {
+            $date = DateTime::createFromFormat('d/m/Y', $r);
+            $day = $date->format('d');
+            $month = $date->format('m');
+            $weekCount []= EngineerFileNote::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
+            
+        }
+
+        $graph = [];
+        $graph['x_axis']= $weekRange;
+        $graph['y_axis']= $weekCount;
+        $graph['label']= 'Customer Support';
+        
+        return response()->json(['graph' => $graph]);
+
+    }
 
     public function getCreditsChart(Request $request){
         $graph = [];
