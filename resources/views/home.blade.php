@@ -80,6 +80,79 @@
           </div>
         </div>
       </div>
+      <div class="p-t-25">  
+      <div class="row">
+        <div class="col-lg-12 col-xlg-12">
+          <div class="widget-15 card card-condensed  no-margin no-border widget-loader-circle">
+            <div class="card-header">
+              <div class="">
+                <h2 class="text-black text-center">Credits</h2>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group form-group-default input-group">
+                    <div class="form-input-group">
+                      <label>Client</label>
+                        <select class="full-width" id="customer_credits" data-init-plugin="select2" name="engineer">
+                        
+                            <option value="all_customers">All Customers</option>
+                            @foreach($customers as $customer)
+                              <option value="{{$customer->id}}">{{$customer->name}}</option>
+                            @endforeach
+                          
+                        </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group form-group-default input-group">
+                      <div class="form-input-group">
+                        <label>Start</label>
+                        <input type="input" style="margin-bottom: 13px;" class="form-control datepicker" placeholder="Start Date" id="start_credits">
+                      </div>
+                      <div class="input-group-append ">
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                      </div>
+                    </div>
+              </div>
+              <div class="col-lg-4">
+                  <div class="form-group form-group-default input-group">
+                      <div class="form-input-group">
+                        <label>End</label>
+                        <input type="input" style="margin-bottom: 13px;" class="form-control datepicker" placeholder="End Date" id="end_credits">
+                      </div>
+                      <div class="input-group-append ">
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                      </div>
+                    </div>
+              </div>
+              </div>
+              <div class="col-lg-12">              
+                <canvas id="credit-charts" height="696" width="1902" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
+              </div>
+              <div id="table-area-credits" class="hide m-t-40">
+                <table id="ctable" class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                    <thead>
+                        <tr role="row">
+                            <th style="width: 2%;">#</th>
+                            <th style="width: 5%;">Credits</th>
+                            <th style="width: 8%;">Customer</th>
+                            <th style="width: 25%;">Stripe ID</th>
+                            <th style="width: 10%;">Paid At</th>
+                        </tr>
+                    </thead>
+                    <tbody id='table-credits'>
+                        
+                    </tbody>
+                </table>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
     </div>
   </div>
 </div>
@@ -89,7 +162,43 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
-      // let table = $('#dataTable').dataTable();
+      let endc = $('#end_credits').val();
+      let startc = $('#start_credits').val();
+      let customer_credits = $('#customer_credits').val();
+
+      get_credits_chart( customer_credits, startc, endc );
+
+      $(document).on('change', '#customer_credits', function(e){
+        
+      let endc = $('#end_credits').val();
+      let startc = $('#start_credits').val();
+      let customer_credits = $(this).val();
+
+      get_credits_chart( customer_credits, startc, endc );
+
+      });
+
+      $(document).on('change', '#end_credits', function(e){
+        
+        let endc = $(this).val();
+        let startc = $('#start_credits').val();
+        let customer_credits = $('#customer_credits').val();
+  
+        get_credits_chart( customer_credits, startc, endc );
+  
+        });
+
+        $(document).on('change', '#start_credits', function(e){
+        
+        let endc = $('#end_credits').val();
+        let startc = $(this).val();
+        let customer_credits = $('#customer_credits').val();
+  
+        get_credits_chart( customer_credits, startc, endc );
+  
+        });
+
+      //// files part
 
       let end = $('#end_files').val();
       let start = $('#start_files').val();
@@ -128,6 +237,56 @@
 
       });
 
+      function get_credits_chart( customer_credits, startc, endc ){
+
+        $.ajax({
+            url: "/get_credits_chart",
+            type: "POST",
+            data: {
+                'customer_credits': customer_credits,
+                'startc': startc,
+                'endc': endc,
+            },
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            success: function(response) {
+
+              console.log(response.graph.has_credits);
+
+              if(response.graph.has_credits){
+                $('#table-area-credits').removeClass('hide');
+              }
+              else{
+                $('#table-area-credits').addClass('hide');
+              }
+
+              $('#table-credits').html(response.graph.credits);
+
+              $('#ctable').dataTable();
+              // table.ajax.reload(null, false );
+
+              new Chart("credit-charts", {
+                type: "line",
+                data: {  
+                        labels: response.graph.x_axis,
+                        datasets: [{
+                        label: response.graph.label,
+                        data: response.graph.y_axis,
+                        borderColor: "#10cfbd",
+                        fill: true,
+                        stepSize: 1,
+                        backgroundColor: '#10cfbd'
+                      }]
+                },
+                options: {
+                    legend: {display: true},
+                    animation: false
+                }
+              });
+            }
+        });
+
+      }
+
       function get_files_chart( engineer_files, start, end ){
 
           // console.log(engineer_files+' '+time_files);
@@ -156,7 +315,6 @@
 
                 $('.table').dataTable();
                 // table.ajax.reload(null, false );
-
 
                 new Chart("files-charts", {
                   type: "line",

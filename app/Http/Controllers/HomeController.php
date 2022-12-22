@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Credit;
 use App\Models\File;
 use App\Models\User;
 use Carbon\Carbon;
@@ -29,11 +30,85 @@ class HomeController extends Controller
     public function index()
     {
         $engineers = User::where('is_engineer', 1)->get();
+        $customers = User::where('is_customer', 1)->get();
         
-        return view('home', [ 'engineers' => $engineers ]);
+        return view('home', [ 'engineers' => $engineers, 'customers' => $customers ]);
     }
 
 
+    public function getCreditsChart(Request $request){
+        $graph = [];
+
+        if(!$request->startc){
+            $min = DB::table('credits')->whereNotNull('stripe_id')->select('created_at')->orderBy('created_at', 'asc')->first();
+            $start = $min->created_at;
+        }
+        else{
+            $start = $request->startc;
+            $date = str_replace('/', '-', $start);
+            $start = date('Y-m-d', strtotime($date));
+        }
+
+        if(!$request->endc){
+            $max = DB::table('credits')->whereNotNull('stripe_id')->select('created_at')->orderBy('created_at', 'desc')->first();
+            $end = $max->created_at;
+        }
+        else{
+            $end = $request->endc;
+            $date = str_replace('/', '-', $end);
+            $end = date('Y-m-d', strtotime($date));
+        }
+
+        $weekRange = $this->createDateRangeArray($start, $end);
+
+        $weekCount = [];
+        foreach($weekRange as $r) {
+            $date = DateTime::createFromFormat('d/m/Y', $r);
+            $day = $date->format('d');
+            $month = $date->format('m');
+            
+            if($request->customer_credits == "all_customers"){
+                $weekCount []= Credit::whereMonth('created_at',$month)->where('credits', '>', 0)->whereDay('created_at',$day)->sum('credits');
+            }
+            else{
+                $weekCount []= Credit::where('user_id', $request->customer_credits)->whereMonth('created_at',$month)->whereDay('created_at',$day)->where('credits', '>', 0)->sum('credits');
+            }
+        }
+
+        if($request->customer_credits == "all_customers"){
+            $credits = Credit::whereNotNull('stripe_id')->where('credits', '>', 0)->whereBetween('created_at', array($start, $end))->get();
+        }
+        else{
+            $credits = Credit::whereNotNull('stripe_id')->where('credits', '>', 0)->where('user_id', $request->customer_credits)->whereBetween('created_at', array($start, $end))->get();
+        }
+
+        $count = 1;
+        $html = '';
+        $hasCredits = false;
+        foreach($credits as $credit){
+
+            $hasCredits = true;
+            
+
+            $html .= '<tr class="" role="row">';
+            $html .= '<td>'. $count .'</td>';
+            $html .= '<td>'.$credit->credits .' '.'</td>';
+            $html .= '<td>'.$credit->user->name.'</td>';
+            $html .= '<td>'.$credit->stripe_id.'</td>';
+            $html .= '<td>'.$credit->created_at.'</td>';
+            $html .= '</tr>';
+            $count++;
+        }
+            
+        $graph = [];
+        $graph['x_axis']= $weekRange;
+        $graph['y_axis']= $weekCount ;
+        $graph['credits']= $html;
+        $graph['has_credits']= $hasCredits;
+        $graph['label']= 'Credits';
+        
+        return response()->json(['graph' => $graph]);
+    }
     public function getFilesChart(Request $request){
         
         $graph = [];
@@ -73,6 +148,7 @@ class HomeController extends Controller
                 $weekCount []= File::where('assigned_to', $request->engineer_files)->whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
             }
         }
+
         if($request->engineer_files == "all_engineers"){
             $files = File::whereBetween('created_at', array($start, $end))->get();
         }
