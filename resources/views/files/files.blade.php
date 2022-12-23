@@ -41,7 +41,7 @@
                                 <td>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</td>
                                 <td><span class="label label-success">{{$file->file_type}}</span></td>
                                 <td><span class="label @if($file->status == 'completed') label-success @elseif($file->status == 'rejected') label-danger @else label-info @endif ">{{$file->status}}</span></td>
-                                <td>
+                                <td>  
                                   <div class="">
                                     @if($file->stages)
                                       <img alt="{{$file->stages}}" width="33" height="33" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
