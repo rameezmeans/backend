@@ -32,7 +32,35 @@ class HomeController extends Controller
     {
         $engineers = User::where('is_engineer', 1)->get();
         $customers = User::where('is_customer', 1)->get();
+        $customersCount = User::where('is_customer', 1)->count();
 
+        $topCountriesObj = User::where('is_customer', 1)->groupBy('country')
+        ->selectRaw('count(*) as count,country')
+        ->get();
+
+        foreach($topCountriesObj as $t){
+            $temp = [];
+            $temp ['country'] = $t->country;
+            $temp ['count'] = $t->count;
+            $topCountries []= $temp;
+        }
+
+        usort($topCountries, array($this, 'sorterc'));
+
+        $topBrandsObj = File::groupBy('brand')
+        ->selectRaw('count(*) as count,brand')
+        ->get();
+
+        foreach($topBrandsObj as $t){
+            $temp = [];
+            $temp ['brand'] = $t->brand;
+            $temp ['count'] = $t->count;
+            $topBrands []= $temp;
+        }
+
+        usort($topBrands, array($this, 'sorterc'));
+        $topBrands = array_slice($topBrands, 0, 5);
+        
         $topCustomers = Credit::whereNotNull('stripe_id')
         ->where('credits', '>', 0)
         ->groupBy('user_id')
@@ -59,11 +87,15 @@ class HomeController extends Controller
             $count++;
         }
 
-        return view('home', [ 'engineers' => $engineers, 'customers' => $customers, 'topCredits' => $top5 ]);
+        return view('home', [ 'topCountries' => $topCountries, 'topBrands' => $topBrands, 'engineers' => $engineers,'customersCount' => $customersCount, 'customers' => $customers, 'topCredits' => $top5 ]);
     }
 
     public function sorter(array $a, array $b) {
         return $a['credits'] < $b['credits'];
+    }
+
+    public function sorterc(array $a, array $b) {
+        return $a['count'] < $b['count'];
     }
 
 

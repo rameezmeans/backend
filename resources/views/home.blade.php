@@ -7,7 +7,101 @@
   <!-- START PAGE CONTENT -->
   <div class="content sm-gutter">
     <!-- START CONTAINER FLUID -->
-    <div class="container-fluid padding-25 sm-padding-10">  
+    <div class="container-fluid p-t-20">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="ar-2-1">
+            <!-- START WIDGET widget_graphTile-->
+            <div class="widget-4 card no-border  no-margin widget-loader-bar">
+              <div class="container-sm-height full-height d-flex flex-column">
+                <div class="card-header  ">
+                  <div class="card-title text-black hint-text">
+                    <span class="font-montserrat fs-11 all-caps">Total Cusotmers <i class="fa fa-chevron-right"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="p-l-20 p-r-20">
+                  
+                  <h1 class="text-success semi-bold">{{$customersCount}}</h1>
+                 
+                  <div class="clearfix"></div>
+                </div>
+                
+              </div>
+            </div>
+            <!-- END WIDGET -->
+          </div>
+        </div>
+        <div class="col-sm-4 m-b-10">
+          <div class="ar-2-1">
+            <!-- START WIDGET widget_barTile-->
+            <div class="widget-5 card no-border  widget-loader-bar">
+              <div class="card-header  pull-top">
+                <span class="font-montserrat fs-11 all-caps">Top Countries <i class="fa fa-chevron-right"></i>
+                </span>
+              </div>
+              <div class="container-xs-height full-height">
+                <div class="row row-xs-height">
+                  <div class="col-xs-5 col-xs-height col-middle relative">
+                    <div class="auto-overflow widget-11-2-table">
+                      <table class="table table-condensed table-hover">
+                        <tbody>
+                          @foreach($topCountries as $t)
+                            <tr>
+                              <td class="font-montserrat all-caps fs-12 w-50"><span style="font-size: 20px;">{{getFlags($t['country'])}}</span><span> {{code_to_country($t['country'])}}</span></td>
+                              <td class="font-montserrat fs-12 w-50">{{$t['count']}} cusomter(s)</td>
+                            </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END WIDGET -->
+          </div>
+        </div>
+        <div class="col-lg-6 col-xl-4 m-b-10 hidden-xlg">
+          <!-- START WIDGET widget_tableWidgetBasic-->
+          <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle full-height d-flex flex-column">
+            <div class="card-header  top-right">
+              <div class="card-controls">
+                <ul>
+                  <li><a data-toggle="refresh" class="card-refresh text-black" href="#">
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="padding-25">
+              <div class="pull-left">
+                <h2 class="text-success no-margin">Top Brands</h2>
+                
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="auto-overflow widget-11-2-table">
+              <table class="table table-condensed table-hover">
+                <tbody>
+                  @foreach($topBrands as $brand)
+                  <tr>
+                    <td class="w-10"><img src="{{get_image_from_brand($brand['brand'])}}" style="width: 60%;"></td>
+                    <td class="font-montserrat all-caps fs-12 w-50">{{$brand['brand']}}</td>
+                    <td class="w-25">
+                      <span class="font-montserrat fs-18">{{$brand['count']}}</span>
+                    </td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+            
+          </div>
+          <!-- END WIDGET -->
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid p-t-25">
       <div class="row">
         <div class="col-lg-12 col-xlg-12">
           <div class="widget-15 card card-condensed  no-margin no-border widget-loader-circle">
