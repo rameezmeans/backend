@@ -32,10 +32,115 @@ class HomeController extends Controller
     {
         $engineers = User::where('is_engineer', 1)->get();
         $customers = User::where('is_customer', 1)->get();
-        
-        return view('home', [ 'engineers' => $engineers, 'customers' => $customers ]);
+
+        $topCustomers = Credit::whereNotNull('stripe_id')
+        ->where('credits', '>', 0)
+        ->groupBy('user_id')
+        ->selectRaw('user_id,sum(credits) as sum')
+        ->get();
+
+        $topUserCredits = [];
+        foreach($topCustomers as $c){
+            $temp = [];
+            $temp ['user'] = User::findOrFail($c->user_id)->name;
+            $temp ['credits'] = $c->sum;
+            $topUserCredits []= $temp;
+        }
+
+        usort($topUserCredits, array($this, 'sorter'));
+
+        $count = 1;
+        $top5 = [];
+        foreach($topUserCredits as $c){
+            if($count > 5){
+                break;
+            }
+            $top5 []= $c;
+            $count++;
+        }
+
+        return view('home', [ 'engineers' => $engineers, 'customers' => $customers, 'topCredits' => $top5 ]);
     }
 
+    public function sorter(array $a, array $b) {
+        return $a['credits'] < $b['credits'];
+    }
+
+
+    public function getResponseTimeChart(Request $request){
+        
+        if($request->reponse_engineer == 'all_engineers'){
+            $files = File::whereNotNull('assigned_to')->get();
+        }
+        else{
+            $files = File::where('assigned_to', $request->reponse_engineer)->get();
+        }
+
+        $averageTimes = [];
+        $engineersA = [];
+
+        if($request->reponse_engineer == 'all_engineers'){
+            $engineers = User::where('is_engineer', 1)->get();
+
+            foreach($engineers as $engineer){
+
+                $totalResponseTime = File::where('assigned_to', $engineer->id)->sum('response_time');
+                $count = File::where('assigned_to', $engineer->id)->count();
+                $averageTime = $totalResponseTime/$count;
+                $averageTimes []= $averageTime;
+                $engineersA []= $engineer->name;
+            }
+        }
+        else{
+            $engineer = User::FindOrFail($request->reponse_engineer);
+            $totalResponseTime = File::where('assigned_to', $engineer->id)->sum('response_time');
+            $count = File::where('assigned_to', $engineer->id)->count();
+            $averageTime = $totalResponseTime/$count;
+            $averageTimes []= $averageTime;
+            $engineersA []= $engineer->name;
+        }
+
+        $count = 1;
+        $html = '';
+        $hasFiles = false;
+        foreach($files as $file){
+
+            $hasFiles = true;
+            if($file->assigned){
+                $assigned = $file->assigned->name;
+            }
+            else{
+                $assigned = 'By Admin';
+            }
+
+            $options = '';
+            if($file->options){
+                foreach($file->options() as $option){
+                    $options .= '<img class="p-l-10" alt="'.$option.'" width="33" height="33" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">'.$option;
+                }
+            }
+
+            $html .= '<tr class="redirect-click" data-redirect="'.route('file', $file->id).'" role="row">';
+            $html .= '<td>'. $count .'</td>';
+            $html .= '<td>'.$file->brand .$file->engine .' '. $file->vehicle()->TORQUE_standard .' '.'</td>';
+            $html .= '<td>'.$assigned.'</td>';
+            $html .= '<td>'.\Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans().'</td>';
+            $html .= '<td>'.\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A').'</td>';
+            $html .= '</tr>';
+            $count++;
+        }
+            
+        $graph = [];
+        $graph['y_axis']= $averageTimes;
+        $graph['x_axis']= $engineersA ;
+        $graph['files']= $html;
+        $graph['has_files']= $hasFiles;
+        $graph['label']= 'Response Time';
+        
+        return response()->json(['graph' => $graph]);
+
+
+    }   
 
     public function getSupportChart(Request $request){
 
@@ -64,17 +169,74 @@ class HomeController extends Controller
         $weekRange = $this->createDateRangeArray($start, $end);
 
         $weekCount = [];
+        $files = [];
+        $fileIDs = [];
         foreach($weekRange as $r) {
             $date = DateTime::createFromFormat('d/m/Y', $r);
             $day = $date->format('d');
             $month = $date->format('m');
-            $weekCount []= EngineerFileNote::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
+
+            if($request->support_engineer == "all_engineers"){
+
+                $files = EngineerFileNote::whereMonth('created_at',$month)->whereDay('created_at',$day)->get();
+            }
+            else{
+                $files = EngineerFileNote::join('files', 'files.id', 'engineer_file_notes.file_id')->where('files.assigned_to', $request->support_engineer)->whereMonth('engineer_file_notes.created_at',$month)->whereDay('engineer_file_notes.created_at',$day)->get();
+            }
             
+            foreach($files as $file){
+                $fileIDs []= $file->file_id;
+            }
+
+            if($request->support_engineer == "all_engineers"){
+                $weekCount []= EngineerFileNote::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
+            }
+            else {
+                $weekCount []= EngineerFileNote::join('files', 'files.id', 'engineer_file_notes.file_id')->where('files.assigned_to', $request->support_engineer)->whereMonth('engineer_file_notes.created_at',$month)->whereDay('engineer_file_notes.created_at',$day)->count();
+            }
+            
+            
+        }
+        $filesToList = [];
+        foreach(array_unique($fileIDs) as $file){
+            $filesToList []= File::findOrFail($file);
+        }
+
+        $count = 1;
+        $html = '';
+        $hasFiles = false;
+        foreach($filesToList as $file){
+
+            $hasFiles = true;
+            if($file->assigned){
+                $assigned = $file->assigned->name;
+            }
+            else{
+                $assigned = 'By Admin';
+            }
+
+            $options = '';
+            if($file->options){
+                foreach($file->options() as $option){
+                    $options .= '<img class="p-l-10" alt="'.$option.'" width="33" height="33" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">'.$option;
+                }
+            }
+
+            $html .= '<tr class="redirect-click" data-redirect="'.route('file', $file->id).'" role="row">';
+            $html .= '<td>'. $count .'</td>';
+            $html .= '<td>'.$file->brand .$file->engine .' '. $file->vehicle()->TORQUE_standard .' '.'</td>';
+            $html .= '<td>'.$assigned.'</td>';
+            $html .= '<td>'.$file->engineer_file_notes->count().'</td>';
+            $html .= '<td>'.\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A').'</td>';
+            $html .= '</tr>';
+            $count++;
         }
 
         $graph = [];
         $graph['x_axis']= $weekRange;
         $graph['y_axis']= $weekCount;
+        $graph['files']= $html;
+        $graph['has_files']= $hasFiles;
         $graph['label']= 'Customer Support';
         
         return response()->json(['graph' => $graph]);
