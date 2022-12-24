@@ -183,7 +183,7 @@
                 <canvas id="files-charts" height="696" width="1902" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
               </div>
               <div id="table-area" class="hide m-t-40">
-                <table id="fTable" class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                <table id="ftable" class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                     <thead>
                         <tr role="row">
                             <th style="width: 2%;">#</th>
@@ -529,7 +529,9 @@
 
               $('#table-response').html(response.graph.files);
 
-              $('#rtable').dataTable();
+              $('#rtable').dataTable({
+                "aaSorting": []
+              });
 
               let chartr = new Chart("response-charts", {
                 type: "line",
@@ -578,7 +580,9 @@
 
               $('#table-support').html(response.graph.files);
 
-              $('#stable').dataTable();
+              $('#stable').dataTable({
+                "aaSorting": []
+              });
 
               chartc = new Chart("support-charts", {
                 type: "line",
@@ -629,7 +633,9 @@
               }
 
               $('#table-credits').html(response.graph.credits);
-              $('#ctable').dataTable();
+              $('#ctable').dataTable({
+                "aaSorting": []
+              });
 
               chartc = new Chart("credit-charts", {
                 type: "line",
@@ -681,7 +687,9 @@
 
                 $('#table').html(response.graph.files);
 
-                $('#ftable').dataTable();
+                $('#ftable').dataTable({
+                  "aaSorting": []
+                });
                 // table.ajax.reload(null, false );
 
                 let chartf = new Chart("files-charts", {

@@ -120,12 +120,7 @@
         });
 
         $('.dataTable').DataTable({
-
-            "ordering": false,
-            // columnDefs: [{
-            // orderable: false,
-            // targets: "sorting"
-            // }]
+          "aaSorting": []
         });
 
         $('.datepicker').datepicker();
