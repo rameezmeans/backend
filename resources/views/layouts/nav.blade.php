@@ -25,11 +25,11 @@
     <!-- END SIDEBAR MENU TOP TRAY CONTENT-->
     <!-- BEGIN SIDEBAR MENU HEADER-->
     <div class="sidebar-header">
-      <img src="{{ url('assets/img/logo_white.png') }}" alt="logo" class="brand" data-src="{{ url('assets/img/logo_white.png') }}" data-src-retina="{{ url('assets/img/logo_white_2x.png') }}" width="78" height="22">
+      <span class="bold font-montserrat">EcuTech</span>
       <div class="sidebar-header-controls">
-        <button type="button" class="btn btn-xs sidebar-slide-toggle btn-link m-l-20" data-pages-toggle="#appMenu"><i class="fa fa-angle-down fs-16"></i>
-        </button>
-        <button type="button" class="btn btn-link d-lg-inline-block d-xlg-inline-block d-md-inline-block d-sm-none d-none" data-toggle-pin="sidebar"><i class="fa fs-12"></i>
+        {{-- <button type="button" class="btn btn-xs sidebar-slide-toggle btn-link m-l-20" data-pages-toggle="#appMenu"><i class="fa fa-angle-down fs-16"></i>
+        </button> --}}
+        <button type="button" class="btn btn-link m-l-50 d-lg-inline-block d-xlg-inline-block d-md-inline-block d-sm-none d-none" data-toggle-pin="sidebar"><i class="fa fs-12"></i>
         </button>
       </div>
     </div>
@@ -109,6 +109,10 @@
             <li class="">
               <a href="{{ route('tools') }}">Tools</a>
               <span class="icon-thumbnail">To</span>
+            </li>
+            <li class="">
+              <a href="{{ route('feeds') }}">News Feed</a>
+              <span class="icon-thumbnail">NF</span>
             </li>
 
           </ul>
