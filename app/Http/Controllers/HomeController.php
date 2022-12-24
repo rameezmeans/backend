@@ -33,6 +33,7 @@ class HomeController extends Controller
         $engineers = User::where('is_engineer', 1)->get();
         $customers = User::where('is_customer', 1)->get();
         $customersCount = User::where('is_customer', 1)->count();
+        $engineersCount = User::where('is_engineer', 1)->count();
 
         $topCountriesObj = User::where('is_customer', 1)->groupBy('country')
         ->selectRaw('count(*) as count,country')
@@ -87,7 +88,14 @@ class HomeController extends Controller
             $count++;
         }
 
-        return view('home', [ 'topCountries' => $topCountries, 'topBrands' => $topBrands, 'engineers' => $engineers,'customersCount' => $customersCount, 'customers' => $customers, 'topCredits' => $top5 ]);
+        return view('home', [ 
+        'topCountries' => $topCountries, 
+        'topBrands' => $topBrands, 
+        'engineers' => $engineers,
+        'customersCount' => $customersCount, 
+        'engineersCount' => $engineersCount, 
+        'customers' => $customers, 
+        'topCredits' => $top5 ]);
     }
 
     public function sorter(array $a, array $b) {
