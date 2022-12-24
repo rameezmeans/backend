@@ -28,7 +28,9 @@
                             <thead>
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Current Credits</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits Purchased</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits Spent</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
                                 </tr>
                             </thead>
@@ -40,6 +42,12 @@
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p><span class="label @if($customer->sum() > 0) label-success @else label-danger @endif">{{$customer->sum()}}</span></p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p><span class="label  label-success ">{{$customer->purchased()}}</span></p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p><span class="label label-success">{{$customer->spent()*-1}}</span></p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$customer->created_at->diffForHumans()}}</p>
