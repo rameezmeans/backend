@@ -97,7 +97,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                   </div>
-                  <input type="text" name="dateTimeRange" id="daterangepicker" class="form-control" value="@if(isset($feed)){{ \Carbon\Carbon::parse($feed->activate_at)->format('d/m/Y H:i A') }}@else{{date('d/m/Y h:i A')}}@endif - @if(isset($feed)){{\Carbon\Carbon::parse($feed->deactivate_at)->format('d/m/Y H:i A')}}@else{{date('d/m/Y h:i A')}}@endif">
+                  <input type="text" name="dateTimeRange" id="daterangepicker" class="form-control" value="@if(isset($feed)){{ \Carbon\Carbon::parse($feed->activate_at)->format('d/m/Y h:i A') }}@else{{date('d/m/Y h:i A')}}@endif - @if(isset($feed)){{\Carbon\Carbon::parse($feed->deactivate_at)->format('d/m/Y h:i A')}}@else{{date('d/m/Y h:i A')}}@endif">
                 </div>
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($feed)) Update @else Add @endif</span></button>
