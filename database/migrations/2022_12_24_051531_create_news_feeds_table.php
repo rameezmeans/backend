@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('feed');
             $table->string('type');
+            $table->timestamp('activate_at');
+            $table->timestamp('deactivate_at');
             $table->boolean('active')->default(0);
             $table->timestamps();
         });

@@ -19,18 +19,22 @@ class NewsFeedsController extends Controller
 
     public function index() {
 
+       
         $newsFeeds = NewsFeed::all();
         return view('feeds.index', ['newsFeeds' => $newsFeeds]);
     }
 
     public function add() {
 
-        return view('feeds.add_edit');
+        $date = date('d/m/Y H:i');
+        return view('feeds.add_edit', ['date' => $date]);
     }
 
     public function edit($id) {
+
+        $date = date('d/m/Y H:i');
         $feed = NewsFeed::findOrFail($id);
-        return view('feeds.add_edit', ['feed' => $feed]);
+        return view('feeds.add_edit', ['feed' => $feed, 'date' => $date]);
     }
 
     public function update(Request $request) {
@@ -72,6 +76,16 @@ class NewsFeedsController extends Controller
 
         $feed = new NewsFeed();
         $feed->title = $request->title;
+        $range = $request->dateTimeRange;
+
+        $timeArray = explode(" - ",$range);
+
+        $activateAt = str_replace( '/', '-', $timeArray[0] );
+        $feed->activate_at = date_create_from_format("m-d-Y h:i A",$activateAt);
+        
+        $deactivateAt = str_replace( '/', '-', $timeArray[1] );
+        $feed->deactivate_at = date_create_from_format("m-d-Y h:i A",$deactivateAt);
+        
         $feed->feed = $request->feed;
         $feed->type = $request->type;
         $feed->save();

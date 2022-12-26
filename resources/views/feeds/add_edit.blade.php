@@ -18,12 +18,16 @@
                   <h5>
                     Add News Feed
                   </h5>
+                  
                 @endif
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
-                    <button data-redirect="{{route('feeds')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">News Feeds</span>
-                    </button>
+                    {{-- <button data-redirect="{{route('feeds')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">News Feeds</span>
+                    </button> --}}
+                   
+                      Current Time: <h5>{{$date}}</h5>
+                    
                     {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                 </div>
                 </div>
@@ -53,6 +57,26 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
+                
+
+                {{-- <div class="form-group form-group-default required ">
+                  <label>Activate At</label>
+                  <input value="@if(isset($feed)) {{ $feed->activate_at }} @else{{old('activate_at') }}@endif"  name="activate_at" type="text" class="form-control timepicker" required>
+                </div>
+                @error('feed')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+                <div class="form-group form-group-default required ">
+                  <label>Deactivate At</label>
+                  <input value="@if(isset($feed)) {{ $feed->feed }} @else{{old('feed') }}@endif"  name="feed" type="text" class="form-control" required>
+                </div>
+                @error('feed')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror --}}
                 <div class="form-group form-group-default required ">
                   <label>Type</label>
                   <select class="full-width" data-init-plugin="select2" name="type">
@@ -67,6 +91,14 @@
                     <strong>{{ $message }}</strong>
                 </span>
               @enderror
+              <label>Activation Range</label>
+                <div class="input-group m-b-10">
+                 
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                  </div>
+                  <input type="text" name="dateTimeRange" id="daterangepicker" class="form-control" value="08/01/2013 1:00 PM - 08/01/2013 1:30 PM">
+                </div>
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($feed)) Update @else Add @endif</span></button>
                   @if(isset($feed))
@@ -88,7 +120,15 @@
 <script type="text/javascript">
 
       $( document ).ready(function(event) {
-        
+
+        $('#daterangepicker').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 30,
+            format: 'MM/DD/YYYY h:mm A'
+        }, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+
         $('.btn-delete').click(function() {
           Swal.fire({
                 title: 'Are you sure?',
