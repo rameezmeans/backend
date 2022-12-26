@@ -47,12 +47,11 @@ class NewsFeedsController extends Controller
         $range = $request->dateTimeRange;
         $timeArray = explode(" - ",$range);
 
-        $activateAt = str_replace( '/', '-', $timeArray[0] );
-        $feed->activate_at = date_create_from_format("m-d-Y h:i A",$activateAt);
-        
-        $deactivateAt = str_replace( '/', '-', $timeArray[1] );
-        $feed->deactivate_at = date_create_from_format("m-d-Y h:i A",$deactivateAt);
-        
+        // $activateAt = str_replace( '/', '-', $timeArray[0] );
+        $feed->activate_at = date_create_from_format("d/m/Y h:i A",$timeArray[0]);
+        // $deactivateAt = str_replace( '/', '-', $timeArray[1] );
+        $feed->deactivate_at = date_create_from_format("d/m/Y h:i A",$timeArray[1]);
+
         $feed->save();
 
         return redirect()->route('feeds')->with(['success' => 'Feed Updated, successfully.']);
@@ -90,11 +89,10 @@ class NewsFeedsController extends Controller
         $range = $request->dateTimeRange;
         $timeArray = explode(" - ",$range);
 
-        $activateAt = str_replace( '/', '-', $timeArray[0] );
-        $feed->activate_at = date_create_from_format("m-d-Y h:i A",$activateAt);
-        
-        $deactivateAt = str_replace( '/', '-', $timeArray[1] );
-        $feed->deactivate_at = date_create_from_format("m-d-Y h:i A",$deactivateAt);
+        // $activateAt = str_replace( '/', '-', $timeArray[0] );
+        $feed->activate_at = date_create_from_format("d/m/Y h:i A",$timeArray[0]);
+        // $deactivateAt = str_replace( '/', '-', $timeArray[1] );
+        $feed->deactivate_at = date_create_from_format("d/m/Y h:i A",$timeArray[1]);
         
         $feed->feed = $request->feed;
         $feed->type = $request->type;
