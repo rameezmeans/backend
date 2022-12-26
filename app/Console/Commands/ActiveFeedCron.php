@@ -33,14 +33,14 @@ class ActiveFeedCron extends Command
         $feeds = NewsFeed::all();
 
         foreach($feeds as $feed){
-            if( strtotime($feed->activate_at) >= date('d-m-y h:i:s')){
+            if( strtotime($feed->activate_at) <= date('d-m-y h:i:s')){
                 if($feed->active == 0){
                     \Log::info("activating feed:".$feed->title);
                     $feed->active = 1;
                     $feed->save();
                 }
             }
-            if( strtotime($feed->deactivate_at) >= date('d-m-y h:i:s')){
+            if( strtotime($feed->deactivate_at) <= date('d-m-y h:i:s')){
                 if($feed->active == 1){
                     \Log::info("deactivating feed:".$feed->title);
                     $feed->active = 0;
