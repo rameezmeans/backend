@@ -65,7 +65,7 @@
                                 </td>
                                 <td><span class="badge badge-important">{{$file->credits}}</span></td>
                                 
-                                <td>{{\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A')}}</td>
+                                <td>{{\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i A')}}</td>
                                 @if(Auth::user()->is_admin)
                                   <td><span class="label label-success">@if($file->assigned){{$file->assigned->name}} @else{{ "No one" }}@endif</span></td>
                                   <td><span class="label label-success">@if( $file->response_time ) {{ \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans() }} @else {{ "Not Responded" }} @endif</span></td>

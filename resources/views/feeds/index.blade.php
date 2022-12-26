@@ -24,7 +24,7 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                    <h3>News Feeds</h3>
+                    <h3>News Feeds</h3> 
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
