@@ -26,13 +26,13 @@ class NewsFeedsController extends Controller
 
     public function add() {
 
-        $date = date('d/m/Y H:i');
+        $date = date('d/m/Y h:i A');
         return view('feeds.add_edit', ['date' => $date]);
     }
 
     public function edit($id) {
 
-        $date = date('d/m/Y H:i');
+        $date = date('d/m/Y h:i A');
         $feed = NewsFeed::findOrFail($id);
 
         // dd("Cron is working fine at: ".date('d-m-y h:i:s'));
