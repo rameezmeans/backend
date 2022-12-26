@@ -97,7 +97,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                   </div>
-                  <input type="text" name="dateTimeRange" id="daterangepicker" class="form-control" value="08/01/2013 1:00 PM - 08/01/2013 1:30 PM">
+                  <input type="text" name="dateTimeRange" id="daterangepicker" class="form-control" value="{{ \Carbon\Carbon::parse($feed->activate_at)->format('d/m/Y H:i A') }} - {{\Carbon\Carbon::parse($feed->deactivate_at)->format('d/m/Y H:i A')}}">
                 </div>
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($feed)) Update @else Add @endif</span></button>
@@ -123,7 +123,7 @@
 
         $('#daterangepicker').daterangepicker({
             timePicker: true,
-            timePickerIncrement: 30,
+            timePickerIncrement: 5,
             format: 'MM/DD/YYYY h:mm A'
         }, function(start, end, label) {
             console.log(start.toISOString(), end.toISOString(), label);
