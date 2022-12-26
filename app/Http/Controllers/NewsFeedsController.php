@@ -34,6 +34,12 @@ class NewsFeedsController extends Controller
 
         $date = date('d/m/Y H:i');
         $feed = NewsFeed::findOrFail($id);
+
+        // dd("Cron is working fine at: ".date('d-m-y h:i:s'));
+        // dd("date time: ".strtotime(now()));
+        // dd("activation date time: ".$feed->activate_at);
+        // dd("activation date time: ".strtotime($feed->activate_at)." date time: ".strtotime(now()));
+
         return view('feeds.add_edit', ['feed' => $feed, 'date' => $date]);
     }
 
