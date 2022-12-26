@@ -28,11 +28,17 @@ class ActiveFeedCron extends Command
      */
     public function handle()
     {
-        \Log::info("Cron is working fine!");
+        \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
 
         $feeds = NewsFeed::all();
 
         foreach($feeds as $feed){
+
+            \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
+            \Log::info("date time: ".strtotime(date('d-m-y h:i:s')));
+            \Log::info("activation date time: ".$feed->activate_at);
+            \Log::info("activation date time: ".strtotime($feed->activate_at));
+
             if( strtotime(date('d-m-y h:i:s') >= strtotime($feed->activate_at))){
                 if($feed->active == 0){
                     \Log::info("activating feed:".$feed->title);
