@@ -52,7 +52,7 @@ class NewsFeedsController extends Controller
 
         $range = $request->dateTimeRange;
         $timeArray = explode(" - ",$range);
-        dd($timeArray);
+        // dd($timeArray);
 
         // $activateAt = str_replace( '/', '-', $timeArray[0] );
         $feed->activate_at = date_create_from_format("d/m/Y h:i A",$timeArray[0]);
