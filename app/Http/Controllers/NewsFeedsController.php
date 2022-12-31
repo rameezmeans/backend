@@ -35,7 +35,7 @@ class NewsFeedsController extends Controller
         $date = date('d/m/Y h:i A');
         $feed = NewsFeed::findOrFail($id);
 
-        // dd("Cron is working fine at: ".date('d-m-y h:i:s'));
+        // dd("Cron is working fine at: ".date('l'));
         // dd("date time: ".strtotime(now()));
         // dd("activation date time: ".$feed->activate_at);
         // dd("activation date time: ".strtotime($feed->activate_at)." date time: ".strtotime(now()));
@@ -49,11 +49,11 @@ class NewsFeedsController extends Controller
         $feed->title = $request->title;
         $feed->feed = $request->feed;
         $feed->type = $request->type;
-
+        $feed->activation_weekday = $request->activation_weekday;
+        $feed->deactivation_weekday = $request->deactivation_weekday;
         $range = $request->dateTimeRange;
         $timeArray = explode(" - ",$range);
-        // dd($timeArray);
-
+        
         // $activateAt = str_replace( '/', '-', $timeArray[0] );
         $feed->activate_at = date_create_from_format("d/m/Y h:i A",$timeArray[0]);
         // $deactivateAt = str_replace( '/', '-', $timeArray[1] );
@@ -103,6 +103,8 @@ class NewsFeedsController extends Controller
         
         $feed->feed = $request->feed;
         $feed->type = $request->type;
+        $feed->activation_weekday = $request->activation_weekday;
+        $feed->deactivation_weekday = $request->deactivation_weekday;
         $feed->save();
 
         return redirect()->route('feeds')->with(['success' => 'Feed added, successfully.']);

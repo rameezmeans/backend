@@ -419,6 +419,9 @@ class HomeController extends Controller
             $options = '';
             if($file->options){
                 foreach($file->options() as $option){
+                    if(!\App\Models\Service::where('name', $option)->first()){
+                        dd($option);
+                    }
                     $options .= '<img class="p-l-10" alt="'.$option.'" width="33" height="33" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">'.$option;
                 }
             }

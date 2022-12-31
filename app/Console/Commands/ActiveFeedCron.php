@@ -38,7 +38,20 @@ class ActiveFeedCron extends Command
             // \Log::info("date time: ".strtotime(date('d-m-y h:i:s')));
             // \Log::info("activation date time: ".$feed->activate_at);
             // \Log::info("activation date time: ".strtotime($feed->activate_at));
-
+            if( date('l') == $feed->activation_weekday ){
+                if($feed->active == 0){
+                    \Log::info("activating feed:".$feed->title);
+                    $feed->active = 1;
+                    $feed->save();
+                }
+            }
+            if( date('l') == $feed->deactivation_weekday ){
+                if($feed->active == 1){
+                    \Log::info("deactivating feed:".$feed->title);
+                    $feed->active = 0;
+                    $feed->save();
+                }
+            }
             if( strtotime(now()) >= strtotime($feed->activate_at)){
                 if($feed->active == 0){
                     \Log::info("activating feed:".$feed->title);
