@@ -26,7 +26,7 @@
                     {{-- <button data-redirect="{{route('feeds')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">News Feeds</span>
                     </button> --}}
                    
-                      Current Time: <h5>{{$date}}</h5>
+                      Current Date Time (Europe/Athens): <h5>{{$date}}</h5>
                     
                     {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                 </div>
@@ -57,6 +57,44 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
+
+                <div class="form-group form-group-default ">
+                  <label>Activation Day of Week</label>
+                  <select class="full-width" data-init-plugin="select2" name="activation_weekday">
+                    <option @if(isset($feed) && $feed->activation_weekday == 'Sunday') selected @endif value="Sunday">Sunday</option>
+                    <option  @if(isset($feed) && $feed->activation_weekday == 'Monday') selected @endif value="monday">Monday</option>
+                    <option  @if(isset($feed) && $feed->activation_weekday == 'Tuesday') selected @endif value="Tuesday">Tuesday</option>
+                    <option  @if(isset($feed) && $feed->activation_weekday == 'Wednesday') selected @endif value="Wednesday">Wednesday</option>
+                    <option  @if(isset($feed) && $feed->activation_weekday == 'Thursday') selected @endif value="Thursday">Thursday</option>
+                    <option  @if(isset($feed) && $feed->activation_weekday == 'Friday') selected @endif value="Friday">Friday</option>
+                    <option  @if(isset($feed) && $feed->activation_weekday == 'Saturday') selected @endif value="Saturday">Saturday</option>
+                  </select>
+                </div>
+              
+              @error('activation_weekday')
+                <span class="text-danger" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+              @enderror
+
+              <div class="form-group form-group-default ">
+                <label>Deactivation Day of Week</label>
+                <select class="full-width" data-init-plugin="select2" name="deactivation_weekday">
+                  <option @if(isset($feed) && $feed->deactivation_weekday == 'Sunday') selected @endif value="Sunday">Sunday</option>
+                  <option  @if(isset($feed) && $feed->deactivation_weekday == 'Monday') selected @endif value="Monday">Monday</option>
+                  <option  @if(isset($feed) && $feed->deactivation_weekday == 'Tuesday') selected @endif value="Tuesday">Tuesday</option>
+                  <option  @if(isset($feed) && $feed->deactivation_weekday == 'Wednesday') selected @endif value="Wednesday">Wednesday</option>
+                  <option  @if(isset($feed) && $feed->deactivation_weekday == 'Thursday') selected @endif value="Thursday">Thursday</option>
+                  <option  @if(isset($feed) && $feed->deactivation_weekday == 'Friday') selected @endif value="Friday">Friday</option>
+                  <option  @if(isset($feed) && $feed->deactivation_weekday == 'Saturday') selected @endif value="Saturday">Saturday</option>
+                </select>
+              </div>
+            
+            @error('deactivation_weekday')
+              <span class="text-danger" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
                 
 
                 {{-- <div class="form-group form-group-default required ">
