@@ -61,6 +61,7 @@
                 <div class="form-group form-group-default ">
                   <label>Activation Day of Week</label>
                   <select class="full-width" data-init-plugin="select2" name="activation_weekday">
+                    <option value="" disabled selected>Select A Day</option>
                     <option @if(isset($feed) && $feed->activation_weekday == 'Sunday') selected @endif value="Sunday">Sunday</option>
                     <option  @if(isset($feed) && $feed->activation_weekday == 'Monday') selected @endif value="monday">Monday</option>
                     <option  @if(isset($feed) && $feed->activation_weekday == 'Tuesday') selected @endif value="Tuesday">Tuesday</option>
@@ -80,6 +81,7 @@
               <div class="form-group form-group-default ">
                 <label>Deactivation Day of Week</label>
                 <select class="full-width" data-init-plugin="select2" name="deactivation_weekday">
+                  <option value="" disabled selected>Select A Day</option>
                   <option @if(isset($feed) && $feed->deactivation_weekday == 'Sunday') selected @endif value="Sunday">Sunday</option>
                   <option  @if(isset($feed) && $feed->deactivation_weekday == 'Monday') selected @endif value="Monday">Monday</option>
                   <option  @if(isset($feed) && $feed->deactivation_weekday == 'Tuesday') selected @endif value="Tuesday">Tuesday</option>
