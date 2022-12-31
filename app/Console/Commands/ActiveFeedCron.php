@@ -35,10 +35,10 @@ class ActiveFeedCron extends Command
         foreach($feeds as $feed){
 
             // \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
-            // \Log::info("date time: ".strtotime(date('d-m-y h:i:s')));
+            // \Log::info("Feed Activation Day: ".strtotime(date('d-m-y h:i:s')));
             // \Log::info("activation date time: ".$feed->activate_at);
             // \Log::info("activation date time: ".strtotime($feed->activate_at));
-            
+
             if( date('l') == $feed->activation_weekday ){
                 if($feed->active == 0){
                     \Log::info("activating feed at:".date('l').$feed->title);
