@@ -168,7 +168,7 @@ class ServicesController extends Controller
      */
     public function getStages(Request $request)
     {
-        $stages = Service::where('type', 'tunning')->where('active', 1)->get();
+        $stages = Service::orderBy('sorting', 'asc')->where('type', 'tunning')->where('active', 1)->get();
         return response()->json(['stages' => $stages]);
     }
 
@@ -179,7 +179,7 @@ class ServicesController extends Controller
      */
     public function getOptions(Request $request)
     {
-        $options = Service::where('type', 'option')->where('active', 1)->get();
+        $options = Service::orderBy('sorting', 'asc')->where('type', 'option')->where('active', 1)->get();
         return response()->json(['options' => $options]);
     }
 }
