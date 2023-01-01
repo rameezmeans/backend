@@ -86,6 +86,10 @@
               <span class="icon-thumbnail">Sr</span>
             </li>
             <li class="">
+              <a href="{{ route('sorting-services') }}">Sorting Services</a>
+              <span class="icon-thumbnail">Sr</span>
+            </li>
+            <li class="">
               <a href="{{ route('unit-price') }}">Unit Price</a>
               <span class="icon-thumbnail">UP</span>
             </li>

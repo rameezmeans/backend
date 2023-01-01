@@ -106,6 +106,27 @@ class ServicesController extends Controller
         return redirect()->route('services')->with(['success' => 'Service updated, successfully.']);
     }
 
+    public function saveSorting(Request $request){
+
+        $sorting = json_decode($request->sorting);
+        $sort = 1;
+        foreach($sorting as $row){
+            $service = Service::findOrFail($row->id);
+            $service->sorting = $sort;
+            $service->save();
+            $sort++;
+        }
+
+        return response()->json(['msg' => 'sorting done']);
+    }
+
+    public function sortingServices(){
+
+        $options = Service::where('type', 'option')->get();
+        $stages = Service::where('type', 'tunning')->get();
+        return view('services.sorting', ['options' => $options, 'stages' => $stages]);
+    }
+
     /**
      * update the services to DB.
      *
