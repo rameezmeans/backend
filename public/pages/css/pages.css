@@ -15447,3 +15447,7 @@ table.dataTable tbody tr.checked td:first-child {
     background-color: #fef6dd !important;
     font-weight: bold !important;
 }
+
+.toast {
+    opacity: 1 !important;
+}

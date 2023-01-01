@@ -28,13 +28,14 @@
     <link href="{{ url('assets/plugins/nvd3/nv.d3.min.css') }}" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ url('assets/plugins/mapplic/css/mapplic.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/plugins/rickshaw/rickshaw.min.css') }}" rel="stylesheet" type="text/css" />
-   
+    <link href="{{ url('assets/plugins/jquery-nestable/jquery.nestable.css')}}" rel="stylesheet" type="text/css" media="screen">
     <link href="{{ url('assets/plugins/bootstrap-datepicker/css/datepicker3.css') }}" rel="stylesheet" type="text/css" media="screen">
     <link href="{{ url('assets/plugins/jquery-metrojs/MetroJs.css') }}" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{ url('assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" media="screen">
     <link href="{{url('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet" type="text/css" media="screen">
     <link href="{{ url('pages/css/pages-icons.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ url('assets/plugins/dropzone/css/dropzone.css')}} " rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet" type="text/css" />
     <link class="main-stylesheet" href="{{ url('pages/css/pages.css') }}" rel="stylesheet" type="text/css" />
     <link class="main-stylesheet" href="{{ url('pages/css/style.css') }}" rel="stylesheet" type="text/css" />
     
@@ -79,9 +80,8 @@
    <script src="{{url('assets/plugins/mapplic/js/mapplic.js') }}"></script>
    <script src="{{url('assets/plugins/rickshaw/rickshaw.min.js') }}"></script>
    <script src="{{url('assets/plugins/moment/moment.min.js')}}"></script>
-   {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
-   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> --}}
    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
    <script src="{{url('assets/plugins/jquery-metrojs/MetroJs.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/skycons/skycons.js') }}" type="text/javascript"></script>
@@ -102,6 +102,7 @@
    <script type="text/javascript" src="{{ url('assets/plugins/dropzone/dropzone.min.js')}}"></script>
    <script src="{{url('assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js')}}"></script>
    <script src="{{url('assets/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+   <script src="{{url('assets/plugins/jquery-nestable/jquery.nestable.js')}}" type="text/javascript"></script>
    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" type="text/javascript"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
    

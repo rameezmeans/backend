@@ -35,6 +35,8 @@ Route::get('/edit_service/{id}', [App\Http\Controllers\ServicesController::class
 Route::post('/add_service', [App\Http\Controllers\ServicesController::class, 'add'])->name('add-service');
 Route::post('/update_service', [App\Http\Controllers\ServicesController::class, 'update'])->name('update-service');
 Route::post('/delete_service', [App\Http\Controllers\ServicesController::class, 'delete'])->name('delete-service');
+Route::get('/sorting_services', [App\Http\Controllers\ServicesController::class, 'sortingServices'])->name('sorting-services');
+Route::post('/sort_services', [App\Http\Controllers\ServicesController::class, 'saveSorting'])->name('sort-services');
 
 
 Route::get('/files', [App\Http\Controllers\FilesController::class, 'index'])->name('files');
