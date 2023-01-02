@@ -122,8 +122,8 @@ class ServicesController extends Controller
 
     public function sortingServices(){
 
-        $options = Service::orderBy('sorting', 'asc')->where('type', 'option')->get();
-        $stages = Service::orderBy('sorting', 'asc')->where('type', 'tunning')->get();
+        $options = Service::orderBy('sorting', 'asc')->where('active', 1)->where('type', 'option')->get();
+        $stages = Service::orderBy('sorting', 'asc')->where('active', 1)->where('type', 'tunning')->get();
         return view('services.sorting', ['options' => $options, 'stages' => $stages]);
     }
 
