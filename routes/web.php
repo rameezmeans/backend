@@ -38,7 +38,6 @@ Route::post('/delete_service', [App\Http\Controllers\ServicesController::class, 
 Route::get('/sorting_services', [App\Http\Controllers\ServicesController::class, 'sortingServices'])->name('sorting-services');
 Route::post('/sort_services', [App\Http\Controllers\ServicesController::class, 'saveSorting'])->name('sort-services');
 
-
 Route::get('/files', [App\Http\Controllers\FilesController::class, 'index'])->name('files');
 Route::get('/file/{id}', [App\Http\Controllers\FilesController::class, 'show'])->name('file');
 
@@ -53,7 +52,6 @@ Route::post('/edit-message', [App\Http\Controllers\FilesController::class,'editM
 Route::get('/reports', [App\Http\Controllers\FilesController::class,'reports'])->name('reports');
 Route::post('/get_engineers_files', [App\Http\Controllers\FilesController::class,'getEngineersFiles'])->name('get-engineers-files');
 Route::post('/get_engineers_report', [App\Http\Controllers\FilesController::class,'getEngineersReport'])->name('get-engineers-report');
-
 
 Route::get('/vehicles', [ App\Http\Controllers\VehiclesController::class,'index'])->name('vehicles');
 Route::get('/vehicle/{id}', [App\Http\Controllers\VehiclesController::class,'show'])->name('vehicle');
@@ -75,7 +73,6 @@ Route::get('/edit-group/{id}', [App\Http\Controllers\GroupsController::class,'ed
 Route::post('/add-group', [App\Http\Controllers\GroupsController::class,'add'])->name('add-group');
 Route::post('/update-group', [App\Http\Controllers\GroupsController::class,'update'])->name('update-group');
 Route::post('/delete_group', [App\Http\Controllers\GroupsController::class,'delete'])->name('delete-group');
-
 
 Route::get('/customers', [App\Http\Controllers\UsersController::class,'Customers'])->name('customers');
 Route::get('/create_customer', [App\Http\Controllers\UsersController::class,'createCustomer'])->name('create-customer');
