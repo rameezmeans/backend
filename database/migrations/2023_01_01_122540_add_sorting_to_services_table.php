@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('services', function (Blueprint $table) {
-            $table->string('sorting')->nullable()->after('type');
+            $table->integer('sorting')->nullable()->after('type');
         });
     }
 
