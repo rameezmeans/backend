@@ -109,7 +109,6 @@ class ServicesController extends Controller
     public function saveSorting(Request $request){
 
         $sorting = json_decode($request->sorting);
-        // dd($sorting);
         $sort = 1;
         foreach($sorting as $row){
             $service = Service::findOrFail($row->id);
@@ -124,7 +123,6 @@ class ServicesController extends Controller
     public function sortingServices(){
 
         $options = Service::orderBy('sorting', 'asc')->where('active', 1)->where('type', 'option')->get();
-        // dd($options);
         $stages = Service::orderBy('sorting', 'asc')->where('active', 1)->where('type', 'tunning')->get();
         return view('services.sorting', ['options' => $options, 'stages' => $stages]);
     }
