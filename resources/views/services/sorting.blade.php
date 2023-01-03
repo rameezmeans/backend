@@ -95,9 +95,9 @@ $(document).ready(function() {
         }
     };
 
-    var updateOptions = function(e) {
-        var list = e.length ? e : $(e.target),
-            output = list.data('output');
+    var updateOptions = function(ee) {
+        var list = ee.length ? ee : $(ee.target),
+        output = list.data('output');
         if (window.JSON) {
 
             $.ajax({
