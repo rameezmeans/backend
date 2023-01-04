@@ -24,6 +24,10 @@ class File extends Model
         return $this->belongsTo(User::class, 'assigned_to', 'id');
     }
 
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
     public function engineer_file_notes(){
         return $this->hasMany(EngineerFileNote::class); 
     }

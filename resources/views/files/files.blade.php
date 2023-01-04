@@ -37,7 +37,7 @@
                           @foreach($files as $file)
                               <tr class="redirect-click @if($file->checked_by == 'customer') checked @endif" data-redirect="{{ route('file', $file->id) }}">
                                 <td><span class="label label-success">Task{{$file->id}}</span></td>
-                                <td>{{$file->name}}</td>
+                                <td>{{$file->user->name}}</td>
                                 <td>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</td>
                                 <td><span class="label label-success">{{$file->file_type}}</span></td>
                                 <td><span class="label @if($file->status == 'completed') label-success @elseif($file->status == 'rejected') label-danger @else label-info @endif ">{{$file->status}}</span></td>
