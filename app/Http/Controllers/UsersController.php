@@ -39,29 +39,29 @@ class UsersController extends Controller
             'password' => ['required', 'string', 'min:8'],
         ]);
 
-       $customer = new User();
-       $customer->name = $request->name;
+        $customer = new User();
+        $customer->name = $request->name;
 
        
         $customer->password = Hash::make($request->password);
        
 
-       $customer->email = $request->email;
-       $customer->phone = $request->phone;
-       $customer->language = $request->language;
-       $customer->address = $request->address;
-       $customer->zip = $request->zip;
-       $customer->city = $request->city;
-       $customer->country = $request->country;
-       $customer->status = $request->status;
-       $customer->company_name = $request->company_name;
-       $customer->company_id = $request->company_id;
-       $customer->group_id = $request->group_id;
-       $customer->is_customer = 1;
+        $customer->email = $request->email;
+        $customer->phone = $request->phone;
+        $customer->language = $request->language;
+        $customer->address = $request->address;
+        $customer->zip = $request->zip;
+        $customer->city = $request->city;
+        $customer->country = $request->country;
+        $customer->status = $request->status;
+        $customer->company_name = $request->company_name;
+        $customer->company_id = $request->company_id;
+        $customer->group_id = $request->group_id;
+        $customer->is_customer = 1;
 
-       $customer->save();
+        $customer->save();
 
-       $this->addCredits($customer->group->bonus_credits, $customer);
+        $this->addCredits($customer->group->bonus_credits, $customer);
 
        return redirect()->route('customers')->with(['success' => 'Customer added, successfully.']);
     }
@@ -95,12 +95,13 @@ class UsersController extends Controller
 
         $customer = User::findOrFail($request->id);
         $customer->name = $request->name;
+        
 
         if($request->password){
-            $customer->password = Hash::make($request->password);
+            $customer->password = Hash::make(trim($request->password));
         }
 
-        $customer->email = $request->email;
+        $customer->email = trim($request->email);
         $customer->phone = $request->phone;
         $customer->language = $request->language;
         $customer->address = $request->address;

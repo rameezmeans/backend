@@ -127,8 +127,12 @@ class FilesController extends Controller
         $engineerFile->save();
 
         $file = File::findOrFail($request->file_id);
-        
 
+        if($file->status == 'submitted'){
+            $file->status = 'completed';
+            $file->save();
+        }
+        
         if(!$file->response_time){
 
             $file->reupload_time = Carbon::now();
@@ -276,10 +280,10 @@ class FilesController extends Controller
             abort(404);
         }
 
-        if($file->status == 'submitted'){
-            $file->status = 'completed';
-            $file->save();
-        }
+        // if($file->status == 'submitted'){
+        //     $file->status = 'completed';
+        //     $file->save();
+        // }
 
         if($file->checked_by == 'customer'){
             $file->checked_by = 'seen';
