@@ -35,6 +35,8 @@ class NewsFeedsController extends Controller
         $date = date('d/m/Y h:i A');
         $feed = NewsFeed::findOrFail($id);
 
+        // dd($feed);
+
         // dd("Cron is working fine at: ".date('l'));
         // dd("date time: ".strtotime(now()));
         // dd("activation date time: ".$feed->activate_at);
@@ -47,18 +49,32 @@ class NewsFeedsController extends Controller
 
         $feed = NewsFeed::findOrFail($request->id);
         $feed->title = $request->title;
+
+        if($request->activation_weekday == null && $request->deactivation_weekday == null){
+
+            $range = $request->dateTimeRange;
+            $timeArray = explode(" - ",$range);
+            $feed->activate_at = date_create_from_format("d/m/Y h:i A",$timeArray[0]);
+            $feed->deactivate_at = date_create_from_format("d/m/Y h:i A",$timeArray[1]);
+            $feed->activation_weekday = null;
+            $feed->deactivation_weekday = null;
+
+        }
+        else{
+
+            // dd($request->all());
+
+            $feed->activation_weekday = $request->activation_weekday;
+            $feed->deactivation_weekday = $request->deactivation_weekday;
+            $feed->daily_activation_time = $request->daily_activation_time;
+            $feed->daily_deactivation_time = $request->daily_deactivation_time;
+            $feed->activate_at = null;
+            $feed->deactivate_at = null;
+        }
+
         $feed->feed = $request->feed;
         $feed->type = $request->type;
-        $feed->activation_weekday = $request->activation_weekday;
-        $feed->deactivation_weekday = $request->deactivation_weekday;
-        $range = $request->dateTimeRange;
-        $timeArray = explode(" - ",$range);
         
-        // $activateAt = str_replace( '/', '-', $timeArray[0] );
-        $feed->activate_at = date_create_from_format("d/m/Y h:i A",$timeArray[0]);
-        // $deactivateAt = str_replace( '/', '-', $timeArray[1] );
-        $feed->deactivate_at = date_create_from_format("d/m/Y h:i A",$timeArray[1]);
-
         $feed->save();
 
         return redirect()->route('feeds')->with(['success' => 'Feed Updated, successfully.']);
@@ -89,8 +105,7 @@ class NewsFeedsController extends Controller
             'title' => 'required|unique:news_feeds|max:255|min:3',
             'feed' => 'required'
         ]);
-
-
+        // dd($request->all());
         $feed = new NewsFeed();
         $feed->title = $request->title;
 
@@ -105,8 +120,11 @@ class NewsFeedsController extends Controller
 
         }
         else{
+
             $feed->activation_weekday = $request->activation_weekday;
             $feed->deactivation_weekday = $request->deactivation_weekday;
+            $feed->daily_activation_time = $request->daily_activation_time;
+            $feed->daily_deactivation_time = $request->daily_deactivation_time;
             $feed->activate_at = null;
             $feed->deactivate_at = null;
         }
