@@ -109,14 +109,17 @@
                                   <strong>{{ $message }}</strong>
                               </span>
                             @enderror
-                            <div class="col-lg-6">
-                              <label>Activation Time for every day of Week</label>
-                              <div class="input-group bootstrap-timepicker">
-                                <input id="timepicker" type="time" class="form-control">
-                                
-                              </div>
-                            </div>
+                            
                         </div>
+                        <div class="col-lg-6">
+                          <label>Activation Time for every day of Week</label>
+                          <div class="input-group bootstrap-timepicker">
+                            <input id="timepicker" type="time" class="form-control">
+                            
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
                         <div class="col-lg-6">
                           <div class="form-group form-group-default ">
                             <label>Deactivation Day of Week</label>
@@ -137,11 +140,12 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                           @enderror
-                          <div class="col-lg-6">
-                            <label>Deactivation Time for every day of Week</label>
-                            <div class="input-group bootstrap-timepicker">
-                              <input id="timepicker" type="time" class="form-control">
-                            </div>
+                          
+                        </div>
+                        <div class="col-lg-6">
+                          <label>Deactivation Time for every day of Week</label>
+                          <div class="input-group bootstrap-timepicker">
+                            <input id="timepicker" type="time" class="form-control">
                           </div>
                         </div>
                       </div>
