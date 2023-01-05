@@ -51,6 +51,7 @@ class HomeController extends Controller
         $topBrandsObj = File::groupBy('brand')
         ->selectRaw('count(*) as count,brand')
         ->get();
+        $topBrands = [];
 
         foreach($topBrandsObj as $t){
             $temp = [];
@@ -58,9 +59,11 @@ class HomeController extends Controller
             $temp ['count'] = $t->count;
             $topBrands []= $temp;
         }
-
-        usort($topBrands, array($this, 'sorterc'));
-        $topBrands = array_slice($topBrands, 0, 5);
+        
+        if(sizeof($topBrands) != 0){
+            usort($topBrands, array($this, 'sorterc'));
+            $topBrands = array_slice($topBrands, 0, 5);
+        }
         
         $topCustomers = Credit::whereNotNull('stripe_id')
         ->where('credits', '>', 0)

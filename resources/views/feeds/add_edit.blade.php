@@ -90,27 +90,34 @@
                   <div class="tab-content">
                     <div class="tab-pane slide-left active show" id="slide1">
                       <div class="row column-seperation">
-                        <div class="col-lg-12">
-                          <div class="form-group form-group-default ">
-                            <label>Activation Day of Week</label>
-                            <select class="full-width" data-init-plugin="select2" name="activation_weekday">
-                              <option value="" disabled selected>Select A Day</option>
-                              <option @if(isset($feed) && $feed->activation_weekday == 'Sunday') selected @endif value="Sunday">Sunday</option>
-                              <option  @if(isset($feed) && $feed->activation_weekday == 'Monday') selected @endif value="monday">Monday</option>
-                              <option  @if(isset($feed) && $feed->activation_weekday == 'Tuesday') selected @endif value="Tuesday">Tuesday</option>
-                              <option  @if(isset($feed) && $feed->activation_weekday == 'Wednesday') selected @endif value="Wednesday">Wednesday</option>
-                              <option  @if(isset($feed) && $feed->activation_weekday == 'Thursday') selected @endif value="Thursday">Thursday</option>
-                              <option  @if(isset($feed) && $feed->activation_weekday == 'Friday') selected @endif value="Friday">Friday</option>
-                              <option  @if(isset($feed) && $feed->activation_weekday == 'Saturday') selected @endif value="Saturday">Saturday</option>
-                            </select>
-                          </div>
-                        
-                          @error('activation_weekday')
-                            <span class="text-danger" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                          @enderror
-          
+                        <div class="col-lg-6">
+                            <div class="form-group form-group-default ">
+                              <label>Activation Day of Week</label>
+                              <select class="full-width" data-init-plugin="select2" name="activation_weekday">
+                                <option value="" disabled selected>Select A Day</option>
+                                <option @if(isset($feed) && $feed->activation_weekday == 'Sunday') selected @endif value="Sunday">Sunday</option>
+                                <option  @if(isset($feed) && $feed->activation_weekday == 'Monday') selected @endif value="monday">Monday</option>
+                                <option  @if(isset($feed) && $feed->activation_weekday == 'Tuesday') selected @endif value="Tuesday">Tuesday</option>
+                                <option  @if(isset($feed) && $feed->activation_weekday == 'Wednesday') selected @endif value="Wednesday">Wednesday</option>
+                                <option  @if(isset($feed) && $feed->activation_weekday == 'Thursday') selected @endif value="Thursday">Thursday</option>
+                                <option  @if(isset($feed) && $feed->activation_weekday == 'Friday') selected @endif value="Friday">Friday</option>
+                                <option  @if(isset($feed) && $feed->activation_weekday == 'Saturday') selected @endif value="Saturday">Saturday</option>
+                              </select>
+                            </div>
+                            @error('activation_weekday')
+                              <span class="text-danger" role="alert">
+                                  <strong>{{ $message }}</strong>
+                              </span>
+                            @enderror
+                            <div class="col-lg-6">
+                              <label>Activation Time for every day of Week</label>
+                              <div class="input-group bootstrap-timepicker">
+                                <input id="timepicker" type="time" class="form-control">
+                                
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
                           <div class="form-group form-group-default ">
                             <label>Deactivation Day of Week</label>
                             <select class="full-width" data-init-plugin="select2" name="deactivation_weekday">
@@ -130,6 +137,12 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                           @enderror
+                          <div class="col-lg-6">
+                            <label>Deactivation Time for every day of Week</label>
+                            <div class="input-group bootstrap-timepicker">
+                              <input id="timepicker" type="time" class="form-control">
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -149,31 +162,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
-
-                
-                
-
-                {{-- <div class="form-group form-group-default required ">
-                  <label>Activate At</label>
-                  <input value="@if(isset($feed)) {{ $feed->activate_at }} @else{{old('activate_at') }}@endif"  name="activate_at" type="text" class="form-control timepicker" required>
-                </div>
-                @error('feed')
-                  <span class="text-danger" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-                @enderror
-                <div class="form-group form-group-default required ">
-                  <label>Deactivate At</label>
-                  <input value="@if(isset($feed)) {{ $feed->feed }} @else{{old('feed') }}@endif"  name="feed" type="text" class="form-control" required>
-                </div>
-                @error('feed')
-                  <span class="text-danger" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-                @enderror --}}
-                
-              
+                </div>              
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($feed)) Update @else Add @endif</span></button>
                   @if(isset($feed))
@@ -196,6 +185,7 @@
 
       $( document ).ready(function(event) {
 
+       
         $('#daterangepicker').daterangepicker({
             timePicker: true,
             timePickerIncrement: 5,
