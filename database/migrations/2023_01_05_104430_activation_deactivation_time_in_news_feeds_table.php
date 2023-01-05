@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('news_feeds', function (Blueprint $table) {
-            $table->time('daily_activation_time');
-            $table->time('daily_deactivation_time');
+            $table->time('daily_activation_time')->nullable();
+            $table->time('daily_deactivation_time')->nullable();
         });
     }
 
