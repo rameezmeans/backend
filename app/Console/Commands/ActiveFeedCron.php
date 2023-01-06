@@ -32,7 +32,7 @@ class ActiveFeedCron extends Command
 
         $feeds = NewsFeed::all();
 
-        foreach($feeds as $feed){
+        foreach($feeds as $feed) {
 
             // \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
             // \Log::info("Feed Activation Day: ".strtotime(date('d-m-y h:i:s')));

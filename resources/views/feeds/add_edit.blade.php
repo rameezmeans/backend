@@ -113,7 +113,7 @@
                             
                         </div>
                         <div class="col-lg-6">
-                          <label>Activation Time for every day of Week</label>
+                          <label>Activation Time for every day of Week:</label>
                           <div class="input-group bootstrap-timepicker">
                             <input name="daily_activation_time" id="timepicker" type="time" class="form-control" value=""@if(isset($feed)){{$feed->daily_activation_time}}@endif">
                             
@@ -144,7 +144,7 @@
                           
                         </div>
                         <div class="col-lg-6">
-                          <label>Deactivation Time for every day of Week</label>
+                          <label>Deactivation Until This time everyday for the week:</label>
                           <div class="input-group bootstrap-timepicker">
                             <input name="daily_deactivation_time" id="timepicker" type="time" class="form-control" value="@if(isset($feed)){{$feed->daily_deactivation_time}}@endif">
                           </div>
@@ -192,7 +192,7 @@
                             
                         </div>
                         <div class="col-lg-6">
-                          <label>Activation Time for every day of Week</label>
+                          <label>Activation Time for every day of Week:</label>
                           <div class="input-group bootstrap-timepicker">
                             <input name="daily_activation_time" id="timepicker" type="time" class="form-control" value="@if(isset($feed)){{$feed->daily_activation_time}}@endif">
                             
@@ -223,7 +223,7 @@
                           
                         </div>
                         <div class="col-lg-6">
-                          <label>Deactivation Time for every day of Week</label>
+                          <label>Deactivation Until This time everyday for the week:</label>
                           <div class="input-group bootstrap-timepicker">
                             <input name="daily_deactivation_time" id="timepicker" type="time" class="form-control" value="@if(isset($feed)){{$feed->daily_deactivation_time}}@endif">
                           </div>

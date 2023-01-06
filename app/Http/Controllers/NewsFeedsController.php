@@ -32,44 +32,9 @@ class NewsFeedsController extends Controller
 
     public function edit($id) {
 
-        
-
         $date = date('d/m/Y h:i A');
         $feed = NewsFeed::findOrFail($id);
-
-        // if($feed->activate_at == null &&  $feed->deactivate_at == null){
-
-        //     if( date('l') == $feed->activation_weekday ){
-                
-        //         if (date('H:i') > date('H:i', strtotime($feed->daily_activation_time))) {
-                    
-        //             if($feed->active == 0){
-                        
-        //                 \Log::info("activating feed at:".date('l').$feed->title);
-        //                 $feed->active = 1;
-        //                 $feed->save();
-        //             }
-        //         }
-        //     }
-        //     if( date('l') == $feed->deactivation_weekday ){
-
-        //         if (date('H:i') > date('H:i', strtotime($feed->daily_deactivation_time))) {
-
-        //             if($feed->active == 1){
-
-        //                 \Log::info("deactivating feed:".date('l').$feed->title);
-        //                 $feed->active = 0;
-        //                 $feed->save();
-        //             }
-        //         }
-        //     }
-        // }
-
-        // dd("Cron is working fine at: ".date('l'));
-        // dd("date time: ".strtotime(now()));
-        // dd("activation date time: ".$feed->activate_at);
-        // dd("activation date time: ".strtotime($feed->activate_at)." date time: ".strtotime(now()));
-
+        
         return view('feeds.add_edit', ['feed' => $feed, 'date' => $date]);
     }
 
@@ -89,8 +54,6 @@ class NewsFeedsController extends Controller
 
         }
         else{
-
-            // dd($request->all());
 
             $feed->activation_weekday = $request->activation_weekday;
             $feed->deactivation_weekday = $request->deactivation_weekday;
@@ -133,7 +96,7 @@ class NewsFeedsController extends Controller
             'title' => 'required|unique:news_feeds|max:255|min:3',
             'feed' => 'required'
         ]);
-        // dd($request->all());
+
         $feed = new NewsFeed();
         $feed->title = $request->title;
 
