@@ -18,8 +18,7 @@ class NewsFeedsController extends Controller
     }
 
     public function index() {
-
-       
+        
         $newsFeeds = NewsFeed::all();
         return view('feeds.index', ['newsFeeds' => $newsFeeds]);
     }
@@ -34,7 +33,7 @@ class NewsFeedsController extends Controller
 
         $date = date('d/m/Y h:i A');
         $feed = NewsFeed::findOrFail($id);
-        
+
         return view('feeds.add_edit', ['feed' => $feed, 'date' => $date]);
     }
 
