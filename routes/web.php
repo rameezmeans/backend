@@ -14,6 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('send-mail', function () {
+   
+    $details = [
+        
+    ];
+   
+    \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AssignEngineerToTaskMail($details));
+   
+    dd("Email is Sent.");
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
