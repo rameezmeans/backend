@@ -82,6 +82,8 @@ class FilesController extends Controller
        $file->assigned_to = $request->assigned_to;
        $file->assignment_time = Carbon::now();
        $file->save();
+       $engineer = User::findOrFail($request->assigned_to);
+       \Mail::to($engineer->email)->send(new \App\Mail\AssignEngineerToTaskMail());
        return Redirect::back()->with(['success' => 'Engineer Assigned to File.']);
 
     }
