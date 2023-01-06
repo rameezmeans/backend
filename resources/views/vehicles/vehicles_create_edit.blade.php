@@ -120,6 +120,36 @@
                         <strong>{{ $message }}</strong>
                     </span>
                   @enderror
+                  <div class="form-group form-group-default">
+                    <label>Read options</label>
+                    <input value="@if(isset($vehicle)) {{ $vehicle->Read_options	}} @else{{old('Read_options') }}@endif"  name="Read_options" type="text" class="form-control">
+                  </div>
+                  @error('Read_options')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+
+                <div class="form-group form-group-default">
+                  <label>Additional_options</label>
+                  <input value="@if(isset($vehicle)) {{ $vehicle->Additional_options }} @else{{old('Additional_options') }}@endif"  name="Additional_options" type="text" class="form-control">
+                </div>
+                @error('Additional options')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+
+                <div class="form-group form-group-default">
+                  <label>Gearbox ECU</label>
+                  <input @if(isset($vehicle)) disabled @endif value="@if(isset($vehicle)) {{ $vehicle->Gearbox_ECU }} @else{{old('Gearbox_ECU') }}@endif"  name="Gearbox_ECU" type="text" class="form-control">
+                </div>
+                @error('Gearbox_ECU')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+                
                   @if(isset($vehicle))
                     <div class="text-center m-t-40">                    
                       <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($vehicle)) Update @else Add @endif</span></button>
@@ -251,15 +281,7 @@
                     </span>
                   @enderror
                   
-                  <div class="form-group form-group-default">
-                    <label>Gearbox ECU</label>
-                    <input @if(isset($vehicle)) disabled @endif value="@if(isset($vehicle)) {{ $vehicle->Gearbox_ECU }} @else{{old('Gearbox_ECU') }}@endif"  name="Gearbox_ECU" type="text" class="form-control">
-                  </div>
-                  @error('Gearbox_ECU')
-                    <span class="text-danger" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                  @enderror
+                  
 
                   <div class="form-group form-group-default">
                     <label>Compression ratio</label>
@@ -300,26 +322,6 @@
                         <strong>{{ $message }}</strong>
                     </span>
                   @enderror
-
-                  <div class="form-group form-group-default">
-                    <label>Read options</label>
-                    <input @if(isset($vehicle)) disabled @endif value="@if(isset($vehicle)) {{ $vehicle->Read_options	}} @else{{old('Read_options') }}@endif"  name="Read_options" type="text" class="form-control">
-                  </div>
-                  @error('Read_options')
-                    <span class="text-danger" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                  @enderror
-
-                <div class="form-group form-group-default">
-                  <label>Additional_options</label>
-                  <input @if(isset($vehicle)) disabled @endif value="@if(isset($vehicle)) {{ $vehicle->Additional_options }} @else{{old('Additional_options') }}@endif"  name="Additional_options" type="text" class="form-control">
-                </div>
-                @error('Additional options')
-                  <span class="text-danger" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-                @enderror
 
                 @if(!isset($vehicle))
                     <div class="text-center m-t-40">                    
