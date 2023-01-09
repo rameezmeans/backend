@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\EmailTemplate;
 use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\RequestFile;
@@ -11,9 +12,11 @@ use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use PDF;
+use SebastianBergmann\Template\Template;
 
 class FilesController extends Controller
 {
@@ -83,7 +86,25 @@ class FilesController extends Controller
        $file->assignment_time = Carbon::now();
        $file->save();
        $engineer = User::findOrFail($request->assigned_to);
-       \Mail::to($engineer->email)->send(new \App\Mail\AssignEngineerToTaskMail());
+    
+       $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
+       
+       $html = $template->html;
+
+       $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
+       $html = str_replace("#brand", $file->brand ,$html);
+       $html = str_replace("#model", $file->model ,$html);
+       $html = str_replace("#version", $file->version,$html);
+       $html = str_replace("#engine", $file->engine,$html);
+       $html = str_replace("#ecu", $file->ecu,$html);
+
+        \Mail::send([], [], function (Message $message) use ($html, $engineer) {
+                    $message->to($engineer->email)
+                ->subject('ECUTech: You are assigned to a Task')
+                ->from('info@ecutech.gr')
+                ->setBody($html, 'text/html');
+        });
+    //    \Mail::to($engineer->email)->send(new \App\Mail\AssignEngineerToTaskMail(['engineer' => $engineer]));
        return Redirect::back()->with(['success' => 'Engineer Assigned to File.']);
 
     }

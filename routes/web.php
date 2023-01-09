@@ -14,17 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('send-mail', function () {
-   
-//     $details = [
-        
-//     ];
-   
-//     \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AssignEngineerToTaskMail($details));
-   
-//     dd("Email is Sent.");
-// });
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -128,3 +117,11 @@ Route::post('/delete-feeds', [App\Http\Controllers\NewsFeedsController::class, '
 Route::get('/edit-feeds/{id}', [App\Http\Controllers\NewsFeedsController::class, 'edit'])->name('edit-feed');
 Route::post('/change_status_feeds', [App\Http\Controllers\NewsFeedsController::class, 'changeStatus'])->name('change-status-feeds');
 Route::post('/delete_feed', [App\Http\Controllers\NewsFeedsController::class, 'delete'])->name('delete-feed');
+
+Route::get('/email_templates', [App\Http\Controllers\EmailTemplatesController::class, 'index'])->name('email-templates');
+Route::get('/add_template', [App\Http\Controllers\EmailTemplatesController::class, 'add'])->name('add-template');
+Route::get('/edit_template/{id}', [App\Http\Controllers\EmailTemplatesController::class, 'edit'])->name('edit-template');
+Route::post('/post_template', [App\Http\Controllers\EmailTemplatesController::class, 'post'])->name('post-template');
+Route::post('/update_template', [App\Http\Controllers\EmailTemplatesController::class, 'update'])->name('update-template');
+Route::post('/delete_template', [App\Http\Controllers\EmailTemplatesController::class, 'delete'])->name('delete-template');
+Route::get('/test_html', [App\Http\Controllers\EmailTemplatesController::class, 'test'])->name('test-html');

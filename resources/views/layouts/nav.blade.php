@@ -113,7 +113,10 @@
               <a href="{{ route('feeds') }}">News Feed</a>
               <span class="icon-thumbnail">NF</span>
             </li>
-
+            <li class="">
+              <a href="{{ route('email-templates') }}">Email Templates</a>
+              <span class="icon-thumbnail">ET</span>
+            </li>
           </ul>
         </li>
         <li class="m-t-30 ">
