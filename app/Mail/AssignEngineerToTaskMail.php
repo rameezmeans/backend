@@ -43,7 +43,10 @@ class AssignEngineerToTaskMail extends Mailable
     public function content()
     {
         return new Content(
-            html: $this->details['html'],
+            view: 'files.email',
+            with: [
+                'html' => $this->details['html'],
+            ]
         );
     }
 
