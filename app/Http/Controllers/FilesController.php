@@ -88,7 +88,7 @@ class FilesController extends Controller
        $engineer = User::findOrFail($request->assigned_to);
     
        $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
-       
+
        $html = $template->html;
 
        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
@@ -98,13 +98,8 @@ class FilesController extends Controller
        $html = str_replace("#engine", $file->engine,$html);
        $html = str_replace("#ecu", $file->ecu,$html);
 
-        \Mail::send([], [], function (Message $message) use ($html, $engineer) {
-                    $message->to($engineer->email)
-                ->subject('ECUTech: You are assigned to a Task')
-                ->from('info@ecutech.gr')
-                ->setBody($html, 'text/html');
-        });
-    //    \Mail::to($engineer->email)->send(new \App\Mail\AssignEngineerToTaskMail(['engineer' => $engineer]));
+       \Mail::to($engineer->email)->send(new \App\Mail\AssignEngineerToTaskMail(['engineer' => $engineer, 'html' => $html]));
+       
        return Redirect::back()->with(['success' => 'Engineer Assigned to File.']);
 
     }
