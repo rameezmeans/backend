@@ -97,6 +97,7 @@ class FilesController extends Controller
        $html = str_replace("#version", $file->version,$html);
        $html = str_replace("#engine", $file->engine,$html);
        $html = str_replace("#ecu", $file->ecu,$html);
+       $html = str_replace("#file_url", route('file', $file->id),$html);
 
        \Mail::to($engineer->email)->send(new \App\Mail\AssignEngineerToTaskMail(['engineer' => $engineer, 'html' => $html]));
        
