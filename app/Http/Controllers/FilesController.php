@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use PDF;
 use SebastianBergmann\Template\Template;
+use Twilio\Rest\Client;
 
 class FilesController extends Controller
 {
@@ -80,6 +81,29 @@ class FilesController extends Controller
         return response('File deleted', 200);
     }
 
+    public function testMessage(){
+        $this->sendMessage('+923218612198', 'test message again');
+    }
+    public function sendMessage($receiver, $message)
+    {
+        try {
+            $accountSid = env("TWILIO_SID");
+            $authToken = env("TWILIO_AUTH_TOKEN");
+            $twilioNumber = env("TWILIO_NUMBER"); 
+            $client = new Client($accountSid, $authToken);
+
+            $message = $client->messages
+                  ->create($receiver, // to
+                           ["body" => $message, "from" => "ecutech"]
+            );
+
+            \Log::info('message sent to:'.$receiver);
+
+        } catch (\Exception $e) {
+            \Log::info($e->getMessage());
+        }
+    }
+
     public function assignEngineer(Request $request){
        $file = File::findOrFail($request->file_id);
        $file->assigned_to = $request->assigned_to;
@@ -100,6 +124,8 @@ class FilesController extends Controller
        $html = str_replace("#file_url", route('file', $file->id),$html);
 
        \Mail::to($engineer->email)->send(new \App\Mail\AssignEngineerToTaskMail(['engineer' => $engineer, 'html' => $html]));
+       
+       $this->sendMessage($engineer->phone, "You have been assigned to new task over the ECU tech platform.");
        
        return Redirect::back()->with(['success' => 'Engineer Assigned to File.']);
 
