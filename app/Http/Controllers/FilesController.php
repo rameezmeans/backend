@@ -213,64 +213,63 @@ class FilesController extends Controller
 
     public function fileEngineersNotes(Request $request)
     {
-        $file = new EngineerFileNote();
-        $file->egnineers_internal_notes = $request->egnineers_internal_notes;
-        $file->engineer = true;
-        $file->file_id = $request->file_id;
-        $file->save();
+        $reply = new EngineerFileNote();
+        $reply->egnineers_internal_notes = $request->egnineers_internal_notes;
+        $reply->engineer = true;
+        $reply->file_id = $request->file_id;
+        $reply->save();
 
+        $file = File::findOrFail($request->file_id);
         $customer = User::findOrFail($file->user_id);
         $admin = User::where('is_admin', 1)->first();
     
-       $template = EmailTemplate::where('name', 'Message To Client')->first();
+        $template = EmailTemplate::where('name', 'Message To Client')->first();
+        $html = $template->html;
 
-       $html = $template->html;
-
-       $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
-       $html = str_replace("#customer_name", $file->name ,$html);
-       $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
-       
-       $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
-       $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
+        $html = str_replace("#customer_name", $file->name ,$html);
+        $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
         
-        foreach($file->options() as $option) {
-            $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-            $tunningType .=  $option;  
-            $tunningType .= '</div>';
-        }
+        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
+        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+            
+            foreach($file->options() as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+                $tunningType .=  $option;  
+                $tunningType .= '</div>';
+            }
 
-        $html = str_replace("#tuning_type", $tunningType,$html);
-        $html = str_replace("#status", $file->status,$html);
-        $html = str_replace("#file_url", route('file', $file->id),$html);
+            $html = str_replace("#tuning_type", $tunningType,$html);
+            $html = str_replace("#status", $file->status,$html);
+            $html = str_replace("#file_url", route('file', $file->id),$html);
 
-        $optionsMessage = "";
-        foreach($file->options() as $option) {
-            $optionsMessage .= ",".$option." ";
-        }
+            $optionsMessage = "";
+            foreach($file->options() as $option) {
+                $optionsMessage .= ",".$option." ";
+            }
 
-        $message = "Hi, Engineer replied to your file. 
-        Customer: ".$file->name." 
-        ". 
-        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
-        ". 
-        "Tuning Type: ".$file->stages." ".$optionsMessage." 
-        ". 
-       
+            $message = "Hi, Engineer replied to your file. 
+            Customer: ".$file->name." 
+            ". 
+            "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
+            ". 
+            "Tuning Type: ".$file->stages." ".$optionsMessage." 
+            ". 
+        
+            $subject = "ECU Tech: Engineer replied to your support message!";
 
-        $subject = "ECU Tech: Engineer replied to your support message!";
+            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html, 'subject' => $subject]));
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html, 'subject' => $subject]));
+            $this->sendMessage($admin->phone, $message);
+            $this->sendMessage($customer->phone, $message);
 
-        \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html, 'subject' => $subject]));
-        \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html, 'subject' => $subject]));
-        $this->sendMessage($admin->phone, $message);
-        $this->sendMessage($customer->phone, $message);
+            $old = File::findOrFail($request->file_id);
+            $old->checked_by = 'engineer';
+            $old->save();
 
-        $old = File::findOrFail($request->file_id);
-        $old->checked_by = 'engineer';
-        $old->save();
-
-        return redirect()->back()
-        ->with('success', 'Engineer note successfully Added!')
-        ->with('tab','chat');
+            return redirect()->back()
+            ->with('success', 'Engineer note successfully Added!')
+            ->with('tab','chat');
     }
 
     public function uploadFileFromEngineer(Request $request)
