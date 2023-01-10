@@ -125,3 +125,5 @@ Route::post('/post_template', [App\Http\Controllers\EmailTemplatesController::cl
 Route::post('/update_template', [App\Http\Controllers\EmailTemplatesController::class, 'update'])->name('update-template');
 Route::post('/delete_template', [App\Http\Controllers\EmailTemplatesController::class, 'delete'])->name('delete-template');
 Route::get('/test_html', [App\Http\Controllers\EmailTemplatesController::class, 'test'])->name('test-html');
+
+Route::get('/test_message', [App\Http\Controllers\FilesController::class, 'testMessage'])->name('test-message');
