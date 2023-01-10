@@ -146,6 +146,7 @@ class FilesController extends Controller
         ". 
         "Status: ".$file->status;
 
+        
         \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject]));
         $this->sendMessage($engineer->phone, $message);
         
