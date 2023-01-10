@@ -174,11 +174,11 @@ class FilesController extends Controller
     
         $template = EmailTemplate::where('name', 'Status Change')->first();
 
-        $html = $template->html;
+        $html1 = $template->html;
 
-        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
-        $html = str_replace("#customer_name", $customer->name ,$html);
-        $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
+        $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+        $html1 = str_replace("#customer_name", $customer->name ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
         
         $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
         $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
@@ -191,9 +191,30 @@ class FilesController extends Controller
             }
         }
 
-        $html = str_replace("#tuning_type", $tunningType,$html);
-        $html = str_replace("#status", $file->status,$html);
-        $html = str_replace("#file_url", route('file', $file->id),$html);
+        $html1 = str_replace("#tuning_type", $tunningType,$html1);
+        $html1 = str_replace("#status", $file->status,$html1);
+        $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+        $html2 = $template->html;
+
+        $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+        $html2 = str_replace("#customer_name", $file->name ,$html2);
+        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
+        
+        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
+        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        
+        if($file->options){
+            foreach($file->options() as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+                $tunningType .=  $option;  
+                $tunningType .= '</div>';
+            }
+        }
+
+        $html2 = str_replace("#tuning_type", $tunningType,$html2);
+        $html2 = str_replace("#status", $file->status,$html1);
+        $html2 = str_replace("#file_url", route('file', $file->id),$html2);
 
         $optionsMessage = "";
         if($file->options){
@@ -202,8 +223,17 @@ class FilesController extends Controller
             }
         }
 
-        $message = "Hi, the status of the file you uploaded is changed. 
+        $message1 = "Hi, the status of the file you uploaded is changed. 
         Customer: ".$customer->name." 
+        ". 
+        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
+        ". 
+        "Tuning Type: ".$file->stages." ".$optionsMessage." 
+        ". 
+        "Status: ".$file->status;
+
+        $message2 = "Hi, the status of the file you uploaded is changed. 
+        Customer: ".$file->name." 
         ". 
         "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
         ". 
@@ -213,10 +243,11 @@ class FilesController extends Controller
 
         $subject = "ECU Tech: File Status Changed!";
 
-        \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html, 'subject' => $subject]));
-        \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html, 'subject' => $subject]));
-        $this->sendMessage($admin->phone, $message);
-        $this->sendMessage($customer->phone, $message);
+        \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+        \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        
+        $this->sendMessage($admin->phone, $message1);
+        $this->sendMessage($customer->phone, $message2);
 
         return Redirect::back()->with(['success' => 'File status changed.']);
     }
@@ -234,11 +265,12 @@ class FilesController extends Controller
         $admin = User::where('is_admin', 1)->first();
     
         $template = EmailTemplate::where('name', 'Message To Client')->first();
-        $html = $template->html;
 
-        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
-        $html = str_replace("#customer_name", $customer->name ,$html);
-        $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
+        $html1 = $template->html;
+
+        $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+        $html1 = str_replace("#customer_name", $customer->name ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
         
         $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
         $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
@@ -251,9 +283,30 @@ class FilesController extends Controller
             }
         }
 
-        $html = str_replace("#tuning_type", $tunningType,$html);
-        $html = str_replace("#status", $file->status,$html);
-        $html = str_replace("#file_url", route('file', $file->id),$html);
+        $html1 = str_replace("#tuning_type", $tunningType,$html1);
+        $html1 = str_replace("#status", $file->status,$html1);
+        $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+        $html2 = $template->html;
+
+        $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+        $html2 = str_replace("#customer_name", $file->name ,$html2);
+        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
+        
+        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
+        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        
+        if($file->options){
+            foreach($file->options() as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+                $tunningType .=  $option;  
+                $tunningType .= '</div>';
+            }
+        }
+
+        $html2 = str_replace("#tuning_type", $tunningType,$html2);
+        $html2 = str_replace("#status", $file->status,$html1);
+        $html2 = str_replace("#file_url", route('file', $file->id),$html2);
 
         $optionsMessage = "";
         if($file->options){
@@ -262,20 +315,30 @@ class FilesController extends Controller
             }
         }
 
-        $message = "Hi, Engineer replied to your file. 
+        $message1 = "Hi, the status of the file you uploaded is changed. 
         Customer: ".$customer->name." 
         ". 
         "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
         ". 
         "Tuning Type: ".$file->stages." ".$optionsMessage." 
         ". 
+        "Status: ".$file->status;
+
+        $message2 = "Hi, the status of the file you uploaded is changed. 
+        Customer: ".$file->name." 
+        ". 
+        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
+        ". 
+        "Tuning Type: ".$file->stages." ".$optionsMessage." 
+        ". 
+        "Status: ".$file->status;
     
         $subject = "ECU Tech: Engineer replied to your support message!";
 
-        \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html, 'subject' => $subject]));
-        \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html, 'subject' => $subject]));
-        $this->sendMessage($admin->phone, $message);
-        $this->sendMessage($customer->phone, $message);
+        \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+        \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        $this->sendMessage($admin->phone, $message1);
+        $this->sendMessage($customer->phone, $message2);
 
         $old = File::findOrFail($request->file_id);
         $old->checked_by = 'engineer';
@@ -330,16 +393,16 @@ class FilesController extends Controller
     
         $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
 
-        $html = $template->html;
+        $html1 = $template->html;
 
-        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
-        $html = str_replace("#customer_name", $customer->name ,$html);
-        $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
+        $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+        $html1 = str_replace("#customer_name", $customer->name ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
         
         $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
         $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        
         if($file->options){
-
             foreach($file->options() as $option) {
                 $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
                 $tunningType .=  $option;  
@@ -347,9 +410,30 @@ class FilesController extends Controller
             }
         }
 
-        $html = str_replace("#tuning_type", $tunningType,$html);
-        $html = str_replace("#status", $file->status,$html);
-        $html = str_replace("#file_url", route('file', $file->id),$html);
+        $html1 = str_replace("#tuning_type", $tunningType,$html1);
+        $html1 = str_replace("#status", $file->status,$html1);
+        $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+        $html2 = $template->html;
+
+        $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+        $html2 = str_replace("#customer_name", $file->name ,$html2);
+        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
+        
+        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
+        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        
+        if($file->options){
+            foreach($file->options() as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+                $tunningType .=  $option;  
+                $tunningType .= '</div>';
+            }
+        }
+
+        $html2 = str_replace("#tuning_type", $tunningType,$html2);
+        $html2 = str_replace("#status", $file->status,$html1);
+        $html2 = str_replace("#file_url", route('file', $file->id),$html2);
 
         $optionsMessage = "";
         if($file->options){
@@ -358,21 +442,31 @@ class FilesController extends Controller
             }
         }
 
-        $message = "Hi, Engineer uploaded a file in reply to your file. 
+        $message1 = "Hi, the status of the file you uploaded is changed. 
         Customer: ".$customer->name." 
         ". 
         "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
         ". 
         "Tuning Type: ".$file->stages." ".$optionsMessage." 
         ". 
+        "Status: ".$file->status;
+
+        $message2 = "Hi, the status of the file you uploaded is changed. 
+        Customer: ".$file->name." 
+        ". 
+        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
+        ". 
+        "Tuning Type: ".$file->stages." ".$optionsMessage." 
+        ". 
+        "Status: ".$file->status;
     
 
         $subject = "ECU Tech: Engineer uploaded a file in reply.";
 
-        \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html, 'subject' => $subject]));
-        \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html, 'subject' => $subject]));
-        $this->sendMessage($admin->phone, $message);
-        $this->sendMessage($customer->phone, $message);
+        \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+        \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        $this->sendMessage($admin->phone, $message1);
+        $this->sendMessage($customer->phone, $message2);
     
 
         return response('file uploaded', 200);
