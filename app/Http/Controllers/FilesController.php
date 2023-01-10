@@ -190,6 +190,7 @@ class FilesController extends Controller
                 $tunningType .= '</div>';
             }
         }
+        
 
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
