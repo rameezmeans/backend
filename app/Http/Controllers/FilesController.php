@@ -146,7 +146,7 @@ class FilesController extends Controller
         }
 
         $message = "Hi, You have been assigned to a Task by ECU Tech Admin. 
-        Customer: ".$file->name." 
+        Customer: ".$customer->name." 
         ". 
         "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
         ". 
@@ -203,7 +203,7 @@ class FilesController extends Controller
         }
 
         $message = "Hi, the status of the file you uploaded is changed. 
-        Customer: ".$file->name." 
+        Customer: ".$customer->name." 
         ". 
         "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
         ". 
@@ -263,7 +263,7 @@ class FilesController extends Controller
         }
 
         $message = "Hi, Engineer replied to your file. 
-        Customer: ".$file->name." 
+        Customer: ".$customer->name." 
         ". 
         "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
         ". 
@@ -359,7 +359,7 @@ class FilesController extends Controller
         }
 
         $message = "Hi, Engineer uploaded a file in reply to your file. 
-        Customer: ".$file->name." 
+        Customer: ".$customer->name." 
         ". 
         "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
         ". 
