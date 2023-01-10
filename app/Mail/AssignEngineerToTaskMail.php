@@ -31,7 +31,7 @@ class AllMails extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject:  $this->details['subject']
+            subject:  $this->details['subject'],
         );
     }
 
