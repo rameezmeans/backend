@@ -116,22 +116,40 @@ class FilesController extends Controller
        $html = $template->html;
 
        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
-       $html = str_replace("#customer_name", $file->brand ,$html);
+       $html = str_replace("#customer_name", $file->name ,$html);
        $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
        
-       $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" data-src-retina="'.url("icons").'/'.\App\Models\Service::where("name", $file->stages)->first()->icon.'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
+       $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
         
-       
+        foreach($file->options() as $option) {
+            $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+            $tunningType .=  $option;  
+            $tunningType .= '</div>';
+        }
 
-       $html = str_replace("#tuning_type", $tunningType,$html);
-       $html = str_replace("#file_url", route('file', $file->id),$html);
+        $html = str_replace("#tuning_type", $tunningType,$html);
+        $html = str_replace("#status", $file->status,$html);
+        $html = str_replace("#file_url", route('file', $file->id),$html);
 
-       \Mail::to($engineer->email)->send(new \App\Mail\AssignEngineerToTaskMail(['engineer' => $engineer, 'html' => $html]));
-       
-       $this->sendMessage($engineer->phone, "You have been assigned to new task over the ECU tech platform.");
-       
-       return Redirect::back()->with(['success' => 'Engineer Assigned to File.']);
+        $optionsMessage = "";
+        foreach($file->options() as $option) {
+            $optionsMessage .= ",".$option." ";
+        }
+
+        $message = "Hi, You have been assigned to a Task by ECU Tech Admin. 
+        Customer: ".$file->name." 
+        ". 
+        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
+        ". 
+        "Tuning Type: ".$file->stages." ".$optionsMessage." 
+        ". 
+        "Status: ".$file->status;
+
+        \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject]));
+        $this->sendMessage($engineer->phone, $message);
+        
+        return Redirect::back()->with(['success' => 'Engineer Assigned to File.']);
 
     }
 

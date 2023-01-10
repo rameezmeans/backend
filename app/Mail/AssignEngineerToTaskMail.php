@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AssignEngineerToTaskMail extends Mailable
+class AllMails extends Mailable
 {
     use Queueable, SerializesModels;
     public $details;
@@ -31,7 +31,7 @@ class AssignEngineerToTaskMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'ECUTech: You are assigned to a Task',
+            subject:  $this->details['subject']
         );
     }
 
