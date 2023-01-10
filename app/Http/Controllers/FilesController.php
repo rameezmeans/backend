@@ -116,11 +116,15 @@ class FilesController extends Controller
        $html = $template->html;
 
        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
-       $html = str_replace("#brand", $file->brand ,$html);
-       $html = str_replace("#model", $file->model ,$html);
-       $html = str_replace("#version", $file->version,$html);
-       $html = str_replace("#engine", $file->engine,$html);
-       $html = str_replace("#ecu", $file->ecu,$html);
+       $html = str_replace("#customer_name", $file->brand ,$html);
+       $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
+       
+       $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" data-src-retina="'.url("icons").'/'.\App\Models\Service::where("name", $file->stages)->first()->icon.'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
+       $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        
+       
+
+       $html = str_replace("#tuning_type", $tunningType,$html);
        $html = str_replace("#file_url", route('file', $file->id),$html);
 
        \Mail::to($engineer->email)->send(new \App\Mail\AssignEngineerToTaskMail(['engineer' => $engineer, 'html' => $html]));
