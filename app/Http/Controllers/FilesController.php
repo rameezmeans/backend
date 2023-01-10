@@ -112,13 +112,14 @@ class FilesController extends Controller
        $file->save();
 
        $engineer = User::findOrFail($request->assigned_to);
+       $customer = User::findOrFail($file->user_id);
     
        $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
 
        $html = $template->html;
 
        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
-       $html = str_replace("#customer_name", $file->name ,$html);
+       $html = str_replace("#customer_name", $customer->name ,$html);
        $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
        
        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
@@ -171,7 +172,7 @@ class FilesController extends Controller
        $html = $template->html;
 
        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
-       $html = str_replace("#customer_name", $file->name ,$html);
+       $html = str_replace("#customer_name", $customer->name ,$html);
        $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
        
        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
@@ -227,7 +228,7 @@ class FilesController extends Controller
         $html = $template->html;
 
         $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
-        $html = str_replace("#customer_name", $file->name ,$html);
+        $html = str_replace("#customer_name", $customer->name ,$html);
         $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
         
         $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
@@ -314,22 +315,22 @@ class FilesController extends Controller
         $customer = User::findOrFail($file->user_id);
         $admin = User::where('is_admin', 1)->first();
     
-       $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
+        $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
 
-       $html = $template->html;
+        $html = $template->html;
 
-       $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
-       $html = str_replace("#customer_name", $file->name ,$html);
-       $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
-       
-       $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
-       $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
+        $html = str_replace("#customer_name", $customer->name ,$html);
+        $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
         
-        foreach($file->options() as $option) {
-            $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-            $tunningType .=  $option;  
-            $tunningType .= '</div>';
-        }
+        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
+        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+            
+            foreach($file->options() as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+                $tunningType .=  $option;  
+                $tunningType .= '</div>';
+            }
 
         $html = str_replace("#tuning_type", $tunningType,$html);
         $html = str_replace("#status", $file->status,$html);
@@ -347,7 +348,7 @@ class FilesController extends Controller
         ". 
         "Tuning Type: ".$file->stages." ".$optionsMessage." 
         ". 
-       
+    
 
         $subject = "ECU Tech: Engineer uploaded a file in reply.";
 
