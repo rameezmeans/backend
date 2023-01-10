@@ -146,7 +146,8 @@ class FilesController extends Controller
         ". 
         "Status: ".$file->status;
 
-        
+        $subject = "ECU Tech: Task Assigned!";
+
         \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject]));
         $this->sendMessage($engineer->phone, $message);
         
