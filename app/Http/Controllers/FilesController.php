@@ -145,14 +145,7 @@ class FilesController extends Controller
             }
         }
 
-        $message = "Hi, You have been assigned to a Task by ECU Tech Admin. 
-        Customer: ".$customer->name." 
-        ". 
-        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
-        ". 
-        "Tuning Type: ".$file->stages." ".$optionsMessage." 
-        ". 
-        "Status: ".$file->status;
+        $message = "Hi, You have been assigned to a Task by Customer: ".$customer->name;
 
         $subject = "ECU Tech: Task Assigned!";
 
@@ -215,7 +208,7 @@ class FilesController extends Controller
 
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html1);
-        $html2 = str_replace("#file_url", route('file', $file->id),$html2);
+        $html2 = str_replace("#file_url",  env('PORTAL_URL')."/file/".$file->id,$html2);
 
         $optionsMessage = "";
         if($file->options){
@@ -224,23 +217,8 @@ class FilesController extends Controller
             }
         }
 
-        $message1 = "Hi, the status of the file you uploaded is changed. 
-        Customer: ".$customer->name." 
-        ". 
-        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
-        ". 
-        "Tuning Type: ".$file->stages." ".$optionsMessage." 
-        ". 
-        "Status: ".$file->status;
-
-        $message2 = "Hi, the status of the file you uploaded is changed. 
-        Customer: ".$file->name." 
-        ". 
-        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
-        ". 
-        "Tuning Type: ".$file->stages." ".$optionsMessage." 
-        ". 
-        "Status: ".$file->status;
+        $message1 = "Hi, File status is changed for the Customer: ".$customer->name;
+        $message2 = "Hi, File status is changed for the Customer: ".$file->name;
 
         $subject = "ECU Tech: File Status Changed!";
 
@@ -307,7 +285,7 @@ class FilesController extends Controller
 
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html1);
-        $html2 = str_replace("#file_url", route('file', $file->id),$html2);
+        $html2 = str_replace("#file_url",  env('PORTAL_URL')."/file/".$file->id,$html2);
 
         $optionsMessage = "";
         if($file->options){
@@ -316,28 +294,14 @@ class FilesController extends Controller
             }
         }
 
-        $message1 = "Hi, the status of the file you uploaded is changed. 
-        Customer: ".$customer->name." 
-        ". 
-        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
-        ". 
-        "Tuning Type: ".$file->stages." ".$optionsMessage." 
-        ". 
-        "Status: ".$file->status;
-
-        $message2 = "Hi, the status of the file you uploaded is changed. 
-        Customer: ".$file->name." 
-        ". 
-        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
-        ". 
-        "Tuning Type: ".$file->stages." ".$optionsMessage." 
-        ". 
-        "Status: ".$file->status;
-    
+        $message1 = "Hi, Status changed for a file by Customer: " .$customer->name;
+        $message2 = "Hi, Status changed for a file by Customer: " .$file->name;
+       
         $subject = "ECU Tech: Engineer replied to your support message!";
 
         \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
         \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        
         $this->sendMessage($admin->phone, $message1);
         $this->sendMessage($customer->phone, $message2);
 
@@ -434,7 +398,7 @@ class FilesController extends Controller
 
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html1);
-        $html2 = str_replace("#file_url", route('file', $file->id),$html2);
+        $html2 = str_replace("#file_url",  env('PORTAL_URL')."/file/".$file->id,$html2);
 
         $optionsMessage = "";
         if($file->options){
@@ -443,29 +407,14 @@ class FilesController extends Controller
             }
         }
 
-        $message1 = "Hi, the status of the file you uploaded is changed. 
-        Customer: ".$customer->name." 
-        ". 
-        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
-        ". 
-        "Tuning Type: ".$file->stages." ".$optionsMessage." 
-        ". 
-        "Status: ".$file->status;
-
-        $message2 = "Hi, the status of the file you uploaded is changed. 
-        Customer: ".$file->name." 
-        ". 
-        "Vehicle: ".$file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard." 
-        ". 
-        "Tuning Type: ".$file->stages." ".$optionsMessage." 
-        ". 
-        "Status: ".$file->status;
-    
-
+        $message1 = "Hi, Engineer uploaded a file in reply to Customer: ".$customer->name;
+        $message2 = "Hi, Engineer uploaded a file in reply to Customer: ".$file->name;
+        
         $subject = "ECU Tech: Engineer uploaded a file in reply.";
 
         \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
         \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        
         $this->sendMessage($admin->phone, $message1);
         $this->sendMessage($customer->phone, $message2);
     
