@@ -58,7 +58,7 @@ class FilesController extends Controller
 
         File::where('is_credited', 0)->delete(); // remove unneccesary NOT credited files
 
-        if(Auth::user()->is_admin){
+        if(Auth::user()->is_admin || Auth::user()->is_head){
             $files = File::orderBy('created_at', 'desc')->where('is_credited', 1)->get();
         }
         else if(Auth::user()->is_engineer){
