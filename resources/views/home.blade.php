@@ -8,6 +8,7 @@
   <div class="content sm-gutter">
     <!-- START CONTAINER FLUID -->
     <div class="container-fluid p-t-20">
+      @if(Auth::user()->is_admin || Auth::user()->is_head)
       <div class="row">
         <div class="col-sm-4">
           <div class="ar-2-1">
@@ -415,6 +416,7 @@
             </div>
           </div>
           </div>
+          @endif
     </div>
   </div>
 </div>

@@ -18,7 +18,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next)
     {
         $user = $request->user();
-        if($user->is_admin){
+        if($user->is_admin || $user->is_head){
             return $next($request);
         }
         return abort(404);
