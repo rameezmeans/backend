@@ -105,18 +105,18 @@
 
         function change_status(service_id, status){
             $.ajax({
-                        url: "/change_status",
-                        type: "POST",
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "service_id": service_id,
-                            "status": status,
-                        },
-                        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-                        success: function(response) {
-                            
-                        }
-                    });  
+                url: "/change_status",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "service_id": service_id,
+                    "status": status,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    
+                }
+            });  
         }
     });
 </script>

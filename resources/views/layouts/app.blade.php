@@ -120,15 +120,42 @@
 
         $(document).on('click','.redirect-click',function(e) {
             if(!$(e.target).hasClass('switchery')){
-                if( e.target.nodeName !== 'SMALL') {
-                    window.location.href = $(this).data('redirect');
+                
+                if( e.target.nodeName !== 'SMALL' && e.target.nodeName !== 'LABEL') {
+                  window.location.href = $(this).data('redirect');
+                }
+
+                if(e.target.nodeName == 'LABEL'){
+                  console.log( $(e.target).prev().is(":checked"));
+                  if($(e.target).prev().is(":checked")){
+                    $(e.target).prev().attr('checked', false);
+                  }
+                  else{
+                    $(e.target).prev().attr('checked', true);
+                  }
                 }
             }
             return false;
         });
 
-        $('.dataTable').DataTable({
+        var pageLength = 0;
+        let table = $('.dataTable').DataTable({
           "aaSorting": []
+        });
+
+        $('.dataTables_filter input').off().on('keyup', function() {
+          var str = $(this).val();
+          if (str.length === 0) {
+            table.page.len(pageLength);
+            pageLength = 0;
+          }
+          else if (pageLength === 0) {
+              pageLength = table.page.len();
+              table.page.len(10000);
+          }
+          
+          table.search(str).draw();
+          
         });
 
         $('.datepicker').datepicker();
