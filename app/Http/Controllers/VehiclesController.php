@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\VehiclesImport;
 use App\Models\Comment;
 use App\Models\Service;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class VehiclesController extends Controller
 {
@@ -84,6 +86,27 @@ class VehiclesController extends Controller
             'includedOptions' => $includedOptions,
             'hasECU' => $hasECU,
         ]);
+    }
+
+    public function importVehicles(Request $request){
+        Excel::import(new VehiclesImport,request()->file);
+        return redirect()->route('vehicles')->with('success',  'Vehicle added, successfully.');
+    }
+
+    public function importVehiclesView(){
+
+        return view('vehicles.import');
+
+    }
+
+
+    public function massDelete(Request $request){
+
+        foreach($request->searchIDs as $id){
+            Vehicle::FindOrFail($id)->delete();
+        }
+
+        return response('vehicles deleted', 200);
     }
 
     public function editOptionComment(Request $request){

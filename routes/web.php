@@ -63,6 +63,9 @@ Route::get('/add_comments/{id}', [App\Http\Controllers\VehiclesController::class
 Route::post('/add-option-comments', [App\Http\Controllers\VehiclesController::class,'addOptionComments'])->name('add-option-comments');
 Route::post('/edit-option-comment', [App\Http\Controllers\VehiclesController::class,'editOptionComment'])->name('edit-option-comment');
 Route::post('/delete_comment', [App\Http\Controllers\VehiclesController::class,'deleteComment'])->name('delete-comment');
+Route::post('/mass_delete', [App\Http\Controllers\VehiclesController::class,'massDelete'])->name('mass-delete');
+Route::get('/import_vehicles', [App\Http\Controllers\VehiclesController::class,'importVehiclesView'])->name('import-vehicles');
+Route::post('/import_vehicles_post', [App\Http\Controllers\VehiclesController::class,'importVehicles'])->name('import-vehicles-post');
 
 Route::get('/groups', [App\Http\Controllers\GroupsController::class,'index'])->name('customer.groups');
 
@@ -124,6 +127,6 @@ Route::get('/edit_template/{id}', [App\Http\Controllers\EmailTemplatesController
 Route::post('/post_template', [App\Http\Controllers\EmailTemplatesController::class, 'post'])->name('post-template');
 Route::post('/update_template', [App\Http\Controllers\EmailTemplatesController::class, 'update'])->name('update-template');
 Route::post('/delete_template', [App\Http\Controllers\EmailTemplatesController::class, 'delete'])->name('delete-template');
-Route::get('/test_html', [App\Http\Controllers\EmailTemplatesController::class, 'test'])->name('test-html');
 
-Route::get('/test_message', [App\Http\Controllers\FilesController::class, 'testMessage'])->name('test-message');
+// Route::get('/test_html', [App\Http\Controllers\EmailTemplatesController::class, 'test'])->name('test-html');
+// Route::get('/test_message', [App\Http\Controllers\FilesController::class, 'testMessage'])->name('test-message');
