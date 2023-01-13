@@ -9,6 +9,6 @@ class Vehicle extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'Make', 'Generation', 'Model', 'Engine', 'Engine_ECU', 'Engine_URL'
+        'Make', 'Generation', 'Model', 'Engine', 'Engine_ECU', 'Engine_URL', 'Name'
     ];
 }
