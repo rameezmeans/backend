@@ -15,6 +15,7 @@ class VehiclesImport implements ToModel
     public function model(array $row)
     {
         return new Vehicle([
+            "Name" => $row[0].' '. $row[1].' '.$row[3],
             "Make" => $row[0],
             "Model" => $row[1],
             "Generation" => $row[2],
