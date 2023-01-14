@@ -21,7 +21,81 @@ class NewsFeedsController extends Controller
     public function index() {
         
         $newsFeeds = NewsFeed::all();
+
+        if(env('APP_ENV') == 'local'){
+            $this->simulateActivation($newsFeeds);
+            dd('check activation');
+        }
         return view('feeds.index', ['newsFeeds' => $newsFeeds]);
+    }
+
+    public function simulateActivation($feeds){
+        $dateCheck = date('l');
+        $timeCheck = date('H:i');
+
+        foreach($feeds as $feed) {
+
+            // \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
+            // \Log::info("Feed Activation Day: ".strtotime(date('d-m-y h:i:s')));
+            // \Log::info("activation date time: ".$feed->activate_at);
+            // \Log::info("activation date time: ".strtotime($feed->activate_at));
+
+            if($feed->activate_at == null &&  $feed->deactivate_at == null) {
+
+                if($this->getDayNumber($dateCheck) >= $this->getDayNumber($feed->activation_weekday) && $this->getDayNumber($dateCheck) <= $this->getDayNumber($feed->deactivation_weekday) ) {
+                    
+                    if ( strtotime($timeCheck) > strtotime($feed->daily_activation_time) && strtotime($timeCheck) < strtotime($feed->daily_deactivation_time) ) {
+
+                        if($feed->active == 0){
+                            
+                            \Log::info("activating feed at:".date('l').$feed->title);
+                            $feed->active = 1;
+                            $feed->save();
+                        }
+                    }
+
+                    else {
+                        
+                        if($feed->active == 1){
+                            
+                            \Log::info("deactivating feed at:".date('l').$feed->title);
+                            $feed->active = 0;
+                            $feed->save();
+                        }
+                    }
+                }
+
+                else{
+
+                    if($feed->active == 1){
+
+                        \Log::info("deactivating feed:".date('l').$feed->title);
+                        $feed->active = 0;
+                        $feed->save();
+                    }
+                    
+                }
+            }
+
+            if($feed->activation_weekday == null &&  $feed->deactivation_weekday == null){
+
+            if( strtotime(now()) >= strtotime($feed->activate_at)){
+                if($feed->active == 0){
+                        \Log::info("activating feed:".$feed->title);
+                        $feed->active = 1;
+                        $feed->save();
+                    }
+                }
+                if( strtotime(now()) >= strtotime($feed->deactivate_at)){
+                    if($feed->active == 1){
+                        \Log::info("deactivating feed:".$feed->title);
+                        $feed->active = 0;
+                        $feed->save();
+                    }
+                }
+            }
+
+        }
     }
 
     public function add() {
@@ -53,84 +127,6 @@ class NewsFeedsController extends Controller
 
         $date = date('d/m/Y h:i A');
         $feed = NewsFeed::findOrFail($id);
-
-        // $feeds = NewsFeed::all();
-
-        // $dateCheck = date('l');
-        // // $dateCheck = 'Saturday';
-        // $timeCheck = date('H:i');
-        // $timeCheck = date('13:59');
-
-        // dd($this->getDayNumber($dateCheck));
-        // dd( $this->getDayNumber($feed->activation_weekday));
-        // dd( $this->getDayNumber($feed->deactivation_weekday));
-        // dd($timeCheck);
-        // dd($timeCheck);
-        // dd($timeCheck);
-        // dd($this->getDayNumber($dateCheck) >= $this->getDayNumber($feed->activation_weekday));
-        // dd($this->getDayNumber($dateCheck) <= $this->getDayNumber($feed->deactivation_weekday));
-        // dd(strtotime($timeCheck) > strtotime($feed->daily_activation_time));
-        // dd(strtotime($timeCheck) > strtotime($feed->daily_activation_time) && strtotime($timeCheck) < strtotime($feed->daily_deactivation_time));
-        // dd(strtotime($timeCheck) < strtotime($feed->daily_deactivation_time));
-
-        // foreach($feeds as $feed) {
-
-            // \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
-            // \Log::info("Feed Activation Day: ".strtotime(date('d-m-y h:i:s')));
-            // \Log::info("activation date time: ".$feed->activate_at);
-            // \Log::info("activation date time: ".strtotime($feed->activate_at));
-
-            // dd($feed);
-
-        //     if($feed->activate_at == null &&  $feed->deactivate_at == null){
-
-        //         if($this->getDayNumber($dateCheck) >= $this->getDayNumber($feed->activation_weekday) && $this->getDayNumber($dateCheck) <= $this->getDayNumber($feed->deactivation_weekday) ){
-        //             // dd('act');
-        //             // dd(strtotime($feed->daily_activation_time));
-        //             // dd(strtotime($timeCheck));
-        //             if ( strtotime($timeCheck) > strtotime($feed->daily_activation_time) && strtotime($timeCheck) < strtotime($feed->daily_deactivation_time) ) {
-
-        //                 // dd($feed);
-                        
-        //                 if($feed->active == 0){
-                            
-        //                     \Log::info("activating feed at:".date('l').$feed->title);
-        //                     $feed->active = 1;
-        //                     $feed->save();
-        //                 }
-        //             }
-
-        //             // dd(strtotime($feed->daily_activation_time));
-
-        //             else {
-                        
-        //                 if($feed->active == 1){
-                            
-        //                     \Log::info("deactivating feed at:".date('l').$feed->title);
-        //                     $feed->active = 0;
-        //                     $feed->save();
-        //                 }
-        //             }
-        //         }
-
-        //         // dd($this->getDayNumber($dateCheck) );
-        //         // dd($this->getDayNumber($feed->deactivation_weekday) );
-
-        //         else{
-        //             // dd('deact');
-        //             if($feed->active == 1){
-
-        //                 \Log::info("deactivating feed:".date('l').$feed->title);
-        //                 $feed->active = 0;
-        //                 $feed->save();
-        //             }
-                    
-        //         }
-        //     }
-
-        // // }
-
-        // dd("testing");
 
         return view('feeds.add_edit', ['feed' => $feed, 'date' => $date]);
     }
