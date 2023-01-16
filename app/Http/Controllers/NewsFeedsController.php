@@ -27,7 +27,7 @@ class NewsFeedsController extends Controller
         }
 
         $newsFeeds = NewsFeed::all();
-        
+
         return view('feeds.index', ['newsFeeds' => $newsFeeds]);
     }
 
@@ -36,7 +36,7 @@ class NewsFeedsController extends Controller
         $dateCheck = date('l');
         // $dateCheck = 'Monday';
         $timeCheck = date('H:i');
-        // $timeCheck = '00:02';
+        // $timeCheck = '09:10';
 
         $deactiveAll = false;
 
