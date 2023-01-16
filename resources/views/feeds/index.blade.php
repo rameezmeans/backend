@@ -56,7 +56,7 @@
                                             <p>{{$feed->created_at->diffForHumans()}}</p>
                                         </td>
                                         <td class="v-align-middle">
-                                            <p><input data-feed_id={{$feed->id}} class="active" type="checkbox" data-init-plugin="switchery" @if($feed->active) checked="checked" @endif onclick="status_change()"/></p>
+                                            <p><input data-feed_id={{$feed->id}} class="active" type="checkbox" data-init-plugin="switchery" @if($feed->active == 1) checked="checked" @endif onclick="status_change()"/></p>
                                         </td>
                                     </tr>
                                 @endforeach

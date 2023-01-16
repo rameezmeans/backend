@@ -45,6 +45,19 @@ class ActiveFeedCron extends Command
         }
 
     }
+
+    public function deactivateAllExceptThisFeed($ThatFeed) {
+        
+        $allOtherFeed = NewsFeed::where('id', '!=', $ThatFeed->id)->get();
+
+        foreach($allOtherFeed as $feed){
+            if($feed->active == 1){
+                \Log::info("deactivating feed inner:".$feed->title);
+                $feed->active = 0;
+                $feed->save();
+            }
+        }
+    }
     
     public function handle()
     {
@@ -55,6 +68,10 @@ class ActiveFeedCron extends Command
         $dateCheck = date('l');
         $timeCheck = date('H:i');
 
+        $deactiveAll = false;
+
+        $thatFeed = '';
+
         foreach($feeds as $feed) {
 
             // \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
@@ -62,61 +79,69 @@ class ActiveFeedCron extends Command
             // \Log::info("activation date time: ".$feed->activate_at);
             // \Log::info("activation date time: ".strtotime($feed->activate_at));
 
-            if($feed->activate_at == null &&  $feed->deactivate_at == null) {
+            if($feed->activation_weekday == null &&  $feed->deactivation_weekday == null){
 
-                if($this->getDayNumber($dateCheck) >= $this->getDayNumber($feed->activation_weekday) && $this->getDayNumber($dateCheck) <= $this->getDayNumber($feed->deactivation_weekday) ) {
-                    
-                    if ( strtotime($timeCheck) > strtotime($feed->daily_activation_time) && strtotime($timeCheck) < strtotime($feed->daily_deactivation_time) ) {
-
-                        if($feed->active == 0){
-                            
-                            \Log::info("activating feed at:".date('l').$feed->title);
+                if( strtotime(now()) >= strtotime($feed->activate_at) && strtotime(now()) <= strtotime($feed->deactivate_at)){
+                    // if($feed->active == 0){
+                            \Log::info("activating feed:".$feed->title);
                             $feed->active = 1;
                             $feed->save();
-                        }
+    
+                            $deactiveAll = true;
+                            $thatFeed = $feed;
+                        // }
                     }
-
                     else {
-                        
                         if($feed->active == 1){
-                            
-                            \Log::info("deactivating feed at:".date('l').$feed->title);
+                            \Log::info("deactivating feed:".$feed->title);
                             $feed->active = 0;
                             $feed->save();
                         }
                     }
                 }
 
-                else{
+            if(!$deactiveAll) {
 
-                    if($feed->active == 1){
+                if($feed->activate_at == null &&  $feed->deactivate_at == null) {
 
-                        \Log::info("deactivating feed:".date('l').$feed->title);
-                        $feed->active = 0;
-                        $feed->save();
+                    if($this->getDayNumber($dateCheck) >= $this->getDayNumber($feed->activation_weekday) && $this->getDayNumber($dateCheck) <= $this->getDayNumber($feed->deactivation_weekday) ) {
+                        
+                        if ( strtotime($timeCheck) > strtotime($feed->daily_activation_time) && strtotime($timeCheck) < strtotime($feed->daily_deactivation_time) ) {
+
+                            if($feed->active == 0){
+                                
+                                \Log::info("activating feed at:".date('l').$feed->title);
+                                $feed->active = 1;
+                                $feed->save();
+                            }
+                        }
+
+                        else {
+                            
+                            if($feed->active == 1){
+                                
+                                \Log::info("deactivating feed at:".date('l').$feed->title);
+                                $feed->active = 0;
+                                $feed->save();
+                            }
+                        }
                     }
-                    
-                }
-            }
 
-            if($feed->activation_weekday == null &&  $feed->deactivation_weekday == null){
+                    else{
 
-            if( strtotime(now()) >= strtotime($feed->activate_at)){
-                if($feed->active == 0){
-                        \Log::info("activating feed:".$feed->title);
-                        $feed->active = 1;
-                        $feed->save();
+                            if($feed->active == 1){
+
+                                \Log::info("deactivating feed:".date('l').$feed->title);
+                                $feed->active = 0;
+                                $feed->save();
+                            }
+                        
+                        }
                     }
                 }
-                if( strtotime(now()) >= strtotime($feed->deactivate_at)){
-                    if($feed->active == 1){
-                        \Log::info("deactivating feed:".$feed->title);
-                        $feed->active = 0;
-                        $feed->save();
-                    }
+                if($deactiveAll){
+                    $this->deactivateAllExceptThisFeed($thatFeed);
                 }
-            }
-
         }
 
         return Command::SUCCESS;
