@@ -63,7 +63,7 @@
                   <select class="full-width" data-init-plugin="select2" name="type">
                     <option @if(isset($feed) && $feed->type == 'danger') selected @endif value="danger">Danger</option>
                     <option  @if(isset($feed) && $feed->type == 'warning') selected @endif value="warning">Warning</option>
-                    <option  @if(isset($feed) && $feed->language == 'good_news') selected @endif value="good_news">Good New</option>
+                    <option  @if(isset($feed) && $feed->type == 'good_news') selected @endif value="good_news">Good New</option>
                   </select>
                 </div>
                 @error('type')
