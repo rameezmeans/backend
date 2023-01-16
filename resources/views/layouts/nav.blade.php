@@ -117,6 +117,10 @@
               <a href="{{ route('email-templates') }}">Email Templates</a>
               <span class="icon-thumbnail">ET</span>
             </li>
+            <li class="">
+              <a href="{{ route('message-templates') }}">Message Templates</a>
+              <span class="icon-thumbnail">MT</span>
+            </li>
           </ul>
         </li>
         <li class="m-t-30 ">
