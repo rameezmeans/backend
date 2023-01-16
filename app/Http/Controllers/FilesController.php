@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\EmailTemplate;
 use App\Models\EngineerFileNote;
 use App\Models\File;
+use App\Models\MessageTemplate;
 use App\Models\RequestFile;
 use App\Models\User;
 use App\Models\Vehicle;
@@ -81,9 +82,9 @@ class FilesController extends Controller
         return response('File deleted', 200);
     }
 
-    public function testMessage(){
-        $this->sendMessage('+923218612198', 'test message again');
-    }
+    // public function testMessage(){
+    //     $this->sendMessage('+923218612198', 'test message again');
+    // }
     
     public function sendMessage($receiver, $message)
     {
@@ -146,7 +147,10 @@ class FilesController extends Controller
             }
         }
 
-        $message = "Hi, You have been assigned to a Task by Customer: ".$customer->name;
+        $messageTemplate = MessageTemplate::where('name', 'Engineer Assignment')->first();
+        $message = $messageTemplate->text;
+
+        $message = str_replace("#customer", $customer->name ,$message);
 
         $subject = "ECU Tech: Task Assigned!";
 
@@ -185,7 +189,6 @@ class FilesController extends Controller
             }
         }
         
-
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
         $html1 = str_replace("#file_url", route('file', $file->id),$html1);
@@ -218,8 +221,14 @@ class FilesController extends Controller
             }
         }
 
-        $message1 = "Hi, File status is changed for the Customer: ".$customer->name;
-        $message2 = "Hi, File status is changed for the Customer: ".$file->name;
+        $messageTemplate = MessageTemplate::where('name', 'Status Change')->first();
+        $message = $messageTemplate->text;
+
+        $message1 = str_replace("#customer", $customer->name ,$message);
+        $message2 = str_replace("#customer", $file->name ,$message);
+
+        // $message1 = "Hi, File status is changed for the Customer: ".$customer->name;
+        // $message2 = "Hi, File status is changed for the Customer: ".$file->name;
 
         $subject = "ECU Tech: File Status Changed!";
 
@@ -297,8 +306,14 @@ class FilesController extends Controller
             }
         }
 
-        $message1 = "Hi, Status changed for a file by Customer: " .$customer->name;
-        $message2 = "Hi, Status changed for a file by Customer: " .$file->name;
+        $messageTemplate = MessageTemplate::where('name', 'Message To Client')->first();
+        $message = $messageTemplate->text;
+
+        $message1 = str_replace("#customer", $customer->name ,$message);
+        $message2 = str_replace("#customer", $file->name ,$message);
+
+        // $message1 = "Hi, Status changed for a file by Customer: " .$customer->name;
+        // $message2 = "Hi, Status changed for a file by Customer: " .$file->name;
        
         $subject = "ECU Tech: Engineer replied to your support message!";
 
@@ -410,8 +425,11 @@ class FilesController extends Controller
             }
         }
 
-        $message1 = "Hi, Engineer uploaded a file in reply to Customer: ".$customer->name;
-        $message2 = "Hi, Engineer uploaded a file in reply to Customer: ".$file->name;
+        $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
+        $message = $messageTemplate->text;
+
+        $message1 = str_replace("#customer", $customer->name ,$message);
+        $message2 = str_replace("#customer", $file->name ,$message);
         
         $subject = "ECU Tech: Engineer uploaded a file in reply.";
 
