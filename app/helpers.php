@@ -645,7 +645,12 @@ if(!function_exists('get_dropdown_image')){
 if(!function_exists('get_image_from_brand')){
 
     function get_image_from_brand( $brand ){
-        return Vehicle::where('make', '=', $brand)->whereNotNull('Brand_image_URL')->first()->Brand_image_URL;
+        if(Vehicle::where('make', '=', $brand)->whereNotNull('Brand_image_URL')->first()){
+            return Vehicle::where('make', '=', $brand)->whereNotNull('Brand_image_URL')->first()->Brand_image_URL;
+        }
+        else {
+            return url('').'/icons/logos/daf.png';
+        }
     }
 }
 
