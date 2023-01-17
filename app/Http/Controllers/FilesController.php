@@ -116,7 +116,8 @@ class FilesController extends Controller
        $engineer = User::findOrFail($request->assigned_to);
        $customer = User::findOrFail($file->user_id);
     
-       $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
+    //    $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
+       $template = EmailTemplate::findOrFail(1);
 
        $html = $template->html;
 
@@ -147,7 +148,10 @@ class FilesController extends Controller
             }
         }
 
-        $messageTemplate = MessageTemplate::where('name', 'Engineer Assignment')->first();
+        // $messageTemplate = MessageTemplate::where('name', 'Engineer Assignment')->first();
+
+        $messageTemplate = MessageTemplate::findOrFail(1);
+
         $message = $messageTemplate->text;
 
         $message = str_replace("#customer", $customer->name ,$message);
@@ -170,7 +174,8 @@ class FilesController extends Controller
         $customer = User::findOrFail($file->user_id);
         $admin = User::where('is_admin', 1)->first();
     
-        $template = EmailTemplate::where('name', 'Status Change')->first();
+        // $template = EmailTemplate::where('name', 'Status Change')->first();
+        $template = EmailTemplate::findOrFail(8);
 
         $html1 = $template->html;
 
@@ -221,7 +226,9 @@ class FilesController extends Controller
             }
         }
 
-        $messageTemplate = MessageTemplate::where('name', 'Status Change')->first();
+        // $messageTemplate = MessageTemplate::where('name', 'Status Change')->first();
+        $messageTemplate = MessageTemplate::findOrFail(6);
+
         $message = $messageTemplate->text;
 
         $message1 = str_replace("#customer", $customer->name ,$message);
@@ -253,7 +260,8 @@ class FilesController extends Controller
         $customer = User::findOrFail($file->user_id);
         $admin = User::where('is_admin', 1)->first();
     
-        $template = EmailTemplate::where('name', 'Message To Client')->first();
+        // $template = EmailTemplate::where('name', 'Message To Client')->first();
+        $template = EmailTemplate::findOrFail(7);
 
         $html1 = $template->html;
 
@@ -306,7 +314,9 @@ class FilesController extends Controller
             }
         }
 
-        $messageTemplate = MessageTemplate::where('name', 'Message To Client')->first();
+        // $messageTemplate = MessageTemplate::where('name', 'Message To Client')->first();
+        $messageTemplate = MessageTemplate::findOrFail(4);
+
         $message = $messageTemplate->text;
 
         $message1 = str_replace("#customer", $customer->name ,$message);
@@ -374,7 +384,8 @@ class FilesController extends Controller
         $customer = User::findOrFail($file->user_id);
         $admin = User::where('is_admin', 1)->first();
     
-        $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
+        // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
+        $template = EmailTemplate::findOrFail(6);
 
         $html1 = $template->html;
 
@@ -425,7 +436,9 @@ class FilesController extends Controller
             }
         }
 
-        $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
+        // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
+        $messageTemplate = MessageTemplate::findOrFail(7);
+
         $message = $messageTemplate->text;
 
         $message1 = str_replace("#customer", $customer->name ,$message);
