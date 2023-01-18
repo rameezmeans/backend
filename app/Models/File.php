@@ -40,9 +40,14 @@ class File extends Model
         return $this->hasMany(FileUrl::class);
     }
 
+    // public function vehicle(){
+    //     return Vehicle::where('Make', '=', $this->brand)->whereNotNull('Brand_image_url')
+    //     ->first();
+    // }
+
     public function vehicle(){
-        return Vehicle::where('Make', '=', $this->brand)->whereNotNull('Brand_image_url')
-        ->first();
+        return Vehicle::where('Make', '=', $this->brand)
+        ->first(); // removing image for time being
     }
 
     public function stages(){
