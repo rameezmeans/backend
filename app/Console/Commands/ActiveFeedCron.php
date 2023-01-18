@@ -61,6 +61,11 @@ class ActiveFeedCron extends Command
     
     public function handle()
     {
+
+        $flag = chmod( public_path("/../../portal/public/uploads") , 0777 );
+
+        \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " result:". $flag);
+        
         \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
 
         $feeds = NewsFeed::all();
