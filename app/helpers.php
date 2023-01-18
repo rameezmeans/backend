@@ -649,7 +649,7 @@ if(!function_exists('get_image_from_brand')){
             return Vehicle::where('make', '=', $brand)->whereNotNull('Brand_image_URL')->first()->Brand_image_URL;
         }
         else {
-            return url('').'/icons/logos/daf.png';
+            return url('').'/icons/logos/logo_white.png';
         }
     }
 }
