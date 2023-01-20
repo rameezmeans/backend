@@ -38,7 +38,7 @@
                     <div class="col-lg-12 m-b-20">
                         <div class="border border-1 p-1">
                         <h5 class="text-center">Credits Bought or Added</h5>
-                                <p class="text-center">Total Amount Spent: <span class="label label-warning text-black">${{$customer->amount()}}</span></p>
+                                <p class="text-center">Total Amount Spent: <span class="label label-warning text-black">€{{$customer->amount()}}</span></p>
                                     <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                                         <thead>
                                             <tr role="row">
@@ -61,7 +61,7 @@
                                                             <p><span class="label label-success">{{$credit->credits}}</span></p>
                                                         </td>
                                                         <td class="v-align-middle semi-bold sorting_1">
-                                                            <p><span class="label label-warning text-black">@if($credit->price_payed == 0) {{ 'Manual Entry' }} @else ${{$credit->price_payed}} @endif</span></p>
+                                                            <p><span class="label label-warning text-black">@if($credit->price_payed == 0) {{ 'Manual Entry' }} @else €{{$credit->price_payed}} @endif</span></p>
                                                         </td>
                                                         <td class="v-align-middle semi-bold sorting_1">
                                                             <p><span class="label label-success">@if($credit->stripe_id){{$credit->stripe_id}} @else {{"Manual Entry"}} @endif</span></p>

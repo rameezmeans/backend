@@ -3,6 +3,52 @@
 use App\Models\File;
 use App\Models\Vehicle;
 
+function fullescape($in)
+
+{
+
+  $out = '';
+
+  for ($i=0;$i<strlen($in);$i++)
+
+  {
+
+    $hex = dechex(ord($in[$i]));
+
+    if ($hex=='') 
+
+       $out = $out.urlencode($in[$i]);
+
+    else 
+
+       $out = $out .'%'.((strlen($hex)==1) ? ('0'.strtoupper($hex)):(strtoupper($hex)));
+
+  }
+
+  $out = str_replace('+','%20',$out);
+
+  $out = str_replace('_','%5F',$out);
+
+  $out = str_replace('.','%2E',$out);
+
+  $out = str_replace('-','%2D',$out);
+
+  $out = str_replace('#','%23',$out);
+
+  return $out;
+
+ }
+
+function encodeURIComponent($str) {
+    $revert = array('%21'=>'!','%23'=>'#', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');
+    return strtr(rawurlencode($str), $revert);
+}
+
+function decodeURIComponent($str) {
+    $revert = array('#'=>'%23');
+    return strtr(rawurlencode($str), $revert);
+}
+
 if(!function_exists('code_to_country')){
 
     function code_to_country( $code ){

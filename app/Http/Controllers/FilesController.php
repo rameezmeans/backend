@@ -31,7 +31,7 @@ class FilesController extends Controller
     {
         $this->middleware('auth');
     }
-
+    
     public function editMessage(Request $request) {
 
         $message = EngineerFileNote::findOrFail($request->id);
@@ -44,7 +44,7 @@ class FilesController extends Controller
     }
 
     public function download($file_name) {
-        
+
         $file_path = public_path('/../../portal/public/uploads/'.$file_name);
         return response()->download($file_path);
     }
@@ -346,6 +346,7 @@ class FilesController extends Controller
     {
         $attachment = $request->file('file');
         $fileName = $attachment->getClientOriginalName();
+
         $attachment->move(public_path("/../../portal/public/uploads/"),$fileName);
 
         $engineerFile = new RequestFile();
