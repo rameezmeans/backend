@@ -20,6 +20,12 @@ class VehiclesController extends Controller
 
     public function index(){
         $vehicles = Vehicle::all();
+
+        foreach($vehicles as $vehicle){
+            $vehicle->Brand_image_URL = str_replace(' ', '_', strtolower($vehicle->Make));
+            $vehicle->save();
+        }
+
         return view('vehicles.vehicles', ['vehicles' => $vehicles]);
     }
 
