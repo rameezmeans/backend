@@ -21,8 +21,14 @@ class VehiclesController extends Controller
     public function index(){
         $vehicles = Vehicle::all();
 
+        // $vehicles = Vehicle::select('Make')->distinct()->get()->toArray();
+        // dd($vehicles);
+
+
+
         foreach($vehicles as $vehicle){
-            $vehicle->Brand_image_URL = str_replace(' ', '_', strtolower($vehicle->Make));
+            $vehicle->Brand_image_URL = 'https://www.carlogos.org/car-logos/'.str_replace(' ', '-', strtolower($vehicle->Make)).'-logo.png';
+
             $vehicle->save();
         }
 
