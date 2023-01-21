@@ -20,52 +20,16 @@ class VehiclesController extends Controller
 
     public function index(){
 
-        $vehicles = Vehicle::all();
+        // $vehicles = Vehicle::all();
 
-        // foreach($vehicles as $v){
-        //     $v->Brand_image_URL = 'https://backend.ecutech.gr/icons/logos/'.str_replace(' ', '-',strtolower($v->Make)).'.png';
-        //     $v->save();
-        // }
+        $vehicles = Vehicle::whereNull('name')->get();
 
-        // Remote image URL
-        // $url = 'http://www.example.com/remote-image.png';
-        // $url = 'https://www.carlogos.org/car-logos/alfa-romeo-logo.png';
+        foreach($vehicles as $v) {
+                $v->Name = $v->Make.' '.$v->Model.' '.$v->Engine;
+                $v->save();
+        }
 
-        // // Image path
-        // $img = public_path('icons/logos/').'codexworld.png';
-
-        // // Save image
-        // $ch = curl_init($url);
-        // $fp = fopen($img, 'wb');
-        // curl_setopt($ch, CURLOPT_FILE, $fp);
-        // curl_setopt($ch, CURLOPT_HEADER, 0);
-        // curl_exec($ch);
-        // curl_close($ch);
-        
-        // exit;
-
-        // $vehicles = Vehicle::select('Make')->addSelect('Brand_image_URL')->distinct('Make')->get();
-        // // dd($vehicles);
-        
-        // foreach($vehicles as $v){
-
-        // // $url = 'https://www.carlogos.org/car-logos/alfa-romeo-logo.png';
-
-        // // Image path
-        // $img =public_path('icons/logos').'/'.str_replace(' ', '-',strtolower($v->Make)).'.png';
-
-        // // Save image
-        // $ch = curl_init($v->Brand_image_URL);
-        // $fp = fopen($img, 'wb');
-        // curl_setopt($ch, CURLOPT_FILE, $fp);
-        // curl_setopt($ch, CURLOPT_HEADER, 0);
-        // curl_exec($ch);
-        // curl_close($ch);
-
-                // file_put_contents(public_path('icons/logos').'/'.str_replace(' ', '-',strtolower($v->Make)).'.png', file_get_contents($v->Brand_image_URL));
-        // }
-
-        // exit;
+        exit;
 
         return view('vehicles.vehicles', ['vehicles' => $vehicles]);
     }
