@@ -22,10 +22,10 @@ class VehiclesController extends Controller
 
         $vehicles = Vehicle::all();
 
-        foreach($vehicles as $v){
-            $v->Brand_image_URL = 'https://backend.ecutech.gr/icons/logos/'.str_replace(' ', '-',strtolower($v->Make)).'.png';
-            $v->save();
-        }
+        // foreach($vehicles as $v){
+        //     $v->Brand_image_URL = 'https://backend.ecutech.gr/icons/logos/'.str_replace(' ', '-',strtolower($v->Make)).'.png';
+        //     $v->save();
+        // }
 
         // Remote image URL
         // $url = 'http://www.example.com/remote-image.png';
