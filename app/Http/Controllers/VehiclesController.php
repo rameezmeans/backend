@@ -20,17 +20,7 @@ class VehiclesController extends Controller
 
     public function index(){
 
-        // $vehicles = Vehicle::all();
-
-        $vehicles = Vehicle::whereNull('name')->get();
-
-        foreach($vehicles as $v) {
-                $v->Name = $v->Make.' '.$v->Model.' '.$v->Engine;
-                $v->save();
-        }
-
-        exit;
-
+        $vehicles = Vehicle::all();
         return view('vehicles.vehicles', ['vehicles' => $vehicles]);
     }
 
