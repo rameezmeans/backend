@@ -232,7 +232,12 @@ class FilesController extends Controller
         $message = $messageTemplate->text;
 
         $message1 = str_replace("#customer", $customer->name ,$message);
+        $message1 = str_replace("#status", $file->status ,$message1);
+
         $message2 = str_replace("#customer", $file->name ,$message);
+        $message2 = str_replace("#status", $file->status ,$message2);
+
+        // dd($message1);   
 
         // $message1 = "Hi, File status is changed for the Customer: ".$customer->name;
         // $message2 = "Hi, File status is changed for the Customer: ".$file->name;
