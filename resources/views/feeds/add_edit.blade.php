@@ -115,7 +115,7 @@
                         <div class="col-lg-6">
                           <label>Activation Time for every day of Week:</label>
                           <div class="input-group bootstrap-timepicker">
-                            <input name="daily_activation_time" id="timepicker" type="time" class="form-control" value=""@if(isset($feed)){{$feed->daily_activation_time}}@endif">
+                            <input name="daily_activation_time" id="timepicker" type="time" class="form-control" value="@if(isset($feed)){{$feed->daily_activation_time}}@endif">
                             
                           </div>
                         </div>

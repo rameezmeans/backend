@@ -121,6 +121,10 @@
               <a href="{{ route('message-templates') }}">Message Templates</a>
               <span class="icon-thumbnail">MT</span>
             </li>
+            <li class="">
+              <a href="{{ route('work-hours') }}">Work Hours</a>
+              <span class="icon-thumbnail">WH</span>
+            </li>
           </ul>
         </li>
         <li class="m-t-30 ">
