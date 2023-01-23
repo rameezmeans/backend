@@ -231,7 +231,7 @@ class NewsFeedsController extends Controller
             }
         }
 
-        dd($testing);
+        // dd($testing);
     }
 
     public function edit($id) {

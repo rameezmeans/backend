@@ -67,6 +67,10 @@ Route::post('/mass_delete', [App\Http\Controllers\VehiclesController::class,'mas
 Route::get('/import_vehicles', [App\Http\Controllers\VehiclesController::class,'importVehiclesView'])->name('import-vehicles');
 Route::post('/import_vehicles_post', [App\Http\Controllers\VehiclesController::class,'importVehicles'])->name('import-vehicles-post');
 
+Route::get('/work_hours', [App\Http\Controllers\WorkHoursController::class,'index'])->name('work-hours');
+Route::get('/edit_work_hour/{id}', [App\Http\Controllers\WorkHoursController::class,'edit'])->name('edit-work-hour');
+Route::post('/update_work_hour', [App\Http\Controllers\WorkHoursController::class,'update'])->name('update-work-hour');
+
 Route::get('/groups', [App\Http\Controllers\GroupsController::class,'index'])->name('customer.groups');
 
 Route::get('/groups', [App\Http\Controllers\GroupsController::class,'index'])->name('groups');
