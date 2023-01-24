@@ -24,7 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $workHours = WorkHours::all();
-        view()->share('workHours', $workHours);
+        
     }
 }
