@@ -202,7 +202,22 @@
 
                         @endif
 
+                        @if($file->customer_internal_notes)
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Customer Notes</p>
+                          <br>
+                          <div>
+                            {{$file->customer_internal_notes}}
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
                         @endif
+
+                        @endif
+
+
 
                       </div>
 
@@ -264,9 +279,25 @@
                           </div>
                           <div class="clearfix"></div>
                         </div>
+                        
+                        @if($file->vehicle_internal_notes)
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Vehicle Notes</p>
+                          <br>
+                          <div>
+                            {{$file->vehicle_internal_notes}}
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        @endif
+
                         <div class="text-center m-t-20">                    
                           <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
                         </div>
+
+                        
         
                       </div>
         
