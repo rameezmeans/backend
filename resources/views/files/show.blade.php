@@ -45,6 +45,11 @@
           <li class="nav-item">
             <a href="#" data-toggle="tab" @if(Session::get('tab') == 'chat') class="active" @endif data-target="#slide2"><span>Chat and Support</span></a>
           </li>
+          @if(Auth::user()->is_admin or Auth::user()->is_head)
+          <li class="nav-item">
+            <a href="#" data-toggle="tab" data-target="#slide3"><span>Admin Tasks</span></a>
+          </li>
+          @endif
           
         </ul>
         <!-- Tab panes -->
@@ -133,44 +138,6 @@
                               <span class="label label-success">No One<span>
                             @endif
                           </div>
-                          <div class="clearfix"></div>
-                        </div>
-
-                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Status</p>
-                          <form action="{{route('change-status')}}" method="POST">
-                            @csrf
-                            <input type="hidden" name="file_id" value="{{$file->id}}">
-                            <div class="">
-                              <select class="full-width" data-init-plugin="select2" name="status">
-                                  <option @if(isset($file) && $file->status == "rejected") selected @endif value="rejected">Rejected</option>
-                              </select>
-                              <div class="text-center m-t-20">                    
-                                <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Update</span></button>
-                              </div>
-                            </div>
-                            
-                          </form>
-                          <div class="clearfix"></div>
-                        </div>
-
-                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Assign This File to An Engineer</p>
-                          <form action="{{route('assign-engineer')}}" method="POST">
-                            @csrf
-                            <input type="hidden" name="file_id" value="{{$file->id}}">
-                            <div class="">
-                              <select class="full-width" data-init-plugin="select2" name="assigned_to">
-                                @foreach($engineers as $engineer)
-                                  <option @if(isset($file) && $file->assigned_to == $engineer->id) selected @endif value="{{$engineer->id}}">{{$engineer->name}}</option>
-                                @endforeach
-                              </select>
-                              <div class="text-center m-t-20">                    
-                                <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Assign Engineer</span></button>
-                              </div>
-                            </div>
-                            
-                          </form>
                           <div class="clearfix"></div>
                         </div>
 
@@ -279,7 +246,7 @@
                           </div>
                           <div class="clearfix"></div>
                         </div>
-                        
+
                         @if($file->vehicle_internal_notes)
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -546,15 +513,77 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane slide-left" id="slide3">
-            <div class="row">
-              <div class="col-lg-12">
-                <h3>Follow us &amp; get updated!</h3>
-                <p>Instantly connect to what's most important to you. Follow your friends, experts, favorite celebrities, and breaking news.</p>
-                <br>
+            @if(Auth::user()->is_admin or Auth::user()->is_head)
+              <div class="tab-pane slide-left" id="slide3">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <h3>Adminstrative Tasks</h3>
+                    <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                      <p class="pull-left">Assign This File to An Engineer</p>
+                      <form action="{{route('assign-engineer')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="file_id" value="{{$file->id}}">
+                        <div class="">
+                          <select class="full-width" data-init-plugin="select2" name="assigned_to">
+                            <option disabled >Not Assigned</option>
+                            @foreach($engineers as $engineer)
+                              <option @if(isset($file) && $file->assigned_to == $engineer->id) selected @endif value="{{$engineer->id}}">{{$engineer->name}}</option>
+                            @endforeach
+                          </select>
+                          <div class="text-center m-t-20">                    
+                            <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Assign Engineer</span></button>
+                          </div>
+                        </div>
+                        
+                      </form>
+                      <div class="clearfix"></div>
+                    </div>
+
+                    <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                      <p class="pull-left">Status</p>
+                      <form action="{{route('change-status')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="file_id" value="{{$file->id}}">
+                        <div class="">
+                          <select class="full-width" data-init-plugin="select2" name="status">
+                              <option @if(isset($file) && $file->status == "submitted") selected @endif value="submitted">Submitted</option>
+                              <option @if(isset($file) && $file->status == "rejected") selected @endif value="rejected">Rejected</option>
+                              <option @if(isset($file) && $file->status == "completed") selected @endif value="completed">Completed</option>
+                          </select>
+                          <div class="text-center m-t-20">                    
+                            <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Update</span></button>
+                          </div>
+                        </div>
+                        
+                      </form>
+                      <div class="clearfix"></div>
+                    </div>
+
+                    <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                      <p class="pull-left">Status</p>
+                      <form action="{{route('change-support-status')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="file_id" value="{{$file->id}}">
+                        <div class="">
+                          <select class="full-width" data-init-plugin="select2" name="support_status">
+                              <option disabled>Not Set</option>
+                              <option @if(isset($file) && $file->support_status == "open") selected @endif value="open">Open</option>
+                              <option @if(isset($file) && $file->support_status == "closed") selected @endif value="closed">Closed</option>
+                          </select>
+                          <div class="text-center m-t-20">                    
+                            <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Update</span></button>
+                          </div>
+                        </div>
+                        
+                      </form>
+                      <div class="clearfix"></div>
+                    </div>
+                    
+                    <br>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            @endif
         </div>
       </div>
 
