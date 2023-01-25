@@ -81,7 +81,7 @@
                           <div class="clearfix"></div>
                         </div>
         
-                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Task ID</p>
                           <div class="pull-right">
                             <span class="label label-success">Task{{$file->id}}<span>

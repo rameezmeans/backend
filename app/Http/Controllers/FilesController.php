@@ -345,20 +345,46 @@ class FilesController extends Controller
     public function uploadFileFromEngineer(Request $request)
     {
         $attachment = $request->file('file');
-        $fileName = $attachment->getClientOriginalName();
 
-        $attachment->move(public_path("/../../portal/public/uploads/"),$fileName);
+        $file = File::findOrFail($request->file_id);
+
+        $fileName = $attachment->getClientOriginalName();
+        $fileNameArr = explode( ".", $fileName );
+        $extenstion = end ( $fileNameArr ) ;    
+
+        $newFileName = '';
+
+        if(strpos($fileName, ' en ') !== false) {
+
+            $start = strpos($fileName, ' en ');
+            $end = $start + 7;
+
+            $endPart = substr($fileName, $start, 7);
+
+            if(isset($file->ecu)){
+                $newFileName = $file->id.' '.$file->brand.' '.$file->model.' '.$file->engine.' '.$file->ecu.$endPart.'.'.$extenstion;
+                
+            }
+            else {
+                $newFileName = $file->brand.' '.$file->model.' '.$file->engine.$endPart.'.'.$extenstion;
+            }
+
+        }
+        
+        else {
+            $newFileName = str_replace('#', '_', $fileName);
+        }
+        
+        $attachment->move(public_path("/../../portal/public/uploads/"),$newFileName);
 
         $engineerFile = new RequestFile();
-        $engineerFile->request_file = $fileName;
+        $engineerFile->request_file = $newFileName;
         $engineerFile->file_type = 'engineer_file';
         $engineerFile->tool_type = 'not_relevant';
         $engineerFile->master_tools = 'not_relevant';
         $engineerFile->file_id = $request->file_id;
         $engineerFile->engineer = true;
         $engineerFile->save();
-
-        $file = File::findOrFail($request->file_id);
 
         if($file->status == 'submitted'){
             $file->status = 'completed';
