@@ -60,10 +60,10 @@ class FilesController extends Controller
         File::where('is_credited', 0)->delete(); // remove unneccesary NOT credited files
 
         if(Auth::user()->is_admin || Auth::user()->is_head){
-            $files = File::orderBy('created_at', 'desc')->where('is_credited', 1)->get();
+            $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
         }
         else if(Auth::user()->is_engineer){
-            $files = File::orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
+            $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
         }
         return view('files.files', ['files' => $files]);
     }
@@ -165,6 +165,15 @@ class FilesController extends Controller
 
     }
 
+    public function changSupportStatus(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+        $file->support_status = $request->support_status;
+        $file->save();
+
+        return Redirect::back()->with(['success' => 'File Support status changed.']);
+    }
+
     public function changeStatus(Request $request){
 
         $file = File::findOrFail($request->file_id);
@@ -257,6 +266,8 @@ class FilesController extends Controller
         $reply->save();
 
         $file = File::findOrFail($request->file_id);
+        $file->support_status = "closed";
+        $file->save();
         $customer = User::findOrFail($file->user_id);
         $admin = User::where('is_admin', 1)->first();
     
@@ -374,7 +385,7 @@ class FilesController extends Controller
         else {
             $newFileName = str_replace('#', '_', $fileName);
         }
-        
+
         $attachment->move(public_path("/../../portal/public/uploads/"),$newFileName);
 
         $engineerFile = new RequestFile();
@@ -402,9 +413,11 @@ class FilesController extends Controller
         if($file->original_file_id){
             $old = File::findOrFail($file->original_file_id);
             $old->checked_by = 'engineer';
+            $file->support_status = "closed";
             $old->save();
         }
-        
+
+            $file->support_status = "closed";
             $file->checked_by = 'engineer';
             $file->save();
 

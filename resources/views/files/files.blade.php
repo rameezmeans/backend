@@ -21,7 +21,7 @@
                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 2%;">Task ID</th>
                                 <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 2%;">Customer</th>
                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 10%;">Vehicle</th>
-                                <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 2%;">ECU Type</th>
+                                <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 2%;">Support Status</th>
                                 <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 2%;">Status</th>
                                 <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 15%;">Stages</th>
                                 <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 25%;">Options</th>
@@ -39,7 +39,7 @@
                                 <td><span class="label label-success">Task{{$file->id}}</span></td>
                                 <td>{{$file->user->name}}</td>
                                 <td>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</td>
-                                <td><span class="label label-success">{{$file->file_type}}</span></td>
+                                <td><span class="label @if($file->support_status == 'closed') label-success @else label-danger @endif">{{$file->support_status}}</span></td>
                                 <td><span class="label @if($file->status == 'completed') label-success @elseif($file->status == 'rejected') label-danger @else label-info @endif ">{{$file->status}}</span></td>
                                 <td>  
                                   <div class="">
