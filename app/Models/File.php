@@ -41,7 +41,11 @@ class File extends Model
     }
 
     public function vehicle(){
-        return Vehicle::where('Make', '=', $this->brand)->whereNotNull('Brand_image_url')
+        return Vehicle::where('Make', '=', $this->brand)
+        ->where('Model', '=', $this->model)
+        ->where('Generation', '=', $this->version)
+        ->where('Engine', '=', $this->engine)
+        ->whereNotNull('Brand_image_url')
         ->first();
     }
 
