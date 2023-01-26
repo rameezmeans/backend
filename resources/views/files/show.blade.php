@@ -238,7 +238,7 @@
                           <h5 class="pull-left">Engineer's Comments On ECU</h5>
                           <br>
                           <div class="m-l-10">
-                            @if($file->getECUComment()){{$file->getECUComment()->notes}}@endif
+                            {{-- @if($file->ecu()){{$file->getECUComment()->notes}}@endif --}}
                           </div>
                           <div class="clearfix"></div>
                         </div>

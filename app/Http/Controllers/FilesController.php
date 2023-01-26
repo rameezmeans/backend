@@ -638,22 +638,16 @@ class FilesController extends Controller
             $file->save();
         }
 
-        if($file->ecu){
-            $vehicle = Vehicle::where('Make', $file->brand)
-            ->where('Model', $file->model)
-            ->where('Generation', $file->version)
-            ->where('Engine', $file->engine)
-            ->where('Engine_ECU', $file->ecu)
-            ->first();
-        }
-        else{
+        
 
             $vehicle = Vehicle::where('Make', $file->brand)
             ->where('Model', $file->model)
             ->where('Generation', $file->version)
             ->where('Engine', $file->engine)
             ->first();
-        }
+        
+
+        // dd($file->version);
 
         $engineers = User::where('is_engineer', 1)->get();
         $withoutTypeArray = $file->files->toArray();
