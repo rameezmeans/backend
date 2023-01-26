@@ -56,7 +56,7 @@ class File extends Model
         ->where('Model', '=', $this->model)
         ->where('Generation', '=', $this->version)
         ->where('Engine', '=', $this->engine)
-        ->first(); 
+        ->first();
 
         return $vehicle->getComment($this->ecu);
     }
