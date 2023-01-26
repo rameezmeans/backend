@@ -360,31 +360,35 @@ class FilesController extends Controller
         $file = File::findOrFail($request->file_id);
 
         $fileName = $attachment->getClientOriginalName();
-        $fileNameArr = explode( ".", $fileName );
-        $extenstion = end ( $fileNameArr ) ;    
 
-        $newFileName = '';
+        //renaming mechanism
+        // $fileNameArr = explode( ".", $fileName );
+        // $extenstion = end ( $fileNameArr ) ;    
 
-        if(strpos($fileName, ' en ') !== false) {
+        // $newFileName = '';
 
-            $start = strpos($fileName, ' en ');
-            $end = $start + 7;
+        // if(strpos($fileName, ' en ') !== false) {
 
-            $endPart = substr($fileName, $start, 7);
+        //     $start = strpos($fileName, ' en ');
+        //     $end = $start + 7;
 
-            if(isset($file->ecu)){
-                $newFileName = $file->id.' '.$file->brand.' '.$file->model.' '.$file->engine.' '.$file->ecu.$endPart.'.'.$extenstion;
+        //     $endPart = substr($fileName, $start, 7);
+
+        //     if(isset($file->ecu)){
+        //         $newFileName = $file->id.' '.$file->brand.' '.$file->model.' '.$file->engine.' '.$file->ecu.$endPart.'.'.$extenstion;
                 
-            }
-            else {
-                $newFileName = $file->brand.' '.$file->model.' '.$file->engine.$endPart.'.'.$extenstion;
-            }
+        //     }
+        //     else {
+        //         $newFileName = $file->brand.' '.$file->model.' '.$file->engine.$endPart.'.'.$extenstion;
+        //     }
 
-        }
+        // }
         
-        else {
-            $newFileName = str_replace('#', '_', $fileName);
-        }
+        // else {
+        //     $newFileName = str_replace('#', '_', $fileName);
+        // }
+
+        $newFileName = str_replace('#', '_', $fileName);
 
         $attachment->move(public_path("/../../portal/public/uploads/"),$newFileName);
 

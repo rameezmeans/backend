@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('work_hours', function (Blueprint $table) {
-            // $table->id();
-            // $table->string('name');
-            // $table->time('start');
-            // $table->time('end');
-            // $table->timestamps();
-        });
+        // Schema::create('work_hours', function (Blueprint $table) {
+        //     // $table->id();
+        //     // $table->string('name');
+        //     // $table->time('start');
+        //     // $table->time('end');
+        //     // $table->timestamps();
+        // });
     }
 
     /**
