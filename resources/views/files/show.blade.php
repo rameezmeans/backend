@@ -233,12 +233,12 @@
                           <div class="clearfix"></div>
                         </div>
 
-                        @if($file->ecu)
+                        @if($file->getECUComment())
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <h5 class="pull-left">Engineer's Comments On ECU</h5>
                           <br>
                           <div class="m-l-10">
-                            {{-- @if($file->ecu()){{$file->getECUComment()->notes}}@endif --}}
+                            @if($file->getECUComment()){{$file->getECUComment()->notes}}@endif
                           </div>
                           <div class="clearfix"></div>
                         </div>
