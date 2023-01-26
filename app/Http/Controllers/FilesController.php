@@ -631,16 +631,29 @@ class FilesController extends Controller
         //     $file->save();
         // }
 
+        // dd($file->vehicle()->getComment('ecu'));
+
         if($file->checked_by == 'customer'){
             $file->checked_by = 'seen';
             $file->save();
         }
 
-        $vehicle = Vehicle::where('Make', $file->brand)
-        ->where('Model', $file->model)
-        ->where('Generation', $file->version)
-        ->where('Engine', $file->engine)
-        ->first();
+        if($file->ecu){
+            $vehicle = Vehicle::where('Make', $file->brand)
+            ->where('Model', $file->model)
+            ->where('Generation', $file->version)
+            ->where('Engine', $file->engine)
+            ->where('Engine_ECU', $file->ecu)
+            ->first();
+        }
+        else{
+
+            $vehicle = Vehicle::where('Make', $file->brand)
+            ->where('Model', $file->model)
+            ->where('Generation', $file->version)
+            ->where('Engine', $file->engine)
+            ->first();
+        }
 
         $engineers = User::where('is_engineer', 1)->get();
         $withoutTypeArray = $file->files->toArray();

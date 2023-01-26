@@ -11,4 +11,8 @@ class Vehicle extends Model
     protected $fillable = [
         'Make', 'Generation', 'Model', 'Engine', 'Engine_ECU', 'Engine_URL', 'Name'
     ];
+
+    public function getComment($ecu){
+        return VehiclesNote::where('vehicle_id', $this->id)->where('ecu', $ecu)->first();
+    }
 }

@@ -40,14 +40,26 @@ class File extends Model
         return $this->hasMany(FileUrl::class);
     }
 
+    public function vehicle(){
+        return Vehicle::where('Make', '=', $this->brand)->whereNotNull('Brand_image_url')
+        ->first();
+    }
+
     // public function vehicle(){
-    //     return Vehicle::where('Make', '=', $this->brand)->whereNotNull('Brand_image_url')
-    //     ->first();
+    //     return Vehicle::where('Make', '=', $this->brand)
+    //     ->first(); // removing image for time being
     // }
 
-    public function vehicle(){
-        return Vehicle::where('Make', '=', $this->brand)
-        ->first(); // removing image for time being
+    public function getECUComment(){
+        
+        $vehicle = Vehicle::where('Make', '=', $this->brand)
+        ->where('Model', '=', $this->model)
+        ->where('Generation', '=', $this->version)
+        ->where('Engine', '=', $this->engine)
+        ->where('Engine_ECU', '=', $this->ecu)
+        ->first(); 
+
+        return $vehicle->getComment($this->ecu);
     }
 
     public function stages(){

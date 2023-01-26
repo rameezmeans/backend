@@ -6,6 +6,7 @@ use App\Imports\VehiclesImport;
 use App\Models\Comment;
 use App\Models\Service;
 use App\Models\Vehicle;
+use App\Models\VehiclesNote;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -22,6 +23,18 @@ class VehiclesController extends Controller
 
         $vehicles = Vehicle::all();
         return view('vehicles.vehicles', ['vehicles' => $vehicles]);
+    }
+
+    public function addEngineerComment(Request $request){
+        
+        $note = new VehiclesNote();
+        $note->ecu = $request->ecu;
+        $note->vehicle_id = $request->vehicle_id;
+        $note->notes = $request->notes;
+        $note->save();
+
+        return redirect()->route('add-comments', $request->vehicle_id)->with('success',  'Note added, successfully.');
+
     }
 
     public function create(){

@@ -233,9 +233,21 @@
                           <div class="clearfix"></div>
                         </div>
 
+                        @if($file->ecu)
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <h5 class="pull-left">Engineer's Comments On ECU</h5>
+                          <br>
+                          <div class="m-l-10">
+                            @if($file->getECUComment()){{$file->getECUComment()->notes}}@endif
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        @endif
+
                         <div class="text-center m-t-20">                    
                           <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
                         </div>
+                        
 
                         
         
@@ -464,12 +476,11 @@
                       @endif
                       <!-- BEGIN Conversation  !-->
                       <!-- BEGIN Chat Input  !-->
-                      <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10">
+                      <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10 text-center">
                         <form method="POST" action="{{ route('file-engineers-notes') }}">
                           @csrf
                           <input type="hidden" value="{{$file->id}}" name="file_id">
                         <div class="row">
-                          
                             <div class="col-10 no-padding">
                               <input type="text" name="egnineers_internal_notes" class="form-control chat-input" data-chat-input="" data-chat-conversation="#my-conversation" placeholder="Reply to cusotmer." required>
                               @error('egnineers_internal_notes')
@@ -478,7 +489,7 @@
                                       </p>
                               @enderror
                             </div>
-                            <div class="col-1 link text-master m-l-10 m-t-15 p-l-10 b-l b-grey col-top">
+                            <div class="col-2 link text-master m-t-15 p-l-10 b-l b-grey col-top">
                               <button class="btn btn-success" type="submit">Send</button>
                             </div>
                           
@@ -499,7 +510,7 @@
                     <div class="card-title">
                         <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
                         <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
-                        <h3 class="m-t-20">Adminstrative Tasks</h3>
+                        <h4 class="m-t-20">Adminstrative Tasks</h4>
                       </div>
                     </div>
                     
@@ -530,7 +541,7 @@
                     </div>
 
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                      <p class="pull-left">Status</p>
+                      <p class="pull-left">File Status</p>
                       <form action="{{route('change-status')}}" method="POST">
                         @csrf
                         <input type="hidden" name="file_id" value="{{$file->id}}">
@@ -550,7 +561,7 @@
                     </div>
 
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                      <p class="pull-left">Status</p>
+                      <p class="pull-left">Support Status</p>
                       <form action="{{route('change-support-status')}}" method="POST">
                         @csrf
                         <input type="hidden" name="file_id" value="{{$file->id}}">
@@ -600,7 +611,6 @@
             <div class="form-group-attached ">
               <div class="row">
                 <div class="col-md-12">
-                  
                   <div class="form-group form-group-default required">
                     <label>Message</label>
                     <textarea id="edit-modal" name="message" required style="height: 100px;" class="form-control"></textarea>
