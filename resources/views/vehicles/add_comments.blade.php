@@ -77,6 +77,33 @@
                                     </div>
                                     <div class="clearfix"></div>
                                   </div>
+
+                                <div class="m-t-20">
+                                  <label>Engineer's Note</label>
+                                  <form role="form" action="{{route('add-engineer-comment')}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" id="vehicle_id" name="vehicle_id" value="{{$vehicle->id}}">
+                                    <input type="hidden" name="ecu" id="ecu" value="{{$ecu}}">
+                                    
+                                    <div class="form-group-attached ">
+                                      <div class="row">
+                                        <div class="col-md-12">
+                                          
+                                          <div class="form-group form-group-default required">
+                                          
+                                            <textarea id="notes" name="notes" required style="height: 100px;" class="form-control" placeholder="Engineer's Notes">@if($vehicle->getComment($ecu)){{ $vehicle->getComment($ecu)->notes }}@endif</textarea>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                 
+                                  <div class="row">
+                                    <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+                                      <button type="submit" class="btn btn-success btn-block m-t-5">Add Note On this ECU</button>
+                                    </div>
+                                  </div>
+                                </form>
+                                </div>
                                   
                                 </div>
                                 <div class="col-lg-6">
