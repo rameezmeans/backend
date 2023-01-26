@@ -60,21 +60,20 @@
                 
                 <div class="widget-16 card no-border widget-loader-circle">
                   <div class="card-header ">
-                      <div class="card-title"><h4>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h4>
+                    <div class="text-center">
+                      <div class="card-title">
+                          <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                          <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                          <a href="{{ route('download', $file->file_attached) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                          </a>
+                        </div>
                       </div>
-                      <div class="pull-right">
-                        <div class="col-xs-12">
-                            <a href="{{ route('download', $file->file_attached) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download</span>
-                            </a>
-                        </div>
-                        </div>
+                      
                       <div class="clearfix"></div>
                   </div>
                   <div class="card-body">
 
-                    
-
-                    <div class="row">
+                    <div class="row m-t-40">
 
                       <div class="col-lg-6">
                         <h5 class="">General Information</h5>
@@ -394,6 +393,12 @@
               <div class="col-lg-12">
                 <div class="widget-16 card no-border widget-loader-circle">
                   <div class="card-header ">
+                    <div class="text-center">
+                      <div class="card-title">
+                          <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                          <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                        </div>
+                      </div>
                       
                       <div class="clearfix"></div>
                   </div>
@@ -515,9 +520,20 @@
           </div>
             @if(Auth::user()->is_admin or Auth::user()->is_head)
               <div class="tab-pane slide-left" id="slide3">
+                <div class="card-header ">
+                  <div class="text-center">
+                    <div class="card-title">
+                        <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                        <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                        <h3 class="m-t-20">Adminstrative Tasks</h3>
+                      </div>
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                </div>
                 <div class="row">
                   <div class="col-lg-12">
-                    <h3>Adminstrative Tasks</h3>
+                   
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Assign This File to An Engineer</p>
                       <form action="{{route('assign-engineer')}}" method="POST">
