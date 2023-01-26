@@ -625,20 +625,11 @@ class FilesController extends Controller
         if(!$file){
             abort(404);
         }
-
-        // if($file->status == 'submitted'){
-        //     $file->status = 'completed';
-        //     $file->save();
-        // }
-
-        // dd($file->vehicle()->getComment('ecu'));
-
+        
         if($file->checked_by == 'customer'){
             $file->checked_by = 'seen';
             $file->save();
         }
-
-        
 
         $vehicle = Vehicle::where('Make', $file->brand)
         ->where('Model', $file->model)
@@ -646,9 +637,6 @@ class FilesController extends Controller
         ->where('Engine', $file->engine)
         ->first();
         
-
-    
-
         $engineers = User::where('is_engineer', 1)->get();
         $withoutTypeArray = $file->files->toArray();
         $unsortedTimelineObjects = [];
