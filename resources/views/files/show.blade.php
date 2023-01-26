@@ -442,6 +442,8 @@
                                 <i data-note_id="{{$message['id']}}" data-message="{{$message['egnineers_internal_notes']}}" class="fa fa-edit m-l-20"></i> 
                                 <i class="pg-trash delete-message" data-note_id="{{$message['id']}}"></i> 
                                 <br>
+                                <br>
+                                <small class="m-t-20" style="font-size: 8px; float:right">{{ \Carbon\Carbon::parse($message['created_at'])->format('H:i:s d/m/Y') }}</small>
                               </div>
                             </div>
           
@@ -454,6 +456,9 @@
                                         <a href="{{route('download', $message['engineers_attachement'])}}" class="text-danger">Download</a>
                                       </div>
                                     @endif
+                                    <br>
+                                    <br>
+                                    <small class="m-t-20" style="font-size: 8px;float:right">{{ \Carbon\Carbon::parse($message['created_at'])->format('H:i:s d/m/Y') }}</small>
                                 </div>
                               </div>
                             @endif
