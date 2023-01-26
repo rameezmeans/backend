@@ -100,20 +100,7 @@
                           </div>
                           <div class="clearfix"></div>
                         </div>
-
-                        @if($file->additional_comments)
-
-                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Additional Comments</p>
-                          <br>
-                          <div>
-                            {{$file->additional_comments}}
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-
-                        @endif
-
+                        
                         @if($file->request_type)
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -168,13 +155,13 @@
 
                         @endif
 
-                        @if($file->customer_internal_notes)
+                        @if($file->additional_comments)
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Customer Notes</p>
+                          <h4 class="pull-left text-bold text-danger">Important Comments from Client</h4>
                           <br>
-                          <div>
-                            {{$file->customer_internal_notes}}
+                          <div class="m-l-10">
+                            {{$file->additional_comments}}
                           </div>
                           <div class="clearfix"></div>
                         </div>
@@ -245,19 +232,6 @@
                           </div>
                           <div class="clearfix"></div>
                         </div>
-
-                        @if($file->vehicle_internal_notes)
-
-                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Vehicle Notes</p>
-                          <br>
-                          <div>
-                            {{$file->vehicle_internal_notes}}
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-
-                        @endif
 
                         <div class="text-center m-t-20">                    
                           <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
