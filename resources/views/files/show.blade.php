@@ -281,16 +281,16 @@
                       @endif
                       <div class="p-b-20">
                       @if($file->options)
-                      <div class="b b-grey p-l-20 p-r-20 p-t-10">
+                      <div class="b  b-grey p-l-20 p-r-20 p-t-10">
                         <p class="pull-left">Options</p>
                         <div class="clearfix"></div>
                       </div>
                         @foreach($file->options() as $option) 
-                        <div class="p-l-20"> 
+                        <div class="p-l-20 b-b b-grey"> 
                           <img alt="{{$option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}">
                           {{$option}}  
                         </div>
-
+                        @if($comments)
                           @foreach($comments as $comment)
                               @if($option == $comment->option)
                                 <div class="p-l-20 p-b-10"> 
@@ -298,6 +298,7 @@
                                 </div>
                               @endif
                           @endforeach
+                        @endif
                         @endforeach
                       @endif
 

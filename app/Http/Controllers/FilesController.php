@@ -672,7 +672,12 @@ class FilesController extends Controller
 
         array_multisort($createdTimes, SORT_ASC, $unsortedTimelineObjects);
 
-        $comments = $this->getComments($file);
+        if($file->ecu){
+            $comments = $this->getComments($file);
+        }
+        else{
+            $comments = null;
+        }
         
         return view('files.show', [ 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
     }
