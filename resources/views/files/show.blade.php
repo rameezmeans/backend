@@ -285,6 +285,7 @@
                         <p class="pull-left">Options</p>
                         <div class="clearfix"></div>
                       </div>
+                      
                         @foreach($file->options() as $option) 
                         <div class="p-l-20 b-b b-grey"> 
                           <img alt="{{$option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}">
@@ -295,7 +296,9 @@
                               @if($option == $comment->option)
                                 <div class="p-l-20 p-b-10"> 
                                   {{$comment->comments}}
+                                 
                                 </div>
+                                <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
                               @endif
                           @endforeach
                         @endif
