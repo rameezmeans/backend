@@ -500,11 +500,64 @@ class FilesController extends Controller
         return response('file uploaded', 200);
     }
 
-    public function reports(){
+    public function feedbackReports(){
+        $engineers = User::where('is_engineer', 1)->get();
+        return view('files.feedback_reports', ['engineers' => $engineers]);
+    }
 
+    public function reports(){
         $engineers = User::where('is_engineer', 1)->get();
         return view('files.reports', ['engineers' => $engineers]);
+    }
 
+    public function getFeedbackReport(Request $request){
+
+        $files = $this->getReportFilesWithFeedback($request->engineer, $request->feedback);
+
+        $html = '';
+        $hasFiles = false;
+        $count = 1;
+        foreach($files as $file){
+
+            $hasFiles = true;
+            
+            if($file->assigned){
+                $assigned = $file->assigned->name;
+            }
+            else{
+                $assigned = 'By Admin';
+            }
+
+            $options = '';
+            if($file->options){
+                foreach($file->options() as $option){
+                    $options .= '<img class="p-l-10" alt="'.$option.'" width="33" height="33" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">'.$option;
+                }
+            }
+
+            $html .= '<tr class="redirect-click" data-redirect="'.route('file', $file->id).'" role="row">';
+            $html .= '<td>'. $count .'</td>';
+            $html .= '<td>'.$file->brand.'</td>';
+            $html .= '<td>'.$file->model.'</td>';
+            $html .= '<td>'.$file->ecu.'</td>';   
+            $html .= '<td><img class="p-r-5" alt="'.$file->stages.'" width="33" height="33" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'">'.$file->stages
+            
+            .$options.'</td>';
+            if($file->type == 'happy' || $file->type == 'good'){
+                $html .= '<td><span class="label label-success">'.ucfirst($file->type).'</span></td>'; 
+            }
+            else if ($file->type == 'ok'){
+                $html .= '<td><span class="label label-info">'.ucfirst($file->type).'</span></td>'; 
+            }
+            else{
+                $html .= '<td><span class="label label-danger">'.ucfirst($file->type).'</span></td>'; 
+            }
+            $html .= '<td>'.$assigned.'</td>';
+            $html .= '</tr>';
+            $count++;
+        }
+
+        return response()->json(['html' =>$html, 'has_files' => $hasFiles ], 200);
     }
 
     public function getEngineersFiles(Request $request){
@@ -559,6 +612,25 @@ class FilesController extends Controller
             return $pdf->download('all_engineers_report.pdf');
         }
         return $pdf->download(User::findOrFail($engineer)->name."_report.pdf");
+    }
+
+    public function getReportFilesWithFeedback($engineer, $feedback){
+
+        $filesObject = File::where('is_credited', 1);
+
+        if($engineer != 'all_engineers'){
+            $filesObject = $filesObject->where('assigned_to', $engineer);
+        }
+
+        if($feedback == 'all_types'){
+            $filesObject = $filesObject->join('file_feedback', 'files.id', '=' , 'file_feedback.file_id');
+        }
+        else{
+            $filesObject = $filesObject->join('file_feedback', 'files.id', '=' , 'file_feedback.file_id');
+            $filesObject = $filesObject->where('file_feedback.type', $feedback);
+        }
+
+        return $filesObject->get();
     }
 
     public function getReportFiles($engineer, $start, $end){

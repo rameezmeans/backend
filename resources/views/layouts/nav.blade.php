@@ -59,10 +59,21 @@
 
         @if(Auth::user()->is_admin || Auth::user()->is_head)
         <li class="m-t-30 ">
-          <a href="{{ route('reports') }}" class="detailed">
+          <a href="javascript:;">
             <span class="title">Reports</span>
+            <span class=" arrow"></span>
           </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+          <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
+          <ul class="sub-menu">
+            <li class="">
+              <a href="{{ route('reports') }}">Engineer's Report</a>
+              <span class="icon-thumbnail">ER</span>
+            </li>
+            <li class="">
+              <a href="{{ route('feedback-reports') }}">Feedback Report</a>
+              <span class="icon-thumbnail">FR</span>
+            </li>
+          </ul>
         </li>
         <li class="m-t-30 ">
           <a href="{{ route('credits') }}" class="detailed">

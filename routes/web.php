@@ -50,9 +50,12 @@ Route::post('/assign-engineer', [App\Http\Controllers\FilesController::class,'as
 Route::post('/change-status', [App\Http\Controllers\FilesController::class,'changeStatus'])->name('change-status');
 Route::post('/change-support-status', [App\Http\Controllers\FilesController::class,'changSupportStatus'])->name('change-support-status');
 Route::post('/edit-message', [App\Http\Controllers\FilesController::class,'editMessage'])->name('edit-message');
-Route::get('/reports', [App\Http\Controllers\FilesController::class,'reports'])->name('reports');
+
+Route::get('/feedback_reports', [App\Http\Controllers\FilesController::class,'feedbackReports'])->name('feedback-reports');
+Route::get('/engineers_reports', [App\Http\Controllers\FilesController::class,'reports'])->name('reports');
 Route::post('/get_engineers_files', [App\Http\Controllers\FilesController::class,'getEngineersFiles'])->name('get-engineers-files');
 Route::post('/get_engineers_report', [App\Http\Controllers\FilesController::class,'getEngineersReport'])->name('get-engineers-report');
+Route::post('/get_feedback_report', [App\Http\Controllers\FilesController::class,'getFeedbackReport'])->name('get-feedback-report');
 
 Route::get('/vehicles', [ App\Http\Controllers\VehiclesController::class,'index'])->name('vehicles');
 Route::get('/vehicle/{id}', [App\Http\Controllers\VehiclesController::class,'show'])->name('vehicle');
