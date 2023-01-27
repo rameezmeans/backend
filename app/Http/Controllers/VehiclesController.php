@@ -51,6 +51,7 @@ class VehiclesController extends Controller
         $comment->model = $request->model;
         $comment->option = $request->option;
         $comment->comments = $request->comments;
+        $comment->comment_type = $request->comment_type;
         $comment->save();
 
         return redirect()->route('add-comments', $request->id)->with('success',  'Comment added, successfully.');
@@ -69,7 +70,8 @@ class VehiclesController extends Controller
         $includedOptions = [];
 
         $options = Service::where('type', 'option')->get();
-        $comments = $this->getComments($vehicle);
+        $downloadComments = $this->getComments($vehicle, 'download');
+        $uploadComments = $this->getComments($vehicle, 'upload');
 
         if($vehicle->Engine_ECU){
 
@@ -96,7 +98,8 @@ class VehiclesController extends Controller
             'vehicle' => $vehicle, 
             'ecus' => $trimmedECUs, 
             'options' => $options,
-            'comments' => $comments,
+            'downloadComments' => $downloadComments,
+            'uploadComments' => $uploadComments,
             'includedOptions' => $includedOptions,
             'hasECU' => $hasECU,
         ]);
@@ -174,11 +177,9 @@ class VehiclesController extends Controller
 
     }
 
-    public function getComments($vehicle){
+    public function getComments($vehicle, $type){
 
-        $commentObj = Comment::where('engine', $vehicle->Engine);
-
-       
+        $commentObj = Comment::where('comment_type', $type)->where('engine', $vehicle->Engine);
 
         if($vehicle->Make){
             $commentObj->where('make', $vehicle->Make);
@@ -187,12 +188,6 @@ class VehiclesController extends Controller
         if($vehicle->Model){
             $commentObj->where('model', $vehicle->Model);
         }
-
-        // I need all and then I get specific through blade file.
-
-        // if($vehicle->Engine_ECU){
-        //     $commentObj->where('ecu', $vehicle->Engine_ECU);
-        // }
 
         if($vehicle->Generation){
             $commentObj->where('generation', $vehicle->Generation);

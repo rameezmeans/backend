@@ -108,8 +108,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                   <div class="p-l-40">
-                                    <h5 class="">Comments</h5>
-                                        @foreach($comments as $comment)
+                                    <h5 class="">Comments On Download</h5>
+                                        @foreach($downloadComments as $comment)
                                             @if($ecu == $comment->ecu)
                                                 <div class="p-t-10">
                                                     <img alt="{{$comment->option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}">
@@ -135,6 +135,66 @@
                                       <input type="hidden" name="generation" value="{{$vehicle->Generation}}">
                                       <input type="hidden" name="model" value="{{$vehicle->Model}}">
                                       <input type="hidden" name="id" value="{{$vehicle->id}}">
+                                      <input type="hidden" name="comment_type" value="download">
+                                      <div class="form-group form-group-default required ">
+                                        <label>Option</label>
+                                        <select class="full-width" data-init-plugin="select2" name="option">
+                                          @foreach($options as $option)
+                                            @if(!in_array($option->name, $includedOptions[$ecu]))
+                                            <option value="{{$option->name}}">{{$option->name}}</option>
+                                            @endif
+                                          @endforeach
+                                        </select>
+                                      </div>
+                                      <div class="form-group-attached ">
+                                        <div class="row">
+                                          <div class="col-md-12">
+                                            
+                                            <div class="form-group form-group-default required">
+                                              <label>Comment</label>
+                                              <textarea name="comments" required style="height: 100px;" class="form-control"></textarea>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                   
+                                    <div class="row">
+                                      <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+                                        <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
+                                      </div>
+                                    </div>
+                                  </form>
+                                  </div>
+
+                                  <div class="p-l-40 m-t-40">
+                                    <h5 class="">Comments On Upload</h5>
+                                        @foreach($uploadComments as $comment)
+                                            @if($ecu == $comment->ecu)
+                                                <div class="p-t-10">
+                                                    <img alt="{{$comment->option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}">
+                                                    {{$comment->option}}
+                                                    <span class="m-l-20">
+                                                      <i class="fa fa-pencil-square text-success btn-edit" data-id={{$comment->id}} data-comment="{{$comment->comments}}"></i>
+                                                      <i class="pg-trash text-danger btn-delete" data-id="{{$comment->id}}"></i>
+                                                    </span>
+                                                </div> 
+
+                                                <p> {{$comment->comments}}</p>
+                                                @php $third++; @endphp
+                                            @endif
+                                        @endforeach
+                                        @if($third == 0)
+                                            <p>No Comments.</p>
+                                        @endif
+                                    <form role="form" action="{{route('add-option-comments')}}" method="POST" class="m-t-40">
+                                      @csrf
+                                      <input type="hidden" name="engine" value="{{$vehicle->Engine}}">
+                                      <input type="hidden" name="make" value="{{$vehicle->Make}}">
+                                      <input type="hidden" name="ecu" value="{{$ecu}}">
+                                      <input type="hidden" name="generation" value="{{$vehicle->Generation}}">
+                                      <input type="hidden" name="model" value="{{$vehicle->Model}}">
+                                      <input type="hidden" name="id" value="{{$vehicle->id}}">
+                                      <input type="hidden" name="comment_type" value="upload">
                                       <div class="form-group form-group-default required ">
                                         <label>Option</label>
                                         <select class="full-width" data-init-plugin="select2" name="option">
