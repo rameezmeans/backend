@@ -62,7 +62,7 @@
                   <div class="card-header ">
                     <div class="text-center">
                       <div class="card-title">
-                          <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                          <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="" style="width: 100%;">
                           <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                           <a href="{{ route('download', $file->file_attached) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                           </a>
