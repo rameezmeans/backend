@@ -10,7 +10,7 @@
     <div class="container-fluid p-t-20">
       @if(Auth::user()->is_admin || Auth::user()->is_head)
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-4 col-xl-4">
           <div class="ar-2-1">
             <!-- START WIDGET widget_graphTile-->
             <div class="widget-4 card no-border  no-margin widget-loader-bar">
@@ -54,7 +54,7 @@
             <!-- END WIDGET -->
           </div>
         </div>
-        <div class="col-lg-6 col-xl-4 m-b-10 hidden-xlg">
+        <div class="col-lg-6 col-xl-4 m-b-10">
           <!-- START WIDGET widget_tableWidgetBasic-->
           <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle full-height d-flex flex-column">
             <div class="card-header  top-right">
@@ -91,7 +91,7 @@
           </div>
           <!-- END WIDGET -->
         </div>
-        <div class="col-lg-6 col-xl-4 m-b-10 hidden-xlg">
+        <div class="col-lg-6 col-xl-4 m-b-10">
           <!-- START WIDGET widget_tableWidgetBasic-->
           <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle full-height d-flex flex-column">
             <div class="card-header  top-right">
