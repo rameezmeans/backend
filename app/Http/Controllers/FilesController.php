@@ -550,7 +550,12 @@ class FilesController extends Controller
                 $html .= '<td><span class="label label-info">'.ucfirst($file->type).'</span></td>'; 
             }
             else{
-                $html .= '<td><span class="label label-danger">'.ucfirst($file->type).'</span></td>'; 
+                if($file->type){
+                    $html .= '<td><span class="label label-danger">'.ucfirst($file->type).'</span></td>'; 
+                }
+                else{
+                    $html .= '<td><span class="label label-danger">'.'No Feedback'.'</span></td>'; 
+                }
             }
             $html .= '<td>'.$assigned.'</td>';
             $html .= '</tr>';
@@ -616,17 +621,22 @@ class FilesController extends Controller
 
     public function getReportFilesWithFeedback($engineer, $feedback){
 
-        $filesObject = File::where('is_credited', 1);
+        $filesObject = File::Orderby('files.created_at', 'desc')->where('is_credited', 1)->select('*')->addSelect('files.id as id');
 
         if($engineer != 'all_engineers'){
             $filesObject = $filesObject->where('assigned_to', $engineer);
         }
 
         if($feedback == 'all_types'){
-            $filesObject = $filesObject->join('file_feedback', 'files.id', '=' , 'file_feedback.file_id');
+            $filesObject = $filesObject->leftjoin('file_feedback', 'files.id', '=' , 'file_feedback.file_id');
         }
+        else if($feedback == 'not_provided'){
+            $filesObject = $filesObject->join('file_feedback', 'files.id', '=' , 'file_feedback.file_id', 'left outer');
+            $filesObject = $filesObject->whereNull('file_feedback.type');
+        }
+
         else{
-            $filesObject = $filesObject->join('file_feedback', 'files.id', '=' , 'file_feedback.file_id');
+            $filesObject = $filesObject->join('file_feedback', 'files.id', '=' , 'file_feedback.file_id', 'left outer');
             $filesObject = $filesObject->where('file_feedback.type', $feedback);
         }
 

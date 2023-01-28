@@ -33,6 +33,7 @@
                               <label>Feedback</label>
                               <select class="full-width" id="feedback" data-init-plugin="select2" name="feedback">
                                 <option value="all_types">All Types</option>
+                                <option value="not_provided">No Feedback</option>
                                 <option value="angry">Angry</option>
                                 <option value="sad">Sad</option>
                                 <option value="ok">OK</option>
@@ -56,11 +57,11 @@
                             <thead>
                                 <tr role="row">
                                     <th style="width: 2%;">#</th>
-                                    <th style="width: 15%;">Brand</th>
+                                    <th style="width: 8%;">Brand</th>
                                     <th style="width: 8%;">Model</th>
                                     <th style="width: 8%;">ECU</th>
                                     <th style="width: 25%;">Stages and Options</th>
-                                    <th style="width: 10%;">Feedback</th>
+                                    <th style="width: 20%;">Feedback</th>
                                     <th style="width: 10%;">Engineer</th>
                                 </tr>
                             </thead>
