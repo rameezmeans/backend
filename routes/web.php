@@ -50,6 +50,9 @@ Route::post('/assign-engineer', [App\Http\Controllers\FilesController::class,'as
 Route::post('/change-status', [App\Http\Controllers\FilesController::class,'changeStatus'])->name('change-status');
 Route::post('/change-support-status', [App\Http\Controllers\FilesController::class,'changSupportStatus'])->name('change-support-status');
 Route::post('/edit-message', [App\Http\Controllers\FilesController::class,'editMessage'])->name('edit-message');
+Route::get('/feedback_emails', [App\Http\Controllers\FilesController::class,'feedbackEmails'])->name('feedback-emails');
+Route::post('/save_feedback_email_template', [App\Http\Controllers\FilesController::class,'saveFeedbackEmailTemplate'])->name('save-feedback-email-template');
+
 
 Route::get('/feedback_reports', [App\Http\Controllers\FilesController::class,'feedbackReports'])->name('feedback-reports');
 Route::get('/engineers_reports', [App\Http\Controllers\FilesController::class,'reports'])->name('reports');
@@ -71,6 +74,7 @@ Route::post('/mass_delete', [App\Http\Controllers\VehiclesController::class,'mas
 Route::get('/import_vehicles', [App\Http\Controllers\VehiclesController::class,'importVehiclesView'])->name('import-vehicles');
 Route::post('/import_vehicles_post', [App\Http\Controllers\VehiclesController::class,'importVehicles'])->name('import-vehicles-post');
 Route::post('/add_engineer_comment', [App\Http\Controllers\VehiclesController::class,'addEngineerComment'])->name('add-engineer-comment');
+
 
 Route::get('/work_hours', [App\Http\Controllers\WorkHoursController::class,'index'])->name('work-hours');
 Route::get('/edit_work_hour/{id}', [App\Http\Controllers\WorkHoursController::class,'edit'])->name('edit-work-hour');
@@ -144,5 +148,6 @@ Route::post('/post_message_template', [App\Http\Controllers\MessageTemplatesCont
 Route::post('/update_message_template', [App\Http\Controllers\MessageTemplatesController::class, 'update'])->name('update-message-template');
 Route::post('/delete_message_template', [App\Http\Controllers\MessageTemplatesController::class, 'delete'])->name('delete-message-template');
 
-// Route::get('/test_html', [App\Http\Controllers\EmailTemplatesController::class, 'test'])->name('test-html');
+Route::get('/test_html', [App\Http\Controllers\EmailTemplatesController::class, 'test'])->name('test-html');
 // Route::get('/test_message', [App\Http\Controllers\FilesController::class, 'testMessage'])->name('test-message');
+Route::get('/test_feedback', [App\Http\Controllers\FilesController::class, 'testFeedbackEmail'])->name('test-feedback');

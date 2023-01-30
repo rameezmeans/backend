@@ -19,7 +19,7 @@ class EmailTemplatesController extends Controller
     }
 
     public function index() {
-        $templates = EmailTemplate::all();
+        $templates = EmailTemplate::where('id', '!=', 9)->get();
         return view('email_templates.index', ['templates' => $templates]);
     }
 
@@ -62,6 +62,7 @@ class EmailTemplatesController extends Controller
 
     public function test() {
         
+        // return view('files.feedback_recorded');
         return view('files.assign_email');
     }
 

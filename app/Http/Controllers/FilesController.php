@@ -29,10 +29,20 @@ class FilesController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth',['except' => ['recordFeedback']]);
     }
     
-    public function editMessage(Request $request) {
+    public function saveFeedbackEmailTemplate(Request $request) {
+
+        $feebdackTemplate = EmailTemplate::findOrFail(9);
+        $feebdackTemplate->html = $request->new_template;
+        $feebdackTemplate->save();
+
+        return redirect()->route('feedback-emails')->with(['success' => 'Template udpated, successfully.']);
+
+    }
+
+    public function editMessage( Request $request ) {
 
         $message = EngineerFileNote::findOrFail($request->id);
         $message->egnineers_internal_notes = $request->message;
@@ -42,6 +52,26 @@ class FilesController extends Controller
         ->with('success', 'Engineer note successfully Edited!')
         ->with('tab','chat');
     }
+
+    public function feedbackEmails() {
+        //email template
+        $feebdackTemplate = EmailTemplate::findOrFail(9);
+        return view('files.feedback_page', [ 'feebdackTemplate' => $feebdackTemplate ]);
+    }
+
+    public function testFeedbackEmail() {
+        $file = File::findOrFail(203); // this is a file on live
+        $feebdackTemplate = EmailTemplate::findOrFail(9);
+        $html = $feebdackTemplate->html;
+
+        $subject = "ECU Tech: Feedback Request";
+        \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
+
+    }
+
+    // public function recordFeedback($fileID, $userID, $feedback){
+        
+    // }
 
     public function download($file_name) {
 
