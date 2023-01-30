@@ -93,11 +93,7 @@
 function getFiles(engineer, feedback){
 
     $('#progress').show();
-
-    // $('#start_field').val(start);
-    // $('#end_field').val(end);
-    // $('#engineer_field').val(engineer);
-
+    
     let feedback_url = '{{route('get-feedback-report')}}';
     
     $.ajax({
