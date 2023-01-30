@@ -1,80 +1,85 @@
 <html>
-    <style>
-        h1,
-        p {
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
-        }
-
-        .app {
-            width: 90%;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        .container {
+<body>
+<p>Hello,</p><p>You submitted a file on ECU tech portal (#file_name). We will be grateful if you will provide your feedback by just clicking over these emojis. </p>
+<div style="text-align: center;">
+    <div class="" style="
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-        }
-
-        .item {
-            width: 90px;
-            height: 90px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            user-select: none;
-        }
-        .radio {
-            display: none;
-        }
-        .radio ~ span {
-            font-size: 3rem;
-            filter: grayscale(0);
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        
-    </style>
-<body>
-<p>Hello,</p><p>You submitted a file on ECU tech portal (#file_name). We will be grateful if you will provide your feedback by just clicking over these emojis. </p>
-<div style="text-align: center;">
-    <div class="container">
-        <div class="item">
+    ">
+        <div class="item" style=" width: 90px;
+        height: 90px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        user-select: none;">
           <label for="0">
-          <input class="radio" type="radio" name="feedback" id="0" value="0">
-          <span><a href="#angry_link" style="color:white;">🤬</a></span>
+          <input class="radio" type="radio" style="display: none;">
+          <span style="font-size: 2rem;
+          filter: grayscale(0);
+          cursor: pointer;
+          transition: 0.3s;"><a href="#angry_link" style="color:white;">🤬</a></span>
         </label>
         </div>
     
-        <div class="item">
+        <div class="item" style=" width: 90px;
+        height: 90px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        user-select: none;">
           <label for="1">
-          <input class="radio" type="radio" name="feedback" id="1" value="1">
-          <span><a href="#sad_link" style="color:white;">🙁</a></span>
+          <input class="radio" type="radio" style="display: none;">
+          <span style="font-size: 2rem;
+          filter: grayscale(0);
+          cursor: pointer;
+          transition: 0.3s;"><a href="#sad_link" style="color:white;">🙁</a></span>
         </label>
         </div>
     
-        <div class="item">
+        <div class="item" style=" width: 90px;
+        height: 90px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        user-select: none;">
           <label for="2">
-          <input class="radio" type="radio" name="feedback" id="2" value="2">
-          <span><a href="#ok_link" style="color:white;">😶</a></span>
+          <input class="radio" type="radio" style="display: none;">
+          <span style="font-size: 2rem;
+          filter: grayscale(0);
+          cursor: pointer;
+          transition: 0.3s;"><a href="#ok_link" style="color:white;">😶</a></span>
         </label>
         </div>
     
-        <div class="item">
+        <div class="item" style=" width: 90px;
+        height: 90px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        user-select: none;">
           <label for="3">
-          <input class="radio" type="radio" name="feedback" id="3" value="3">
-          <span><a href="#good_link" style="color:white;">😁</a></span>
+          <input class="radio" type="radio" style="display: none;">
+          <span style="font-size: 2rem;
+          filter: grayscale(0);
+          cursor: pointer;
+          transition: 0.3s;"><a href="#good_link" style="color:white;">😁</a></span>
         </label>
         </div>
     
-        <div class="item">
+        <div class="item" style=" width: 90px;
+        height: 90px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        user-select: none;">
           <label for="4">
-          <input class="radio" type="radio" name="feedback" id="4" value="4">
-          <span><a href="#happy_link" style="color:white;">😍</a></span>
+          <input class="radio" type="radio" style="display: none;">
+          <span style="font-size: 2rem;
+          filter: grayscale(0);
+          cursor: pointer;
+          transition: 0.3s;"><a href="#happy_link" style="color:white;">😍</a></span>
         </label>
         </div>
     

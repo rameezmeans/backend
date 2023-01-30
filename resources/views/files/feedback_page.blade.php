@@ -22,7 +22,7 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                    <h3>Feedback Email</h3>
+                    <h3>Feedback Reminders</h3>
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
@@ -33,11 +33,35 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
-                <form method="POST" action="{{route('save-feedback-email-template')}}">
-                    @csrf
-                    <textarea name="new_template" style="width: 100%; height: 500px;">{{$feebdackTemplate->html}}</textarea>
-                    <button type="submit" class="btn btn-success pull-right">Save</button>
-                </form>
+                <div class="">
+                    <h5>Email Schedual</h5>
+                    <form method="POST" action="{{route('save-feedback-email-schedual')}}">
+                        @csrf
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label>Days</label>
+                                <input class="form-control" name="days" type="number" min="1" value="{{$schedual->days}}">
+                            </div>
+                            <div class="bootstrap-timepicker col-lg-4">
+                                <label>Time of Day</label>
+                                <input class="form-control" name="time_of_day" type="time" value="{{$schedual->time_of_day}}">
+                            </div>
+                            <div class="col-lg-2 m-t-30">
+                                <button type="submit" class="btn btn-success pull-right">Save</button>
+                            </div>  
+                        </div>
+                        
+                        
+                    </form>
+                </div>
+                <div class="" style="margin-top: 100px;">
+                    <h5>Email Template</h5>
+                    <form method="POST" action="{{route('save-feedback-email-template')}}">
+                        @csrf
+                        <textarea class="form-control" name="new_template" style="width: 100%; height: 500px;">{{$feebdackTemplate->html}}</textarea>
+                        <button type="submit" class="btn btn-success m-t-20">Save</button>
+                    </form>
+                </div>
             </div>
           </div>
         </div>

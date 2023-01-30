@@ -8,6 +8,7 @@ use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\MessageTemplate;
 use App\Models\RequestFile;
+use App\Models\Schedualer;
 use App\Models\User;
 use App\Models\Vehicle;
 use Carbon\Carbon;
@@ -32,6 +33,33 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
     
+    public function saveFeedbackEmailSchedual(Request $request) {
+
+        $schedual = Schedualer::where('id',1)->first();
+
+        if( !$schedual ) {
+            $new = new Schedualer();
+            $new->days = $request->days; 
+            $new->time_of_day = $request->time_of_day; 
+            $new->save(); 
+        }
+        else{
+           
+            $schedual->days = $request->days; 
+            $schedual->time_of_day = $request->time_of_day; 
+            $schedual->save(); 
+        }
+
+        return redirect()->route('feedback-emails')->with(['success' => 'Schedual udpated, successfully.']);
+    }
+
+    public function feedbackEmails() {
+        //email template
+        $feebdackTemplate = EmailTemplate::findOrFail(9);
+        $schedual = Schedualer::where('id',1)->first();
+        return view('files.feedback_page', [ 'feebdackTemplate' => $feebdackTemplate, 'schedual' => $schedual ]);
+    }
+
     public function saveFeedbackEmailTemplate(Request $request) {
 
         $feebdackTemplate = EmailTemplate::findOrFail(9);
@@ -51,12 +79,6 @@ class FilesController extends Controller
         return redirect()->back()
         ->with('success', 'Engineer note successfully Edited!')
         ->with('tab','chat');
-    }
-
-    public function feedbackEmails() {
-        //email template
-        $feebdackTemplate = EmailTemplate::findOrFail(9);
-        return view('files.feedback_page', [ 'feebdackTemplate' => $feebdackTemplate ]);
     }
 
     public function testFeedbackEmail() {

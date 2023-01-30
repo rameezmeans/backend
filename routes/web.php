@@ -52,6 +52,7 @@ Route::post('/change-support-status', [App\Http\Controllers\FilesController::cla
 Route::post('/edit-message', [App\Http\Controllers\FilesController::class,'editMessage'])->name('edit-message');
 Route::get('/feedback_emails', [App\Http\Controllers\FilesController::class,'feedbackEmails'])->name('feedback-emails');
 Route::post('/save_feedback_email_template', [App\Http\Controllers\FilesController::class,'saveFeedbackEmailTemplate'])->name('save-feedback-email-template');
+Route::post('/save_feedback_email_schedual', [App\Http\Controllers\FilesController::class,'saveFeedbackEmailSchedual'])->name('save-feedback-email-schedual');
 
 
 Route::get('/feedback_reports', [App\Http\Controllers\FilesController::class,'feedbackReports'])->name('feedback-reports');
