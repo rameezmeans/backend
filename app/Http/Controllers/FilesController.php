@@ -65,7 +65,7 @@ class FilesController extends Controller
         $feebdackTemplate = EmailTemplate::findOrFail(9);
         $html = $feebdackTemplate->html;
 
-        dd($html);
+        // dd($html);
 
         $subject = "ECU Tech: Feedback Request";
         \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
