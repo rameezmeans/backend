@@ -60,9 +60,12 @@ class FilesController extends Controller
     }
 
     public function testFeedbackEmail() {
+        // $file = File::findOrFail(42); // this is a file on local
         $file = File::findOrFail(203); // this is a file on live
         $feebdackTemplate = EmailTemplate::findOrFail(9);
         $html = $feebdackTemplate->html;
+
+        dd($html);
 
         $subject = "ECU Tech: Feedback Request";
         \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
