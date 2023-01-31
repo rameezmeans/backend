@@ -40,11 +40,11 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label>Days</label>
-                                <input class="form-control" name="days" type="number" min="1" value="{{$schedual->days}}">
+                                <input class="form-control" name="days" type="number" min="1" value="@if($schedual){{$schedual->days}}@endif">
                             </div>
                             <div class="bootstrap-timepicker col-lg-4">
                                 <label>Time of Day</label>
-                                <input class="form-control" name="time_of_day" type="time" value="{{$schedual->time_of_day}}">
+                                <input class="form-control" name="time_of_day" type="time" value="@if($schedual){{$schedual->time_of_day}}@endif">
                             </div>
                             <div class="col-lg-2 m-t-30">
                                 <button type="submit" class="btn btn-success pull-right">Save</button>
