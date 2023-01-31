@@ -51,14 +51,19 @@ class FilesController extends Controller
             $schedual->save(); 
         }
 
-        $filesObject = File::Orderby('files.created_at', 'desc')->where('is_credited', 1)->select('*')->addSelect('files.id as id');
-        $filesObject = $filesObject->join('file_feedback', 'files.id', '=' , 'file_feedback.file_id', 'left outer')->whereNull('type');
+        $filesObject = File::Orderby('files.created_at', 'desc')
+        ->where('is_credited', 1)->select('*')
+        ->addSelect('files.id as id')
+        ->addSelect('request_files.id as req_id');
+        $filesObject = $filesObject->join('request_files', 'files.id', '=' , 'request_files.file_id');
+        $filesObject = $filesObject->join('file_feedback', 'request_files.id', '=' , 'file_feedback.request_file_id', 'left outer')->whereNull('type');
         $reminderFiles = $filesObject->get();
-
+        
         foreach($reminderFiles as $file){
             $reminder = new EmailReminder();
             $reminder->file_id = $file->id;
             $reminder->user_id = $file->user_id;
+            $reminder->request_file_id = $file->req_id;
             $reminder->set_time = Carbon::now();
             $reminder->save();
         }
@@ -690,21 +695,22 @@ class FilesController extends Controller
     public function getReportFilesWithFeedback($engineer, $feedback){
 
         $filesObject = File::Orderby('files.created_at', 'desc')->where('is_credited', 1)->select('*')->addSelect('files.id as id');
+        $filesObject = $filesObject->join('request_files', 'files.id', '=' , 'request_files.file_id');
 
         if($engineer != 'all_engineers'){
             $filesObject = $filesObject->where('assigned_to', $engineer);
         }
 
         if($feedback == 'all_types'){
-            $filesObject = $filesObject->leftjoin('file_feedback', 'files.id', '=' , 'file_feedback.file_id');
+            $filesObject = $filesObject->leftjoin('file_feedback', 'request_files.id', '=' , 'file_feedback.request_file_id');
         }
         else if($feedback == 'not_provided'){
-            $filesObject = $filesObject->join('file_feedback', 'files.id', '=' , 'file_feedback.file_id', 'left outer');
+            $filesObject = $filesObject->join('file_feedback', 'request_files.id', '=' , 'file_feedback.request_file_id', 'left outer');
             $filesObject = $filesObject->whereNull('file_feedback.type');
         }
 
         else{
-            $filesObject = $filesObject->join('file_feedback', 'files.id', '=' , 'file_feedback.file_id', 'left outer');
+            $filesObject = $filesObject->join('file_feedback', 'request_files.id', '=' , 'file_feedback.request_file_id', 'left outer');
             $filesObject = $filesObject->where('file_feedback.type', $feedback);
         }
 
