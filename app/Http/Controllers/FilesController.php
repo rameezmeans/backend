@@ -99,16 +99,43 @@ class FilesController extends Controller
         ->with('tab','chat');
     }
 
-    public function testFeedbackEmail() {
-        // $file = File::findOrFail(42); // this is a file on local
-        $file = File::findOrFail(203); // this is a file on live
-        $feebdackTemplate = EmailTemplate::findOrFail(9);
-        $html = $feebdackTemplate->html;
+    public function generateFeedbackEmail( $fileID, $requestFileID, $userID ) {
 
-        // dd($html);
+        $file = File::findOrFail($fileID); // this is a file on local
+        // $file = File::findOrFail(203); // this is a file on live
+        $feebdackTemplate = EmailTemplate::findOrFail(9); // email template must always be 9
+        $html = $feebdackTemplate->html;
+        $fileName = $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard;
+
+        $html = str_replace('#file_name', $fileName, $html);
+        $html = str_replace('#angry_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/angry', $html);
+        $html = str_replace('#sad_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/sad', $html);
+        $html = str_replace('#ok_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/ok', $html);
+        $html = str_replace('#good_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/good', $html);
+        $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
+        $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
+        $html = str_replace('#file_url', env('PORTAL_URL').'file/'.$fileID, $html);
 
         $subject = "ECU Tech: Feedback Request";
         \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
+
+    }
+
+    public function testFeedbackEmail() {
+        // $file = File::findOrFail(42); // this is a file on local
+        $file = File::findOrFail(231); // this is a file on live
+        $requestFileID = 102;
+        $userID = 52;
+
+        $this->generateFeedbackEmail($file->id, $requestFileID, $userID);
+
+        // $feebdackTemplate = EmailTemplate::findOrFail(9);
+        // $html = $feebdackTemplate->html;
+
+        // // dd($html);
+
+        // $subject = "ECU Tech: Feedback Request";
+        // \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
 
     }
 
@@ -473,6 +500,12 @@ class FilesController extends Controller
         $engineerFile->file_id = $request->file_id;
         $engineerFile->engineer = true;
         $engineerFile->save();
+
+        $reminder = new EmailReminder();
+        $reminder->user_id = $file->user_id;
+        $reminder->file_id = $file->id;
+        $reminder->request_file_id = $engineerFile->id;
+        $reminder->save();
 
         if($file->status == 'submitted'){
             $file->status = 'completed';
