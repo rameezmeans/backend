@@ -123,7 +123,7 @@ class FilesController extends Controller
 
     public function testFeedbackEmail() {
         // $file = File::findOrFail(42); // this is a file on local
-        $file = File::findOrFail(203); // this is a file on live
+        $file = File::findOrFail(231); // this is a file on live
         $requestFileID = 102;
         $userID = 52;
 
@@ -500,6 +500,12 @@ class FilesController extends Controller
         $engineerFile->file_id = $request->file_id;
         $engineerFile->engineer = true;
         $engineerFile->save();
+
+        $reminder = new EmailReminder();
+        $reminder->user_id = $file->user_id;
+        $reminder->file_id = $file->id;
+        $reminder->request_file_id = $engineerFile->id;
+        $reminder->save();
 
         if($file->status == 'submitted'){
             $file->status = 'completed';
