@@ -13,6 +13,7 @@ use App\Models\Schedualer;
 use App\Models\User;
 use App\Models\Vehicle;
 use Carbon\Carbon;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Mail\Message;
@@ -139,6 +140,8 @@ class FilesController extends Controller
 
     }
 
+
+
     // public function recordFeedback($fileID, $userID, $feedback){
         
     // }
@@ -165,6 +168,56 @@ class FilesController extends Controller
         else if(Auth::user()->is_engineer){
             $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
         }
+
+
+        // $reminders = EmailReminder::all();
+
+        // $dateCheck = date('Y-m-d');
+
+        // // dd($dateCheck);
+        // // dd($dateCheck);
+        // // $dateCheck = '2023-02-01';
+
+        // $current = Carbon::parse(Carbon::createFromTimestamp(strtotime($dateCheck))->format('Y-m-d'));
+        
+        // // dd($current);
+        
+        // // dd($current);
+        // // dd(Carbon::now());
+
+        // $schedualer = Schedualer::take(1)->first();
+
+        // $days = $schedualer->days;
+        // $time = $schedualer->time_of_day;
+
+        // foreach($reminders as $reminder){
+
+        //     // dd($reminder->set_time);
+
+        //     $reminderSetDate = Carbon::parse(Carbon::createFromTimestamp(strtotime($reminder->set_time))->format('Y-m-d'));
+            
+        //     $emailTime = $reminderSetDate->addDays($days);
+
+        //     // dd($emailTime);
+
+        //     $result = $emailTime->eq($current);
+
+        //     // dd($result);
+
+        //     if($result){
+        //         // dd(Carbon::parse($time));
+        //         $timeGreater = now()->greaterThan(Carbon::parse($time));
+        //         // $timeGreater = now()->greaterThan(Carbon::parse());
+
+        //        if($timeGreater){
+        //         //    $this->generateFeedbackEmail($reminder->file_id, $reminder->request_file_id, $reminder->user_id);
+        //            $reminder->set_time = Carbon::now();
+        //            $reminder->save();
+        //        }
+        //     }
+        // }
+
+
         return view('files.files', ['files' => $files]);
     }
 

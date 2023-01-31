@@ -2,7 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Models\EmailReminder;
+use App\Models\EmailTemplate;
+use App\Models\File;
 use App\Models\NewsFeed;
+use App\Models\Schedualer;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class ActiveFeedCron extends Command
@@ -58,9 +64,59 @@ class ActiveFeedCron extends Command
             }
         }
     }
+
+    public function generateFeedbackEmail( $fileID, $requestFileID, $userID ) {
+
+        $file = File::findOrFail($fileID); 
+        $user = User::findOrFail($userID);
+        
+        $feebdackTemplate = EmailTemplate::findOrFail(9); // email template must always be 9
+        $html = $feebdackTemplate->html;
+        $fileName = $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard;
+
+        $html = str_replace('#file_name', $fileName, $html);
+        $html = str_replace('#angry_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/angry', $html);
+        $html = str_replace('#sad_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/sad', $html);
+        $html = str_replace('#ok_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/ok', $html);
+        $html = str_replace('#good_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/good', $html);
+        $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
+        $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
+        $html = str_replace('#file_url', env('PORTAL_URL').'file/'.$fileID, $html);
+
+        $subject = "ECU Tech: Feedback Request";
+        \Mail::to($user->email)->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
+
+    }
     
     public function handle()
     {
+        $reminders = EmailReminder::all();
+
+        $dateCheck = date('Y-m-d');
+        $current = Carbon::parse(Carbon::createFromTimestamp(strtotime($dateCheck))->format('Y-m-d'));
+        $schedualer = Schedualer::take(1)->first();
+
+        $days = $schedualer->days;
+        $time = $schedualer->time_of_day;
+
+        foreach($reminders as $reminder){
+
+            $reminderSetDate = Carbon::parse(Carbon::createFromTimestamp(strtotime($reminder->set_time))->format('Y-m-d'));
+            $emailTime = $reminderSetDate->addDays($days);
+            $result = $emailTime->eq($current);
+                if($result){
+                    $timeGreater = now()->greaterThan(Carbon::parse($time));
+                    if($timeGreater){
+                        $this->generateFeedbackEmail($reminder->file_id, $reminder->request_file_id, $reminder->user_id);
+                        $reminder->set_time = Carbon::now();
+                        $reminder->save();
+
+                        \Log::info("Sent Email at: ".date('d-m-y h:i:s').' for file: '.$reminder->file_id);
+                    }
+                }
+        }
+
+        ///////////////////////
 
         $flag = chmod( public_path("/../../portal/public/uploads") , 0777 );
 
