@@ -505,6 +505,7 @@ class FilesController extends Controller
         $reminder->user_id = $file->user_id;
         $reminder->file_id = $file->id;
         $reminder->request_file_id = $engineerFile->id;
+        $reminder->set_time = Carbon::now();
         $reminder->save();
 
         if($file->status == 'submitted'){
