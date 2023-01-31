@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\EmailReminder;
 use App\Models\EmailTemplate;
 use App\Models\EngineerFileNote;
 use App\Models\File;
@@ -35,7 +36,7 @@ class FilesController extends Controller
     
     public function saveFeedbackEmailSchedual(Request $request) {
 
-        $schedual = Schedualer::where('id',1)->first();
+        $schedual = Schedualer::take(1)->first();
 
         if( !$schedual ) {
             $new = new Schedualer();
@@ -50,13 +51,25 @@ class FilesController extends Controller
             $schedual->save(); 
         }
 
+        $filesObject = File::Orderby('files.created_at', 'desc')->where('is_credited', 1)->select('*')->addSelect('files.id as id');
+        $filesObject = $filesObject->join('file_feedback', 'files.id', '=' , 'file_feedback.file_id', 'left outer')->whereNull('type');
+        $reminderFiles = $filesObject->get();
+
+        foreach($reminderFiles as $file){
+            $reminder = new EmailReminder();
+            $reminder->file_id = $file->id;
+            $reminder->user_id = $file->user_id;
+            $reminder->set_time = Carbon::now();
+            $reminder->save();
+        }
+
         return redirect()->route('feedback-emails')->with(['success' => 'Schedual udpated, successfully.']);
     }
 
     public function feedbackEmails() {
         //email template
         $feebdackTemplate = EmailTemplate::findOrFail(9);
-        $schedual = Schedualer::where('id',1)->first();
+        $schedual = Schedualer::take(1)->first();
         return view('files.feedback_page', [ 'feebdackTemplate' => $feebdackTemplate, 'schedual' => $schedual ]);
     }
 
