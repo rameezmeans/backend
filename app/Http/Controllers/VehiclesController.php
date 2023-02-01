@@ -65,9 +65,9 @@ class VehiclesController extends Controller
         $trimmedECUs = [];
         $options = null;
         $comments = null;
-        $includedOptions = null;
+
         $hasECU = 0;
-        $includedOptions = [];
+        $includedOptionsForDownload = [];
 
         $options = Service::where('type', 'option')->get();
         $downloadComments = $this->getComments($vehicle, 'download');
@@ -84,7 +84,8 @@ class VehiclesController extends Controller
             }
 
             foreach($trimmedECUs as $row){
-                $includedOptions [$row]=  $this->getOptions($row, $vehicle);
+                $includedOptionsForDownload [$row]=  $this->getOptions($row, $vehicle, 'download');
+                $includedOptionsForUpload [$row]=  $this->getOptions($row, $vehicle, 'upload');
             }
 
         }
@@ -93,6 +94,8 @@ class VehiclesController extends Controller
             abort('404');
         }
         
+        // dd($includedOptions);
+
         return view('vehicles.add_comments', 
         [
             'vehicle' => $vehicle, 
@@ -100,7 +103,8 @@ class VehiclesController extends Controller
             'options' => $options,
             'downloadComments' => $downloadComments,
             'uploadComments' => $uploadComments,
-            'includedOptions' => $includedOptions,
+            'includedOptionsForUpload' => $includedOptionsForUpload,
+            'includedOptionsForDownload' => $includedOptionsForDownload,
             'hasECU' => $hasECU,
         ]);
     }
@@ -136,9 +140,9 @@ class VehiclesController extends Controller
 
     }
 
-    public function getOptions($ecu, $vehicle){
+    public function getOptions($ecu, $vehicle, $type){
 
-        $commentObj = Comment::where('engine', $vehicle->Engine);
+        $commentObj = Comment::where('engine', $vehicle->Engine)->where('comment_type', $type);
 
         if($vehicle->Make){
             $commentObj->where('make', $vehicle->Make);
