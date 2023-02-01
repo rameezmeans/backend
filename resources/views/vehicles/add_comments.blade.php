@@ -140,7 +140,7 @@
                                         <label>Option</label>
                                         <select class="full-width" data-init-plugin="select2" name="option">
                                           @foreach($options as $option)
-                                            @if(!in_array($option->name, $includedOptions[$ecu]))
+                                            @if(!in_array($option->name, $includedOptionsForDownload[$ecu]))
                                             <option value="{{$option->name}}">{{$option->name}}</option>
                                             @endif
                                           @endforeach
@@ -199,7 +199,7 @@
                                         <label>Option</label>
                                         <select class="full-width" data-init-plugin="select2" name="option">
                                           @foreach($options as $option)
-                                            @if(!in_array($option->name, $includedOptions[$ecu]))
+                                            @if(!in_array($option->name, $includedOptionsForUpload[$ecu]))
                                             <option value="{{$option->name}}">{{$option->name}}</option>
                                             @endif
                                           @endforeach
