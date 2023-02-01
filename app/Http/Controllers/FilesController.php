@@ -61,12 +61,24 @@ class FilesController extends Controller
         $reminderFiles = $filesObject->get();
         
         foreach($reminderFiles as $file){
-            $reminder = new EmailReminder();
-            $reminder->file_id = $file->id;
-            $reminder->user_id = $file->user_id;
-            $reminder->request_file_id = $file->req_id;
-            $reminder->set_time = Carbon::now();
-            $reminder->save();
+
+            $alreadyadded = EmailReminder::where('file_id', $file->id)
+            ->where('user_id', $file->user_id)
+            ->where('request_file_id', $file->req_id)
+            ->first();
+
+            if(!$alreadyadded){
+                $reminder = new EmailReminder();
+                $reminder->file_id = $file->id;
+                $reminder->user_id = $file->user_id;
+                $reminder->request_file_id = $file->req_id;
+                $reminder->set_time = Carbon::now();
+                $reminder->save();
+            }
+            else{
+                $alreadyadded->set_time = Carbon::now();
+                $alreadyadded->save();
+            }
         }
 
         return redirect()->route('feedback-emails')->with(['success' => 'Schedual udpated, successfully.']);
