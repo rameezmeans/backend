@@ -48,7 +48,8 @@ class ServicesController extends Controller
     public function edit($id)
     {
         $service = Service::findOrFail($id);
-        return view('services.services_add_edit', ['service' => $service]);
+        $vehicleTypes = explode(',', $service->vehicle_type);
+        return view('services.services_add_edit', [ 'service' => $service, 'vehicleTypes' => $vehicleTypes ]);
     }
 
      /**
@@ -70,7 +71,7 @@ class ServicesController extends Controller
         $created = new Service();
         $created->name = $validated['name'];
         $created->type = $validated['type'];
-        $created->vehicle_type = $validated['vehicle_type'];
+        $created->vehicle_type = implode( ',', $validated['vehicle_type'] );
         $created->credits = $validated['credits'];
         $created->description = $validated['description'];
 
@@ -158,10 +159,7 @@ class ServicesController extends Controller
         $service = Service::findOrFail($request->id);
         $service->delete();
         $request->session()->put('success', 'Service deleted, successfully.');
-        $service = Service::findOrFail($request->id);
-        $service->delete();
-        $request->session()->put('success', 'Service deleted, successfully.');
-
+        
     }
 
     /**
