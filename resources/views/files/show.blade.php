@@ -45,11 +45,11 @@
           <li class="nav-item">
             <a href="#" data-toggle="tab" @if(Session::get('tab') == 'chat') class="active" @endif data-target="#slide2"><span>Chat and Support</span></a>
           </li>
-          @if(Auth::user()->is_admin or Auth::user()->is_head)
+          
           <li class="nav-item">
             <a href="#" data-toggle="tab" data-target="#slide3"><span>Admin Tasks</span></a>
           </li>
-          @endif
+          
           
         </ul>
         <!-- Tab panes -->
@@ -523,22 +523,21 @@
               </div>
             </div>
           </div>
-            @if(Auth::user()->is_admin or Auth::user()->is_head)
-              <div class="tab-pane slide-left" id="slide3">
-                <div class="card-header ">
-                  <div class="text-center">
-                    <div class="card-title">
-                        <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                        <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
-                        <h4 class="m-t-20">Adminstrative Tasks</h4>
-                      </div>
+            <div class="tab-pane slide-left" id="slide3">
+              <div class="card-header ">
+                <div class="text-center">
+                  <div class="card-title">
+                      <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <h4 class="m-t-20">Adminstrative Tasks</h4>
                     </div>
-                    
-                    <div class="clearfix"></div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-12">
-                   
+                  </div>
+                  
+                  <div class="clearfix"></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  @if(Auth::user()->is_admin or Auth::user()->is_head)
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Assign This File to An Engineer</p>
                       <form action="{{route('assign-engineer')}}" method="POST">
@@ -559,27 +558,30 @@
                       </form>
                       <div class="clearfix"></div>
                     </div>
+                  @endif
 
-                    <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                      <p class="pull-left">File Status</p>
-                      <form action="{{route('change-status')}}" method="POST">
-                        @csrf
-                        <input type="hidden" name="file_id" value="{{$file->id}}">
-                        <div class="">
-                          <select class="full-width" data-init-plugin="select2" name="status">
-                              <option @if(isset($file) && $file->status == "submitted") selected @endif value="submitted">Submitted</option>
-                              <option @if(isset($file) && $file->status == "rejected") selected @endif value="rejected">Rejected</option>
-                              <option @if(isset($file) && $file->status == "completed") selected @endif value="completed">Completed</option>
-                          </select>
-                          <div class="text-center m-t-20">                    
-                            <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Update</span></button>
-                          </div>
+                  <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                    <p class="pull-left">File Status</p>
+                    <form action="{{route('change-status')}}" method="POST">
+                      @csrf
+                      <input type="hidden" name="file_id" value="{{$file->id}}">
+                      <div class="">
+                        <select class="full-width" data-init-plugin="select2" name="status">
+                            <option @if(isset($file) && $file->status == "submitted") selected @endif value="submitted">Submitted</option>
+                            <option @if(isset($file) && $file->status == "rejected") selected @endif value="rejected">Rejected</option>
+                            <option @if(isset($file) && $file->status == "completed") selected @endif value="completed">Completed</option>
+                            <option @if(isset($file) && $file->status == "processing") selected @endif value="processing">Processing</option>
+                            <option @if(isset($file) && $file->status == "on_hold") selected @endif value="on_hold">On Hold</option>
+                        </select>
+                        <div class="text-center m-t-20">                    
+                          <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Update</span></button>
                         </div>
-                        
-                      </form>
-                      <div class="clearfix"></div>
-                    </div>
-
+                      </div>
+                      
+                    </form>
+                    <div class="clearfix"></div>
+                  </div>
+                  @if(Auth::user()->is_admin or Auth::user()->is_head)
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Support Status</p>
                       <form action="{{route('change-support-status')}}" method="POST">
@@ -599,17 +601,13 @@
                       </form>
                       <div class="clearfix"></div>
                     </div>
-                    
-                    <br>
-                  </div>
+                  @endif
+                  <br>
                 </div>
               </div>
-            @endif
+            </div>
         </div>
       </div>
-
-      
-
     </div>
   </div>
 </div>
