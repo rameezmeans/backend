@@ -183,7 +183,7 @@ class FilesController extends Controller
     public function index()
     {
 
-        File::where('is_credited', 0)->delete(); // remove unneccesary NOT credited files
+        File::where('is_credited', 0)->delete();
 
         if(Auth::user()->is_admin || Auth::user()->is_head){
             $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
@@ -191,7 +191,6 @@ class FilesController extends Controller
         else if(Auth::user()->is_engineer){
             $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
         }
-
 
         // $reminders = EmailReminder::all();
 
@@ -219,6 +218,8 @@ class FilesController extends Controller
 
         //     $reminderSetDate = Carbon::parse(Carbon::createFromTimestamp(strtotime($reminder->set_time))->format('Y-m-d'));
             
+        //     // dd($reminderSetDate);
+
         //     $emailTime = $reminderSetDate->addDays($days);
 
         //     // dd($emailTime);
@@ -228,14 +229,22 @@ class FilesController extends Controller
         //     // dd($result);
 
         //     if($result){
-        //         // dd(Carbon::parse($time));
-        //         $timeGreater = now()->greaterThan(Carbon::parse($time));
-        //         // $timeGreater = now()->greaterThan(Carbon::parse());
+        //             // dd(Carbon::parse($time));
+        //             // $timeGreater = now()->greaterThan(Carbon::parse($time));
+        //             $timeGreater = true;
+        //             // $timeGreater = now()->greaterThan(Carbon::parse());
 
         //        if($timeGreater){
-        //         //    $this->generateFeedbackEmail($reminder->file_id, $reminder->request_file_id, $reminder->user_id);
-        //            $reminder->set_time = Carbon::now();
-        //            $reminder->save();
+        //             //    $this->generateFeedbackEmail($reminder->file_id, $reminder->request_file_id, $reminder->user_id);
+        //             $reminder->cycle = $reminder->cycle - 1;
+
+        //             if($reminder->cycle == 0){
+        //                 $reminder->delete();
+        //             }
+        //             else{
+        //                 $reminder->set_time = Carbon::now();
+        //                 $reminder->save();
+        //             }
         //        }
         //     }
         // }
@@ -577,11 +586,22 @@ class FilesController extends Controller
         $engineerFile->engineer = true;
         $engineerFile->save();
 
+        $allEearlierReminders = EmailReminder::where('user_id', $file->user_id)
+        ->where('file_id', $file->id)->get();
+
+        foreach($allEearlierReminders as $reminderToBeDeleted){
+            $reminderToBeDeleted->delete();
+        }
+
+        $schedual = Schedualer::take(1)->first();
+
         $reminder = new EmailReminder();
         $reminder->user_id = $file->user_id;
         $reminder->file_id = $file->id;
         $reminder->request_file_id = $engineerFile->id;
         $reminder->set_time = Carbon::now();
+        $reminder->cycle = $schedual->cycle;
+
         $reminder->save();
 
         if($file->status == 'submitted'){
