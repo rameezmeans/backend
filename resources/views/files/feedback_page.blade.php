@@ -46,10 +46,15 @@
                                 <label>Time of Day</label>
                                 <input class="form-control" name="time_of_day" type="time" value="@if($schedual){{$schedual->time_of_day}}@endif">
                             </div>
-                            <div class="col-lg-2 m-t-30">
-                                <button type="submit" class="btn btn-success pull-right">Save</button>
-                            </div>  
+                            <div class="bootstrap-timepicker col-lg-4">
+                                <label>Number of Cycles</label>
+                                <input class="form-control" name="cycle" min="1" type="number" value="@if($schedual){{$schedual->cycle}}@endif">
+                            </div>
+                            
                         </div>
+                        <div class="pull-left">
+                            <button type="submit" class="btn btn-success pull-right">Save</button>
+                        </div>  
                         
                         
                     </form>
