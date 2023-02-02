@@ -94,8 +94,6 @@ class VehiclesController extends Controller
             abort('404');
         }
         
-        // dd($includedOptions);
-
         return view('vehicles.add_comments', 
         [
             'vehicle' => $vehicle, 

@@ -19,6 +19,7 @@ use Illuminate\Http\Response;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use PDF;
 use SebastianBergmann\Template\Template;
 use Twilio\Rest\Client;
@@ -37,18 +38,26 @@ class FilesController extends Controller
     
     public function saveFeedbackEmailSchedual(Request $request) {
 
+        $validator = Validator::make($request->all(), [
+            'days' => 'required|',
+            'time_of_day' => 'required|',
+            'password' => 'required'
+        ]);
+
         $schedual = Schedualer::take(1)->first();
 
         if( !$schedual ) {
             $new = new Schedualer();
             $new->days = $request->days; 
             $new->time_of_day = $request->time_of_day; 
+            $new->cycle = $request->cycle; 
             $new->save(); 
         }
         else{
            
             $schedual->days = $request->days; 
             $schedual->time_of_day = $request->time_of_day; 
+            $schedual->cycle = $request->cycle;
             $schedual->save(); 
         }
 
@@ -73,10 +82,12 @@ class FilesController extends Controller
                 $reminder->user_id = $file->user_id;
                 $reminder->request_file_id = $file->req_id;
                 $reminder->set_time = Carbon::now();
+                $reminder->cycle =  $request->cycle;
                 $reminder->save();
             }
             else{
                 $alreadyadded->set_time = Carbon::now();
+                $alreadyadded->cycle =  $request->cycle;
                 $alreadyadded->save();
             }
         }
