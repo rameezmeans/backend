@@ -64,11 +64,13 @@ class ServicesController extends Controller
             'credits' => 'required',
             'icon' => 'required',
             'description' => 'required',
+            'vehicle_type' => 'required',
         ]);
 
         $created = new Service();
         $created->name = $validated['name'];
         $created->type = $validated['type'];
+        $created->vehicle_type = $validated['vehicle_type'];
         $created->credits = $validated['credits'];
         $created->description = $validated['description'];
 
@@ -92,6 +94,7 @@ class ServicesController extends Controller
         $service = Service::findOrFail($request->id);
         $service->credits = $request->credits;
         $service->type = $request->type;
+        $service->vehicle_type = $request->vehicle_type;
         $service->description = $request->description;
 
         if($request->file('icon')){

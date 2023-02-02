@@ -74,6 +74,21 @@
                       </span>
                     @enderror
 
+                    <div class="form-group form-group-default">
+                      <label>Vehicle Type</label>
+                      <select class="full-width" data-init-plugin="select2" name="vehicle_type">
+                        <option @if(isset($service) && $service->vehicle_type == 'car') selected @endif value="car">Car</option>
+                        <option  @if(isset($service) && $service->vehicle_type == 'truck') selected @endif value="truck">Truck</option>
+                        <option  @if(isset($service) && $service->vehicle_type == 'machine') selected @endif value="machine">Machine</option>
+                        <option  @if(isset($service) && $service->vehicle_type == 'agri') selected @endif value="agri">Agricultural</option>
+                      </select>
+                    </div>
+                    @error('type')
+                      <span class="text-danger" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+
                     <div class="form-group form-group-default required ">
                       <label>Description</label>
                       <textarea name="description" class="form-control" required>@if(isset($service)) {{ $service->description }} @else{{old('description') }}@endif</textarea>
