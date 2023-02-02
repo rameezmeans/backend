@@ -9,6 +9,7 @@ use App\Models\Vehicle;
 use App\Models\VehiclesNote;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class VehiclesController extends Controller
@@ -217,9 +218,24 @@ class VehiclesController extends Controller
     }
 
     public function add(Request $request){
+
+        $this->validate($request, [
+            'Name' => 'required',
+            'Make' => 'required',
+            'Model' => 'required',
+            'Generation' => 'required',
+            'Engine' => 'required',
+            'Engine_ECU' => 'required',
+            'Gearbox_ECU' => 'required',
+            'type' => 'required',
+            'Engine_URL' => 'required',
+            'Brand_image_URL' => 'required',
+        ]);
+        
         $vehicle = new Vehicle();
         $vehicle->Name = $request->Name;
         $vehicle->Make = $request->Make;
+        $vehicle->type = $request->type;
         $vehicle->Engine_URL = $request->Engine_URL;
         $vehicle->Brand_image_URL = $request->Brand_image_URL;
         $vehicle->Chart_image_URL = $request->Chart_image_URL;
@@ -253,6 +269,7 @@ class VehiclesController extends Controller
         $vehicle = Vehicle::findOrFail($request->id);
         $vehicle->Name = $request->Name;
         $vehicle->Make = $request->Make;
+        $vehicle->type = $request->type;
         $vehicle->Engine_URL = $request->Engine_URL;
         $vehicle->Brand_image_URL = $request->Brand_image_URL;
         $vehicle->Chart_image_URL = $request->Chart_image_URL;

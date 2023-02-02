@@ -149,6 +149,21 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
+
+                <div class="form-group form-group-default">
+                  <label>Type</label>
+                  <select class="full-width" data-init-plugin="select2" name="type">
+                    <option @if(isset($vehicle) && $vehicle->type == 'car') selected @endif value="car">Car</option>
+                    <option  @if(isset($vehicle) && $vehicle->type == 'truck') selected @endif value="truck">Truck</option>
+                    <option  @if(isset($vehicle) && $vehicle->type == 'machine') selected @endif value="machine">Machine</option>
+                    <option  @if(isset($vehicle) && $vehicle->type == 'agri') selected @endif value="agri">Agricultural</option>
+                  </select>
+                </div>
+                @error('type')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
                 
                   @if(isset($vehicle))
                     <div class="text-center m-t-40">                    
