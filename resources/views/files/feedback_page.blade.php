@@ -41,14 +41,29 @@
                             <div class="col-lg-4">
                                 <label>Days</label>
                                 <input class="form-control" name="days" type="number" min="1" value="@if($schedual){{$schedual->days}}@endif">
+                                @error('days')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="bootstrap-timepicker col-lg-4">
                                 <label>Time of Day</label>
                                 <input class="form-control" name="time_of_day" type="time" value="@if($schedual){{$schedual->time_of_day}}@endif">
+                                @error('time_of_day')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="bootstrap-timepicker col-lg-4">
                                 <label>Number of Cycles</label>
                                 <input class="form-control" name="cycle" min="1" type="number" value="@if($schedual){{$schedual->cycle}}@endif">
+                                @error('cycle')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             
                         </div>

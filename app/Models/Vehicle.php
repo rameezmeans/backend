@@ -9,7 +9,7 @@ class Vehicle extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'Make', 'Generation', 'Model', 'Engine', 'Engine_ECU', 'Engine_URL', 'Name'
+        'Make', 'Generation', 'Model', 'Engine', 'Engine_ECU', 'Engine_URL', 'Name', 'type'
     ];
 
     public function getComment($ecu){

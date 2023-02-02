@@ -38,10 +38,10 @@ class FilesController extends Controller
     
     public function saveFeedbackEmailSchedual(Request $request) {
 
-        $validator = Validator::make($request->all(), [
-            'days' => 'required|',
-            'time_of_day' => 'required|',
-            'password' => 'required'
+        $this->validate($request, [
+            'days' => 'required|min:1',
+            'time_of_day' => 'required',
+            'cycle' => 'required|min:1'
         ]);
 
         $schedual = Schedualer::take(1)->first();
