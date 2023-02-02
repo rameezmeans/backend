@@ -95,7 +95,7 @@ class ServicesController extends Controller
         $service = Service::findOrFail($request->id);
         $service->credits = $request->credits;
         $service->type = $request->type;
-        $service->vehicle_type = $request->vehicle_type;
+        $service->vehicle_type = implode( ',', $request->vehicle_type ); ;
         $service->description = $request->description;
 
         if($request->file('icon')){
