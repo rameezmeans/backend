@@ -107,11 +107,19 @@ class ActiveFeedCron extends Command
                 if($result){
                     $timeGreater = now()->greaterThan(Carbon::parse($time));
                     if($timeGreater){
-                        $this->generateFeedbackEmail($reminder->file_id, $reminder->request_file_id, $reminder->user_id);
-                        $reminder->set_time = Carbon::now();
-                        $reminder->save();
 
-                        \Log::info("Sent Email at: ".date('d-m-y h:i:s').' for file: '.$reminder->file_id);
+                        $this->generateFeedbackEmail($reminder->file_id, $reminder->request_file_id, $reminder->user_id);
+                        $reminder->cycle = $reminder->cycle - 1;
+
+                        if($reminder->cycle == 0){
+                            $reminder->delete();
+                        }
+                        else{
+                            $reminder->set_time = Carbon::now();
+                            $reminder->save();
+                        }
+
+                        \Log::info("Check cycles as well. They must be 2.Email Sent at: ".date('d-m-y h:i:s').' for file: '.$reminder->file_id);
                     }
                 }
         }
