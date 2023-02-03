@@ -73,6 +73,10 @@
               <a href="{{ route('feedback-reports') }}">Feedback Report</a>
               <span class="icon-thumbnail">FR</span>
             </li>
+            <li class="">
+              <a href="{{ route('credits-reports') }}">Credits Report</a>
+              <span class="icon-thumbnail">FR</span>
+            </li>
           </ul>
         </li>
         <li class="m-t-30 ">

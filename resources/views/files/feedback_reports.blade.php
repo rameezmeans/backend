@@ -97,7 +97,7 @@ function getFiles(engineer, feedback){
     let feedback_url = '{{route('get-feedback-report')}}';
     
     $.ajax({
-            url: "/get_feedback_report",
+            url: feedback_url,
             type: "POST",
             data: {
                 engineer: engineer,

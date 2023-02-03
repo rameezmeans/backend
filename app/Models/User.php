@@ -54,12 +54,16 @@ class User extends Authenticatable
         return Credit::where('user_id', $this->id)->where('credits', '<', 0)->whereNotNull('file_id')->sum('credits'); 
     }
 
+    public function total_credits(){
+        return Credit::where('user_id', '=', $this->id)->sum('credits');
+    }
+
     public function amount(){
         return Credit::where('user_id', $this->id)->sum('price_payed'); 
     }
 
     public function credits(){
-        return $this->hasMany(Credit::class); 
+        return $this->hasMany(Credit::class)->orderby('created_at', 'desc'); 
     }
 
     public function group(){
