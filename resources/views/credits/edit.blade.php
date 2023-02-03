@@ -30,6 +30,10 @@
                             <label></label>
                             <input value="{{ $customer->sum() }}"  name="total_credits_updated" type="number" class="form-control" required>
                         </div>
+                        <div class="form-group form-group-default">
+                            <label>Message to Client</label>
+                            <input value=""  name="message_to_credit" type="text" class="form-control">
+                        </div>
                           <div class="text-center m-t-20">                    
                             <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Update Credits</span></button>
                           </div>

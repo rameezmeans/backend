@@ -39,6 +39,7 @@ class CreditsController extends Controller
         $credit->user_id = $customer->id;
         $credit->stripe_id = NULL;
         $credit->price_payed = 0;
+        $credit->message_to_credit = $request->message_to_credit;
         $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
         $credit->save();
 
