@@ -55,7 +55,7 @@ class CreditsController extends Controller
         else{
 
             foreach($users as $user){
-                
+
                 $creditsForUsers = [];
                 $creditsForUsers ['user']= $user;
                 $creditObj = Credit::orderBy('created_at', 'desc')->where('user_id', $user->id);
@@ -84,7 +84,7 @@ class CreditsController extends Controller
 
                 if(sizeof($row['credits']) != 0){
                     $html .= '<table class="table table-hover demo-table-search table-responsive-block no-footer" >';
-                    $html .= '<tr><th>Date</th><th>Credits</th><th>Total Credits</th><th>Vehicle</th><th>Invoice Ref.</th><th>Amount</th></tr>';
+                    $html .= '<tr><th>Date</th><th>Credits</th><th>Total Credits</th><th>Reason to consume or earn</th><th>Invoice Ref.</th><th>Amount</th></tr>';
                     $html .= '<tr>';
 
                     $total = $row['user']->total_credits();
