@@ -8,6 +8,7 @@ use App\Models\EmailTemplate;
 use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\MessageTemplate;
+use App\Models\NewsFeed;
 use App\Models\RequestFile;
 use App\Models\Schedualer;
 use App\Models\User;
@@ -614,7 +615,23 @@ class FilesController extends Controller
             $file->reupload_time = Carbon::now();
             $assignmentTimeInSeconds  = strtotime($file->assignment_time);
             $reloadTimeInSeconds  = strtotime($file->reupload_time);
-            $file->response_time = $reloadTimeInSeconds - $assignmentTimeInSeconds;
+
+            $carbonAssignTime = Carbon::parse($file->assignment_time);
+            $carbonReuploadTime = Carbon::parse($file->reupload_time);
+
+            $difInDays = $carbonReuploadTime->diffInDays( $carbonAssignTime );
+
+            $feed = NewsFeed::findOrFail(1);
+            $dailyActivationTimeInSecond = strtotime($feed->daily_activation_time);
+            $dailyDeactivationTimeInSecond = strtotime($feed->daily_deactivation_time);
+            $difference = $dailyDeactivationTimeInSecond - $dailyActivationTimeInSecond;
+
+            $secondsToSubtractEveryDay = 86400 - $difference;
+            $totalSecondsToSubtract =  $secondsToSubtractEveryDay * $difInDays;
+
+            $timeWithoutBigSubtraction = $reloadTimeInSeconds - $assignmentTimeInSeconds;
+            $file->response_time = $timeWithoutBigSubtraction - $totalSecondsToSubtract;
+            // $file->response_time = $reloadTimeInSeconds - $assignmentTimeInSeconds;
         }
 
         if($file->original_file_id){
