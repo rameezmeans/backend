@@ -88,19 +88,25 @@ class CreditsController extends Controller
                     $html .= '<tr>';
 
                     $total = $row['user']->total_credits();
+                    $totalMoney = 0;
+                    $creditsBought = 0;
+                    $creditsSpent = 0;
 
                         foreach( $row['credits'] as $record ){
                             if($record->credits < 0){
                                 if($record->file){
                                     $html .= '<tr><td>'.$record->created_at->format('d/m/Y').'</td><td><label class="label label-danger">'.$record->credits.'</label></td><td><label class="label label-info">'.$total.'</label></td><td><img style="width: 10%;" src="'.get_image_from_brand($record->file->brand).'" >  '.$record->file->vehicle()->Name .' '. $record->file->engine .' '. $record->file->vehicle()->TORQUE_standard .'</td><td>'.$record->invoice_id.'</td><td></td></tr>';
+                                    $creditsSpent += $record->credits;
                                 }
                                 else{
                                     $html .= '<tr><td>'.$record->created_at->format('d/m/Y').'</td><td><label class="label label-danger">'.$record->credits.'</label></td><td><label class="label label-info">'.$total.'</label></td><td>'.$record->message_to_credit. '</td><td>'.$record->invoice_id.'</td><td></td></tr>';
                                 }
+                               
                             }
                             else{
                                 if($record->price_payed > 0){
                                     $html .= '<tr><td>'.$record->created_at->format('d/m/Y').'</td><td><label class="label label-success">'.$record->credits.'</label></td><td><label class="label label-info">'.$total.'</label></td><td>'.$record->message_to_credit. '</td><td>'.$record->invoice_id.'</td><td>€'.$record->price_payed.'</td></tr>';
+                                    $creditsBought += $record->credits;
                                 }
                                 else{
                                     $html .= '<tr><td>'.$record->created_at->format('d/m/Y').'</td><td><label class="label label-success">'.$record->credits.'</label></td><td><label class="label label-info">'.$total.'</label></td><td>'.$record->message_to_credit. '</td><td>'.$record->invoice_id.'</td><td></td></tr>';
@@ -108,7 +114,11 @@ class CreditsController extends Controller
                             }
 
                             $total -= $record->credits;
+                            $totalMoney += $record->price_payed;
                         }
+
+                    $html .= '<tr><td><b>Total</b></td><td><label class="label label-danger">Credit Consumed:'.-1*$creditsSpent.'</label></td><td><label class="label label-info">Credit Bought:'.$creditsBought.'</label></td><td></td><td></td><td>Money Spent: €'.$totalMoney.'</td></tr>';
+
                     $html .= '</tr>';
 
                     $html .= '</table>';
