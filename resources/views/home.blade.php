@@ -532,7 +532,7 @@
               $('#table-response').html(response.graph.files);
 
               $('#rtable').dataTable({
-                "aaSorting": []
+                retrieve: true,
               });
 
               let chartr = new Chart("response-charts", {
@@ -583,7 +583,7 @@
               $('#table-support').html(response.graph.files);
 
               $('#stable').dataTable({
-                "aaSorting": []
+                retrieve: true,
               });
 
               chartc = new Chart("support-charts", {
@@ -635,8 +635,9 @@
               }
 
               $('#table-credits').html(response.graph.credits);
+
               $('#ctable').dataTable({
-                "aaSorting": []
+                retrieve: true,
               });
 
               chartc = new Chart("credit-charts", {
@@ -690,7 +691,7 @@
                 $('#table').html(response.graph.files);
 
                 $('#ftable').dataTable({
-                  "aaSorting": []
+                  retrieve: true,
                 });
                 // table.ajax.reload(null, false );
 
