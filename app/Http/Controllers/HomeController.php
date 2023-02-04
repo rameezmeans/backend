@@ -143,6 +143,12 @@ class HomeController extends Controller
             $engineer = User::FindOrFail($request->reponse_engineer);
             $totalResponseTime = File::where('assigned_to', $engineer->id)->sum('response_time');
             $count = File::where('assigned_to', $engineer->id)->count();
+            if($count != 0){
+                $averageTime = $totalResponseTime/$count;
+            }
+            else{
+                $averageTime = 0;
+            }
             $averageTime = $totalResponseTime/$count;
             $averageTimes []= $averageTime;
             $engineersA []= $engineer->name;
@@ -172,7 +178,12 @@ class HomeController extends Controller
             $html .= '<td>'. $count .'</td>';
             $html .= '<td>'.$file->brand .$file->engine .' '. $file->vehicle()->TORQUE_standard .' '.'</td>';
             $html .= '<td>'.$assigned.'</td>';
-            $html .= '<td>'.\Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans().'</td>';
+
+            if($file->response_time)
+                $html .= '<td>'.\Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans().'</td>';
+            else 
+                $html .= '<td>Not Responded</td>';
+                
             $html .= '<td>'.\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A').'</td>';
             $html .= '</tr>';
             $count++;
