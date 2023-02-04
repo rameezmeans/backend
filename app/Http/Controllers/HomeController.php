@@ -129,7 +129,12 @@ class HomeController extends Controller
 
                 $totalResponseTime = File::where('assigned_to', $engineer->id)->sum('response_time');
                 $count = File::where('assigned_to', $engineer->id)->count();
-                $averageTime = $totalResponseTime/$count;
+                if($count != 0){
+                    $averageTime = $totalResponseTime/$count;
+                }
+                else{
+                    $averageTime = 0;
+                }
                 $averageTimes []= $averageTime;
                 $engineersA []= $engineer->name;
             }
