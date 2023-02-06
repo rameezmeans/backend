@@ -18,6 +18,18 @@
             </div>
           </div>
         @endif
+        @if(Session::has('info'))
+          <div class="pgn-wrapper" data-position="top" style="top: 59px;">
+            <div class="pgn push-on-sidebar-open pgn-bar">
+              <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert">
+                  <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                </button>
+                {{ Session::get('info') }}
+              </div>
+            </div>
+          </div>
+        @endif
         <div class="card card-transparent m-t-40">
             <div class="row p-b-20">
                 <div class="col-lg-12 p-b-20">
@@ -33,6 +45,19 @@
                         <div class="form-group form-group-default">
                             <label>Message to Client</label>
                             <input value=""  name="message_to_credit" type="text" class="form-control">
+                        </div>
+                        <div class="form-group form-group-default price_payed_field">
+                            <label></label>
+                            <input value=""  name="price_payed" type="number" class="form-control">
+                        </div>
+                        @error('price_payed')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                        <div class="checkbox check-success">
+                            <input name="gifted" type="checkbox" id="checkbox-gifted">
+                            <label for="checkbox-gifted">Check if these credits are a gift to customer.</label>
                         </div>
                           <div class="text-center m-t-20">                    
                             <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Update Credits</span></button>
@@ -52,6 +77,7 @@
                                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 25%">Strip ID</th>
                                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 20%">Date</th>
                                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Download PDF</th>
+                                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -62,18 +88,19 @@
                                                             <p><span class="label label-">{{$credit->invoice_id}}</span></p>
                                                         </td>
                                                         <td class="v-align-middle semi-bold sorting_1">
-                                                            <p><span class="label label-success">{{$credit->credits}}</span></p>
+                                                            <p><span class="label @if($credit->gifted) label-info @else label-warning @endif">{{$credit->credits}}</span></p>
                                                         </td>
                                                         <td class="v-align-middle semi-bold sorting_1">
-                                                            <p><span class="label label-warning text-black">@if($credit->price_payed == 0) {{ 'Manual Entry' }} @else €{{$credit->price_payed}} @endif</span></p>
+                                                            <p><span class="label  @if($credit->gifted) label-info @else label-warning @endif text-black">@if($credit->price_payed == 0) {{ 'Admin Entry' }} @else €{{$credit->price_payed}} @endif</span></p>
                                                         </td>
                                                         <td class="v-align-middle semi-bold sorting_1">
-                                                            <p><span class="label label-success">@if($credit->stripe_id){{$credit->stripe_id}} @else {{"Manual Entry"}} @endif</span></p>
+                                                            <p><span class="label  @if($credit->gifted) label-info @else label-warning @endif">@if($credit->stripe_id){{$credit->stripe_id}} @else @if($credit->gifted) {{ 'Gifted' }} @else {{ 'Direct Transaction' }} @endif @endif</span></p>
                                                         </td>
                                                         <td class="v-align-middle semi-bold sorting_1">
-                                                            <p><span class="label label-success">{{\Carbon\Carbon::parse($credit->created_at)->format('d/m/Y')}}</span></p>
+                                                            <p><span class="label  @if($credit->gifted) label-info @else label-success @endif">{{\Carbon\Carbon::parse($credit->created_at)->format('d/m/Y')}}</span></p>
                                                         </td>
                                                         <td><a href="{{ route('pdfview',['id'=>$credit->id]) }}" class="btn btn-sm btn-primary"><i class="pg-printer"></i></a></td>
+                                                        <td><a href="{{ route('update-credit',['id'=>$credit->id]) }}" class="btn btn-sm btn-success">Edit</a></td>
                                                     </tr>
                                                 @endif
                                             @endforeach
@@ -138,9 +165,20 @@
 
 <script type="text/javascript">
 
-      $( document ).ready(function(event) {
+    $( document ).ready(function(event) {
         
-       
+        $('#checkbox-gifted').on('change', function() {
+
+            let ischecked= $(this).is(':checked');
+            
+            if(ischecked) {
+                $('.price_payed_field').addClass('hide');
+            }
+            else{
+                $('.price_payed_field').removeClass('hide');
+            }
+        }); 
+
     });
 
 </script>
