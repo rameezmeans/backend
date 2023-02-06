@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use PDF;
@@ -187,10 +188,28 @@ class FilesController extends Controller
         File::where('is_credited', 0)->delete();
 
         if(Auth::user()->is_admin || Auth::user()->is_head){
-            $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
+            // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
+            $files = File::select('*')
+            ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
+            ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
+            ->orderBy('ss', 'asc')
+            ->orderBy('s', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->where('is_credited', 1)
+            ->get();
+            
         }
         else if(Auth::user()->is_engineer){
-            $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
+            // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
+            $files = File::select('*')
+            ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
+            ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
+            ->orderBy('ss', 'asc')
+            ->orderBy('s', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->where('is_credited', 1)
+            ->where('assigned_to', Auth::user()->id)
+            ->get();
         }
 
         // $reminders = EmailReminder::all();
