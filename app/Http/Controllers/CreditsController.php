@@ -95,21 +95,33 @@ class CreditsController extends Controller
                         foreach( $row['credits'] as $record ){
                             if($record->credits < 0){
                                 if($record->file){
-                                    $html .= '<tr><td>'.$record->created_at->format('d/m/Y').'</td><td><label class="label label-danger">'.$record->credits.'</label></td><td><label class="label label-info">'.$total.'</label></td><td><img style="width: 10%;" src="'.get_image_from_brand($record->file->brand).'" >  '.$record->file->vehicle()->Name .' '. $record->file->engine .' '. $record->file->vehicle()->TORQUE_standard .'</td><td>'.$record->invoice_id.'</td><td></td></tr>';
+                                    $html .= '<tr><td>'.$record->created_at->format('d/m/Y').'</td><td><label class="label label-danger">'.$record->credits.'</label></td><td><label class="label label-danger">'.$total.'</label></td><td><img style="width: 10%;" src="'.get_image_from_brand($record->file->brand).'" >  '.$record->file->vehicle()->Name .' '. $record->file->engine .' '. $record->file->vehicle()->TORQUE_standard .'</td><td>'.$record->invoice_id.'</td><td></td></tr>';
                                     $creditsSpent += $record->credits;
                                 }
                                 else{
-                                    $html .= '<tr><td>'.$record->created_at->format('d/m/Y').'</td><td><label class="label label-danger">'.$record->credits.'</label></td><td><label class="label label-info">'.$total.'</label></td><td>'.$record->message_to_credit. '</td><td>'.$record->invoice_id.'</td><td></td></tr>';
+                                    $html .= '<tr><td>'.$record->created_at->format('d/m/Y').'</td><td><label class="label label-danger">'.$record->credits.'</label></td><td><label class="label label-danger">'.$total.'</label></td><td>'.$record->message_to_credit. '</td><td>'.$record->invoice_id.'</td><td></td></tr>';
                                 }
                                
                             }
+                            
                             else{
                                 if($record->price_payed > 0){
-                                    $html .= '<tr><td>'.$record->created_at->format('d/m/Y').'</td><td><label class="label label-success">'.$record->credits.'</label></td><td><label class="label label-info">'.$total.'</label></td><td>'.$record->message_to_credit. '</td><td>'.$record->invoice_id.'</td><td>€'.$record->price_payed.'</td></tr>';
+
+                                    $html .= '<tr><td>'.$record->created_at->format('d/m/Y').'</td><td><label class="label label-success">'.$record->credits.'</label></td><td><label class="label label-warning">'.$total.'</label></td><td>'.$record->message_to_credit. '</td><td>'.$record->invoice_id.'</td><td>€'.$record->price_payed.'</td></tr>';
+                                    
                                     $creditsBought += $record->credits;
                                 }
                                 else{
-                                    $html .= '<tr><td>'.$record->created_at->format('d/m/Y').'</td><td><label class="label label-success">'.$record->credits.'</label></td><td><label class="label label-info">'.$total.'</label></td><td>'.$record->message_to_credit. '</td><td>'.$record->invoice_id.'</td><td></td></tr>';
+
+                                    if(!$record->gifted){
+                                        $creditsBought += $record->credits;
+                                        $html .= '<tr><td>'.$record->created_at->format('d/m/Y').'</td><td><label class="label label-success">'.$record->credits.'</label></td><td><label class="label label-warning">'.$total.'</label></td><td>'.$record->message_to_credit. '</td><td>'.$record->invoice_id.'</td><td></td></tr>';
+
+                                    }
+                                    else{
+
+                                        $html .= '<tr><td>'.$record->created_at->format('d/m/Y').'</td><td><label class="label label-info">'.$record->credits.'</label></td><td><label class="label label-info">'.$total.'</label></td><td>'.$record->message_to_credit. '</td><td>'.$record->invoice_id.'</td><td></td></tr>';
+                                    }
                                 }
                             }
 
@@ -117,7 +129,7 @@ class CreditsController extends Controller
                             $totalMoney += $record->price_payed;
                         }
 
-                    $html .= '<tr><td><b>Total</b></td><td><label class="label label-danger">Credit Consumed:'.-1*$creditsSpent.'</label></td><td><label class="label label-info">Credit Bought:'.$creditsBought.'</label></td><td></td><td></td><td>Money Spent: €'.$totalMoney.'</td></tr>';
+                    $html .= '<tr><td><b>Total</b></td><td><label class="label label-danger">Credit Consumed:'.-1*$creditsSpent.'</label></td><td><label class="label label-warning">Credit Bought:'.$creditsBought.'</label></td><td></td><td></td><td>Money Spent: €'.$totalMoney.'</td></tr>';
 
                     $html .= '</tr>';
 
@@ -133,18 +145,32 @@ class CreditsController extends Controller
     }
 
     public function updateCredits(Request $request) {
-
+        
         $customer = User::findOrFail($request->user_id);
 
         $difference = (float) $request->total_credits_updated - (float) $customer->sum();
 
-        if($difference != 0){
+        if($difference != 0) {
 
         $credit = new Credit();
         $credit->credits = $difference;
         $credit->user_id = $customer->id;
         $credit->stripe_id = NULL;
-        $credit->price_payed = 0;
+        
+        if( isset($request->gifted) && $request->gifted == 'on' ){
+            $credit->gifted = 1;
+            $credit->price_payed = 0;
+        }
+        else{
+            $credit->gifted = 0;
+
+            $request->validate([
+                'price_payed' => 'required|number'
+            ]);
+
+            $credit->price_payed = $request->price_payed;
+        }
+
         $credit->message_to_credit = $request->message_to_credit;
         $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
         $credit->save();
@@ -153,9 +179,24 @@ class CreditsController extends Controller
 
        }
        
-       return redirect()->route('edit-credit', $customer->id)->with(['success' => 'Credit is not changed.']);
+       return redirect()->route('edit-credit', $customer->id)->with(['info' => 'Credits are not changed.']);
     }
 
+    public function setCreditInformation(Request $request) {
+
+        $credit = Credit::findOrFail($request->id);
+        $credit->price_payed = $request->price_payed;
+        $credit->credits =$request->credits;
+        $credit->save();
+        
+        return redirect()->route('edit-credit', $credit->user_id)->with(['success' => 'Credit udpated, successfully.']);
+
+    }
+
+    public function UpdateIndividualCredit($id) {
+        $credit = Credit::findOrFail($id);
+        return view( 'credits.update-individual', ['credit' => $credit] );
+    }
     public function EditCredit($id) {
         $customer = User::findOrFail($id);
         $credits = $customer->credits;
