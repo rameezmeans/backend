@@ -55,6 +55,8 @@ class TranslationController extends Controller
 
         $record[ $texts['english'] ] = $texts['greek'];
 
+        // dd($texts);
+
         $this->removeKey($texts['english']);
         $this->appendRecord($record);
 
@@ -62,23 +64,27 @@ class TranslationController extends Controller
     }
 
     public function appendRecord($record) {
-        $json = file_get_contents(public_path('data.json'));
+        $json = file_get_contents(public_path("/../../portal/resources/lang/gr.json"));
         $data = json_decode($json, true);
-        
-        $data[] = $record;
-        
-        $json = json_encode($data, JSON_PRETTY_PRINT);
-        file_put_contents(public_path('data.json'), $json);
+        $data = array_merge($data,$record);
+        $json = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        file_put_contents(public_path("/../../portal/resources/lang/gr.json"), $json);
     }
 
     public function removeKey($key) {
 
         $json = file_get_contents(public_path("/../../portal/resources/lang/gr.json"));
         $data = json_decode($json, true);
+
+        // unset($data[$key]);
+
+        // dd($data);
         
-        $data = array_filter($data, function ($item) use ($key) {
-            return !array_key_exists($key, $item);
-        });
+        // $data = array_filter($data, function ($item) use ($key) {
+        //     dd($item);
+        //     dd($key);
+        //     return !array_key_exists($key, $item);
+        // });
         
         $json = json_encode($data, JSON_PRETTY_PRINT);
         file_put_contents(public_path("/../../portal/resources/lang/gr.json"), $json);

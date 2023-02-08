@@ -102,12 +102,12 @@ class ServicesController extends Controller
     
         $service->description = $request->description;
 
-        // $greekDescription = $request->greek_description;
+        $greekDescription = $request->greek_description;
 
-        // $texts['english'] = $request->description;;
-        // $texts['greek'] = $request->greek_description;
+        $texts['english'] = $request->description;;
+        $texts['greek'] = $request->greek_description;
 
-        // $this->translationObj->store($request->id, 'service', $texts);
+        $this->translationObj->store($request->id, 'service', $texts);
         
         if($request->file('icon')){
             $file = $request->file('icon');
