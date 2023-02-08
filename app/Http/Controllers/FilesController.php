@@ -185,7 +185,7 @@ class FilesController extends Controller
     public function index()
     {
 
-        File::where('is_credited', 0)->delete();
+        // File::where('is_credited', 0)->delete();
 
         if(Auth::user()->is_admin || Auth::user()->is_head){
             // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
