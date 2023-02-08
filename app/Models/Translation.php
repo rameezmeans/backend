@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Translation extends Model
 {
+    public $table = 'frontend_translations';
     use HasFactory;
 }

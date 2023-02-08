@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('translations', function (Blueprint $table) {
+        Schema::create('frontend_translations', function (Blueprint $table) {
             $table->id();
             $table->text('english');
             $table->text('greek');
