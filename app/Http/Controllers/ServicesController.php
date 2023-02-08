@@ -54,7 +54,7 @@ class ServicesController extends Controller
         
 
         $service = Service::findOrFail($id);
-        $modelInstance = Translation::where('english', $service->description)->first();
+        $modelInstance = Translation::where('model_id', $service->id)->where('model', 'Service')->first();
         $vehicleTypes = explode(',', $service->vehicle_type);
         return view('services.services_add_edit', [ 'modelInstance' => $modelInstance, 'service' => $service, 'vehicleTypes' => $vehicleTypes ]);
     }
