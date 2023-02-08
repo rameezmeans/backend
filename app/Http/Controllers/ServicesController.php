@@ -6,6 +6,7 @@ use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\TranslationController;
+use App\Models\Translation;
 
 class ServicesController extends Controller
 {
@@ -50,9 +51,12 @@ class ServicesController extends Controller
      */
     public function edit($id)
     {
+        
+
         $service = Service::findOrFail($id);
+        $modelInstance = Translation::where('english', $service->description)->first();
         $vehicleTypes = explode(',', $service->vehicle_type);
-        return view('services.services_add_edit', [ 'service' => $service, 'vehicleTypes' => $vehicleTypes ]);
+        return view('services.services_add_edit', [ 'modelInstance' => $modelInstance, 'service' => $service, 'vehicleTypes' => $vehicleTypes ]);
     }
 
      /**

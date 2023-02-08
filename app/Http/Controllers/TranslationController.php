@@ -35,7 +35,9 @@ class TranslationController extends Controller
      */
     public function store($id, $model, $texts)
     {
-        $modelInstance = Translation::where('model_id', $id)->where('model', $model)->first();
+        // $modelInstance = Translation::where('model_id', $id)->where('model', $model)->first();
+
+        $modelInstance = Translation::where('english', $texts['english'])->first();
         
         if($modelInstance){
             $modelInstance->english = $texts['english'];    
@@ -54,8 +56,6 @@ class TranslationController extends Controller
         }
 
         $record[ $texts['english'] ] = $texts['greek'];
-
-        // dd($texts);
 
         $this->removeKey($texts['english']);
         $this->appendRecord($record);
@@ -76,16 +76,8 @@ class TranslationController extends Controller
         $json = file_get_contents(public_path("/../../portal/resources/lang/gr.json"));
         $data = json_decode($json, true);
 
-        // unset($data[$key]);
+        unset($data[$key]);
 
-        // dd($data);
-        
-        // $data = array_filter($data, function ($item) use ($key) {
-        //     dd($item);
-        //     dd($key);
-        //     return !array_key_exists($key, $item);
-        // });
-        
         $json = json_encode($data, JSON_PRETTY_PRINT);
         file_put_contents(public_path("/../../portal/resources/lang/gr.json"), $json);
     }
