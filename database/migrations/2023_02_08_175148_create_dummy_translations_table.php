@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('frontend_translations', function (Blueprint $table) {
+        Schema::create('translations', function (Blueprint $table) {
             $table->id();
-            $table->text('english')->nullable();
-            $table->text('greek')->nullable();
-            $table->integer('model_id')->nullable();
-            $table->string('model')->nullable();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('locale');
+            $table->string('ip');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('frontend_translations');
+        // Schema::dropIfExists('dummy_translations');
     }
 };
