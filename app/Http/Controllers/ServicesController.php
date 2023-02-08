@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\TranslationController;
 
 class ServicesController extends Controller
 {
+    private $translationObj;
     /**
      * Create a new controller instance.
      *
@@ -15,6 +17,7 @@ class ServicesController extends Controller
      */
     public function __construct()
     {
+        $this->translationObj = new TranslationController();
         $this->middleware('auth',['except' => ['getStages', 'getOptions']]);
         $this->middleware('adminOnly', ['except' => ['getStages', 'getOptions']]);
     }
@@ -98,6 +101,13 @@ class ServicesController extends Controller
         $service->vehicle_type = implode( ',', $request->vehicle_type ); ;
         $service->description = $request->description;
 
+        $greekDescription = $request->greek_description;
+
+        $texts['english'] = $request->description;;
+        $texts['greek'] = $request->greek_description;
+
+        $this->translationObj->store($request->id, 'service', $texts);
+        
         if($request->file('icon')){
             $file = $request->file('icon');
             $fileName = $file->getClientOriginalName();
