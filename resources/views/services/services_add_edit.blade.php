@@ -98,6 +98,10 @@
                           <strong>{{ $message }}</strong>
                       </span>
                     @enderror
+                    <div class="form-group form-group-default required ">
+                      <label>Greek Description</label>
+                      <textarea name="greek_description" class="form-control" required></textarea>
+                    </div>
                     <div class="text-center m-t-40">                    
                       <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($service)) Update @else Add @endif</span></button>
                       @if(isset($service))

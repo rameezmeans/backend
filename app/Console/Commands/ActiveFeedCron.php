@@ -58,7 +58,7 @@ class ActiveFeedCron extends Command
 
         foreach($allOtherFeed as $feed){
             if($feed->active == 1){
-                \Log::info("deactivating feed inner:".$feed->title);
+                // \Log::info("deactivating feed inner:".$feed->title);
                 $feed->active = 0;
                 $feed->save();
             }
@@ -128,9 +128,9 @@ class ActiveFeedCron extends Command
 
         $flag = chmod( public_path("/../../portal/public/uploads") , 0777 );
 
-        \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " result:". $flag);
+        // \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " result:". $flag);
         
-        \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
+        // \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
 
         $feeds = NewsFeed::all();
 
@@ -152,7 +152,7 @@ class ActiveFeedCron extends Command
 
                 if( strtotime(now()) >= strtotime($feed->activate_at) && strtotime(now()) <= strtotime($feed->deactivate_at)){
                     // if($feed->active == 0){
-                            \Log::info("activating feed:".$feed->title);
+                            // \Log::info("activating feed:".$feed->title);
                             $feed->active = 1;
                             $feed->save();
     
@@ -162,7 +162,7 @@ class ActiveFeedCron extends Command
                     }
                     else {
                         if($feed->active == 1){
-                            \Log::info("deactivating feed:".$feed->title);
+                            // \Log::info("deactivating feed:".$feed->title);
                             $feed->active = 0;
                             $feed->save();
                         }
@@ -179,7 +179,7 @@ class ActiveFeedCron extends Command
 
                             if($feed->active == 0){
                                 
-                                \Log::info("activating feed at:".date('l').$feed->title);
+                                // \Log::info("activating feed at:".date('l').$feed->title);
                                 $feed->active = 1;
                                 $feed->save();
                             }
@@ -189,7 +189,7 @@ class ActiveFeedCron extends Command
                             
                             if($feed->active == 1){
                                 
-                                \Log::info("deactivating feed at:".date('l').$feed->title);
+                                // \Log::info("deactivating feed at:".date('l').$feed->title);
                                 $feed->active = 0;
                                 $feed->save();
                             }
@@ -200,7 +200,7 @@ class ActiveFeedCron extends Command
 
                             if($feed->active == 1){
 
-                                \Log::info("deactivating feed:".date('l').$feed->title);
+                                // \Log::info("deactivating feed:".date('l').$feed->title);
                                 $feed->active = 0;
                                 $feed->save();
                             }
