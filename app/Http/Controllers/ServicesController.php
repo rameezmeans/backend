@@ -98,15 +98,16 @@ class ServicesController extends Controller
         $service = Service::findOrFail($request->id);
         $service->credits = $request->credits;
         $service->type = $request->type;
-        $service->vehicle_type = implode( ',', $request->vehicle_type ); ;
+        $service->vehicle_type = implode( ',', $request->vehicle_type );
+    
         $service->description = $request->description;
 
-        $greekDescription = $request->greek_description;
+        // $greekDescription = $request->greek_description;
 
-        $texts['english'] = $request->description;;
-        $texts['greek'] = $request->greek_description;
+        // $texts['english'] = $request->description;;
+        // $texts['greek'] = $request->greek_description;
 
-        $this->translationObj->store($request->id, 'service', $texts);
+        // $this->translationObj->store($request->id, 'service', $texts);
         
         if($request->file('icon')){
             $file = $request->file('icon');
