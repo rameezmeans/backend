@@ -35,9 +35,9 @@ class TranslationController extends Controller
      */
     public function store($id, $model, $texts)
     {
-        // $modelInstance = Translation::where('model_id', $id)->where('model', $model)->first();
+        $modelInstance = Translation::where('model_id', $id)->where('model', $model)->first();
 
-        $modelInstance = Translation::where('english', $texts['english'])->first();
+        // $modelInstance = Translation::where('english', $texts['english'])->first();
         
         if($modelInstance){
             $modelInstance->english = $texts['english'];    
