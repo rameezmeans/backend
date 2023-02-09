@@ -70,7 +70,7 @@ class ServicesController extends Controller
             'credits' => 'required',
             'icon' => 'required',
             'description' => 'required',
-            'greek_description' => 'required',
+            'greek_description' => '',
             'vehicle_type' => 'required',
         ]);
 
