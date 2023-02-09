@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class NewsFeed extends Model
 {
     use HasFactory;
+
+    public function translation(){
+        return $this->hasOne(Translation::class, 'model_id', 'id')->where('model', 'Feed');
+    }
 }
