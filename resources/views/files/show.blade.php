@@ -155,6 +155,8 @@
 
                         @endif
 
+                        @endif
+
                         @if($file->additional_comments)
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -165,8 +167,6 @@
                           </div>
                           <div class="clearfix"></div>
                         </div>
-
-                        @endif
 
                         @endif
 
