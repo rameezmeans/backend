@@ -14,8 +14,12 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class VehiclesController extends Controller
 {
+
+    private $translationObj;
+
     public function __construct()
     {
+        $this->translationObj = new TranslationController();
         $this->middleware('auth');
         $this->middleware('adminOnly');
     }
@@ -55,7 +59,10 @@ class VehiclesController extends Controller
         $comment->comment_type = $request->comment_type;
         $comment->save();
 
-        
+        $texts['english'] =  $request->comments;
+        $texts['greek'] =  $request->greek_comments;
+
+        $this->translationObj->store($comment->id, 'Comment', $texts);
 
         return redirect()->route('add-comments', $request->id)->with('success',  'Comment added, successfully.');
 
@@ -121,7 +128,6 @@ class VehiclesController extends Controller
 
     }
 
-
     public function massDelete(Request $request){
 
         foreach($request->searchIDs as $id){
@@ -136,6 +142,11 @@ class VehiclesController extends Controller
         $comment = Comment::findOrFail($request->id);
         $comment->comments = $request->comments;
         $comment->save();
+
+        $texts['english'] =  $request->comments;
+        $texts['greek'] =  $request->greek_comments;
+
+        $this->translationObj->store($comment->id, 'Comment', $texts);
 
         return redirect()->route('add-comments', $request->vehicle_id)->with('success',  'Comment updated, successfully.');
 
