@@ -51,8 +51,6 @@ class ServicesController extends Controller
      */
     public function edit($id)
     {
-        
-
         $service = Service::findOrFail($id);
         $modelInstance = Translation::where('model_id', $service->id)->where('model', 'Service')->first();
         $vehicleTypes = explode(',', $service->vehicle_type);
@@ -72,6 +70,7 @@ class ServicesController extends Controller
             'credits' => 'required',
             'icon' => 'required',
             'description' => 'required',
+            'greek_description' => 'required',
             'vehicle_type' => 'required',
         ]);
 
@@ -89,6 +88,11 @@ class ServicesController extends Controller
 
         $created->save();
 
+        $texts['english'] =  $validated['description'];
+        $texts['greek'] =  $validated['greek_description'];
+
+        $this->translationObj->store($created->id, 'service', $texts);
+
         return redirect()->route('services')->with(['success' => 'Service added, successfully.']);
     }
 
@@ -105,9 +109,6 @@ class ServicesController extends Controller
         $service->vehicle_type = implode( ',', $request->vehicle_type );
     
         $service->description = $request->description;
-
-        $greekDescription = $request->greek_description;
-
         $texts['english'] = $request->description;;
         $texts['greek'] = $request->greek_description;
 

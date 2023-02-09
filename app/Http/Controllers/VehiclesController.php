@@ -55,6 +55,8 @@ class VehiclesController extends Controller
         $comment->comment_type = $request->comment_type;
         $comment->save();
 
+        
+
         return redirect()->route('add-comments', $request->id)->with('success',  'Comment added, successfully.');
 
     }
