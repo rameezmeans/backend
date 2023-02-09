@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class NewsFeedsController extends Controller
 {
+
+    private $translationObj;
+
     /**
      * Create a new controller instance.
      *
@@ -14,6 +17,7 @@ class NewsFeedsController extends Controller
      */
     public function __construct()
     {
+        $this->translationObj = new TranslationController();
         $this->middleware('auth');
         $this->middleware('adminOnly');
     }
@@ -272,6 +276,11 @@ class NewsFeedsController extends Controller
         
         $feed->save();
 
+        $texts['english'] = $request->feed;;
+        $texts['greek']   = $request->feed_in_greek;
+
+        $this->translationObj->store($request->id, 'Feed', $texts); 
+
         return redirect()->route('feeds')->with(['success' => 'Feed Updated, successfully.']);
 
     }
@@ -328,6 +337,11 @@ class NewsFeedsController extends Controller
         $feed->type = $request->type;
         
         $feed->save();
+
+        $texts['english'] = $request->feed;;
+        $texts['greek']   = $request->feed_in_greek;
+
+        $this->translationObj->store($request->id, 'Feed', $texts); 
 
         return redirect()->route('feeds')->with(['success' => 'Feed added, successfully.']);
 

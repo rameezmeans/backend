@@ -57,6 +57,15 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
+                <div class="form-group form-group-default">
+                  <label>Feed In Greek</label>
+                  <input value="@if(isset($feed->translation)){{ $feed->translation->greek }}@endif"  name="feed_in_greek" type="text" class="form-control">
+                </div>
+                @error('feed')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
 
                 <div class="form-group form-group-default required ">
                   <label>Type</label>
