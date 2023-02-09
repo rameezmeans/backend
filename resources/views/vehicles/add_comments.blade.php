@@ -39,7 +39,7 @@
                     @php $third = 0; @endphp
                         <div class="tab-pane @if($second == 0) active @endif" id="tab-fillup-{{$second}}">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                   <h5 class="p-b-20">{{$vehicle->Name}}</h5>
                                  
                                   <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -99,15 +99,15 @@
                                  
                                   <div class="row">
                                     <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
-                                      <button type="submit" class="btn btn-success btn-block m-t-5">Add Note On this ECU</button>
+                                      <button type="submit" class="btn btn-success btn-block m-t-5">Add Note</button>
                                     </div>
                                   </div>
                                 </form>
                                 </div>
                                   
                                 </div>
-                                <div class="col-lg-6">
-                                  <div class="p-l-40">
+                                <div class="col-lg-4">
+                                  <div class="p-l-10">
                                     <h5 class="">Comments On Download</h5>
                                         @foreach($downloadComments as $comment)
                                             @if($ecu == $comment->ecu)
@@ -115,7 +115,7 @@
                                                     <img alt="{{$comment->option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}">
                                                     {{$comment->option}}
                                                     <span class="m-l-20">
-                                                      <i class="fa fa-pencil-square text-success btn-edit" data-id={{$comment->id}} data-comment="{{$comment->comments}}"></i>
+                                                      <i class="fa fa-pencil-square text-success btn-edit" data-id={{$comment->id}} data-comment="{{$comment->comments}}" data-greek-comment="@if($comment->translation){{$comment->translation->greek}}@endif"></i>
                                                       <i class="pg-trash text-danger btn-delete" data-id="{{$comment->id}}"></i>
                                                     </span>
                                                 </div> 
@@ -127,7 +127,7 @@
                                         @if($third == 0)
                                             <p>No Comments.</p>
                                         @endif
-                                    <form role="form" action="{{route('add-option-comments')}}" method="POST" class="m-t-40">
+                                    <form role="form" action="{{route('add-option-comments')}}" method="POST" class="m-t-10">
                                       @csrf
                                       <input type="hidden" name="engine" value="{{$vehicle->Engine}}">
                                       <input type="hidden" name="make" value="{{$vehicle->Make}}">
@@ -150,23 +150,28 @@
                                         <div class="row">
                                           <div class="col-md-12">
                                             
-                                            <div class="form-group form-group-default required">
+                                            <div class="form-group form-group-default m-t-10 required" style="height: 50%;">
                                               <label>Comment</label>
-                                              <textarea name="comments" required style="height: 100px;" class="form-control"></textarea>
+                                              <textarea name="comments" required style="height: 10px;" class="form-control"></textarea>
+                                            </div>
+                                            <div class="form-group form-group-default m-t-10 required" style="height: 50%;">
+                                              <label>Greek Comment</label>
+                                              <textarea name="greek_comments" required style="height: 10px;" class="form-control"></textarea>
+                                            </div>
+                                            <div class="form-group m-t-10">
+                                              <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
                                             </div>
                                           </div>
                                         </div>
                                       </div>
-                                   
-                                    <div class="row">
-                                      <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
-                                        <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
-                                      </div>
-                                    </div>
                                   </form>
                                   </div>
 
-                                  <div class="p-l-40 m-t-40">
+                                  
+
+                                </div>
+                                <div class="col-lg-4">
+                                  <div class="p-l-40">
                                     <h5 class="">Comments On Upload</h5>
                                         @foreach($uploadComments as $comment)
                                             @if($ecu == $comment->ecu)
@@ -174,7 +179,7 @@
                                                     <img alt="{{$comment->option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}">
                                                     {{$comment->option}}
                                                     <span class="m-l-20">
-                                                      <i class="fa fa-pencil-square text-success btn-edit" data-id={{$comment->id}} data-comment="{{$comment->comments}}"></i>
+                                                      <i class="fa fa-pencil-square text-success btn-edit" data-id={{$comment->id}} data-comment="{{$comment->comments}}" data-greek-comment="@if($comment->translation){{$comment->translation->greek}}@endif"></i>
                                                       <i class="pg-trash text-danger btn-delete" data-id="{{$comment->id}}"></i>
                                                     </span>
                                                 </div> 
@@ -186,7 +191,7 @@
                                         @if($third == 0)
                                             <p>No Comments.</p>
                                         @endif
-                                    <form role="form" action="{{route('add-option-comments')}}" method="POST" class="m-t-40">
+                                    <form role="form" action="{{route('add-option-comments')}}" method="POST" class="m-t-10">
                                       @csrf
                                       <input type="hidden" name="engine" value="{{$vehicle->Engine}}">
                                       <input type="hidden" name="make" value="{{$vehicle->Make}}">
@@ -209,22 +214,22 @@
                                         <div class="row">
                                           <div class="col-md-12">
                                             
-                                            <div class="form-group form-group-default required">
+                                            <div class="form-group form-group-default required m-t-10" style="height: 50%;">
                                               <label>Comment</label>
-                                              <textarea name="comments" required style="height: 100px;" class="form-control"></textarea>
+                                              <textarea name="comments" required style="height: 10px;" class="form-control"></textarea>
+                                            </div>
+                                            <div class="form-group form-group-default required m-t-10" style="height: 50%;">
+                                              <label>Greek Comment</label>
+                                              <textarea name="greek_comments" required style="height: 10px;" class="form-control"></textarea>
+                                            </div>
+                                            <div class="form-group m-t-10">
+                                              <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
                                             </div>
                                           </div>
                                         </div>
                                       </div>
-                                   
-                                    <div class="row">
-                                      <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
-                                        <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
-                                      </div>
-                                    </div>
                                   </form>
                                   </div>
-
                                 </div>
                                 
                             </div>
@@ -239,7 +244,42 @@
     </div>
 </div>
 
-<div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="editModal" tabindex="-1" role="dialog" aria-hidden="false">
+<div class="modal fade fill-in show" style="z-index: 99999;" id="editModal" tabindex="-1" role="dialog">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+    <i class="pg-close"></i>
+  </button>
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="text-left p-b-5"><span class="semi-bold">Update Comment</span></h5>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <form role="form" action="{{route('edit-option-comment')}}" method="POST">
+            @csrf
+            <input type="hidden" id="edit-modal-id" name="id" value="">
+            <input type="hidden" name="vehicle_id" value="{{$vehicle->id}}">
+          <div class="col-lg-9 ">
+            <label>English Comment</label>
+            <textarea id="edit-modal-comments" name="comments" required style="height: 100px; width: 500px;" class="form-control input-lg"></textarea>
+            <label>Greek Comment</label>
+            <textarea id="edit-modal-greek-comments" name="greek_comments" required style="height: 100px; width: 500px;" class="form-control input-lg"></textarea>
+          </div>
+          <div class="col-lg-3 no-padding sm-m-t-10 m-t-10 text-center sm-text-center">
+            <button type="submit" class="btn btn-primary btn-lg btn-large fs-15">Update</button>
+          </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+{{-- <div class="modal fade fill-in" id="editModal" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog">
     <div class="modal-content-wrapper">
       <div class="modal-content">
@@ -258,25 +298,30 @@
                 <div class="col-md-12">
                   
                   <div class="form-group form-group-default required">
-                    <label>Comment</label>
-                    <textarea id="edit-modal-comments" name="comments" required style="height: 100px;" class="form-control"></textarea>
+                    <label>English Comment</label>
+                    <textarea id="edit-modal-comments" name="comments" required style="height: 10px;" class="form-control"></textarea>
+                  </div>
+                  <div class="form-group form-group-default required">
+                    <label>Greek Comment</label>
+                    <textarea id="edit-modal-greek-comments" name="greek_comments" required style="height: 10px;" class="form-control"></textarea>
                   </div>
                 </div>
               </div>
+             
+                <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+                  <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
+                </div>
+              
             </div>
          
-          <div class="row">
-            <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
-              <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
-            </div>
-          </div>
+          
         </form>
         </div>
       </div>
     </div>
     <!-- /.modal-content -->
   </div>
-</div>
+</div> --}}
 
 @endsection
 
@@ -290,7 +335,9 @@
             console.log(e);
             let id = $(this).data('id');
             let comment = $(this).data('comment');
+            let greek_comment = $(this).data('greek-comment');
             $('#edit-modal-comments').val(comment);
+            $('#edit-modal-greek-comments').val(greek_comment);
             $('#edit-modal-id').val(id);
             console.log(comment+' '+id);
 

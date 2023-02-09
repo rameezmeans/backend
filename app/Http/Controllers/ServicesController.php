@@ -91,7 +91,7 @@ class ServicesController extends Controller
         $texts['english'] =  $validated['description'];
         $texts['greek'] =  $validated['greek_description'];
 
-        $this->translationObj->store($created->id, 'service', $texts);
+        $this->translationObj->store($created->id, 'Service', $texts);
 
         return redirect()->route('services')->with(['success' => 'Service added, successfully.']);
     }
@@ -112,7 +112,7 @@ class ServicesController extends Controller
         $texts['english'] = $request->description;;
         $texts['greek'] = $request->greek_description;
 
-        $this->translationObj->store($request->id, 'service', $texts);
+        $this->translationObj->store($request->id, 'Service', $texts);
         
         if($request->file('icon')){
             $file = $request->file('icon');
