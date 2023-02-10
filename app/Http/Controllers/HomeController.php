@@ -438,9 +438,7 @@ class HomeController extends Controller
             $options = '';
             if($file->options){
                 foreach($file->options() as $option){
-                    if(!\App\Models\Service::where('name', $option)->first()){
-                        dd($option);
-                    }
+                    
                     $options .= '<img class="p-l-10" alt="'.$option.'" width="33" height="33" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">'.$option;
                 }
             }
@@ -448,10 +446,17 @@ class HomeController extends Controller
             $html .= '<tr class="redirect-click" data-redirect="'.route('file', $file->id).'" role="row">';
             $html .= '<td>'. $count .'</td>';
             $html .= '<td>'.$file->brand .$file->engine .' '. $file->vehicle()->TORQUE_standard .' '.'</td>';
-            $html .= '<td>'.$assigned.'</td>';    
-            $html .= '<td><img class="p-r-5" alt="'.$file->stages.'" width="33" height="33" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'">'.$file->stages
-            
-            .$options.'</td>';
+            $html .= '<td>'.$assigned.'</td>';
+
+            if($file->stages){   
+
+                if(!\App\Models\Service::where('name', $file->stages)->first()){
+                    dd($option);
+                } 
+                
+                $html .= '<td><img class="p-r-5" alt="'.$file->stages.'" width="33" height="33" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'">'.$file->stages
+                .$options.'</td>';
+            }
 
             if($file->response_time)
                 $html .= '<td>'.\Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans().'</td>';
