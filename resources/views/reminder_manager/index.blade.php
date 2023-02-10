@@ -1,10 +1,11 @@
 @extends('layouts.app')
 @section('pagespecificstyles')
 <style>
-    .table tbody tr td .checkbox label::after{
+    .main-table tbody tr td .checkbox label::after{
         left:3px !important;
     }
 </style>
+@endsection
 @section('content')
 <div class="page-content-wrapper ">
     <!-- START PAGE CONTENT -->
@@ -32,7 +33,7 @@
                     <div class="card-body">
                       <div class="table-responsive">
                         <div id="condensedTable_wrapper" class="dataTables_wrapper no-footer">
-                            <table class="table table-hover table-condensed no-footer" id="condensedTable" role="grid">
+                            <table class="main-table table table-hover table-condensed no-footer" id="condensedTable" role="grid">
                             <thead>
                                 <tr role="row">
                                     <th style="width:200px; color: black;" class="sorting_asc" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending text-black">Title</th>

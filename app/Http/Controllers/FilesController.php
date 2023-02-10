@@ -9,12 +9,14 @@ use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\MessageTemplate;
 use App\Models\NewsFeed;
+use App\Models\ReminderManager;
 use App\Models\RequestFile;
 use App\Models\Schedualer;
 use App\Models\User;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
+use App\Http\Controllers\ReminderManagerController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Mail\Message;
@@ -28,6 +30,7 @@ use Twilio\Rest\Client;
 
 class FilesController extends Controller
 {
+    private $manager;
     /**
      * Create a new controller instance.
      *
@@ -35,6 +38,8 @@ class FilesController extends Controller
      */
     public function __construct()
     {
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getManager();
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
     
@@ -125,45 +130,45 @@ class FilesController extends Controller
         ->with('tab','chat');
     }
 
-    public function generateFeedbackEmail( $fileID, $requestFileID, $userID ) {
+    // public function generateFeedbackEmail( $fileID, $requestFileID, $userID ) {
 
-        $file = File::findOrFail($fileID); // this is a file on local
-        // $file = File::findOrFail(203); // this is a file on live
-        $feebdackTemplate = EmailTemplate::findOrFail(9); // email template must always be 9
-        $html = $feebdackTemplate->html;
-        $fileName = $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard;
+    //     $file = File::findOrFail($fileID); // this is a file on local
+    //     // $file = File::findOrFail(203); // this is a file on live
+    //     $feebdackTemplate = EmailTemplate::findOrFail(9); // email template must always be 9
+    //     $html = $feebdackTemplate->html;
+    //     $fileName = $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard;
 
-        $html = str_replace('#file_name', $fileName, $html);
-        $html = str_replace('#angry_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/angry', $html);
-        $html = str_replace('#sad_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/sad', $html);
-        $html = str_replace('#ok_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/ok', $html);
-        $html = str_replace('#good_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/good', $html);
-        $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
-        $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
-        $html = str_replace('#file_url', env('PORTAL_URL').'file/'.$fileID, $html);
+    //     $html = str_replace('#file_name', $fileName, $html);
+    //     $html = str_replace('#angry_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/angry', $html);
+    //     $html = str_replace('#sad_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/sad', $html);
+    //     $html = str_replace('#ok_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/ok', $html);
+    //     $html = str_replace('#good_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/good', $html);
+    //     $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
+    //     $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
+    //     $html = str_replace('#file_url', env('PORTAL_URL').'file/'.$fileID, $html);
 
-        $subject = "ECU Tech: Feedback Request";
-        \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
+    //     $subject = "ECU Tech: Feedback Request";
+    //     \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
 
-    }
+    // }
 
-    public function testFeedbackEmail() {
-        // $file = File::findOrFail(42); // this is a file on local
-        $file = File::findOrFail(231); // this is a file on live
-        $requestFileID = 118;
-        $userID = 50;
+    // public function testFeedbackEmail() {
+    //     // $file = File::findOrFail(42); // this is a file on local
+    //     $file = File::findOrFail(231); // this is a file on live
+    //     $requestFileID = 118;
+    //     $userID = 50;
 
-        $this->generateFeedbackEmail($file->id, $requestFileID, $userID);
+    //     $this->generateFeedbackEmail($file->id, $requestFileID, $userID);
 
-        // $feebdackTemplate = EmailTemplate::findOrFail(9);
-        // $html = $feebdackTemplate->html;
+    //     // $feebdackTemplate = EmailTemplate::findOrFail(9);
+    //     // $html = $feebdackTemplate->html;
 
-        // // dd($html);
+    //     // // dd($html);
 
-        // $subject = "ECU Tech: Feedback Request";
-        // \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
+    //     // $subject = "ECU Tech: Feedback Request";
+    //     // \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
 
-    }
+    // }
 
 
 
@@ -363,8 +368,15 @@ class FilesController extends Controller
 
         $subject = "ECU Tech: Task Assigned!";
 
-        \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject]));
-        $this->sendMessage($engineer->phone, $message);
+        if($this->manager['eng_assign_eng_email']){
+
+            \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject]));
+        }
+
+        if($this->manager['eng_assign_eng_sms']){
+        
+            $this->sendMessage($engineer->phone, $message);
+        }
         
         return Redirect::back()->with(['success' => 'Engineer Assigned to File.']);
 
@@ -453,11 +465,20 @@ class FilesController extends Controller
         
         $subject = "ECU Tech: File Status Changed!";
 
-        \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
-        \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
-        
-        $this->sendMessage($admin->phone, $message1);
-        $this->sendMessage($customer->phone, $message2);
+        if($this->manager['status_change_cus_email']){
+            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+        }
+
+        if($this->manager['status_change_admin_email']){
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        }
+
+        if($this->manager['status_change_admin_sms']){
+            $this->sendMessage($admin->phone, $message1);
+        }
+        if($this->manager['status_change_cus_sms']){
+            $this->sendMessage($customer->phone, $message2);
+        }
 
         return Redirect::back()->with(['success' => 'File status changed.']);
     }
@@ -542,12 +563,19 @@ class FilesController extends Controller
         // $message2 = "Hi, Status changed for a file by Customer: " .$file->name;
        
         $subject = "ECU Tech: Engineer replied to your support message!";
-
-        \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
-        \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        if($this->manager['msg_eng_cus_email']){
+            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+        }
+        if($this->manager['msg_eng_admin_email']){
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        }
         
-        $this->sendMessage($admin->phone, $message1);
-        $this->sendMessage($customer->phone, $message2);
+        if($this->manager['msg_eng_admin_sms']){
+            $this->sendMessage($admin->phone, $message1);
+        }
+        if($this->manager['msg_eng_cus_sms']){
+            $this->sendMessage($customer->phone, $message2);
+        }
 
         $old = File::findOrFail($request->file_id);
         $old->checked_by = 'engineer';
@@ -729,11 +757,19 @@ class FilesController extends Controller
         
         $subject = "ECU Tech: Engineer uploaded a file in reply.";
 
-        \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
-        \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        if($this->manager['eng_file_upload_cus_email']){
+            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+        }
+        if($this->manager['eng_file_upload_admin_email']){
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        }
         
-        $this->sendMessage($admin->phone, $message1);
-        $this->sendMessage($customer->phone, $message2);
+        if($this->manager['eng_file_upload_admin_sms']){
+            $this->sendMessage($admin->phone, $message1);
+        }
+        if($this->manager['eng_file_upload_cus_sms']){
+            $this->sendMessage($customer->phone, $message2);
+        }
     
 
         return response('file uploaded', 200);
