@@ -169,9 +169,7 @@
                         </div>
 
                         @endif
-
-
-
+                        
                       </div>
 
                       <div class="col-lg-6">
@@ -260,7 +258,7 @@
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Tool</p>
                           <div class="pull-right">
-                              <img alt="{{$file->tool}}" width="50" height="20" data-src-retina="{{ get_dropdown_image($file->tool) }}" data-src="{{ get_dropdown_image($file->tool) }}" src="{{ get_dropdown_image($file->tool) }}">
+                              <img alt="{{$file->tool}}" width="50" height="" data-src-retina="{{ get_dropdown_image($file->tool) }}" data-src="{{ get_dropdown_image($file->tool) }}" src="{{ get_dropdown_image($file->tool) }}">
                               <span class="" style="top: 2px; position:relative;">{{ $file->tool }}</span>
                           </div>
                           <div class="clearfix"></div>
@@ -273,7 +271,7 @@
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Stage</p>
                           <div class="pull-right">
-                              <img alt="{{$file->stages}}" width="33" height="33" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
+                              <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
                               <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span>
                           </div>
                           <div class="clearfix"></div>
