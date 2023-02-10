@@ -974,10 +974,10 @@ class FilesController extends Controller
     public function show($id)
     {
         if(Auth::user()->is_admin){
-            $file = File::findOrFail($id);
+            $file = File::where('id', $id)->where('is_credited', 1)->first();
         }
         else if(Auth::user()->is_engineer){
-            $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->first();
+            $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
         }
 
         if(!$file){

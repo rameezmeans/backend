@@ -416,10 +416,10 @@ class HomeController extends Controller
         }
 
         if($request->engineer_files == "all_engineers"){
-            $files = File::whereBetween('created_at', array($start, $end))->get();
+            $files = File::whereBetween('created_at', array($start, $end))->where('is_credited', 1)->get();
         }
         else{
-            $files = File::where('assigned_to', $request->engineer_files)->whereBetween('created_at', array($start, $end))->get();
+            $files = File::where('assigned_to', $request->engineer_files)->whereBetween('created_at', array($start, $end))->where('is_credited', 1)->get();
         }
 
         $count = 1;
@@ -449,10 +449,6 @@ class HomeController extends Controller
             $html .= '<td>'.$assigned.'</td>';
 
             if($file->stages){   
-
-                if(!\App\Models\Service::where('name', $file->stages)->first()){
-                    dd($option);
-                } 
                 
                 $html .= '<td><img class="p-r-5" alt="'.$file->stages.'" width="33" height="33" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'">'.$file->stages
                 .$options.'</td>';
