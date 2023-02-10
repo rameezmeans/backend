@@ -140,6 +140,10 @@
               <a href="{{ route('work-hours') }}">Work Hours</a>
               <span class="icon-thumbnail">WH</span>
             </li>
+            <li class="">
+              <a href="{{ route('reminder-manager') }}">Reminder Manager</a>
+              <span class="icon-thumbnail">Rm</span>
+            </li>
           </ul>
         </li>
         <li class="m-t-30 ">
