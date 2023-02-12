@@ -65,7 +65,7 @@ class User extends Authenticatable
     public function credits(){
         return $this->hasMany(Credit::class)->orderby('created_at', 'desc'); 
     }
-
+    
     public function group(){
         return $this->belongsTo(Group::class); 
     }
