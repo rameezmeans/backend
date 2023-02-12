@@ -72,16 +72,16 @@
                                     </div>
                                 </td>
                                 <td class="v-align-middle">
-                                    <div class="checkbox check-success ">
+                                    {{-- <div class="checkbox check-success ">
                                         <input type="checkbox" @if($manager['eng_assign_cus_email']) checked @endif id="eng_assign_cus_email">
                                         <label for="eng_assign_cus_email" class="">Enable Email</label>
-                                    </div>
+                                    </div> --}}
                                 </td>
                                 <td class="v-align-middle semi-bold">
-                                    <div class="checkbox check-success ">
+                                    {{-- <div class="checkbox check-success ">
                                         <input type="checkbox" @if($manager['eng_assign_cus_sms']) checked @endif id="eng_assign_cus_sms">
                                         <label for="eng_assign_cus_sms" class="">Enable SMS</label>
-                                    </div>
+                                    </div> --}}
                                 </td>
                                 </tr>
                                 <tr role="row" class="even">
@@ -264,16 +264,16 @@
                                             </div>
                                         </td>
                                         <td class="v-align-middle">
-                                            <div class="checkbox check-success ">
+                                            {{-- <div class="checkbox check-success ">
                                                 <input type="checkbox" @if($manager['status_change_eng_email']) checked @endif id="status_change_eng_email">
                                                 <label for="status_change_eng_email" class="">Enable Email</label>
-                                            </div>
+                                            </div> --}}
                                         </td>
                                         <td class="v-align-middle semi-bold">
-                                            <div class="checkbox check-success ">
+                                            {{-- <div class="checkbox check-success ">
                                                 <input type="checkbox" @if($manager['status_change_eng_sms']) checked @endif id="status_change_eng_sms">
                                                 <label for="status_change_eng_sms" class="">Enable SMS</label>
-                                            </div>
+                                            </div> --}}
                                         </td>
                                         <td class="v-align-middle">
                                             <div class="checkbox check-success ">
