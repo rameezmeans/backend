@@ -156,7 +156,7 @@ class ActiveFeedCron extends Command
 
                 if( strtotime(now()) >= strtotime($feed->activate_at) && strtotime(now()) <= strtotime($feed->deactivate_at)){
                     // if($feed->active == 0){
-                            \Log::info("weekend activating feed:".$feed->title);
+                            // \Log::info("weekend activating feed:".$feed->title);
                             $feed->active = 1;
                             $feed->save();
     

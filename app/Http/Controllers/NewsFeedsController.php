@@ -26,9 +26,9 @@ class NewsFeedsController extends Controller
         
         $newsFeeds = NewsFeed::all();
 
-        if(env('APP_ENV') == 'local'){
+        // if(env('APP_ENV') == 'local'){
             $this->simulateActivation($newsFeeds);
-        }
+        // }
 
         $newsFeeds = NewsFeed::all();
 
