@@ -42,13 +42,15 @@ class NewsFeedsController extends Controller
         $timeCheck = date('H:i');
         // $timeCheck = '09:10';
 
+        // dd($dateCheck);
+
         $deactiveAll = false;
 
         $thatFeed = '';
 
         foreach($feeds as $feed) {
 
-            // \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
+            \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
             // \Log::info("Feed Activation Day: ".strtotime(date('d-m-y h:i:s')));
             // \Log::info("activation date time: ".$feed->activate_at);
             // \Log::info("activation date time: ".strtotime($feed->activate_at));
@@ -57,7 +59,7 @@ class NewsFeedsController extends Controller
 
                 if( strtotime(now()) >= strtotime($feed->activate_at) && strtotime(now()) <= strtotime($feed->deactivate_at)){
                     // if($feed->active == 0){
-                            \Log::info("activating feed:".$feed->title);
+                            \Log::info("weekend activating feed:".$feed->title);
                             $feed->active = 1;
                             $feed->save();
     
@@ -84,7 +86,7 @@ class NewsFeedsController extends Controller
 
                             if($feed->active == 0){
                                 
-                                \Log::info("activating feed at:".date('l').$feed->title);
+                                // \Log::info("activating feed at:".date('l').$feed->title);
                                 $feed->active = 1;
                                 $feed->save();
                             }
@@ -94,7 +96,7 @@ class NewsFeedsController extends Controller
                             
                             if($feed->active == 1){
                                 
-                                \Log::info("deactivating feed at:".date('l').$feed->title);
+                                // \Log::info("deactivating feed at:".date('l').$feed->title);
                                 $feed->active = 0;
                                 $feed->save();
                             }
@@ -105,7 +107,7 @@ class NewsFeedsController extends Controller
 
                             if($feed->active == 1){
 
-                                \Log::info("deactivating feed:".date('l').$feed->title);
+                                // \Log::info("deactivating feed:".date('l').$feed->title);
                                 $feed->active = 0;
                                 $feed->save();
                             }
