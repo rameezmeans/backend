@@ -59,7 +59,7 @@ class NewsFeedsController extends Controller
 
                 if( strtotime(now()) >= strtotime($feed->activate_at) && strtotime(now()) <= strtotime($feed->deactivate_at)){
                     // if($feed->active == 0){
-                            \Log::info("weekend activating feed:".$feed->title);
+                            // \Log::info("weekend activating feed:".$feed->title);
                             $feed->active = 1;
                             $feed->save();
     
@@ -86,7 +86,7 @@ class NewsFeedsController extends Controller
 
                             if($feed->active == 0){
                                 
-                                // \Log::info("activating feed at:".date('l').$feed->title);
+                                \Log::info("activating feed at:".date('l').$feed->title);
                                 $feed->active = 1;
                                 $feed->save();
                             }
@@ -96,7 +96,7 @@ class NewsFeedsController extends Controller
                             
                             if($feed->active == 1){
                                 
-                                // \Log::info("deactivating feed at:".date('l').$feed->title);
+                                \Log::info("deactivating feed at:".date('l').$feed->title);
                                 $feed->active = 0;
                                 $feed->save();
                             }
