@@ -48,7 +48,7 @@
                         </div>
                         <div class="form-group form-group-default price_payed_field">
                             <label></label>
-                            <input value=""  name="price_payed" type="number" class="form-control">
+                            <input value=""  name="price_payed" type="text" class="form-control">
                         </div>
                         @error('price_payed')
                             <span class="text-danger" role="alert">

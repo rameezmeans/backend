@@ -165,7 +165,7 @@ class CreditsController extends Controller
             $credit->gifted = 0;
 
             $request->validate([
-                'price_payed' => 'required|number'
+                'price_payed' => 'required|numeric|min:1'
             ]);
 
             $credit->price_payed = $request->price_payed;
