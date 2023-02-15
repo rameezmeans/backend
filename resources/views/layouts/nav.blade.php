@@ -144,6 +144,10 @@
               <a href="{{ route('reminder-manager') }}">Reminder Manager</a>
               <span class="icon-thumbnail">Rm</span>
             </li>
+            <li class="">
+              <a href="{{ route('frontends') }}">Frontends</a>
+              <span class="icon-thumbnail">Fr</span>
+            </li>
           </ul>
         </li>
         <li class="m-t-30 ">
