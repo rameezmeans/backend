@@ -218,7 +218,7 @@ class FilesController extends Controller
         }
 
         foreach($files as $file){
-            if($file->reload_time){
+            if($file->reupload_time){
                 $file->response_time = $this->getResponseTime($file);
                 $file->save();
             }
@@ -1050,8 +1050,8 @@ class FilesController extends Controller
             abort(404);
         }
 
-        $file->response_time = $responseTime;
-        $file->save();
+        // $file->response_time = $this->getResponseTime($file);
+        // $file->save();
         
         if($file->checked_by == 'customer'){
             $file->checked_by = 'seen';
