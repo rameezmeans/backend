@@ -31,6 +31,7 @@
                                   <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 20%;">Assigned To</th>
                                   <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 20%;">Response Time</th>
                                 @endif
+                                <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 5%;">Frontend</th>
                               </tr>
                         </thead>
                         <tbody>
@@ -70,6 +71,7 @@
                                   <td><span class="label label-success">@if($file->assigned){{$file->assigned->name}} @else{{ "No one" }}@endif</span></td>
                                   <td><span class="label label-success">@if( $file->response_time ) {{ \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans() }} @else {{ "Not Responded" }} @endif</span></td>
                                 @endif
+                                <td><span class="badge badge-important">{{$file->frontend->name}}</span></td>
                               </tr>
                           @endforeach
                         </tbody>

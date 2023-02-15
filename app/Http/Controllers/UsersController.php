@@ -18,7 +18,7 @@ class UsersController extends Controller
     }
 
     public function Customers(){
-        $customers = User::where('is_customer', 1)->get();
+        $customers = User::where('is_customer', 1)->OrderBy('created_at', 'desc')->get();
         return view('groups.customers', ['customers' => $customers]);
     } 
 

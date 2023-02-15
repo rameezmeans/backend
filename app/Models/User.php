@@ -69,4 +69,8 @@ class User extends Authenticatable
     public function group(){
         return $this->belongsTo(Group::class); 
     }
+
+    public function frontend(){
+        return $this->belongsTo(FrontEnd::class, 'front_end_id', 'id'); 
+    }
 }
