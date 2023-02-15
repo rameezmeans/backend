@@ -217,6 +217,13 @@ class FilesController extends Controller
             ->get();
         }
 
+        foreach($files as $file){
+            if($file->reload_time){
+                $file->response_time = $this->getResponseTime($file);
+                $file->save();
+            }
+        }
+
         // $reminders = EmailReminder::all();
 
         // $dateCheck = date('Y-m-d');
@@ -584,6 +591,7 @@ class FilesController extends Controller
         return redirect()->back()
         ->with('success', 'Engineer note successfully Added!')
         ->with('tab','chat');
+
     }
 
     public function uploadFileFromEngineer(Request $request)
@@ -660,25 +668,11 @@ class FilesController extends Controller
         if(!$file->response_time){
 
             $file->reupload_time = Carbon::now();
-            $assignmentTimeInSeconds  = strtotime($file->assignment_time);
-            $reloadTimeInSeconds  = strtotime($file->reupload_time);
+            $file->save();
 
-            $carbonAssignTime = Carbon::parse($file->assignment_time);
-            $carbonReuploadTime = Carbon::parse($file->reupload_time);
+            $file->response_time = $this->getResponseTime($file);
+            $file->save();
 
-            $difInDays = $carbonReuploadTime->diffInDays( $carbonAssignTime );
-
-            $feed = NewsFeed::findOrFail(1);
-            $dailyActivationTimeInSecond = strtotime($feed->daily_activation_time);
-            $dailyDeactivationTimeInSecond = strtotime($feed->daily_deactivation_time);
-            $difference = $dailyDeactivationTimeInSecond - $dailyActivationTimeInSecond;
-
-            $secondsToSubtractEveryDay = 86400 - $difference;
-            $totalSecondsToSubtract =  $secondsToSubtractEveryDay * $difInDays;
-
-            $timeWithoutBigSubtraction = $reloadTimeInSeconds - $assignmentTimeInSeconds;
-            $file->response_time = $timeWithoutBigSubtraction - $totalSecondsToSubtract;
-            // $file->response_time = $reloadTimeInSeconds - $assignmentTimeInSeconds;
         }
 
         if($file->original_file_id){
@@ -770,8 +764,7 @@ class FilesController extends Controller
         if($this->manager['eng_file_upload_cus_sms']){
             $this->sendMessage($customer->phone, $message2);
         }
-    
-
+        
         return response('file uploaded', 200);
     }
 
@@ -966,6 +959,77 @@ class FilesController extends Controller
         return $commentObj->get();
     }
 
+    public function getResponseTime($file){
+        
+        $fileAssignmentDateTime = Carbon::parse($file->assignment_time);
+        $carbonUploadDateTime = Carbon::parse($file->reupload_time);
+
+        $feed = NewsFeed::findOrFail(1);
+        
+        $dailyActivationTimeCarbon = Carbon::parse($feed->daily_activation_time);
+        $dailyDeactivationTimeCarbon = Carbon::parse($feed->daily_deactivation_time);
+
+        $timeDiff = $dailyDeactivationTimeCarbon->diffInSeconds($dailyActivationTimeCarbon);
+
+        $fileAssignmentDay = $fileAssignmentDateTime->format('Y-m-d');
+        $fileUploadDay = $carbonUploadDateTime->format('Y-m-d');
+
+        $assignmentBackToDate =  Carbon::parse( $fileAssignmentDay );
+        $uploadBackToDate =  Carbon::parse( $fileUploadDay );
+
+        $daysDiff =  $uploadBackToDate->diffInDays($assignmentBackToDate);
+        
+        $fileAssignmentDayWorkHourStart = Carbon::parse( $fileAssignmentDay.' '.$feed->daily_activation_time );
+        $fileAssignmentDayWorkHourEnd = Carbon::parse( $fileAssignmentDay.' '.$feed->daily_deactivation_time );
+        
+        $fileUploadDayWorkHourStart = Carbon::parse( $fileUploadDay.' '.$feed->daily_activation_time );
+        $fileUploadDayWorkHourEnd = Carbon::parse( $fileUploadDay.' '.$feed->daily_deactivation_time );
+
+        $fileAssignmentDateAndTime = Carbon::parse($file->assignment_time);
+
+        $fileAssignmentDateTime = Carbon::parse($file->assignment_time);
+        $carbonUploadDateTime = Carbon::parse($file->reupload_time);
+
+        $totalTimeWihoutSubtraction = ($timeDiff * $daysDiff);
+        $totalTimeWihoutSubtraction += $timeDiff;
+
+        $responseTime = 0;
+
+        $differnceOfSecondsForFileAssingmentDay = 0;
+
+        if( $fileAssignmentDateTime->between($fileAssignmentDayWorkHourStart, $fileAssignmentDayWorkHourEnd, true) ) {
+            
+            $differnceOfSecondsForFileAssingmentDay = $fileAssignmentDateTime->diffInSeconds( $fileAssignmentDayWorkHourStart );
+            
+        }
+        else{
+            
+            if($fileAssignmentDateTime->greaterThan($fileAssignmentDayWorkHourEnd)){
+
+                $totalTimeWihoutSubtraction -= $timeDiff;
+            }
+        }
+
+        $responseTime = $totalTimeWihoutSubtraction - $differnceOfSecondsForFileAssingmentDay;
+        
+        $differnceOfSecondsForFileUploadDay = 0;
+        
+        if( $carbonUploadDateTime->between($fileUploadDayWorkHourStart, $fileUploadDayWorkHourEnd, true) ) {
+            
+            $differnceOfSecondsForFileUploadDay = $carbonUploadDateTime->diffInSeconds( $fileUploadDayWorkHourEnd );
+            
+        }
+        else{
+            if($fileUploadDayWorkHourStart->greaterThan($carbonUploadDateTime)){
+                $responseTime -= $timeDiff;
+            }
+        }
+
+        $responseTime = $responseTime - $differnceOfSecondsForFileUploadDay;
+
+        return $responseTime;
+    }
+
      /**
      * Show the file.
      *
@@ -980,9 +1044,14 @@ class FilesController extends Controller
             $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
         }
 
+            // $file->reupload_time = Carbon::now();
+        
         if(!$file){
             abort(404);
         }
+
+        $file->response_time = $responseTime;
+        $file->save();
         
         if($file->checked_by == 'customer'){
             $file->checked_by = 'seen';
