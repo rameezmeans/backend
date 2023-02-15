@@ -217,12 +217,12 @@ class FilesController extends Controller
             ->get();
         }
 
-        foreach($files as $file){
-            if($file->reupload_time){
-                $file->response_time = $this->getResponseTime($file);
-                $file->save();
-            }
-        }
+        // foreach($files as $file){
+        //     if($file->reupload_time){
+        //         $file->response_time = $this->getResponseTime($file);
+        //         $file->save();
+        //     }
+        // }
 
         // $reminders = EmailReminder::all();
 
