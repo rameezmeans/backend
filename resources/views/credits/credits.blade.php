@@ -28,6 +28,7 @@
                             <thead>
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Frontend</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Current Credits</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits Purchased</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits Spent</th>
@@ -39,6 +40,9 @@
                                     <tr role="row" class="redirect-click" data-redirect="{{ route('edit-credit', $customer->id) }}">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$customer->name}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p><span class="label label-success">{{$customer->frontend->name}}</span></p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p><span class="label @if($customer->sum() > 0) label-success @else label-danger @endif">{{$customer->sum()}}</span></p>
