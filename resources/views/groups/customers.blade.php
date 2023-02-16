@@ -56,7 +56,7 @@
                                     <p>{{$customer->name}}</p>
                                 </td>
                                 <td class="v-align-middle semi-bold sorting_1">
-                                  <p><label class="label label-success">{{$customer->frontend->name}}</label></p>
+                                  <p><label class="label @if($customer->frontend->id == 1) text-white bg-primary @else text-black bg-warning @endif">{{$customer->frontend->name}}</label></p>
                               </td>
                                 <td class="v-align-middle semi-bold sorting_1">
                                   <p>{{$customer->email}}</p>
