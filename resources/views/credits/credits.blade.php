@@ -42,7 +42,7 @@
                                             <p>{{$customer->name}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p><span class="label label-success">{{$customer->frontend->name}}</span></p>
+                                            <p><span class="label @if($customer->frontend->id == 1) text-white bg-primary @else text-black bg-warning @endif">{{$customer->frontend->name}}</span></p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p><span class="label @if($customer->sum() > 0) label-success @else label-danger @endif">{{$customer->sum()}}</span></p>
