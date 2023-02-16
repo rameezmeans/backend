@@ -2,7 +2,7 @@
 
 @section('pagespecificstyles')
   <style>
-    .checked-darkly {
+    table.dataTable tbody tr.checked-darkly {
       background-color: #d8dadc !important;
     }
   </style>
