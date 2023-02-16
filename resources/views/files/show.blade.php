@@ -16,6 +16,14 @@
     margin-top: 10px;
   }
 
+  .bg-warning-light {
+    background-color: #fef6dd !important;
+  }
+
+  .bg-primary-light {
+    background-color: #e2deef !important;
+  }
+
   </style>
 @endsection
 @section('content')
@@ -23,7 +31,7 @@
   <!-- START PAGE CONTENT -->
   <div class="content sm-gutter">
     <!-- START CONTAINER FLUID -->
-    <div class=" container-fluid   container-fixed-lg bg-white">
+    <div class="container-fluid   container-fixed-lg bg-white">
       @if(Session::has('success'))
         <div class="pgn-wrapper" data-position="top" style="top: 59px;">
           <div class="pgn push-on-sidebar-open pgn-bar">
@@ -59,7 +67,7 @@
               <div class="col-lg-12">
                 
                 <div class="widget-16 card no-border widget-loader-circle">
-                  <div class="card-header ">
+                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                     <div class="text-center">
                       <div class="card-title">
                           <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="" style="width: 30%;">
@@ -97,6 +105,14 @@
                           <p class="pull-left">Customer Name</p>
                           <div class="pull-right">
                             <span class="label label-success">{{$file->user->name}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Frontend</p>
+                          <div class="pull-right">
+                            <span class="label @if($file->frontend->id == 1) text-white bg-primary @else text-black bg-warning @endif">{{$file->frontend->name}}<span>
                           </div>
                           <div class="clearfix"></div>
                         </div>

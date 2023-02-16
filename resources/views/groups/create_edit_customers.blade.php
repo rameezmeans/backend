@@ -433,6 +433,20 @@
                     <strong>{{ $message }}</strong>
                 </span>
               @enderror
+              <div class="form-group form-group-default required ">
+                <label>Frontend</label>
+                <select class="full-width" data-init-plugin="select2" name="front_end_id">
+                  @foreach($frontends as $frontend)
+                    <option @if(isset($customer) && $customer->frontend->id == $frontend->id) selected @endif value="{{$frontend->id}}">{{$frontend->name}}</option>
+                  @endforeach
+                </select>
+              </div>
+            
+            @error('front_end_id')
+              <span class="text-danger" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($customer)) Update @else Add @endif</span></button>
                   @if(isset($customer))

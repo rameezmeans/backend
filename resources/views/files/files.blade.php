@@ -37,7 +37,7 @@
                         <tbody>
                           @foreach($files as $file)
                               <tr class="redirect-click @if($file->checked_by == 'customer') checked @endif" data-redirect="{{ route('file', $file->id) }}">
-                                <td><span class="label label-success">Task{{$file->id}}</span></td>
+                                <td><span class="label @if($file->frontend->id == 1) text-white bg-primary @else text-black bg-warning @endif">Task{{$file->id}}</span></td>
                                 <td>{{$file->user->name}}</td>
                                 <td>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</td>
                                 <td><span class="label @if($file->support_status == 'closed') label-success @else label-danger @endif">{{$file->support_status}}</span></td>
@@ -71,7 +71,7 @@
                                   <td><span class="label label-success">@if($file->assigned){{$file->assigned->name}} @else{{ "No one" }}@endif</span></td>
                                   <td><span class="label label-success">@if( $file->response_time ) {{ \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans() }} @else {{ "Not Responded" }} @endif</span></td>
                                 @endif
-                                <td><span class="badge badge-important">{{$file->frontend->name}}</span></td>
+                                <td><span class="label @if($file->frontend->id == 1) text-white bg-primary @else text-black bg-warning @endif">{{$file->frontend->name}}</span></td>
                               </tr>
                           @endforeach
                         </tbody>

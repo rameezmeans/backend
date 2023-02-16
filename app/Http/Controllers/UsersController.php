@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Credit;
+use App\Models\FrontEnd;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -42,10 +43,8 @@ class UsersController extends Controller
         $customer = new User();
         $customer->name = $request->name;
 
-       
         $customer->password = Hash::make($request->password);
        
-
         $customer->email = $request->email;
         $customer->phone = $request->phone;
         $customer->language = $request->language;
@@ -58,6 +57,7 @@ class UsersController extends Controller
         $customer->company_id = $request->company_id;
         $customer->group_id = $request->group_id;
         $customer->is_customer = 1;
+        $customer->front_end_id = $request->front_end_id;
 
         $customer->save();
 
@@ -68,13 +68,15 @@ class UsersController extends Controller
 
     public function createCustomer(){
         $groups = Group::all();
-        return view('groups.create_edit_customers', ['groups' => $groups]);
+        $frontends = FrontEnd::all();
+        return view('groups.create_edit_customers', ['groups' => $groups, 'frontends' => $frontends]);
     } 
 
     public function editCustomer($id){
         $customer = User::findOrFail($id);
         $groups = Group::all();
-        return view('groups.create_edit_customers', ['customer' => $customer, 'groups' => $groups]);
+        $frontends = FrontEnd::all();
+        return view('groups.create_edit_customers', ['customer' => $customer, 'groups' => $groups, 'frontends' => $frontends]);
     } 
 
     public function updateCustomer(Request $request){
@@ -112,6 +114,7 @@ class UsersController extends Controller
         $customer->company_name = $request->company_name;
         $customer->company_id = $request->company_id;
         $customer->group_id = $request->group_id;
+        $customer->front_end_id = $request->front_end_id;
 
         $customer->save();
 
