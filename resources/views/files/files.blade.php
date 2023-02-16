@@ -42,7 +42,7 @@
                         </thead>
                         <tbody>
                           @foreach($files as $file)
-                              <tr class="redirect-click @if($file->checked_by == 'customer') checked-darkly @endif" data-redirect="{{ route('file', $file->id) }}">
+                              <tr class="redirect-click @if($file->checked_by == 'customer') checked @endif" data-redirect="{{ route('file', $file->id) }}">
                                 <td><span class="label @if($file->frontend->id == 1) text-white bg-primary @else text-black bg-warning @endif">Task{{$file->id}}</span></td>
                                 <td>{{$file->user->name}}</td>
                                 <td>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</td>

@@ -15439,12 +15439,12 @@ Main components
 }
 
 table.dataTable tbody tr.checked {
-    background-color: #626c75 !important;
+    background-color: #d8dadc !important;
     font-weight: bold !important;
 }
 
-table.datatable tbody tr.checked td:nth-child(12) {
-    background-color: #626c75 !important;
+table.dataTable tbody tr.checked td:nth-child(n) {
+    background-color: #d8dadc !important;
     font-weight: bold !important;
 }
 
