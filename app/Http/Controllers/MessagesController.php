@@ -268,7 +268,7 @@ class MessagesController extends Controller
         ->paginate($request->per_page ?? $this->perPage);
 
         $usersList = $users->items();
-
+        
         if (count($usersList) > 0) {
             $contacts = '';
             foreach ($usersList as $user) {
