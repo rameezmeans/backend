@@ -15,7 +15,7 @@ var messenger,
 const messagesContainer = $(".messenger-messagingView .m-body"),
     messengerTitleDefault = $(".messenger-headTitle").text(),
     messageInput = $("#message-form .m-send"),
-    auth_id = $("meta[name=url]").attr("data-user"),
+    auth_id = $("meta[name=user]").attr("data-user"),
     url = $("meta[name=url]").attr("content"),
     defaultMessengerColor = $("meta[name=messenger-color]").attr("content"),
     access_token = $('meta[name="csrf-token"]').attr("content");
@@ -839,7 +839,7 @@ function getContacts() {
     if (!contactsLoading && !noMoreContacts) {
         setContactsLoading(true);
         $.ajax({
-            url: url + "/getContacts",
+            url: "/chatify/getContacts",
             method: "GET",
             data: { _token: access_token, page: contactsPage },
             dataType: "JSON",

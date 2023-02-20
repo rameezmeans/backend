@@ -14,7 +14,7 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <meta name="url" data-user="{{env('CHAT_USER_ID')}}">
+    <meta name="user" data-user="{{env('CHAT_USER_ID')}}">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta content="" name="description" />
     <meta content="" name="author" />
