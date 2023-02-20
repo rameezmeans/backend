@@ -152,7 +152,7 @@
 @section('pagespecificscripts')
 
 <script type="text/javascript">
-    var id = "{{ Auth::user()->id }}";
+    var id = "{{ env('CHAT_USER_ID') }}";
     const messagesContainerAgain = $(".messenger-messagingView .m-body");
     $( document ).ready(function(event) {
         // var intervalId = window.setInterval(function () {
