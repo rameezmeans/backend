@@ -24,6 +24,7 @@ const getMessengerId = () => $("meta[name=id]").attr("content");
 const getMessengerType = () => $("meta[name=type]").attr("content");
 const setMessengerId = (id) => $("meta[name=id]").attr("content", id);
 const setMessengerType = (type) => $("meta[name=type]").attr("content", type);
+
 /**
  *-------------------------------------------------------------
  * Re-usable methods
@@ -609,6 +610,7 @@ function cancelUpdatingAvatar() {
 // subscribe to the channel
 const channelName = "private-chatify";
 var channel = pusher.subscribe(`${channelName}.${auth_id}`);
+console.log(channel);
 var clientSendChannel;
 var clientListenChannel;
 
@@ -1560,6 +1562,7 @@ $(document).ready(function () {
         },
         true
     );
+
     //Contacts (users) pagination
     actionOnScroll(".messenger-tab.users-tab", function () {
         getContacts();
