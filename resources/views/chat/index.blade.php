@@ -152,9 +152,29 @@
 @section('pagespecificscripts')
 
 <script type="text/javascript">
-
+    var id = "{{ Auth::user()->id }}";
+    const messagesContainerAgain = $(".messenger-messagingView .m-body");
     $( document ).ready(function(event) {
-        
+        // var intervalId = window.setInterval(function () {
+        //     console.log('running every 5 seconds.');
+        //     // update contact item
+        //             getContacts();
+        //             fetchMessages(getMessengerId(), getMessengerType(), true);
+        //             updateContactItem(id);
+        //             // temporary message card
+        //             // const tempMsgCardElement = messagesContainer.find(
+        //             //     `.message-card[data-id=${data.tempID}]`
+        //             // );
+        //             // add the message card coming from the server before the temp-card
+        //             // tempMsgCardElement.before(data.message);
+        //             // then, remove the temporary message card
+        //             // tempMsgCardElement.remove();
+        //             // scroll to bottom
+        //             scrollToBottom(messagesContainerAgain);
+        //             // send contact item updates
+        //             sendContactItemUpdates(true);
+        //     // fetchMessages(getMessengerId(), getMessengerType());
+        // }, 5000);
     });
 
 </script>

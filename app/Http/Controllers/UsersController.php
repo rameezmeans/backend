@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ChMessage;
 use App\Models\Credit;
 use App\Models\FrontEnd;
 use App\Models\Group;
@@ -19,7 +20,24 @@ class UsersController extends Controller
     }
 
     public function Customers(){
+
+        // 'type' => 'user',
+        //         'from_id' => Auth::user()->id,
+        //         'to_id' => $request['id'],
+        //         'body' 
+        
         $customers = User::where('is_customer', 1)->OrderBy('created_at', 'desc')->get();
+        foreach($customers as $customer){
+            $id = mt_rand(9, 999999999) + time();
+            $newMessage = new ChMessage();
+            $newMessage->id = $id;
+            $newMessage->type = 'user';
+            $newMessage->from_id = 19;
+            $newMessage->to_id = $customer->id;
+            $newMessage->body = "Greetings! Feel free to write Us.";
+            $newMessage->save();
+
+        }
         return view('groups.customers', ['customers' => $customers]);
     } 
 
