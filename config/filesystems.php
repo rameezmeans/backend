@@ -40,6 +40,8 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
+            'backend_url' => 'http://backend.test'.'/storage',
+            'frontend_url' => 'http://portal.test'.'/storage',
             'visibility' => 'public',
             'throw' => false,
         ],

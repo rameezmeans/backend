@@ -185,7 +185,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        App\Providers\ChatifyServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -218,6 +218,7 @@ return [
 
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Chatify1' => App\Chatify\ChatifyMessenger::class,
         
     ])->toArray(),
 
