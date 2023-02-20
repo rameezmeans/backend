@@ -61,12 +61,12 @@ class MessagesController extends Controller
             ]
         );
 
-        return view('Chatify::pages.app', [
-            'id' => $id ?? 0,
-            'type' => $type ?? 'user',
-            'messengerColor' => Auth::user()->messenger_color ?? $this->messengerFallbackColor,
-            'dark_mode' => Auth::user()->dark_mode < 1 ? 'light' : 'dark',
-        ]);
+        // return view('Chatify::pages.app', [
+        //     'id' => $id ?? 0,
+        //     'type' => $type ?? 'user',
+        //     'messengerColor' => Auth::user()->messenger_color ?? $this->messengerFallbackColor,
+        //     'dark_mode' => Auth::user()->dark_mode < 1 ? 'light' : 'dark',
+        // ]);
     }
 
 
@@ -96,6 +96,7 @@ class MessagesController extends Controller
             'user_avatar' => $userAvatar ?? null,
         ]);
     }
+    
 
     /**
      * This method to make a links for the attachments
@@ -104,12 +105,18 @@ class MessagesController extends Controller
      * @param string $fileName
      * @return \Symfony\Component\HttpFoundation\StreamedResponse|void
      */
-    public function download($fileName)
-    {
-        $filePath = config('chatify.attachments.folder') . '/' . $fileName;
-        if (Chatify::storage()->exists($filePath)) {
+    public function download($fileName, $type)
+    {   
+       
+        if($type == 'sender'){
+            $filePath = config('chatify.attachments.folder') . '/' . $fileName;
             return Chatify::storage()->download($filePath);
         }
+        else{
+            $filePath = public_path('/../../portal/storage/app/public/attachments/'.$fileName);
+            return response()->download($filePath);
+        }
+        
         return abort(404, "Sorry, File does not exist in our server or may have been deleted!");
     }
 
@@ -198,7 +205,7 @@ class MessagesController extends Controller
      */
     public function fetch(Request $request)
     {
-        $query = Chatify::fetchMessagesQuery($request['id'])->latest();
+        $query = self::fetchMessagesQuery($request['id'])->latest();
         $messages = $query->paginate($request->per_page ?? $this->perPage);
         $totalMessages = $messages->total();
         $lastPage = $messages->lastPage();
@@ -220,12 +227,80 @@ class MessagesController extends Controller
         }
         $allMessages = null;
         foreach ($messages->reverse() as $index => $message) {
-            $allMessages .= Chatify::messageCard(
-                Chatify::fetchMessage($message->id, $index)
+            $allMessages .= self::messageCard(
+                self::fetchMessage($message->id, $index)
             );
         }
         $response['messages'] = $allMessages;
         return Response::json($response);
+    }
+
+    /**
+     * Return a message card with the given data.
+     *
+     * @param array $data
+     * @param string $viewType
+     * @return string
+     */
+    public function messageCard($data, $viewType = null)
+    {
+        if (!$data) {
+            return '';
+        }
+        $data['viewType'] = ($viewType) ? $viewType : $data['viewType'];
+        return view('chat.messageCard', $data)->render();
+    }
+
+    /**
+     * This method returns the allowed image extensions
+     * to attach with the message.
+     *
+     * @return array
+     */
+    public function getAllowedImages()
+    {
+        return config('chatify.attachments.allowed_images');
+    }
+
+    /**
+     * Fetch message by id and return the message card
+     * view as a response.
+     *
+     * @param int $id
+     * @return array
+     */
+    public function fetchMessage($id, $index = null)
+    {
+        $attachment = null;
+        $attachment_type = null;
+        $attachment_title = null;
+
+        $msg = Message::where('id', $id)->first();
+        if(!$msg){
+            return [];
+        }
+
+        if (isset($msg->attachment)) {
+            $attachmentOBJ = json_decode($msg->attachment);
+            $attachment = $attachmentOBJ->new_name;
+            $attachment_title = htmlentities(trim($attachmentOBJ->old_name), ENT_QUOTES, 'UTF-8');
+
+            $ext = pathinfo($attachment, PATHINFO_EXTENSION);
+            $attachment_type = in_array($ext, $this->getAllowedImages()) ? 'image' : 'file';
+        }
+
+        return [
+            'index' => $index,
+            'id' => $msg->id,
+            'from_id' => $msg->from_id,
+            'to_id' => $msg->to_id,
+            'message' => $msg->body,
+            'attachment' => [$attachment, $attachment_title, $attachment_type],
+            'time' => $msg->created_at->diffForHumans(),
+            'fullTime' => $msg->created_at,
+            'viewType' => ($msg->from_id == Auth::user()->id) ? 'sender' : 'default',
+            'seen' => $msg->seen,
+        ];
     }
 
     /**
@@ -272,7 +347,7 @@ class MessagesController extends Controller
         if (count($usersList) > 0) {
             $contacts = '';
             foreach ($usersList as $user) {
-                $contacts .= Chatify::getContactItem($user);
+                $contacts .= self::getContactItem($user);
             }
         } else {
             $contacts = '<p class="message-hint center-el"><span>Your contact list is empty</span></p>';
@@ -283,6 +358,94 @@ class MessagesController extends Controller
             'total' => $users->total() ?? 0,
             'last_page' => $users->lastPage() ?? 1,
         ], 200);
+    }
+
+    public function getContactItem($user)
+    {
+        // get last message
+        $lastMessage = $this->getLastMessageQuery($user->id);
+
+        // Get Unseen messages counter
+        $unseenCounter = $this->countUnseenMessages($user->id);
+
+        return view('Chatify::layouts.listItem', [
+            'get' => 'users',
+            'user' => $this->getUserWithAvatar($user),
+            'lastMessage' => $lastMessage,
+            'unseenCounter' => $unseenCounter,
+        ])->render();
+    }
+
+    /**
+     * Get last message for a specific user
+     *
+     * @param int $user_id
+     * @return Message|Collection|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
+     */
+    public function getLastMessageQuery($user_id)
+    {
+        return $this->fetchMessagesQuery($user_id)->latest()->first();
+    }
+
+    /**
+     * Get user with avatar (formatted).
+     *
+     * @param Collection $user
+     * @return Collection
+     */
+    public function getUserWithAvatar($user)
+    {
+        if ($user->avatar == 'avatar.png' && config('chatify.gravatar.enabled')) {
+            $imageSize = config('chatify.gravatar.image_size');
+            $imageset = config('chatify.gravatar.imageset');
+            $user->avatar = 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($user->email))) . '?s=' . $imageSize . '&d=' . $imageset;
+        } else {
+            $user->avatar = self::getUserAvatarUrl($user->avatar);
+        }
+        return $user;
+    }
+
+    /**
+     * Return a storage instance with disk name specified in the config.
+     *
+     */
+    public function storage()
+    {
+        return Storage::disk(config('chatify.storage_disk_name'));
+    }
+
+     /**
+     * Get user avatar url.
+     *
+     * @param string $user_avatar_name
+     * @return string
+     */
+    public function getUserAvatarUrl($user_avatar_name)
+    {
+        return env('FONTEND_URL').'storage/'.config('chatify.user_avatar.folder') . '/' . $user_avatar_name;
+    }
+
+    /**
+     * Default fetch messages query between a Sender and Receiver.
+     *
+     * @param int $user_id
+     * @return Message|\Illuminate\Database\Eloquent\Builder
+     */
+    public function fetchMessagesQuery($user_id)
+    {
+        return Message::where('from_id', Auth::user()->id)->where('to_id', $user_id)
+                    ->orWhere('from_id', $user_id)->where('to_id', Auth::user()->id);
+    }
+
+    /**
+     * Count Unseen messages
+     *
+     * @param int $user_id
+     * @return Collection
+     */
+    public function countUnseenMessages($user_id)
+    {
+        return Message::where('from_id', $user_id)->where('to_id', Auth::user()->id)->where('seen', 0)->count();
     }
 
     /**
