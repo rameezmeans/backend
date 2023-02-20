@@ -836,11 +836,10 @@ function setContactsLoading(loading = false) {
     contactsLoading = loading;
 }
 function getContacts() {
-    var url = "{{route('contacts.get')}}";
     if (!contactsLoading && !noMoreContacts) {
         setContactsLoading(true);
         $.ajax({
-            url: url,
+            url: "/chatify/getContacts",
             method: "GET",
             data: { _token: access_token, page: contactsPage },
             dataType: "JSON",
