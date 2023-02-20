@@ -32,7 +32,7 @@ class UsersController extends Controller
             $newMessage = new ChMessage();
             $newMessage->id = $id;
             $newMessage->type = 'user';
-            $newMessage->from_id = 19;
+            $newMessage->from_id = 65;
             $newMessage->to_id = $customer->id;
             $newMessage->body = "Greetings! Feel free to write Us.";
             $newMessage->save();
