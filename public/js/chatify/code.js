@@ -20,6 +20,8 @@ const messagesContainer = $(".messenger-messagingView .m-body"),
     defaultMessengerColor = $("meta[name=messenger-color]").attr("content"),
     access_token = $('meta[name="csrf-token"]').attr("content");
 
+console.log("auth_id:" + auth_id);
+
 const getMessengerId = () => $("meta[name=id]").attr("content");
 const getMessengerType = () => $("meta[name=type]").attr("content");
 const setMessengerId = (id) => $("meta[name=id]").attr("content", id);
@@ -609,7 +611,7 @@ function cancelUpdatingAvatar() {
 
 // subscribe to the channel
 const channelName = "private-chatify";
-console.log("auth_id:" + auth_id);
+
 var channel = pusher.subscribe(`${channelName}.${auth_id}`);
 console.log(channel);
 var clientSendChannel;
