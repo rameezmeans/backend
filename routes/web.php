@@ -4,6 +4,8 @@ use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessagesController;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -175,7 +177,7 @@ Route::post('/delete_message_template', [App\Http\Controllers\MessageTemplatesCo
 * This is the main app route [Chatify Messenger]
 */
 
-Route::get('/chat', [MessagesController::class, 'index'])->name(config('chatify.routes.prefix'))->middleware(['auth']);;
+Route::get('/chat', [MessagesController::class, 'index'])->name(config('chatify.routes.prefix'))->middleware(['auth', 'adminOnly']);
 
 /**
  *  Fetch info for specific id [user/group]
