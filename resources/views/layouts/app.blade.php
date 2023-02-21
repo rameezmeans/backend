@@ -15,6 +15,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="user" data-user="{{env('CHAT_USER_ID')}}">
+    <meta name="type" data-user="engineer">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta content="" name="description" />
     <meta content="" name="author" />
@@ -142,6 +143,7 @@
         var pageLength = 0;
         let table = $('.dataTable').DataTable({
           "aaSorting": []
+        });
         });
 
         $('.dataTables_filter input').off().on('keyup', function() {
