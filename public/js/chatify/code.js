@@ -15,18 +15,15 @@ var messenger,
 const messagesContainer = $(".messenger-messagingView .m-body"),
     messengerTitleDefault = $(".messenger-headTitle").text(),
     messageInput = $("#message-form .m-send"),
-    auth_id = $("meta[name=user]").attr("data-user"),
+    auth_id = $("meta[name=url]").attr("data-user"),
     url = $("meta[name=url]").attr("content"),
     defaultMessengerColor = $("meta[name=messenger-color]").attr("content"),
     access_token = $('meta[name="csrf-token"]').attr("content");
-
-console.log("auth_id:" + auth_id);
 
 const getMessengerId = () => $("meta[name=id]").attr("content");
 const getMessengerType = () => $("meta[name=type]").attr("content");
 const setMessengerId = (id) => $("meta[name=id]").attr("content", id);
 const setMessengerType = (type) => $("meta[name=type]").attr("content", type);
-
 /**
  *-------------------------------------------------------------
  * Re-usable methods
@@ -611,9 +608,7 @@ function cancelUpdatingAvatar() {
 
 // subscribe to the channel
 const channelName = "private-chatify";
-
 var channel = pusher.subscribe(`${channelName}.${auth_id}`);
-console.log(channel);
 var clientSendChannel;
 var clientListenChannel;
 
@@ -839,7 +834,7 @@ function getContacts() {
     if (!contactsLoading && !noMoreContacts) {
         setContactsLoading(true);
         $.ajax({
-            url: "/chatify/getContacts",
+            url: url + "/getContacts",
             method: "GET",
             data: { _token: access_token, page: contactsPage },
             dataType: "JSON",
@@ -1565,7 +1560,6 @@ $(document).ready(function () {
         },
         true
     );
-
     //Contacts (users) pagination
     actionOnScroll(".messenger-tab.users-tab", function () {
         getContacts();

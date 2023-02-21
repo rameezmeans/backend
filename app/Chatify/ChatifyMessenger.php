@@ -424,9 +424,10 @@ class ChatifyMessenger
     public static function getAttachmentUrl($attachment_name, $type)
     {   
         if($type == 'default'){
-            return env('FONTEND_URL').'storage/'.config('chatify.attachments.folder') . '/' . $attachment_name;
+            return env('FRONTEND_URL').'storage/'.config('chatify.attachments.folder') . '/' . $attachment_name;
         }
         else{
+            
             return env('BACKEND_URL').'storage/'.config('chatify.attachments.folder') . '/' . $attachment_name;
         }
     }
