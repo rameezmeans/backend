@@ -2,14 +2,16 @@
 @if($viewType == 'default')
     @if($from_id != $to_id)
     <div class="message-card" data-id="{{ $id }}">
-        <p>{!! ($message == null && $attachment != null && @$attachment[2] != 'file') ? $attachment[1] : nl2br($message) !!}
-            <sub title="{{ $fullTime }}">{{ $time }}</sub>
-            {{-- If attachment is a file --}}
-            @if(@$attachment[2] == 'file')
-            <a href="{{ route(config('chatify.attachments.download_route_name'), ['fileName'=>$attachment[0], 'type' => $viewType]) }}" style="color: #595959;" class="file-download">
-                <span class="fas fa-file"></span> {{$attachment[1]}}</a>
-            @endif
-        </p>
+        <div class="chatify-d-flex chatify-align-items-center" style="flex-direction: row-reverse; justify-content: flex-end;">
+            <p>{!! ($message == null && $attachment != null && @$attachment[2] != 'file') ? $attachment[1] : nl2br($message) !!}
+                <sub title="{{ $fullTime }}">{{ $time }}</sub>
+                {{-- If attachment is a file --}}
+                @if(@$attachment[2] == 'file')
+                <a href="{{ route(config('chatify.attachments.download_route_name'), ['fileName'=>$attachment[0], 'type' => $viewType]) }}" style="color: #595959;" class="file-download">
+                    <span class="fas fa-file"></span> {{$attachment[1]}}</a>
+                @endif
+            </p>
+        </div>
         {{-- If attachment is an image --}}
         @if(@$attachment[2] == 'image')
         <div class="image-file chat-image" style="width: 250px; height: 150px;background-image: url('{{ Chatify1::getAttachmentUrl($attachment[0], $viewType) }}')">

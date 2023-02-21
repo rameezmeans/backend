@@ -148,12 +148,12 @@
               <a href="{{ route('frontends') }}">Frontends</a>
               <span class="icon-thumbnail">Fr</span>
             </li>
-            @if(Auth::user()->is_admin )
+           
             <li class="">
               <a href="{{ route(config('chatify.routes.prefix'))}}">Chat</a>
-              <span class="icon-thumbnail">Chat</span>
+              <span class="icon-thumbnail">Ch</span>
             </li>
-            @endif
+           
           </ul>
         </li>
         <li class="m-t-30 ">

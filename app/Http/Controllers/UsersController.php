@@ -27,17 +27,19 @@ class UsersController extends Controller
         //         'body' 
         
         $customers = User::where('is_customer', 1)->OrderBy('created_at', 'desc')->get();
-        // foreach($customers as $customer){
-        //     $id = mt_rand(9, 999999999) + time();
-        //     $newMessage = new ChMessage();
-        //     $newMessage->id = $id;
-        //     $newMessage->type = 'user';
-        //     $newMessage->from_id = User::where('is_admin', 1)->first()->id;
-        //     $newMessage->to_id = $customer->id;
-        //     $newMessage->body = "Greetings! Feel free to write Us.";
-        //     $newMessage->save();
+        
+        foreach($customers as $customer){
+            $id = mt_rand(9, 999999999) + time();
+            $newMessage = new ChMessage();
+            $newMessage->id = $id;
+            $newMessage->type = 'user';
+            $newMessage->from_id = 65;
+            $newMessage->to_id = $customer->id;
+            $newMessage->body = "Greetings! Feel free to write Us.";
+            $newMessage->save();
 
-        // }
+        }
+
         return view('groups.customers', ['customers' => $customers]);
     } 
 
