@@ -629,6 +629,7 @@ channel.bind("messaging", function (data) {
         messagesContainer.find(".messages").append(data.message);
         scrollToBottom(messagesContainer);
         makeSeen(true);
+        console.log("MOG");
         // remove unseen counter for the user from the contacts list
         $(".messenger-list-item[data-contact=" + getMessengerId() + "]")
             .find("tr>td>b")
@@ -661,6 +662,7 @@ clientListenChannel.bind("client-seen", function (data) {
 
 // listen to contact item updates event
 clientListenChannel.bind("client-contactItem", function (data) {
+    console.log("mog");
     if (data.update_for == auth_id) {
         data.updating == true
             ? updateContactItem(data.update_to)
