@@ -432,7 +432,7 @@ function sendMessage() {
     if (inputValue.length > 0 || hasFile) {
         const formData = new FormData($("#message-form")[0]);
         formData.append("id", getMessengerId());
-        formData.append("type", getMessengerType());
+        formData.append("type", "engineer");
         formData.append("temporaryMsgId", tempID);
         formData.append("_token", access_token);
         $.ajax({
