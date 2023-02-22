@@ -12,8 +12,7 @@ var messenger,
     dark_mode,
     messages_page = 1;
 
-const messagesContainer = $(".messenger-messagingView .m-body"),
-    messengerTitleDefault = $(".messenger-headTitle").text(),
+const messengerTitleDefault = $(".messenger-headTitle").text(),
     messageInput = $("#message-form .m-send"),
     auth_id = $("meta[name=url]").attr("data-user"),
     url = $("meta[name=url]").attr("content"),
@@ -1213,8 +1212,14 @@ function setActiveStatus(status, user_id) {
  *-------------------------------------------------------------
  */
 $(document).ready(function () {
+    console.log("trying to detect click");
+    $("").on("click", function (e) {
+        e.preventDefault();
+        console.log(e);
+    });
+
     // get contacts list
-    console.log("getting contact list");
+
     getContacts();
 
     // get contacts list

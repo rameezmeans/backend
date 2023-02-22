@@ -127,8 +127,7 @@
       height: 20px;;
       font-size: 12px;
       text-align: center;
-      position: relative;
-      left: 10px;
+      
     }
 
     .chat-user-list-ecu-tech {
@@ -164,10 +163,10 @@
      });
    
        // Bellow are all the methods/variables that using php to assign globally.
-       const allowedImages = {!! json_encode(config('chatify.attachments.allowed_images')) !!} || [];
-       const allowedFiles = {!! json_encode(config('chatify.attachments.allowed_files')) !!} || [];
-       const getAllowedExtensions = [...allowedImages, ...allowedFiles];
-       const getMaxUploadSize = {{ Chatify::getMaxUploadSize() }};
+      //  const allowedImages = {!! json_encode(config('chatify.attachments.allowed_images')) !!} || [];
+      //  const allowedFiles = {!! json_encode(config('chatify.attachments.allowed_files')) !!} || [];
+      //  const getAllowedExtensions = [...allowedImages, ...allowedFiles];
+      //  const getMaxUploadSize = {{ Chatify::getMaxUploadSize() }};
    </script>
 <meta name="id" content="{{ env('CHAT_USER_ID') }}">
 <meta name="url" content="{{ url('').'/'.config('chatify.routes.prefix') }}" data-user="{{ env('CHAT_USER_ID') }}">
