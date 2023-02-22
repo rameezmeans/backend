@@ -39,21 +39,21 @@
     <link href="{{ url('assets/plugins/dropzone/css/dropzone.css')}} " rel="stylesheet" type="text/css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet" type="text/css" />
     <link class="main-stylesheet" href="{{ url('pages/css/pages.css') }}" rel="stylesheet" type="text/css" />
-    <link class="main-stylesheet" href="{{ url('pages/css/style.css') }}" rel="stylesheet" type="text/css" />
-    
+    {{-- <link class="main-stylesheet" href="{{ url('pages/css/style.css') }}" rel="stylesheet" type="text/css" /> --}}
+    <style>
+       
+    </style>
     @yield('pagespecificstyles')
   </head>
   <body class="fixed-header dashboard menu-pin">
   
-  
-
    @include('layouts.nav')
    <!-- START PAGE-CONTAINER -->
    <div class="page-container ">
        @include('layouts.header')
        @yield('content')
    </div>
-   
+   @include('chat.chatview')
    <!-- BEGIN VENDOR JS -->
    <script src="{{ url('assets/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/jquery/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
@@ -100,6 +100,79 @@
    <!-- END PAGE LEVEL JS -->
    <!-- END CORE TEMPLATE JS -->
    <!-- BEGIN PAGE LEVEL JS -->
+
+   <!--CHATIFY AREA-->
+
+   <style>
+
+    .activeStatus {
+        width: 10px;
+        height: 10px;
+        background: rgb(76, 175, 80);
+        border-radius: 20px;
+        position: absolute;
+        bottom: 12%;
+        right: 6%;
+        transition: border 0.1s ease 0s;
+    }
+
+    .count {
+      background: #2180f3;
+      float: right;
+      color: rgb(255, 255, 255);
+      padding: 0px 4px;
+      border-radius: 20px;
+      font-size: 13px;
+      width: 20px;
+      height: 20px;;
+      font-size: 12px;
+      text-align: center;
+      position: relative;
+      left: 10px;
+    }
+
+    .chat-user-list-ecu-tech {
+      background-color: #e2deef;
+    }
+
+    .chat-user-list-tuningx {
+      background-color: #fef6dd;
+    }
+
+   </style>
+
+  <script src='https://unpkg.com/nprogress@0.2.0/nprogress.js'></script>
+  <script src="{{ asset('js/chatify/autosize.js') }}"></script>
+
+  {{-- styles --}}
+  <link rel='stylesheet' href='https://unpkg.com/nprogress@0.2.0/nprogress.css'/>
+
+   <script src="https://js.pusher.com/7.0.3/pusher.min.js"></script>
+   <script >
+     // Enable pusher logging - don't include this in production
+     Pusher.logToConsole = true;
+   
+     var pusher = new Pusher("{{ config('chatify.pusher.key') }}", {
+       encrypted: true,
+       cluster: "{{ config('chatify.pusher.options.cluster') }}",
+       authEndpoint: '{{route("pusher.auth")}}',
+       auth: {
+           headers: {
+               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+           }
+       }
+     });
+   
+       // Bellow are all the methods/variables that using php to assign globally.
+       const allowedImages = {!! json_encode(config('chatify.attachments.allowed_images')) !!} || [];
+       const allowedFiles = {!! json_encode(config('chatify.attachments.allowed_files')) !!} || [];
+       const getAllowedExtensions = [...allowedImages, ...allowedFiles];
+       const getMaxUploadSize = {{ Chatify::getMaxUploadSize() }};
+   </script>
+<meta name="id" content="{{ env('CHAT_USER_ID') }}">
+<meta name="url" content="{{ url('').'/'.config('chatify.routes.prefix') }}" data-user="{{ env('CHAT_USER_ID') }}">
+<script src="{{url('js/chatify/code2.js') }}" type="text/javascript"></script>
+
    <script src="{{url('assets/js/dashboard.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/js/scripts.js') }}" type="text/javascript"></script>
    <script type="text/javascript" src="{{ url('assets/plugins/dropzone/dropzone.min.js')}}"></script>
@@ -144,7 +217,7 @@
         let table = $('.dataTable').DataTable({
           "aaSorting": []
         });
-        });
+        
 
         $('.dataTables_filter input').off().on('keyup', function() {
           var str = $(this).val();

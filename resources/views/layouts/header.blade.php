@@ -166,7 +166,7 @@
         </div>
       </div>
       <!-- END User Info-->
-      {{-- <a href="#" class="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block" data-toggle="quickview" data-toggle-element="#quickview"></a> --}}
+      <a href="#" class="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block" data-toggle="quickview" data-toggle-element="#quickview"></a>
     </div>
   </div>
   <!-- END HEADER -->
