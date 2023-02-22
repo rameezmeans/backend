@@ -210,7 +210,7 @@ class MessagesController extends Controller
             $messageID = mt_rand(9, 999999999) + time();
             Chatify::newMessage([
                 'id' => $messageID,
-                'type' => 'user',
+                'type' => 'engineer',
                 'from_id' => $this->chatUser->id, /// this is the 4th auth_instance
                 'to_id' => $request['id'],
                 'body' => htmlentities(trim($request['message']), ENT_QUOTES, 'UTF-8'),
@@ -404,6 +404,47 @@ class MessagesController extends Controller
         return 1;
     }
 
+     /**
+     * Get contacts list
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getContactsMain(Request $request)
+    {
+        // get all users that received/sent message from/to [Auth user]
+        $users = Message::join('users',  function ($join) {
+            $join->on('ch_messages.from_id', '=', 'users.id')
+                ->orOn('ch_messages.to_id', '=', 'users.id');
+        })
+        ->where(function ($q) {
+            $q->where('ch_messages.from_id', $this->chatUser->id) /// this is the 7th auth_instance
+            ->orWhere('ch_messages.to_id', $this->chatUser->id); /// this is the 8th auth_instance
+        })
+        ->where('users.id','!=', $this->chatUser->id) /// this is the 9th auth_instance
+        ->select('users.*',DB::raw('MAX(ch_messages.created_at) max_created_at'))
+        ->orderBy('max_created_at', 'desc')
+        ->groupBy('users.id')
+        ->paginate($request->per_page ?? $this->perPage);
+
+        $usersList = $users->items();
+        
+        if (count($usersList) > 0) {
+            $contacts = '';
+            foreach ($usersList as $user) {
+                $contacts .= self::getContactItemMain($user);
+            }
+        } else {
+            $contacts = '<p class="message-hint center-el"><span>Your contact list is empty</span></p>';
+        }
+
+        return Response::json([
+            'contacts' => $contacts,
+            'total' => $users->total() ?? 0,
+            'last_page' => $users->lastPage() ?? 1,
+        ], 200);
+    }
+
     /**
      * Get contacts list
      *
@@ -428,7 +469,7 @@ class MessagesController extends Controller
         ->paginate($request->per_page ?? $this->perPage);
 
         $usersList = $users->items();
-        
+
         if (count($usersList) > 0) {
             $contacts = '';
             foreach ($usersList as $user) {
@@ -443,6 +484,22 @@ class MessagesController extends Controller
             'total' => $users->total() ?? 0,
             'last_page' => $users->lastPage() ?? 1,
         ], 200);
+    }
+
+    public function getContactItemMain($user)
+    {
+        // get last message
+        $lastMessage = $this->getLastMessageQuery($user->id);
+
+        // Get Unseen messages counter
+        $unseenCounter = $this->countUnseenMessages($user->id);
+        
+        return view('chat.listview', [
+            'get' => 'users',
+            'user' => $this->getUserWithAvatar($user),
+            'lastMessage' => $lastMessage,
+            'unseenCounter' => $unseenCounter,
+        ])->render();
     }
 
     public function getContactItem($user)

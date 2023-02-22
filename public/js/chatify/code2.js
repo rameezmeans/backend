@@ -100,8 +100,8 @@ function listItemLoading(items) {
 <tr>
 <td style="width: 45px;"><div class="loadingPlaceholder-avatar"></div></td>
 <td>
-  <div class="loadingPlaceholder-name"></div>
-      <div class="loadingPlaceholder-date"></div>
+<div class="loadingPlaceholder-name"></div>
+   <div class="loadingPlaceholder-date"></div>
 </td>
 </tr>
 </table>
@@ -122,11 +122,11 @@ function avatarLoading(items) {
 <div class="loadingPlaceholder-wrapper">
 <div class="loadingPlaceholder-body">
 <table class="loadingPlaceholder-header">
-    <tr>
-        <td style="width: 45px;">
-            <div class="loadingPlaceholder-avatar" style="margin: 2px;"></div>
-        </td>
-    </tr>
+ <tr>
+     <td style="width: 45px;">
+         <div class="loadingPlaceholder-avatar" style="margin: 2px;"></div>
+     </td>
+ </tr>
 </table>
 </div>
 </div>
@@ -140,12 +140,12 @@ function avatarLoading(items) {
 function sendTempMessageCard(message, id) {
     return `
 <div class="message-card mc-sender" data-id="${id}">
-  <p>
-      ${message}
-      <sub>
-          <span class="far fa-clock"></span>
-      </sub>
-  </p>
+<p>
+   ${message}
+   <sub>
+       <span class="far fa-clock"></span>
+   </sub>
+</p>
 </div>
 `;
 }
@@ -262,11 +262,11 @@ let app_modal = function ({
  *-------------------------------------------------------------
  */
 function scrollToBottom(container) {
-    $(container)
-        .stop()
-        .animate({
-            scrollTop: $(container)[0].scrollHeight,
-        });
+    // $(container)
+    //     .stop()
+    //     .animate({
+    //         scrollTop: $(container)[0].scrollHeight,
+    //     });
 }
 
 /**
@@ -275,29 +275,28 @@ function scrollToBottom(container) {
  *-------------------------------------------------------------
  */
 function hScroller(scroller) {
-    const slider = document.querySelector(scroller);
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    slider.addEventListener("mousedown", (e) => {
-        isDown = true;
-        startX = e.pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
-    });
-    slider.addEventListener("mouseleave", () => {
-        isDown = false;
-    });
-    slider.addEventListener("mouseup", () => {
-        isDown = false;
-    });
-    slider.addEventListener("mousemove", (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 1;
-        slider.scrollLeft = scrollLeft - walk;
-    });
+    // const slider = document.querySelector(scroller);
+    // let isDown = false;
+    // let startX;
+    // let scrollLeft;
+    // slider.addEventListener("mousedown", (e) => {
+    //     isDown = true;
+    //     startX = e.pageX - slider.offsetLeft;
+    //     scrollLeft = slider.scrollLeft;
+    // });
+    // slider.addEventListener("mouseleave", () => {
+    //     isDown = false;
+    // });
+    // slider.addEventListener("mouseup", () => {
+    //     isDown = false;
+    // });
+    // slider.addEventListener("mousemove", (e) => {
+    //     if (!isDown) return;
+    //     e.preventDefault();
+    //     const x = e.pageX - slider.offsetLeft;
+    //     const walk = (x - startX) * 1;
+    //     slider.scrollLeft = scrollLeft - walk;
+    // });
 }
 
 /**
@@ -836,28 +835,29 @@ function getContacts() {
     if (!contactsLoading && !noMoreContacts) {
         setContactsLoading(true);
         $.ajax({
-            url: url + "/getContacts",
-            method: "GET",
+            url: url + "/getContactsMain",
+            method: "POST",
             data: { _token: access_token, page: contactsPage },
             dataType: "JSON",
             success: (data) => {
+                console.log(data);
                 setContactsLoading(false);
                 if (contactsPage < 2) {
-                    $(".listOfContacts").html(data.contacts);
+                    $(".listOfContactsMain").html(data.contacts);
                 } else {
-                    $(".listOfContacts").append(data.contacts);
+                    $(".listOfContactsMain").append(data.contacts);
                 }
                 updateSelectedContact();
                 // update data-action required with [responsive design]
-                cssMediaQueries();
+                // cssMediaQueries();
                 // Pagination lock & messages page
                 noMoreContacts = contactsPage >= data?.last_page;
                 if (!noMoreContacts) contactsPage += 1;
             },
-            error: (error) => {
-                setContactsLoading(false);
-                console.error(error);
-            },
+            // error: (error) => {
+            //     setContactsLoading(false);
+            //     console.error(error);
+            // },
         });
     }
 }
@@ -1214,6 +1214,7 @@ function setActiveStatus(status, user_id) {
  */
 $(document).ready(function () {
     // get contacts list
+    console.log("getting contact list");
     getContacts();
 
     // get contacts list

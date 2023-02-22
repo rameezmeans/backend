@@ -305,9 +305,13 @@ class HomeController extends Controller
     public function getCreditsChart(Request $request){
         $graph = [];
 
+        $start = NULL;
+        $end = NULL;
         if(!$request->startc){
             $min = DB::table('credits')->whereNotNull('stripe_id')->select('created_at')->orderBy('created_at', 'asc')->first();
-            $start = $min->created_at;
+            
+            if($min)
+                $start = $min->created_at;
         }
         else{
             $start = $request->startc;
@@ -316,13 +320,27 @@ class HomeController extends Controller
         }
 
         if(!$request->endc){
+
             $max = DB::table('credits')->whereNotNull('stripe_id')->select('created_at')->orderBy('created_at', 'desc')->first();
-            $end = $max->created_at;
+            
+            if($max)
+                $end = $max->created_at;
         }
         else{
             $end = $request->endc;
             $date = str_replace('/', '-', $end);
             $end = date('Y-m-d', strtotime($date));
+        }
+
+        if($start == NULL && $end == NULL){
+            $graph = [];
+            $graph['x_axis']= 0;
+            $graph['y_axis']= 0;
+            $graph['credits']= "";
+            $graph['has_credits']= false;
+            $graph['label']= 'Credits';
+            
+            return response()->json(['graph' => $graph]);
         }
 
         $weekRange = $this->createDateRangeArray($start, $end);
@@ -368,7 +386,7 @@ class HomeController extends Controller
             
         $graph = [];
         $graph['x_axis']= $weekRange;
-        $graph['y_axis']= $weekCount ;
+        $graph['y_axis']= $weekCount;
         $graph['credits']= $html;
         $graph['has_credits']= $hasCredits;
         $graph['label']= 'Credits';

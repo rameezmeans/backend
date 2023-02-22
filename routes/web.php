@@ -215,6 +215,8 @@ Route::post('chatify/makeSeen', [MessagesController::class, 'seen'])->name('mess
  */
 Route::get('chatify/getContacts', [MessagesController::class, 'getContacts'])->name('contacts.get');
 
+Route::post('chatify/getContactsMain', [MessagesController::class, 'getContactsMain'])->name('contacts.get.main');
+
 /**
  * Update contact item data
  */
@@ -279,8 +281,8 @@ Route::post('chatify/setActiveStatus', [MessagesController::class, 'setActiveSta
 * e.g. - The commented routes below :
 */
 // Route::get('/route', function(){ return 'Munaf'; }); // works as a route
-Route::get('chatify/{id}', function(){
-    abort('404');
-})->name('user');
+// Route::get('chatify/{id}', function(){
+//     abort('404');
+// })->name('user');
 
 // Route::get('/route', function(){ return 'Munaf'; }); // works as a user id
