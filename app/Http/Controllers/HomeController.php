@@ -97,7 +97,7 @@ class HomeController extends Controller
         'engineers' => $engineers,
         'customersCount' => $customersCount, 
         'engineersCount' => $engineersCount, 
-        'customers' => $customers, 
+        'customers' => $customers,
         'topCredits' => $top5 ]);
     }
 
