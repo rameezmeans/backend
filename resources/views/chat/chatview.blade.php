@@ -1,5 +1,5 @@
 <!--START QUICKVIEW -->
-<div id="quickview" class="quickview-wrapper open" data-pages="quickview">
+<div id="quickview" class="quickview-wrapper @if(Chatify1::showChat()) open @endif" data-pages="quickview">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist" style="padding-left: 10px !important;">
       <li class="hide">
