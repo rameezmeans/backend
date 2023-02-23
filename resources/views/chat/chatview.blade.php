@@ -1,5 +1,5 @@
 <!--START QUICKVIEW -->
-<div id="quickview" class="quickview-wrapper" data-pages="quickview">
+<div id="quickview" class="quickview-wrapper open" data-pages="quickview">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist" style="padding-left: 10px !important;">
       <li class="hide">
@@ -16,7 +16,7 @@
     <!-- Tab panes -->
     <div class="tab-content">
       <!-- BEGIN Notes !-->
-      <div class="tab-pane no-padding" id="quickview-notes">
+      {{-- <div class="tab-pane no-padding" id="quickview-notes">
         <div class="view-port clearfix quickview-notes" id="note-views">
           <!-- BEGIN Note List !-->
           <div class="view list" id="quick-note-list">
@@ -175,10 +175,10 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
       <!-- END Notes !-->
       <!-- BEGIN Alerts !-->
-      <div class="tab-pane no-padding" id="quickview-alerts">
+      {{-- <div class="tab-pane no-padding" id="quickview-alerts">
         <div class="view-port clearfix" id="alerts">
           <!-- BEGIN Alerts View !-->
           <div class="view bg-white">
@@ -318,11 +318,11 @@
           </div>
           <!-- EEND Alerts View !-->
         </div>
-      </div>
+      </div> --}}
       <!-- END Alerts !-->
       <div class="tab-pane active no-padding" id="quickview-chat">
         <div class="view-port clearfix" id="chat">
-          <div class="view bg-white">
+          <div class="view bg-white" id="contacts">
             <!-- BEGIN View Header !-->
             <div class="navbar navbar-default">
               <div class="navbar-inner">
@@ -367,86 +367,62 @@
             </div>
           </div>
           <!-- BEGIN Conversation View  !-->
-          <div class="view chat-view bg-white clearfix">
+          <div class="view chat-view bg-white clearfix" id="conversation-view">
             <!-- BEGIN Header  !-->
             <div class="navbar navbar-default">
               <div class="navbar-inner">
-                <a href="javascript:;" class="link text-master inline action p-l-10 p-r-10" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
+                <a href="javascript:;" class="close-conversation link text-master inline action p-l-10 p-r-10" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
                   <i class="pg-arrow_left"></i>
                 </a>
                 <div class="view-heading">
-                  John Smith
-                  <div class="fs-11 hint-text">Online</div>
+                  <span id="username"></span>
+                  <div class="fs-11 hint-text" id="user-active">Online</div>
                 </div>
                 <a href="#" class="link text-master inline action p-r-10 pull-right ">
-                  <i class="pg-more"></i>
+                  <i class="pg-more hide"></i>
                 </a>
               </div>
             </div>
             <!-- END Header  !-->
             <!-- BEGIN Conversation  !-->
-            <div class="chat-inner" id="my-conversation">
+            <div class="chat-inner" id="conversation">
               <!-- BEGIN From Me Message  !-->
-              <div class="message clearfix">
-                <div class="chat-bubble from-me">
-                  Hello there
-                </div>
-              </div>
-              <!-- END From Me Message  !-->
-              <!-- BEGIN From Them Message  !-->
-              <div class="message clearfix">
-                <div class="profile-img-wrapper m-t-5 inline">
-                  <img class="col-top" width="30" height="30" src="assets/img/profiles/avatar_small.jpg" alt="" data-src="assets/img/profiles/avatar_small.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg">
-                </div>
-                <div class="chat-bubble from-them">
-                  Hey
-                </div>
-              </div>
-              <!-- END From Them Message  !-->
-              <!-- BEGIN From Me Message  !-->
-              <div class="message clearfix">
-                <div class="chat-bubble from-me">
-                  Did you check out Pages framework ?
-                </div>
-              </div>
-              <!-- END From Me Message  !-->
-              <!-- BEGIN From Me Message  !-->
-              <div class="message clearfix">
-                <div class="chat-bubble from-me">
-                  Its an awesome chat
-                </div>
-              </div>
-              <!-- END From Me Message  !-->
-              <!-- BEGIN From Them Message  !-->
-              <div class="message clearfix">
-                <div class="profile-img-wrapper m-t-5 inline">
-                  <img class="col-top" width="30" height="30" src="assets/img/profiles/avatar_small.jpg" alt="" data-src="assets/img/profiles/avatar_small.jpg" data-src-retina="assets/img/profiles/avatar_small2x.jpg">
-                </div>
-                <div class="chat-bubble from-them">
-                  Yea
-                </div>
-              </div>
+              
+              
               <!-- END From Them Message  !-->
             </div>
             <!-- BEGIN Conversation  !-->
             <!-- BEGIN Chat Input  !-->
             <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10">
               <div class="row">
+                {{-- <form id="message-form" method="POST" action="{{route('send.message')}}" enctype="multipart/form-data">
+                  @csrf     
+                  <input type="hidden" name="type" value="engineer">
+                  <label>
+                    <svg style="width: 10%;" class="svg-inline--fa fa-paperclip fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paperclip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M43.246 466.142c-58.43-60.289-57.341-157.511 1.386-217.581L254.392 34c44.316-45.332 116.351-45.336 160.671 0 43.89 44.894 43.943 117.329 0 162.276L232.214 383.128c-29.855 30.537-78.633 30.111-107.982-.998-28.275-29.97-27.368-77.473 1.452-106.953l143.743-146.835c6.182-6.314 16.312-6.422 22.626-.241l22.861 22.379c6.315 6.182 6.422 16.312.241 22.626L171.427 319.927c-4.932 5.045-5.236 13.428-.648 18.292 4.372 4.634 11.245 4.711 15.688.165l182.849-186.851c19.613-20.062 19.613-52.725-.011-72.798-19.189-19.627-49.957-19.637-69.154 0L90.39 293.295c-34.763 35.56-35.299 93.12-1.191 128.313 34.01 35.093 88.985 35.137 123.058.286l172.06-175.999c6.177-6.319 16.307-6.433 22.626-.256l22.877 22.364c6.319 6.177 6.434 16.307.256 22.626l-172.06 175.998c-59.576 60.938-155.943 60.216-214.77-.485z"></path></svg><!-- <span class="fas fa-paperclip"></span> --><input type="file" class="upload-attachment" name="file" accept=".png, .jpg, .jpeg, .gif, .zip, .rar, .txt"></label>
+                <textarea name="message" class="m-send app-scroll" placeholder="Type a message.." style="overflow: hidden; overflow-wrap: break-word;"></textarea>
+                <button type="submit" class="btn" id="sendBtn" autofocus>Send</button>
+                </form> --}}
+                <form id="message-form-main" method="POST" action="{{route('send.message')}}" enctype="multipart/form-data">
                 <div class="col-1 p-t-15">
-                  <a href="#" class="link text-master"><i class="fa fa-plus-circle"></i></a>
+                  <input type="hidden" value="25" id="chat-user-id">
+                  <input name="file" type="file" id="upload-attachment">
                 </div>
-                <div class="col-8 no-padding">
-                  <input type="text" class="form-control chat-input" data-chat-input="" data-chat-conversation="#my-conversation" placeholder="Say something">
+                <div class="col-10 p-b-10 text-center">
+                  <input autocomplete="off" name="message" type="text" class="form-control m-t-10 m-b-10 full-width" id="chat-input" placeholder="Say something">
+                  <button class="btn btn-success" type="submit">Send</button>
                 </div>
-                <div class="col-2 link text-master m-l-10 m-t-15 p-l-10 b-l b-grey col-top">
+                </form>
+                {{-- <div class="col-2 link text-master m-l-10 m-t-15 p-l-10 b-l b-grey col-top">
                   <a href="#" class="link text-master"><i class="pg-camera"></i></a>
-                </div>
+                </div> --}}
               </div>
             </div>
             <!-- END Chat Input  !-->
           </div>
           <!-- END Conversation View  !-->
         </div>
+
       </div>
     </div>
   </div>

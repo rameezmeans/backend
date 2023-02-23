@@ -171,6 +171,7 @@ class MessagesController extends Controller
      */
     public function send(Request $request)
     {
+        
         // default variables
         $error = (object)[
             'status' => 0,
@@ -225,7 +226,7 @@ class MessagesController extends Controller
             Chatify::push("private-chatify.".$request['id'], 'messaging', [
                 'from_id' => $this->chatUser->id, /// this is the 5th auth_instance
                 'to_id' => $request['id'],
-                'message' => self::messageCard($messageData, 'default')
+                'message' => self::messageToOtherSide($messageData, 'default')
             ]);
         }
 
@@ -233,7 +234,7 @@ class MessagesController extends Controller
         return Response::json([
             'status' => '200',
             'error' => $error,
-            'message' => self::messageCard(@$messageData),
+            'message' => self::message(@$messageData),
             'tempID' => $request['temporaryMsgId'],
         ]);
     }
@@ -302,11 +303,12 @@ class MessagesController extends Controller
         }
         $allMessages = null;
         foreach ($messages->reverse() as $index => $message) {
-            $allMessages .= self::messageCard(
+            $allMessages .= self::message(
                 self::fetchMessage($message->id, $index)
             );
         }
         $response['messages'] = $allMessages;
+        $response['user'] = User::findOrFail($request['id']);
         return Response::json($response);
     }
 
@@ -317,13 +319,23 @@ class MessagesController extends Controller
      * @param string $viewType
      * @return string
      */
-    public function messageCard($data, $viewType = null)
+    public function message($data, $viewType = null)
     {
         if (!$data) {
             return '';
         }
         $data['viewType'] = ($viewType) ? $viewType : $data['viewType'];
-        return view('chat.messageCard', $data)->render();
+        return view('chat.message', $data)->render();
+    }
+
+
+    public function messageToOtherSide($data, $viewType = null)
+    {
+        if (!$data) {
+            return '';
+        }
+        $data['viewType'] = ($viewType) ? $viewType : $data['viewType'];
+        return view('chat.messageToOtherSide', $data)->render();
     }
 
     /**
@@ -493,7 +505,7 @@ class MessagesController extends Controller
         // Get Unseen messages counter
         $unseenCounter = $this->countUnseenMessages($user->id);
         
-        return view('chat.listview', [
+        return view('chat.item', [
             'get' => 'users',
             'user' => $this->getUserWithAvatar($user),
             'lastMessage' => $lastMessage,
@@ -629,7 +641,7 @@ class MessagesController extends Controller
         // Get Unseen messages counter
         $unseenCounter = $this->countUnseenMessages($user->id);
 
-        return view('Chatify::layouts.listItem', [
+        return view('chat.item', [
             'get' => 'users',
             'user' => $this->getUserWithAvatar($user),
             'lastMessage' => $lastMessage,

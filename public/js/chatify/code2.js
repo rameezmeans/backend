@@ -12,7 +12,8 @@ var messenger,
     dark_mode,
     messages_page = 1;
 
-const messengerTitleDefault = $(".messenger-headTitle").text(),
+const messagesContainer = $(".messenger-messagingView .m-body"),
+    messengerTitleDefault = $(".messenger-headTitle").text(),
     messageInput = $("#message-form .m-send"),
     auth_id = $("meta[name=url]").attr("data-user"),
     url = $("meta[name=url]").attr("content"),
@@ -425,16 +426,17 @@ function IDinfo(id, type) {
 function sendMessage() {
     temporaryMsgId += 1;
     let tempID = `temp_${temporaryMsgId}`;
-    let hasFile = !!$(".upload-attachment").val();
+    let hasFile = !!$("#upload-attachment").val();
+    console.log(hasFile);
     const inputValue = $.trim(messageInput.val());
     if (inputValue.length > 0 || hasFile) {
-        const formData = new FormData($("#message-form")[0]);
+        const formData = new FormData($("#message-form-main")[0]);
         formData.append("id", getMessengerId());
         formData.append("type", "engineer");
         formData.append("temporaryMsgId", tempID);
         formData.append("_token", access_token);
         $.ajax({
-            url: $("#message-form").attr("action"),
+            url: $("#message-form-main").attr("action"),
             method: "POST",
             data: formData,
             dataType: "JSON",
@@ -622,17 +624,18 @@ initClientChannel();
 
 // Listen to messages, and append if data received
 channel.bind("messaging", function (data) {
-    if (data.from_id == getMessengerId() && data.to_id == auth_id) {
-        $(".messages").find(".message-hint").remove();
-        messagesContainer.find(".messages").append(data.message);
-        scrollToBottom(messagesContainer);
-        makeSeen(true);
-        console.log("MOG");
-        // remove unseen counter for the user from the contacts list
-        $(".messenger-list-item[data-contact=" + getMessengerId() + "]")
-            .find("tr>td>b")
-            .remove();
-    }
+    // console.log(data);
+    // if (data.from_id == getMessengerId() && data.to_id == auth_id) {
+    // $(".messages").find(".message-hint").remove();
+    $("#conversation").append(data.message);
+    $("#conversation").animate({ scrollTop: 100000 }, 1000);
+    // scrollToBottom(messagesContainer);
+    // makeSeen(true);
+    // remove unseen counter for the user from the contacts list
+    // $(".messenger-list-item[data-contact=" + getMessengerId() + "]")
+    //     .find("tr>td>b")
+    //     .remove();
+    // }
 });
 
 // listen to typing indicator
@@ -660,7 +663,8 @@ clientListenChannel.bind("client-seen", function (data) {
 
 // listen to contact item updates event
 clientListenChannel.bind("client-contactItem", function (data) {
-    console.log("mog");
+    console.log("on updated");
+
     if (data.update_for == auth_id) {
         data.updating == true
             ? updateContactItem(data.update_to)
@@ -722,24 +726,25 @@ function isTyping(status) {
  * Trigger seen event
  *-------------------------------------------------------------
  */
-function makeSeen(status) {
-    if (document?.hidden) {
-        return;
-    }
+function makeSeen(status, id) {
+    // if (document?.hidden) {
+    //     return;
+    // }
     // remove unseen counter for the user from the contacts list
-    $(".messenger-list-item[data-contact=" + getMessengerId() + "]")
-        .find("tr>td>b")
-        .remove();
+    // $(".messenger-list-item[data-contact=" + getMessengerId() + "]")
+    //     .find("tr>td>b")
+    //     .remove();
     // seen
     $.ajax({
         url: url + "/makeSeen",
         method: "POST",
-        data: { _token: access_token, id: getMessengerId() },
+        data: { _token: access_token, id: id },
         dataType: "JSON",
     });
+    console.log("client seen");
     return clientSendChannel.trigger("client-seen", {
         from_id: auth_id, // Me
-        to_id: getMessengerId(), // Messenger
+        to_id: id, // Messenger
         seen: status,
     });
 }
@@ -830,36 +835,36 @@ function setContactsLoading(loading = false) {
     }
     contactsLoading = loading;
 }
-function getContacts() {
-    if (!contactsLoading && !noMoreContacts) {
-        setContactsLoading(true);
-        $.ajax({
-            url: url + "/getContactsMain",
-            method: "POST",
-            data: { _token: access_token, page: contactsPage },
-            dataType: "JSON",
-            success: (data) => {
-                console.log(data);
-                setContactsLoading(false);
-                if (contactsPage < 2) {
-                    $(".listOfContactsMain").html(data.contacts);
-                } else {
-                    $(".listOfContactsMain").append(data.contacts);
-                }
-                updateSelectedContact();
-                // update data-action required with [responsive design]
-                // cssMediaQueries();
-                // Pagination lock & messages page
-                noMoreContacts = contactsPage >= data?.last_page;
-                if (!noMoreContacts) contactsPage += 1;
-            },
-            // error: (error) => {
-            //     setContactsLoading(false);
-            //     console.error(error);
-            // },
-        });
-    }
-}
+// function getContacts() {
+//     if (!contactsLoading && !noMoreContacts) {
+//         setContactsLoading(true);
+//         $.ajax({
+//             url: url + "/getContactsMain",
+//             method: "POST",
+//             data: { _token: access_token, page: contactsPage },
+//             dataType: "JSON",
+//             success: (data) => {
+//                 console.log(data);
+//                 setContactsLoading(false);
+//                 if (contactsPage < 2) {
+//                     $(".listOfContactsMain").html(data.contacts);
+//                 } else {
+//                     $(".listOfContactsMain").append(data.contacts);
+//                 }
+//                 // updateSelectedContact();
+//                 // update data-action required with [responsive design]
+//                 // cssMediaQueries();
+//                 // Pagination lock & messages page
+//                 // noMoreContacts = contactsPage >= data?.last_page;
+//                 // if (!noMoreContacts) contactsPage += 1;
+//             },
+//             // error: (error) => {
+//             //     setContactsLoading(false);
+//             //     console.error(error);
+//             // },
+//         });
+//     }
+// }
 
 /**
  *-------------------------------------------------------------
@@ -867,10 +872,13 @@ function getContacts() {
  *-------------------------------------------------------------
  */
 function updateContactItem(user_id) {
+    console.log(user_id);
     if (user_id != auth_id) {
         let listItem = $("body")
-            .find(".listOfContacts")
-            .find(".messenger-list-item[data-contact=" + user_id + "]");
+            .find(".listOfContactsMain")
+            .find(".chat-user-list[data-contact=" + user_id + "]");
+        console.log(listItem.data);
+        // listItem.remove();
         $.ajax({
             url: url + "/updateContacts",
             method: "POST",
@@ -880,14 +888,15 @@ function updateContactItem(user_id) {
             },
             dataType: "JSON",
             success: (data) => {
-                const totalContacts =
-                    $(".listOfContacts").find(".messenger-list-item")?.length ||
-                    0;
-                if (totalContacts < 1)
-                    $(".listOfContacts").find(".message-hint").remove();
+                // listItem.find("#counter-number").removeClass("hide");
+                // const totalContacts =
+                //     $(".listOfContacts").find(".messenger-list-item")?.length ||
+                //     0;
+                // if (totalContacts < 1)
+                //     $(".listOfContacts").find(".message-hint").remove();
                 listItem.remove();
-                $(".listOfContacts").prepend(data.contactItem);
-                // update data-action required with [responsive design]
+                $(".listOfContactsMain").prepend(data.contactItem);
+                // // update data-action required with [responsive design]
                 cssMediaQueries();
                 updateSelectedContact(user_id);
             },
@@ -1326,12 +1335,6 @@ $(document).ready(function () {
 
     // calling Css Media Queries
     cssMediaQueries();
-
-    // message form on submit.
-    $("#message-form").on("submit", (e) => {
-        e.preventDefault();
-        sendMessage();
-    });
 
     // message input on keyup [Enter to send, Enter+Shift for new line]
     $("#message-form .m-send").on("keyup", (e) => {
