@@ -299,11 +299,17 @@ class FilesController extends Controller
         return response('File deleted', 200);
     }
 
-    public function testMessage(){
-        $this->sendMessage('+923218612198', 'test message again');
-        dd('sms test');
+    // public function testMessage(){
+    //     $this->sendMessage('+923218612198', 'test message again');
+    //     dd('sms test');
+    // }
+
+    public function testEmail(){
+        $html = "<p>testing</p>";
+        \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => NULL, 'html' => $html, 'subject' => 'testing']));
+        dd('email test');
     }
-    
+
     public function sendMessage($receiver, $message)
     {
         try {
