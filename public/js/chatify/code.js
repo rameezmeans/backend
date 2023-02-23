@@ -662,7 +662,6 @@ clientListenChannel.bind("client-seen", function (data) {
 
 // listen to contact item updates event
 clientListenChannel.bind("client-contactItem", function (data) {
-    console.log("mog");
     if (data.update_for == auth_id) {
         data.updating == true
             ? updateContactItem(data.update_to)

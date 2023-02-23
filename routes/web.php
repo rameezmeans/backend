@@ -177,7 +177,7 @@ Route::post('/delete_message_template', [App\Http\Controllers\MessageTemplatesCo
 * This is the main app route [Chatify Messenger]
 */
 
-Route::get('/chat', [MessagesController::class, 'index'])->name(config('chatify.routes.prefix'))->middleware(['auth']);
+// Route::get('/chat', [MessagesController::class, 'index'])->name(config('chatify.routes.prefix'))->middleware(['auth']);
 
 /**
  *  Fetch info for specific id [user/group]

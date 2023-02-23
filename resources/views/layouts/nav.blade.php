@@ -149,10 +149,10 @@
               <span class="icon-thumbnail">Fr</span>
             </li>
            
-            <li class="">
+            {{-- <li class="">
               <a href="{{ route(config('chatify.routes.prefix'))}}">Chat</a>
               <span class="icon-thumbnail">Ch</span>
-            </li>
+            </li> --}}
            
           </ul>
         </li>

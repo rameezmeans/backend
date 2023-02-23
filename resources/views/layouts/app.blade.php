@@ -121,12 +121,13 @@
       float: right;
       color: rgb(255, 255, 255);
       padding: 0px 4px;
-      border-radius: 20px;
-      font-size: 13px;
+      border-radius: 20px !important;
+      font-size: 8px !important;
       width: 20px;
       height: 20px;;
       font-size: 12px;
       text-align: center;
+      
       
     }
 

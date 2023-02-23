@@ -35,81 +35,81 @@
 
         // Widget 14
 
-        (function () {
-            var container = ".widget-14-chart";
+        // (function () {
+        //     var container = ".widget-14-chart";
 
-            var seriesData = [[], [], []];
-            var random = new Rickshaw.Fixtures.RandomData(50);
-            for (var i = 0; i < 50; i++) {
-                random.addData(seriesData);
-            }
-            var graph = new Rickshaw.Graph({
-                element: document.querySelector(container),
-                renderer: "area",
-                padding: {
-                    top: 0.5,
-                    bottom: 1,
-                },
-                series: [
-                    {
-                        data: seriesData[0],
-                        color: $.Pages.getColor("success-light", 0.5),
-                        name: "DB Server",
-                    },
-                    {
-                        data: seriesData[1],
-                        color: $.Pages.getColor("master-light"),
-                        name: "Web Server",
-                    },
-                ],
-            });
+        //     var seriesData = [[], [], []];
+        //     var random = new Rickshaw.Fixtures.RandomData(50);
+        //     for (var i = 0; i < 50; i++) {
+        //         random.addData(seriesData);
+        //     }
+        //     var graph = new Rickshaw.Graph({
+        //         element: document.querySelector(container),
+        //         renderer: "area",
+        //         padding: {
+        //             top: 0.5,
+        //             bottom: 1,
+        //         },
+        //         series: [
+        //             {
+        //                 data: seriesData[0],
+        //                 color: $.Pages.getColor("success-light", 0.5),
+        //                 name: "DB Server",
+        //             },
+        //             {
+        //                 data: seriesData[1],
+        //                 color: $.Pages.getColor("master-light"),
+        //                 name: "Web Server",
+        //             },
+        //         ],
+        //     });
 
-            var y_axis = new Rickshaw.Graph.Axis.Y({
-                graph: graph,
-                orientation: "right",
-                tickFormat: function (y) {
-                    return y / 10;
-                },
-                element: document.querySelector(".widget-14-chart_y_axis"),
-            });
+        //     var y_axis = new Rickshaw.Graph.Axis.Y({
+        //         graph: graph,
+        //         orientation: "right",
+        //         tickFormat: function (y) {
+        //             return y / 10;
+        //         },
+        //         element: document.querySelector(".widget-14-chart_y_axis"),
+        //     });
 
-            var legend = new Rickshaw.Graph.Legend({
-                graph: graph,
-                element: document.querySelector(".widget-14-chart-legend"),
-            });
+        //     var legend = new Rickshaw.Graph.Legend({
+        //         graph: graph,
+        //         element: document.querySelector(".widget-14-chart-legend"),
+        //     });
 
-            var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
-                graph: graph,
-                legend: legend,
-            });
+        //     var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
+        //         graph: graph,
+        //         legend: legend,
+        //     });
 
-            var hoverDetail = new Rickshaw.Graph.HoverDetail({
-                graph: graph,
-            });
-            setInterval(function () {
-                random.removeData(seriesData);
-                random.addData(seriesData);
-                graph.update();
-            }, 1000);
+        //     var hoverDetail = new Rickshaw.Graph.HoverDetail({
+        //         graph: graph,
+        //     });
+        //     setInterval(function () {
+        //         random.removeData(seriesData);
+        //         random.addData(seriesData);
+        //         graph.update();
+        //     }, 1000);
 
-            d3.selectAll(".widget-14-chart_y_axis .tick.major line").attr(
-                "x2",
-                "7"
-            );
-            d3.selectAll(".widget-14-chart_y_axis .tick.major text").attr(
-                "x",
-                "12"
-            );
-            $(window).resize(function () {
-                graph.configure({
-                    width: $(container).width(),
-                });
+        //     d3.selectAll(".widget-14-chart_y_axis .tick.major line").attr(
+        //         "x2",
+        //         "7"
+        //     );
+        //     d3.selectAll(".widget-14-chart_y_axis .tick.major text").attr(
+        //         "x",
+        //         "12"
+        //     );
+        //     $(window).resize(function () {
+        //         graph.configure({
+        //             width: $(container).width(),
+        //         });
 
-                graph.render();
-            });
+        //         graph.render();
+        //     });
 
-            $(container).data("chart", graph);
-        })();
+        //     $(container).data("chart", graph);
+        // })();
 
         //Get from JSON data and build
 
@@ -433,245 +433,245 @@
 
             // Widget 15
 
-            (function () {
-                var container = ".widget-15-chart";
+            // (function () {
+            //     var container = ".widget-15-chart";
 
-                var seriesData = [[], []];
-                var random = new Rickshaw.Fixtures.RandomData(40);
-                for (var i = 0; i < 40; i++) {
-                    random.addData(seriesData);
-                }
+            //     var seriesData = [[], []];
+            //     var random = new Rickshaw.Fixtures.RandomData(40);
+            //     for (var i = 0; i < 40; i++) {
+            //         random.addData(seriesData);
+            //     }
 
-                var graph = new Rickshaw.Graph({
-                    renderer: "bar",
-                    element: document.querySelector(container),
-                    height: 200,
-                    padding: {
-                        top: 0.5,
-                    },
-                    series: [
-                        {
-                            data: seriesData[0],
-                            color: $.Pages.getColor("complete-light"),
-                            name: "New users",
-                        },
-                        {
-                            data: seriesData[1],
-                            color: $.Pages.getColor("master-lighter"),
-                            name: "Returning users",
-                        },
-                    ],
-                });
+            //     var graph = new Rickshaw.Graph({
+            //         renderer: "bar",
+            //         element: document.querySelector(container),
+            //         height: 200,
+            //         padding: {
+            //             top: 0.5,
+            //         },
+            //         series: [
+            //             {
+            //                 data: seriesData[0],
+            //                 color: $.Pages.getColor("complete-light"),
+            //                 name: "New users",
+            //             },
+            //             {
+            //                 data: seriesData[1],
+            //                 color: $.Pages.getColor("master-lighter"),
+            //                 name: "Returning users",
+            //             },
+            //         ],
+            //     });
 
-                var hoverDetail = new Rickshaw.Graph.HoverDetail({
-                    graph: graph,
-                    formatter: function (series, x, y) {
-                        var date =
-                            '<span class="date">' +
-                            new Date(x * 1000).toUTCString() +
-                            "</span>";
-                        var swatch =
-                            '<span class="detail_swatch" style="background-color: ' +
-                            series.color +
-                            '"></span>';
-                        var content =
-                            swatch +
-                            series.name +
-                            ": " +
-                            parseInt(y) +
-                            "<br>" +
-                            date;
-                        return content;
-                    },
-                });
+            //     var hoverDetail = new Rickshaw.Graph.HoverDetail({
+            //         graph: graph,
+            //         formatter: function (series, x, y) {
+            //             var date =
+            //                 '<span class="date">' +
+            //                 new Date(x * 1000).toUTCString() +
+            //                 "</span>";
+            //             var swatch =
+            //                 '<span class="detail_swatch" style="background-color: ' +
+            //                 series.color +
+            //                 '"></span>';
+            //             var content =
+            //                 swatch +
+            //                 series.name +
+            //                 ": " +
+            //                 parseInt(y) +
+            //                 "<br>" +
+            //                 date;
+            //             return content;
+            //         },
+            //     });
 
-                graph.render();
+            //     graph.render();
 
-                $(window).resize(function () {
-                    graph.configure({
-                        width: $(container).width(),
-                        height: 200,
-                    });
+            //     $(window).resize(function () {
+            //         graph.configure({
+            //             width: $(container).width(),
+            //             height: 200,
+            //         });
 
-                    graph.render();
-                });
+            //         graph.render();
+            //     });
 
-                $(container).data("chart", graph);
-            })();
+            //     $(container).data("chart", graph);
+            // })();
 
-            // widget 15-2
-            (function () {
-                var container = ".widget-15-chart2";
+            // // widget 15-2
+            // (function () {
+            //     var container = ".widget-15-chart2";
 
-                var seriesData = [[], []];
-                var random = new Rickshaw.Fixtures.RandomData(40);
-                for (var i = 0; i < 40; i++) {
-                    random.addData(seriesData);
-                }
+            //     var seriesData = [[], []];
+            //     var random = new Rickshaw.Fixtures.RandomData(40);
+            //     for (var i = 0; i < 40; i++) {
+            //         random.addData(seriesData);
+            //     }
 
-                var graph = new Rickshaw.Graph({
-                    renderer: "bar",
-                    element: document.querySelector(container),
-                    padding: {
-                        top: 0.5,
-                    },
-                    series: [
-                        {
-                            data: seriesData[0],
-                            color: $.Pages.getColor("complete-light"),
-                            name: "New users",
-                        },
-                        {
-                            data: seriesData[1],
-                            color: $.Pages.getColor("master-lighter"),
-                            name: "Returning users",
-                        },
-                    ],
-                });
+            //     var graph = new Rickshaw.Graph({
+            //         renderer: "bar",
+            //         element: document.querySelector(container),
+            //         padding: {
+            //             top: 0.5,
+            //         },
+            //         series: [
+            //             {
+            //                 data: seriesData[0],
+            //                 color: $.Pages.getColor("complete-light"),
+            //                 name: "New users",
+            //             },
+            //             {
+            //                 data: seriesData[1],
+            //                 color: $.Pages.getColor("master-lighter"),
+            //                 name: "Returning users",
+            //             },
+            //         ],
+            //     });
 
-                var hoverDetail = new Rickshaw.Graph.HoverDetail({
-                    graph: graph,
-                    formatter: function (series, x, y) {
-                        var date =
-                            '<span class="date">' +
-                            new Date(x * 1000).toUTCString() +
-                            "</span>";
-                        var swatch =
-                            '<span class="detail_swatch" style="background-color: ' +
-                            series.color +
-                            '"></span>';
-                        var content =
-                            swatch +
-                            series.name +
-                            ": " +
-                            parseInt(y) +
-                            "<br>" +
-                            date;
-                        return content;
-                    },
-                });
+            //     var hoverDetail = new Rickshaw.Graph.HoverDetail({
+            //         graph: graph,
+            //         formatter: function (series, x, y) {
+            //             var date =
+            //                 '<span class="date">' +
+            //                 new Date(x * 1000).toUTCString() +
+            //                 "</span>";
+            //             var swatch =
+            //                 '<span class="detail_swatch" style="background-color: ' +
+            //                 series.color +
+            //                 '"></span>';
+            //             var content =
+            //                 swatch +
+            //                 series.name +
+            //                 ": " +
+            //                 parseInt(y) +
+            //                 "<br>" +
+            //                 date;
+            //             return content;
+            //         },
+            //     });
 
-                graph.render();
+            //     graph.render();
 
-                $(window).resize(function () {
-                    graph.configure({
-                        width: $(container).width(),
-                        height: 200,
-                    });
+            //     $(window).resize(function () {
+            //         graph.configure({
+            //             width: $(container).width(),
+            //             height: 200,
+            //         });
 
-                    graph.render();
-                });
+            //         graph.render();
+            //     });
 
-                $(container).data("chart", graph);
-            })();
+            //     $(container).data("chart", graph);
+            // })();
 
             // widget 5
-            (function () {
-                var container = ".widget-5-chart";
+            // (function () {
+            //     var container = ".widget-5-chart";
 
-                var seriesData = [[], []];
-                var random = new Rickshaw.Fixtures.RandomData(7);
-                for (var i = 0; i < 7; i++) {
-                    random.addData(seriesData);
-                }
+            //     var seriesData = [[], []];
+            //     var random = new Rickshaw.Fixtures.RandomData(7);
+            //     for (var i = 0; i < 7; i++) {
+            //         random.addData(seriesData);
+            //     }
 
-                var graph = new Rickshaw.Graph({
-                    element: document.querySelector(container),
-                    renderer: "bar",
-                    series: [
-                        {
-                            data: [
-                                {
-                                    x: 0,
-                                    y: 10,
-                                },
-                                {
-                                    x: 1,
-                                    y: 8,
-                                },
-                                {
-                                    x: 2,
-                                    y: 5,
-                                },
-                                {
-                                    x: 3,
-                                    y: 9,
-                                },
-                                {
-                                    x: 4,
-                                    y: 5,
-                                },
-                                {
-                                    x: 5,
-                                    y: 8,
-                                },
-                                {
-                                    x: 6,
-                                    y: 10,
-                                },
-                            ],
-                            color: $.Pages.getColor("danger"),
-                        },
-                        {
-                            data: [
-                                {
-                                    x: 0,
-                                    y: 0,
-                                },
-                                {
-                                    x: 1,
-                                    y: 2,
-                                },
-                                {
-                                    x: 2,
-                                    y: 5,
-                                },
-                                {
-                                    x: 3,
-                                    y: 1,
-                                },
-                                {
-                                    x: 4,
-                                    y: 5,
-                                },
-                                {
-                                    x: 5,
-                                    y: 2,
-                                },
-                                {
-                                    x: 6,
-                                    y: 0,
-                                },
-                            ],
-                            color: $.Pages.getColor("master-light"),
-                        },
-                    ],
-                });
+            //     var graph = new Rickshaw.Graph({
+            //         element: document.querySelector(container),
+            //         renderer: "bar",
+            //         series: [
+            //             {
+            //                 data: [
+            //                     {
+            //                         x: 0,
+            //                         y: 10,
+            //                     },
+            //                     {
+            //                         x: 1,
+            //                         y: 8,
+            //                     },
+            //                     {
+            //                         x: 2,
+            //                         y: 5,
+            //                     },
+            //                     {
+            //                         x: 3,
+            //                         y: 9,
+            //                     },
+            //                     {
+            //                         x: 4,
+            //                         y: 5,
+            //                     },
+            //                     {
+            //                         x: 5,
+            //                         y: 8,
+            //                     },
+            //                     {
+            //                         x: 6,
+            //                         y: 10,
+            //                     },
+            //                 ],
+            //                 color: $.Pages.getColor("danger"),
+            //             },
+            //             {
+            //                 data: [
+            //                     {
+            //                         x: 0,
+            //                         y: 0,
+            //                     },
+            //                     {
+            //                         x: 1,
+            //                         y: 2,
+            //                     },
+            //                     {
+            //                         x: 2,
+            //                         y: 5,
+            //                     },
+            //                     {
+            //                         x: 3,
+            //                         y: 1,
+            //                     },
+            //                     {
+            //                         x: 4,
+            //                         y: 5,
+            //                     },
+            //                     {
+            //                         x: 5,
+            //                         y: 2,
+            //                     },
+            //                     {
+            //                         x: 6,
+            //                         y: 0,
+            //                     },
+            //                 ],
+            //                 color: $.Pages.getColor("master-light"),
+            //             },
+            //         ],
+            //     });
 
-                var MonthBarsRenderer = Rickshaw.Class.create(
-                    Rickshaw.Graph.Renderer.Bar,
-                    {
-                        barWidth: function (series) {
-                            return 7;
-                        },
-                    }
-                );
+            //     var MonthBarsRenderer = Rickshaw.Class.create(
+            //         Rickshaw.Graph.Renderer.Bar,
+            //         {
+            //             barWidth: function (series) {
+            //                 return 7;
+            //             },
+            //         }
+            //     );
 
-                graph.setRenderer(MonthBarsRenderer);
+            //     graph.setRenderer(MonthBarsRenderer);
 
-                graph.render();
+            //     graph.render();
 
-                $(window).resize(function () {
-                    graph.configure({
-                        width: $(container).width(),
-                        height: $(container).height(),
-                    });
+            //     $(window).resize(function () {
+            //         graph.configure({
+            //             width: $(container).width(),
+            //             height: $(container).height(),
+            //         });
 
-                    graph.render();
-                });
+            //         graph.render();
+            //     });
 
-                $(container).data("chart", graph);
-            })();
+            //     $(container).data("chart", graph);
+            // })();
         });
 
         // Init portlets
