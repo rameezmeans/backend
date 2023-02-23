@@ -299,9 +299,10 @@ class FilesController extends Controller
         return response('File deleted', 200);
     }
 
-    // public function testMessage(){
-    //     $this->sendMessage('+923218612198', 'test message again');
-    // }
+    public function testMessage(){
+        $this->sendMessage('+923218612198', 'test message again');
+        dd('sms test');
+    }
     
     public function sendMessage($receiver, $message)
     {
