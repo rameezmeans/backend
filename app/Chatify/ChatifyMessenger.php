@@ -433,7 +433,7 @@ class ChatifyMessenger
 
     public static function showChat(){
 
-        return (ChMessage::where('seen', 0)->count() > 0) ? true : false; 
+        return (ChMessage::where('type', 'user')->where('seen', 0)->count() > 0) ? true : false; 
     }
 
     /**
