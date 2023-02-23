@@ -304,11 +304,11 @@ class FilesController extends Controller
     //     dd('sms test');
     // }
 
-    public function testEmail(){
-        $html = "<p>testing</p>";
-        \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => NULL, 'html' => $html, 'subject' => 'testing']));
-        dd('email test');
-    }
+    // public function testEmail(){
+    //     $html = "<p>testing</p>";
+    //     \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => NULL, 'html' => $html, 'subject' => 'testing']));
+    //     dd('email test');
+    // }
 
     public function sendMessage($receiver, $message)
     {

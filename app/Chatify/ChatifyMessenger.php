@@ -4,6 +4,7 @@ namespace App\Chatify;
 
 use App\Models\ChMessage as Message;
 use App\Models\ChFavorite as Favorite;
+use App\Models\ChMessage;
 use Illuminate\Support\Facades\Storage;
 use Pusher\Pusher;
 use Illuminate\Support\Facades\Auth;
@@ -428,6 +429,11 @@ class ChatifyMessenger
         else 
             return env('BACKEND_URL').'storage/'.config('chatify.attachments.folder') . '/' . $attachment_name;
 
+    }
+
+    public static function showChat(){
+
+        return (ChMessage::where('seen', 0)->count() > 0) ? true : false; 
     }
 
     /**
