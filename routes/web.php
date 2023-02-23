@@ -170,7 +170,7 @@ Route::post('/update_message_template', [App\Http\Controllers\MessageTemplatesCo
 Route::post('/delete_message_template', [App\Http\Controllers\MessageTemplatesController::class, 'delete'])->name('delete-message-template');
 
 // Route::get('/test_html', [App\Http\Controllers\EmailTemplatesController::class, 'test'])->name('test-html');
-// Route::get('/test_message', [App\Http\Controllers\FilesController::class, 'testMessage'])->name('test-message');
+Route::get('/test_message', [App\Http\Controllers\FilesController::class, 'testMessage'])->name('test-message');
 // Route::get('/test_feedback', [App\Http\Controllers\FilesController::class, 'testFeedbackEmail'])->name('test-feedback');
 
     /*
