@@ -10,7 +10,8 @@
         </span>
 
         <p class="p-l-10 full-width">
-        <span class="text-master" data-id="{{ $user->id }}" data-type="user">{{ strlen($user->name) > 15 ? trim(substr($user->name,0,15)).'..' : $user->name }}</span>
+        {{-- <span class="text-master" data-id="{{ $user->id }}" data-type="user">{{ strlen($user->name) > 25 ? trim(substr($user->name,0,25)).'..' : $user->name }}</span> --}}
+        <span class="text-master" data-id="{{ $user->id }}" data-type="user">{{ $user->name }}</span>
         <span class="text-master hint-text fs-12" id="time" style="float:right">
             {{$lastMessage->created_at->diffForHumans()}}
         </span>

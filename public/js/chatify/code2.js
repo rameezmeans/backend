@@ -630,7 +630,7 @@ channel.bind("messaging", function (data) {
     $("#conversation").append(data.message);
     $("#conversation").animate({ scrollTop: 100000 }, 1000);
     // scrollToBottom(messagesContainer);
-    // makeSeen(true);
+    makeSeen(true, from_id);
     // remove unseen counter for the user from the contacts list
     // $(".messenger-list-item[data-contact=" + getMessengerId() + "]")
     //     .find("tr>td>b")
