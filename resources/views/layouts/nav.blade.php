@@ -49,9 +49,9 @@
           <a href="{{ route('files') }}" class="detailed">
             <span class="title">Files</span>
             @if(Auth::user()->is_admin)
-              @if(count_of_files() > 0)
-                <span id="file-count" class="badge badged-warning text-black">{{count_of_files()}}</span>
-              @endif
+              
+                <span id="file-count" class="badge badged-warning text-black @if(count_of_files() == 0) hide @endif">{{count_of_files()}}</span>
+              
             @endif
           </a>
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>

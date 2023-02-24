@@ -672,13 +672,15 @@ clientListenChannel.bind("client-contactItem", function (data) {
             ? updateContactItem(data.update_to)
             : console.error("[Contact Item updates] Updating failed!");
     }
+    $(this).uiSound({ play: "hover" });
 });
 
 // listen on message delete event
 clientListenChannel.bind("file-uploaded", function (data) {
     console.log("file uploaded");
-    $(this).uiSound({ play: "hover" });
+    $("#file-count").removeClass("hide");
     $("#file-count").html(data.count);
+    $(this).uiSound({ play: "hover" });
 });
 
 // listen on message delete event
