@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use PDF;
 use SebastianBergmann\Template\Template;
+use Svg\Tag\Rect;
 use Twilio\Rest\Client;
 
 class FilesController extends Controller
@@ -42,7 +43,179 @@ class FilesController extends Controller
         $this->manager = $reminderManager->getManager();
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
-    
+
+    public function updateFileVehicle(Request $request) {
+
+        $this->validate($request, [
+            'brand' => 'required',
+            'model' => 'required',
+            'engine' => 'required',
+            'version' => 'required'
+        ]);
+
+        $file = File::findOrFail($request->id);
+        $file->brand = $request->brand;
+        $file->model = $request->model;
+        $file->version = $request->version;
+        $file->engine = $request->engine;
+        $file->ecu = $request->ecu;
+        $file->save();
+
+        return redirect()->back()
+        ->with('success', 'File successfully Edited!');
+
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getModels(Request $request)
+    {
+        $brand = $request->brand;
+        
+        $models = Vehicle::OrderBy('model', 'asc')->select('model')->whereNotNull('model')->distinct()->where('make', '=', $brand)->get();
+        
+        return response()->json( [ 'models' => $models ] );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getVersions(Request $request)
+    {
+        $model = $request->model;
+        $brand = $request->brand;
+
+        $versions = Vehicle::OrderBy('generation', 'asc')->whereNotNull('generation')->select('generation')->distinct()
+        ->where('Make', '=', $brand)
+        ->where('Model', '=', $model)
+        ->get();
+
+        return response()->json( [ 'versions' => $versions ] );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getEngines(Request $request)
+    {
+        $model = $request->model;
+        $brand = $request->brand;
+        $version = $request->version;
+
+        $engines = Vehicle::OrderBy('engine', 'asc')->whereNotNull('engine')->select('engine')->distinct()
+        ->where('Make', '=', $brand)
+        ->where('Model', '=', $model)
+        ->where('Generation', '=', $version)
+        ->get();
+
+        return response()->json( [ 'engines' => $engines ] );
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getECUs(Request $request)
+    {
+        $model = $request->model;
+        $brand = $request->brand;
+        $version = $request->version;
+        $engine = $request->engine;
+       
+        $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->whereNotNull('Engine_ECU')->select('Engine_ECU')->distinct()
+        ->where('Make', '=', $brand)
+        ->where('Model', '=', $model)
+        ->where('Generation', '=', $version)
+        ->where('Engine', '=', $engine)
+        ->get();
+
+        $ecusArray = [];
+
+        foreach($ecus as $e){
+            $temp = explode(' / ', $e->Engine_ECU);
+            $ecusArray = array_merge($ecusArray,$temp);
+        }
+
+        $ecusArray = array_values(array_unique($ecusArray));
+
+        return response()->json( [ 'ecus' => $ecusArray ]);
+    }
+
+    public function editFile($id) {
+        $file = File::findOrFail($id);
+
+        $brandsObjects = Vehicle::OrderBy('make', 'asc')->select('make')->distinct()->get();
+
+        $brands = [];
+        foreach($brandsObjects as $b){
+            if($b->make != '')
+            $brands []= $b->make;
+        }
+
+        $modelsObjects = Vehicle::OrderBy('model', 'asc')->select('model')->whereNotNull('model')->distinct()->where('make', '=', $file->brand)->get();
+
+        $models = [];
+        foreach($modelsObjects as $m){
+            if($m->model != '')
+            $models []= $m->model;
+        }
+
+        $versionsObjects = Vehicle::OrderBy('generation', 'asc')->whereNotNull('generation')->select('generation')->distinct()
+        ->where('Make', '=', $file->brand)
+        ->where('Model', '=', $file->model)
+        ->get();
+
+        $versions = [];
+        foreach($versionsObjects as $v){
+            if($v->generation != '')
+            $versions []= $v->generation;   
+        }        
+
+        $enginesObjects = Vehicle::OrderBy('engine', 'asc')->whereNotNull('engine')->select('engine')->distinct()
+        ->where('Make', '=', $file->brand)
+        ->where('Model', '=', $file->model)
+        ->where('Generation', '=', $file->version)
+        ->get();
+
+        $engines = [];
+        foreach($enginesObjects as $e){
+            if($e->engine != '')
+            $engines []= $e->engine;   
+        }   
+
+        $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->whereNotNull('Engine_ECU')->select('Engine_ECU')->distinct()
+        ->where('Make', '=', $file->brand)
+        ->where('Model', '=', $file->model)
+        ->where('Generation', '=', $file->version)
+        ->where('Engine', '=', $file->engine)
+        ->get();
+
+        $ecusArray = [];
+
+        foreach($ecus as $e){
+            $temp = explode(' / ', $e->Engine_ECU);
+            $ecusArray = array_merge($ecusArray,$temp);
+        }
+
+        $ecusArray = array_values(array_unique($ecusArray));
+
+        return view('files.edit', [ 'file' => $file, 
+        'brands' => $brands, 
+        'models' => $models, 
+        'versions' => $versions,
+        'engines' => $engines,
+        'ecus' => $ecusArray
+    ]);
+    }
+
     public function saveFeedbackEmailSchedual(Request $request) {
 
         $this->validate($request, [
