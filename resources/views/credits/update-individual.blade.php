@@ -10,15 +10,9 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                  @if(isset($engineer))
                   <h5>
-                    Edit Engineer
+                    Update Credits
                   </h5>
-                @else
-                  <h5>
-                    Add Engineer
-                  </h5>
-                @endif
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">

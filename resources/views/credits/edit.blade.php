@@ -74,7 +74,8 @@
                                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 20%">Invoice ID</th>
                                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 5%">Credits</th>
                                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 10%">Amount</th>
-                                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 25%">Strip ID</th>
+                                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 25%">Strip ID or Manual Entry</th>
+                                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 25%">Note To Client</th>
                                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 20%">Date</th>
                                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Download PDF</th>
                                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Actions</th>
@@ -97,6 +98,9 @@
                                                             <p><span class="label  @if($credit->gifted) label-info @else label-warning @endif">@if($credit->stripe_id){{$credit->stripe_id}} @else @if($credit->gifted) {{ 'Gifted' }} @else {{ 'Direct Transaction' }} @endif @endif</span></p>
                                                         </td>
                                                         <td class="v-align-middle semi-bold sorting_1">
+                                                            <p>{{$credit->message_to_credit}}</p>
+                                                        </td>
+                                                        <td class="v-align-middle semi-bold sorting_1">
                                                             <p><span class="label  @if($credit->gifted) label-info @else label-success @endif">{{\Carbon\Carbon::parse($credit->created_at)->format('d/m/Y')}}</span></p>
                                                         </td>
                                                         <td><a href="{{ route('pdfview',['id'=>$credit->id]) }}" class="btn btn-sm btn-primary"><i class="pg-printer"></i></a></td>
@@ -117,6 +121,7 @@
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 15%">Invoice ID</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 5%">Credits</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 25%">Reason to Decrease credits</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 25%">Date</th>
                                     {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Download PDF</th> --}}
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">File</th>
@@ -132,7 +137,9 @@
                                             <td class="v-align-middle semi-bold sorting_1">
                                                 <p><span class="label label-danger">{{-1*(int)$credit->credits}}</span></p>
                                             </td>
-                                            
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>@if($credit->file_id)  <a href="{{route('file', $credit->file_id)}}"> {{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}</a> @else<span class="label label-danger">{{$credit->message_to_credit}}</span>@endif</p>
+                                            </td>
                                             <td class="v-align-middle semi-bold sorting_1">
                                                 <p><span class="label label-success">{{\Carbon\Carbon::parse($credit->created_at)->format('d/m/Y')}}</span></p>
                                             </td>
