@@ -278,11 +278,11 @@
             mData.showLocation("usa");
         });
 
-        // Disable scroll to zoom
-        setTimeout(function () {
-            location.hash = "#usa";
-            $(".mapplic-layer").unbind("mousewheel DOMMouseScroll");
-        }, 1000);
+        // // Disable scroll to zoom
+        // setTimeout(function () {
+        //     location.hash = "#usa";
+        //     $(".mapplic-layer").unbind("mousewheel DOMMouseScroll");
+        // }, 1000);
 
         $('.widget-13 a[data-toggle="tab"]').on("show.bs.tab", function (e) {
             var target = $(e.target).text().trim();
@@ -420,7 +420,7 @@
                             .call(chart);
 
                         nv.utils.windowResize(function () {
-                            chart.update();
+                            // chart.update();
                         });
 
                         $(".widget-4-chart").data("chart", chart);

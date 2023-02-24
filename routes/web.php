@@ -47,6 +47,8 @@ Route::get('/file/{id}', [App\Http\Controllers\FilesController::class, 'show'])-
 
 Route::get('/download/{file}', [App\Http\Controllers\FilesController::class,'download'])->name('download');
 Route::post('/file-engineers-notes', [App\Http\Controllers\FilesController::class,'fileEngineersNotes'])->name('file-engineers-notes');
+Route::get('/edit_file/{id}', [App\Http\Controllers\FilesController::class,'editFile'])->name('edit-file');
+Route::post('/update-file-vehicle', [App\Http\Controllers\FilesController::class,'updateFileVehicle'])->name('update-file-vehicle');
 Route::post('/request-file-upload', [App\Http\Controllers\FilesController::class,'uploadFileFromEngineer'])->name('request-file-upload');
 Route::post('/delete-request-file', [App\Http\Controllers\FilesController::class,'deleteUploadedFile'])->name('delete-request-file');
 Route::post('/delete-message', [App\Http\Controllers\FilesController::class,'deleteMessage'])->name('delete-message');
@@ -57,7 +59,10 @@ Route::post('/edit-message', [App\Http\Controllers\FilesController::class,'editM
 Route::get('/feedback_emails', [App\Http\Controllers\FilesController::class,'feedbackEmails'])->name('feedback-emails');
 Route::post('/save_feedback_email_template', [App\Http\Controllers\FilesController::class,'saveFeedbackEmailTemplate'])->name('save-feedback-email-template');
 Route::post('/save_feedback_email_schedual', [App\Http\Controllers\FilesController::class,'saveFeedbackEmailSchedual'])->name('save-feedback-email-schedual');
-
+Route::post('/get_models', [App\Http\Controllers\FilesController::class, 'getModels'])->name('get-models');
+Route::post('/get_versions', [App\Http\Controllers\FilesController::class, 'getVersions'])->name('get-versions');
+Route::post('/get_engines', [App\Http\Controllers\FilesController::class, 'getEngines'])->name('get-engines');
+Route::post('/get_ecus', [App\Http\Controllers\FilesController::class, 'getECUs'])->name('get-ecus');
 
 Route::get('/feedback_reports', [App\Http\Controllers\FilesController::class,'feedbackReports'])->name('feedback-reports');
 Route::get('/engineers_reports', [App\Http\Controllers\FilesController::class,'reports'])->name('reports');
