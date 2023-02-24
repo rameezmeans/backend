@@ -284,6 +284,7 @@
                       <h5 class="m-t-40">Options And Credits</h5>
         
                       @if($file->stages)
+                      @if(\App\Models\Service::where('name', $file->stage)->first())
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Stage</p>
                           <div class="pull-right">
@@ -292,6 +293,7 @@
                           </div>
                           <div class="clearfix"></div>
                         </div>
+                        @endif
                       @endif
                       <div class="p-b-20">
                       @if($file->options)
@@ -301,10 +303,12 @@
                       </div>
                       
                         @foreach($file->options() as $option) 
-                        <div class="p-l-20 b-b b-grey"> 
-                          <img alt="{{$option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}">
-                          {{$option}}  
-                        </div>
+                          @if(\App\Models\Service::where('name', $option)->first())
+                            <div class="p-l-20 b-b b-grey"> 
+                              <img alt="{{$option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}">
+                              {{$option}}  
+                            </div>
+                          @endif
                         @if($comments)
                           @foreach($comments as $comment)
                               @if($option == $comment->option)

@@ -51,8 +51,10 @@
                                 <td>  
                                   <div class="">
                                     @if($file->stages)
-                                      <img alt="{{$file->stages}}" width="33" height="33" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
-                                      <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span>
+                                      @if(\App\Models\Service::where('name', $file->stages)->first())
+                                        <img alt="{{$file->stages}}" width="33" height="33" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
+                                        <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span>
+                                      @endif
                                     @endif
                                   </div>  
                                 </td>
@@ -61,10 +63,12 @@
                                     @if($file->options)
                       
                                       @foreach($file->options() as $option)
+                                      @if(\App\Models\Service::where('name', $option)->first())
                                         <span class="label label-warning-darker m-l-10" class="text-black" style="top: 2px; position:relative;">
                                           <img alt="{{$option}}" width="20" height="20" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}">
                                           {{ $option }}<br>
                                         </span>
+                                        @endif
                                       @endforeach
                        
                                     @endif
