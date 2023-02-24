@@ -45,7 +45,7 @@ class FilesController extends Controller
     }
 
     public function updateFileVehicle(Request $request) {
-
+        
         $this->validate($request, [
             'brand' => 'required',
             'model' => 'required',

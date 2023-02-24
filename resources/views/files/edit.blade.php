@@ -291,16 +291,16 @@
         function disable_dropdowns() {
 
             $('#model').children().remove();
-            $('#model').append('<option selected id="model">Model</option>');
+            $('#model').append('<option selected id="model" disabled>Model</option>');
 
             $('#version').children().remove();
-            $('#version').append('<option selected id="version">Version</option>');
+            $('#version').append('<option selected id="version" disabled>Version</option>');
 
             $('#ecu').children().remove();
-            $('#ecu').append('<option selected id="ecu">ECU</option>');
+            $('#ecu').append('<option selected id="ecu" disabled>ECU</option>');
 
             $('#engine').children().remove();
-            $('#engine').append('<option selected id="engine">Engine</option>');
+            $('#engine').append('<option selected id="engine" disabled>Engine</option>');
 
 
             $('#model').attr('disabled', 'disabled');
