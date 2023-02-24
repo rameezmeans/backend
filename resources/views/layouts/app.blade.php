@@ -97,6 +97,8 @@
    <!-- END CORE TEMPLATE JS -->
    <!-- BEGIN PAGE LEVEL JS -->
    <script src="{{url('assets/js/scripts.js') }}" type="text/javascript"></script>
+   <script src="{{url('assets/js/jquery.ui.sound.js') }}" type="text/javascript"></script>
+
    <!-- END PAGE LEVEL JS -->
    <!-- END CORE TEMPLATE JS -->
    <!-- BEGIN PAGE LEVEL JS -->
