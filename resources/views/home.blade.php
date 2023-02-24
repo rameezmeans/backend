@@ -24,6 +24,7 @@
                 <div class="p-l-20 p-r-20">
                   
                   <h1 class="text-success semi-bold">{{$customersCount}}</h1>
+                  {{-- <button id="hover">Sound</button> --}}
                  
                   <div class="clearfix"></div>
                 </div>
@@ -420,11 +421,19 @@
     </div>
   </div>
 </div>
+{{-- <audio id="submit" src="{{url('sound/hover.wav')}}" type="audio/wav"></audio>   --}}
 @endsection
 
 @section('pagespecificscripts')
 <script type="text/javascript">
     $(document).ready(function(){
+      // var audio = document.createElement("AUDIO")
+      // document.body.appendChild(audio);
+      // audio.src = "/sound/hover.wav";
+
+      // $("#hover").on("mouseenter", function(){
+      //     audio.play()
+      // });
 
       set_and_get_response_time();
 

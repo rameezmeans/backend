@@ -630,7 +630,7 @@ channel.bind("messaging", function (data) {
     $("#conversation").append(data.message);
     $("#conversation").animate({ scrollTop: 100000 }, 1000);
     // scrollToBottom(messagesContainer);
-    makeSeen(true, from_id);
+    // makeSeen(true, from_id);
     // remove unseen counter for the user from the contacts list
     // $(".messenger-list-item[data-contact=" + getMessengerId() + "]")
     //     .find("tr>td>b")
@@ -664,12 +664,21 @@ clientListenChannel.bind("client-seen", function (data) {
 // listen to contact item updates event
 clientListenChannel.bind("client-contactItem", function (data) {
     console.log("on updated");
-
+    if (!$("#quickview").hasClass("open")) {
+        $("#quickview").addClass("open");
+    }
     if (data.update_for == auth_id) {
         data.updating == true
             ? updateContactItem(data.update_to)
             : console.error("[Contact Item updates] Updating failed!");
     }
+});
+
+// listen on message delete event
+clientListenChannel.bind("file-uploaded", function (data) {
+    console.log("file uploaded");
+    $(this).uiSound({ play: "hover" });
+    $("#file-count").html(data.count);
 });
 
 // listen on message delete event

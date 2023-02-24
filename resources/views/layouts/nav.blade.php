@@ -50,7 +50,7 @@
             <span class="title">Files</span>
             @if(Auth::user()->is_admin)
               @if(count_of_files() > 0)
-                <span class="badge badged-warning text-black">{{count_of_files()}}</span>
+                <span id="file-count" class="badge badged-warning text-black">{{count_of_files()}}</span>
               @endif
             @endif
           </a>
