@@ -40,10 +40,7 @@ class FilesDatatable extends LivewireDatatable
         return $files;
     }
 
-    public function configure(): void
-    {
-        $this->setRefreshMethod('refresh');
-    }
+    
 
     public function columns()
     {
@@ -54,10 +51,10 @@ class FilesDatatable extends LivewireDatatable
                 $file = File::findOrFail($id);
 
                 if($file->frontend->id == 1){
-                    return '<lable class="label bg-primary text-white">'.$id.'</lable>';
+                    return '<lable class="label bg-primary text-white">Task'.$id.'</lable>';
                 }
                 else{
-                    return '<lable class="label bg-warning text-black">'.$id.'</lable>';
+                    return '<lable class="label bg-warning text-black">Task'.$id.'</lable>';
                 }
                 
             })->label('Task'),

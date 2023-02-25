@@ -74,7 +74,9 @@ Route::post('/get_feedback_report', [App\Http\Controllers\FilesController::class
 Route::get('/credits_reports', [App\Http\Controllers\CreditsController::class,'creditsReports'])->name('credits-reports');
 Route::post('/get_credits_report', [App\Http\Controllers\CreditsController::class,'getCreditsReport'])->name('get-credits-report');
 
-Route::get('/vehicles', [ App\Http\Controllers\VehiclesController::class,'index'])->name('vehicles');
+// Route::get('/vehicles', [ App\Http\Controllers\VehiclesController::class,'index'])->name('vehicles');
+Route::get('/vehicles', [ App\Http\Controllers\VehiclesController::class,'liveVehicles'])->name('vehicles');
+
 Route::get('/vehicle/{id}', [App\Http\Controllers\VehiclesController::class,'show'])->name('vehicle');
 Route::get('/create_vehicle', [App\Http\Controllers\VehiclesController::class,'create'])->name('create-vehicle');
 Route::post('/add-vehicle', [App\Http\Controllers\VehiclesController::class,'add'])->name('add-vehicle');
