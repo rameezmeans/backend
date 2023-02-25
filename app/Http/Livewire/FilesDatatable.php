@@ -119,7 +119,7 @@ class FilesDatatable extends LivewireDatatable
             ->label('Options'),
 
             DateColumn::name('created_at')
-                ->label('Upload Date')->sortable(),
+                ->label('Upload Date')->sortable()->filterable(),
 
             DateColumn::callback('assigned_to', function($id){
                 return '<label class="label label-success">'.User::findOrFail($id)->name.'<label>';
