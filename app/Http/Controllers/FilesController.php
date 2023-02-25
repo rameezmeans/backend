@@ -28,6 +28,9 @@ use PDF;
 use SebastianBergmann\Template\Template;
 use Svg\Tag\Rect;
 use Twilio\Rest\Client;
+use Yajra\DataTables\DataTables;
+
+use PDO;
 
 class FilesController extends Controller
 {
@@ -44,6 +47,10 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
 
+    public function liveFiles(){
+        return view('files.live_files');    
+    }
+    
     public function updateFileVehicle(Request $request) {
         
         $this->validate($request, [
@@ -579,7 +586,7 @@ class FilesController extends Controller
     }
 
     public function changeStatus(Request $request){
-
+        
         $file = File::findOrFail($request->file_id);
         $file->status = $request->status;
         $file->save();

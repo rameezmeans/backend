@@ -40,8 +40,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet" type="text/css" />
     <link class="main-stylesheet" href="{{ url('pages/css/pages.css') }}" rel="stylesheet" type="text/css" />
     {{-- <link class="main-stylesheet" href="{{ url('pages/css/style.css') }}" rel="stylesheet" type="text/css" /> --}}
+      
+    @livewireStyles
+   
     <style>
-       
+       [x-cloak] {
+          display: none;
+      }
+      h3 {
+        font-size: 27px !important
+      }
     </style>
     @yield('pagespecificstyles')
   </head>
@@ -164,12 +172,7 @@
            }
        }
      });
-   
-       // Bellow are all the methods/variables that using php to assign globally.
-      //  const allowedImages = {!! json_encode(config('chatify.attachments.allowed_images')) !!} || [];
-      //  const allowedFiles = {!! json_encode(config('chatify.attachments.allowed_files')) !!} || [];
-      //  const getAllowedExtensions = [...allowedImages, ...allowedFiles];
-      //  const getMaxUploadSize = {{ Chatify::getMaxUploadSize() }};
+     
    </script>
 <meta name="id" content="{{ env('CHAT_USER_ID') }}">
 <meta name="url" content="{{ url('').'/'.config('chatify.routes.prefix') }}" data-user="{{ env('CHAT_USER_ID') }}">
@@ -216,8 +219,12 @@
         });
 
         var pageLength = 0;
+
+        
+
         let table = $('.dataTable').DataTable({
-          "aaSorting": []
+          "aaSorting": [],
+
         });
         
 
@@ -244,4 +251,5 @@
    <!-- END PAGE LEVEL JS -->
    @yield('pagespecificscripts')
  </body>
+ @livewireScripts
 </html>

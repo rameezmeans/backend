@@ -21,7 +21,7 @@
             <div class="card-body">
               <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                 <div>
-                    <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                    <table class="table table-hover demo-table-search table-responsive-block dataTable-Files no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                         <thead>
                             <tr role="row">
                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 2%;">Task ID</th>
@@ -76,7 +76,7 @@
                                 </td>
                                 <td><span class="badge badge-important">{{$file->credits}}</span></td>
                                 
-                                <td>{{\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i A')}}</td>
+                                <td>{{\Carbon\Carbon::parse($file->created_at)->format('d/m/Y')}}</td>
                                 @if(Auth::user()->is_admin)
                                   <td><span class="label label-success">@if($file->assigned){{$file->assigned->name}} @else{{ "No one" }}@endif</span></td>
                                   <td><span class="label label-success">@if( $file->response_time ) {{ \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans() }} @else {{ "Not Responded" }} @endif</span></td>
@@ -93,4 +93,16 @@
         </div>
         </div>
     </div>
+
+@section('pagespecificscripts')
+
+    <script type="text/javascript">
+        $( document ).ready(function(event) {
+          $(document).on('click','.redirect-click-file',function(e) {
+            var lastClass = $(this).attr('class').split(' ').pop();
+            console.log(lastClass);
+          });
+        });
+    </script>
+@endsection
 @endsection
