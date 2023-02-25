@@ -42,8 +42,8 @@ Route::post('/delete_service', [App\Http\Controllers\ServicesController::class, 
 Route::get('/sorting_services', [App\Http\Controllers\ServicesController::class, 'sortingServices'])->name('sorting-services');
 Route::post('/sort_services', [App\Http\Controllers\ServicesController::class, 'saveSorting'])->name('sort-services');
 
-Route::get('/files', [App\Http\Controllers\FilesController::class, 'index'])->name('files');
-Route::get('/live_files', [App\Http\Controllers\FilesController::class, 'liveFiles'])->name('files_live');
+// Route::get('/files', [App\Http\Controllers\FilesController::class, 'index'])->name('files');
+Route::get('/files', [App\Http\Controllers\FilesController::class, 'liveFiles'])->name('files');
 Route::get('/file/{id}', [App\Http\Controllers\FilesController::class, 'show'])->name('file');
 
 Route::get('/download/{file}', [App\Http\Controllers\FilesController::class,'download'])->name('download');
