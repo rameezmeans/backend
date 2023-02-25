@@ -30,6 +30,11 @@ class VehiclesController extends Controller
         return view('vehicles.vehicles', ['vehicles' => $vehicles]);
     }
 
+    public function liveVehicles(){
+        
+        return view('vehicles.vehicles-live');
+    }
+
     public function addEngineerComment(Request $request){
         
         $note = new VehiclesNote();
