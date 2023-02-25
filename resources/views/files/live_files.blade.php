@@ -25,7 +25,7 @@
             </div>
             <div class="card-body">
               <livewire:files-datatable 
-                searchable="name, vehicle"
+                searchable="name"
               />
             </div>
           </div>
