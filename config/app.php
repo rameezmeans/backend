@@ -198,8 +198,6 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
-
-        Yajra\DataTables\DataTablesServiceProvider::class,
     ],
 
     /*

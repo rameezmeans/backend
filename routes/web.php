@@ -66,7 +66,8 @@ Route::post('/get_engines', [App\Http\Controllers\FilesController::class, 'getEn
 Route::post('/get_ecus', [App\Http\Controllers\FilesController::class, 'getECUs'])->name('get-ecus');
 
 Route::get('/feedback_reports', [App\Http\Controllers\FilesController::class,'feedbackReports'])->name('feedback-reports');
-Route::get('/engineers_reports', [App\Http\Controllers\FilesController::class,'reports'])->name('reports');
+// Route::get('/engineers_reports', [App\Http\Controllers\FilesController::class,'reports'])->name('reports');
+Route::get('/engineers_reports_live', [App\Http\Controllers\FilesController::class,'reportsEngineerLive'])->name('reports');
 Route::post('/get_engineers_files', [App\Http\Controllers\FilesController::class,'getEngineersFiles'])->name('get-engineers-files');
 Route::post('/get_engineers_report', [App\Http\Controllers\FilesController::class,'getEngineersReport'])->name('get-engineers-report');
 Route::post('/get_feedback_report', [App\Http\Controllers\FilesController::class,'getFeedbackReport'])->name('get-feedback-report');
@@ -271,10 +272,9 @@ Route::post('chatify/updateSettings', [MessagesController::class,'updateSettings
  */
 Route::post('chatify/setActiveStatus', [MessagesController::class, 'setActiveStatus'])->name('activeStatus.set');
 
-
-
-
-
+Route::get('myspace', function(){
+    dd(User::get(['id', 'name'])->pluck('name','id')->toArray());
+});
 
 /*
 * [Group] view by id
