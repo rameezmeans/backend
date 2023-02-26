@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\File;
+use App\Models\Service;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -65,7 +66,7 @@ class FilesDatatable extends LivewireDatatable
             ->filterable(User::where('is_customer', 1)->get(['id', 'name']))
             ->searchable(),
 
-            NumberColumn::callback(['id', 'brand'], function ($id) {
+            Column::callback(['id', 'brand'], function ($id) {
 
                 $file = File::findOrFail($id);
 
@@ -82,6 +83,7 @@ class FilesDatatable extends LivewireDatatable
                     return '<lable class="label bg-success text-black">'.$supportStatus.'</lable>';
                 }
             })
+            ->filterable(File::groupBy('support_status')->pluck('support_status')->toArray())
             ->label('Support Status'),
 
             Column::callback('status', function($status){
@@ -96,7 +98,8 @@ class FilesDatatable extends LivewireDatatable
                     return '<lable class="label bg-blue-200 text-black">'.$status.'</lable>';
                 }
             })
-            ->label('Support Status'),
+            ->filterable(File::groupBy('status')->pluck('status')->toArray())
+            ->label('Status')->searchable(),
 
             Column::callback('stages', function($stages){
                
@@ -105,9 +108,8 @@ class FilesDatatable extends LivewireDatatable
                                         <span class="text-black" style="top: 2px; position:relative;">'.$stages.'</span>';
                 }
             })
-            ->label('Stage'),
-
-            
+            ->filterable(Service::where('type', 'tunning')->pluck('name')->toArray())
+            ->label('Stage')->searchable(),
 
             Column::callback(['id','options'], function($id,$op){
                 $options = '';
