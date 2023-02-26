@@ -965,6 +965,10 @@ class FilesController extends Controller
         return view('files.reports', ['engineers' => $engineers]);
     }
 
+    public function reportsEngineerLive(){
+        return view('files.report-engineers-live');
+    }
+
     public function getFeedbackReport(Request $request){
 
         $files = $this->getReportFilesWithFeedback($request->engineer, $request->feedback);

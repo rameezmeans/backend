@@ -280,17 +280,17 @@
                      
         
                       <h5 class="m-t-40">Options And Credits</h5>
-        
+                        
                       @if($file->stages)
-                      @if(\App\Models\Service::where('name', $file->stage)->first())
-                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Stage</p>
-                          <div class="pull-right">
-                              <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
-                              <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span>
+                        @if(\App\Models\Service::where('name', $file->stages)->first())
+                          <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Stage</p>
+                            <div class="pull-right">
+                                <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
+                                <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span>
+                            </div>
+                            <div class="clearfix"></div>
                           </div>
-                          <div class="clearfix"></div>
-                        </div>
                         @endif
                       @endif
                       <div class="p-b-20">

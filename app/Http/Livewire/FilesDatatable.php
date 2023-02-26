@@ -59,10 +59,13 @@ class FilesDatatable extends LivewireDatatable
                 
             })->label('Task'),
 
-            Column::name('name')
-                ->label('Customer'),
+            Column::callback(['user_id'], function($userID){
+                return User::findOrFail($userID)->name;
+            })->label('Customer')
+            ->filterable(User::where('is_customer', 1)->get(['id', 'name']))
+            ->searchable(),
 
-            NumberColumn::callback(['id', 'name'], function ($id) {
+            NumberColumn::callback(['id', 'brand'], function ($id) {
 
                 $file = File::findOrFail($id);
 
@@ -118,13 +121,19 @@ class FilesDatatable extends LivewireDatatable
             })
             ->label('Options'),
 
+            Column::callback('credits', function($credits){
+                return '<lable class="label bg-danger text-white">'.$credits.'</lable>';
+            }) ->label('Credits'),
+
             DateColumn::name('created_at')
                 ->label('Upload Date')->sortable()->filterable(),
 
-            DateColumn::callback('assigned_to', function($id){
-                return '<label class="label label-success">'.User::findOrFail($id)->name.'<label>';
-            })->label('Assigned to'),
-
+            Column::callback(['assigned_to'], function($assigned_to){
+                return User::findOrFail($assigned_to)->name;
+            })->label('Assigned to')
+            ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))
+            ->searchable(),
+    
             DateColumn::callback('response_time', function($rt){
                 if($rt == null ){
                     return '<label class="label label-success">Not Responsed<label>';
