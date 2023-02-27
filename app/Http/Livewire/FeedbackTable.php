@@ -21,6 +21,9 @@ class FeedbackTable extends LivewireDatatable
 
     public function columns()
     {
+
+        $feedbacks = FileFeedback::groupBy('type')->pluck('type');
+        
         return [
             Column::index($this),
             NumberColumn::name('request_files.file_id')->label('Task ID'),
@@ -58,7 +61,7 @@ class FeedbackTable extends LivewireDatatable
                 }
 
             })->label('Feedback')
-            ->filterable(FileFeedback::groupBy('type')->pluck('type')),
+            ->filterable($feedbacks),
             Column::callback(['assigned_to'], function($assigned_to){
                 return User::findOrFail($assigned_to)->name;
             })->label('Assigned to')
