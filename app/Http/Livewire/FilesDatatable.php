@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\DataTables\DatetimeColumn;
 use App\Models\File;
+use App\Models\FrontEnd;
 use App\Models\Service;
 use App\Models\User;
 use Carbon\Carbon;
@@ -47,18 +49,18 @@ class FilesDatatable extends LivewireDatatable
     {
         return [
 
-            NumberColumn::callback(['id'], function ($id) {
+            NumberColumn::name('id')->label('Task ID'),
 
-                $file = File::findOrFail($id);
-
-                if($file->frontend->id == 1){
-                    return '<lable class="label bg-primary text-white">Task'.$id.'</lable>';
+            Column::callback(['front_end_id'], function($frontEndID){
+                if($frontEndID == 1){
+                    return '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
                 }
                 else{
-                    return '<lable class="label bg-warning text-black">Task'.$id.'</lable>';
+                    return '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
                 }
-                
-            })->label('Task'),
+            })->label('Front End')
+            ->filterable(FrontEnd::get(['id', 'name']))
+            ->searchable(),
 
             Column::callback(['user_id'], function($userID){
                 return User::findOrFail($userID)->name;
@@ -127,8 +129,8 @@ class FilesDatatable extends LivewireDatatable
                 return '<lable class="label bg-danger text-white">'.$credits.'</lable>';
             }) ->label('Credits'),
 
-            DateColumn::name('created_at')
-                ->label('Upload Date')->sortable()->filterable(),
+            DatetimeColumn::name('created_at')
+                ->label('Upload Date')->sortable()->format('d/m/Y h:i A')->filterable(),
 
             Column::callback(['assigned_to'], function($assigned_to){
                 return User::findOrFail($assigned_to)->name;
