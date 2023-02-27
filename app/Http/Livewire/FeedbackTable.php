@@ -47,7 +47,7 @@ class FeedbackTable extends LivewireDatatable
                 if($type == 'ok'){
                     return '<span class="label bg-blue-200">'.$type.'</span>';
                 }
-                else if($type == 'happy'){
+                else if($type == 'happy' or $type == 'good'){
                     return '<span class="label bg-success">'.$type.'</span>';
                 }
                 else if($type == 'sad' or $type == 'angry'){
