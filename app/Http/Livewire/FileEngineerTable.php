@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\File;
+use App\Models\FrontEnd;
 use App\Models\User;
 use Mediconesystems\LivewireDatatables\Action;
 use Mediconesystems\LivewireDatatables\Column;
@@ -20,6 +21,16 @@ class FileEngineerTable extends LivewireDatatable
     {
         return [
             Column::index($this),
+            Column::callback(['front_end_id'], function($frontEndID){
+                if($frontEndID == 1){
+                    return '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+                else{
+                    return '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+            })->label('Front End')
+            ->filterable(FrontEnd::get(['id', 'name']))
+            ->searchable(),
             Column::callback(['id', 'name'], function ($id) {
                 $file = File::findOrFail($id);
                 return $file->brand.' '.$file->engine.' '.$file->vehicle()->TORQUE_standard;

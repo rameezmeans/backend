@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\DataTables\DatetimeColumn;
 use App\Models\File;
 use App\Models\FileFeedback;
+use App\Models\FrontEnd;
 use App\Models\User;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
@@ -23,9 +24,19 @@ class FeedbackTable extends LivewireDatatable
     {
 
         $feedbacks = FileFeedback::groupBy('type')->pluck('type');
-        
+
         return [
             Column::index($this),
+            Column::callback(['front_end_id'], function($frontEndID){
+                if($frontEndID == 1){
+                    return '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+                else{
+                    return '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+            })->label('Front End')
+            ->filterable(FrontEnd::get(['id', 'name']))
+            ->searchable(),
             NumberColumn::name('request_files.file_id')->label('Task ID'),
             Column::name('brand')->label('Brand'),
             Column::name('model')->label('Model'),

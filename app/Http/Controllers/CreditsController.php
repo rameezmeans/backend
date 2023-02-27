@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Credit;
+use App\Models\FrontEnd;
 use App\Models\Group;
 use App\Models\Price;
 use App\Models\User;
@@ -80,7 +81,15 @@ class CreditsController extends Controller
             }
 
             foreach($data as $row){
-                $html .= '<h5 class="m-t-40"><b>Customer:</b> '.$row['user']->name.'</h5>';
+                if($row['user']->front_end_id == 1){
+                    $bgClasses = 'bg-primary text-white';
+                }
+                else{
+                    $bgClasses = 'bg-warning text-black';
+                }
+                $span = ' <span class="label '.$bgClasses.'">'.FrontEnd::findOrFail($row['user']->front_end_id)->name.'</span>';
+                $html .= '<h5 class="m-t-40"><b>Customer:</b> '.$row['user']->name.$span.'</h5>';
+                
 
                 if(sizeof($row['credits']) != 0){
                     $html .= '<table class="table table-hover demo-table-search table-responsive-block no-footer" >';
