@@ -65,8 +65,8 @@ Route::post('/get_versions', [App\Http\Controllers\FilesController::class, 'getV
 Route::post('/get_engines', [App\Http\Controllers\FilesController::class, 'getEngines'])->name('get-engines');
 Route::post('/get_ecus', [App\Http\Controllers\FilesController::class, 'getECUs'])->name('get-ecus');
 
-Route::get('/feedback_reports', [App\Http\Controllers\FilesController::class,'feedbackReports'])->name('feedback-reports');
-Route::get('/feedback_reports_live', [App\Http\Controllers\FilesController::class,'feedbackReportsLive'])->name('feedback-reports-live');
+// Route::get('/feedback_reports', [App\Http\Controllers\FilesController::class,'feedbackReports'])->name('feedback-reports');
+Route::get('/feedback_reports', [App\Http\Controllers\FilesController::class,'feedbackReportsLive'])->name('feedback-reports');
 // Route::get('/engineers_reports', [App\Http\Controllers\FilesController::class,'reports'])->name('reports');
 Route::get('/engineers_reports', [App\Http\Controllers\FilesController::class,'reportsEngineerLive'])->name('reports');
 Route::post('/get_engineers_files', [App\Http\Controllers\FilesController::class,'getEngineersFiles'])->name('get-engineers-files');
