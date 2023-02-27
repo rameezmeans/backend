@@ -28,14 +28,15 @@
             class="m-1 pl-1 flex items-center uppercase tracking-wide bg-gray-300 text-white hover:bg-red-600 rounded-full focus:outline-none text-xs space-x-1">
            
             @if(is_numeric($value))
-                {{-- @php echo $name; exit; @endphp   --}}
                 @if($name == 'Stage')
                     <span>{{ \App\Models\Service::findOrFail($value)->name }}</span>
-                @else
+                @elseif($name == 'Assigned To' || $name == 'Customer')
                     <span>{{ \App\Models\User::findOrFail($value)->name }}</span>
+                @elseif($name == 'Front End')
+                    <span>{{ \App\Models\Frontend::findOrFail($value)->name }}</span>
                 @endif
             @else
-            <span>{{ $this->getDisplayValue($index, $value) }}</span>
+                <span>{{ $this->getDisplayValue($index, $value) }}</span>
             @endif
             <x-icons.x-circle />
         </button>
