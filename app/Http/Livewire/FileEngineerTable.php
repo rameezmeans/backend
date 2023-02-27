@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\File;
 use App\Models\User;
+use Mediconesystems\LivewireDatatables\Action;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
@@ -22,7 +23,9 @@ class FileEngineerTable extends LivewireDatatable
             Column::callback(['id', 'name'], function ($id) {
                 $file = File::findOrFail($id);
                 return $file->brand.' '.$file->engine.' '.$file->vehicle()->TORQUE_standard;
-            })->label('Vehicle'),
+            })
+            ->label('Vehicle'),
+
             Column::callback('id,stages,options', function($id,$stages, $op){
                 $all = "";
                 $file = File::findOrFail($id);
@@ -39,18 +42,37 @@ class FileEngineerTable extends LivewireDatatable
                     }
                 return $all;
             })
+            ->exportCallback(function($id,$stages, $op){
+                $file = File::findOrFail($id);
+
+                $all = "";
+
+                if(\App\Models\Service::where('name', $stages)->first()){
+                    $all .= $stages.', ';
+                }
+
+                foreach($file->options() as $option){
+                    if(\App\Models\Service::where('name', $option)->first() != null){
+                        $all .= $option;    
+                    }
+                }
+
+                return $all;
+            })
             ->label('Stage and Options'),
+
             Column::callback('credits', function($credits){
                 return '<lable class="label bg-danger text-white">'.$credits.'</lable>';
-            }) ->label('Credits'),
+            })
+            ->exportCallback(function($credits){
+                return $credits;
+            })
+            ->label('Credits'),
+
             Column::callback(['assigned_to'], function($id){
                 return User::findOrFail($id)->name;
             })->label('Assigned to')->filterable(User::get('name')->pluck('name')->toArray())->searchable(),
-            // Column::callback('assigned_to', function($id){
-            //     return '<label class="label label-success">'.User::findOrFail($id)->name.'<label>';
-            // })->label('Assigned to')->filterable(collect(User::findOrFail($id))->map( function($value, $key) {
-            //     return ['id' => $key, 'name' => $value];
-            // }))->searchable(),
+
             DateColumn::name('created_at')
                 ->label('Upload Date')->sortable()->filterable(),
             DateColumn::callback('response_time', function($rt){
@@ -61,7 +83,46 @@ class FileEngineerTable extends LivewireDatatable
                     
                     return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
                 }
-            })->label('Response Time'),
+            })
+            ->exportCallback(function($rt){
+                if($rt == null ){
+                    return 'Not Responded';
+                }
+                else{
+                    return \Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans();
+                }
+            })
+            ->label('Response Time'),
+        ];
+    }
+
+    public function getExportStylesProperty()
+    {
+        return [
+            '1'  => ['font' => ['bold' => true]],
+            'B2' => ['font' => ['italic' => true]],
+            'C'  => ['font' => ['size' => 16]],
+        ];
+    }
+
+    public function getExportWidthsProperty()
+    {
+        return [
+            'A' => 55,
+            'B' => 45,
+        ];
+    }
+
+    public function buildActions()
+    {
+        return [
+
+            Action::groupBy('Export Options', function () {
+                return [
+                    Action::value('csv')->label('Export CSV')->export('EngineersReport.csv'),
+                    Action::value('xlsx')->label('Export XLSX')->export('EngineersReport.xlsx')->styles($this->exportStyles)->widths($this->exportWidths)
+                ];
+            }),
         ];
     }
 }

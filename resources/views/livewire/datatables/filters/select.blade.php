@@ -31,6 +31,7 @@
                 @if($name == 'Stage')
                     <span>{{ \App\Models\Service::findOrFail($value)->name }}</span>
                 @elseif($name == 'Assigned To' || $name == 'Customer')
+                    @php dd($name); @endphp
                     <span>{{ \App\Models\User::findOrFail($value)->name }}</span>
                 @elseif($name == 'Front End')
                     <span>{{ \App\Models\Frontend::findOrFail($value)->name }}</span>

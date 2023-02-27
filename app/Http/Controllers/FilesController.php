@@ -960,6 +960,11 @@ class FilesController extends Controller
         return view('files.feedback_reports', ['engineers' => $engineers]);
     }
 
+    public function feedbackReportsLive(){
+        
+        return view('files.feedback_reports_live');
+    }
+
     public function reports(){
         $engineers = User::where('is_engineer', 1)->get();
         return view('files.reports', ['engineers' => $engineers]);
