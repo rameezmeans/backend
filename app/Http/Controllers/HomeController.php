@@ -146,7 +146,12 @@ class HomeController extends Controller
             else{
                 $averageTime = 0;
             }
-            $average = \Carbon\CarbonInterval::seconds($averageTime)->cascade()->forHumans();
+            if($average != 0){
+                $average = \Carbon\CarbonInterval::seconds($averageTime)->cascade()->forHumans();
+            }
+            else{
+                $average = 'No Time';
+            }
             $averageTimes []= $averageTime;
             $engineersA []= $engineer->name;
         }
