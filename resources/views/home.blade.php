@@ -181,30 +181,26 @@
                     </div>
               </div>
               </div>
-              <div class="col-lg-12">              
-                <canvas id="files-charts" height="696" width="1902" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
+                
+                  <div class="row p-l-40 p-r-40 m-t-40">
+                    
+                      <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
+                        <h4 class="bold no-margin" id="total_files"></h4>
+                        <p class="no-margin font-large" >Total Files</p>
+                      </div>
+                      <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
+                        <h4 class="bold no-margin" id="avg_files"></h4>
+                        <p class="no-margin ">Avg. Per Engineer</p>
+                      </div>
+                  </div>
+                             
+                <div class="col-lg-12">              
+                  <canvas id="files-charts" height="696" width="1902" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
+                </div>
               </div>
-              <div id="table-area" class="hide m-t-40">
-                <table id="ftable" class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
-                    <thead>
-                        <tr role="row">
-                            <th style="width: 2%;">#</th>
-                            <th style="width: 15%;">File</th>
-                            <th style="width: 8%;">Engineer</th>
-                            <th style="width: 25%;">Stages and Options</th>
-                            <th style="width: 10%;">Response Time</th>
-                            <th style="width: 10%;">Uploaded At</th>
-                        </tr>
-                    </thead>
-                    <tbody id='table'>
-                        
-                    </tbody>
-                </table>
-            </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
       <div class="p-t-25">  
       <div class="row">
         <div class="col-lg-12 col-xlg-12">
@@ -213,9 +209,20 @@
             <div class="card-header">
               <div class="">
                 @if(!empty($topCredits))
-                <h2 class="text-black text-center">Top Credits By Customers</h2>
+                <h2 class="text-black text-center">Credits Information</h2>
                 @endif
               </div>
+              <div class="row p-l-20 p-r-20 m-t-40">
+                    
+                <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
+                  <h4 class="bold no-margin" id="total_credits"></h4>
+                  <p class="no-margin font-large">Total Credits</p>
+                </div>
+                <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
+                  <h4 class="bold no-margin" id="avg_credits"></h4>
+                  <p class="no-margin">Avg. Per Customer</p>
+                </div>
+            </div>
               <div class="row p-l-20 p-r-20">
                 @foreach($topCredits as $t)
                   <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
@@ -271,27 +278,13 @@
               <div class="col-lg-12">              
                 <canvas id="credit-charts" height="696" width="1902" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
               </div>
-              <div id="table-area-credits" class="hide m-t-40">
-                <table id="ctable" class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
-                    <thead>
-                        <tr role="row">
-                            <th style="width: 2%;">#</th>
-                            <th style="width: 5%;">Credits</th>
-                            <th style="width: 8%;">Customer</th>
-                            <th style="width: 25%;">Stripe ID</th>
-                            <th style="width: 10%;">Paid At</th>
-                        </tr>
-                    </thead>
-                    <tbody id='table-credits'>
-                        
-                    </tbody>
-                </table>
-            </div>
-            </div>
+              
+              </div>
           </div>
         </div>
       </div>
       </div>
+
       <div class="p-t-25">  
         <div class="row">
           <div class="col-lg-12 col-xlg-12">
@@ -341,26 +334,20 @@
                       </div>
                 </div>
                 </div>
+                <div class="row p-l-40 p-r-40 m-t-40">
+                    <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
+                      <h4 class="bold no-margin" id="total_requests"></h4>
+                      <p class="no-margin font-large" >Total Requests</p>
+                    </div>
+                    <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
+                      <h4 class="bold no-margin" id="avg_requests"></h4>
+                      <p class="no-margin ">Avg. Per Engineer</p>
+                    </div>
+                </div>
                 <div class="col-lg-12">              
                   <canvas id="support-charts" height="696" width="1902" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
                 </div>
-                <div id="table-area-support" class="hide m-t-40">
-                  <table id="stable" class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
-                      <thead>
-                          <tr role="row">
-                            <th style="width: 2%;">#</th>
-                            <th style="width: 15%;">File</th>
-                            <th style="width: 8%;">Engineer</th>
-                            <th style="width: 8%;">Number of Messages</th>
-                            <th style="width: 8%;">Upload Date</th>
-                          </tr>
-                      </thead>
-                      <tbody id='table-support'>
-                          
-                      </tbody>
-                  </table>
-              </div>
-              </div>
+                
             </div>
           </div>
         </div>
@@ -392,26 +379,17 @@
                       </div>
                     </div>
                   </div>
+                  <div class="row p-l-40 p-r-40 m-t-40" id="show_avarage">
+                    <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
+                      <h4 class="bold no-margin" id="user_average"></h4>
+                      <p class="no-margin font-large" >Average Time</p>
+                    </div>
+                   
+                </div>
                   <div class="col-lg-12">              
                     <canvas id="response-charts" height="696" width="1902" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
                   </div>
-                  <div id="table-area-response" class="hide m-t-40">
-                    <table id="rtable" class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
-                        <thead>
-                            <tr role="row">
-                              <th style="width: 2%;">#</th>
-                              <th style="width: 15%;">File</th>
-                              <th style="width: 8%;">Engineer</th>
-                              <th style="width: 8%;">Response Time</th>
-                              <th style="width: 8%;">Upload Date</th>
-                              
-                            </tr>
-                        </thead>
-                        <tbody id='table-response'>
-                            
-                        </tbody>
-                    </table>
-                </div>
+                  
                 </div>
               </div>
             </div>
@@ -427,14 +405,7 @@
 @section('pagespecificscripts')
 <script type="text/javascript">
     $(document).ready(function(){
-      // var audio = document.createElement("AUDIO")
-      // document.body.appendChild(audio);
-      // audio.src = "/sound/hover.wav";
-
-      // $("#hover").on("mouseenter", function(){
-      //     audio.play()
-      // });
-
+      
       set_and_get_response_time();
 
       function set_and_get_response_time(){
@@ -527,22 +498,18 @@
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
             success: function(response) {
 
-              console.log(response.graph.has_files);
+              // console.log(response.graph.has_files);
 
-              if(response.graph.has_files){
-                $('#table-area-response').removeClass('hide');
-                $('#response-charts').removeClass('hide');
+              if(response.graph.show_avarage){
+                
+                $('#show_avarage').removeClass('hide');
               }
               else{
-                $('#table-area-response').addClass('hide');
-                $('#response-charts').addClass('hide');
+                
+                $('#show_avarage').addClass('hide');
               }
 
-              $('#table-response').html(response.graph.files);
-
-              $('#rtable').dataTable({
-                retrieve: true,
-              });
+              $('#user_average').html(response.graph.user_average);
 
               let chartr = new Chart("response-charts", {
                 type: "line",
@@ -580,16 +547,17 @@
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
             success: function(response) {
 
-              if(response.graph.has_files){
-                $('#table-area-support').removeClass('hide');
-                $('#support-charts').removeClass('hide');
-              }
-              else{
-                $('#table-area-support').addClass('hide');
-                $('#support-charts').addClass('hide');
-              }
+              // if(response.graph.has_files){
+              //   $('#table-area-support').removeClass('hide');
+              //   $('#support-charts').removeClass('hide');
+              // }
+              // else{
+              //   $('#table-area-support').addClass('hide');
+              //   $('#support-charts').addClass('hide');
+              // }
 
-              $('#table-support').html(response.graph.files);
+              $('#total_requests').html(response.graph.total_requests);
+              $('#avg_requests').html(response.graph.avg_requests);
 
               $('#stable').dataTable({
                 retrieve: true,
@@ -634,14 +602,8 @@
 
               console.log(response.graph.has_credits);
 
-              if(response.graph.has_credits){
-                $('#table-area-credits').removeClass('hide');
-                $('#credit-charts').removeClass('hide');
-              }
-              else{
-                $('#table-area-credits').addClass('hide');
-                $('#credit-charts').addClass('hide');
-              }
+              $('#total_credits').html(response.graph.total_credits);
+              $('#avg_credits').html(response.graph.avg_credits);
 
               $('#table-credits').html(response.graph.credits);
 
@@ -686,23 +648,10 @@
               headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
               success: function(response) {
 
-                console.log(response.graph.has_files);
+                console.log(response);
 
-                if(response.graph.has_files){
-                  $('#table-area').removeClass('hide');
-                  $('#files-charts').removeClass('hide');
-                }
-                else{
-                  $('#table-area').addClass('hide');
-                  $('#files-charts').addClass('hide');
-                }
-
-                $('#table').html(response.graph.files);
-
-                $('#ftable').dataTable({
-                  retrieve: true,
-                });
-                // table.ajax.reload(null, false );
+                $('#total_files').html(response.graph.total_files); 
+                $('#avg_files').html(response.graph.avg_files); 
 
                 let chartf = new Chart("files-charts", {
                   type: "line",
