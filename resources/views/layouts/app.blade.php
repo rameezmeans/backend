@@ -41,6 +41,7 @@
     <link class="main-stylesheet" href="{{ url('pages/css/pages.css') }}" rel="stylesheet" type="text/css" />
     {{-- <link class="main-stylesheet" href="{{ url('pages/css/style.css') }}" rel="stylesheet" type="text/css" /> --}}
     {{-- @vite('resources/js/push.js', 'node_modules/push.js/bin/push.min.js') --}}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js"></script>
     @livewireStyles
     <style>
        [x-cloak] {
@@ -187,7 +188,11 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
    
    <script type="text/javascript">
-   
+
+      Push.create("Hello Shailesh!",{
+            body: "Welcome to the Dashboard.",
+            timeout: 5000,
+      });
 
       Dropzone.autoDiscover = false;
 
