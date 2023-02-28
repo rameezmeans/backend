@@ -140,13 +140,15 @@ class HomeController extends Controller
             $engineer = User::FindOrFail($request->reponse_engineer);
             $totalResponseTime = File::where('assigned_to', $engineer->id)->sum('response_time');
             $count = File::where('assigned_to', $engineer->id)->count();
+
             if($count != 0){
                 $averageTime = $totalResponseTime/$count;
             }
             else{
                 $averageTime = 0;
             }
-            if($average != 0){
+            
+            if($averageTime != 0){
                 $average = \Carbon\CarbonInterval::seconds($averageTime)->cascade()->forHumans();
             }
             else{
