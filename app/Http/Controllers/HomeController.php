@@ -189,7 +189,7 @@ class HomeController extends Controller
         $graph = [];
         $graph['y_axis']= $averageTimes;
         $graph['x_axis']= $engineersA ;
-        $graph['user_average']= round($average, 2);
+        $graph['user_average']= $average;
         $graph['show_avarage']= $showAverage;
         // $graph['files']= $html;
         $graph['has_files']= true;
