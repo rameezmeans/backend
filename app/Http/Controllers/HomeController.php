@@ -147,7 +147,7 @@ class HomeController extends Controller
             else{
                 $averageTime = 0;
             }
-            
+
             if($averageTime != 0){
                 $average = \Carbon\CarbonInterval::seconds($averageTime)->cascade()->forHumans();
             }
@@ -364,7 +364,7 @@ class HomeController extends Controller
             $month = $date->format('m');
             
             if($request->customer_credits == "all_customers"){
-                $weekCount []= Credit::whereMonth('created_at',$month)->where('credits', '>', 0)->whereDay('created_at',$day)->sum('credits');
+                $weekCount []= Credit::whereMonth('created_at',$month)->where('credits', '>', 0)->whereDay('created_at',$day)->whereDate('created_at', '>' ,'2023-01-17')->sum('credits');
             }
             else{
                 $weekCount []= Credit::where('user_id', $request->customer_credits)->whereMonth('created_at',$month)->whereDay('created_at',$day)->where('credits', '>', 0)->sum('credits');
