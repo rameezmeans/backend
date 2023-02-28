@@ -40,9 +40,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet" type="text/css" />
     <link class="main-stylesheet" href="{{ url('pages/css/pages.css') }}" rel="stylesheet" type="text/css" />
     {{-- <link class="main-stylesheet" href="{{ url('pages/css/style.css') }}" rel="stylesheet" type="text/css" /> --}}
-      
+    {{-- @vite('resources/js/push.js', 'node_modules/push.js/bin/push.min.js') --}}
     @livewireStyles
-   
     <style>
        [x-cloak] {
           display: none;
