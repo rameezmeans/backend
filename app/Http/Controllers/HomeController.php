@@ -189,7 +189,7 @@ class HomeController extends Controller
         $graph = [];
         $graph['y_axis']= $averageTimes;
         $graph['x_axis']= $engineersA ;
-        $graph['user_average']= $average;
+        $graph['user_average']= round($average, 2);
         $graph['show_avarage']= $showAverage;
         // $graph['files']= $html;
         $graph['has_files']= true;
@@ -300,7 +300,7 @@ class HomeController extends Controller
         $graph['x_axis']= $weekRange;
         $graph['y_axis']= $weekCount;
         $graph['total_requests']= $grandTotal;
-        $graph['avg_requests']= $avgTotal;
+        $graph['avg_requests']= round($avgTotal, 2);
         $graph['label']= 'Customer Support';
         
         return response()->json(['graph' => $graph]);
@@ -397,7 +397,7 @@ class HomeController extends Controller
         $graph['x_axis']= $weekRange;
         $graph['y_axis']= $weekCount;
         $graph['total_credits']= $grandTotal;
-        $graph['avg_credits']= $avgTotal;
+        $graph['avg_credits']= round($avgTotal, 2);
         // $graph['credits']= $html;
         // $graph['has_credits']= true;
         $graph['label']= 'Credits';
@@ -504,7 +504,7 @@ class HomeController extends Controller
         $graph['x_axis']= $weekRange;
         $graph['y_axis']= $weekCount ;
         $graph['total_files']= $totalFiles;
-        $graph['avg_files']= $avgFiles;
+        $graph['avg_files']= round($avgFiles, 2);
         $graph['label']= 'Files';
         
         return response()->json(['graph' => $graph]);
