@@ -188,12 +188,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
    
    <script type="text/javascript">
-
-      Push.create("Hello Shailesh!",{
-            body: "Welcome to the Dashboard.",
-            timeout: 5000,
-      });
-
+      
       Dropzone.autoDiscover = false;
 
       $( document ).ready(function(event) {
