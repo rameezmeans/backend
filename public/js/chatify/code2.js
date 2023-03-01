@@ -673,7 +673,6 @@ clientListenChannel.bind("client-contactItem", function (data) {
             : console.error("[Contact Item updates] Updating failed!");
     }
     $(this).uiSound({ play: "hover" });
-    $(this).uiSound({ play: "hover" });
     Push.create("ECU Tech New message", {
         body: "Customer sent a new message in chat.",
         timeout: 5000,
