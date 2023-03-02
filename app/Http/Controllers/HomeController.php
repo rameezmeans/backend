@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Credit;
 use App\Models\EngineerFileNote;
 use App\Models\File;
+use App\Models\FrontEnd;
 use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
@@ -31,11 +32,30 @@ class HomeController extends Controller
     public function index()
     {
         $engineers = User::where('is_engineer', 1)->get();
-        $customers = User::where('is_customer', 1)->get();
-        $customersCount = User::where('is_customer', 1)->count();
+        $customers = User::where('is_customer', 1)->where('front_end_id', 1)->get();
         $engineersCount = User::where('is_engineer', 1)->count();
 
-        $topCountriesObj = User::where('is_customer', 1)->groupBy('country')
+        $frontends = FrontEnd::all();
+
+        return view('home', [ 
+
+        'frontends' => $frontends,
+        'engineers' => $engineers,
+        'engineersCount' => $engineersCount, 
+        'customers' => $customers,
+        
+        ]);
+    }
+
+    public function getFrontendData(Request $request){
+
+        $customerCount = User::where('is_customer', 1)
+        ->where('front_end_id', $request->frontend_id)
+        ->count();
+
+        $topCountriesObj = User::where('is_customer', 1)
+        ->where('front_end_id', $request->frontend_id)
+        ->groupBy('country')
         ->selectRaw('count(*) as count,country')
         ->get();
 
@@ -48,9 +68,24 @@ class HomeController extends Controller
 
         usort($topCountries, array($this, 'sorterc'));
 
+        $countryTable = '<table class="table table-condensed table-hover"><tbody>';
+        foreach($topCountries as $country){
+        $countryTable .= '<tr><td class="w-10">
+        <span style="font-size: 20px;">'.getFlags($country['country']).'</span>
+        </td>
+            <td class="font-montserrat all-caps fs-12 w-50">'.code_to_country($country['country']).'</td>
+            <td class="w-25">
+                <span class="font-montserrat fs-18">'.$country['count'].'</span>
+            </td></tr>';
+        }
+
+        $countryTable .= '</tbody></table>';
+
         $topBrandsObj = File::groupBy('brand')
+        ->where('front_end_id', $request->frontend_id)
         ->selectRaw('count(*) as count,brand')
         ->get();
+
         $topBrands = [];
 
         foreach($topBrandsObj as $t){
@@ -64,40 +99,36 @@ class HomeController extends Controller
             usort($topBrands, array($this, 'sorterc'));
             $topBrands = array_slice($topBrands, 0, 5);
         }
-        
-        $topCustomers = Credit::where('credits', '>', 0)
-        ->groupBy('user_id')
-        ->selectRaw('user_id,sum(credits) as sum')
-        ->get();
 
-        $topUserCredits = [];
-        foreach($topCustomers as $c){
-            $temp = [];
-            $temp ['user'] = User::findOrFail($c->user_id)->name;
-            $temp ['credits'] = $c->sum;
-            $topUserCredits []= $temp;
+        $brandsTable = '<table class="table table-condensed table-hover"><tbody>';
+
+        foreach($topBrands as $brand){
+            $brandsTable .= '<tr><td class="w-10">
+            <img src="'.get_image_from_brand($brand['brand']).'" style="width: 60%;">
+            </td>
+            <td class="font-montserrat all-caps fs-12 w-50">'.$brand['brand'].'</td>
+            <td class="w-25">
+                <span class="font-montserrat fs-18">'.$brand['count'].'</span>
+            </td></tr>';
         }
 
-        usort($topUserCredits, array($this, 'sorter'));
+        $brandsTable .= '</tbody></table>';
 
-        $count = 1;
-        $top5 = [];
-        foreach($topUserCredits as $c){
-            if($count > 5){
-                break;
-            }
-            $top5 []= $c;
-            $count++;
+        $customerOptions = '<option value="all_customers">All Customers</option>';
+
+        $customers = User::where('is_customer', 1)->where('front_end_id', $request->frontend_id)->get();
+
+        foreach($customers as $customer){
+            $customerOptions .= '<option value="'.$customer->id.'">'.$customer->name.'</option>';
         }
 
-        return view('home', [ 
-        'topCountries' => $topCountries, 
-        'topBrands' => $topBrands, 
-        'engineers' => $engineers,
-        'customersCount' => $customersCount, 
-        'engineersCount' => $engineersCount, 
-        'customers' => $customers,
-        'topCredits' => $top5 ]);
+        return response()->json([
+            'customerCount' => $customerCount,
+            'countryTable' => $countryTable,
+            'brandsTable' => $brandsTable,
+            'customerOptions' => $customerOptions,
+        ]);
+
     }
 
     public function sorter(array $a, array $b) {
@@ -158,47 +189,11 @@ class HomeController extends Controller
             $engineersA []= $engineer->name;
         }
 
-        // $count = 1;
-        // $html = '';
-        // $hasFiles = false;
-        // foreach($files as $file){
-
-        //     $hasFiles = true;
-        //     if($file->assigned){
-        //         $assigned = $file->assigned->name;
-        //     }
-        //     else{
-        //         $assigned = 'By Admin';
-        //     }
-
-        //     $options = '';
-        //     if($file->options){
-        //         foreach($file->options() as $option){
-        //             $options .= '<img class="p-l-10" alt="'.$option.'" width="33" height="33" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">'.$option;
-        //         }
-        //     }
-
-        //     $html .= '<tr class="redirect-click" data-redirect="'.route('file', $file->id).'" role="row">';
-        //     $html .= '<td>'. $count .'</td>';
-        //     $html .= '<td>'.$file->brand .$file->engine .' '. $file->vehicle()->TORQUE_standard .' '.'</td>';
-        //     $html .= '<td>'.$assigned.'</td>';
-
-        //     if($file->response_time)
-        //         $html .= '<td>'.\Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans().'</td>';
-        //     else 
-        //         $html .= '<td>Not Responded</td>';
-                
-        //     $html .= '<td>'.\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A').'</td>';
-        //     $html .= '</tr>';
-        //     $count++;
-        // }
-            
         $graph = [];
         $graph['y_axis']= $averageTimes;
         $graph['x_axis']= $engineersA ;
         $graph['user_average']= $average;
         $graph['show_avarage']= $showAverage;
-        // $graph['files']= $html;
         $graph['has_files']= true;
         $graph['label']= 'Response Time';
         
@@ -241,19 +236,6 @@ class HomeController extends Controller
             $day = $date->format('d');
             $month = $date->format('m');
 
-            // if($request->support_engineer == "all_engineers"){
-            //     $grandTotal = EngineerFileNote::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
-            //     // $files = EngineerFileNote::whereMonth('created_at',$month)->whereDay('created_at',$day)->get();
-            // }
-            // else{
-            //     $grandTotal = EngineerFileNote::join('files', 'files.id', 'engineer_file_notes.file_id')->where('files.assigned_to', $request->support_engineer)->whereMonth('engineer_file_notes.created_at',$month)->whereDay('engineer_file_notes.created_at',$day)->count();
-            //     // $files = EngineerFileNote::join('files', 'files.id', 'engineer_file_notes.file_id')->where('files.assigned_to', $request->support_engineer)->whereMonth('engineer_file_notes.created_at',$month)->whereDay('engineer_file_notes.created_at',$day)->get();
-            // }
-            
-            // foreach($files as $file){
-            //     $fileIDs []= $file->file_id;
-            // }
-
             if($request->support_engineer == "all_engineers"){
                 $grandTotal += EngineerFileNote::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
                 $weekCount []= EngineerFileNote::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
@@ -273,36 +255,6 @@ class HomeController extends Controller
             $filesToList []= File::findOrFail($file);
         }
 
-        // $count = 1;
-        // $html = '';
-        // $hasFiles = false;
-        // foreach($filesToList as $file){
-
-        //     $hasFiles = true;
-        //     if($file->assigned){
-        //         $assigned = $file->assigned->name;
-        //     }
-        //     else{
-        //         $assigned = 'By Admin';
-        //     }
-
-        //     $options = '';
-        //     if($file->options){
-        //         foreach($file->options() as $option){
-        //             $options .= '<img class="p-l-10" alt="'.$option.'" width="33" height="33" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">'.$option;
-        //         }
-        //     }
-
-        //     $html .= '<tr class="redirect-click" data-redirect="'.route('file', $file->id).'" role="row">';
-        //     $html .= '<td>'. $count .'</td>';
-        //     $html .= '<td>'.$file->brand .$file->engine .' '. $file->vehicle()->TORQUE_standard .' '.'</td>';
-        //     $html .= '<td>'.$assigned.'</td>';
-        //     $html .= '<td>'.$file->engineer_file_notes->count().'</td>';
-        //     $html .= '<td>'.\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A').'</td>';
-        //     $html .= '</tr>';
-        //     $count++;
-        // }
-
         $graph = [];
         $graph['x_axis']= $weekRange;
         $graph['y_axis']= $weekCount;
@@ -315,12 +267,18 @@ class HomeController extends Controller
     }
 
     public function getCreditsChart(Request $request){
+
         $graph = [];
 
         $start = NULL;
         $end = NULL;
         if(!$request->startc){
-            $min = DB::table('credits')->where('credits', '>', 0)->select('created_at')->orderBy('created_at', 'asc')->first();
+            $min = DB::table('credits')
+            ->join('users', 'users.id', 'credits.user_id')
+            ->where('users.front_end_id', $request->frontend_id)
+            ->where('credits', '>', 0)
+            ->select('credits.created_at')
+            ->orderBy('credits.created_at', 'asc')->first();
             
             if($min)
                 $start = $min->created_at;
@@ -333,7 +291,12 @@ class HomeController extends Controller
 
         if(!$request->endc){
 
-            $max = DB::table('credits')->where('credits', '>', 0)->select('created_at')->orderBy('created_at', 'desc')->first();
+            $max = DB::table('credits')
+            ->join('users', 'users.id', 'credits.user_id')
+            ->where('users.front_end_id', $request->frontend_id)
+            ->where('credits', '>', 0)
+            ->select('credits.created_at')
+            ->orderBy('credits.created_at', 'desc')->first();
             
             if($max)
                 $end = $max->created_at;
@@ -364,59 +327,91 @@ class HomeController extends Controller
             $month = $date->format('m');
             
             if($request->customer_credits == "all_customers"){
-                $weekCount []= Credit::whereMonth('created_at',$month)->where('credits', '>', 0)->whereDay('created_at',$day)->whereDate('created_at', '>' ,'2023-01-17')->sum('credits');
+                $weekCount []= Credit::whereMonth('credits.created_at',$month)
+                ->join('users', 'users.id', 'credits.user_id')
+                ->where('users.front_end_id', $request->frontend_id)
+                ->where('credits', '>', 0)
+                ->whereDay('credits.created_at',$day)
+                ->whereDate('credits.created_at', '>' ,'2023-01-17')
+                ->sum('credits');
             }
             else{
-                $weekCount []= Credit::where('user_id', $request->customer_credits)->whereMonth('created_at',$month)->whereDay('created_at',$day)->where('credits', '>', 0)->sum('credits');
+                
+                // dd(Credit::where('user_id', $request->customer_credits)
+                // ->whereMonth('created_at',$month)
+                // ->whereDay('created_at',$day)
+                // ->where('credits', '>', 0)
+                // ->toSql());
+
+                $weekCount []= Credit::where('user_id', $request->customer_credits)
+                ->whereMonth('created_at',$month)
+                ->whereDay('created_at',$day)
+                ->where('credits', '>', 0)
+                ->sum('credits');
             }
         }
 
-        $grandTotal = Credit::where('credits', '>', 0)->sum('credits');
-        $customers = User::where('is_customer', 1)->count();
+        $grandTotal = Credit::where('credits', '>', 0)
+        ->sum('credits');
+
+        $customers = User::where('is_customer', 1)
+        ->count();
 
         $avgTotal = $grandTotal / $customers;
 
-        // if($request->customer_credits == "all_customers"){
-        //     $credits = Credit::whereNotNull('stripe_id')->where('credits', '>', 0)->whereBetween('created_at', array($start, $end))->get();
-        // }
-        // else{
-        //     $credits = Credit::whereNotNull('stripe_id')->where('credits', '>', 0)->where('user_id', $request->customer_credits)->whereBetween('created_at', array($start, $end))->get();
-        // }
+        $topCustomers = Credit::where('credits', '>', 0)
+        ->join('users', 'users.id', 'credits.user_id')
+        ->where('users.front_end_id', $request->frontend_id)
+        ->groupBy('user_id')
+        ->selectRaw('user_id,sum(credits) as sum')
+        ->get();
 
-        // $count = 1;
-        // $html = '';
-        // $hasCredits = false;
-        // foreach($credits as $credit){
+        $topUserCredits = [];
+        foreach($topCustomers as $c){
+            $temp = [];
+            $temp ['user'] = User::findOrFail($c->user_id)->name;
+            $temp ['credits'] = $c->sum;
+            $topUserCredits []= $temp;
+        }
 
-        //     $hasCredits = true;
-        
-        //     $html .= '<tr class="" role="row">';
-        //     $html .= '<td>'. $count .'</td>';
-        //     $html .= '<td>'.$credit->credits .' '.'</td>';
-        //     $html .= '<td>'.$credit->user->name.'</td>';
-        //     $html .= '<td>'.$credit->stripe_id.'</td>';
-        //     $html .= '<td>'.$credit->created_at.'</td>';
-        //     $html .= '</tr>';
-        //     $count++;
-        // }
-            
+        usort($topUserCredits, array($this, 'sorter'));
+
+        $count = 1;
+        $top5 = [];
+        foreach($topUserCredits as $c){
+            if($count > 5){
+                break;
+            }
+            $top5 []= $c;
+            $count++;
+        }
+
+        $customerTab = '';
+
+        foreach($top5 as $top){
+        $customerTab .= '<div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
+                    <h4 class="bold no-margin">'.$top['credits'].'</h4>
+                    <p class="small no-margin">'.$top['user'].'</p>
+                  </div>';
+        }
+
         $graph = [];
         $graph['x_axis']= $weekRange;
         $graph['y_axis']= $weekCount;
+        $graph['customerTab']= $customerTab;
         $graph['total_credits']= $grandTotal;
         $graph['avg_credits']= round($avgTotal, 2);
-        // $graph['credits']= $html;
-        // $graph['has_credits']= true;
         $graph['label']= 'Credits';
         
         return response()->json(['graph' => $graph]);
     }
+
     public function getFilesChart(Request $request){
         
         $graph = [];
 
         if(!$request->start){
-            $min = DB::table('files')->select('created_at')->orderBy('created_at', 'asc')->first();
+            $min = DB::table('files')->select('created_at')->where('front_end_id', $request->frontend_id)->orderBy('created_at', 'asc')->first();
             $start = $min->created_at;
         }
         else{
@@ -426,7 +421,7 @@ class HomeController extends Controller
         }
 
         if(!$request->end){
-            $max = DB::table('files')->select('created_at')->orderBy('created_at', 'desc')->first();
+            $max = DB::table('files')->select('created_at')->where('front_end_id', $request->frontend_id)->orderBy('created_at', 'desc')->first();
             $end = $max->created_at;
         }
         else{
@@ -444,22 +439,22 @@ class HomeController extends Controller
             $month = $date->format('m');
             
             if($request->engineer_files == "all_engineers"){
-                $weekCount []= File::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
+                $weekCount []= File::whereMonth('created_at',$month)->where('front_end_id', $request->frontend_id)->whereDay('created_at',$day)->count();
             }
             else{
-                $weekCount []= File::where('assigned_to', $request->engineer_files)->whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
+                $weekCount []= File::where('assigned_to', $request->engineer_files)->where('front_end_id', $request->frontend_id)->whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
             }
         }
 
         $totalEngineers = User::where('is_engineer', 1)->count();
 
         if($request->engineer_files == "all_engineers"){
-            $files = File::whereBetween('created_at', array($start, $end))->where('is_credited', 1)->get();
-            $totalFiles = File::whereBetween('created_at', array($start, $end))->where('is_credited', 1)->count();
+            $files = File::whereBetween('created_at', array($start, $end))->where('front_end_id', $request->frontend_id)->where('is_credited', 1)->get();
+            $totalFiles = File::whereBetween('created_at', array($start, $end))->where('front_end_id', $request->frontend_id)->where('is_credited', 1)->count();
         }
         else{
-            $files = File::where('assigned_to', $request->engineer_files)->whereBetween('created_at', array($start, $end))->where('is_credited', 1)->get();
-            $totalFiles = File::where('assigned_to', $request->engineer_files)->whereBetween('created_at', array($start, $end))->where('is_credited', 1)->count();
+            $files = File::where('assigned_to', $request->engineer_files)->where('front_end_id', $request->frontend_id)->whereBetween('created_at', array($start, $end))->where('is_credited', 1)->get();
+            $totalFiles = File::where('assigned_to', $request->engineer_files)->where('front_end_id', $request->frontend_id)->whereBetween('created_at', array($start, $end))->where('is_credited', 1)->count();
         }
 
         $grandTotal = File::count();
