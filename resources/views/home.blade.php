@@ -422,28 +422,25 @@
 @section('pagespecificscripts')
 <script type="text/javascript">
     $(document).ready(function(){
-      
-      set_and_get_response_time();
 
       function set_and_get_response_time(){
         let reponse_engineer = $('#reponse_engineer').val();
-        get_response_time_chart( reponse_engineer );
+        let frontend_id = $('#frontend').val();
+        get_response_time_chart( reponse_engineer, frontend_id );
       }
 
       $(document).on('change', '#reponse_engineer', function(e){
         let reponse_engineer = $(this).val();
-        get_response_time_chart( reponse_engineer );
+        let frontend_id = $('#frontend').val();
+        get_response_time_chart( reponse_engineer, frontend_id );
       });
-
-      // get support chart
-
-      set_and_get_support();
 
       function set_and_get_support(){
         let ends = $('#end_support').val();
         let starts = $('#start_support').val();
         let support_engineer = $('#support_engineer').val();
-        get_support_chart( support_engineer, starts, ends );
+        let frontend_id = $('#frontend').val();
+        get_support_chart( support_engineer, starts, ends, frontend_id );
       }
 
       $(document).on('change', '#end_support', function(e){
@@ -458,10 +455,6 @@
         set_and_get_support();
       });
       
-      // get credits
-
-      
-
       function set_and_get_credits() {
         let endc = $('#end_credits').val();
         let startc = $('#start_credits').val();
@@ -508,6 +501,9 @@
               
               set_and_get_files();
               set_and_get_credits();
+              set_and_get_support();
+              set_and_get_response_time();
+
             }
         });
       }
@@ -544,13 +540,14 @@
         set_and_get_files();
       });
 
-      function get_response_time_chart( reponse_engineer  ){
+      function get_response_time_chart( reponse_engineer, frontend_id  ){
 
         $.ajax({
             url: "/get_response_time_chart",
             type: "POST",
             data: {
                 'reponse_engineer': reponse_engineer,
+                'frontend_id': frontend_id,
                 
             },
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
@@ -590,7 +587,7 @@
         });
       } 
 
-      function get_support_chart( support_engineer, starts, ends  ){
+      function get_support_chart( support_engineer, starts, ends, frontend_id  ){
 
         $.ajax({
             url: "/get_support_chart",
@@ -599,6 +596,7 @@
                 'support_engineer': support_engineer,
                 'starts': starts,
                 'ends': ends,
+                'frontend_id': frontend_id,
             },
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
             success: function(response) {

@@ -153,8 +153,14 @@ class HomeController extends Controller
 
             foreach($engineers as $engineer){
 
-                $totalResponseTime = File::where('assigned_to', $engineer->id)->sum('response_time');
-                $count = File::where('assigned_to', $engineer->id)->count();
+                $totalResponseTime = File::where('assigned_to', $engineer->id)
+                ->where('front_end_id', $request->frontend_id)
+                ->sum('response_time');
+                
+                $count = File::where('assigned_to', $engineer->id)
+                ->where('front_end_id', $request->frontend_id)
+                ->count();
+
                 if($count != 0){
                     $averageTime = $totalResponseTime/$count;
                 }
@@ -169,8 +175,12 @@ class HomeController extends Controller
 
             $showAverage = true;
             $engineer = User::FindOrFail($request->reponse_engineer);
-            $totalResponseTime = File::where('assigned_to', $engineer->id)->sum('response_time');
-            $count = File::where('assigned_to', $engineer->id)->count();
+            $totalResponseTime = File::where('assigned_to', $engineer->id)
+            ->where('front_end_id', $request->frontend_id)
+            ->sum('response_time');
+            $count = File::where('assigned_to', $engineer->id)
+            ->where('front_end_id', $request->frontend_id)
+            ->count();
 
             if($count != 0){
                 $averageTime = $totalResponseTime/$count;
@@ -237,12 +247,30 @@ class HomeController extends Controller
             $month = $date->format('m');
 
             if($request->support_engineer == "all_engineers"){
-                $grandTotal += EngineerFileNote::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
-                $weekCount []= EngineerFileNote::whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
+                $grandTotal += EngineerFileNote::whereMonth('engineer_file_notes.created_at',$month)
+                ->join('files', 'files.id', 'engineer_file_notes.file_id')
+                ->where('files.front_end_id', $request->frontend_id)
+                ->whereDay('engineer_file_notes.created_at',$day)->count();
+
+                $weekCount []= EngineerFileNote::whereMonth('engineer_file_notes.created_at',$month)
+                ->join('files', 'files.id', 'engineer_file_notes.file_id')
+                ->where('files.front_end_id', $request->frontend_id)
+                ->whereDay('engineer_file_notes.created_at',$day)->count();
             }
             else {
-                $grandTotal += EngineerFileNote::join('files', 'files.id', 'engineer_file_notes.file_id')->where('files.assigned_to', $request->support_engineer)->whereMonth('engineer_file_notes.created_at',$month)->whereDay('engineer_file_notes.created_at',$day)->count();
-                $weekCount []= EngineerFileNote::join('files', 'files.id', 'engineer_file_notes.file_id')->where('files.assigned_to', $request->support_engineer)->whereMonth('engineer_file_notes.created_at',$month)->whereDay('engineer_file_notes.created_at',$day)->count();
+                $grandTotal += EngineerFileNote::join('files', 'files.id', 'engineer_file_notes.file_id')
+                ->where('files.front_end_id', $request->frontend_id)
+                ->where('files.assigned_to', $request->support_engineer)
+                ->whereMonth('engineer_file_notes.created_at',$month)
+                ->whereDay('engineer_file_notes.created_at',$day)
+                ->count();
+                
+                $weekCount []= EngineerFileNote::join('files', 'files.id', 'engineer_file_notes.file_id')
+                ->where('files.front_end_id', $request->frontend_id)
+                ->where('files.assigned_to', $request->support_engineer)
+                ->whereMonth('engineer_file_notes.created_at',$month)
+                ->whereDay('engineer_file_notes.created_at',$day)
+                ->count();
             }
         }
 
@@ -274,11 +302,10 @@ class HomeController extends Controller
         $end = NULL;
         if(!$request->startc){
             $min = DB::table('credits')
-            ->join('users', 'users.id', 'credits.user_id')
-            ->where('users.front_end_id', $request->frontend_id)
+            
             ->where('credits', '>', 0)
-            ->select('credits.created_at')
-            ->orderBy('credits.created_at', 'asc')->first();
+            ->select('created_at')
+            ->orderBy('created_at', 'asc')->first();
             
             if($min)
                 $start = $min->created_at;
@@ -292,11 +319,9 @@ class HomeController extends Controller
         if(!$request->endc){
 
             $max = DB::table('credits')
-            ->join('users', 'users.id', 'credits.user_id')
-            ->where('users.front_end_id', $request->frontend_id)
             ->where('credits', '>', 0)
-            ->select('credits.created_at')
-            ->orderBy('credits.created_at', 'desc')->first();
+            ->select('created_at')
+            ->orderBy('created_at', 'desc')->first();
             
             if($max)
                 $end = $max->created_at;
@@ -327,6 +352,7 @@ class HomeController extends Controller
             $month = $date->format('m');
             
             if($request->customer_credits == "all_customers"){
+
                 $weekCount []= Credit::whereMonth('credits.created_at',$month)
                 ->join('users', 'users.id', 'credits.user_id')
                 ->where('users.front_end_id', $request->frontend_id)
@@ -334,15 +360,10 @@ class HomeController extends Controller
                 ->whereDay('credits.created_at',$day)
                 ->whereDate('credits.created_at', '>' ,'2023-01-17')
                 ->sum('credits');
+
             }
             else{
                 
-                // dd(Credit::where('user_id', $request->customer_credits)
-                // ->whereMonth('created_at',$month)
-                // ->whereDay('created_at',$day)
-                // ->where('credits', '>', 0)
-                // ->toSql());
-
                 $weekCount []= Credit::where('user_id', $request->customer_credits)
                 ->whereMonth('created_at',$month)
                 ->whereDay('created_at',$day)
@@ -460,48 +481,6 @@ class HomeController extends Controller
         $grandTotal = File::count();
         $avgFiles = $grandTotal / $totalEngineers;
 
-        // $count = 1;
-        // $html = '';
-        // $hasFiles = false;
-        // foreach($files as $file){
-
-        //     $hasFiles = true;
-        //     if($file->assigned){
-        //         $assigned = $file->assigned->name;
-        //     }
-        //     else{
-        //         $assigned = 'By Admin';
-        //     }
-
-        //     $options = '';
-        //     if($file->options){
-        //         foreach($file->options() as $option){
-                    
-        //             $options .= '<img class="p-l-10" alt="'.$option.'" width="33" height="33" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">'.$option;
-        //         }
-        //     }
-
-        //     $html .= '<tr class="redirect-click" data-redirect="'.route('file', $file->id).'" role="row">';
-        //     $html .= '<td>'. $count .'</td>';
-        //     $html .= '<td>'.$file->brand .$file->engine .' '. $file->vehicle()->TORQUE_standard .' '.'</td>';
-        //     $html .= '<td>'.$assigned.'</td>';
-
-        //     if($file->stages){   
-                
-        //         $html .= '<td><img class="p-r-5" alt="'.$file->stages.'" width="33" height="33" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'">'.$file->stages
-        //         .$options.'</td>';
-        //     }
-
-        //     if($file->response_time)
-        //         $html .= '<td>'.\Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans().'</td>';
-        //     else 
-        //         $html .= '<td>Not Responded</td>';
-            
-        //     $html .= '<td>'.\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A').'</td>';
-        //     $html .= '</tr>';
-        //     $count++;
-        // }
-            
         $graph = [];
         $graph['x_axis']= $weekRange;
         $graph['y_axis']= $weekCount ;
