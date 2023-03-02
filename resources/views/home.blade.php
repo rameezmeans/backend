@@ -10,6 +10,26 @@
     <div class="container-fluid p-t-20">
       @if(Auth::user()->is_admin || Auth::user()->is_head)
       <div class="row">
+        <div class="col-sm-12 col-xl-12">
+          <div class="form-group form-group-default input-group">
+            <div class="form-input-group m-l-20 m-r-20 p-b-20">
+              <label>Frontend</label>
+                <select class="full-width" id="frontend" data-init-plugin="select2" name="frontend">
+                    @foreach($frontends as $frontend)
+                      <option value="{{$frontend->id}}">{{$frontend->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-xl-12">
+          <div class="progress-circle-indeterminate hide" style="" id="loading">
+          </div>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-sm-4 col-xl-4">
           <div class="ar-2-1">
             <!-- START WIDGET widget_graphTile-->
@@ -23,9 +43,7 @@
                 </div>
                 <div class="p-l-20 p-r-20">
                   
-                  <h1 class="text-success semi-bold">{{$customersCount}}</h1>
-                  {{-- <button id="hover">Sound</button> --}}
-                 
+                  <h1 class="text-success semi-bold" id="customerCount"></h1>
                   <div class="clearfix"></div>
                 </div>
                 
@@ -73,8 +91,8 @@
               </div>
               <div class="clearfix"></div>
             </div>
-            <div class="auto-overflow widget-11-2-table">
-              <table class="table table-condensed table-hover">
+            <div class="auto-overflow widget-11-2-table" id="countryTable">
+              {{-- <table class="table table-condensed table-hover">
                 <tbody>
                   @foreach($topCountries as $c)
                   <tr>
@@ -86,7 +104,7 @@
                   </tr>
                   @endforeach
                 </tbody>
-              </table>
+              </table> --}}
             </div>
             
           </div>
@@ -110,8 +128,8 @@
               </div>
               <div class="clearfix"></div>
             </div>
-            <div class="auto-overflow widget-11-2-table">
-              <table class="table table-condensed table-hover">
+            <div class="auto-overflow widget-11-2-table" id="brandsTable">
+              {{-- <table class="table table-condensed table-hover">
                 <tbody>
                   @foreach($topBrands as $brand)
                   <tr>
@@ -123,7 +141,7 @@
                   </tr>
                   @endforeach
                 </tbody>
-              </table>
+              </table> --}}
             </div>
             
           </div>
@@ -223,13 +241,13 @@
                   <p class="no-margin">Avg. Per Customer</p>
                 </div>
             </div>
-              <div class="row p-l-20 p-r-20">
-                @foreach($topCredits as $t)
+              <div class="row p-l-20 p-r-20" id="customerTab">
+                {{-- @foreach($topCredits as $t)
                   <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
                     <h4 class="bold no-margin">{{$t['credits']}}</h4>
                     <p class="small no-margin">{{$t['user']}}</p>
                   </div>
-                @endforeach
+                @endforeach --}}
               </div>
               <div class="">
                 <h2 class="text-black text-center">Credits</h2>
@@ -241,8 +259,7 @@
                   <div class="form-group form-group-default input-group">
                     <div class="form-input-group">
                       <label>Client</label>
-                        <select class="full-width" id="customer_credits" data-init-plugin="select2" name="engineer">
-                        
+                        <select class="full-width" id="customer_credits" data-init-plugin="select2" >
                             <option value="all_customers">All Customers</option>
                             @foreach($customers as $customer)
                               <option value="{{$customer->id}}">{{$customer->name}}</option>
@@ -443,13 +460,56 @@
       
       // get credits
 
-      set_and_get_credits();
+      
 
       function set_and_get_credits() {
         let endc = $('#end_credits').val();
         let startc = $('#start_credits').val();
         let customer_credits = $('#customer_credits').val();
-        get_credits_chart( customer_credits, startc, endc );
+        let frontend_id = $('#frontend').val();
+        get_credits_chart( customer_credits, startc, endc, frontend_id );
+      }
+
+      let frontendURL = "{{route('get-frontend-data')}}";
+
+      $(document).on('change', '#frontend', function(e){
+
+        let frontend_id = $(this).val();
+        get_front_end_data(frontend_id, true);
+
+      });
+
+      get_front_end_data(1, false);
+
+      function get_front_end_data(frontend_id, onChange){
+
+        $('#loading').removeClass('hide');
+
+        $.ajax({
+            url: frontendURL,
+            type: "POST",
+            data: {
+                'frontend_id': frontend_id,
+            },
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            success: function(response) {
+
+              console.log(response.customerCount);
+
+              $('#loading').addClass('hide');
+              $('#customerCount').html(response.customerCount);
+              $('#brandsTable').html(response.brandsTable);
+              $('#countryTable').html(response.countryTable);
+
+              if(onChange){
+                console.log(response.customerOptions);
+                $('#customer_credits').empty().append(response.customerOptions);
+              }
+              
+              set_and_get_files();
+              set_and_get_credits();
+            }
+        });
       }
 
       $(document).on('change', '#customer_credits', function(e){
@@ -464,14 +524,12 @@
         set_and_get_credits();
       });
 
-      //// files part
-      set_and_get_files();
-
       function set_and_get_files(){
         let end = $('#end_files').val();
         let start = $('#start_files').val();
         let engineer_files = $('#engineer_files').val();
-        get_files_chart( engineer_files, start, end );
+        let frontend_id = $('#frontend').val();
+        get_files_chart( engineer_files, start, end, frontend_id );
       }
 
       $(document).on('change', '#engineer_files', function(e){
@@ -497,8 +555,6 @@
             },
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
             success: function(response) {
-
-              // console.log(response.graph.has_files);
 
               if(response.graph.show_avarage){
                 
@@ -547,15 +603,6 @@
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
             success: function(response) {
 
-              // if(response.graph.has_files){
-              //   $('#table-area-support').removeClass('hide');
-              //   $('#support-charts').removeClass('hide');
-              // }
-              // else{
-              //   $('#table-area-support').addClass('hide');
-              //   $('#support-charts').addClass('hide');
-              // }
-
               $('#total_requests').html(response.graph.total_requests);
               $('#avg_requests').html(response.graph.avg_requests);
 
@@ -587,7 +634,7 @@
 
       } 
 
-      function get_credits_chart( customer_credits, startc, endc ){
+      function get_credits_chart( customer_credits, startc, endc, frontend_id ){
 
         $.ajax({
             url: "/get_credits_chart",
@@ -596,16 +643,18 @@
                 'customer_credits': customer_credits,
                 'startc': startc,
                 'endc': endc,
+                'frontend_id': frontend_id,
             },
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
             success: function(response) {
 
-              console.log(response.graph.has_credits);
-
               $('#total_credits').html(response.graph.total_credits);
               $('#avg_credits').html(response.graph.avg_credits);
+              $('#customerTab').html(response.graph.customerTab);
 
               $('#table-credits').html(response.graph.credits);
+
+              $('#customerTab').html(response.customerTab);
 
               $('#ctable').dataTable({
                 retrieve: true,
@@ -635,13 +684,14 @@
 
       }
 
-      function get_files_chart( engineer_files, start, end ){
+      function get_files_chart( engineer_files, start, end, frontend_id ){
           
           $.ajax({
               url: "/get_files_chart",
               type: "POST",
               data: {
                   'engineer_files': engineer_files,
+                  'frontend_id': frontend_id,
                   'start': start,
                   'end': end,
               },
