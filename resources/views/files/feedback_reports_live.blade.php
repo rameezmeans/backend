@@ -4,7 +4,9 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
 <style>
-
+  .redirect-click-file{
+    cursor: pointer;
+  }
 </style>
 @endsection
 
@@ -22,7 +24,7 @@
             </div>
             <div class="card-body">
               <livewire:feedback-table 
-                searchable="request_files.file_id,brand,model,engine"
+                searchable="request_files.file_id,brand,model,engine,ecu"
               />
             </div>
           </div>
@@ -31,7 +33,17 @@
     </div>
 @endsection
 @section('pagespecificscripts')
-    <script type="text/javascript">
-      
-    </script>
+<script type="text/javascript">
+  $( document ).ready(function(event) {
+    $(document).on('click','.redirect-click-file',function(e) {
+      console.log('clicked');
+        var lastClass = $(this).attr('class').split(' ').pop();
+        console.log(lastClass);
+        // console.log("http://backend.test/file/"+lastClass);
+
+        window.location.href = "/file/"+lastClass;
+        
+      });
+    });
+</script>
 @endsection
