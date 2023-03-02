@@ -41,6 +41,7 @@ class FeedbackTable extends LivewireDatatable
             Column::name('brand')->label('Brand'),
             Column::name('model')->label('Model'),
             Column::name('engine')->label('Engine'),
+            Column::name('ecu')->label('ecu'),
             Column::callback('id,stages,options', function($id,$stages, $op){
                 $all = "";
                 $file = File::findOrFail($id);
@@ -81,5 +82,9 @@ class FeedbackTable extends LivewireDatatable
             DatetimeColumn::name('created_at')
             ->label('Date')->sortable()->format('d/m/Y h:i A')->filterable(),
         ];
+    }
+
+    public function rowClasses($row, $loop){
+        return 'hover:bg-gray-300 divide-x divide-gray-100 text-sm text-gray-900 ' . ($loop->even ? 'bg-gray-200' : 'bg-gray-50').' redirect-click-file '.$row->{"request_files.file_id"} ;
     }
 }

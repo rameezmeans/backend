@@ -28,9 +28,14 @@ class FileEngineerTable extends LivewireDatatable
                 else{
                     return '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
                 }
-            })->label('Front End')
+            })
+            ->exportCallback(function($frontEndID){
+                return FrontEnd::findOrFail($frontEndID)->name;
+            })
+            ->label('Front End')
             ->filterable(FrontEnd::get(['id', 'name']))
             ->searchable(),
+
             Column::callback(['id', 'name'], function ($id) {
                 $file = File::findOrFail($id);
                 return $file->brand.' '.$file->engine.' '.$file->vehicle()->TORQUE_standard;
@@ -82,7 +87,8 @@ class FileEngineerTable extends LivewireDatatable
 
             Column::callback(['assigned_to'], function($id){
                 return User::findOrFail($id)->name;
-            })->label('Assigned to')->filterable(User::get('name')->pluck('name')->toArray())->searchable(),
+            })->label('Assigned to')
+            ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))->searchable(),
 
             DateColumn::name('created_at')
                 ->label('Upload Date')->sortable()->filterable(),
@@ -105,6 +111,10 @@ class FileEngineerTable extends LivewireDatatable
             })
             ->label('Response Time'),
         ];
+    }
+
+    public function rowClasses($row, $loop){
+        return 'hover:bg-gray-300 divide-x divide-gray-100 text-sm text-gray-900 ' . ($loop->even ? 'bg-gray-200' : 'bg-gray-50');
     }
 
     public function getExportStylesProperty()
