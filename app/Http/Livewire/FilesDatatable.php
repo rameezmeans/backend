@@ -153,6 +153,6 @@ class FilesDatatable extends LivewireDatatable
             return 'bg-gray-500 hover:bg-gray-300 divide-x divide-gray-100 text-sm text-white redirect-click-file '.$row->id;
         }
 
-            return 'hover:bg-gray-300 divide-x divide-gray-100 text-sm text-gray-900 ' . ($loop->even ? 'bg-gray-200' : 'bg-gray-50').' redirect-click-file '.$row->id;
+            return 'hover:bg-gray-300 divide-x divide-gray-100 text-sm text-gray-900 ' . ($loop->even ? 'bg-gray-100' : 'bg-gray-50').' redirect-click-file '.$row->id;
     }
 }
