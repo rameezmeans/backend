@@ -85,6 +85,6 @@ class FeedbackTable extends LivewireDatatable
     }
 
     public function rowClasses($row, $loop){
-        return 'hover:bg-gray-300 divide-x divide-gray-100 text-sm text-gray-900 ' . ($loop->even ? 'bg-gray-200' : 'bg-gray-50').' redirect-click-file '.$row->{"request_files.file_id"} ;
+        return 'hover:bg-gray-300 divide-x divide-gray-100 text-sm text-gray-900 ' . ($loop->even ? 'bg-gray-100' : 'bg-gray-50').' redirect-click-file '.$row->{"request_files.file_id"} ;
     }
 }
