@@ -188,23 +188,39 @@ class UsersController extends Controller
     }
 
     public function updateEngineer(Request $request){
-        
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:255'],
-            'country' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-        ]);
 
         $engineer = User::findOrFail($request->id);
+
+        if($engineer->email == $request->email){
+        
+            $validated = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'string', 'max:255'],
+                'address' => ['required', 'string', 'max:255'],
+                'city' => ['required', 'string', 'max:255'],
+                'country' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255'],
+            ]);
+            
+        }
+        else{
+
+            $validated = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'string', 'max:255'],
+                'address' => ['required', 'string', 'max:255'],
+                'city' => ['required', 'string', 'max:255'],
+                'country' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            ]);
+        }
+        
         $engineer->name = $request->name;
 
         if($request->password){
             $engineer->password = Hash::make($request->password);
         }
-        
+
         $engineer->email = $request->email;
         $engineer->phone = $request->phone;
         $engineer->address = $request->address;
