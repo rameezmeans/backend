@@ -48,7 +48,7 @@ Route::get('/files', [App\Http\Controllers\FilesController::class, 'liveFiles'])
 Route::get('/file/{id}', [App\Http\Controllers\FilesController::class, 'show'])->name('file');
 
 Route::get('/download/{id}/{file}', [App\Http\Controllers\FilesController::class,'download'])->name('download');
-Route::get('/curl_testing', [App\Http\Controllers\FilesController::class,'curlTesting'])->name('curl-testing');
+Route::get('/get_access_token', [App\Http\Controllers\FilesController::class,'getAccessToken'])->name('get-access-token');
 // Route::get('/file_copy_path', [App\Http\Controllers\FilesController::class,'fileCopyAndPath'])->name('file-copy-path');
 Route::post('/file-engineers-notes', [App\Http\Controllers\FilesController::class,'fileEngineersNotes'])->name('file-engineers-notes');
 Route::get('/edit_file/{id}', [App\Http\Controllers\FilesController::class,'editFile'])->name('edit-file');
