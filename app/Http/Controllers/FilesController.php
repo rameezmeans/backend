@@ -69,7 +69,7 @@ class FilesController extends Controller
         if(isset($responseBody['accessToken'])){
             $key = new Key();
             $key->key = 'alientech_access_token';
-            $key->key = $responseBody['accessToken'];
+            $key->value = $responseBody['accessToken'];
             $key->save();
             return $responseBody['accessToken'];
         }
