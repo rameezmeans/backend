@@ -22,6 +22,7 @@ use Illuminate\Http\Response;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use PDF;
@@ -47,34 +48,54 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
 
-    public function fileCopyAndPath(){
+    public function curlTesting(){
 
-        $files = File::all();
-
-        foreach($files as $file){
-        
-            $toPath = public_path('/../../portal/public/uploads/'.$file->file_attached);
-
-            $inPath = public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/');
-            
-            if (!file_exists($inPath )) {
-                mkdir($inPath , 0777, true);
-            }
-
-            $flag = copy( $toPath, $inPath.$file->file_attached);
-
-            $file->file_path = '/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/';
-            $file->save();
-
-            $engineerFiles = RequestFile::where('file_id', $file->id)->get();
-
-            foreach($engineerFiles as $f){
-                $flag = copy( $toPath, $inPath.$f->request_file);
-            }
-
-            
-        }
+        $apiURL = 'https://encodingapi.alientech.to/api/access-tokens/request';
+        $postInput = [
+            'clientApplicationGUID' => 'f8b0f518-8de7-4528-b8db-3995e1b787e9',
+            'secretKey' => "#5!/ThmmM*?;D\\jvjQ6%9/",
+        ];
+  
+        $headers = [
+            'Content-Type' => 'application/json'
+        ];
+  
+        $response = Http::withHeaders($headers)->post($apiURL, $postInput);
+  
+        $statusCode = $response->status();
+        $responseBody = json_decode($response->getBody(), true);
+     
+        dd($responseBody);
     }
+
+    // public function fileCopyAndPath(){
+
+    //     $files = File::all();
+
+    //     foreach($files as $file){
+        
+    //         $toPath = public_path('/../../portal/public/uploads/'.$file->file_attached);
+
+    //         $inPath = public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/');
+            
+    //         if (!file_exists($inPath )) {
+    //             mkdir($inPath , 0777, true);
+    //         }
+
+    //         $flag = copy( $toPath, $inPath.$file->file_attached);
+
+    //         $file->file_path = '/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/';
+    //         $file->save();
+
+    //         $engineerFiles = RequestFile::where('file_id', $file->id)->get();
+
+    //         foreach($engineerFiles as $f){
+    //             $flag = copy( $toPath, $inPath.$f->request_file);
+    //         }
+
+            
+    //     }
+    // }
 
     public function liveFiles(){
         return view('files.live_files');    
