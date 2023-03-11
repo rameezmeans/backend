@@ -72,7 +72,7 @@
                       <div class="card-title">
                           <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="" style="width: 30%;">
                           <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
-                          <a href="{{ route('download', $file->file_attached) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                          <a href="{{ route('download', [$file->id, $file->file_attached]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                           </a>
                         </div>
                       </div>
@@ -358,7 +358,7 @@
                                   <a href="#" class="btn-sm btn-info btn-cons"> <span class="bold">{{$message['type']}}</span>
                                   </a>
                                   @endisset
-                                    <a href="{{ route('download', $message['request_file']) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
+                                    <a href="{{ route('download',[$message['file_id'], $message['request_file']]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
                                     </a>
                                     <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a>
                                 </div>
@@ -473,7 +473,7 @@
                                     {{ $message['egnineers_internal_notes'] }}<br>
                                     @if(isset($message['engineers_attachement']))
                                       <div class="text-center m-t-10">
-                                        <a href="{{route('download', $message['engineers_attachement'])}}" class="text-danger">Download</a>
+                                        <a href="{{route('download',[$message['file_id'], $message['engineers_attachement']])}}" class="text-danger">Download</a>
                                       </div>
                                     @endif
                                     <br>
@@ -490,7 +490,7 @@
                                 {{ $message['file_url'] }}<br>
                                 @if(isset($message['file_url_attachement']))
                                       <div class="text-center m-t-10">
-                                        <a href="{{route('download', $message['file_url_attachement'])}}" class="text-danger">Download</a>
+                                        <a href="{{route('download',[$message['file_id'], $message['file_url_attachement']])}}" class="text-danger">Download</a>
                                       </div>
                                     @endif
                               </div>

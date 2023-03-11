@@ -47,6 +47,35 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
 
+    public function fileCopyAndPath(){
+
+        $files = File::all();
+
+        foreach($files as $file){
+        
+            $toPath = public_path('/../../portal/public/uploads/'.$file->file_attached);
+
+            $inPath = public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/');
+            
+            if (!file_exists($inPath )) {
+                mkdir($inPath , 0777, true);
+            }
+
+            $flag = copy( $toPath, $inPath.$file->file_attached);
+
+            $file->file_path = '/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/';
+            $file->save();
+
+            $engineerFiles = RequestFile::where('file_id', $file->id)->get();
+
+            foreach($engineerFiles as $f){
+                $flag = copy( $toPath, $inPath.$f->request_file);
+            }
+
+            
+        }
+    }
+
     public function liveFiles(){
         return view('files.live_files');    
     }
@@ -356,9 +385,10 @@ class FilesController extends Controller
         
     // }
 
-    public function download($file_name) {
-
-        $file_path = public_path('/../../portal/public/uploads/'.$file_name);
+    public function download($id,$file_name) {
+        $file = File::findOrFail($id);
+        $path = public_path('/../../portal/public'.$file->file_path);
+        $file_path = $path.$file_name;
         return response()->download($file_path);
     }
 
@@ -460,8 +490,7 @@ class FilesController extends Controller
         //        }
         //     }
         // }
-
-
+        
         return view('files.files', ['files' => $files]);
     }
 
@@ -818,7 +847,8 @@ class FilesController extends Controller
 
         $newFileName = str_replace('#', '_', $fileName);
 
-        $attachment->move(public_path("/../../portal/public/uploads/"),$newFileName);
+        $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$newFileName);
+        // $attachment->move(public_path("/../../portal/public/uploads/"),$newFileName);
 
         $engineerFile = new RequestFile();
         $engineerFile->request_file = $newFileName;
