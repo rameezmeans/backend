@@ -17,6 +17,7 @@ use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Controllers\ReminderManagerController;
+use App\Models\Key;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Mail\Message;
@@ -48,7 +49,7 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
 
-    public function curlTesting(){
+    public function getAccessToken(){
 
         $apiURL = 'https://encodingapi.alientech.to/api/access-tokens/request';
         $postInput = [
@@ -65,7 +66,15 @@ class FilesController extends Controller
         $statusCode = $response->status();
         $responseBody = json_decode($response->getBody(), true);
      
-        dd($responseBody);
+        if(isset($responseBody['accessToken'])){
+            $key = new Key();
+            $key->key = 'alientech_access_token';
+            $key->key = $responseBody['accessToken'];
+            $key->save();
+            return $responseBody['accessToken'];
+        }
+
+        return null;
     }
 
     // public function fileCopyAndPath(){
