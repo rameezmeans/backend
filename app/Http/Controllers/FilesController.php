@@ -67,10 +67,10 @@ class FilesController extends Controller
         $responseBody = json_decode($response->getBody(), true);
      
         if(isset($responseBody['accessToken'])){
-            $key = new Key();
-            $key->key = 'alientech_access_token';
-            $key->value = $responseBody['accessToken'];
-            $key->save();
+            // $key = new Key();
+            // $key->key = 'alientech_access_token';
+            // $key->value = $responseBody['accessToken'];
+            // $key->save();
             return $responseBody['accessToken'];
         }
 
