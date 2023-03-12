@@ -96,6 +96,11 @@ class FilesController extends Controller
 
         dd($response);
 
+        $statusCode = $response->status();
+        $responseBody = json_decode($response->getBody(), true);
+
+        dd($responseBody);
+
     }
 
     // public function fileCopyAndPath(){
