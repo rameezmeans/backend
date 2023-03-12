@@ -99,7 +99,7 @@ class FilesController extends Controller
         $statusCode = $response->status();
         $responseBody = json_decode($response->getBody(), true);
 
-        dd($statusCode);
+        dd($responseBody);
 
     }
 
