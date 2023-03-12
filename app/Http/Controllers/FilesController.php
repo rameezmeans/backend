@@ -77,6 +77,27 @@ class FilesController extends Controller
         return null;
     }
 
+    public function decodeFile(){
+
+        $token = Key::where('key', 'alientech_access_token')->first()->value;
+
+        $apiURL = 'https://encodingapi.alientech.to/api/kessv2/decode-read-file/user1';
+        $postInput = [
+            'readFile' => public_path('test1.dec'),
+            'userInfo' => []
+        ];
+  
+        $headers = [
+            'Content-Type' => 'application/json',
+            'X-Alientech-ReCodAPI-LLC' => $token,
+        ];
+  
+        $response = Http::withHeaders($headers)->post($apiURL, $postInput);
+
+        dd($response);
+
+    }
+
     // public function fileCopyAndPath(){
 
     //     $files = File::all();
