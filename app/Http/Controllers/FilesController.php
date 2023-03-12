@@ -88,7 +88,7 @@ class FilesController extends Controller
         ];
   
         $headers = [
-            'Content-Type' => 'application/json',
+            'Content-Type' => 'multipart/form-data',
             'X-Alientech-ReCodAPI-LLC' => $token,
         ];
   
