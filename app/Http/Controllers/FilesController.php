@@ -83,8 +83,8 @@ class FilesController extends Controller
 
         $apiURL = 'https://encodingapi.alientech.to/api/kessv2/decode-read-file/user1';
         $postInput = [
-            'readFile' => public_path('test1.dec'),
-            'userInfo' => []
+            'readFile' => public_path('test2.cod'),
+            'userInfo' => [],
         ];
   
         $headers = [
