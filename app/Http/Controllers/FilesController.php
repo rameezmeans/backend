@@ -94,7 +94,7 @@ class FilesController extends Controller
   
         $response = Http::withHeaders($headers)->post($apiURL, $postInput);
 
-        dd($response);
+        // dd($response);
 
         $statusCode = $response->status();
         $responseBody = json_decode($response->getBody(), true);
