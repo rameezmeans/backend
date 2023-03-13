@@ -77,14 +77,19 @@ class FilesController extends Controller
         return null;
     }
 
+    public function callbackKess3($response){
+        dd($response);
+    }
+
     public function decodeFile(){
 
         $token = Key::where('key', 'alientech_access_token')->first()->value;
 
-        $apiURL = 'https://encodingapi.alientech.to/api/kessv2/decode-read-file/user1';
+        // dd(public_path('test2.cod'));
+
+        $apiURL = 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1/https://backend.ecutech.gr/callback/kess3';
         $postInput = [
-            'readFile' => public_path('test2.cod'),
-            'userInfo' => [],
+            'readFile' => public_path('obd1'),
         ];
   
         $headers = [
@@ -94,12 +99,10 @@ class FilesController extends Controller
   
         $response = Http::withHeaders($headers)->post($apiURL, $postInput);
 
-        // dd($response);
-
         $statusCode = $response->status();
-        $responseBody = json_decode($response->getBody(), true);
+        $responseBody = json_decode($response, true);
 
-        dd($responseBody);
+        dd($statusCode);
 
     }
 
