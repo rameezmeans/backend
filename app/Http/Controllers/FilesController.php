@@ -94,10 +94,21 @@ class FilesController extends Controller
 
         $data = "readFile=".public_path('obd1');
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        $result = curl_exec($curl);
+        // $result = curl_exec($curl);
+
+        if(curl_exec($curl) === false)
+        {
+            echo 'Curl error: ' . curl_error($curl);
+        }
+        else
+        {
+            echo 'Operation completed without any errors';
+        }        
         curl_close($curl);
 
-        dd($result);
+        exit;
+
+        // dd($result);
         
         // $postInput = [
         //     'readFile' => public_path('obd1'),
