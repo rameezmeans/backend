@@ -85,24 +85,33 @@ class FilesController extends Controller
 
         $token = Key::where('key', 'alientech_access_token')->first()->value;
 
-        // dd(public_path('test2.cod'));
+        $url = 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3';
+        
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-        $apiURL = 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1/https://backend.ecutech.gr/callback/kess3';
-        $postInput = [
-            'readFile' => public_path('obd1'),
-        ];
+        $data = "name=jane&age=23";
+
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+$result = curl_exec($curl);
+curl_close($curl);
+        // $postInput = [
+        //     'readFile' => public_path('obd1'),
+        // ];
   
-        $headers = [
-            'Content-Type' => 'multipart/form-data',
-            'X-Alientech-ReCodAPI-LLC' => $token,
-        ];
+        // $headers = [
+        //     'Content-Type' => 'multipart/form-data',
+        //     'X-Alientech-ReCodAPI-LLC' => $token,
+        // ];
   
-        $response = Http::withHeaders($headers)->post($apiURL, $postInput);
+        // $response = Http::withHeaders($headers)->post($apiURL, $postInput);
 
-        $statusCode = $response->status();
-        $responseBody = json_decode($response, true);
+        // $statusCode = $response->status();
+        // $responseBody = json_decode($response, true);
 
-        dd($statusCode);
+        // dd($statusCode);
 
     }
 
