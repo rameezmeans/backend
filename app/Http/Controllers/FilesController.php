@@ -89,14 +89,16 @@ class FilesController extends Controller
         
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:multipart/form-data', 'X-Alientech-ReCodAPI-LLC:'.$token));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-        $data = "name=jane&age=23";
-
+        $data = "readFile=".public_path('obd1');
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        $result = curl_exec($curl);
+        curl_close($curl);
 
-$result = curl_exec($curl);
-curl_close($curl);
+        dd($result);
+        
         // $postInput = [
         //     'readFile' => public_path('obd1'),
         // ];
