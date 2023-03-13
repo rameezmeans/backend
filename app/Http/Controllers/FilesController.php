@@ -78,7 +78,7 @@ class FilesController extends Controller
     }
 
     public function callbackKess3($response){
-        dd($response);
+        \Log::info($response);
     }
 
     public function decodeFile(){
