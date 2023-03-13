@@ -85,46 +85,56 @@ class FilesController extends Controller
 
         $token = Key::where('key', 'alientech_access_token')->first()->value;
 
-        $url = 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3';
+        // $url = 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3';
         
-        $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:multipart/form-data', 'X-Alientech-ReCodAPI-LLC:'.$token));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        // $curl = curl_init($url);
+        // curl_setopt($curl, CURLOPT_POST, true);
+        // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:multipart/form-data', 'X-Alientech-ReCodAPI-LLC:'.$token));
+        // curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-        $data = "readFile=".public_path('obd1');
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        // $result = curl_exec($curl);
+        // $data = "readFile=".public_path('obd1');
+        // curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        // // $result = curl_exec($curl);
 
-        if(curl_exec($curl) === false)
-        {
-            echo 'Curl error: ' . curl_error($curl);
-        }
-        else
-        {
-            echo 'Operation completed without any errors';
-        }        
-        curl_close($curl);
+        // if(curl_exec($curl) === false)
+        // {
+        //     echo 'Curl error: ' . curl_error($curl);
+        // }
+        // else
+        // {
+        //     echo 'Operation completed without any errors';
+        // }        
+        // curl_close($curl);
 
-        exit;
+        // exit;
 
         // dd($result);
-        
-        // $postInput = [
-        //     'readFile' => public_path('obd1'),
-        // ];
-  
-        // $headers = [
-        //     'Content-Type' => 'multipart/form-data',
-        //     'X-Alientech-ReCodAPI-LLC' => $token,
-        // ];
-  
-        // $response = Http::withHeaders($headers)->post($apiURL, $postInput);
 
-        // $statusCode = $response->status();
-        // $responseBody = json_decode($response, true);
+        $apiURL = 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3';
 
-        // dd($statusCode);
+        $postInput = [
+            'readFile' => public_path('obd1'),
+        ];
+  
+        $headers = [
+            'Content-Type' => 'multipart/form-data',
+            'X-Alientech-ReCodAPI-LLC' => $token,
+        ];
+  
+        $response = Http::withHeaders($headers)->post($apiURL, $postInput);
+
+        $statusCode = $response->status();
+
+        try {
+            $response->throw();
+        }
+        catch(\Exception $e){
+            dd($e->getMessage());
+        }
+
+        // $responseBody = json_decode($response->getBody(), true);
+
+        // dd($responseBody);
 
     }
 
