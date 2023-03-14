@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('pagespecificstyles')
   <style>
@@ -98,6 +98,7 @@
 
     <script type="text/javascript">
         $( document ).ready(function(event) {
+          $(".parent-adjusted").parents('div').css("display", "flex !important;");
           $(document).on('click','.redirect-click-file',function(e) {
             var lastClass = $(this).attr('class').split(' ').pop();
             console.log(lastClass);
@@ -105,4 +106,4 @@
         });
     </script>
 @endsection
-@endsection
+@endsection --}}

@@ -5,9 +5,13 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
 <style>
   
-.redirect-click-file{
-  cursor: pointer;
-}
+  .flex {
+    display: flex !important;
+  }
+
+  .redirect-click-file{
+    cursor: pointer;
+  }
 
 </style>
 @endsection
@@ -37,6 +41,7 @@
 @section('pagespecificscripts')
     <script type="text/javascript">
       $( document ).ready(function(event) {
+        $('.parent-adjusted').parent().addClass('flex');
         $(document).on('click','.redirect-click-file',function(e) {
           console.log('clicked');
             var lastClass = $(this).attr('class').split(' ').pop();
