@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Controllers\ReminderManagerController;
 use App\Models\Key;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Mail\Message;
@@ -90,12 +91,13 @@ class FilesController extends Controller
         // $curl = curl_init($url);
         // curl_setopt($curl, CURLOPT_POST, true);
         // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:multipart/form-data', 'X-Alientech-ReCodAPI-LLC:'.$token));
-        // curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        // $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         // $data = "readFile=".public_path('obd1');
         // curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         // // $result = curl_exec($curl);
 
+        
         // if(curl_exec($curl) === false)
         // {
         //     echo 'Curl error: ' . curl_error($curl);
@@ -105,6 +107,8 @@ class FilesController extends Controller
         //     echo 'Operation completed without any errors';
         // }        
         // curl_close($curl);
+
+        // dd($httpCode);
 
         // exit;
 
@@ -128,13 +132,14 @@ class FilesController extends Controller
         try {
             $response->throw();
         }
-        catch(\Exception $e){
-            dd($e->getMessage());
+        catch(RequestException $e){
+
+            dd($e->response);
         }
 
-        // $responseBody = json_decode($response->getBody(), true);
+        $responseBody = json_decode($response->getBody(), true);
 
-        // dd($responseBody);
+        dd($responseBody);
 
     }
 
