@@ -116,7 +116,7 @@ class FilesDatatable extends LivewireDatatable
                 $file = File::findOrFail($id);
                 foreach($file->options() as $option){
                     if(\App\Models\Service::where('name', $option)->first() != null){
-                        $options .= '<img alt="'.$option.'" width="20" height="20" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon .'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">'.$option.'<br>';
+                        $options .= '<img alt="'.$option.'" width="40" height="40" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon .'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'"><br>';
                         }
                     }
                     return $options;
