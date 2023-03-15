@@ -811,13 +811,24 @@ class FilesController extends Controller
 
     public function fileEngineersNotes(Request $request)
     {
+
+        $file = File::findOrFail($request->file_id);
+
         $reply = new EngineerFileNote();
         $reply->egnineers_internal_notes = $request->egnineers_internal_notes;
+
+        if($request->file('engineers_attachement')){
+
+            $attachment = $request->file('engineers_attachement');
+            $fileName = $attachment->getClientOriginalName();
+            $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$fileName);
+            $reply->engineers_attachement = $fileName;
+        }
+
         $reply->engineer = true;
         $reply->file_id = $request->file_id;
         $reply->save();
-
-        $file = File::findOrFail($request->file_id);
+        
         $file->support_status = "closed";
         $file->save();
         $customer = User::findOrFail($file->user_id);
