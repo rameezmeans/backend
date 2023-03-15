@@ -106,7 +106,7 @@
                                 </div>
                                   
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4" style="height: 2000px;">
                                   <div class="p-l-10">
                                     <h5 class="">Comments On Download</h5>
                                         @foreach($downloadComments as $comment)
@@ -170,7 +170,7 @@
                                   
 
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-4" style="height: 2000px;">
                                   <div class="p-l-40">
                                     <h5 class="">Comments On Upload</h5>
                                         @foreach($uploadComments as $comment)
