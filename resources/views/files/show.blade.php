@@ -464,9 +464,15 @@
                             <div class="message clearfix">
                               <div class="chat-bubble bg-primary from-me text-white">
                                 {{ $message['egnineers_internal_notes'] }} 
+                                
                                 <i data-note_id="{{$message['id']}}" data-message="{{$message['egnineers_internal_notes']}}" class="fa fa-edit m-l-20"></i> 
                                 <i class="pg-trash delete-message" data-note_id="{{$message['id']}}"></i> 
                                 <br>
+                                @if(isset($message['engineers_attachement']))
+                                  <div class="text-center m-t-10">
+                                    <a href="{{route('download',[$message['file_id'], $message['engineers_attachement']])}}" class="text-danger">Download</a>
+                                  </div>
+                                @endif
                                 <br>
                                 <small class="m-t-20" style="font-size: 8px; float:right">{{ \Carbon\Carbon::parse($message['created_at'])->format('H:i:s d/m/Y') }}</small>
                               </div>
@@ -518,17 +524,21 @@
                       <!-- BEGIN Conversation  !-->
                       <!-- BEGIN Chat Input  !-->
                       <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10 text-center">
-                        <form method="POST" action="{{ route('file-engineers-notes') }}">
+                        <form method="POST" action="{{ route('file-engineers-notes') }}" enctype="multipart/form-data">
                           @csrf
                           <input type="hidden" value="{{$file->id}}" name="file_id">
                         <div class="row">
-                            <div class="col-10 no-padding">
+                            <div class="col-6 no-padding">
                               <input type="text" name="egnineers_internal_notes" class="form-control chat-input" data-chat-input="" data-chat-conversation="#my-conversation" placeholder="Reply to cusotmer." required>
                               @error('egnineers_internal_notes')
                                       <p class="text-danger" role="alert">
                                           <strong>{{ $message }}</strong>
                                       </p>
                               @enderror
+                             
+                            </div>
+                            <div  class="col-4 no-padding"> 
+                              <input class="m-t-10" type="file" name="engineers_attachement" style="float: :left;">
                             </div>
                             <div class="col-2 link text-master m-t-15 p-l-10 b-l b-grey col-top">
                               <button class="btn btn-success" type="submit">Send</button>
