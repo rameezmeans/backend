@@ -60,11 +60,7 @@ class FilesDatatable extends LivewireDatatable
             ->filterable(FrontEnd::get(['id', 'name']))
             ->searchable(),
 
-            Column::callback(['user_id'], function($userID){
-                return User::findOrFail($userID)->name;
-            })->label('Customer')
-            ->filterable(User::where('is_customer', 1)->get(['id', 'name']))
-            ->searchable(),
+            Column::name('username')->label('Customer')->searchable(),
 
             Column::callback(['id', 'brand'], function ($id) {
 
