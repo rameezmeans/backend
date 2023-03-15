@@ -417,7 +417,7 @@
                   <div class="card-header ">
                     <div class="text-center">
                       <div class="card-title">
-                          <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                          <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
                           <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                         </div>
                       </div>
@@ -558,7 +558,7 @@
               <div class="card-header ">
                 <div class="text-center">
                   <div class="card-title">
-                      <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
                       <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                       <h4 class="m-t-20">Adminstrative Tasks</h4>
                     </div>
