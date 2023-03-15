@@ -173,6 +173,13 @@ class FilesController extends Controller
     // }
 
     public function liveFiles(){
+
+        // $files = File::all();
+        // foreach($files as $file){
+        //     $file->username = User::findOrFail($file->user_id)->name;
+        //     $file->save();
+        // }
+
         return view('files.live_files');    
     }
     

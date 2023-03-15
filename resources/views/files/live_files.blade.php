@@ -30,7 +30,7 @@
             </div>
             <div class="card-body">
               <livewire:files-datatable 
-                searchable="id"
+                searchable="id,username"
               />
             </div>
           </div>
