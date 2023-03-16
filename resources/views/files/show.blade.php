@@ -432,7 +432,7 @@
                       <!-- BEGIN Conversation  !-->
                       @if(!empty($messages))
           
-                      <div class="chat-inner" id="my-conversation">
+                      <div class="chat-inner" id="my-conversation" style="overflow: scroll !important; height:">
                         <!-- END From Me Message  !-->
                         <!-- BEGIN From Them Message  !-->
                         @foreach($messages as $message)
@@ -474,7 +474,7 @@
                                   </div>
                                 @endif
                                 <br>
-                                <small class="m-t-20" style="font-size: 8px; float:right">{{ \Carbon\Carbon::parse($message['created_at'])->format('H:i:s d/m/Y') }}</small>
+                                <small class="m-t-20" style="font-size: 8px; float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
                               </div>
                             </div>
           
@@ -489,7 +489,7 @@
                                     @endif
                                     <br>
                                     <br>
-                                    <small class="m-t-20" style="font-size: 8px;float:right">{{ \Carbon\Carbon::parse($message['created_at'])->format('H:i:s d/m/Y') }}</small>
+                                    <small class="m-t-20" style="font-size: 8px;float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
                                 </div>
                               </div>
                             @endif
