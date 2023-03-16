@@ -432,7 +432,7 @@
                       <!-- BEGIN Conversation  !-->
                       @if(!empty($messages))
           
-                      <div class="chat-inner" id="my-conversation" style="overflow: scroll !important; height:">
+                      <div class="chat-inner" id="my-conversation" style="overflow: scroll !important; height:500px;">
                         <!-- END From Me Message  !-->
                         <!-- BEGIN From Them Message  !-->
                         @foreach($messages as $message)
