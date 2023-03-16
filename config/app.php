@@ -69,6 +69,7 @@ return [
     |
     */
 
+    // 'timezone' => 'Asia/Karachi',
     'timezone' => 'Europe/Athens',
 
     /*
