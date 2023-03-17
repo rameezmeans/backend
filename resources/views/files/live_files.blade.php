@@ -7,6 +7,7 @@
   
   .flex {
     display: flex !important;
+    width: max-content;
   }
 
   .redirect-click-file{
