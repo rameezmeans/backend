@@ -76,8 +76,19 @@
                             <a href="{{ route('download', [$file->original_file_id, $file->file_attached]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                             </a>
                           @else
-                            <a href="{{ route('download', [$file->id, $file->file_attached]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
-                            </a>
+                              <a href="{{ route('download', [$file->id, $file->file_attached]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                              </a>
+
+                            @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+                              @if($decodedAvailable)
+                                <a href="{{ route('download-decoded', [$file->id, $file->file_attached]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's Decoded File</span>
+                                </a>
+                              @endif
+                            @else
+                              <a href="{{ route('download', [$file->id, $file->file_attached]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                              </a>
+                            @endif
+
                           @endif
                         </div>
                       </div>
