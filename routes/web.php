@@ -48,6 +48,7 @@ Route::get('/files', [App\Http\Controllers\FilesController::class, 'liveFiles'])
 Route::get('/file/{id}', [App\Http\Controllers\FilesController::class, 'show'])->name('file');
 
 Route::get('/download/{id}/{file}', [App\Http\Controllers\FilesController::class,'download'])->name('download');
+Route::get('/download_decoded/{id}/{file}', [App\Http\Controllers\FilesController::class,'downloadDecoded'])->name('download-decoded');
 Route::get('/get_access_token', [App\Http\Controllers\FilesController::class,'getAccessToken'])->name('get-access-token');
 Route::get('/decode_file', [App\Http\Controllers\FilesController::class,'decodeFile'])->name('decode-file');
 Route::post('/callback/kess3', [App\Http\Controllers\FilesController::class,' callbackKess3'])->name('callback-kess3');
