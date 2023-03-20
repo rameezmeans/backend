@@ -654,9 +654,7 @@ class FilesController extends Controller
         $result = $responseBody['result'];
 
         if( isset($result['obdDecodedFileURL']) ){
-
-        // dd($result['obdDecodedFileURL']);
-
+        
         $url = $result['obdDecodedFileURL'];
 
         $headers = [
@@ -1619,7 +1617,7 @@ class FilesController extends Controller
         if(AlientechFile::where('file_id', $file->id)->first()){
             $decodedAvailable = true;
         }
-
+        
         $vehicle = Vehicle::where('Make', $file->brand)
         ->where('Model', $file->model)
         ->where('Generation', $file->version)
