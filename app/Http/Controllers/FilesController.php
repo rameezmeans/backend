@@ -36,6 +36,7 @@ use Twilio\Rest\Client;
 use Yajra\DataTables\DataTables;
 
 use PDO;
+use stdClass;
 
 class FilesController extends Controller
 {
@@ -1613,23 +1614,26 @@ class FilesController extends Controller
             abort(404);
         }
 
+        $decodedAvailable = false;
+        
+        if(AlientechFile::where('file_id', $file->id)->first()){
+
+            $decodedAvailable = true;
+            
+            if($file->alientech_files->isEmpty()){
+                $this->saveFiles($file->id);
+               
+            }
+        }
+
+        $alientechFiles = $file->alientech_files;
+
         // $file->response_time = $this->getResponseTime($file);
         // $file->save();
         
         if($file->checked_by == 'customer'){
             $file->checked_by = 'seen';
             $file->save();
-        }
-
-        $decodedAvailable = false;
-
-        if(AlientechFile::where('file_id', $file->id)->first()){
-
-            $decodedAvailable = true;
-
-            if($file->alientech_files->isEmpty()){
-                $this->saveFiles($file->id);
-            }
         }
 
         $vehicle = Vehicle::where('Make', $file->brand)
@@ -1680,7 +1684,7 @@ class FilesController extends Controller
             $comments = null;
         }
         
-        return view('files.show', ['decodedAvailable' => $decodedAvailable, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
+        return view('files.show', ['alientechFiles' => $alientechFiles, 'decodedAvailable' => $decodedAvailable, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
     }
 
     public function saveFiles($id){
