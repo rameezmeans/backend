@@ -1627,7 +1627,7 @@ class FilesController extends Controller
 
             $decodedAvailable = true;
 
-            if(!$file->alientech_files){
+            if(!$file->alientech_files->isEmpty()){
                 $this->saveFiles($file->id);
             }
         }
@@ -1732,7 +1732,7 @@ class FilesController extends Controller
                 ];
 
                 $response = Http::withHeaders($headers)->post($url, []);
-                
+
                 $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
 
                 $obj = new AlientechFile();
