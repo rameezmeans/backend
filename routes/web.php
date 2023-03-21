@@ -52,6 +52,7 @@ Route::get('/download_decoded/{id}/{file}', [App\Http\Controllers\FilesControlle
 Route::get('/get_access_token', [App\Http\Controllers\FilesController::class,'getAccessToken'])->name('get-access-token');
 Route::get('/decode_file', [App\Http\Controllers\FilesController::class,'decodeFile'])->name('decode-file');
 Route::post('/callback/kess3', [App\Http\Controllers\FilesController::class,' callbackKess3'])->name('callback-kess3');
+Route::post('/callback/kess3/complete', [App\Http\Controllers\FilesController::class,' callbackKess3Complete'])->name('callback-kess3-complete');
 // Route::get('/file_copy_path', [App\Http\Controllers\FilesController::class,'fileCopyAndPath'])->name('file-copy-path');
 Route::post('/file-engineers-notes', [App\Http\Controllers\FilesController::class,'fileEngineersNotes'])->name('file-engineers-notes');
 Route::get('/edit_file/{id}', [App\Http\Controllers\FilesController::class,'editFile'])->name('edit-file');

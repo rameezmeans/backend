@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('alientech_files', function (Blueprint $table) {
+            $table->id();
             $table->string('key');
             $table->string('value');
             $table->string('purpose')->nullable();

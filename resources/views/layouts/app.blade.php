@@ -39,6 +39,7 @@
     <link href="{{ url('assets/plugins/dropzone/css/dropzone.css')}} " rel="stylesheet" type="text/css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet" type="text/css" />
     <link class="main-stylesheet" href="{{ url('pages/css/pages.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     {{-- <link class="main-stylesheet" href="{{ url('pages/css/style.css') }}" rel="stylesheet" type="text/css" /> --}}
     {{-- @vite('resources/js/push.js', 'node_modules/push.js/bin/push.min.js') --}}
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js"></script>
@@ -63,6 +64,7 @@
    </div>
    @include('chat.chatview')
    <!-- BEGIN VENDOR JS -->
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
    <script src="{{ url('assets/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/jquery/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/modernizr.custom.js') }}" type="text/javascript"></script>

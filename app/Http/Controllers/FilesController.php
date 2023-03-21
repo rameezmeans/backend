@@ -694,11 +694,11 @@ class FilesController extends Controller
                 // // download the file to the user's browser
                 // readfile($filepath);
 
-                $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
+                // $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
                 
-                $path = public_path('/../../portal/public'.$file->file_path);
-                $file_path = $path.$file->file_attached.'.'.$extension;
-                return response()->download($file_path);
+                // $path = public_path('/../../portal/public'.$file->file_path);
+                // $file_path = $path.$file->file_attached.'.'.$extension;
+                // return response()->download($file_path);
                 
                 // $path = public_path('/../../portal/public'.$file->file_path);
                 // $file_path = $path.$file_name;
@@ -726,13 +726,17 @@ class FilesController extends Controller
                 // save the decoded string to a file
                 $flag = file_put_contents($filepath, $base64_string);
 
+                $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
+
+                $headers = [
+                // 'Content-Type' => 'multipart/form-data',
+                'X-Alientech-ReCodAPI-LLC' => $token,
+                ];
+
+                $response = Http::withHeaders($headers)->post($url, []);
 
             }
-
-            // dd('done');
         }
-
-        
     }
 
     public function download($id,$file_name) {
@@ -1173,6 +1177,240 @@ class FilesController extends Controller
 
     public function uploadFileFromEngineerAndEncode(Request $request){
 
+        $attachment = $request->file('file');
+
+        $file = File::findOrFail($request->file_id);
+
+        $fileName = $attachment->getClientOriginalName();
+        
+        $newFileName = str_replace('#', '_', $fileName);
+        $newFileName = str_replace(' ', '_', $fileName);
+
+        $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$newFileName);
+
+        // if($request->encode == '1'){
+
+            $path = public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/').$newFileName;
+            $slotID = AlientechFile::where('key', 'slotGUID')->where('file_id', $file->id)->first()->value;
+            $token = Key::where('key', 'alientech_access_token')->first()->value;
+
+            $response = $this->uploadFileToEncode($token, $path, $slotID);
+
+            // dd($response);
+
+            if( isset($response->guid) ){
+
+                $url = "https://encodingapi.alientech.to/api/kess3/encode-obd-file";
+
+                $headers = [
+                'X-Alientech-ReCodAPI-LLC' => $token,
+                ];
+                
+                $postInput = [
+                    'userCustomerCode' => 'user1',
+                    'kess3FileSlotGUID' => $slotID,
+                    'modifiedFileGUID' => $response->guid,
+                    'WillCorrectCVN' => true,
+                ];
+
+                $syncResponse = Http::withHeaders($headers)->post($url, $postInput);                
+                $syncResponseBody = json_decode($syncResponse->getBody(), true);
+
+                // dd($syncResponseBody);
+                
+                if(!AlientechFile::where('file_id', $file->id)->where('purpose', 'download_encoded')->first()){
+
+                    $obj = new AlientechFile();
+                    $obj->key = 'guid';
+                    $obj->value = $syncResponseBody['guid'];
+                    $obj->purpose = "download_encoded";
+                    $obj->file_id = $file->id;
+                    $obj->save();
+                }
+
+                return response('file will be ready after few seconds. please refresh the page.', 200);
+
+            }
+            else{
+                // dd($response);
+                return response('Uploaded file is not Compatible', 500);
+            }
+        }
+
+        // $engineerFile = new RequestFile();
+        // $engineerFile->request_file = $newFileName;
+        // $engineerFile->file_type = 'engineer_file';
+        // $engineerFile->tool_type = 'not_relevant';
+        // $engineerFile->master_tools = 'not_relevant';
+        // $engineerFile->file_id = $request->file_id;
+        // $engineerFile->engineer = true;
+        // $engineerFile->save();
+
+        // $allEearlierReminders = EmailReminder::where('user_id', $file->user_id)
+        // ->where('file_id', $file->id)->get();
+
+        // foreach($allEearlierReminders as $reminderToBeDeleted){
+        //     $reminderToBeDeleted->delete();
+        // }
+
+        // $schedual = Schedualer::take(1)->first();
+
+        // $reminder = new EmailReminder();
+        // $reminder->user_id = $file->user_id;
+        // $reminder->file_id = $file->id;
+        // $reminder->request_file_id = $engineerFile->id;
+        // $reminder->set_time = Carbon::now();
+        // $reminder->cycle = $schedual->cycle;
+
+        // $reminder->save();
+
+        // if($file->status == 'submitted'){
+        //     $file->status = 'completed';
+        //     $file->save();
+        // }
+        
+        // if(!$file->response_time){
+
+        //     $file->reupload_time = Carbon::now();
+        //     $file->save();
+
+        //     $file->response_time = $this->getResponseTime($file);
+        //     $file->save();
+
+        // }
+
+        // if($file->original_file_id){
+        //     $old = File::findOrFail($file->original_file_id);
+        //     $old->checked_by = 'engineer';
+        //     $file->support_status = "closed";
+        //     $old->save();
+        // }
+
+        //     $file->support_status = "closed";
+        //     $file->checked_by = 'engineer';
+        //     $file->save();
+
+        // $customer = User::findOrFail($file->user_id);
+        // $admin = User::where('is_admin', 1)->first();
+    
+        // // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
+        // $template = EmailTemplate::findOrFail(6);
+
+        // $html1 = $template->html;
+
+        // $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+        // $html1 = str_replace("#customer_name", $customer->name ,$html1);
+        // $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
+        
+        // $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
+        // $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        
+        // if($file->options){
+        //     foreach($file->options() as $option) {
+        //         $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+        //         $tunningType .=  $option;  
+        //         $tunningType .= '</div>';
+        //     }
+        // }
+
+        // $html1 = str_replace("#tuning_type", $tunningType,$html1);
+        // $html1 = str_replace("#status", $file->status,$html1);
+        // $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+        // $html2 = $template->html;
+
+        // $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+        // $html2 = str_replace("#customer_name", $file->name ,$html2);
+        // $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
+        
+        // $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
+        // $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        
+        // if($file->options){
+        //     foreach($file->options() as $option) {
+        //         $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+        //         $tunningType .=  $option;  
+        //         $tunningType .= '</div>';
+        //     }
+        // }
+
+        // $html2 = str_replace("#tuning_type", $tunningType,$html2);
+        // $html2 = str_replace("#status", $file->status,$html2);
+        // $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+
+        // $optionsMessage = "";
+        // if($file->options){
+        //     foreach($file->options() as $option) {
+        //         $optionsMessage .= ",".$option." ";
+        //     }
+        // }
+
+        // // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
+        // $messageTemplate = MessageTemplate::findOrFail(7);
+
+        // $message = $messageTemplate->text;
+
+        // $message1 = str_replace("#customer", $customer->name ,$message);
+        // $message2 = str_replace("#customer", $file->name ,$message);
+        
+        // $subject = "ECU Tech: Engineer uploaded a file in reply.";
+
+        // if($this->manager['eng_file_upload_cus_email']){
+        //     \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+        // }
+        // if($this->manager['eng_file_upload_admin_email']){
+        //     \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        // }
+        
+        // if($this->manager['eng_file_upload_admin_sms']){
+        //     $this->sendMessage($admin->phone, $message1);
+        // }
+        // if($this->manager['eng_file_upload_cus_sms']){
+        //     $this->sendMessage($customer->phone, $message2);
+        // }
+        
+        // return response('file uploaded', 200);
+
+    // }
+
+    public function uploadFileToEncode($token, $path, $slotID){
+
+        $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotID."/reopen";
+
+        $headers = [
+        // 'Content-Type' => 'multipart/form-data',
+        'X-Alientech-ReCodAPI-LLC' => $token,
+        ];
+
+        $response = Http::withHeaders($headers)->post($url, []);
+        
+        $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/OBDModified';
+    
+        if (function_exists('curl_file_create')) { // php 5.5+
+            $cFile = curl_file_create($path);
+            // $cFile = curl_file_create(public_path('Test_File1'));
+          } else { // 
+            // $cFile = '@' . realpath(public_path('Test_File1'));
+            $cFile = '@' . realpath($path);
+          }
+    
+          $post = array('file'=> $cFile);
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-type: multipart/form-data',
+            'X-Alientech-ReCodAPI-LLC:'.$token
+        ]);
+          curl_setopt($ch, CURLOPT_URL,$target_url);
+          curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+          $result=curl_exec ($ch);
+          curl_close ($ch);
+          return json_decode($result);
+        }
+
+    public function callbackKess3Complete(Request $request){
+        \Log::info( $request->all() );
     }
 
     public function uploadFileFromEngineer(Request $request)
@@ -1184,10 +1422,10 @@ class FilesController extends Controller
         $fileName = $attachment->getClientOriginalName();
         
         $newFileName = str_replace('#', '_', $fileName);
+        $newFileName = str_replace(' ', '_', $fileName);
 
         $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$newFileName);
-        // $attachment->move(public_path("/../../portal/public/uploads/"),$newFileName);
-
+        
         $engineerFile = new RequestFile();
         $engineerFile->request_file = $newFileName;
         $engineerFile->file_type = 'engineer_file';
@@ -1626,6 +1864,18 @@ class FilesController extends Controller
             }
         }
 
+        $aboutToDownload = AlientechFile::where('purpose', 'download_encoded')->where('file_id', $file->id)->get();
+       
+        if($aboutToDownload){
+            foreach($aboutToDownload as $f){
+                $this->saveMoreFiles($file->id, $f->id);
+                $f->purpose = "download_encoded_done";
+                $f->save();
+            }
+        }
+             
+        
+
         $alientechFiles = $file->alientech_files;
 
         // $file->response_time = $this->getResponseTime($file);
@@ -1687,7 +1937,222 @@ class FilesController extends Controller
         return view('files.show', ['alientechFiles' => $alientechFiles, 'decodedAvailable' => $decodedAvailable, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
     }
 
+    public function saveMoreFiles($id, $alientechFileID){
+
+        $token = Key::where('key', 'alientech_access_token')->first()->value;
+
+        $file = File::findOrFail($id);
+        // $alientechGUID = AlientechFile::where('purpose', 'download_encoded')->where('key', 'guid')->where('file_id', $id)->first()->value;
+        $alientechObj = AlientechFile::findOrFail($alientechFileID);
+        $alientechGUID = $alientechObj->value;
+        
+        $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechGUID;
+
+        $headers = [
+            'X-Alientech-ReCodAPI-LLC' => $token,
+        ];
+  
+        $response = Http::withHeaders($headers)->get($getsyncOpURL);
+        $responseBody = json_decode($response->getBody(), true);
+
+        $var = $responseBody['result']['name'];
+        $fileName = substr($var, strrpos($var, '/') + 1);
+        
+        $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechGUID;
+
+        $headers = [
+            'X-Alientech-ReCodAPI-LLC' => $token,
+        ];
+  
+        $response = Http::withHeaders($headers)->get($getsyncOpURL);
+        $responseBody = json_decode($response->getBody(), true);
+
+        $slotGuid = $responseBody['slotGUID'];
+        
+        $result = $responseBody['result'];
+
+        if( isset($result['encodedFileURL']) ){
+            
+            $url = $result['encodedFileURL'];
+
+            $headers = [
+                'X-Alientech-ReCodAPI-LLC' => $token,
+            ];
+    
+            $response = Http::withHeaders($headers)->get($url);
+            $responseBody = json_decode($response->getBody(), true);
+
+            $base64_string = $responseBody['data'];
+
+            // specify the path and filename for the downloaded file
+            $filepath = $responseBody['name'];
+
+            // save the decoded string to a file
+            $flag = file_put_contents($filepath, $base64_string);
+
+            $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
+
+            $headers = [
+            // 'Content-Type' => 'multipart/form-data',
+            'X-Alientech-ReCodAPI-LLC' => $token,
+            ];
+
+            $response = Http::withHeaders($headers)->post($url, []);
+
+            $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
+
+            $fileWithExtenion = $fileName;
+
+            $obj = new AlientechFile();
+            $obj->key = $extension;
+            $obj->value = $fileWithExtenion;
+            $obj->purpose = "encoded";
+            $obj->file_id = $file->id;
+            $obj->save();
+        
+            //// this is repetitive code.
+
+        $engineerFile = new RequestFile();
+        $engineerFile->request_file = $fileWithExtenion;
+        $engineerFile->file_type = 'engineer_file';
+        $engineerFile->tool_type = 'not_relevant';
+        $engineerFile->master_tools = 'not_relevant';
+        $engineerFile->file_id = $file->id;
+        $engineerFile->engineer = true;
+        $engineerFile->save();
+
+        $allEearlierReminders = EmailReminder::where('user_id', $file->user_id)
+        ->where('file_id', $file->id)->get();
+
+        foreach($allEearlierReminders as $reminderToBeDeleted){
+            $reminderToBeDeleted->delete();
+        }
+
+        $schedual = Schedualer::take(1)->first();
+
+        $reminder = new EmailReminder();
+        $reminder->user_id = $file->user_id;
+        $reminder->file_id = $file->id;
+        $reminder->request_file_id = $engineerFile->id;
+        $reminder->set_time = Carbon::now();
+        $reminder->cycle = $schedual->cycle;
+
+        $reminder->save();
+
+        if($file->status == 'submitted'){
+            $file->status = 'completed';
+            $file->save();
+        }
+        
+        if(!$file->response_time){
+
+            $file->reupload_time = Carbon::now();
+            $file->save();
+
+            $file->response_time = $this->getResponseTime($file);
+            $file->save();
+
+        }
+
+        if($file->original_file_id){
+            $old = File::findOrFail($file->original_file_id);
+            $old->checked_by = 'engineer';
+            $file->support_status = "closed";
+            $old->save();
+        }
+
+            $file->support_status = "closed";
+            $file->checked_by = 'engineer';
+            $file->save();
+
+        $customer = User::findOrFail($file->user_id);
+        $admin = User::where('is_admin', 1)->first();
+    
+        // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
+        $template = EmailTemplate::findOrFail(6);
+
+        $html1 = $template->html;
+
+        $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+        $html1 = str_replace("#customer_name", $customer->name ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
+        
+        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
+        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        
+        if($file->options){
+            foreach($file->options() as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+                $tunningType .=  $option;  
+                $tunningType .= '</div>';
+            }
+        }
+
+        $html1 = str_replace("#tuning_type", $tunningType,$html1);
+        $html1 = str_replace("#status", $file->status,$html1);
+        $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+        $html2 = $template->html;
+
+        $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+        $html2 = str_replace("#customer_name", $file->name ,$html2);
+        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
+        
+        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
+        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        
+        if($file->options){
+            foreach($file->options() as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+                $tunningType .=  $option;  
+                $tunningType .= '</div>';
+            }
+        }
+
+        $html2 = str_replace("#tuning_type", $tunningType,$html2);
+        $html2 = str_replace("#status", $file->status,$html2);
+        $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+
+        $optionsMessage = "";
+        if($file->options){
+            foreach($file->options() as $option) {
+                $optionsMessage .= ",".$option." ";
+            }
+        }
+
+        // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
+        $messageTemplate = MessageTemplate::findOrFail(7);
+
+        $message = $messageTemplate->text;
+
+        $message1 = str_replace("#customer", $customer->name ,$message);
+        $message2 = str_replace("#customer", $file->name ,$message);
+        
+        $subject = "ECU Tech: Engineer uploaded a file in reply.";
+
+        if($this->manager['eng_file_upload_cus_email']){
+            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+        }
+        if($this->manager['eng_file_upload_admin_email']){
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        }
+        
+        if($this->manager['eng_file_upload_admin_sms']){
+            $this->sendMessage($admin->phone, $message1);
+        }
+        if($this->manager['eng_file_upload_cus_sms']){
+            $this->sendMessage($customer->phone, $message2);
+        }
+        
+        // return response('file uploaded', 200);
+
+        }
+
+        
+    }
+
     public function saveFiles($id){
+
         $token = Key::where('key', 'alientech_access_token')->first()->value;
 
         $file = File::findOrFail($id);

@@ -464,6 +464,7 @@
                                       <form action="{{route('encoded-file-upload')}}" class="encoded-dropzone dropzone no-margin">
                                         @csrf
                                         <input type="hidden" value="{{$file->id}}" name="file_id">
+                                        <input type="hidden" value="1" name="encode">
                                         <div class="fallback">
                                           <input name="file" type="file" />
                                         </div>
@@ -499,6 +500,7 @@
                                     <form action="{{route('request-file-upload')}}" class="simple-dropzone dropzone no-margin">
                                       @csrf
                                       <input type="hidden" value="{{$file->id}}" name="file_id">
+                                      <input type="hidden" value="0" name="encode">
                                       <div class="fallback">
                                         <input name="file" type="file" />
                                       </div>
@@ -923,14 +925,40 @@
       
     });
     
-    let engineerFileDrop= new Dropzone(".simple-dropzone", {});
+    let engineerFileDrop= new Dropzone(".encoded-dropzone", {});
 
-    engineerFileDrop.on("complete", function(file) {
+    engineerFileDrop.on("success", function(file) {
+
       engineerFileDrop.removeFile(file);
-      location.reload();
+        Toastify({
+        text: "File will be ready in few second. Please refresh the page.",
+        className: "info",
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+      }).showToast();
+
+      // location.reload();
+    })
+    .on("complete", function(file) {
+
+      setTimeout(
+    function() {
+      // location.reload();
+      
+    }, 10000);
+
+}).on('error', function(e){
+      Toastify({
+        text: "Something went wrong. File is not compatible.",
+        className: "danger",
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+      }).showToast();
     });
 
-    let engineerEncodedFileDrop= new Dropzone(".encoded-dropzone", {});
+    let engineerEncodedFileDrop= new Dropzone(".simple-dropzone", {});
 
     engineerEncodedFileDrop.on("complete", function(file) {
       engineerEncodedFileDrop.removeFile(file);
