@@ -81,8 +81,8 @@ class FilesController extends Controller
         return null;
     }
 
-    public function callbackKess3($response){
-        \Log::info($response);
+    public function callbackKess3(Request $request){
+        \Log::info($request->all());
     }
 
     public function decodeFile(){
@@ -1615,7 +1615,7 @@ class FilesController extends Controller
         }
 
         $decodedAvailable = false;
-        
+
         if(AlientechFile::where('file_id', $file->id)->first()){
 
             $decodedAvailable = true;
