@@ -13,6 +13,10 @@ class File extends Model
         return $this->hasMany(RequestFile::class); 
     }
 
+    public function alientech_files(){
+        return $this->hasMany(AlientechFile::class)->where('purpose', 'download'); 
+    }
+
     public function frontend(){
         return $this->belongsTo(FrontEnd::class,'front_end_id', 'id'); 
     }

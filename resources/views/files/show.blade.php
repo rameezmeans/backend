@@ -81,8 +81,10 @@
 
                             @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
                               @if($decodedAvailable == true)
-                                <a href="{{ route('download-decoded', [$file->id, $file->file_attached]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's Decoded File</span>
-                                </a>
+                                @foreach($file->alientech_files as $alientech_file)
+                                  <a href="{{ route('download', [$file->id, $alientech_file->value]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$alientech_file->key}})</span>
+                                  </a>
+                                @endforeach
                               @endif
                             @endif
                           @endif
@@ -383,7 +385,7 @@
                       @endforeach
                       </div>
 
-                      <div class="col-xl-12">
+                      {{-- <div class="col-xl-12">
                         <h5 class="m-t-40">Upload File</h5>
                         <!-- START card -->
                         <div class="card card-default">
@@ -409,54 +411,98 @@
                           </div>
                         </div>
                         <!-- END card -->
-                      </div>
+                      </div> --}}
                       
 
                       <div class="col-xl-12 m-t-20">
                         <div class="card card-transparent flex-row">
                           <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
+
+                            @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+                              @if($decodedAvailable == true)
+                              <li class="nav-item">
+                                <a href="#" class="active show" data-toggle="tab" data-target="#tab3hellowWorld">Encode</a>
+                              </li>
+                              @endif
+                            @endif
+
                             <li class="nav-item">
-                              <a href="#" class="active show" data-toggle="tab" data-target="#tab3hellowWorld">One</a>
+                              <a href="#" data-toggle="tab" data-target="#tab3FollowUs" class="">Upload</a>
                             </li>
-                            <li class="nav-item">
-                              <a href="#" data-toggle="tab" data-target="#tab3FollowUs" class="">Two</a>
-                            </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                               <a href="#" data-toggle="tab" data-target="#tab3Inspire">Three</a>
-                            </li>
+                            </li> --}}
                           </ul>
-                          <div class="tab-content bg-white">
+                          <div class="tab-content bg-white full-width">
+
+                            @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+                              @if($decodedAvailable == true)
+
                             <div class="tab-pane active show" id="tab3hellowWorld">
                               <div class="row column-seperation">
                                 
-                                  
+                                <div class="col-xl-12 full-width">
+                                  <h5 class="">Upload Decoded File to Encode</h5>
+                                  <!-- START card -->
+                                  <div class="card card-default">
+                                    <div class="card-header ">
+                                      <div class="card-title">
+                                        Drag n' drop uploader
+                                      </div>
+                                      <div class="tools">
+                                        <a class="collapse" href="javascript:;"></a>
+                                        <a class="config" data-toggle="modal" href="#grid-config"></a>
+                                        <a class="reload" href="javascript:;"></a>
+                                        <a class="remove" href="javascript:;"></a>
+                                      </div>
+                                    </div>
+                                    <div class="card-body no-scroll no-padding">
+                                      <form action="{{route('request-file-upload')}}" class="encoded-dropzone dropzone no-margin">
+                                        @csrf
+                                        <input type="hidden" value="{{$file->id}}" name="file_id">
+                                        <div class="fallback">
+                                          <input name="file" type="file" />
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                  <!-- END card -->
+                                </div> 
                                     
-                                
-
                               </div>
                             </div>
-                            <div class="tab-pane" id="tab3FollowUs">
-                              <h3>
-                                “ Nothing is <span class="semi-bold">impossible</span>, the word
-                                itself says 'I'm <span class="semi-bold">possible</span>'! ”
-                              </h3>
-                              <p>
-                                A style represents visual customizations on top of a layout. By editing a style, you can use Squarespace's visual interface to customize your...
-                              </p>
-                              <br>
-                              <p class="pull-right">
-                                <button class="btn btn-default btn-cons" type="button">White</button>
-                                <button class="btn btn-success btn-cons" type="button">Success</button>
-                              </p>
-                            </div>
-                            <div class="tab-pane" id="tab3Inspire">
-                              <h3>
-                                Follow us &amp; get updated!
-                              </h3>
-                              <p>
-                                Instantly connect to what's most important to you. Follow your friends, experts, favorite celebrities, and breaking news.
-                              </p>
-                              <br>
+
+                            @endif
+                            @endif
+
+                            <div class="tab-pane @if($decodedAvailable == false) active show @endif" id="tab3FollowUs">
+                              <div class="col-xl-12 full-width">
+                                <h5 class="">Upload File</h5>
+                                <!-- START card -->
+                                <div class="card card-default">
+                                  <div class="card-header ">
+                                    <div class="card-title">
+                                      Drag n' drop uploader
+                                    </div>
+                                    <div class="tools">
+                                      <a class="collapse" href="javascript:;"></a>
+                                      <a class="config" data-toggle="modal" href="#grid-config"></a>
+                                      <a class="reload" href="javascript:;"></a>
+                                      <a class="remove" href="javascript:;"></a>
+                                    </div>
+                                  </div>
+                                  <div class="card-body no-scroll no-padding">
+                                    <form action="{{route('request-file-upload')}}" class="simple-dropzone dropzone no-margin">
+                                      @csrf
+                                      <input type="hidden" value="{{$file->id}}" name="file_id">
+                                      <div class="fallback">
+                                        <input name="file" type="file" />
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                                <!-- END card -->
+                              </div> 
                             </div>
                           </div>
                         </div>
@@ -877,6 +923,13 @@
 
     engineerFileDrop.on("complete", function(file) {
       engineerFileDrop.removeFile(file);
+      location.reload();
+    });
+
+    let engineerEncodedFileDrop= new Dropzone(".encoded-dropzone", {});
+
+    engineerEncodedFileDrop.on("complete", function(file) {
+      engineerEncodedFileDrop.removeFile(file);
       location.reload();
     });
 
