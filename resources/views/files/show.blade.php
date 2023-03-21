@@ -944,7 +944,8 @@
 
       setTimeout(
     function() {
-      // location.reload();
+      
+      location.reload();
       
     }, 10000);
 
