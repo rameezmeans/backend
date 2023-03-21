@@ -1627,7 +1627,7 @@ class FilesController extends Controller
 
             $decodedAvailable = true;
 
-            if(!$file->alientech_files->isEmpty()){
+            if($file->alientech_files->isEmpty()){
                 $this->saveFiles($file->id);
             }
         }
