@@ -872,8 +872,7 @@
       e.preventDefault();
 
       let request_file_id = $(this).data('request_file_id');
-
-
+      
   const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
     confirmButton: 'btn btn-success',
@@ -924,8 +923,23 @@
     });
       
     });
-    
-    let engineerFileDrop= new Dropzone(".encoded-dropzone", {});
+   
+    let engineerEncodedFileDrop= new Dropzone(".simple-dropzone", {});
+
+    engineerEncodedFileDrop.on("complete", function(file) {
+      engineerEncodedFileDrop.removeFile(file);
+      location.reload();
+    });
+
+    });
+  </script>
+
+@if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+@if($decodedAvailable == true)
+
+<script>
+
+let engineerFileDrop= new Dropzone(".encoded-dropzone", {});
 
     engineerFileDrop.on("success", function(file) {
 
@@ -959,13 +973,9 @@
       }).showToast();
     });
 
-    let engineerEncodedFileDrop= new Dropzone(".simple-dropzone", {});
+</script>
 
-    engineerEncodedFileDrop.on("complete", function(file) {
-      engineerEncodedFileDrop.removeFile(file);
-      location.reload();
-    });
+@endif
+@endif
 
-    });
-  </script>
 @endsection
