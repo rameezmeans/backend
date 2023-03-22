@@ -1865,7 +1865,7 @@ class FilesController extends Controller
         }
 
         $aboutToDownload = AlientechFile::where('purpose', 'download_encoded')->where('file_id', $file->id)->get();
-       
+        
         if($aboutToDownload){
             foreach($aboutToDownload as $f){
                 $this->saveMoreFiles($file->id, $f->id);
@@ -1873,9 +1873,7 @@ class FilesController extends Controller
                 $f->save();
             }
         }
-             
         
-
         $alientechFiles = $file->alientech_files;
 
         // $file->response_time = $this->getResponseTime($file);
