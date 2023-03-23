@@ -18,6 +18,7 @@ Route::get('get_stages', [App\Http\Controllers\ServicesController::class, 'getSt
 Route::get('get_options', [App\Http\Controllers\ServicesController::class, 'getOptions']);
 
 Route::get('lua/files', [App\Http\Controllers\FilesAPIController::class, 'files'])->name('api-get-files');
+Route::post('lua/file/set_checking_status', [App\Http\Controllers\FilesAPIController::class, 'setCheckingStatus'])->name('api-set-checking-status');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
