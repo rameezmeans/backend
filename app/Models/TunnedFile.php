@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TunnedFile extends Model
 {
     use HasFactory;
+    protected $fillable = ['file', 'file_id'];
 }
