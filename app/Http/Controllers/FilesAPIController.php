@@ -26,4 +26,18 @@ class FilesAPIController extends Controller
 
         return response()->json($arrFiles);
     }
+
+    public function setCheckingStatus(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+        $file->checking_status = $request->checking_status;
+        $flag = $file->save();
+
+        if($flag){
+            return response()->json('status changed.');
+        }
+        
+        return response()->json('status not changed.');
+
+    }
 }
