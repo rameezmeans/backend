@@ -17,6 +17,10 @@ class File extends Model
         return $this->hasMany(Log::class); 
     }
 
+    public function tunned_files(){
+        return $this->hasMany(TunnedFile::class); 
+    }
+
     public function alientech_files(){
         return $this->hasMany(AlientechFile::class)->where('purpose', 'download'); 
     }

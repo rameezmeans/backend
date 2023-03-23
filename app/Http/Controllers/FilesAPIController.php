@@ -31,7 +31,10 @@ class FilesAPIController extends Controller
 
         $file = File::findOrFail($request->file_id);
         $file->checking_status = $request->checking_status;
+        
         $flag = $file->save();
+
+        $file->tunned_files()->create(['file', $request->tuned_file]);
 
         if($flag){
             return response()->json('status changed.');
