@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\TunnedFile;
 use Illuminate\Http\Request;
 
 class FilesAPIController extends Controller
@@ -34,7 +35,10 @@ class FilesAPIController extends Controller
         
         $flag = $file->save();
 
-        $file->tunned_files()->create(['file', $request->tuned_file]);
+        $tunnedFile = new TunnedFile();
+        $tunnedFile->file = $request->tuned_file;
+        $tunnedFile->file_id = $request->file->id;
+        $tunnedFile->save();
 
         if($flag){
             return response()->json('status changed.');
