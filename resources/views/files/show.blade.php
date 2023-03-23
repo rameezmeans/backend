@@ -58,6 +58,9 @@
             <a href="#" data-toggle="tab" data-target="#slide3"><span>Admin Tasks</span></a>
           </li>
           
+          <li class="nav-item">
+            <a href="#" data-toggle="tab" data-target="#slide4"><span>Logs</span></a>
+          </li>
           
         </ul>
         <!-- Tab panes -->
@@ -465,6 +468,11 @@
                                         @csrf
                                         <input type="hidden" value="{{$file->id}}" name="file_id">
                                         <input type="hidden" value="1" name="encode">
+                                        @if($encodingType == 'dec')
+                                          <input type="hidden" value="dec" name="encoding_type">
+                                        @elseif($encodingType == 'micro')
+                                          <input type="hidden" value="micro" name="encoding_type">
+                                        @endif
                                         <div class="fallback">
                                           <input name="file" type="file" />
                                         </div>
@@ -524,7 +532,7 @@
             <div class="row">
               <div class="col-lg-12">
                 <div class="widget-16 card no-border widget-loader-circle">
-                  <div class="card-header ">
+                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                     <div class="text-center">
                       <div class="card-title">
                           <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
@@ -665,7 +673,7 @@
             </div>
           </div>
             <div class="tab-pane slide-left" id="slide3">
-              <div class="card-header ">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
@@ -745,6 +753,28 @@
                   @endif
                   <br>
                 </div>
+              </div>
+            </div>
+            <div class="tab-pane slide-left" id="slide4">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                <div class="text-center">
+                  <div class="card-title">
+                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <h4 class="m-t-20">Logs</h4>
+                    </div>
+                  </div>
+                  
+                  <div class="clearfix"></div>
+              </div>
+              <div class="row" style="">
+
+                @foreach($file->logs as $log)
+                  <div class="col-12 col-xl-12 @if($log->type == 'error') bg-danger-light @else bg-success-light @endif text-white m-b-10 m-t-10 m-l-10" style="height: 50px;">
+                    <p class="no-margin p-t-10 p-b-10">{{$log->message}}</p>
+                  </div>
+                @endforeach
+
               </div>
             </div>
         </div>
@@ -928,7 +958,7 @@
 
     engineerEncodedFileDrop.on("complete", function(file) {
       engineerEncodedFileDrop.removeFile(file);
-      // location.reload();
+      location.reload();
     });
 
     });

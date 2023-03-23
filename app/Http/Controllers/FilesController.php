@@ -19,6 +19,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Controllers\ReminderManagerController;
 use App\Models\AlientechFile;
 use App\Models\Key;
+use App\Models\Log;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
@@ -1193,30 +1194,42 @@ class FilesController extends Controller
             $slotID = AlientechFile::where('key', 'slotGUID')->where('file_id', $file->id)->first()->value;
             $token = Key::where('key', 'alientech_access_token')->first()->value;
 
-            $response = $this->uploadFileToEncode($token, $path, $slotID);
-
-            // dd($response);
+            $encodingType = $request->encoding_type;
+            $response = $this->uploadFileToEncode($token, $path, $slotID, $encodingType);
 
             if( isset($response->guid) ){
 
-                $url = "https://encodingapi.alientech.to/api/kess3/encode-obd-file";
+                if($encodingType == 'dec'){
+                    $url = "https://encodingapi.alientech.to/api/kess3/encode-obd-file";
+                }
+                else{
+                    $url = "https://encodingapi.alientech.to/api/kess3/encode-boot-bench-file";
+                }
 
                 $headers = [
                 'X-Alientech-ReCodAPI-LLC' => $token,
                 ];
                 
-                $postInput = [
-                    'userCustomerCode' => 'user1',
-                    'kess3FileSlotGUID' => $slotID,
-                    'modifiedFileGUID' => $response->guid,
-                    'WillCorrectCVN' => true,
-                ];
+                if($encodingType == 'dec'){
+                    $postInput = [
+                        'userCustomerCode' => 'user1',
+                        'kess3FileSlotGUID' => $slotID,
+                        'modifiedFileGUID' => $response->guid,
+                        'WillCorrectCVN' => true,
+                    ];
+                }
+                else{
+                    $postInput = [
+                        'userCustomerCode' => 'user1',
+                        'kess3FileSlotGUID' => $slotID,
+                        'microFileGUID' => $response->guid,
+                        'WillCorrectCVN' => true,
+                    ];
+                }
 
                 $syncResponse = Http::withHeaders($headers)->post($url, $postInput);                
                 $syncResponseBody = json_decode($syncResponse->getBody(), true);
 
-                // dd($syncResponseBody);
-                
                 if(!AlientechFile::where('file_id', $file->id)->where('purpose', 'download_encoded')->first()){
 
                     $obj = new AlientechFile();
@@ -1231,7 +1244,8 @@ class FilesController extends Controller
 
             }
             else{
-                // dd($response);
+
+                $this->makeLogEntry($file->id, 'error', 'File Upload error. Line: 1236.');
                 return response('Uploaded file is not Compatible', 500);
             }
         }
@@ -1372,7 +1386,17 @@ class FilesController extends Controller
 
     // }
 
-    public function uploadFileToEncode($token, $path, $slotID){
+    public function makeLogEntry($fileID, $type, $message){
+
+        $log = new Log();
+        $log->file_id = $fileID;
+        $log->type = $type;
+        $log->message = $message;
+        $log->save();
+
+    }
+
+    public function uploadFileToEncode($token, $path, $slotID, $encodingType){
 
         $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotID."/reopen";
 
@@ -1383,7 +1407,14 @@ class FilesController extends Controller
 
         $response = Http::withHeaders($headers)->post($url, []);
         
-        $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/OBDModified';
+        if($encodingType == 'dec'){
+            $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/OBDModified';
+        }
+        else if($encodingType == 'micro'){
+            $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/BootBenchModifiedMicro';
+        }
+
+        // $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/BootBenchModifiedEEPROM';
     
         if (function_exists('curl_file_create')) { // php 5.5+
             $cFile = curl_file_create($path);
@@ -1845,7 +1876,7 @@ class FilesController extends Controller
             $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
         }
 
-            // $file->reupload_time = Carbon::now();
+        // $file->reupload_time = Carbon::now();
         
         if(!$file){
             abort(404);
@@ -1853,13 +1884,22 @@ class FilesController extends Controller
 
         $decodedAvailable = false;
 
+        $encodingType = 'micro';
+
+        $setEncodingType = AlientechFile::where('purpose','download')->where('file_id', $file->id)->first();
+
+        if($setEncodingType){
+            if($setEncodingType->key == 'dec'){
+                $encodingType = 'dec';
+            }
+        }
+
         if(AlientechFile::where('file_id', $file->id)->first()){
 
             $decodedAvailable = true;
             
             if($file->alientech_files->isEmpty()){
                 $this->saveFiles($file->id);
-               
             }
         }
 
@@ -1931,7 +1971,7 @@ class FilesController extends Controller
             $comments = null;
         }
         
-        return view('files.show', ['alientechFiles' => $alientechFiles, 'decodedAvailable' => $decodedAvailable, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
+        return view('files.show', ['encodingType' => $encodingType, 'alientechFiles' => $alientechFiles, 'decodedAvailable' => $decodedAvailable, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
     }
 
     public function saveMoreFiles($id, $alientechFileID){
@@ -1952,17 +1992,27 @@ class FilesController extends Controller
         $response = Http::withHeaders($headers)->get($getsyncOpURL);
         $responseBody = json_decode($response->getBody(), true);
 
+       
+
+        if(!isset($responseBody['result']['name'])){
+            $this->makeLogEntry($file->id, 'error', 'line 1998; file is not uploaded successfully.');
+        }
+        else{
+
         $var = $responseBody['result']['name'];
         $fileName = substr($var, strrpos($var, '/') + 1);
-        
-        $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechGUID;
 
-        $headers = [
-            'X-Alientech-ReCodAPI-LLC' => $token,
-        ];
+        $fileName = str_replace('#', '', $fileName);
+        // $fileName = str_replace(' ', '_', $fileName);
+        
+        // $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechGUID;
+
+        // $headers = [
+        //     'X-Alientech-ReCodAPI-LLC' => $token,
+        // ];
   
-        $response = Http::withHeaders($headers)->get($getsyncOpURL);
-        $responseBody = json_decode($response->getBody(), true);
+        // $response = Http::withHeaders($headers)->get($getsyncOpURL);
+        // $responseBody = json_decode($response->getBody(), true);
 
         $slotGuid = $responseBody['slotGUID'];
         
@@ -1983,6 +2033,8 @@ class FilesController extends Controller
 
             // specify the path and filename for the downloaded file
             $filepath = $responseBody['name'];
+
+            $filepath = str_replace('#', '', $filepath);
 
             // save the decoded string to a file
             $flag = file_put_contents($filepath, $base64_string);
@@ -2144,6 +2196,7 @@ class FilesController extends Controller
         // return response('file uploaded', 200);
 
         }
+    }
 
         
     }
