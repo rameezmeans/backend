@@ -37,7 +37,7 @@ class FilesAPIController extends Controller
 
         $tunnedFile = new TunnedFile();
         $tunnedFile->file = $request->tuned_file;
-        $tunnedFile->file_id = $request->file->id;
+        $tunnedFile->file_id = $file->id;
         $tunnedFile->save();
 
         if($flag){
