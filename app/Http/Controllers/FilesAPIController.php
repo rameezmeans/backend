@@ -35,10 +35,12 @@ class FilesAPIController extends Controller
         
         $flag = $file->save();
 
-        $tunnedFile = new TunnedFile();
-        $tunnedFile->file = $request->tuned_file;
-        $tunnedFile->file_id = $file->id;
-        $tunnedFile->save();
+        if(isset($request->tuned_file) && $request->tuned_file){
+            $tunnedFile = new TunnedFile();
+            $tunnedFile->file = $request->tuned_file;
+            $tunnedFile->file_id = $file->id;
+            $tunnedFile->save();
+        }
 
         if($flag){
             return response()->json('status changed.');
