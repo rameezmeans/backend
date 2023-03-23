@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('get_stages', [App\Http\Controllers\ServicesController::class, 'getStages']);
 Route::get('get_options', [App\Http\Controllers\ServicesController::class, 'getOptions']);
 
-Route::get('lua/file/{id}', [App\Http\Controllers\FilesAPIController::class, 'getFile'])->name('api-get-file');
+Route::get('lua/files', [App\Http\Controllers\FilesAPIController::class, 'files'])->name('api-get-files');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
