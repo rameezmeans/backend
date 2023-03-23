@@ -729,8 +729,7 @@ class FilesController extends Controller
                 $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
 
                 $headers = [
-                // 'Content-Type' => 'multipart/form-data',
-                'X-Alientech-ReCodAPI-LLC' => $token,
+                    'X-Alientech-ReCodAPI-LLC' => $token,
                 ];
 
                 $response = Http::withHeaders($headers)->post($url, []);
@@ -1420,10 +1419,10 @@ class FilesController extends Controller
         $file = File::findOrFail($request->file_id);
 
         $fileName = $attachment->getClientOriginalName();
-        
-        $newFileName = str_replace('#', '_', $fileName);
-        $newFileName = str_replace(' ', '_', $fileName);
 
+        $newFileName = str_replace('#', '', $fileName);
+        $newFileName = str_replace(' ', '_', $newFileName);
+        
         $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$newFileName);
         
         $engineerFile = new RequestFile();

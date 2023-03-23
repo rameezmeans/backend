@@ -928,7 +928,7 @@
 
     engineerEncodedFileDrop.on("complete", function(file) {
       engineerEncodedFileDrop.removeFile(file);
-      location.reload();
+      // location.reload();
     });
 
     });
