@@ -18,7 +18,7 @@ class FilesAPIController extends Controller
             $temp['file_id'] = $file->id;
             $temp['stage'] = $file->stages;
             $temp['options'] = $file->options;
-            $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.'/'.$file->file_attached;
+            $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached;
             $temp['checked'] = $file->checking_status;
 
             $arrFiles []= $temp;
