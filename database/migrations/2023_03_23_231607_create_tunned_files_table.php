@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('tunned_files', function (Blueprint $table) {
             $table->id();
+            $table->string('file');
+            $table->foreignId('file_id')->onDelete('cascade');
             $table->timestamps();
         });
     }
