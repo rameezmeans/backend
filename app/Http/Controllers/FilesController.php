@@ -331,15 +331,15 @@ class FilesController extends Controller
     public function updateFileVehicle(Request $request) {
         
         $this->validate($request, [
-            'brand' => 'required',
-            'model' => 'required',
+            // 'brand' => 'required',
+            // 'model' => 'required',
             'engine' => 'required',
             'version' => 'required'
         ]);
 
         $file = File::findOrFail($request->id);
-        $file->brand = $request->brand;
-        $file->model = $request->model;
+        // $file->brand = $request->brand;
+        // $file->model = $request->model;
         $file->version = $request->version;
         $file->engine = $request->engine;
         $file->ecu = $request->ecu;
@@ -434,71 +434,71 @@ class FilesController extends Controller
     }
 
     public function editFile($id) {
-        //disabled at the moment.
-    //     $file = File::findOrFail($id);
+        
+        $file = File::findOrFail($id);
 
-    //     $brandsObjects = Vehicle::OrderBy('make', 'asc')->select('make')->distinct()->get();
+        $brandsObjects = Vehicle::OrderBy('make', 'asc')->select('make')->distinct()->get();
 
-    //     $brands = [];
-    //     foreach($brandsObjects as $b){
-    //         if($b->make != '')
-    //         $brands []= $b->make;
-    //     }
+        $brands = [];
+        foreach($brandsObjects as $b){
+            if($b->make != '')
+            $brands []= $b->make;
+        }
 
-    //     $modelsObjects = Vehicle::OrderBy('model', 'asc')->select('model')->whereNotNull('model')->distinct()->where('make', '=', $file->brand)->get();
+        $modelsObjects = Vehicle::OrderBy('model', 'asc')->select('model')->whereNotNull('model')->distinct()->where('make', '=', $file->brand)->get();
 
-    //     $models = [];
-    //     foreach($modelsObjects as $m){
-    //         if($m->model != '')
-    //         $models []= $m->model;
-    //     }
+        $models = [];
+        foreach($modelsObjects as $m){
+            if($m->model != '')
+            $models []= $m->model;
+        }
 
-    //     $versionsObjects = Vehicle::OrderBy('generation', 'asc')->whereNotNull('generation')->select('generation')->distinct()
-    //     ->where('Make', '=', $file->brand)
-    //     ->where('Model', '=', $file->model)
-    //     ->get();
+        $versionsObjects = Vehicle::OrderBy('generation', 'asc')->whereNotNull('generation')->select('generation')->distinct()
+        ->where('Make', '=', $file->brand)
+        ->where('Model', '=', $file->model)
+        ->get();
 
-    //     $versions = [];
-    //     foreach($versionsObjects as $v){
-    //         if($v->generation != '')
-    //         $versions []= $v->generation;   
-    //     }        
+        $versions = [];
+        foreach($versionsObjects as $v){
+            if($v->generation != '')
+            $versions []= $v->generation;   
+        }        
 
-    //     $enginesObjects = Vehicle::OrderBy('engine', 'asc')->whereNotNull('engine')->select('engine')->distinct()
-    //     ->where('Make', '=', $file->brand)
-    //     ->where('Model', '=', $file->model)
-    //     ->where('Generation', '=', $file->version)
-    //     ->get();
+        $enginesObjects = Vehicle::OrderBy('engine', 'asc')->whereNotNull('engine')->select('engine')->distinct()
+        ->where('Make', '=', $file->brand)
+        ->where('Model', '=', $file->model)
+        ->where('Generation', '=', $file->version)
+        ->get();
 
-    //     $engines = [];
-    //     foreach($enginesObjects as $e){
-    //         if($e->engine != '')
-    //         $engines []= $e->engine;   
-    //     }   
+        $engines = [];
+        foreach($enginesObjects as $e){
+            if($e->engine != '')
+            $engines []= $e->engine;   
+        }   
 
-    //     $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->whereNotNull('Engine_ECU')->select('Engine_ECU')->distinct()
-    //     ->where('Make', '=', $file->brand)
-    //     ->where('Model', '=', $file->model)
-    //     ->where('Generation', '=', $file->version)
-    //     ->where('Engine', '=', $file->engine)
-    //     ->get();
+        $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->whereNotNull('Engine_ECU')->select('Engine_ECU')->distinct()
+        ->where('Make', '=', $file->brand)
+        ->where('Model', '=', $file->model)
+        ->where('Generation', '=', $file->version)
+        ->where('Engine', '=', $file->engine)
+        ->get();
 
-    //     $ecusArray = [];
+        $ecusArray = [];
 
-    //     foreach($ecus as $e){
-    //         $temp = explode(' / ', $e->Engine_ECU);
-    //         $ecusArray = array_merge($ecusArray,$temp);
-    //     }
+        foreach($ecus as $e){
+            $temp = explode(' / ', $e->Engine_ECU);
+            $ecusArray = array_merge($ecusArray,$temp);
+        }
 
-    //     $ecusArray = array_values(array_unique($ecusArray));
+        $ecusArray = array_values(array_unique($ecusArray));
 
-    //     return view('files.edit', [ 'file' => $file, 
-    //     'brands' => $brands, 
-    //     'models' => $models, 
-    //     'versions' => $versions,
-    //     'engines' => $engines,
-    //     'ecus' => $ecusArray
-    // ]);
+            return view('files.edit', [ 'file' => $file, 
+            'brands' => $brands, 
+            'models' => $models, 
+            'versions' => $versions,
+            'engines' => $engines,
+            'ecus' => $ecusArray
+        ]);
     }
 
     public function saveFeedbackEmailSchedual(Request $request) {
@@ -745,7 +745,7 @@ class FilesController extends Controller
         $file_path = $path.$file_name;
         return response()->download($file_path);
     }
-    
+
     // /**
     //  * Show the files table.
     //  *
