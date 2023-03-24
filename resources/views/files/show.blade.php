@@ -279,10 +279,12 @@
                         </div>
                         @endif
 
-                        <div class="text-center m-t-20">                    
-                          <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
-                          <a class="btn btn-success btn-cons m-b-10" href="{{route('edit-file', $file->id)}}"><span class="bold">Edit File</span></a>
-                        </div>
+                        @if(Auth::user()->is_admin or Auth::user()->is_head)
+                          <div class="text-center m-t-20">                    
+                            <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
+                            <a class="btn btn-success btn-cons m-b-10" href="{{route('edit-file', $file->id)}}"><span class="bold">Edit File</span></a>
+                          </div>
+                        @endif
                         
                       </div>
         

@@ -48,7 +48,7 @@
                 <div>
                   <label>Brand</label>
                     <div class="form-group">
-                        <select name="brand" id="brand" class="select full-width" data-init-plugin="select2">
+                        <select disabled name="brand" id="brand" class="select full-width" data-init-plugin="select2">
                             @foreach ($brands as $brand)
                                 <option @if($file->brand==$brand) selected @endif value="{{ $brand }}">{{$brand}}</option>
                             @endforeach
@@ -63,7 +63,7 @@
                 <div>
                  <label>Model</label>
                     <div class="form-group">
-                        <select name="model" id="model" class="select full-width" data-init-plugin="select2">
+                        <select disabled name="model" id="model" class="select full-width" data-init-plugin="select2">
                             @foreach ($models as $model)
                                 <option @if($file->model==$model) selected @endif value="{{ $model }}">{{$model}}</option>
                             @endforeach

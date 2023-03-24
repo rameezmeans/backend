@@ -331,15 +331,15 @@ class FilesController extends Controller
     public function updateFileVehicle(Request $request) {
         
         $this->validate($request, [
-            'brand' => 'required',
-            'model' => 'required',
+            // 'brand' => 'required',
+            // 'model' => 'required',
             'engine' => 'required',
             'version' => 'required'
         ]);
 
         $file = File::findOrFail($request->id);
-        $file->brand = $request->brand;
-        $file->model = $request->model;
+        // $file->brand = $request->brand;
+        // $file->model = $request->model;
         $file->version = $request->version;
         $file->engine = $request->engine;
         $file->ecu = $request->ecu;
@@ -434,71 +434,71 @@ class FilesController extends Controller
     }
 
     public function editFile($id) {
-        //disabled at the moment.
-    //     $file = File::findOrFail($id);
+        
+        $file = File::findOrFail($id);
 
-    //     $brandsObjects = Vehicle::OrderBy('make', 'asc')->select('make')->distinct()->get();
+        $brandsObjects = Vehicle::OrderBy('make', 'asc')->select('make')->distinct()->get();
 
-    //     $brands = [];
-    //     foreach($brandsObjects as $b){
-    //         if($b->make != '')
-    //         $brands []= $b->make;
-    //     }
+        $brands = [];
+        foreach($brandsObjects as $b){
+            if($b->make != '')
+            $brands []= $b->make;
+        }
 
-    //     $modelsObjects = Vehicle::OrderBy('model', 'asc')->select('model')->whereNotNull('model')->distinct()->where('make', '=', $file->brand)->get();
+        $modelsObjects = Vehicle::OrderBy('model', 'asc')->select('model')->whereNotNull('model')->distinct()->where('make', '=', $file->brand)->get();
 
-    //     $models = [];
-    //     foreach($modelsObjects as $m){
-    //         if($m->model != '')
-    //         $models []= $m->model;
-    //     }
+        $models = [];
+        foreach($modelsObjects as $m){
+            if($m->model != '')
+            $models []= $m->model;
+        }
 
-    //     $versionsObjects = Vehicle::OrderBy('generation', 'asc')->whereNotNull('generation')->select('generation')->distinct()
-    //     ->where('Make', '=', $file->brand)
-    //     ->where('Model', '=', $file->model)
-    //     ->get();
+        $versionsObjects = Vehicle::OrderBy('generation', 'asc')->whereNotNull('generation')->select('generation')->distinct()
+        ->where('Make', '=', $file->brand)
+        ->where('Model', '=', $file->model)
+        ->get();
 
-    //     $versions = [];
-    //     foreach($versionsObjects as $v){
-    //         if($v->generation != '')
-    //         $versions []= $v->generation;   
-    //     }        
+        $versions = [];
+        foreach($versionsObjects as $v){
+            if($v->generation != '')
+            $versions []= $v->generation;   
+        }        
 
-    //     $enginesObjects = Vehicle::OrderBy('engine', 'asc')->whereNotNull('engine')->select('engine')->distinct()
-    //     ->where('Make', '=', $file->brand)
-    //     ->where('Model', '=', $file->model)
-    //     ->where('Generation', '=', $file->version)
-    //     ->get();
+        $enginesObjects = Vehicle::OrderBy('engine', 'asc')->whereNotNull('engine')->select('engine')->distinct()
+        ->where('Make', '=', $file->brand)
+        ->where('Model', '=', $file->model)
+        ->where('Generation', '=', $file->version)
+        ->get();
 
-    //     $engines = [];
-    //     foreach($enginesObjects as $e){
-    //         if($e->engine != '')
-    //         $engines []= $e->engine;   
-    //     }   
+        $engines = [];
+        foreach($enginesObjects as $e){
+            if($e->engine != '')
+            $engines []= $e->engine;   
+        }   
 
-    //     $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->whereNotNull('Engine_ECU')->select('Engine_ECU')->distinct()
-    //     ->where('Make', '=', $file->brand)
-    //     ->where('Model', '=', $file->model)
-    //     ->where('Generation', '=', $file->version)
-    //     ->where('Engine', '=', $file->engine)
-    //     ->get();
+        $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->whereNotNull('Engine_ECU')->select('Engine_ECU')->distinct()
+        ->where('Make', '=', $file->brand)
+        ->where('Model', '=', $file->model)
+        ->where('Generation', '=', $file->version)
+        ->where('Engine', '=', $file->engine)
+        ->get();
 
-    //     $ecusArray = [];
+        $ecusArray = [];
 
-    //     foreach($ecus as $e){
-    //         $temp = explode(' / ', $e->Engine_ECU);
-    //         $ecusArray = array_merge($ecusArray,$temp);
-    //     }
+        foreach($ecus as $e){
+            $temp = explode(' / ', $e->Engine_ECU);
+            $ecusArray = array_merge($ecusArray,$temp);
+        }
 
-    //     $ecusArray = array_values(array_unique($ecusArray));
+        $ecusArray = array_values(array_unique($ecusArray));
 
-    //     return view('files.edit', [ 'file' => $file, 
-    //     'brands' => $brands, 
-    //     'models' => $models, 
-    //     'versions' => $versions,
-    //     'engines' => $engines,
-    //     'ecus' => $ecusArray
-    // ]);
+            return view('files.edit', [ 'file' => $file, 
+            'brands' => $brands, 
+            'models' => $models, 
+            'versions' => $versions,
+            'engines' => $engines,
+            'ecus' => $ecusArray
+        ]);
     }
 
     public function saveFeedbackEmailSchedual(Request $request) {
@@ -746,107 +746,107 @@ class FilesController extends Controller
         return response()->download($file_path);
     }
 
-    /**
-     * Show the files table.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
+    // /**
+    //  * Show the files table.
+    //  *
+    //  * @return \Illuminate\Contracts\Support\Renderable
+    //  */
+    // public function index()
+    // {
 
-        // File::where('is_credited', 0)->delete();
+    //     // File::where('is_credited', 0)->delete();
 
-        if(Auth::user()->is_admin || Auth::user()->is_head){
-            // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
-            $files = File::select('*')
-            ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
-            ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
-            ->orderBy('ss', 'asc')
-            ->orderBy('s', 'asc')
-            ->orderBy('created_at', 'desc')
-            ->where('is_credited', 1)
-            ->get();
+    //     // if(Auth::user()->is_admin || Auth::user()->is_head){
+    //         // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
+    //         // $files = File::select('*')
+    //         // ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
+    //         // ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
+    //         // ->orderBy('ss', 'asc')
+    //         // ->orderBy('s', 'asc')
+    //         // ->orderBy('created_at', 'desc')
+    //         // ->where('is_credited', 1)
+    //         // ->get();
             
-        }
-        else if(Auth::user()->is_engineer){
-            // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
-            $files = File::select('*')
-            ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
-            ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
-            ->orderBy('ss', 'asc')
-            ->orderBy('s', 'asc')
-            ->orderBy('created_at', 'desc')
-            ->where('is_credited', 1)
-            ->where('assigned_to', Auth::user()->id)
-            ->get();
-        }
+    //     // }
+    //     // else if(Auth::user()->is_engineer){
+    //     //     // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
+    //     //     $files = File::select('*')
+    //     //     ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
+    //     //     ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
+    //     //     ->orderBy('ss', 'asc')
+    //     //     ->orderBy('s', 'asc')
+    //     //     ->orderBy('created_at', 'desc')
+    //     //     ->where('is_credited', 1)
+    //     //     // ->where('assigned_to', Auth::user()->id)
+    //     //     ->get();
+    //     // }
 
-        // foreach($files as $file){
-        //     if($file->reupload_time){
-        //         $file->response_time = $this->getResponseTime($file);
-        //         $file->save();
-        //     }
-        // }
+    //     // foreach($files as $file){
+    //     //     if($file->reupload_time){
+    //     //         $file->response_time = $this->getResponseTime($file);
+    //     //         $file->save();
+    //     //     }
+    //     // }
 
-        // $reminders = EmailReminder::all();
+    //     // $reminders = EmailReminder::all();
 
-        // $dateCheck = date('Y-m-d');
+    //     // $dateCheck = date('Y-m-d');
 
-        // // dd($dateCheck);
-        // // dd($dateCheck);
-        // // $dateCheck = '2023-02-01';
+    //     // // dd($dateCheck);
+    //     // // dd($dateCheck);
+    //     // // $dateCheck = '2023-02-01';
 
-        // $current = Carbon::parse(Carbon::createFromTimestamp(strtotime($dateCheck))->format('Y-m-d'));
+    //     // $current = Carbon::parse(Carbon::createFromTimestamp(strtotime($dateCheck))->format('Y-m-d'));
         
-        // // dd($current);
+    //     // // dd($current);
         
-        // // dd($current);
-        // // dd(Carbon::now());
+    //     // // dd($current);
+    //     // // dd(Carbon::now());
 
-        // $schedualer = Schedualer::take(1)->first();
+    //     // $schedualer = Schedualer::take(1)->first();
 
-        // $days = $schedualer->days;
-        // $time = $schedualer->time_of_day;
+    //     // $days = $schedualer->days;
+    //     // $time = $schedualer->time_of_day;
 
-        // foreach($reminders as $reminder){
+    //     // foreach($reminders as $reminder){
 
-        //     // dd($reminder->set_time);
+    //     //     // dd($reminder->set_time);
 
-        //     $reminderSetDate = Carbon::parse(Carbon::createFromTimestamp(strtotime($reminder->set_time))->format('Y-m-d'));
+    //     //     $reminderSetDate = Carbon::parse(Carbon::createFromTimestamp(strtotime($reminder->set_time))->format('Y-m-d'));
             
-        //     // dd($reminderSetDate);
+    //     //     // dd($reminderSetDate);
 
-        //     $emailTime = $reminderSetDate->addDays($days);
+    //     //     $emailTime = $reminderSetDate->addDays($days);
 
-        //     // dd($emailTime);
+    //     //     // dd($emailTime);
 
-        //     $result = $emailTime->eq($current);
+    //     //     $result = $emailTime->eq($current);
 
-        //     // dd($result);
+    //     //     // dd($result);
 
-        //     if($result){
-        //             // dd(Carbon::parse($time));
-        //             // $timeGreater = now()->greaterThan(Carbon::parse($time));
-        //             $timeGreater = true;
-        //             // $timeGreater = now()->greaterThan(Carbon::parse());
+    //     //     if($result){
+    //     //             // dd(Carbon::parse($time));
+    //     //             // $timeGreater = now()->greaterThan(Carbon::parse($time));
+    //     //             $timeGreater = true;
+    //     //             // $timeGreater = now()->greaterThan(Carbon::parse());
 
-        //        if($timeGreater){
-        //             //    $this->generateFeedbackEmail($reminder->file_id, $reminder->request_file_id, $reminder->user_id);
-        //             $reminder->cycle = $reminder->cycle - 1;
+    //     //        if($timeGreater){
+    //     //             //    $this->generateFeedbackEmail($reminder->file_id, $reminder->request_file_id, $reminder->user_id);
+    //     //             $reminder->cycle = $reminder->cycle - 1;
 
-        //             if($reminder->cycle == 0){
-        //                 $reminder->delete();
-        //             }
-        //             else{
-        //                 $reminder->set_time = Carbon::now();
-        //                 $reminder->save();
-        //             }
-        //        }
-        //     }
-        // }
+    //     //             if($reminder->cycle == 0){
+    //     //                 $reminder->delete();
+    //     //             }
+    //     //             else{
+    //     //                 $reminder->set_time = Carbon::now();
+    //     //                 $reminder->save();
+    //     //             }
+    //     //        }
+    //     //     }
+    //     // }
         
-        return view('files.files', ['files' => $files]);
-    }
+    //     return view('files.files', ['files' => $files]);
+    // }
 
     public function deleteMessage(Request $request)
     {
@@ -1735,7 +1735,8 @@ class FilesController extends Controller
             $file = File::where('id', $id)->where('is_credited', 1)->first();
         }
         else if(Auth::user()->is_engineer){
-            $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
+            $file = File::where('id',$id)->where('is_credited', 1)->first();
+            // $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
         }
 
         // $file->reupload_time = Carbon::now();
@@ -1893,7 +1894,9 @@ class FilesController extends Controller
             $base64_string = $responseBody['data'];
 
             // specify the path and filename for the downloaded file
-            $filepath = $responseBody['name'].'_'.$file->id;
+            $filepath = $responseBody['name'];
+
+            // dd($filepath);
 
             $filepath = str_replace('#', '', $filepath);
 
