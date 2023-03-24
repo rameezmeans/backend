@@ -756,7 +756,7 @@ class FilesController extends Controller
 
         // File::where('is_credited', 0)->delete();
 
-        if(Auth::user()->is_admin || Auth::user()->is_head){
+        // if(Auth::user()->is_admin || Auth::user()->is_head){
             // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
             $files = File::select('*')
             ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
@@ -767,19 +767,19 @@ class FilesController extends Controller
             ->where('is_credited', 1)
             ->get();
             
-        }
-        else if(Auth::user()->is_engineer){
-            // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
-            $files = File::select('*')
-            ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
-            ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
-            ->orderBy('ss', 'asc')
-            ->orderBy('s', 'asc')
-            ->orderBy('created_at', 'desc')
-            ->where('is_credited', 1)
-            ->where('assigned_to', Auth::user()->id)
-            ->get();
-        }
+        // }
+        // else if(Auth::user()->is_engineer){
+        //     // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
+        //     $files = File::select('*')
+        //     ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
+        //     ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
+        //     ->orderBy('ss', 'asc')
+        //     ->orderBy('s', 'asc')
+        //     ->orderBy('created_at', 'desc')
+        //     ->where('is_credited', 1)
+        //     // ->where('assigned_to', Auth::user()->id)
+        //     ->get();
+        // }
 
         // foreach($files as $file){
         //     if($file->reupload_time){
@@ -1735,7 +1735,8 @@ class FilesController extends Controller
             $file = File::where('id', $id)->where('is_credited', 1)->first();
         }
         else if(Auth::user()->is_engineer){
-            $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
+            $file = File::where('id',$id)->where('is_credited', 1)->first();
+            // $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
         }
 
         // $file->reupload_time = Carbon::now();
@@ -1893,7 +1894,9 @@ class FilesController extends Controller
             $base64_string = $responseBody['data'];
 
             // specify the path and filename for the downloaded file
-            $filepath = $responseBody['name'].'_'.$file->id;
+            $filepath = $responseBody['name'];
+
+            // dd($filepath);
 
             $filepath = str_replace('#', '', $filepath);
 
