@@ -745,108 +745,108 @@ class FilesController extends Controller
         $file_path = $path.$file_name;
         return response()->download($file_path);
     }
+    
+    // /**
+    //  * Show the files table.
+    //  *
+    //  * @return \Illuminate\Contracts\Support\Renderable
+    //  */
+    // public function index()
+    // {
 
-    /**
-     * Show the files table.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
+    //     // File::where('is_credited', 0)->delete();
 
-        // File::where('is_credited', 0)->delete();
-
-        // if(Auth::user()->is_admin || Auth::user()->is_head){
-            // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
-            $files = File::select('*')
-            ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
-            ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
-            ->orderBy('ss', 'asc')
-            ->orderBy('s', 'asc')
-            ->orderBy('created_at', 'desc')
-            ->where('is_credited', 1)
-            ->get();
+    //     // if(Auth::user()->is_admin || Auth::user()->is_head){
+    //         // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
+    //         // $files = File::select('*')
+    //         // ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
+    //         // ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
+    //         // ->orderBy('ss', 'asc')
+    //         // ->orderBy('s', 'asc')
+    //         // ->orderBy('created_at', 'desc')
+    //         // ->where('is_credited', 1)
+    //         // ->get();
             
-        // }
-        // else if(Auth::user()->is_engineer){
-        //     // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
-        //     $files = File::select('*')
-        //     ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
-        //     ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
-        //     ->orderBy('ss', 'asc')
-        //     ->orderBy('s', 'asc')
-        //     ->orderBy('created_at', 'desc')
-        //     ->where('is_credited', 1)
-        //     // ->where('assigned_to', Auth::user()->id)
-        //     ->get();
-        // }
+    //     // }
+    //     // else if(Auth::user()->is_engineer){
+    //     //     // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
+    //     //     $files = File::select('*')
+    //     //     ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
+    //     //     ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
+    //     //     ->orderBy('ss', 'asc')
+    //     //     ->orderBy('s', 'asc')
+    //     //     ->orderBy('created_at', 'desc')
+    //     //     ->where('is_credited', 1)
+    //     //     // ->where('assigned_to', Auth::user()->id)
+    //     //     ->get();
+    //     // }
 
-        // foreach($files as $file){
-        //     if($file->reupload_time){
-        //         $file->response_time = $this->getResponseTime($file);
-        //         $file->save();
-        //     }
-        // }
+    //     // foreach($files as $file){
+    //     //     if($file->reupload_time){
+    //     //         $file->response_time = $this->getResponseTime($file);
+    //     //         $file->save();
+    //     //     }
+    //     // }
 
-        // $reminders = EmailReminder::all();
+    //     // $reminders = EmailReminder::all();
 
-        // $dateCheck = date('Y-m-d');
+    //     // $dateCheck = date('Y-m-d');
 
-        // // dd($dateCheck);
-        // // dd($dateCheck);
-        // // $dateCheck = '2023-02-01';
+    //     // // dd($dateCheck);
+    //     // // dd($dateCheck);
+    //     // // $dateCheck = '2023-02-01';
 
-        // $current = Carbon::parse(Carbon::createFromTimestamp(strtotime($dateCheck))->format('Y-m-d'));
+    //     // $current = Carbon::parse(Carbon::createFromTimestamp(strtotime($dateCheck))->format('Y-m-d'));
         
-        // // dd($current);
+    //     // // dd($current);
         
-        // // dd($current);
-        // // dd(Carbon::now());
+    //     // // dd($current);
+    //     // // dd(Carbon::now());
 
-        // $schedualer = Schedualer::take(1)->first();
+    //     // $schedualer = Schedualer::take(1)->first();
 
-        // $days = $schedualer->days;
-        // $time = $schedualer->time_of_day;
+    //     // $days = $schedualer->days;
+    //     // $time = $schedualer->time_of_day;
 
-        // foreach($reminders as $reminder){
+    //     // foreach($reminders as $reminder){
 
-        //     // dd($reminder->set_time);
+    //     //     // dd($reminder->set_time);
 
-        //     $reminderSetDate = Carbon::parse(Carbon::createFromTimestamp(strtotime($reminder->set_time))->format('Y-m-d'));
+    //     //     $reminderSetDate = Carbon::parse(Carbon::createFromTimestamp(strtotime($reminder->set_time))->format('Y-m-d'));
             
-        //     // dd($reminderSetDate);
+    //     //     // dd($reminderSetDate);
 
-        //     $emailTime = $reminderSetDate->addDays($days);
+    //     //     $emailTime = $reminderSetDate->addDays($days);
 
-        //     // dd($emailTime);
+    //     //     // dd($emailTime);
 
-        //     $result = $emailTime->eq($current);
+    //     //     $result = $emailTime->eq($current);
 
-        //     // dd($result);
+    //     //     // dd($result);
 
-        //     if($result){
-        //             // dd(Carbon::parse($time));
-        //             // $timeGreater = now()->greaterThan(Carbon::parse($time));
-        //             $timeGreater = true;
-        //             // $timeGreater = now()->greaterThan(Carbon::parse());
+    //     //     if($result){
+    //     //             // dd(Carbon::parse($time));
+    //     //             // $timeGreater = now()->greaterThan(Carbon::parse($time));
+    //     //             $timeGreater = true;
+    //     //             // $timeGreater = now()->greaterThan(Carbon::parse());
 
-        //        if($timeGreater){
-        //             //    $this->generateFeedbackEmail($reminder->file_id, $reminder->request_file_id, $reminder->user_id);
-        //             $reminder->cycle = $reminder->cycle - 1;
+    //     //        if($timeGreater){
+    //     //             //    $this->generateFeedbackEmail($reminder->file_id, $reminder->request_file_id, $reminder->user_id);
+    //     //             $reminder->cycle = $reminder->cycle - 1;
 
-        //             if($reminder->cycle == 0){
-        //                 $reminder->delete();
-        //             }
-        //             else{
-        //                 $reminder->set_time = Carbon::now();
-        //                 $reminder->save();
-        //             }
-        //        }
-        //     }
-        // }
+    //     //             if($reminder->cycle == 0){
+    //     //                 $reminder->delete();
+    //     //             }
+    //     //             else{
+    //     //                 $reminder->set_time = Carbon::now();
+    //     //                 $reminder->save();
+    //     //             }
+    //     //        }
+    //     //     }
+    //     // }
         
-        return view('files.files', ['files' => $files]);
-    }
+    //     return view('files.files', ['files' => $files]);
+    // }
 
     public function deleteMessage(Request $request)
     {
