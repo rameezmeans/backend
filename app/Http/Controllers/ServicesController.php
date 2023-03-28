@@ -65,7 +65,7 @@ class ServicesController extends Controller
     public function add(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|unique:services|max:255|min:3',
+            'name' => 'required|max:255|min:3',
             'type' => 'required',
             'credits' => 'required',
             'icon' => 'required',
@@ -104,6 +104,7 @@ class ServicesController extends Controller
     public function update(Request $request)
     {
         $service = Service::findOrFail($request->id);
+        $service->name = $request->name;
         $service->credits = $request->credits;
         $service->type = $request->type;
         $service->vehicle_type = implode( ',', $request->vehicle_type );
