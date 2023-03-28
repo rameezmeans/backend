@@ -36,7 +36,7 @@
                     @endif
                     <div class="form-group form-group-default required ">
                       <label>Name</label>
-                      <input @if(isset($service)) disabled @endif value="@if(isset($service)) {{ $service->name }} @else{{old('name') }}@endif"  name="name" type="text" class="form-control" required>
+                      <input value="@if(isset($service)) {{ $service->name }} @else{{old('name') }}@endif"  name="name" type="text" class="form-control" required>
                     </div>
                     @error('name')
                       <span class="text-danger" role="alert">
