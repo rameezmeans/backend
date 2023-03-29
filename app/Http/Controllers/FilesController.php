@@ -319,7 +319,16 @@ class FilesController extends Controller
 
     public function liveFiles(){
 
-        // $files = File::all();
+        $files = File::all();
+        foreach($files as $file){
+            if(AlientechFile::where('file_id', $file->id)->first()){
+
+                if($file->alientech_files->isEmpty()){
+                    $this->saveFiles($file->id);
+                }
+            }
+        }
+        
         // foreach($files as $file){
         //     $file->username = User::findOrFail($file->user_id)->name;
         //     $file->save();
@@ -1761,9 +1770,9 @@ class FilesController extends Controller
 
             $decodedAvailable = true;
             
-            if($file->alientech_files->isEmpty()){
-                $this->saveFiles($file->id);
-            }
+            // if($file->alientech_files->isEmpty()){
+            //     $this->saveFiles($file->id);
+            // }
         }
 
         $aboutToDownload = AlientechFile::where('purpose', 'download_encoded')->where('file_id', $file->id)->get();
