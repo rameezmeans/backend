@@ -99,11 +99,11 @@
                   <div class="card-body">
 
                     <div class="row m-t-40">
-                      @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+                      {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
                         @if($decodedAvailable == true)
                           <p class="text-danger">This File will provide you facility to download additional Decoded Files. Please refresh the page once or twice. Thanks.</p>
                         @endif
-                      @endif
+                      @endif --}}
                       <div class="col-lg-6">
                         <h5 class="">General Information</h5>
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
