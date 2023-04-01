@@ -641,7 +641,7 @@ class FilesController extends Controller
                 // specify the path and filename for the downloaded file
                 $filepath = $responseBody['name'];
 
-                $pathAndNameArray = $this->getFileName($filepath, $file);
+                $pathAndNameArray = $this->getFileName($filepath, $file, 'decoded');
 
                 // save the decoded string to a file
                 $flag = file_put_contents($pathAndNameArray['path'], $contents);
@@ -692,7 +692,7 @@ class FilesController extends Controller
                 // specify the path and filename for the downloaded file
                 $filepath = $responseBody['name'];
 
-                $pathAndNameArray = $this->getFileName($filepath, $file);
+                $pathAndNameArray = $this->getFileName($filepath, $file,'decoded');
 
                 // save the decoded string to a file
                 $flag = file_put_contents($pathAndNameArray['path'], $contents);
@@ -1442,23 +1442,28 @@ class FilesController extends Controller
         return view('files.report-engineers-live');
     }
 
-    public function getEncodedFileName($path, $file){
+    public function getFileName($path, $file, $type){
         $extension = pathinfo($path, PATHINFO_EXTENSION);
-        $savingPath = public_path('/../../portal/public'.$file->file_path.$file->file_attached.'_encoded_api.'.$extension);
+
+        if($type == 'decoded'){
+            $middle = '_decoded_api';
+        }
+        else if($type == 'encoded'){
+            $middle = '_encoded_api';
+        }
+
+        if($extension != ''){
+            $fileName = $file->file_attached.$middle.'.'.$extension;
+        }
+        else{
+            $fileName = $file->file_attached.$middle;
+        }
+
+        $savingPath = public_path('/../../portal/public'.$file->file_path.$fileName);
 
         return array(
             'path' => $savingPath,
-            'name' => $file->file_attached.'_encoded_api.'.$extension,
-        );
-    }
-
-    public function getFileName($path, $file){
-        $extension = pathinfo($path, PATHINFO_EXTENSION);
-        $savingPath = public_path('/../../portal/public'.$file->file_path.$file->file_attached.'_decoded_api.'.$extension);
-
-        return array(
-            'path' => $savingPath,
-            'name' => $file->file_attached.'_decoded_api.'.$extension,
+            'name' => $fileName,
         );
     }
 
@@ -1886,7 +1891,7 @@ class FilesController extends Controller
             // specify the path and filename for the downloaded file
             $filepath = $responseBody['name'];
 
-            $pathAndNameArrayEncoded = $this->getEncodedFileName($filepath, $file);
+            $pathAndNameArrayEncoded = $this->getFileName($filepath, $file, 'encoded');
             
             // save the decoded string to a file
             $flag = file_put_contents($pathAndNameArrayEncoded['path'], $contents);
@@ -2091,7 +2096,7 @@ class FilesController extends Controller
                 // specify the path and filename for the downloaded file
                 $filepath = $responseBody['name'];
 
-                $pathAndNameArray = $this->getFileName($filepath, $file);
+                $pathAndNameArray = $this->getFileName($filepath, $file, 'decoded');
 
                 // save the decoded string to a file
                 $flag = file_put_contents($pathAndNameArray['path'], $contents);
@@ -2135,7 +2140,7 @@ class FilesController extends Controller
                 // specify the path and filename for the downloaded file
                 $filepath = $responseBody['name'];
                 
-                $pathAndNameArray = $this->getFileName($filepath, $file);
+                $pathAndNameArray = $this->getFileName($filepath, $file, 'decoded');
 
                 // save the decoded string to a file
                 $flag = file_put_contents($pathAndNameArray['path'], $contents);
