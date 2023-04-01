@@ -241,51 +241,6 @@ class FilesController extends Controller
 
         dd('all_closed');
         exit;
-
-        ///
-
-        // $url = "https://encodingapi.alientech.to/api/kess3/file-slots/8ae30e82-0263-4ba2-bb50-2d88b5d8a4b7/files/?fileType=OBDDecoded";
-
-        // $headers = [
-        //     // 'Content-Type' => 'multipart/form-data',
-        //     'X-Alientech-ReCodAPI-LLC' => $token,
-        // ];
-  
-        // $response = Http::withHeaders($headers)->get($url);
-        // $responseBody = json_decode($response->getBody(), true);
-
-        // $base64_string = $responseBody['data'];
-
-        // // specify the path and filename for the downloaded file
-        // $filepath = public_path('').'/'.$responseBody['name'];
-
-        // // save the decoded string to a file
-        // $flag = file_put_contents($filepath, $base64_string);
-
-        // dd($flag);
-
-        // $statusCode = $response->status();
-
-        // try {
-        //     $response->throw();
-        // }
-        // catch(RequestException $e){
-
-        //     dd($e->response);
-        // }
-
-       
-
-        // dd($responseBody);
-
-       
-        // // set the content type and headers for downloading the file
-        // header('Content-Type: application/octet-stream');
-        // header('Content-Disposition: attachment; filename="'.$responseBody['name'].'"');
-
-        // download the file to the user's browser
-        // readfile($filepath);
-
     }
 
     // public function fileCopyAndPath(){
@@ -679,14 +634,17 @@ class FilesController extends Controller
                 $response = Http::withHeaders($headers)->get($url);
                 $responseBody = json_decode($response->getBody(), true);
 
-                $base64_string = $responseBody['data'];
+                $base64Data = $responseBody['data'];
+                $contents   = base64_decode($base64Data);
 
                 // dd($responseBody);
                 // specify the path and filename for the downloaded file
                 $filepath = $responseBody['name'];
 
+                $pathAndNameArray = $this->getFileName($filepath, $file);
+
                 // save the decoded string to a file
-                $flag = file_put_contents($filepath, $base64_string);
+                $flag = file_put_contents($pathAndNameArray['path'], $contents);
 
                 $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
 
@@ -728,13 +686,16 @@ class FilesController extends Controller
                 $response = Http::withHeaders($headers)->get($url);
                 $responseBody = json_decode($response->getBody(), true);
 
-                $base64_string = $responseBody['data'];
+                $base64Data = $responseBody['data'];
+                $contents   = base64_decode($base64Data);
 
                 // specify the path and filename for the downloaded file
                 $filepath = $responseBody['name'];
 
+                $pathAndNameArray = $this->getFileName($filepath, $file);
+
                 // save the decoded string to a file
-                $flag = file_put_contents($filepath, $base64_string);
+                $flag = file_put_contents($pathAndNameArray['path'], $contents);
 
                 $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
 
@@ -1481,6 +1442,26 @@ class FilesController extends Controller
         return view('files.report-engineers-live');
     }
 
+    public function getEncodedFileName($path, $file){
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        $savingPath = public_path('/../../portal/public'.$file->file_path.$file->file_attached.'_encoded_api.'.$extension);
+
+        return array(
+            'path' => $savingPath,
+            'name' => $file->file_attached.'_encoded_api.'.$extension,
+        );
+    }
+
+    public function getFileName($path, $file){
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        $savingPath = public_path('/../../portal/public'.$file->file_path.$file->file_attached.'_decoded_api.'.$extension);
+
+        return array(
+            'path' => $savingPath,
+            'name' => $file->file_attached.'_decoded_api.'.$extension,
+        );
+    }
+
     public function getFeedbackReport(Request $request){
 
         $files = $this->getReportFilesWithFeedback($request->engineer, $request->feedback);
@@ -1864,8 +1845,6 @@ class FilesController extends Controller
         $response = Http::withHeaders($headers)->get($getsyncOpURL);
         $responseBody = json_decode($response->getBody(), true);
 
-       
-
         if(!isset($responseBody['result']['name'])){
             $this->makeLogEntry($file->id, 'error', 'line 1998; file is not uploaded successfully.');
         }
@@ -1900,17 +1879,17 @@ class FilesController extends Controller
             $response = Http::withHeaders($headers)->get($url);
             $responseBody = json_decode($response->getBody(), true);
 
-            $base64_string = $responseBody['data'];
+            // $base64_string = $responseBody['data'];
+            $base64Data = $responseBody['data'];
+            $contents   = base64_decode($base64Data);
 
             // specify the path and filename for the downloaded file
             $filepath = $responseBody['name'];
 
-            // dd($filepath);
-
-            $filepath = str_replace('#', '', $filepath);
-
+            $pathAndNameArrayEncoded = $this->getEncodedFileName($filepath, $file);
+            
             // save the decoded string to a file
-            $flag = file_put_contents($filepath, $base64_string);
+            $flag = file_put_contents($pathAndNameArrayEncoded['path'], $contents);
 
             $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
 
@@ -1921,12 +1900,10 @@ class FilesController extends Controller
             $response = Http::withHeaders($headers)->post($url, []);
 
             $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
-
-            $fileWithExtenion = $fileName;
-
+            
             $obj = new AlientechFile();
             $obj->key = $extension;
-            $obj->value = $fileWithExtenion;
+            $obj->value = $pathAndNameArrayEncoded['name'];
             $obj->purpose = "encoded";
             $obj->file_id = $file->id;
             $obj->save();
@@ -1934,7 +1911,7 @@ class FilesController extends Controller
             //// this is repetitive code.
 
         $engineerFile = new RequestFile();
-        $engineerFile->request_file = $fileWithExtenion;
+        $engineerFile->request_file = $pathAndNameArrayEncoded['name'];
         $engineerFile->file_type = 'engineer_file';
         $engineerFile->tool_type = 'not_relevant';
         $engineerFile->master_tools = 'not_relevant';
@@ -2107,13 +2084,17 @@ class FilesController extends Controller
                 $response = Http::withHeaders($headers)->get($url);
                 $responseBody = json_decode($response->getBody(), true);
 
-                $base64_string = $responseBody['data'];
+                // $base64_string = $responseBody['data'];
+                $base64Data = $responseBody['data'];
+                $contents   = base64_decode($base64Data);
 
                 // specify the path and filename for the downloaded file
                 $filepath = $responseBody['name'];
 
+                $pathAndNameArray = $this->getFileName($filepath, $file);
+
                 // save the decoded string to a file
-                $flag = file_put_contents($filepath, $base64_string);
+                $flag = file_put_contents($pathAndNameArray['path'], $contents);
 
                 $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
 
@@ -2128,7 +2109,7 @@ class FilesController extends Controller
 
                 $obj = new AlientechFile();
                 $obj->key = $extension;
-                $obj->value = $file->file_attached.'.'.$extension;
+                $obj->value = $pathAndNameArray['name'];
                 $obj->purpose = "download";
                 $obj->file_id = $file->id;
                 $obj->save();
@@ -2147,14 +2128,18 @@ class FilesController extends Controller
                 $response = Http::withHeaders($headers)->get($url);
                 $responseBody = json_decode($response->getBody(), true);
 
-                $base64_string = $responseBody['data'];
+                // $base64_string = $responseBody['data'];
+                $base64Data = $responseBody['data'];
+                $contents   = base64_decode($base64Data);
 
                 // specify the path and filename for the downloaded file
                 $filepath = $responseBody['name'];
+                
+                $pathAndNameArray = $this->getFileName($filepath, $file);
 
                 // save the decoded string to a file
-                $flag = file_put_contents($filepath, $base64_string);
-
+                $flag = file_put_contents($pathAndNameArray['path'], $contents);
+                
                 $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
 
                 $headers = [
@@ -2168,7 +2153,7 @@ class FilesController extends Controller
 
                 $obj = new AlientechFile();
                 $obj->key = $extension;
-                $obj->value = $file->file_attached.'.'.$extension;
+                $obj->value = $pathAndNameArray['name'];
                 $obj->purpose = "download";
                 $obj->file_id = $file->id;
                 $obj->save();
