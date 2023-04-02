@@ -56,6 +56,11 @@ class FilesAPIController extends Controller
             $engineerFile->file_id = $file->id;
             $engineerFile->engineer = true;
             $engineerFile->save();
+
+            if($file->status == 'submitted'){
+                $file->status = 'completed';
+                $file->save();
+            }
         }
 
         if($flag){
