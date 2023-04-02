@@ -43,8 +43,8 @@ class FilesAPIController extends Controller
             $tunnedFile->file_id = $file->id;
             $tunnedFile->save();
 
-            copy( public_path('/../../portal/uploads/filesready').'/'.$request->tuned_file, 
-            public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'.$request->tuned_file) );
+            copy( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file, 
+            public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file) );
 
             unlink( public_path('/../../portal/uploads/filesready').'/'.$request->tuned_file );
 

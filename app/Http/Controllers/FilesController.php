@@ -1610,6 +1610,13 @@ class FilesController extends Controller
             // $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
         }
 
+        // if($file->tunned_files){
+
+        //     copy( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file, 
+        //     public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file) );
+
+        // }
+
         // $file->reupload_time = Carbon::now();
         
         if(!$file){
