@@ -18,7 +18,7 @@ class File extends Model
     }
 
     public function tunned_files(){
-        return $this->hasMany(TunnedFile::class); 
+        return $this->hasOne(TunnedFile::class); 
     }
 
     public function alientech_files(){
