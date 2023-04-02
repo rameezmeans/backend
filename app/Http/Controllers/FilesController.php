@@ -1952,6 +1952,8 @@ class FilesController extends Controller
         
         $result = $responseBody['result'];
 
+        if($result){
+
         if($result['kess3Mode'] == 'OBD'){
 
             if( isset($result['obdDecodedFileURL']) ){
@@ -1998,48 +2000,52 @@ class FilesController extends Controller
             }
         }
         else if($result['kess3Mode'] == 'BootBench'){
-            foreach($result['bootBenchComponents'] as $row){
+                foreach($result['bootBenchComponents'] as $row){
 
-                $url = $row['decodedFileURL'];
+                    $url = $row['decodedFileURL'];
 
-                $headers = [
+                    $headers = [
+                        'X-Alientech-ReCodAPI-LLC' => $token,
+                    ];
+            
+                    $response = Http::withHeaders($headers)->get($url);
+                    $responseBody = json_decode($response->getBody(), true);
+
+                    // $base64_string = $responseBody['data'];
+                    $base64Data = $responseBody['data'];
+                    $contents   = base64_decode($base64Data);
+
+                    // specify the path and filename for the downloaded file
+                    $filepath = $responseBody['name'];
+                    
+                    $pathAndNameArray = $this->getFileName($filepath, $file, 'decoded');
+
+                    // save the decoded string to a file
+                    $flag = file_put_contents($pathAndNameArray['path'], $contents);
+                    
+                    $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
+
+                    $headers = [
+                    // 'Content-Type' => 'multipart/form-data',
                     'X-Alientech-ReCodAPI-LLC' => $token,
-                ];
-        
-                $response = Http::withHeaders($headers)->get($url);
-                $responseBody = json_decode($response->getBody(), true);
+                    ];
 
-                // $base64_string = $responseBody['data'];
-                $base64Data = $responseBody['data'];
-                $contents   = base64_decode($base64Data);
+                    $response = Http::withHeaders($headers)->post($url, []);
 
-                // specify the path and filename for the downloaded file
-                $filepath = $responseBody['name'];
-                
-                $pathAndNameArray = $this->getFileName($filepath, $file, 'decoded');
+                    $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
 
-                // save the decoded string to a file
-                $flag = file_put_contents($pathAndNameArray['path'], $contents);
-                
-                $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
+                    $obj = new AlientechFile();
+                    $obj->key = $extension;
+                    $obj->value = $pathAndNameArray['name'];
+                    $obj->purpose = "download";
+                    $obj->file_id = $file->id;
+                    $obj->save();
 
-                $headers = [
-                // 'Content-Type' => 'multipart/form-data',
-                'X-Alientech-ReCodAPI-LLC' => $token,
-                ];
-
-                $response = Http::withHeaders($headers)->post($url, []);
-
-                $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
-
-                $obj = new AlientechFile();
-                $obj->key = $extension;
-                $obj->value = $pathAndNameArray['name'];
-                $obj->purpose = "download";
-                $obj->file_id = $file->id;
-                $obj->save();
-
+                }
             }
+        }
+        else{
+            $this->makeLogEntry($file->id, 'error', 'line 2048; File can not be decoded.');
         }
     }
 }
