@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\RequestFile;
 use App\Models\TunnedFile;
 use Illuminate\Http\Request;
 
@@ -36,10 +37,25 @@ class FilesAPIController extends Controller
         $flag = $file->save();
 
         if(isset($request->tuned_file) && $request->tuned_file){
+
             $tunnedFile = new TunnedFile();
             $tunnedFile->file = $request->tuned_file;
             $tunnedFile->file_id = $file->id;
             $tunnedFile->save();
+
+            copy( public_path('/../../portal/uploads/filesready').'/'.$request->tuned_file, 
+            public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'.$request->tuned_file) );
+
+            unlink( public_path('/../../portal/uploads/filesready').'/'.$request->tuned_file );
+
+            $engineerFile = new RequestFile();
+            $engineerFile->request_file = $request->tuned_file;
+            $engineerFile->file_type = 'engineer_file';
+            $engineerFile->tool_type = 'not_relevant';
+            $engineerFile->master_tools = 'not_relevant';
+            $engineerFile->file_id = $file->id;
+            $engineerFile->engineer = true;
+            $engineerFile->save();
         }
 
         if($flag){

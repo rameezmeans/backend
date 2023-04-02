@@ -43,18 +43,6 @@ class FilesDatatable extends LivewireDatatable
         //     ->where('assigned_to', Auth::user()->id);
         // }
         
-        // foreach($files as $f){
-        //     dd($file);
-        //     // if(AlientechFile::where('file_id', $file->id)->first()){
-
-        //     //     $decodedAvailable = true;
-                
-        //     //     if($file->alientech_files->isEmpty()){
-        //     //         $this->saveFiles($file->id);
-        //     //     }
-        //     // }
-        // }
-
         return $files;
     }
 
