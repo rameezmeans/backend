@@ -82,137 +82,17 @@ class FilesController extends Controller
         return null;
     }
 
-    public function callbackKess3(Request $request){
-        \Log::info($request->all());
+    public function callbackKess3(Response $response){
+        \Log::info($response);
     }
 
     public function decodeFile(){
 
         $token = Key::where('key', 'alientech_access_token')->first()->value;
 
-        // $client = new GuzzleHttpClient();
-
-        // $response = $client->request('POST', 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3', [
-        //     'headers' => [
-        //         'Content-Type' => 'multipart/form-data',
-        //         'X-Alientech-ReCodAPI-LLC' => $token,
-        //     ],
-        //     'json' => [
-        //         'readFile' => public_path('Test_File1'),
-        //     ],
-        // ]);
-
-        // if ($response->getStatusCode() == 200) {
-        //     // Request was successful
-        //     $userData = json_decode($response->getBody()->getContents(), true);
-
-        //     dd($userData);
-        // } else {
-        //     // Request failed
-
-           
-        //     $errorMessage = json_decode($response->getBody()->getContents(), true)['error'];
-        //     dd($errorMessage);
-        // }
-
-        // $postInput = [
-        //     'readFile' => public_path('Test_File1'),
-        // ];
-        
-        // $postHeaders = [
-        //     'Content-Type' => 'multipart/form-data',
-        //     'X-Alientech-ReCodAPI-LLC' => $token,
-        // ];
-
-        // // dd($postInput);
-
-        // $response = Http::withHeaders([
-        //     'Content-Type' => 'multipart/form-data',
-        //     'X-Alientech-ReCodAPI-LLC' => $token,
-        // ])->post('https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3', [
-        //     'readFile' => public_path('Test_File1')
-        // ]);
-
-        // $apiURL = 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3';
-        // dd(($apiURL));
-        // $postInput = [
-        //     'readFile' => public_path('Test_File1'),
-        // ];
-        
-        // $postHeaders = [
-        //     'Content-Type' => 'multipart/form-data',
-        //     'X-Alientech-ReCodAPI-LLC' => $token,
-        // ];
-
-        // $response = Http::withHeaders($postHeaders)->post($apiURL, [
-        //     'readFile' => public_path('Test_File1'),
-        // ]);
-
-        // dd($response->status());
-        // $responseBody = json_decode($response->getBody(), true);
-
-        // dd($responseBody);
-
-        // $postInput = [
-        //     'readFile' => public_path('obd1'),
-        // ];
-
-
-        // $response = Http::withHeaders($headers)->post($apiURL, $postInput);
-
-        // $postInput = [
-        //     'readFile' => public_path('obd1'),
-        // ];
-
-        // Set the URL and data for the POST request
-        // $url = 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3';
-        // $data = array('readFile' => public_path('Test_File1'));
-
-        // // Initialize cURL
-        // $ch = curl_init();
-
-        // // Set the cURL options
-        // curl_setopt($ch, CURLOPT_URL, $url);
-        // curl_setopt($ch, CURLOPT_POST, 1);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        //     'Content-Type' => 'multipart/form-data',
-        //     'X-Alientech-ReCodAPI-LLC' => $token,
-        // ));
-
-        // // Execute the cURL request
-        // $response = curl_exec($ch);
-
-        // // Close cURL
-        // curl_close($ch);
-
-        // // Do something with the response
-        // dd( $response );
-
-
-        //close all code
-
-        // $url = "https://encodingapi.alientech.to/api/kess3/file-slots/d824a6a4-16eb-42eb-a824-65965358cafb/close";
-        // $url = "https://encodingapi.alientech.to/api/kess3/file-slots/4c91a0d6-712a-4cd3-a5c2-74270f539c65/close";
-
-        //     $headers = [
-        //         // 'Content-Type' => 'multipart/form-data',
-        //         'X-Alientech-ReCodAPI-LLC' => $token,
-        //     ];
-  
-        //     $response = Http::withHeaders($headers)->post($url, []);
-
-        //     dd($response->getBody());
-
-        //     exit;
-
-//        $url = "https://encodingapi.alientech.to/api/kess3/file-slots?ownerCustomerCode=user1";
-        
         $url = "https://encodingapi.alientech.to/api/kess3/file-slots";
 
         $headers = [
-            // 'Content-Type' => 'multipart/form-data',
             'X-Alientech-ReCodAPI-LLC' => $token,
         ];
   
@@ -223,14 +103,11 @@ class FilesController extends Controller
 
         foreach($responseBody as $row){
 
-            // dd($row['guid']);
-            
             if($row['isClosed'] == false){
 
                 $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$row['guid']."/close";
 
                 $headers = [
-                // 'Content-Type' => 'multipart/form-data',
                 'X-Alientech-ReCodAPI-LLC' => $token,
                 ];
 
@@ -243,34 +120,34 @@ class FilesController extends Controller
         exit;
     }
 
-    // public function fileCopyAndPath(){
+    public function fileCopyAndPath(){
 
-    //     $files = File::all();
+        $files = File::all();
 
-    //     foreach($files as $file){
+        foreach($files as $file){
         
-    //         $toPath = public_path('/../../portal/public/uploads/'.$file->file_attached);
+            $toPath = public_path('/../../portal/public/uploads/'.$file->file_attached);
 
-    //         $inPath = public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/');
+            $inPath = public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/');
             
-    //         if (!file_exists($inPath )) {
-    //             mkdir($inPath , 0777, true);
-    //         }
+            if (!file_exists($inPath )) {
+                mkdir($inPath , 0777, true);
+            }
 
-    //         $flag = copy( $toPath, $inPath.$file->file_attached);
+            $flag = copy( $toPath, $inPath.$file->file_attached);
 
-    //         $file->file_path = '/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/';
-    //         $file->save();
+            $file->file_path = '/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/';
+            $file->save();
 
-    //         $engineerFiles = RequestFile::where('file_id', $file->id)->get();
+            $engineerFiles = RequestFile::where('file_id', $file->id)->get();
 
-    //         foreach($engineerFiles as $f){
-    //             $flag = copy( $toPath, $inPath.$f->request_file);
-    //         }
+            foreach($engineerFiles as $f){
+                $flag = copy( $toPath, $inPath.$f->request_file);
+            }
 
             
-    //     }
-    // }
+        }
+    }
 
     public function liveFiles(){
 
@@ -1635,7 +1512,6 @@ class FilesController extends Controller
         if($file->Model){
             $commentObj->where('model', $file->model);
         }
-
 
         if($file->ecu){
             $commentObj->where('ecu', $file->ecu);
