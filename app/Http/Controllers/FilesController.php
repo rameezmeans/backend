@@ -2046,6 +2046,23 @@ class FilesController extends Controller
         }
         else{
             $this->makeLogEntry($file->id, 'error', 'line 2048; File can not be decoded.');
+            $slot_id = AlientechFile::where('file_id', $file->id)->where('key','slotGUID')->first();
+            $this->closeOneSlot($slot_id);
+            AlientechFile::where('file_id', $file->id)->delete();
         }
+    }
+
+    public function closeOneSlot($slotID){
+
+        $token = Key::where('key', 'alientech_access_token')->first()->value;
+
+        $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotID."/close";
+
+        $headers = [
+        // 'Content-Type' => 'multipart/form-data',
+        'X-Alientech-ReCodAPI-LLC' => $token,
+        ];
+
+        $response = Http::withHeaders($headers)->post($url, []);
     }
 }
