@@ -1146,7 +1146,7 @@ class FilesController extends Controller
           $result=curl_exec ($ch);
           curl_close ($ch);
           return json_decode($result);
-        }
+    }
 
     public function callbackKess3Complete(Request $request){
         \Log::info( $request->all() );
@@ -1334,6 +1334,11 @@ class FilesController extends Controller
         }
         else{
             $fileName = $file->file_attached.$middle;
+        }
+
+        if($type == 'decoded'){
+            $file->file_attached = $fileName;
+            $file->save();
         }
 
         $savingPath = public_path('/../../portal/public'.$file->file_path.$fileName);

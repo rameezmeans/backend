@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AlientechFile;
 use App\Models\File;
+use App\Models\Key;
 use App\Models\RequestFile;
 use App\Models\TunnedFile;
 use Illuminate\Http\Request;
@@ -48,6 +50,15 @@ class FilesAPIController extends Controller
 
             unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
+            $path = public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file);
+            $slotID = AlientechFile::where('key', 'slotGUID')->where('file_id', $file->id)->first()->value;
+            $token = Key::where('key', 'alientech_access_token')->first()->value;
+
+            
+            $encodingType = '';
+
+            $response = (new FilesController())->uploadFileToEncode($token, $path, $slotID, $encodingType);
+
             $engineerFile = new RequestFile();
             $engineerFile->request_file = $request->tuned_file;
             $engineerFile->file_type = 'engineer_file';
@@ -61,6 +72,7 @@ class FilesAPIController extends Controller
                 $file->status = 'completed';
                 $file->save();
             }
+
         }
 
         if($flag){
