@@ -13,28 +13,30 @@ class FilesAPIController extends Controller
 {
     public function files(){
 
-        $files = File::where('checking_status', 'unchecked')
-        ->where('checking_status', 'undecided')
+        $undecidedFiles = File::where('checking_status', 'undecided')
         ->get();
+
+        foreach($undecidedFiles as $file){
+
+                if(AlientechFile::where('file_id', $file->id)->first()){
+                    
+                    if($file->alientech_files->isEmpty()){
+                       
+                        (new FilesController)->saveFiles( $file->id );
+                        
+                        $file->checking_status = 'unchecked';
+                        $file->save();
+                    }
+                
+
+            }
+        }
+
+        $files = File::where('checking_status', 'unchecked')->get();
 
         $arrFiles = [];
 
         foreach($files as $file){
-
-            if($file->checking_status == 'undecided'){
-
-                if(AlientechFile::where('file_id', $file->id)->first()){
-
-                    if($file->alientech_files->isEmpty()){
-
-                        (new FilesController)->saveFiles( $file->id );
-                        $file->checking_status == 'unchecked';
-                        $file->save();
-                    }
-                }
-
-            }
-
             $temp = [];
             $temp['file_id'] = $file->id;
             $temp['stage'] = $file->stages;
