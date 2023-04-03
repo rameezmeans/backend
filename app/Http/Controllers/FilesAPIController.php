@@ -54,10 +54,10 @@ class FilesAPIController extends Controller
             $slotID = AlientechFile::where('key', 'slotGUID')->where('file_id', $file->id)->first()->value;
             $token = Key::where('key', 'alientech_access_token')->first()->value;
 
-            
-            $encodingType = '';
 
-            $response = (new FilesController())->uploadFileToEncode($token, $path, $slotID, $encodingType);
+            // $encodingType = '';
+
+            // $response = (new FilesController())->uploadFileToEncode($token, $path, $slotID, $encodingType);
 
             $engineerFile = new RequestFile();
             $engineerFile->request_file = $request->tuned_file;
