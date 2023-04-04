@@ -86,6 +86,7 @@ class VehiclesController extends Controller
 
         $options = Service::where('type', 'option')->get();
         $downloadComments = $this->getComments($vehicle, 'download');
+        // dd($downloadComments);
         $uploadComments = $this->getComments($vehicle, 'upload');
 
         if($vehicle->Engine_ECU){
