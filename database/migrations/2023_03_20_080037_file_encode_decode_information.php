@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('alientech_files', function (Blueprint $table) {
             $table->id();
-            $table->string('key');
-            $table->string('value');
-            $table->string('purpose')->nullable();
+            $table->string('guid');
+            $table->string('slot_id');
+            $table->string('type');
+            $table->string('purpose');
+            $table->boolean('processed')->default(0);
+            $table->text('desc');
             $table->foreignId('file_id')->onDelete('cascade');
             $table->timestamps();
         });

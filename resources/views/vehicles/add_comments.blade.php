@@ -112,7 +112,9 @@
                                         @foreach($downloadComments as $comment)
                                             @if($ecu == $comment->ecu)
                                                 <div class="p-t-10">
-                                                    <img alt="{{$comment->option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}">
+                                                    @if(\App\Models\Service::where('name', $comment->option)->first())
+                                                      <img alt="{{$comment->option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}">
+                                                    @endif
                                                     {{$comment->option}}
                                                     <span class="m-l-20">
                                                       <i class="fa fa-pencil-square text-success btn-edit" data-id={{$comment->id}} data-comment="{{$comment->comments}}" data-greek-comment="@if($comment->translation){{$comment->translation->greek}}@endif"></i>
