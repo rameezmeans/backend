@@ -343,7 +343,7 @@
                                 {{$option}}  
                               </div>
                             @endif
-                            @if($comments)
+                            {{-- @if($comments)
                               @foreach($comments as $comment)
                                   @if($option == $comment->option)
                                     <div class="p-l-20 p-b-10"> 
@@ -353,7 +353,7 @@
                                     <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
                                   @endif
                               @endforeach
-                            @endif
+                            @endif --}}
                         @endforeach
                       @else
                               
