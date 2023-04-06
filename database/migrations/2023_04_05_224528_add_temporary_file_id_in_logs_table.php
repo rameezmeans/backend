@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::table('temporary_files', function (Blueprint $table) {
-        //     $table->string('encode_async_key')->nullable();
-        // });
+        Schema::table('logs', function (Blueprint $table) {
+            $table->foreignId('temporary_file_id')->default(0);
+        });
     }
 
     /**
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('temporary_files', function (Blueprint $table) {
+        Schema::table('logs', function (Blueprint $table) {
             //
         });
     }

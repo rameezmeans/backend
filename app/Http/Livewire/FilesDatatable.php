@@ -204,11 +204,21 @@ class FilesDatatable extends LivewireDatatable
             ->filterable(File::groupBy('status')->pluck('status')->toArray())
             ->label('Status')->searchable(),
 
-            Column::callback('stages', function($stages){
-               
-                if(\App\Models\Service::where('name', $stages)->first()){
-                    return '<img alt="{{$file->stages}}" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::where('name', $stages)->first()->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $stages)->first()->icon.'">
-                                        <span class="text-black" style="top: 2px; position:relative;">'.$stages.'</span>';
+            Column::callback(['id', 'stages'], function($id, $stages){
+
+                $file = File::findOrFail($id);
+                if($file->stages == NULL){
+                   
+                    if($file->stage_services){
+                        return '<img alt="{{$file->stages}}" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
+                                            <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
+                    }
+                }
+                else{
+                    if(\App\Models\Service::where('name', $stages)->first()){
+                        return '<img alt="{{$file->stages}}" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::where('name', $stages)->first()->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $stages)->first()->icon.'">
+                                            <span class="text-black" style="top: 2px; position:relative;">'.$stages.'</span>';
+                    }
                 }
             })
             ->filterable(Service::where('type', 'tunning')->pluck('name')->toArray())
@@ -217,12 +227,22 @@ class FilesDatatable extends LivewireDatatable
             Column::callback(['id','options'], function($id,$op){
                 $options = '';
                 $file = File::findOrFail($id);
+
+                if($file->options_services == NULL){
                 foreach($file->options() as $option){
                     if(\App\Models\Service::where('name', $option)->first() != null){
                         $options .= '<img class="parent-adjusted" alt="'.$option.'" width="30" height="30" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon .'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
                         }
                     }
-                    return $options;
+                }
+                else{
+                    foreach($file->options_services as $option){
+                        if(\App\Models\Service::findOrFail($option->service_id) != null){
+                            $options .= '<img class="parent-adjusted" alt="'.\App\Models\Service::findOrFail($option->service_id)->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon .'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon.'">';
+                            }
+                        }
+                }
+                return $options;
             })
             ->label('Options'),
 

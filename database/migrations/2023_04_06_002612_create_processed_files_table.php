@@ -13,9 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::table('temporary_files', function (Blueprint $table) {
-        //     $table->string('encode_async_key')->nullable();
-        // });
+        Schema::create('processed_files', function (Blueprint $table) {
+            $table->id();
+            $table->string('type');
+            $table->string('name');
+            $table->string('extension')->nullable();
+            $table->foreignId('file_id')->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -25,8 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('temporary_files', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('processed_files');
     }
 };

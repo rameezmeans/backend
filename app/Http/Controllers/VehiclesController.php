@@ -198,7 +198,7 @@ class VehiclesController extends Controller
         ]);
 
     }
-
+    
     public function getComments($vehicle, $type){
 
         $commentObj = Comment::where('comment_type', $type)->where('engine', $vehicle->Engine);
