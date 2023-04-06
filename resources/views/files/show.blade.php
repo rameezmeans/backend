@@ -343,7 +343,7 @@
                                 {{$option}}  
                               </div>
                             @endif
-                            {{-- @if($comments)
+                            @if($comments)
                               @foreach($comments as $comment)
                                   @if($option == $comment->option)
                                     <div class="p-l-20 p-b-10"> 
@@ -353,7 +353,7 @@
                                     <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
                                   @endif
                               @endforeach
-                            @endif --}}
+                            @endif
                         @endforeach
                       @else
                               
@@ -514,11 +514,13 @@
                                         @csrf
                                         <input type="hidden" value="{{$file->id}}" name="file_id">
                                         <input type="hidden" value="1" name="encode">
-                                        @if($file->decoded_files[0]->extension == 'dec')
-                                          <input type="hidden" value="dec" name="encoding_type">
-                                        @else
-                                          <input type="hidden" value="micro" name="encoding_type">
-                                        @endif
+                                        
+                                          @if($file->decoded_file->extension == 'dec')
+                                            <input type="hidden" value="dec" name="encoding_type">
+                                          @else
+                                            <input type="hidden" value="micro" name="encoding_type">
+                                          @endif
+                                       
                                         <div class="fallback">
                                           <input name="file" type="file" />
                                         </div>
