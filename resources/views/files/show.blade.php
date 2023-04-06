@@ -337,7 +337,7 @@
                         </div>
                       
                         @foreach($file->options() as $option) 
-                            @if(\App\Models\Service::FindOrFail($option->service_id))
+                            @if(\App\Models\Service::where('name', $option)->first())
                               <div class="p-l-20 b-b b-grey"> 
                                 <img alt="{{$option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}">
                                 {{$option}}  
