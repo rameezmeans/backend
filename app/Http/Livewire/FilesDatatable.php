@@ -228,7 +228,7 @@ class FilesDatatable extends LivewireDatatable
                 $options = '';
                 $file = File::findOrFail($id);
 
-                if($file->options_services == NULL){
+                if($file->options){
                 foreach($file->options() as $option){
                     if(\App\Models\Service::where('name', $option)->first() != null){
                         $options .= '<img class="parent-adjusted" alt="'.$option.'" width="30" height="30" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon .'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
@@ -236,6 +236,7 @@ class FilesDatatable extends LivewireDatatable
                     }
                 }
                 else{
+                    
                     foreach($file->options_services as $option){
                         if(\App\Models\Service::findOrFail($option->service_id) != null){
                             $options .= '<img class="parent-adjusted" alt="'.\App\Models\Service::findOrFail($option->service_id)->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon .'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon.'">';
