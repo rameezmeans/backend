@@ -514,11 +514,12 @@
                                         @csrf
                                         <input type="hidden" value="{{$file->id}}" name="file_id">
                                         <input type="hidden" value="1" name="encode">
-                                        
-                                          @if($file->decoded_file->extension == 'dec')
-                                            <input type="hidden" value="dec" name="encoding_type">
-                                          @else
-                                            <input type="hidden" value="micro" name="encoding_type">
+                                          @if($file->decoded_file)
+                                            @if($file->decoded_file->extension == 'dec')
+                                              <input type="hidden" value="dec" name="encoding_type">
+                                            @else
+                                              <input type="hidden" value="micro" name="encoding_type">
+                                            @endif
                                           @endif
                                        
                                         <div class="fallback">
