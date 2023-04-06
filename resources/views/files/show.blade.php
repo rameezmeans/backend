@@ -83,9 +83,9 @@
                               </a>
 
                             @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
-                              @if($decodedAvailable == true)
-                                @foreach($alientechFiles as $alientech_file)
-                                  <a href="{{ route('download', [$file->id, $alientech_file->value]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$alientech_file->key}})</span>
+                              @if($file->decoded_files)
+                                @foreach($file->decoded_files as $decodedFile)
+                                  <a href="{{ route('download', [$file->id, $decodedFile->name.'.'.$decodedFile->extension]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$decodedFile->extension}})</span>
                                   </a>
                                 @endforeach
                               @endif
@@ -315,40 +315,84 @@
                             <div class="clearfix"></div>
                           </div>
                         @endif
-                      @endif
-                      <div class="p-b-20">
-                      @if($file->options)
-                      <div class="b  b-grey p-l-20 p-r-20 p-t-10">
-                        <p class="pull-left">Options</p>
-                        <div class="clearfix"></div>
-                      </div>
-                      
-                        @foreach($file->options() as $option) 
-                          @if(\App\Models\Service::where('name', $option)->first())
-                            <div class="p-l-20 b-b b-grey"> 
-                              <img alt="{{$option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}">
-                              {{$option}}  
-                            </div>
-                          @endif
-                        @if($comments)
-                          @foreach($comments as $comment)
-                              @if($option == $comment->option)
-                                <div class="p-l-20 p-b-10"> 
-                                  {{$comment->comments}}
-                                 
-                                </div>
-                                <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
-                              @endif
-                          @endforeach
+                      @else
+                        @if(\App\Models\Service::FindOrFail($file->stage_services->service_id))
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Stage</p>
+                          <div class="pull-right">
+                              <img alt="{{\App\Models\Service::FindOrFail($file->stage_services->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}">
+                              <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_services->service_id)->name }}</span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
                         @endif
-                        @endforeach
                       @endif
 
+                      <div class="p-b-20">
+
+                      @if($file->options)
+                        <div class="b  b-grey p-l-20 p-r-20 p-t-10">
+                          <p class="pull-left">Options</p>
+                          <div class="clearfix"></div>
+                        </div>
+                      
+                        @foreach($file->options() as $option) 
+                            @if(\App\Models\Service::FindOrFail($option->service_id))
+                              <div class="p-l-20 b-b b-grey"> 
+                                <img alt="{{$option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon }}">
+                                {{$option}}  
+                              </div>
+                            @endif
+                            @if($comments)
+                              @foreach($comments as $comment)
+                                  @if($option == $comment->option)
+                                    <div class="p-l-20 p-b-10"> 
+                                      {{$comment->comments}}
+                                    
+                                    </div>
+                                    <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
+                                  @endif
+                              @endforeach
+                            @endif
+                        @endforeach
+                      @else
+                              
+                        <div class="b  b-grey p-l-20 p-r-20 p-t-10">
+                          <p class="pull-left">Options</p>
+                          <div class="clearfix"></div>
+                        </div>
+                      
+                        @foreach($file->options_services as $option)
+                            
+                            @if(\App\Models\Service::FindOrFail($option->service_id))
+                              <div class="p-l-20 b-b b-grey"> 
+                                <img alt="{{\App\Models\Service::FindOrFail($option->service_id)->name}}" width="40" height="40" 
+                                data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
+                                {{\App\Models\Service::FindOrFail($option->service_id)->name}}  
+                              </div>
+                            @endif
+                            @if($comments)
+                              @foreach($comments as $comment)
+                                  @if(\App\Models\Service::FindOrFail($option->service_id)->name == $comment->option)
+                                    <div class="p-l-20 p-b-10"> 
+                                      {{$comment->comments}}
+                                    
+                                    </div>
+                                    <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
+                                  @endif
+                              @endforeach
+                            @endif
+                        @endforeach
+
+                      @endif
+                      
                       </div>
                       
                       @if($file->dtc_off_comments)
-                      <div class="b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                        <p class="pull-left">DTC OFF Comments</p>
+                      <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <p class="pull-left text-danger">DTC OFF Comments</p>
                         <br>
                         <div class="m-l-20">
                           {{$file->dtc_off_comments}}
@@ -428,7 +472,7 @@
                           <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
 
                             @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
-                              @if($decodedAvailable == true)
+                              @if($file->decoded_files)
                               <li class="nav-item">
                                 <a href="#" class="active show" data-toggle="tab" data-target="#tab3hellowWorld">Encode</a>
                               </li>
@@ -445,7 +489,7 @@
                           <div class="tab-content bg-white full-width">
 
                             @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
-                              @if($decodedAvailable == true)
+                            @if($file->decoded_files)
 
                             <div class="tab-pane active show" id="tab3hellowWorld">
                               <div class="row column-seperation">
@@ -470,9 +514,9 @@
                                         @csrf
                                         <input type="hidden" value="{{$file->id}}" name="file_id">
                                         <input type="hidden" value="1" name="encode">
-                                        @if($encodingType == 'dec')
+                                        @if($file->decoded_files[0]->extension == 'dec')
                                           <input type="hidden" value="dec" name="encoding_type">
-                                        @elseif($encodingType == 'micro')
+                                        @else
                                           <input type="hidden" value="micro" name="encoding_type">
                                         @endif
                                         <div class="fallback">
@@ -490,7 +534,7 @@
                             @endif
                             @endif
 
-                            <div class="tab-pane @if($decodedAvailable == false) active show @endif" id="tab3FollowUs">
+                            <div class="tab-pane  @if(!$file->decoded_files) active show @endif" id="tab3FollowUs">
                               <div class="col-xl-12 full-width">
                                 <h5 class="">Upload File</h5>
                                 <!-- START card -->
@@ -960,14 +1004,14 @@
 
     engineerEncodedFileDrop.on("complete", function(file) {
       engineerEncodedFileDrop.removeFile(file);
-      location.reload();
+      // location.reload();
     });
 
     });
   </script>
 
 @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
-@if($decodedAvailable == true)
+@if($file->decoded_files)
 
 <script>
 
@@ -975,34 +1019,14 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {});
 
     engineerFileDrop.on("success", function(file) {
 
-      engineerFileDrop.removeFile(file);
-        Toastify({
-        text: "File will be ready in few second. Please refresh the page.",
-        className: "info",
-        style: {
-          background: "linear-gradient(to right, #00b09b, #96c93d)",
-        }
-      }).showToast();
-
+    engineerFileDrop.removeFile(file);
+      
       // location.reload();
     })
     .on("complete", function(file) {
-
-      setTimeout(
-    function() {
+      // location.reload();
+    }).on('error', function(e){
       
-      location.reload();
-      
-    }, 10000);
-
-}).on('error', function(e){
-      Toastify({
-        text: "Something went wrong. File is not compatible.",
-        className: "danger",
-        style: {
-          background: "linear-gradient(to right, #00b09b, #96c93d)",
-        }
-      }).showToast();
     });
 
 </script>

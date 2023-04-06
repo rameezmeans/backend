@@ -64,6 +64,7 @@ class TranslationController extends Controller
     }
 
     public function appendRecord($record) {
+        
         $json = file_get_contents(public_path("/../../portal/resources/lang/gr.json"));
         $data = json_decode($json, true);
         $data = array_merge($data,$record);
