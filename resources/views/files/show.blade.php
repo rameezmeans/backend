@@ -1024,7 +1024,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {});
 
     engineerFileDrop.removeFile(file);
       
-      // location.reload();
+      location.reload();
     })
     .on("complete", function(file) {
       // location.reload();
