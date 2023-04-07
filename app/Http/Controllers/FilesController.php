@@ -18,8 +18,10 @@ use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Controllers\ReminderManagerController;
 use App\Models\AlientechFile;
+use App\Models\FileService;
 use App\Models\Key;
 use App\Models\Log;
+use App\Models\Service;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
@@ -153,7 +155,46 @@ class FilesController extends Controller
 
     public function liveFiles(){
 
-        return view('files.live_files');    
+        $files = File::all();
+
+        foreach($files as $file){
+
+            if($file->stages != NULL){
+
+                FileService::where('file_id', $file->id)->delete();
+
+                $stage = Service::where('name', $file->stages)->first();
+
+                    $fileService = new FileService();
+                    $fileService->type = 'stage';
+                    $fileService->credits = $stage->credits;
+                    $fileService->service_id = $stage->id;
+                    $fileService->file_id = $file->id;
+                    $fileService->save();
+            }
+            if( $file->options ){
+                foreach(explode(',', $file->options) as $option){
+    
+                    $optionService = Service::where('name', $option)->first();
+
+                    if($optionService){
+
+                        $fileOption = new FileService();
+                        $fileOption->type = 'option';
+                        $fileOption->credits = $optionService->credits;
+                        
+                        $fileOption->service_id = $optionService->id;
+                        $fileOption->temporary_file_id = $file->id;
+                        $fileOption->save();
+                    }
+                    else{
+                        \Log::info('option not found: '. $option);
+                    }
+                } 
+        }
+
+            return view('files.live_files');    
+        }
     }
     
     public function updateFileVehicle(Request $request) {
