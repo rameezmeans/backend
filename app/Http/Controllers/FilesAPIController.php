@@ -13,34 +13,35 @@ class FilesAPIController extends Controller
 {
     public function files(){
 
-        $undecidedFiles = File::where('checking_status', 'undecided')
-        ->get();
-
-        foreach($undecidedFiles as $file){
-
-                if(AlientechFile::where('file_id', $file->id)->first()){
-                    
-                    if($file->alientech_files->isEmpty()){
-                       
-                        (new FilesController)->saveFiles( $file->id );
-                        
-                        $file->checking_status = 'unchecked';
-                        $file->save();
-                    }
-                
-
-            }
-        }
-
         $files = File::where('checking_status', 'unchecked')->get();
 
         $arrFiles = [];
 
         foreach($files as $file){
+
+            if($file->stage_services){
+                $stage = \App\Models\Service::FindOrFail( $file->stage_services->service_id )->name;
+            }
+            else{
+                $stage = $file->stages;
+            }
+
+            $options = NULL;
+
+            if($file->options_services){
+                foreach($file->options_services as $o){
+                    $options .= \App\Models\Service::FindOrFail( $o->service_id )->name.',';
+                }
+                $options = rtrim($options, ",");
+            }
+            else{
+                $options = $file->options;
+            }
+
             $temp = [];
             $temp['file_id'] = $file->id;
-            $temp['stage'] = $file->stages;
-            $temp['options'] = $file->options;
+            $temp['stage'] = $stage;
+            $temp['options'] = $options;
             $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached;
             $temp['checked'] = $file->checking_status;
 
@@ -70,14 +71,7 @@ class FilesAPIController extends Controller
             unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
             $path = public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file);
-            $slotID = AlientechFile::where('key', 'slotGUID')->where('file_id', $file->id)->first()->value;
-            $token = Key::where('key', 'alientech_access_token')->first()->value;
-
-
-            // $encodingType = '';
-
-            // $response = (new FilesController())->uploadFileToEncode($token, $path, $slotID, $encodingType);
-
+            
             $engineerFile = new RequestFile();
             $engineerFile->request_file = $request->tuned_file;
             $engineerFile->file_type = 'engineer_file';
