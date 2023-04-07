@@ -165,12 +165,17 @@ class FilesController extends Controller
 
                 $stage = Service::where('name', $file->stages)->first();
 
+                if($stage){
                     $fileService = new FileService();
                     $fileService->type = 'stage';
                     $fileService->credits = $stage->credits;
                     $fileService->service_id = $stage->id;
                     $fileService->file_id = $file->id;
                     $fileService->save();
+                }
+                else{
+                    \Log::info('option not found: '. $stage->name);
+                }
             }
             if( $file->options ){
                 foreach(explode(',', $file->options) as $option){
