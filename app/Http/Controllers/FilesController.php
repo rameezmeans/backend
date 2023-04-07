@@ -198,8 +198,10 @@ class FilesController extends Controller
                 } 
         }
 
-            return view('files.live_files');    
+            
         }
+
+        return view('files.live_files');    
     }
     
     public function updateFileVehicle(Request $request) {
