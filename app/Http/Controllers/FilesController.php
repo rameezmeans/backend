@@ -174,7 +174,7 @@ class FilesController extends Controller
                     $fileService->save();
                 }
                 else{
-                    \Log::info('option not found: '. $stage->name);
+                    \Log::info('stage not found: '. $file->stages);
                 }
             }
             if( $file->options ){
