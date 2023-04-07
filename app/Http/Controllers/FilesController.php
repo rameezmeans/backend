@@ -155,51 +155,51 @@ class FilesController extends Controller
 
     public function liveFiles(){
 
-        $files = File::all();
+        // $files = File::all();
 
-        foreach($files as $file){
+        // foreach($files as $file){
 
-            if($file->stages != NULL){
+        //     if($file->stages != NULL){
 
-                FileService::where('file_id', $file->id)->delete();
+        //         FileService::where('file_id', $file->id)->delete();
 
-                $stage = Service::where('name', $file->stages)->first();
+        //         $stage = Service::where('name', $file->stages)->first();
 
-                if($stage){
-                    $fileService = new FileService();
-                    $fileService->type = 'stage';
-                    $fileService->credits = $stage->credits;
-                    $fileService->service_id = $stage->id;
-                    $fileService->file_id = $file->id;
-                    $fileService->save();
-                }
-                else{
-                    \Log::info('stage not found: '. $file->stages);
-                }
-            }
-            if( $file->options ){
-                foreach(explode(',', $file->options) as $option){
+        //         if($stage){
+        //             $fileService = new FileService();
+        //             $fileService->type = 'stage';
+        //             $fileService->credits = $stage->credits;
+        //             $fileService->service_id = $stage->id;
+        //             $fileService->file_id = $file->id;
+        //             $fileService->save();
+        //         }
+        //         else{
+        //             \Log::info('stage not found: '. $file->stages);
+        //         }
+        //     }
+        //     if( $file->options ){
+        //         foreach(explode(',', $file->options) as $option){
     
-                    $optionService = Service::where('name', $option)->first();
+        //             $optionService = Service::where('name', $option)->first();
 
-                    if($optionService){
+        //             if($optionService){
 
-                        $fileOption = new FileService();
-                        $fileOption->type = 'option';
-                        $fileOption->credits = $optionService->credits;
+        //                 $fileOption = new FileService();
+        //                 $fileOption->type = 'option';
+        //                 $fileOption->credits = $optionService->credits;
                         
-                        $fileOption->service_id = $optionService->id;
-                        $fileOption->temporary_file_id = $file->id;
-                        $fileOption->save();
-                    }
-                    else{
-                        \Log::info('option not found: '. $option);
-                    }
-                } 
-        }
+        //                 $fileOption->service_id = $optionService->id;
+        //                 $fileOption->temporary_file_id = $file->id;
+        //                 $fileOption->save();
+        //             }
+        //             else{
+        //                 \Log::info('option not found: '. $option);
+        //             }
+        //         } 
+        // }
 
             
-        }
+        // }
 
         return view('files.live_files');    
     }
