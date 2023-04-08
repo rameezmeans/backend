@@ -471,13 +471,13 @@
                         <div class="card card-transparent flex-row">
                           <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
 
-                            @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+                            {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
                               @if($file->decoded_files)
                               <li class="nav-item">
                                 <a href="#" class="active show" data-toggle="tab" data-target="#tab3hellowWorld">Encode</a>
                               </li>
                               @endif
-                            @endif
+                            @endif --}}
 
                             <li class="nav-item">
                               <a href="#" data-toggle="tab" data-target="#tab3FollowUs" class="">Upload</a>
@@ -488,8 +488,8 @@
                           </ul>
                           <div class="tab-content bg-white full-width">
 
-                            @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
-                            @if($file->decoded_files)
+                            {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+                            @if($file->decoded_files) --}}
 
                             <div class="tab-pane active show" id="tab3hellowWorld">
                               <div class="row column-seperation">
@@ -513,13 +513,17 @@
                                       <form action="{{route('encoded-file-upload')}}" class="encoded-dropzone dropzone no-margin">
                                         @csrf
                                         <input type="hidden" value="{{$file->id}}" name="file_id">
-                                        <input type="hidden" value="1" name="encode">
-                                          @if($file->decoded_file)
-                                            @if($file->decoded_file->extension == 'dec')
-                                              <input type="hidden" value="dec" name="encoding_type">
-                                            @else
-                                              <input type="hidden" value="micro" name="encoding_type">
+                                        @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+                                          <input type="hidden" value="1" name="encode">
+                                            @if($file->decoded_file)
+                                              @if($file->decoded_file->extension == 'dec')
+                                                <input type="hidden" value="dec" name="encoding_type">
+                                              @else
+                                                <input type="hidden" value="micro" name="encoding_type">
+                                              @endif
                                             @endif
+                                          @else
+                                            <input type="hidden" value="0" name="encode">
                                           @endif
                                        
                                         <div class="fallback">
@@ -534,10 +538,10 @@
                               </div>
                             </div>
 
-                            @endif
-                            @endif
+                            {{-- @endif
+                            @endif --}}
 
-                            <div class="tab-pane  @if(!$file->decoded_files) active show @endif" id="tab3FollowUs">
+                            {{-- <div class="tab-pane  @if(!$file->decoded_files) active show @endif" id="tab3FollowUs">
                               <div class="col-xl-12 full-width">
                                 <h5 class="">Upload File</h5>
                                 <!-- START card -->
@@ -566,7 +570,8 @@
                                 </div>
                                 <!-- END card -->
                               </div> 
-                            </div>
+                            </div> --}}
+
                           </div>
                         </div>
                       </div>
@@ -1003,18 +1008,17 @@
       
     });
    
-    let engineerEncodedFileDrop= new Dropzone(".simple-dropzone", {});
+    // let engineerEncodedFileDrop= new Dropzone(".simple-dropzone", {});
 
-    engineerEncodedFileDrop.on("complete", function(file) {
-      engineerEncodedFileDrop.removeFile(file);
-      // location.reload();
-    });
+    // engineerEncodedFileDrop.on("complete", function(file) {
+    //   engineerEncodedFileDrop.removeFile(file);
+    //   // location.reload();
+    // });
 
     });
   </script>
 
-@if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
-@if($file->decoded_files)
+
 
 <script>
 
@@ -1034,7 +1038,6 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {});
 
 </script>
 
-@endif
-@endif
+
 
 @endsection

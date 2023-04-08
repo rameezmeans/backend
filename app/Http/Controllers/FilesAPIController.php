@@ -8,6 +8,7 @@ use App\Models\Key;
 use App\Models\RequestFile;
 use App\Models\TunnedFile;
 use Illuminate\Http\Request;
+use Chatify\Facades\ChatifyMessenger as Chatify;
 
 class FilesAPIController extends Controller
 {
@@ -89,8 +90,18 @@ class FilesAPIController extends Controller
         }
 
         if($flag){
+
+            Chatify::push("private-chatify-download", 'download-button', [
+                'status' => 'completed',
+                'file_id' => $file->id
+            ]);
+
             return response()->json('status changed.');
         }
+
+        Chatify::push("private-chatify-download", 'download-button', [
+            'status' => 'failed',
+        ]);
         
         return response()->json('status not changed.');
 
