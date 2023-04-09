@@ -7,6 +7,7 @@ use App\Models\File;
 use App\Models\Key;
 use App\Models\RequestFile;
 use App\Models\TunnedFile;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Chatify\Facades\ChatifyMessenger as Chatify;
 
@@ -84,7 +85,19 @@ class FilesAPIController extends Controller
 
             if($file->status == 'submitted'){
                 $file->status = 'completed';
+                $file->support_status = "closed";
+                $file->checked_by = 'engineer';
                 $file->save();
+            }
+
+            if(!$file->response_time){
+
+                $file->reupload_time = Carbon::now();
+                $file->save();
+    
+                $file->response_time = (new FilesController)->getResponseTime($file);
+                $file->save();
+    
             }
 
         }
