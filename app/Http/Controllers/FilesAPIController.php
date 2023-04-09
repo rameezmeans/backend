@@ -95,7 +95,7 @@ class FilesAPIController extends Controller
                 $file->reupload_time = Carbon::now();
                 $file->save();
     
-                $file->response_time = (new FilesController)->getResponseTime($file);
+                $file->response_time = (new FilesController)->getResponseTimeAuto($file);
                 $file->save();
     
             }

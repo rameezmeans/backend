@@ -1591,6 +1591,16 @@ class FilesController extends Controller
         return $commentObj->get();
     }
 
+    public function getResponseTimeAuto($file){
+        
+        $fileAssignmentDateTime = Carbon::parse($file->assignment_time);
+        $carbonUploadDateTime = Carbon::parse($file->reupload_time);
+        
+        $responseTime = $fileAssignmentDateTime - $carbonUploadDateTime;
+
+        return $responseTime;
+    }
+
     public function getResponseTime($file){
         
         $fileAssignmentDateTime = Carbon::parse($file->assignment_time);
