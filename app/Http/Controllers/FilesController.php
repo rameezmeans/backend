@@ -1595,8 +1595,8 @@ class FilesController extends Controller
         
         $fileAssignmentDateTime = Carbon::parse($file->assignment_time);
         $carbonUploadDateTime = Carbon::parse($file->reupload_time);
-        
-        $responseTime = $fileAssignmentDateTime - $carbonUploadDateTime;
+
+        $responseTime = $carbonUploadDateTime->diffInSeconds( $fileAssignmentDateTime );
 
         return $responseTime;
     }
