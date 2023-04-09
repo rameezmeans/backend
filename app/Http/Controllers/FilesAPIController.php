@@ -56,60 +56,62 @@ class FilesAPIController extends Controller
     public function setCheckingStatus(Request $request){
         
         $file = File::findOrFail($request->file_id);
-        $file->checking_status = $request->checking_status;
+
+        if($file->checking_status == 'unchecked'){
+            $file->checking_status = $request->checking_status;
+            $flag = $file->save();
+
+            if(isset($request->tuned_file) && $request->tuned_file){
+
+                $tunnedFile = new TunnedFile();
+                $tunnedFile->file = $request->tuned_file;
+                $tunnedFile->file_id = $file->id;
+                $tunnedFile->save();
+
+                copy( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file, 
+                public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file) );
+
+                unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
+
+                $path = public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file);
+                
+                $engineerFile = new RequestFile();
+                $engineerFile->request_file = $request->tuned_file;
+                $engineerFile->file_type = 'engineer_file';
+                $engineerFile->tool_type = 'not_relevant';
+                $engineerFile->master_tools = 'not_relevant';
+                $engineerFile->file_id = $file->id;
+                $engineerFile->engineer = true;
+                $engineerFile->save();
+
+                if($file->status == 'submitted'){
+                    $file->status = 'completed';
+                    $file->support_status = "closed";
+                    $file->checked_by = 'engineer';
+                    $file->save();
+                }
+
+                if(!$file->response_time){
+
+                    $file->reupload_time = Carbon::now();
+                    $file->save();
         
-        $flag = $file->save();
+                    $file->response_time = (new FilesController)->getResponseTimeAuto($file);
+                    $file->save();
+        
+                }
 
-        if(isset($request->tuned_file) && $request->tuned_file){
-
-            $tunnedFile = new TunnedFile();
-            $tunnedFile->file = $request->tuned_file;
-            $tunnedFile->file_id = $file->id;
-            $tunnedFile->save();
-
-            copy( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file, 
-            public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file) );
-
-            unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
-
-            $path = public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file);
-            
-            $engineerFile = new RequestFile();
-            $engineerFile->request_file = $request->tuned_file;
-            $engineerFile->file_type = 'engineer_file';
-            $engineerFile->tool_type = 'not_relevant';
-            $engineerFile->master_tools = 'not_relevant';
-            $engineerFile->file_id = $file->id;
-            $engineerFile->engineer = true;
-            $engineerFile->save();
-
-            if($file->status == 'submitted'){
-                $file->status = 'completed';
-                $file->support_status = "closed";
-                $file->checked_by = 'engineer';
-                $file->save();
             }
 
-            if(!$file->response_time){
+            if($flag){
 
-                $file->reupload_time = Carbon::now();
-                $file->save();
-    
-                $file->response_time = (new FilesController)->getResponseTimeAuto($file);
-                $file->save();
-    
+                Chatify::push("private-chatify-download", 'download-button', [
+                    'status' => 'completed',
+                    'file_id' => $file->id
+                ]);
+
+                return response()->json('status changed.');
             }
-
-        }
-
-        if($flag){
-
-            Chatify::push("private-chatify-download", 'download-button', [
-                'status' => 'completed',
-                'file_id' => $file->id
-            ]);
-
-            return response()->json('status changed.');
         }
 
         Chatify::push("private-chatify-download", 'download-button', [

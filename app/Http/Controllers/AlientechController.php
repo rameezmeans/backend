@@ -362,9 +362,7 @@ class AlientechController extends Controller
             $result=curl_exec ($ch);
             curl_close ($ch);
             $response = json_decode($result);
-
             
-
             if( isset($response->guid) ){
 
             if($encodingType == 'dec'){
