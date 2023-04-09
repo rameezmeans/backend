@@ -69,7 +69,7 @@ class FilesAPIController extends Controller
             copy( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file, 
             public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file) );
 
-            // unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
+            unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
             $path = public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file);
             
