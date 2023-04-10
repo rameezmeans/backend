@@ -103,7 +103,7 @@ class FilesController extends Controller
         $response = Http::withHeaders($headers)->get($url);
         $responseBody = json_decode($response->getBody(), true);
 
-        dd($responseBody);
+        // dd($responseBody);
 
         foreach($responseBody as $row){
 
@@ -1219,9 +1219,11 @@ class FilesController extends Controller
 
             $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
             $encodingType = $request->encoding_type;
-            $slotID = $file->alientech_file->slot_id;
-            
-            $this->alientechObj->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType );
+
+            if($file->alientech_file){ // if slot id is assigned
+                $slotID = $file->alientech_file->slot_id;
+                $this->alientechObj->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType );
+            }
         }
         
         $engineerFile = new RequestFile();
