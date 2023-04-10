@@ -1009,13 +1009,16 @@ class FilesController extends Controller
         $html2 = str_replace("#customer_name", $file->name ,$html2);
         $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
         
-        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
-        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        if( \App\Models\Service::FindOrFail( $file->stage_services->service_id ) ){
+            $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
+            $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
+        }
         
-        if($file->options){
-            foreach($file->options() as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-                $tunningType .=  $option;  
+        if($file->options_services){
+
+            foreach($file->options_services as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.\App\Models\Service::FindOrFail( $option->service_id )->name .'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $option->service_id )->icon.'">';
+                $tunningType .=  \App\Models\Service::FindOrFail( $option->service_id )->name;
                 $tunningType .= '</div>';
             }
         }

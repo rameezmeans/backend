@@ -101,21 +101,21 @@ class FilesAPIController extends Controller
         
                 }
 
-            }
+                if($flag){
 
-            if($flag){
+                    Chatify::push("private-chatify-download", 'download-button', [
+                        'status' => 'completed',
+                        'file_id' => $file->id
+                    ]);
+    
+                    return response()->json('status changed.');
+                }
 
-                Chatify::push("private-chatify-download", 'download-button', [
-                    'status' => 'completed',
-                    'file_id' => $file->id
-                ]);
-
-                return response()->json('status changed.');
             }
         }
 
         Chatify::push("private-chatify-download", 'download-button', [
-            'status' => 'failed',
+            'status' => 'fail',
         ]);
         
         return response()->json('status not changed.');
