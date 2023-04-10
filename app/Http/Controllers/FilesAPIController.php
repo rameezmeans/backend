@@ -61,7 +61,7 @@ class FilesAPIController extends Controller
             $file->checking_status = $request->checking_status;
             $flag = $file->save();
 
-            if(isset($request->tuned_file) && $request->tuned_file){
+            if( $request->tuned_file && $request->tuned_file != '' && isset($request->tuned_file) ){
 
                 $tunnedFile = new TunnedFile();
                 $tunnedFile->file = $request->tuned_file;
@@ -74,6 +74,12 @@ class FilesAPIController extends Controller
                 unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
                 $path = public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file);
+
+                if($file->alientech_file){ // if slot id is assigned
+                    $slotID = $file->alientech_file->slot_id;
+                    $encodingType = $this->getEncodingType($file);
+                    (new AlientechController)->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType );
+                }
                 
                 $engineerFile = new RequestFile();
                 $engineerFile->request_file = $request->tuned_file;
@@ -116,9 +122,30 @@ class FilesAPIController extends Controller
 
         Chatify::push("private-chatify-download", 'download-button', [
             'status' => 'fail',
+            'file_id' => $file->id
         ]);
         
         return response()->json('status not changed.');
 
+    }
+
+    public function getEncodingType($file){
+
+        $extensionArr = [];
+        foreach($file->decoded_files as $d){
+            $extensionArr []= $d->extension; 
+        }
+
+        foreach($extensionArr as $ex){
+            if($ex == 'dec'){
+                $e = 'dec';
+            }
+            else if($ex == 'mpc'){
+                $e = 'micro';
+            }
+
+        }
+
+        return $e;
     }
 }
