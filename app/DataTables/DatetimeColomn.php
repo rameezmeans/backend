@@ -10,6 +10,7 @@ class DatetimeColumn extends Column
     public $type = 'datetime';
     public $callback;
 
+    // this must be done.
     public function __construct()
     {
         $this->format();
