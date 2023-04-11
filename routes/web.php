@@ -26,23 +26,23 @@ Route::get('/', function () {
 });
 
  Route::get('/tasks/files_tools', function () {
+     
+    // $files = File::all();
 
-    $files = File::all();
+    // foreach($files as $file){
 
-    foreach($files as $file){
-
-        $tool = $tool = Tool::where('label', $file->tool)->first();
+    //     $tool = $tool = Tool::where('label', $file->tool)->first();
         
-        if($tool){
-            $file->tool_id = $tool->id;
-            $file->save();
-        }
-        else{
-            \Log::info('tool missing in File: '.$file->id.' Tool: '.$file->tool);
-        }
-    }
+    //     if($tool){
+    //         $file->tool_id = $tool->id;
+    //         $file->save();
+    //     }
+    //     else{
+    //         \Log::info('tool missing in File: '.$file->id.' Tool: '.$file->tool);
+    //     }
+    // }
 
-    dd($files);
+    // dd($files);
 
 //     foreach(User::where('is_customer', 1)->get() as $user){
 
