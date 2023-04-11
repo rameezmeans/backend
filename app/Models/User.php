@@ -65,6 +65,14 @@ class User extends Authenticatable
     public function credits(){
         return $this->hasMany(Credit::class)->orderby('created_at', 'desc'); 
     }
+
+    public function tools_slave(){
+        return $this->hasMany(UserTool::class, 'user_id', 'id')->where('type', 'slave'); 
+    }
+
+    public function tools_master(){
+        return $this->hasMany(UserTool::class, 'user_id', 'id')->where('type', 'master'); 
+    }
     
     public function group(){
         return $this->belongsTo(Group::class); 
