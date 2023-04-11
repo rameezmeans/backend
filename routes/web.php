@@ -4,7 +4,9 @@ use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessagesController;
+use App\Models\Comment;
 use App\Models\File;
+use App\Models\Service;
 use App\Models\Tool;
 use App\Models\User;
 use App\Models\UserTool;
@@ -26,6 +28,20 @@ Route::get('/', function () {
 });
 
  Route::get('/tasks/files_tools', function () {
+
+    $comments = Comment::all();
+
+    foreach($comments as $comment){
+        $service = Service::where('options', $comment->option)->first();
+
+        if($service){
+            $comment->service_id = $service->id;
+            $comment->save();
+        }
+        else{
+            \Log::info('service missing: '.$comment->option);
+        }
+    }
      
     // $files = File::all();
 

@@ -1783,15 +1783,7 @@ class FilesController extends Controller
         $fileName = substr($var, strrpos($var, '/') + 1);
         $fileName = str_replace('#', '', $fileName);
         $fileName = $fileName.'_'.$file->id;
-
-        // $fileName = str_replace(' ', '_', $fileName);
-        // $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechGUID;
-        // $headers = [
-        //     'X-Alientech-ReCodAPI-LLC' => $token,
-        // ];
-        // $response = Http::withHeaders($headers)->get($getsyncOpURL);
-        // $responseBody = json_decode($response->getBody(), true);
-
+        
         $slotGuid = $responseBody['slotGUID'];
         
         $result = $responseBody['result'];
@@ -1975,147 +1967,10 @@ class FilesController extends Controller
         if($this->manager['eng_file_upload_cus_sms']){
             $this->sendMessage($customer->phone, $message2);
         }
-        
-        // return response('file uploaded', 200);
 
         }
     }
 
         
     }
-
-    // public function saveFiles($id){
-
-    //     $token = Key::where('key', 'alientech_access_token')->first()->value;
-
-    //     $file = File::findOrFail($id);
-
-    //     $alientechGUID = AlientechFile::where('key', 'guid')->where('file_id', $id)->first()->value;
-        
-    //     $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechGUID;
-
-    //     $headers = [
-    //         'X-Alientech-ReCodAPI-LLC' => $token,
-    //     ];
-  
-    //     $response = Http::withHeaders($headers)->get($getsyncOpURL);
-    //     $responseBody = json_decode($response->getBody(), true);
-
-    //     $slotGuid = $responseBody['slotGUID'];
-        
-    //     $result = $responseBody['result'];
-
-    //     if($result){
-
-    //     if($result['kess3Mode'] == 'OBD'){
-
-    //         if( isset($result['obdDecodedFileURL']) ){
-            
-    //             $url = $result['obdDecodedFileURL'];
-
-    //             $headers = [
-    //                 'X-Alientech-ReCodAPI-LLC' => $token,
-    //             ];
-        
-    //             $response = Http::withHeaders($headers)->get($url);
-    //             $responseBody = json_decode($response->getBody(), true);
-
-    //             // $base64_string = $responseBody['data'];
-    //             $base64Data = $responseBody['data'];
-    //             $contents   = base64_decode($base64Data);
-
-    //             // specify the path and filename for the downloaded file
-    //             $filepath = $responseBody['name'];
-
-    //             $pathAndNameArray = $this->getFileName($filepath, $file, 'decoded');
-
-    //             // save the decoded string to a file
-    //             $flag = file_put_contents($pathAndNameArray['path'], $contents);
-
-    //             $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
-
-    //             $headers = [
-    //             // 'Content-Type' => 'multipart/form-data',
-    //             'X-Alientech-ReCodAPI-LLC' => $token,
-    //             ];
-
-    //             $response = Http::withHeaders($headers)->post($url, []);
-
-    //             $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
-
-    //             $obj = new AlientechFile();
-    //             $obj->key = $extension;
-    //             $obj->value = $pathAndNameArray['name'];
-    //             $obj->purpose = "download";
-    //             $obj->file_id = $file->id;
-    //             $obj->save();
-
-    //         }
-    //     }
-    //     else if($result['kess3Mode'] == 'BootBench'){
-    //             foreach($result['bootBenchComponents'] as $row){
-
-    //                 $url = $row['decodedFileURL'];
-
-    //                 $headers = [
-    //                     'X-Alientech-ReCodAPI-LLC' => $token,
-    //                 ];
-            
-    //                 $response = Http::withHeaders($headers)->get($url);
-    //                 $responseBody = json_decode($response->getBody(), true);
-
-    //                 // $base64_string = $responseBody['data'];
-    //                 $base64Data = $responseBody['data'];
-    //                 $contents   = base64_decode($base64Data);
-
-    //                 // specify the path and filename for the downloaded file
-    //                 $filepath = $responseBody['name'];
-                    
-    //                 $pathAndNameArray = $this->getFileName($filepath, $file, 'decoded');
-
-    //                 // save the decoded string to a file
-    //                 $flag = file_put_contents($pathAndNameArray['path'], $contents);
-                    
-    //                 $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
-
-    //                 $headers = [
-    //                 // 'Content-Type' => 'multipart/form-data',
-    //                 'X-Alientech-ReCodAPI-LLC' => $token,
-    //                 ];
-
-    //                 $response = Http::withHeaders($headers)->post($url, []);
-
-    //                 $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
-
-    //                 $obj = new AlientechFile();
-    //                 $obj->key = $extension;
-    //                 $obj->value = $pathAndNameArray['name'];
-    //                 $obj->purpose = "download";
-    //                 $obj->file_id = $file->id;
-    //                 $obj->save();
-
-    //             }
-    //         }
-    //     }
-    //     else{
-    //         $this->makeLogEntry($file->id, 'error', 'line 2048; File can not be decoded.');
-    //         $slot_id = AlientechFile::where('file_id', $file->id)->where('key','slotGUID')->first();
-    //         $this->closeOneSlot($slot_id);
-    //         AlientechFile::where('file_id', $file->id)->delete();
-    //     }
-    // }
-
-    // public function closeOneSlot($slotID){
-
-    //     $token = Key::where('key', 'alientech_access_token')->first()->value;
-
-    //     $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotID."/close";
-
-    //     $headers = [
-    //     // 'Content-Type' => 'multipart/form-data',
-    //     'X-Alientech-ReCodAPI-LLC' => $token,
-    //     ];
-
-    //     $response = Http::withHeaders($headers)->post($url, []);
-    // }
 }

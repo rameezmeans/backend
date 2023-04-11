@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use App\Models\Tool;
+use App\Models\UserTool;
 use Illuminate\Http\Request;
 
 class ToolsController extends Controller
@@ -43,7 +45,10 @@ class ToolsController extends Controller
     public function delete(Request $request)
     {
         $tool = Tool::findOrFail($request->id);
+        File::where('tool_id', $tool->id)->delete();
+        UserTool::where('tool_id', $tool->id)->delete();
         $tool->delete();
+
         $request->session()->put('success', 'Tool deleted, successfully.');
     }
 
