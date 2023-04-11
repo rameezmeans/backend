@@ -32,7 +32,7 @@ Route::get('/', function () {
     $comments = Comment::all();
 
     foreach($comments as $comment){
-        $service = Service::where('options', $comment->option)->first();
+        $service = Service::where('name', $comment->option)->first();
 
         if($service){
             $comment->service_id = $service->id;
