@@ -97,6 +97,10 @@ class File extends Model
         return $this->hasOne(ProcessedFile::class, 'file_id', 'id')->where('type', 'decoded');
     }
 
+    public function reading_tool($type){
+        return $this->hasOne(Tool::class, 'file_id', 'id')->where('type', $type);
+    }
+
     public function options_services(){
         return $this->hasMany(FileService::class, 'file_id', 'id')->where('type', 'option');
     }

@@ -22,6 +22,7 @@ use App\Models\FileService;
 use App\Models\Key;
 use App\Models\Log;
 use App\Models\Service;
+use App\Models\Tool;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
@@ -1692,54 +1693,9 @@ class FilesController extends Controller
             // $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
         }
 
-        // if($file->tunned_files){
-
-        //     copy( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file, 
-        //     public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file) );
-
-        // }
-
-        // $file->reupload_time = Carbon::now();
-        
         if(!$file){
             abort(404);
         }
-
-        // $decodedAvailable = false;
-
-        // $encodingType = 'micro';
-
-        // $setEncodingType = AlientechFile::where('purpose','download')->where('file_id', $file->id)->first();
-
-        // if($setEncodingType){
-        //     if($setEncodingType->key == 'dec'){
-        //         $encodingType = 'dec';
-        //     }
-        // }
-
-        // if(AlientechFile::where('file_id', $file->id)->first()){
-
-        //     $decodedAvailable = true;
-            
-        //     // if($file->alientech_files->isEmpty()){
-        //     //     $this->saveFiles($file->id);
-        //     // }
-        // }
-
-        // $aboutToDownload = AlientechFile::where('purpose', 'download_encoded')->where('file_id', $file->id)->get();
-        
-        // if($aboutToDownload){
-        //     foreach($aboutToDownload as $f){
-        //         $this->saveMoreFiles($file->id, $f->id);
-        //         $f->purpose = "download_encoded_done";
-        //         $f->save();
-        //     }
-        // }
-        
-        // $alientechFiles = $file->alientech_files;
-
-        // $file->response_time = $this->getResponseTime($file);
-        // $file->save();
         
         if($file->checked_by == 'customer'){
             $file->checked_by = 'seen';
@@ -1794,7 +1750,9 @@ class FilesController extends Controller
             $comments = null;
         }
 
-        return view('files.show', [ 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
+        $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
+
+        return view('files.show', [ 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
     }
 
     public function saveMoreFiles($id, $alientechFileID){
