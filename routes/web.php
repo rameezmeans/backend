@@ -25,64 +25,81 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/tasks/users_tools', function () {
+ Route::get('/tasks/files_tools', function () {
 
-//         foreach(User::where('is_customer', 1)->get() as $user){
-            
-//             $slaveTools = explode(',', $user->slave_tools);
-//             $masterTools = explode(',', $user->master_tools);
+    $files = File::all();
 
-//             UserTool::where('user_id', $user->id)->where('type', 'master')->delete();
+    foreach($files as $file){
 
-//             foreach($masterTools as $m){
+        $tool = $tool = Tool::where('label', $file->tool)->first();
+        
+        if($tool){
+            $file->tool_id = $tool->id;
+            $file->save();
+        }
+        else{
+            \Log::info('tool missing in File: '.$file->id.' Tool: '.$file->tool);
+        }
+    }
 
-//                 $tool = Tool::where('label', $m)->where('type', 'master')->first();
-                
-//                 if($tool){
-//                     $record = new UserTool();
-//                     $record->type = 'master';
-//                     $record->user_id = $user->id;
-//                     $record->tool_id = $tool->id;
-//                     $record->save();
-//                 }
-//                 else{
-//                     \Log::info('missing: '.$m);
-//                 }
-//             }
+    dd($files);
 
-//             UserTool::where('user_id', $user->id)->where('type', 'slave')->delete();
+//     foreach(User::where('is_customer', 1)->get() as $user){
 
-//             foreach($slaveTools as $s){
+//     $slaveTools = explode(',', $user->slave_tools);
+//     $masterTools = explode(',', $user->master_tools);
 
-//                 $tool = Tool::where('label', $s)->where('type', 'slave')->first();
-//                 if($tool){
-//                     $record = new UserTool();
-//                     $record->type = 'slave';
-//                     $record->user_id = $user->id;
-//                     $record->tool_id = $tool->id;
-//                     $record->save();
-//                 }
-//                 else{
-//                     \Log::info('missing: '.$s);
-//                 }
-//             }
+//     UserTool::where('user_id', $user->id)->where('type', 'master')->delete();
 
-//             echo "---------------------------------------------------------------------------<br>";
-//             echo 'user: "'.$user->name. '" id: '.$user->id.'<br><br>';
+//     foreach($masterTools as $m){
 
-//             foreach($user->tools_slave as $sl){
-//                 echo Tool::findOrFail($sl->tool_id)->label.'(slave)<br>';
-//             }
+//     $tool = Tool::where('label', $m)->where('type', 'master')->first();
 
-//             foreach($user->tools_master as $ms){
-//                 echo Tool::findOrFail($ms->tool_id)->label.'(master)<br>';
-//             }
-//             echo "---------------------------------------------------------------------------<br>";
-//             echo "<br><br>";
-
+//         if($tool){
+//             $record = new UserTool();
+//             $record->type = 'master';
+//             $record->user_id = $user->id;
+//             $record->tool_id = $tool->id;
+//             $record->save();
 //         }
-    
-// });
+//         else{
+//         \Log::info('missing: '.$m);
+//         }
+//     }
+
+//     UserTool::where('user_id', $user->id)->where('type', 'slave')->delete();
+
+//     foreach($slaveTools as $s){
+
+//     $tool = Tool::where('label', $s)->where('type', 'slave')->first();
+//         if($tool){
+//             $record = new UserTool();
+//             $record->type = 'slave';
+//             $record->user_id = $user->id;
+//             $record->tool_id = $tool->id;
+//             $record->save();
+//         }
+//         else{
+//         \Log::info('missing: '.$s);
+//         }
+//     }
+
+//     echo "---------------------------------------------------------------------------<br>";
+//     echo 'user: "'.$user->name. '" id: '.$user->id.'<br><br>';
+
+//     foreach($user->tools_slave as $sl){
+//     echo Tool::findOrFail($sl->tool_id)->label.'(slave)<br>';
+//     }
+
+//     foreach($user->tools_master as $ms){
+//     echo Tool::findOrFail($ms->tool_id)->label.'(master)<br>';
+//     }
+//     echo "---------------------------------------------------------------------------<br>";
+//     echo "<br><br>";
+
+//  }
+
+ });
 
 Route::post('/change_status', [App\Http\Controllers\ServicesController::class, 'changeStatus'])->name('change-status');
 
@@ -347,22 +364,3 @@ Route::post('chatify/setActiveStatus', [MessagesController::class, 'setActiveSta
 Route::get('myspace', function(){
     dd(User::get(['id', 'name'])->pluck('name','id')->toArray());
 });
-
-/*
-* [Group] view by id
-*/
-// Route::get('/group/{id}', [MessagesController::class,'index'])->name('group');
-
-/*
-* user view by id.
-* Note : If you added routes after the [User] which is the below one,
-* it will considered as user id.
-*
-* e.g. - The commented routes below :
-*/
-// Route::get('/route', function(){ return 'Munaf'; }); // works as a route
-// Route::get('chatify/{id}', function(){
-//     abort('404');
-// })->name('user');
-
-// Route::get('/route', function(){ return 'Munaf'; }); // works as a user id
