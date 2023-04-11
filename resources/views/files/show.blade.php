@@ -82,7 +82,7 @@
                               <a href="{{ route('download', [$file->id, $file->file_attached]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                               </a>
 
-                            @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+                            @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
                               @if($file->decoded_files)
                                 @foreach($file->decoded_files as $decodedFile)
                                   <a href="{{ route('download', [$file->id, $decodedFile->name.'.'.$decodedFile->extension]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$decodedFile->extension}})</span>
@@ -295,8 +295,8 @@
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Tool</p>
                           <div class="pull-right">
-                              <img alt="{{$file->tool}}" width="50" height="" data-src-retina="{{ get_dropdown_image($file->tool) }}" data-src="{{ get_dropdown_image($file->tool) }}" src="{{ get_dropdown_image($file->tool) }}">
-                              <span class="" style="top: 2px; position:relative;">{{ $file->tool }}</span>
+                              <img alt="{{$file->tool_id}}" width="50" height="" data-src-retina="{{ get_dropdown_image($file->tool_id) }}" data-src="{{ get_dropdown_image($file->tool_id) }}" src="{{ get_dropdown_image($file->tool) }}">
+                              <span class="" style="top: 2px; position:relative;">{{ \App\Models\Tool::findOrFail( $file->tool_id )->name }}({{$file->tool_type}})</span>
                           </div>
                           <div class="clearfix"></div>
                         </div>
@@ -513,7 +513,7 @@
                                       <form action="{{route('encoded-file-upload')}}" class="encoded-dropzone dropzone no-margin">
                                         @csrf
                                         <input type="hidden" value="{{$file->id}}" name="file_id">
-                                        @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+                                        @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
                                           <input type="hidden" value="1" name="encode">
                                             @if($file->decoded_file)
                                               @if($file->decoded_file->extension == 'dec')
