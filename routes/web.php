@@ -36,7 +36,7 @@ Route::get('/', function () {
 
 //             foreach($masterTools as $m){
 
-//                 $tool = Tool::where('label', $m)->first();
+//                 $tool = Tool::where('label', $m)->where('type', 'master')->first();
                 
 //                 if($tool){
 //                     $record = new UserTool();
@@ -54,7 +54,7 @@ Route::get('/', function () {
 
 //             foreach($slaveTools as $s){
 
-//                 $tool = Tool::where('label', $s)->first();
+//                 $tool = Tool::where('label', $s)->where('type', 'slave')->first();
 //                 if($tool){
 //                     $record = new UserTool();
 //                     $record->type = 'slave';
