@@ -25,64 +25,64 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/tasks/users_tools', function () {
+// Route::get('/tasks/users_tools', function () {
 
-        foreach(User::where('is_customer', 1)->get() as $user){
+//         foreach(User::where('is_customer', 1)->get() as $user){
             
-            $slaveTools = explode(',', $user->slave_tools);
-            $masterTools = explode(',', $user->master_tools);
+//             $slaveTools = explode(',', $user->slave_tools);
+//             $masterTools = explode(',', $user->master_tools);
 
-            UserTool::where('user_id', $user->id)->where('type', 'master')->delete();
+//             UserTool::where('user_id', $user->id)->where('type', 'master')->delete();
 
-            foreach($masterTools as $m){
+//             foreach($masterTools as $m){
 
-                $tool = Tool::where('label', $m)->first();
+//                 $tool = Tool::where('label', $m)->first();
                 
-                if($tool){
-                    $record = new UserTool();
-                    $record->type = 'master';
-                    $record->user_id = $user->id;
-                    $record->tool_id = $tool->id;
-                    $record->save();
-                }
-                else{
-                    \Log::info('missing: '.$m);
-                }
-            }
+//                 if($tool){
+//                     $record = new UserTool();
+//                     $record->type = 'master';
+//                     $record->user_id = $user->id;
+//                     $record->tool_id = $tool->id;
+//                     $record->save();
+//                 }
+//                 else{
+//                     \Log::info('missing: '.$m);
+//                 }
+//             }
 
-            UserTool::where('user_id', $user->id)->where('type', 'slave')->delete();
+//             UserTool::where('user_id', $user->id)->where('type', 'slave')->delete();
 
-            foreach($slaveTools as $s){
+//             foreach($slaveTools as $s){
 
-                $tool = Tool::where('label', $s)->first();
-                if($tool){
-                    $record = new UserTool();
-                    $record->type = 'slave';
-                    $record->user_id = $user->id;
-                    $record->tool_id = $tool->id;
-                    $record->save();
-                }
-                else{
-                    \Log::info('missing: '.$s);
-                }
-            }
+//                 $tool = Tool::where('label', $s)->first();
+//                 if($tool){
+//                     $record = new UserTool();
+//                     $record->type = 'slave';
+//                     $record->user_id = $user->id;
+//                     $record->tool_id = $tool->id;
+//                     $record->save();
+//                 }
+//                 else{
+//                     \Log::info('missing: '.$s);
+//                 }
+//             }
 
-            echo "---------------------------------------------------------------------------<br>";
-            echo 'user: "'.$user->name. '" id: '.$user->id.'<br><br>';
+//             echo "---------------------------------------------------------------------------<br>";
+//             echo 'user: "'.$user->name. '" id: '.$user->id.'<br><br>';
 
-            foreach($user->tools_slave as $sl){
-                echo Tool::findOrFail($sl->tool_id)->label.'(slave)<br>';
-            }
+//             foreach($user->tools_slave as $sl){
+//                 echo Tool::findOrFail($sl->tool_id)->label.'(slave)<br>';
+//             }
 
-            foreach($user->tools_master as $ms){
-                echo Tool::findOrFail($ms->tool_id)->label.'(master)<br>';
-            }
-            echo "---------------------------------------------------------------------------<br>";
-            echo "<br><br>";
+//             foreach($user->tools_master as $ms){
+//                 echo Tool::findOrFail($ms->tool_id)->label.'(master)<br>';
+//             }
+//             echo "---------------------------------------------------------------------------<br>";
+//             echo "<br><br>";
 
-        }
+//         }
     
-});
+// });
 
 Route::post('/change_status', [App\Http\Controllers\ServicesController::class, 'changeStatus'])->name('change-status');
 
