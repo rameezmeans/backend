@@ -156,53 +156,6 @@ class FilesController extends Controller
 
     public function liveFiles(){
 
-        // $files = File::all();
-
-        // foreach($files as $file){
-
-        //     if($file->stages != NULL){
-
-        //         FileService::where('file_id', $file->id)->delete();
-        //         FileService::where('temporary_file_id', $file->id)->delete();
-
-        //         $stage = Service::where('name', $file->stages)->first();
-
-        //         if($stage){
-        //             $fileService = new FileService();
-        //             $fileService->type = 'stage';
-        //             $fileService->credits = $stage->credits;
-        //             $fileService->service_id = $stage->id;
-        //             $fileService->file_id = $file->id;
-        //             $fileService->save();
-        //         }
-        //         else{
-        //             \Log::info('stage not found: '. $file->stages);
-        //         }
-        //     }
-        //     if( $file->options ){
-        //         foreach(explode(',', $file->options) as $option){
-    
-        //             $optionService = Service::where('name', $option)->first();
-
-        //             if($optionService){
-
-        //                 $fileOption = new FileService();
-        //                 $fileOption->type = 'option';
-        //                 $fileOption->credits = $optionService->credits;
-                        
-        //                 $fileOption->service_id = $optionService->id;
-        //                 $fileOption->file_id = $file->id;
-        //                 $fileOption->save();
-        //             }
-        //             else{
-        //                 \Log::info('option not found: '. $option);
-        //             }
-        //         } 
-        //  }
-
-            
-        // }
-
         return view('files.live_files');    
     }
     
@@ -466,162 +419,7 @@ class FilesController extends Controller
         ->with('tab','chat');
     }
 
-    // public function generateFeedbackEmail( $fileID, $requestFileID, $userID ) {
-
-    //     $file = File::findOrFail($fileID); // this is a file on local
-    //     // $file = File::findOrFail(203); // this is a file on live
-    //     $feebdackTemplate = EmailTemplate::findOrFail(9); // email template must always be 9
-    //     $html = $feebdackTemplate->html;
-    //     $fileName = $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard;
-
-    //     $html = str_replace('#file_name', $fileName, $html);
-    //     $html = str_replace('#angry_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/angry', $html);
-    //     $html = str_replace('#sad_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/sad', $html);
-    //     $html = str_replace('#ok_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/ok', $html);
-    //     $html = str_replace('#good_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/good', $html);
-    //     $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
-    //     $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
-    //     $html = str_replace('#file_url', env('PORTAL_URL').'file/'.$fileID, $html);
-
-    //     $subject = "ECU Tech: Feedback Request";
-    //     \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
-
-    // }
-
-    // public function testFeedbackEmail() {
-    //     // $file = File::findOrFail(42); // this is a file on local
-    //     $file = File::findOrFail(231); // this is a file on live
-    //     $requestFileID = 118;
-    //     $userID = 50;
-
-    //     $this->generateFeedbackEmail($file->id, $requestFileID, $userID);
-
-    //     // $feebdackTemplate = EmailTemplate::findOrFail(9);
-    //     // $html = $feebdackTemplate->html;
-
-    //     // // dd($html);
-
-    //     // $subject = "ECU Tech: Feedback Request";
-    //     // \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
-
-    // }
-
-
-
-    // public function recordFeedback($fileID, $userID, $feedback){
-        
-    // }
-
-    // public function downloadDecoded($id,$file_name) {
-
-    //     $token = Key::where('key', 'alientech_access_token')->first()->value;
-
-    //     $file = File::findOrFail($id);
-
-    //     $alientechGUID = AlientechFile::where('key', 'guid')->where('file_id', $id)->first()->value;
-        
-    //     $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechGUID;
-
-    //     $headers = [
-    //         'X-Alientech-ReCodAPI-LLC' => $token,
-    //     ];
-  
-    //     $response = Http::withHeaders($headers)->get($getsyncOpURL);
-    //     $responseBody = json_decode($response->getBody(), true);
-
-    //     // dd($responseBody);
-
-    //     $slotGuid = $responseBody['slotGUID'];
-        
-    //     $result = $responseBody['result'];
-
-    //     if($result['kess3Mode'] == 'OBD'){
-
-    //         if( isset($result['obdDecodedFileURL']) ){
-            
-    //             $url = $result['obdDecodedFileURL'];
-
-    //             $headers = [
-    //                 'X-Alientech-ReCodAPI-LLC' => $token,
-    //             ];
-        
-    //             $response = Http::withHeaders($headers)->get($url);
-    //             $responseBody = json_decode($response->getBody(), true);
-
-    //             $base64Data = $responseBody['data'];
-    //             $contents   = base64_decode($base64Data);
-
-    //             // dd($responseBody);
-    //             // specify the path and filename for the downloaded file
-    //             $filepath = $responseBody['name'];
-
-    //             $pathAndNameArray = $this->getFileName($filepath, $file, 'decoded');
-
-    //             // save the decoded string to a file
-    //             $flag = file_put_contents($pathAndNameArray['path'], $contents);
-
-    //             $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
-
-    //             $headers = [
-    //             // 'Content-Type' => 'multipart/form-data',
-    //             'X-Alientech-ReCodAPI-LLC' => $token,
-    //             ];
-
-    //             $response = Http::withHeaders($headers)->post($url, []);
-
-    //             // // set the content type and headers for downloading the file
-    //             // header('Content-Type: application/octet-stream');
-    //             // header('Content-Disposition: attachment; filename="'.$responseBody['name'].'"');
-                
-    //             // // download the file to the user's browser
-    //             // readfile($filepath);
-
-    //             // $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
-                
-    //             // $path = public_path('/../../portal/public'.$file->file_path);
-    //             // $file_path = $path.$file->file_attached.'.'.$extension;
-    //             // return response()->download($file_path);
-                
-    //             // $path = public_path('/../../portal/public'.$file->file_path);
-    //             // $file_path = $path.$file_name;
-    //             // return response()->download($file_path);
-
-    //         }
-    //     }
-    //     else if($result['kess3Mode'] == 'BootBench'){
-    //         foreach($result['bootBenchComponents'] as $row){
-
-    //             $url = $row['decodedFileURL'];
-
-    //             $headers = [
-    //                 'X-Alientech-ReCodAPI-LLC' => $token,
-    //             ];
-        
-    //             $response = Http::withHeaders($headers)->get($url);
-    //             $responseBody = json_decode($response->getBody(), true);
-
-    //             $base64Data = $responseBody['data'];
-    //             $contents   = base64_decode($base64Data);
-
-    //             // specify the path and filename for the downloaded file
-    //             $filepath = $responseBody['name'];
-
-    //             $pathAndNameArray = $this->getFileName($filepath, $file,'decoded');
-
-    //             // save the decoded string to a file
-    //             $flag = file_put_contents($pathAndNameArray['path'], $contents);
-
-    //             $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
-
-    //             $headers = [
-    //                 'X-Alientech-ReCodAPI-LLC' => $token,
-    //             ];
-
-    //             $response = Http::withHeaders($headers)->post($url, []);
-
-    //         }
-    //     }
-    // }
+    
 
     public function download($id,$file_name) {
         $file = File::findOrFail($id);
@@ -629,108 +427,6 @@ class FilesController extends Controller
         $file_path = $path.$file_name;
         return response()->download($file_path);
     }
-
-    // /**
-    //  * Show the files table.
-    //  *
-    //  * @return \Illuminate\Contracts\Support\Renderable
-    //  */
-    // public function index()
-    // {
-
-    //     // File::where('is_credited', 0)->delete();
-
-    //     // if(Auth::user()->is_admin || Auth::user()->is_head){
-    //         // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
-    //         // $files = File::select('*')
-    //         // ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
-    //         // ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
-    //         // ->orderBy('ss', 'asc')
-    //         // ->orderBy('s', 'asc')
-    //         // ->orderBy('created_at', 'desc')
-    //         // ->where('is_credited', 1)
-    //         // ->get();
-            
-    //     // }
-    //     // else if(Auth::user()->is_engineer){
-    //     //     // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
-    //     //     $files = File::select('*')
-    //     //     ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
-    //     //     ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
-    //     //     ->orderBy('ss', 'asc')
-    //     //     ->orderBy('s', 'asc')
-    //     //     ->orderBy('created_at', 'desc')
-    //     //     ->where('is_credited', 1)
-    //     //     // ->where('assigned_to', Auth::user()->id)
-    //     //     ->get();
-    //     // }
-
-    //     // foreach($files as $file){
-    //     //     if($file->reupload_time){
-    //     //         $file->response_time = $this->getResponseTime($file);
-    //     //         $file->save();
-    //     //     }
-    //     // }
-
-    //     // $reminders = EmailReminder::all();
-
-    //     // $dateCheck = date('Y-m-d');
-
-    //     // // dd($dateCheck);
-    //     // // dd($dateCheck);
-    //     // // $dateCheck = '2023-02-01';
-
-    //     // $current = Carbon::parse(Carbon::createFromTimestamp(strtotime($dateCheck))->format('Y-m-d'));
-        
-    //     // // dd($current);
-        
-    //     // // dd($current);
-    //     // // dd(Carbon::now());
-
-    //     // $schedualer = Schedualer::take(1)->first();
-
-    //     // $days = $schedualer->days;
-    //     // $time = $schedualer->time_of_day;
-
-    //     // foreach($reminders as $reminder){
-
-    //     //     // dd($reminder->set_time);
-
-    //     //     $reminderSetDate = Carbon::parse(Carbon::createFromTimestamp(strtotime($reminder->set_time))->format('Y-m-d'));
-            
-    //     //     // dd($reminderSetDate);
-
-    //     //     $emailTime = $reminderSetDate->addDays($days);
-
-    //     //     // dd($emailTime);
-
-    //     //     $result = $emailTime->eq($current);
-
-    //     //     // dd($result);
-
-    //     //     if($result){
-    //     //             // dd(Carbon::parse($time));
-    //     //             // $timeGreater = now()->greaterThan(Carbon::parse($time));
-    //     //             $timeGreater = true;
-    //     //             // $timeGreater = now()->greaterThan(Carbon::parse());
-
-    //     //        if($timeGreater){
-    //     //             //    $this->generateFeedbackEmail($reminder->file_id, $reminder->request_file_id, $reminder->user_id);
-    //     //             $reminder->cycle = $reminder->cycle - 1;
-
-    //     //             if($reminder->cycle == 0){
-    //     //                 $reminder->delete();
-    //     //             }
-    //     //             else{
-    //     //                 $reminder->set_time = Carbon::now();
-    //     //                 $reminder->save();
-    //     //             }
-    //     //        }
-    //     //     }
-    //     // }
-        
-    //     return view('files.files', ['files' => $files]);
-    // }
 
     public function deleteMessage(Request $request)
     {
@@ -745,17 +441,6 @@ class FilesController extends Controller
         $file->delete();
         return response('File deleted', 200);
     }
-
-    // public function testMessage(){
-    //     $this->sendMessage('+923218612198', 'test message again');
-    //     dd('sms test');
-    // }
-
-    // public function testEmail(){
-    //     $html = "<p>testing</p>";
-    //     \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => NULL, 'html' => $html, 'subject' => 'testing']));
-    //     dd('email test');
-    // }
 
     public function sendMessage($receiver, $message)
     {
@@ -779,37 +464,26 @@ class FilesController extends Controller
 
     public function assignEngineer(Request $request){
     
-       $file = File::findOrFail($request->file_id);
-       $file->assigned_to = $request->assigned_to;
-       $file->assignment_time = Carbon::now();
-       $file->save();
+        $file = File::findOrFail($request->file_id);
+        $file->assigned_to = $request->assigned_to;
+        $file->assignment_time = Carbon::now();
+        $file->save();
 
-       $engineer = User::findOrFail($request->assigned_to);
-       $customer = User::findOrFail($file->user_id);
-    
-    //    $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
-       $template = EmailTemplate::findOrFail(1);
-
-       $html = $template->html;
-
-       $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
-       $html = str_replace("#customer_name", $customer->name ,$html);
-       $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
-       
-       if( \App\Models\Service::FindOrFail( $file->stage_services->service_id ) ){
-            $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
-            $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
-        }
+        $engineer = User::findOrFail($request->assigned_to);
+        $customer = User::findOrFail($file->user_id);
         
-        if($file->options_services){
+        //    $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
+        $template = EmailTemplate::findOrFail(1);
 
-            foreach($file->options_services as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.\App\Models\Service::FindOrFail( $option->service_id )->name .'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $option->service_id )->icon.'">';
-                $tunningType .=  \App\Models\Service::FindOrFail( $option->service_id )->name;
-                $tunningType .= '</div>';
-            }
-        }
+        $html = $template->html;
 
+        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
+        $html = str_replace("#customer_name", $customer->name ,$html);
+        $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
+       
+
+        $tunningType = $this->emailStagesAndOption($file);
+        
         $html = str_replace("#tuning_type", $tunningType,$html);
         $html = str_replace("#status", $file->status,$html);
         $html = str_replace("#file_url", route('file', $file->id),$html);
@@ -872,19 +546,8 @@ class FilesController extends Controller
         $html1 = str_replace("#customer_name", $customer->name ,$html1);
         $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
         
-        if( \App\Models\Service::FindOrFail( $file->stage_services->service_id ) ){
-            $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
-            $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
-        }
-        
-        if($file->options_services){
 
-            foreach($file->options_services as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.\App\Models\Service::FindOrFail( $option->service_id )->name .'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $option->service_id )->icon.'">';
-                $tunningType .=  \App\Models\Service::FindOrFail( $option->service_id )->name;
-                $tunningType .= '</div>';
-            }
-        }
+        $tunningType = $this->emailStagesAndOption($file);
         
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
@@ -896,20 +559,9 @@ class FilesController extends Controller
         $html2 = str_replace("#customer_name", $file->name ,$html2);
         $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
         
-        if( \App\Models\Service::FindOrFail( $file->stage_services->service_id ) ){
-            $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
-            $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
-        }
+
+        $tunningType = $this->emailStagesAndOption($file);
         
-        if($file->options_services){
-
-            foreach($file->options_services as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.\App\Models\Service::FindOrFail( $option->service_id )->name .'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $option->service_id )->icon.'">';
-                $tunningType .=  \App\Models\Service::FindOrFail( $option->service_id )->name;
-                $tunningType .= '</div>';
-            }
-        }
-
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html2);
         $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
@@ -985,19 +637,7 @@ class FilesController extends Controller
         $html1 = str_replace("#customer_name", $customer->name ,$html1);
         $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
         
-        if( \App\Models\Service::FindOrFail( $file->stage_services->service_id ) ){
-            $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
-            $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
-        }
-        
-        if($file->options_services){
-
-            foreach($file->options_services as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.\App\Models\Service::FindOrFail( $option->service_id )->name .'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $option->service_id )->icon.'">';
-                $tunningType .=  \App\Models\Service::FindOrFail( $option->service_id )->name;
-                $tunningType .= '</div>';
-            }
-        }
+        $tunningType = $this->emailStagesAndOption($file);
 
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
@@ -1010,20 +650,9 @@ class FilesController extends Controller
         $html2 = str_replace("#customer_name", $file->name ,$html2);
         $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
         
-        if( \App\Models\Service::FindOrFail( $file->stage_services->service_id ) ){
-            $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
-            $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
-        }
+
+        $tunningType = $this->emailStagesAndOption($file);
         
-        if($file->options_services){
-
-            foreach($file->options_services as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.\App\Models\Service::FindOrFail( $option->service_id )->name .'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $option->service_id )->icon.'">';
-                $tunningType .=  \App\Models\Service::FindOrFail( $option->service_id )->name;
-                $tunningType .= '</div>';
-            }
-        }
-
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html2);
         $html2 = str_replace("#note", $request->egnineers_internal_notes,$html2);
@@ -1072,79 +701,6 @@ class FilesController extends Controller
 
     }
 
-    // public function uploadFileFromEngineerAndEncode(Request $request){
-
-    //     $attachment = $request->file('file');
-
-    //     $file = File::findOrFail($request->file_id);
-
-    //     $fileName = $attachment->getClientOriginalName();
-        
-    //     $newFileName = str_replace('#', '_', $fileName);
-    //     $newFileName = str_replace(' ', '_', $fileName);
-
-    //     $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$newFileName);
-
-    //     $path = public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/').$newFileName;
-    //     $slotID = AlientechFile::where('key', 'slotGUID')->where('file_id', $file->id)->first()->value;
-    //     $token = Key::where('key', 'alientech_access_token')->first()->value;
-
-    //     $encodingType = $request->encoding_type;
-    //     $response = $this->uploadFileToEncode($token, $path, $slotID, $encodingType);
-
-    //     if( isset($response->guid) ){
-
-    //         if($encodingType == 'dec'){
-    //             $url = "https://encodingapi.alientech.to/api/kess3/encode-obd-file";
-    //         }
-    //         else if($encodingType == 'micro'){
-    //             $url = "https://encodingapi.alientech.to/api/kess3/encode-boot-bench-file";
-    //         }
-
-    //         $headers = [
-    //         'X-Alientech-ReCodAPI-LLC' => $token,
-    //         ];
-            
-    //         if($encodingType == 'dec'){
-    //             $postInput = [
-    //                 'userCustomerCode' => 'user1',
-    //                 'kess3FileSlotGUID' => $slotID,
-    //                 'modifiedFileGUID' => $response->guid,
-    //                 // 'WillCorrectCVN' => true,
-    //             ];
-    //         }
-    //         else if($encodingType == 'micro'){
-    //             $postInput = [
-    //                 'userCustomerCode' => 'user1',
-    //                 'kess3FileSlotGUID' => $slotID,
-    //                 'modifiedFileGUID' => $response->guid,
-    //                 // 'WillCorrectCVN' => true,
-    //             ];
-    //         }
-
-    //         $syncResponse = Http::withHeaders($headers)->post($url, $postInput);                
-    //         $syncResponseBody = json_decode($syncResponse->getBody(), true);
-
-    //         if(!AlientechFile::where('file_id', $file->id)->where('purpose', 'download_encoded')->first()){
-
-    //             $obj = new AlientechFile();
-    //             $obj->key = 'guid';
-    //             $obj->value = $syncResponseBody['guid'];
-    //             $obj->purpose = "download_encoded";
-    //             $obj->file_id = $file->id;
-    //             $obj->save();
-    //         }
-
-    //         return response('file will be ready after few seconds. please refresh the page.', 200);
-
-    //     }
-    //     else{
-
-    //         $this->makeLogEntry($file->id, 'error', 'File Upload error. Line: 1236.');
-    //         return response('Uploaded file is not Compatible', 500);
-    //     }
-    // }
-
     public function makeLogEntry($fileID, $type, $message){
 
         $log = new Log();
@@ -1154,49 +710,6 @@ class FilesController extends Controller
         $log->save();
 
     }
-
-    // public function uploadFileToEncode($token, $path, $slotID, $encodingType){
-
-    //     $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotID."/reopen";
-
-    //     $headers = [
-    //     // 'Content-Type' => 'multipart/form-data',
-    //     'X-Alientech-ReCodAPI-LLC' => $token,
-    //     ];
-
-    //     $response = Http::withHeaders($headers)->post($url, []);
-        
-    //     if($encodingType == 'dec'){
-    //         $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/OBDModified';
-    //     }
-    //     else if($encodingType == 'micro'){
-    //         $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/BootBenchModifiedMicro';
-    //     }
-
-    //     // $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/BootBenchModifiedEEPROM';
-    
-    //     if (function_exists('curl_file_create')) { // php 5.5+
-    //         $cFile = curl_file_create($path);
-    //         // $cFile = curl_file_create(public_path('Test_File1'));
-    //       } else { // 
-    //         // $cFile = '@' . realpath(public_path('Test_File1'));
-    //         $cFile = '@' . realpath($path);
-    //       }
-    
-    //       $post = array('file'=> $cFile);
-    //       $ch = curl_init();
-    //       curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    //         'Content-type: multipart/form-data',
-    //         'X-Alientech-ReCodAPI-LLC:'.$token
-    //     ]);
-    //       curl_setopt($ch, CURLOPT_URL,$target_url);
-    //       curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-    //       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
-    //       curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-    //       $result=curl_exec ($ch);
-    //       curl_close ($ch);
-    //       return json_decode($result);
-    // }
 
     public function callbackKess3Complete(Request $request){
         \Log::info( $request->all() );
@@ -1292,20 +805,8 @@ class FilesController extends Controller
         $html1 = str_replace("#customer_name", $customer->name ,$html1);
         $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
         
-        if( \App\Models\Service::FindOrFail( $file->stage_services->service_id ) ){
-            $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
-            $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
-        }
+        $tunningType = $this->emailStagesAndOption($file);
         
-        if($file->options_services){
-
-            foreach($file->options_services as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.\App\Models\Service::FindOrFail( $option->service_id )->name .'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $option->service_id )->icon.'">';
-                $tunningType .=  \App\Models\Service::FindOrFail( $option->service_id )->name;
-                $tunningType .= '</div>';
-            }
-        }
-
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
         $html1 = str_replace("#file_url", route('file', $file->id),$html1);
@@ -1316,19 +817,7 @@ class FilesController extends Controller
         $html2 = str_replace("#customer_name", $file->name ,$html2);
         $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
         
-        if( \App\Models\Service::FindOrFail( $file->stage_services->service_id ) ){
-            $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
-            $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
-        }
-        
-        if($file->options_services){
-
-            foreach($file->options_services as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.\App\Models\Service::FindOrFail( $option->service_id )->name .'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $option->service_id )->icon.'">';
-                $tunningType .=  \App\Models\Service::FindOrFail( $option->service_id )->name;
-                $tunningType .= '</div>';
-            }
-        }
+        $tunningType = $this->emailStagesAndOption($file);
 
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html2);
@@ -1830,147 +1319,140 @@ class FilesController extends Controller
         
             //// this is repetitive code.
 
-        $engineerFile = new RequestFile();
-        $engineerFile->request_file = $pathAndNameArrayEncoded['name'];
-        $engineerFile->file_type = 'engineer_file';
-        $engineerFile->tool_type = 'not_relevant';
-        $engineerFile->master_tools = 'not_relevant';
-        $engineerFile->file_id = $file->id;
-        $engineerFile->engineer = true;
-        $engineerFile->save();
+            $engineerFile = new RequestFile();
+            $engineerFile->request_file = $pathAndNameArrayEncoded['name'];
+            $engineerFile->file_type = 'engineer_file';
+            $engineerFile->tool_type = 'not_relevant';
+            $engineerFile->master_tools = 'not_relevant';
+            $engineerFile->file_id = $file->id;
+            $engineerFile->engineer = true;
+            $engineerFile->save();
 
-        $allEearlierReminders = EmailReminder::where('user_id', $file->user_id)
-        ->where('file_id', $file->id)->get();
+            $allEearlierReminders = EmailReminder::where('user_id', $file->user_id)
+            ->where('file_id', $file->id)->get();
 
-        foreach($allEearlierReminders as $reminderToBeDeleted){
-            $reminderToBeDeleted->delete();
-        }
-
-        $schedual = Schedualer::take(1)->first();
-
-        $reminder = new EmailReminder();
-        $reminder->user_id = $file->user_id;
-        $reminder->file_id = $file->id;
-        $reminder->request_file_id = $engineerFile->id;
-        $reminder->set_time = Carbon::now();
-        $reminder->cycle = $schedual->cycle;
-
-        $reminder->save();
-
-        if($file->status == 'submitted'){
-            $file->status = 'completed';
-            $file->save();
-        }
-        
-        if(!$file->response_time){
-
-            $file->reupload_time = Carbon::now();
-            $file->save();
-
-            $file->response_time = $this->getResponseTime($file);
-            $file->save();
-
-        }
-
-        if($file->original_file_id){
-            $old = File::findOrFail($file->original_file_id);
-            $old->checked_by = 'engineer';
-            $file->support_status = "closed";
-            $old->save();
-        }
-
-            $file->support_status = "closed";
-            $file->checked_by = 'engineer';
-            $file->save();
-
-        $customer = User::findOrFail($file->user_id);
-        $admin = User::where('is_admin', 1)->first();
-    
-        // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
-        $template = EmailTemplate::findOrFail(6);
-
-        $html1 = $template->html;
-
-        $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
-        $html1 = str_replace("#customer_name", $customer->name ,$html1);
-        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
-        
-        if( \App\Models\Service::FindOrFail( $file->stage_services->service_id ) ){
-            $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
-            $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
-        }
-        
-        if($file->options_services){
-
-            foreach($file->options_services as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.\App\Models\Service::FindOrFail( $option->service_id )->name .'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $option->service_id )->icon.'">';
-                $tunningType .=  \App\Models\Service::FindOrFail( $option->service_id )->name;
-                $tunningType .= '</div>';
+            foreach($allEearlierReminders as $reminderToBeDeleted){
+                $reminderToBeDeleted->delete();
             }
-        }
 
-        $html1 = str_replace("#tuning_type", $tunningType,$html1);
-        $html1 = str_replace("#status", $file->status,$html1);
-        $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+            $schedual = Schedualer::take(1)->first();
 
-        $html2 = $template->html;
+            $reminder = new EmailReminder();
+            $reminder->user_id = $file->user_id;
+            $reminder->file_id = $file->id;
+            $reminder->request_file_id = $engineerFile->id;
+            $reminder->set_time = Carbon::now();
+            $reminder->cycle = $schedual->cycle;
 
-        $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
-        $html2 = str_replace("#customer_name", $file->name ,$html2);
-        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
-        
-        if( \App\Models\Service::FindOrFail( $file->stage_services->service_id ) ){
-            $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
-            $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
-        }
-        
-        if($file->options_services){
+            $reminder->save();
 
-            foreach($file->options_services as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.\App\Models\Service::FindOrFail( $option->service_id )->name .'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $option->service_id )->icon.'">';
-                $tunningType .=  \App\Models\Service::FindOrFail( $option->service_id )->name;
-                $tunningType .= '</div>';
+            if($file->status == 'submitted'){
+                $file->status = 'completed';
+                $file->save();
             }
-        }
+            
+            if(!$file->response_time){
 
-        $html2 = str_replace("#tuning_type", $tunningType,$html2);
-        $html2 = str_replace("#status", $file->status,$html2);
-        $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+                $file->reupload_time = Carbon::now();
+                $file->save();
 
-        $optionsMessage = "";
-        if($file->options){
-            foreach($file->options() as $option) {
-                $optionsMessage .= ",".$option." ";
+                $file->response_time = $this->getResponseTime($file);
+                $file->save();
+
             }
-        }
 
-        // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
-        $messageTemplate = MessageTemplate::findOrFail(7);
+            if($file->original_file_id){
+                $old = File::findOrFail($file->original_file_id);
+                $old->checked_by = 'engineer';
+                $file->support_status = "closed";
+                $old->save();
+            }
 
-        $message = $messageTemplate->text;
+                $file->support_status = "closed";
+                $file->checked_by = 'engineer';
+                $file->save();
 
-        $message1 = str_replace("#customer", $customer->name ,$message);
-        $message2 = str_replace("#customer", $file->name ,$message);
+            $customer = User::findOrFail($file->user_id);
+            $admin = User::where('is_admin', 1)->first();
         
-        $subject = "ECU Tech: Engineer uploaded a file in reply.";
+            // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
+            $template = EmailTemplate::findOrFail(6);
 
-        if($this->manager['eng_file_upload_cus_email']){
-            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
-        }
-        if($this->manager['eng_file_upload_admin_email']){
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
-        }
-        
-        if($this->manager['eng_file_upload_admin_sms']){
-            $this->sendMessage($admin->phone, $message1);
-        }
-        if($this->manager['eng_file_upload_cus_sms']){
-            $this->sendMessage($customer->phone, $message2);
-        }
+            $html1 = $template->html;
 
-        }
+            $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+            $html1 = str_replace("#customer_name", $customer->name ,$html1);
+            $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
+            
+            $tunningType = $this->emailStagesAndOption($file);
+            
+            $html1 = str_replace("#tuning_type", $tunningType,$html1);
+            $html1 = str_replace("#status", $file->status,$html1);
+            $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+            $html2 = $template->html;
+
+            $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+            $html2 = str_replace("#customer_name", $file->name ,$html2);
+            $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
+            
+            $tunningType = $this->emailStagesAndOption($file);
+
+            $html2 = str_replace("#tuning_type", $tunningType,$html2);
+            $html2 = str_replace("#status", $file->status,$html2);
+            $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+
+            $optionsMessage = "";
+            if($file->options){
+                foreach($file->options() as $option) {
+                    $optionsMessage .= ",".$option." ";
+                }
+            }
+
+            // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
+            $messageTemplate = MessageTemplate::findOrFail(7);
+
+            $message = $messageTemplate->text;
+
+            $message1 = str_replace("#customer", $customer->name ,$message);
+            $message2 = str_replace("#customer", $file->name ,$message);
+            
+            $subject = "ECU Tech: Engineer uploaded a file in reply.";
+
+            if($this->manager['eng_file_upload_cus_email']){
+                \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+            }
+            if($this->manager['eng_file_upload_admin_email']){
+                \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+            }
+            
+            if($this->manager['eng_file_upload_admin_sms']){
+                $this->sendMessage($admin->phone, $message1);
+            }
+            if($this->manager['eng_file_upload_cus_sms']){
+                $this->sendMessage($customer->phone, $message2);
+            }
+
+            }
+        } 
     }
 
+    public function emailStagesAndOption($file){
+
+        if( \App\Models\Service::FindOrFail( $file->stage_services->service_id ) ){
+            $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
+            $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
+        }
         
+        if($file->options_services){
+
+            foreach($file->options_services as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.\App\Models\Service::FindOrFail( $option->service_id )->name .'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $option->service_id )->icon.'">';
+                $tunningType .=  \App\Models\Service::FindOrFail( $option->service_id )->name;
+                $tunningType .= '</div>';
+            }
+        }
+
+        return $tunningType;
     }
 }
