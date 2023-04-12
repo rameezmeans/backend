@@ -150,7 +150,7 @@
                                           
                                           @foreach($options as $option)
                                             @if(!in_array($option->id, $includedOptionsForDownload[$ecu]))
-                                            <option value="{{$option->id}}">{{$option->name}} <span style="font-size: 8px;">({{\App\Models\Service::findOrFail( $comment->service_id )->vehicle_type}})</span></option>
+                                            <option value="{{$option->id}}">{{$option->name}} <span style="font-size: 8px;">({{$option->vehicle_type}})</span></option>
                                             @endif
                                           @endforeach
                                         </select>
