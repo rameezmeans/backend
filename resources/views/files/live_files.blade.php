@@ -23,6 +23,19 @@
     <div class="content sm-gutter">
       <!-- START CONTAINER FLUID -->
         <div class="container-fluid bg-white">
+          @if (Session::get('success'))
+                <div class="pgn-wrapper" data-position="top" style="top: 59px;">
+                    <div class="pgn push-on-sidebar-open pgn-bar">
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                            {{ Session::get('success') }}
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @php
+              Session::forget('success')
+            @endphp
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title"><h3>Files</h3>

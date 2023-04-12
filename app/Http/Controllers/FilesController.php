@@ -18,9 +18,13 @@ use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Controllers\ReminderManagerController;
 use App\Models\AlientechFile;
+use App\Models\FileFeedback;
+use App\Models\FileInternalEvent;
 use App\Models\FileService;
+use App\Models\FileUrl;
 use App\Models\Key;
 use App\Models\Log;
+use App\Models\ProcessedFile;
 use App\Models\Service;
 use App\Models\Tool;
 use GuzzleHttp\Client as GuzzleHttpClient;
@@ -57,6 +61,25 @@ class FilesController extends Controller
         $reminderManager = new ReminderManagerController();
         $this->manager = $reminderManager->getManager();
         $this->middleware('auth',['except' => ['recordFeedback']]);
+    }
+
+    public function delete(Request $request){
+        $file = File::findOrFail($request->id);
+
+        FileService::where('file_id', $file->id)->delete();
+        ProcessedFile::where('file_id', $file->id)->delete();
+        RequestFile::where('file_id', $file->id)->delete();
+        FileInternalEvent::where('file_id', $file->id)->delete();
+        FileFeedback::where('file_id', $file->id)->delete();
+        AlientechFile::where('file_id', $file->id)->delete();
+        EngineerFileNote::where('file_id', $file->id)->delete();
+        FileUrl::where('file_id', $file->id)->delete();
+        Log::where('file_id', $file->id)->delete();
+        
+        $file->delete();
+
+        return redirect()->route('files')->with(['success' => 'File deleted.']);
+
     }
 
     public function getAccessToken(){

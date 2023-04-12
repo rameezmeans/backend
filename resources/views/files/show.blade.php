@@ -283,6 +283,12 @@
                           <div class="text-center m-t-20">                    
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('edit-file', $file->id)}}"><span class="bold">Edit File</span></a>
+                            
+                              <form method="POST" action="{{route('delete-file')}}">
+                                @csrf
+                                <input type="hidden" value="{{$file->id}}" name="id">
+                                <button type="submit" class="btn btn-danger btn-cons m-b-10"><span class="bold">Delete File</span></button>
+                              </form>
                           </div>
                         @endif
                         
