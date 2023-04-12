@@ -105,7 +105,4 @@ class File extends Model
         return $this->hasMany(FileService::class, 'file_id', 'id')->where('type', 'option');
     }
     
-    public function options(){
-        return explode(',',$this->options);
-    }
 }
