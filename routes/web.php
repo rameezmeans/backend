@@ -27,21 +27,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
- Route::get('/tasks/files_tools', function () {
+//  Route::get('/tasks', function () {
 
-    $comments = Comment::all();
+    // $comments = Comment::all();
 
-    foreach($comments as $comment){
-        $service = Service::where('name', $comment->option)->first();
+    // foreach($comments as $comment){
+    //     $service = Service::where('name', $comment->option)->first();
 
-        if($service){
-            $comment->service_id = $service->id;
-            $comment->save();
-        }
-        else{
-            \Log::info('service missing: '.$comment->option);
-        }
-    }
+    //     if($service){
+    //         $comment->service_id = $service->id;
+    //         $comment->save();
+    //     }
+    //     else{
+    //         \Log::info('service missing: '.$comment->option);
+    //     }
+    // }
      
     // $files = File::all();
 
@@ -115,7 +115,7 @@ Route::get('/', function () {
 
 //  }
 
- });
+//  });
 
 Route::post('/change_status', [App\Http\Controllers\ServicesController::class, 'changeStatus'])->name('change-status');
 
