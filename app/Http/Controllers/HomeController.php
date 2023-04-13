@@ -491,6 +491,60 @@ class HomeController extends Controller
         return response()->json(['graph' => $graph]);
     }
 
+    public function getAutotunnedFilesChart(Request $request){
+        
+        $graph = [];
+
+        if(!$request->start){
+            $min = DB::table('files')->select('created_at')->where('front_end_id', $request->frontend_id)->orderBy('created_at', 'asc')->first();
+            $start = $min->created_at;
+        }
+        else{
+            $start = $request->start;
+            $date = str_replace('/', '-', $start);
+            $start = date('Y-m-d', strtotime($date));
+        }
+
+        if(!$request->end){
+            $max = DB::table('files')->select('created_at')->
+            where('front_end_id', $request->frontend_id)
+            ->orderBy('created_at', 'desc')->first();
+            $end = $max->created_at;
+        }
+        else{
+            $end = $request->end;
+            $date = str_replace('/', '-', $end);
+            $end = date('Y-m-d', strtotime($date));
+        }
+
+        $weekRange = $this->createDateRangeArray($start, $end);
+
+        $weekCount = [];
+        foreach($weekRange as $r){
+            $date = DateTime::createFromFormat('d/m/Y', $r);
+            $day = $date->format('d');
+            $month = $date->format('m');
+            $weekCount []= File::whereMonth('created_at',$month)
+            ->where('front_end_id', $request->frontend_id)
+            ->where('checking_status', 'completed')
+            ->whereDay('created_at',$day)->count();
+            
+        }
+        
+        $totalFiles = File::whereBetween('created_at', array($start, $end))
+        ->where('front_end_id', $request->frontend_id)
+        ->where('checking_status', 'completed')
+        ->where('is_credited', 1)->count();
+        
+        $graph = [];
+        $graph['x_axis']= $weekRange;
+        $graph['y_axis']= $weekCount ;
+        $graph['total_files']= $totalFiles;
+        $graph['label']= 'Files';
+        
+        return response()->json(['graph' => $graph]);
+    }
+
     function createDateRangeArray($strDateFrom,$strDateTo){
 
         // takes two dates formatted as YYYY-MM-DD and creates an
