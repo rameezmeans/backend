@@ -575,8 +575,8 @@
       set_and_get_autotunned_files();
 
       function set_and_get_autotunned_files(){
-        let end = $('#start_autotunned_files').val();
         let start = $('#start_autotunned_files').val();
+        let end = $('#end_autotunned_files').val();
         let frontend_id = $('#frontend').val();
         get_autotunned_files_chart( start, end, frontend_id );
       }
