@@ -585,7 +585,7 @@
         set_and_get_autotunned_files();
       });
 
-      $(document).on('change', '#start_autotunned_files', function(e){
+      $(document).on('change', '#end_autotunned_files', function(e){
         set_and_get_autotunned_files();
       });
 
