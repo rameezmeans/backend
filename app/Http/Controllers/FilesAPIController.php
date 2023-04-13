@@ -46,11 +46,17 @@ class FilesAPIController extends Controller
                 $temp['file_id'] = $file->id;
                 $temp['stage'] = $stage;
                 $temp['options'] = $options;
-                $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->decoded_file;
+
+                $extension = '';
+                if($file->decoded_file->extension != ''){
+                    $extension = '.'.$file->decoded_file->extension;
+                }
+                
+                $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->decoded_file->name.$extension;
                 $temp['checked'] = $file->checking_status;
             }
             else{
-                
+
                 $temp = [];
                 $temp['file_id'] = $file->id;
                 $temp['stage'] = $stage;
