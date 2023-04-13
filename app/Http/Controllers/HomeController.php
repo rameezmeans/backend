@@ -531,14 +531,25 @@ class HomeController extends Controller
             
         }
         
-        $totalFiles = File::whereBetween('created_at', array($start, $end))
+        $totalAutoTunedFiles = File::whereBetween('created_at', array($start, $end))
         ->where('front_end_id', $request->frontend_id)
         ->where('checking_status', 'completed')
+        ->where('is_credited', 1)->count();
+
+        $totalFiles = File::whereBetween('created_at', array($start, $end))
+        ->where('front_end_id', $request->frontend_id)
+        ->where('is_credited', 1)->count();
+
+        $totalFilesManual = File::whereBetween('created_at', array($start, $end))
+        ->where('front_end_id', $request->frontend_id)
+        ->whereNot('checking_status', 'completed')
         ->where('is_credited', 1)->count();
         
         $graph = [];
         $graph['x_axis']= $weekRange;
         $graph['y_axis']= $weekCount ;
+        $graph['total_autotuned_files']= $totalAutoTunedFiles;
+        $graph['total_manual_files']= $totalFilesManual;
         $graph['total_files']= $totalFiles;
         $graph['label']= 'Files';
         
