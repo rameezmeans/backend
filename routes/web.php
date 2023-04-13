@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlientechTestController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -123,6 +124,7 @@ Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/get_files_chart', [App\Http\Controllers\HomeController::class, 'getFilesChart'])->name('get-files-chart');
+Route::post('/get_autotunned_files_chart', [App\Http\Controllers\HomeController::class, 'getAutotunnedFilesChart'])->name('get-autotunned-files-chart');
 Route::post('/get_frontend_data', [App\Http\Controllers\HomeController::class, 'getFrontendData'])->name('get-frontend-data');
 // Route::post('/get_files_chart', [App\Http\Controllers\HomeController::class, 'getFilesChart'])->name('get-files-chart');
 Route::post('/get_credits_chart', [App\Http\Controllers\HomeController::class, 'getCreditsChart'])->name('get-credits-chart');
@@ -381,3 +383,11 @@ Route::post('chatify/setActiveStatus', [MessagesController::class, 'setActiveSta
 Route::get('myspace', function(){
     dd(User::get(['id', 'name'])->pluck('name','id')->toArray());
 });
+
+// alientech testing ... 
+
+Route::get('upload_customer_file/{folder_path}/{file_name}', [AlientechTestController::class, 'uploadCustomersFileAndSaveGUID'])->name('upload-customer-file');
+Route::get('upload_engineers_file/{folder_path}/{file_name}', [AlientechTestController::class, 'uploadEngineersFileAndSaveGUID'])->name('upload-engineers-file');
+Route::get('download_encoded_file/{folder_id}', [AlientechTestController::class, 'downloadEncodedFile'])->name('download-encoded-file');
+Route::get('close_all', [AlientechTestController::class, 'closeAllSlots'])->name('close-all');
+Route::get('show_all', [AlientechTestController::class, 'showAllSlots'])->name('show-all');

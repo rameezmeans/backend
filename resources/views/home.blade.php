@@ -156,6 +156,57 @@
           <div class="widget-15 card card-condensed  no-margin no-border widget-loader-circle">
             <div class="card-header">
               <div class="">
+                <h2 class="text-black text-center">Auto Tunned Files</h2>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group form-group-default input-group">
+                      <div class="form-input-group">
+                        <label>Start</label>
+                        <input type="input" style="margin-bottom: 13px;" class="form-control datepicker" placeholder="Start Date" id="start_files">
+                      </div>
+                      <div class="input-group-append ">
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                      </div>
+                    </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="form-group form-group-default input-group">
+                      <div class="form-input-group">
+                        <label>End</label>
+                        <input type="input" style="margin-bottom: 13px;" class="form-control datepicker" placeholder="End Date" id="end_files">
+                      </div>
+                      <div class="input-group-append ">
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                      </div>
+                    </div>
+              </div>
+              </div>
+                
+                  <div class="row p-l-40 p-r-40 m-t-40">
+                    
+                      <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
+                        <h4 class="bold no-margin" id="total_autotunned_files"></h4>
+                        <p class="no-margin font-large" >Total Files</p>
+                      </div>
+                      
+                  </div>
+                             
+                <div class="col-lg-12">              
+                  <canvas id="autotunned-files-charts" height="696" width="1902" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="p-t-25">  
+      <div class="row">
+        <div class="col-lg-12 col-xlg-12">
+          <div class="widget-15 card card-condensed  no-margin no-border widget-loader-circle">
+            <div class="card-header">
+              <div class="">
                 <h2 class="text-black text-center">Files</h2>
               </div>
             </div>
@@ -218,6 +269,7 @@
               </div>
               </div>
             </div>
+          </div>
           </div>
       <div class="p-t-25">  
       <div class="row">
@@ -520,6 +572,24 @@
         set_and_get_credits();
       });
 
+      set_and_get_autotunned_files();
+
+      function set_and_get_autotunned_files(){
+        let end = $('#start_autotunned_files').val();
+        let start = $('#start_autotunned_files').val();
+        let frontend_id = $('#frontend').val();
+        get_autotunned_files_chart( start, end, frontend_id );
+      }
+
+      $(document).on('change', '#start_autotunned_files', function(e){
+        set_and_get_autotunned_files();
+      });
+
+      $(document).on('change', '#start_autotunned_files', function(e){
+        set_and_get_autotunned_files();
+      });
+
+
       function set_and_get_files(){
         let end = $('#end_files').val();
         let start = $('#start_files').val();
@@ -680,6 +750,47 @@
             }
         });
 
+      }
+
+      function get_autotunned_files_chart( start, end, frontend_id ){
+          
+          $.ajax({
+              url: "/get_autotunned_files_chart",
+              type: "POST",
+              data: {
+
+                  'frontend_id': frontend_id,
+                  'start': start,
+                  'end': end,
+              },
+              headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+              success: function(response) {
+
+                console.log(response);
+
+                $('#total_autotunned_files').html(response.graph.total_files); 
+                
+                let chartf = new Chart("autotunned-files-charts", {
+                  type: "line",
+                  data: {  
+                          labels: response.graph.x_axis,
+                          datasets: [{
+                          label: response.graph.label,
+                          data: response.graph.y_axis,
+                          borderColor: "#10cfbd",
+                          fill: true,
+                          stepSize: 1,
+                          backgroundColor: '#10cfbd'
+                        }]
+                  },
+                  options: {
+                      legend: {display: true},
+                      animation: false
+                  }
+                });
+              }
+          });
+      
       }
 
       function get_files_chart( engineer_files, start, end, frontend_id ){
