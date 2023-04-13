@@ -165,7 +165,7 @@
                   <div class="form-group form-group-default input-group">
                       <div class="form-input-group">
                         <label>Start</label>
-                        <input type="input" style="margin-bottom: 13px;" class="form-control datepicker" placeholder="Start Date" id="start_files">
+                        <input type="input" style="margin-bottom: 13px;" class="form-control datepicker" placeholder="Start Date" id="start_autotunned_files">
                       </div>
                       <div class="input-group-append ">
                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
@@ -176,7 +176,7 @@
                   <div class="form-group form-group-default input-group">
                       <div class="form-input-group">
                         <label>End</label>
-                        <input type="input" style="margin-bottom: 13px;" class="form-control datepicker" placeholder="End Date" id="end_files">
+                        <input type="input" style="margin-bottom: 13px;" class="form-control datepicker" placeholder="End Date" id="end_autotunned_files">
                       </div>
                       <div class="input-group-append ">
                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
