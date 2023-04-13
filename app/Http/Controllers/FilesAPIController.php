@@ -40,17 +40,33 @@ class FilesAPIController extends Controller
                 $options = $file->options;
             }
 
-            $temp = [];
-            $temp['file_id'] = $file->id;
-            $temp['stage'] = $stage;
-            $temp['options'] = $options;
-            $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached;
-            $temp['checked'] = $file->checking_status;
+            if($file->decoded_file){
+
+                $temp = [];
+                $temp['file_id'] = $file->id;
+                $temp['stage'] = $stage;
+                $temp['options'] = $options;
+                $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->decoded_file;
+                $temp['checked'] = $file->checking_status;
+            }
+            else{
+                
+                $temp = [];
+                $temp['file_id'] = $file->id;
+                $temp['stage'] = $stage;
+                $temp['options'] = $options;
+                $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached;
+                $temp['checked'] = $file->checking_status;
+            }
 
             $arrFiles []= $temp;
         }
 
         return response()->json($arrFiles);
+    }
+
+    public function getFileToShowToLUA($file){
+
     }
 
     public function setCheckingStatus(Request $request){
