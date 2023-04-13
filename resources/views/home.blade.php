@@ -188,11 +188,21 @@
                   <div class="row p-l-40 p-r-40 m-t-40">
                     
                       <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
-                        <h4 class="bold no-margin" id="total_autotunned_files"></h4>
+                        <h4 class="bold no-margin" id="total_files_upper"></h4>
                         <p class="no-margin font-large" >Total Files</p>
+                      </div>
+                      <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
+                        <h4 class="bold no-margin" id="total_autotunned_files"></h4>
+                        <p class="no-margin font-large" >Total Files Auto Tuned</p>
+                      </div>
+                      <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
+                        <h4 class="bold no-margin" id="total_manual_files"></h4>
+                        <p class="no-margin font-large" >Total Manual Files</p>
                       </div>
                       
                   </div>
+
+                  
                              
                 <div class="col-lg-12">              
                   <canvas id="autotunned-files-charts" height="696" width="1902" class="chartjs-render-monitor" style="display: block; height: 0px; width: 0px;"></canvas>
@@ -768,7 +778,9 @@
 
                 console.log(response);
 
-                $('#total_autotunned_files').html(response.graph.total_files); 
+                $('#total_autotunned_files').html(response.graph.total_autotuned_files); 
+                $('#total_manual_files').html(response.graph.total_manual_files); 
+                $('#total_files_upper').html(response.graph.total_files); 
                 
                 let chartf = new Chart("autotunned-files-charts", {
                   type: "line",
