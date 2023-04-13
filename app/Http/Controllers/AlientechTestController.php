@@ -112,7 +112,7 @@ class AlientechTestController extends Controller
         $result=curl_exec ($ch);
         curl_close ($ch);
         $response = json_decode($result);
-
+        
         $folder->engineers_upload_guid = $response->guid;
 
         $encodedFileURL = $this->uploadedEngineersEnocdeURlBootBench;
@@ -125,7 +125,7 @@ class AlientechTestController extends Controller
         $postInput = [
             'userCustomerCode' => 'user1',
             'kess3FileSlotGUID' => $folder->slot_id,
-            'modifiedFileGUID' => $folder->engineers_upload_guid,
+            'microFileGUID' => $folder->engineers_upload_guid,
         ];
         
         $syncResponse = Http::withHeaders($headers)->post($encodedFileURL, $postInput);                
@@ -142,8 +142,8 @@ class AlientechTestController extends Controller
 
         $folder = AlientechTestFolder::findOrFail($folderID);
         
-        // $encodedFileGUID = $folder->engineers_upload_encoded_guid;
-        $encodedFileGUID = $folder->engineers_upload_guid;
+        $encodedFileGUID = $folder->engineers_upload_encoded_guid;
+        // $encodedFileGUID = $folder->engineers_upload_guid;
 
         $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$encodedFileGUID;
 

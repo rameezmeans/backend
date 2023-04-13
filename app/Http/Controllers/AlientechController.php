@@ -387,7 +387,7 @@ class AlientechController extends Controller
                 $postInput = [
                     'userCustomerCode' => 'user1',
                     'kess3FileSlotGUID' => $slotID,
-                    'modifiedFileGUID' => $response->guid,
+                    'microFileGUID' => $response->guid,
                 ];
             }
 
