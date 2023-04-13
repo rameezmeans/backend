@@ -153,9 +153,7 @@ class AlientechTestController extends Controller
   
         $response = Http::withHeaders($headers)->get($getsyncOpURL);
         $responseBody = json_decode($response->getBody(), true);
-
-        dd($responseBody);
-
+        
         $slotID = $responseBody['slotGUID'];
 
         /*
