@@ -496,7 +496,9 @@ class HomeController extends Controller
         $graph = [];
 
         if(!$request->start){
-            $min = DB::table('files')->select('created_at')->where('front_end_id', $request->frontend_id)->orderBy('created_at', 'asc')->first();
+            $min = DB::table('files')->
+            select('created_at')
+            ->orderBy('created_at', 'asc')->first();
             $start = $min->created_at;
         }
         else{
@@ -506,9 +508,7 @@ class HomeController extends Controller
         }
 
         if(!$request->end){
-            $max = DB::table('files')->select('created_at')->
-            where('front_end_id', $request->frontend_id)
-            ->orderBy('created_at', 'desc')->first();
+            $max = DB::table('files')->select('created_at')->orderBy('created_at', 'desc')->first();
             $end = $max->created_at;
         }
         else{
@@ -526,7 +526,6 @@ class HomeController extends Controller
             $month = $date->format('m');
             $weekCount []= File::whereMonth('created_at',$month)
             ->where('front_end_id', $request->frontend_id)
-            ->where('checking_status', 'completed')
             ->whereDay('created_at',$day)->count();
             
         }
