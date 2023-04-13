@@ -526,6 +526,7 @@ class HomeController extends Controller
             $month = $date->format('m');
             $weekCount []= File::whereMonth('created_at',$month)
             ->where('front_end_id', $request->frontend_id)
+            ->where('checking_status', 'completed')
             ->whereDay('created_at',$day)->count();
             
         }
