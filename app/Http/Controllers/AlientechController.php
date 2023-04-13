@@ -338,7 +338,7 @@ class AlientechController extends Controller
                 $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/OBDModified';
             }
             else if($encodingType == 'micro'){
-                $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/BootBenchModifiedMapFile';
+                $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/BootBenchModifiedMicro';
             }
             
             if (function_exists('curl_file_create')) { 
