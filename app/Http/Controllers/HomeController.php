@@ -70,7 +70,7 @@ class HomeController extends Controller
         ->sum('response_time');
 
         if($totalTime != 0){
-            $AvgRTToday = $totalTime / $autotunedFileCountToday ;
+            $AvgRTToday = round( $totalTime / $autotunedFileCountToday , 2) ;
         }
 
         $topCountriesObj = User::where('is_customer', 1)
