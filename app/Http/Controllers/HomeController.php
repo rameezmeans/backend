@@ -82,7 +82,7 @@ class HomeController extends Controller
         $totalsevenDaysCount = File::where('front_end_id', $request->frontend_id)
         ->where('created_at', '>=', $date)
         ->count();
-
+        
         $autotunedFileCountSevendays = File::where('checking_status', 'completed')
         ->where('front_end_id', $request->frontend_id)
         ->where('created_at', '>=', $date)
@@ -97,6 +97,54 @@ class HomeController extends Controller
 
         if($totalTimeSevendays != 0){
             $AvgRTSevendays = round( $totalTimeSevendays / $autotunedFileCountSevendays , 2)." sec" ;
+        }
+
+        // 30 days 
+
+        $date = Carbon::now()->subDays(30);
+
+        $total30DaysCount = File::where('front_end_id', $request->frontend_id)
+        ->where('created_at', '>=', $date)
+        ->count();
+
+        $autotunedFileCount30days = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->where('created_at', '>=', $date)
+        ->count();
+
+        $AvgRT30days = 0;
+
+        $totalTime30days = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->whereRaw('date(created_at) = curdate()')
+        ->sum('response_time');
+
+        if($totalTime30days != 0){
+            $AvgRT30days = round( $totalTime30days / $autotunedFileCount30days , 2)." sec" ;
+        }
+
+        // 365 days 
+        
+        $date = Carbon::now()->subDays(365);
+
+        $total365DaysCount = File::where('front_end_id', $request->frontend_id)
+        ->where('created_at', '>=', $date)
+        ->count();
+
+        $autotunedFileCount365days = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->where('created_at', '>=', $date)
+        ->count();
+
+        $AvgRT365days = 0;
+
+        $totalTime365days = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->whereRaw('date(created_at) = curdate()')
+        ->sum('response_time');
+
+        if($totalTime365days != 0){
+            $AvgRT365days = round( $totalTime365days / $autotunedFileCount365days , 2)." sec" ;
         }
 
         $topCountriesObj = User::where('is_customer', 1)
@@ -176,6 +224,12 @@ class HomeController extends Controller
             'AvgRTSevendays' => $AvgRTSevendays,
             'autotunedFileCountSevendays' => $autotunedFileCountSevendays,
             'totalsevenDaysCount' => $totalsevenDaysCount,
+            'AvgRT30days' => $AvgRT30days,
+            'autotunedFileCount30days' => $autotunedFileCount30days,
+            'total30DaysCount' => $total30DaysCount,
+            'AvgRT365days' => $AvgRT365days,
+            'autotunedFileCount365days' => $autotunedFileCount365days,
+            'total365DaysCount' => $total365DaysCount,
             'countryTable' => $countryTable,
             'brandsTable' => $brandsTable,
             'customerOptions' => $customerOptions,
