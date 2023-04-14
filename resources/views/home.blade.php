@@ -181,13 +181,15 @@
               <div class="container-sm-height full-height d-flex flex-column">
                 <div class="card-header  ">
                   <div class="card-title text-black hint-text">
-                    <span class="font-montserrat fs-11 all-caps">File Processed <i class="fa fa-chevron-right"></i>
+                    <span class="font-montserrat fs-11 all-caps">File Processed (Last 7 days) <i class="fa fa-chevron-right"></i>
                     </span>
                   </div>
                 </div>
                 <div class="p-l-20 p-r-20">
                   
-                  <h1 class="text-success semi-bold" id="customerCount"></h1>
+                  <h1 class="text-success semi-bold" id="autotunedFileCountSevendays"></h1>
+                  <span class="text-success" style="font-size: 20px;" id="autotunedFileCountSevendays"></span>
+                  (Avg. Response Time <span class="text-success" style="font-size: 20px;" id="AvgRTSevendays"></span>)
                   <div class="clearfix"></div>
                 </div>
                 
@@ -649,6 +651,9 @@
               $('#autotunedFileCountToday').html(response.autotunedFileCountToday);
               $('#totalFileCountToday').html(response.totalFileCountToday);
               $('#AvgRTToday').html(response.AvgRTToday);
+              $('#autotunedFileCountSevendays').html(response.autotunedFileCountSevendays);
+              $('#totalsevenDaysCount').html(response.totalsevenDaysCount);
+              $('#AvgRTSevendays').html(response.AvgRTSevendays);
               $('#brandsTable').html(response.brandsTable);
               $('#countryTable').html(response.countryTable);
 

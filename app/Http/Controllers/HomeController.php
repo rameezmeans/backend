@@ -53,6 +53,8 @@ class HomeController extends Controller
         ->where('front_end_id', $request->frontend_id)
         ->count();
 
+        // today
+
         $totalFileCountToday = File::where('front_end_id', $request->frontend_id)
         ->whereRaw('date(created_at) = curdate()')
         ->count();
@@ -70,7 +72,31 @@ class HomeController extends Controller
         ->sum('response_time');
 
         if($totalTime != 0){
-            $AvgRTToday = round( $totalTime / $autotunedFileCountToday , 2) ;
+            $AvgRTToday = round( $totalTime / $autotunedFileCountToday , 2)." sec" ;
+        }
+
+        //// 7 days
+
+        $date = Carbon::now()->subDays(7);
+
+        $totalsevenDaysCount = File::where('front_end_id', $request->frontend_id)
+        ->where('created_at', '>=', $date)
+        ->count();
+
+        $autotunedFileCountSevendays = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->where('created_at', '>=', $date)
+        ->count();
+
+        $AvgRTSevendays = 0;
+
+        $totalTimeSevendays = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->whereRaw('date(created_at) = curdate()')
+        ->sum('response_time');
+
+        if($totalTimeSevendays != 0){
+            $AvgRTSevendays = round( $totalTimeSevendays / $autotunedFileCountSevendays , 2)." sec" ;
         }
 
         $topCountriesObj = User::where('is_customer', 1)
@@ -147,6 +173,9 @@ class HomeController extends Controller
             'AvgRTToday' => $AvgRTToday,
             'autotunedFileCountToday' => $autotunedFileCountToday,
             'totalFileCountToday' => $totalFileCountToday,
+            'AvgRTSevendays' => $AvgRTSevendays,
+            'autotunedFileCountSevendays' => $autotunedFileCountSevendays,
+            'totalsevenDaysCount' => $totalsevenDaysCount,
             'countryTable' => $countryTable,
             'brandsTable' => $brandsTable,
             'customerOptions' => $customerOptions,
