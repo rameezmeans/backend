@@ -53,6 +53,26 @@ class HomeController extends Controller
         ->where('front_end_id', $request->frontend_id)
         ->count();
 
+        $totalFileCountToday = File::where('front_end_id', $request->frontend_id)
+        ->whereRaw('date(created_at) = curdate()')
+        ->count();
+
+        $autotunedFileCountToday = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->whereRaw('date(created_at) = curdate()')
+        ->count();
+
+        $AvgRTToday = 0;
+
+        $totalTime = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->whereRaw('date(created_at) = curdate()')
+        ->sum('response_time');
+
+        if($totalTime != 0){
+            $AvgRTToday = $totalTime / $autotunedFileCountToday ;
+        }
+
         $topCountriesObj = User::where('is_customer', 1)
         ->where('front_end_id', $request->frontend_id)
         ->groupBy('country')
@@ -124,6 +144,9 @@ class HomeController extends Controller
 
         return response()->json([
             'customerCount' => $customerCount,
+            'AvgRTToday' => $AvgRTToday,
+            'autotunedFileCountToday' => $autotunedFileCountToday,
+            'totalFileCountToday' => $totalFileCountToday,
             'countryTable' => $countryTable,
             'brandsTable' => $brandsTable,
             'customerOptions' => $customerOptions,

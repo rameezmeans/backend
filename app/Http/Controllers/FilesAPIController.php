@@ -93,12 +93,12 @@ class FilesAPIController extends Controller
                 $tunnedFile->file_id = $file->id;
                 $tunnedFile->save();
 
-                copy( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file, 
-                public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file) );
+                copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                public_path('/../../portal/public'.$file->file_path.$request->tuned_file) );
 
                 unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                $path = public_path('/../../portal/public'.$file->file_path.$file->tunned_files->file);
+                $path = public_path('/../../portal/public'.$file->file_path.$request->tuned_file);
 
                 if($file->alientech_file){ // if slot id is assigned
                     $slotID = $file->alientech_file->slot_id;
