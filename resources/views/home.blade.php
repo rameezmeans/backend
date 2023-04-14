@@ -163,10 +163,21 @@
                 </div>
                 <div class="p-l-20 p-r-20">
                   
-                  <h1 class="text-success semi-bold" id="totalFileCountToday"></h1>
+                  {{-- <h1 class="text-success semi-bold" id="totalFileCountToday"></h1>
                   <span class="text-success" style="font-size: 20px;" id="autotunedFileCountToday"></span>
                   (Avg. Response Time <span class="text-success" style="font-size: 20px;" id="AvgRTToday"></span>)
-                  <div class="clearfix"></div>
+                  <div class="clearfix"></div> --}}
+
+                  <div style="display: flex;">
+                    <h1 class="text-danger" id="autotunedFileCountToday"></h1>
+                    <h1>/</h1>
+                    
+                    <h1 class="text-success semi-bold" id="totalFileCountToday"></h1>
+                  </div>
+                  <p>
+                  (Avg. Response Time <span class="text-success" style="font-size: 20px;" id="AvgRTToday"></span>)
+                  </p>
+
                 </div>
                 
               </div>
@@ -187,9 +198,16 @@
                 </div>
                 <div class="p-l-20 p-r-20">
                   
-                  <h1 class="text-success semi-bold" id="totalsevenDaysCount"></h1>
-                  <span class="text-success" style="font-size: 20px;" id="autotunedFileCountSevendays"></span>
+                  <div style="display: flex;">
+
+                    <h1 class="text-danger" id="autotunedFileCountSevendays"></h1>
+                    <h1>/</h1>
+                    <h1 class="text-success semi-bold" id="totalsevenDaysCount"></h1>
+                  </div>
+                  <p>
                   (Avg. Response Time <span class="text-success" style="font-size: 20px;" id="AvgRTSevendays"></span>)
+                  </p>
+                  
                   <div class="clearfix"></div>
                 </div>
                 
@@ -212,10 +230,20 @@
                     </div>
                     <div class="p-l-20 p-r-20">
                       
-                      <h1 class="text-success semi-bold" id="total30DaysCount"></h1>
+                      <div style="display: flex;">
+                        <h1 class="text-danger" id="autotunedFileCount30days"></h1>
+                        <h1>/</h1>
+                        
+                        <h1 class="text-success semi-bold" id="total30DaysCount"></h1>
+                      </div>
+                      <p>
+                      (Avg. Response Time <span class="text-success" style="font-size: 20px;" id="AvgRT30days"></span>)
+                      </p>
+
+                      {{-- <h1 class="text-success semi-bold" id="total30DaysCount"></h1>
                       <span class="text-success" style="font-size: 20px;" id="autotunedFileCount30days"></span>
                       (Avg. Response Time <span class="text-success" style="font-size: 20px;" id="AvgRT30days"></span>)
-                      <div class="clearfix"></div>
+                      <div class="clearfix"></div> --}}
                       
                     </div>
                     
@@ -236,11 +264,21 @@
                         </div>
                       </div>
                       <div class="p-l-20 p-r-20">
+
+                        <div style="display: flex;">
+                          <h1 class="text-danger" id="autotunedFileCount365days"></h1>
+                          <h1>/</h1>
+                          
+                          <h1 class="text-success semi-bold" id="total365DaysCount"></h1>
+                        </div>
+                        <p>
+                        (Avg. Response Time <span class="text-success" style="font-size: 20px;" id="AvgRT365days"></span>)
+                        </p>
                         
-                        <h1 class="text-success semi-bold" id="total365DaysCount"></h1>
+                        {{-- <h1 class="text-success semi-bold" id="total365DaysCount"></h1>
                       <span class="text-success" style="font-size: 20px;" id="autotunedFileCount365days"></span>
                       (Avg. Response Time <span class="text-success" style="font-size: 20px;" id="AvgRT365days"></span>)
-                      <div class="clearfix"></div>
+                      <div class="clearfix"></div> --}}
 
                       </div>
                       
