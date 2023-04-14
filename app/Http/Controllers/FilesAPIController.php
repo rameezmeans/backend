@@ -40,31 +40,23 @@ class FilesAPIController extends Controller
                 $options = $file->options;
             }
 
-            if($file->decoded_file){
+            
 
                 $temp = [];
                 $temp['file_id'] = $file->id;
                 $temp['stage'] = $stage;
                 $temp['options'] = $options;
 
-                $extension = '';
-                if($file->decoded_file->extension != ''){
-                    $extension = '.'.$file->decoded_file->extension;
+                if($file->decoded_files){
+                    $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->decoded_file;
                 }
-                
-                $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->decoded_file->name.$extension;
-                $temp['checked'] = $file->checking_status;
-            }
-            else{
+                else{
+                    $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached.$this->getFileToShowToLUA($file);
 
-                $temp = [];
-                $temp['file_id'] = $file->id;
-                $temp['stage'] = $stage;
-                $temp['options'] = $options;
-                $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached;
-                $temp['checked'] = $file->checking_status;
-            }
+                }
 
+                $temp['checked'] = $file->checking_status;
+            
             $arrFiles []= $temp;
         }
 
@@ -73,6 +65,18 @@ class FilesAPIController extends Controller
 
     public function getFileToShowToLUA($file){
 
+        $name = "";
+
+        foreach($file->decoded_files as $d){
+            if($d->extension == 'dec'){
+                $name = $d->name.'.'.$d->extension;
+            }
+            else if ($d->extension == 'mpc'){
+                $name = $d->name.'.'.$d->extension;
+            }
+        }
+
+        return $name;
     }
 
     public function setCheckingStatus(Request $request){
