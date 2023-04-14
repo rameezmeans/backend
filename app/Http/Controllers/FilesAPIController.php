@@ -39,19 +39,18 @@ class FilesAPIController extends Controller
             else{
                 $options = $file->options;
             }
-
-            
-
+                
                 $temp = [];
                 $temp['file_id'] = $file->id;
                 $temp['stage'] = $stage;
                 $temp['options'] = $options;
 
-                if($file->decoded_files){
-                    $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->decoded_file;
+                if($file->decoded_files->count() > 0){
+                    $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$this->getFileToShowToLUA($file);
                 }
                 else{
-                    $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached.$this->getFileToShowToLUA($file);
+                    
+                    $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached;
 
                 }
 
