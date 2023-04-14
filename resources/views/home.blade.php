@@ -149,6 +149,99 @@
         </div>
 
       </div>
+      <div class="row">
+        <div class="col-sm-4 col-xl-4">
+          <div class="ar-2-1">
+            <!-- START WIDGET widget_graphTile-->
+            <div class="widget-4 card no-border  no-margin widget-loader-bar">
+              <div class="container-sm-height full-height d-flex flex-column">
+                <div class="card-header  ">
+                  <div class="card-title text-black hint-text">
+                    <span class="font-montserrat fs-11 all-caps">File Processed (Today) <i class="fa fa-chevron-right"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="p-l-20 p-r-20">
+                  
+                  <h1 class="text-success semi-bold" id="totalFileCountToday"></h1>
+                  <span class="text-success" style="font-size: 20px;" id="autotunedFileCountToday"></span>
+                  (Avg. Response Time <span class="text-success" style="font-size: 20px;" id="AvgRTToday"></span>)
+                  <div class="clearfix"></div>
+                </div>
+                
+              </div>
+            </div>
+            <!-- END WIDGET -->
+            </div>
+          </div>
+        <div class="col-sm-4 col-xl-4">
+          <div class="ar-2-1">
+            <!-- START WIDGET widget_graphTile-->
+            <div class="widget-4 card no-border  no-margin widget-loader-bar">
+              <div class="container-sm-height full-height d-flex flex-column">
+                <div class="card-header  ">
+                  <div class="card-title text-black hint-text">
+                    <span class="font-montserrat fs-11 all-caps">File Processed <i class="fa fa-chevron-right"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="p-l-20 p-r-20">
+                  
+                  <h1 class="text-success semi-bold" id="customerCount"></h1>
+                  <div class="clearfix"></div>
+                </div>
+                
+              </div>
+            </div>
+            <!-- END WIDGET -->
+            </div>
+          </div>
+          
+            <div class="col-sm-4 col-xl-4">
+              <div class="ar-2-1">
+                <!-- START WIDGET widget_graphTile-->
+                <div class="widget-4 card no-border  no-margin widget-loader-bar">
+                  <div class="container-sm-height full-height d-flex flex-column">
+                    <div class="card-header  ">
+                      <div class="card-title text-black hint-text">
+                        <span class="font-montserrat fs-11 all-caps">File Processed <i class="fa fa-chevron-right"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="p-l-20 p-r-20">
+                      
+                      <h1 class="text-success semi-bold" id="customerCount"></h1>
+                      <div class="clearfix"></div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <!-- END WIDGET -->
+                </div>
+              </div>
+              <div class="col-sm-4 col-xl-4 m-t-10">
+                <div class="ar-2-1">
+                  <!-- START WIDGET widget_graphTile-->
+                  <div class="widget-4 card no-border  no-margin widget-loader-bar">
+                    <div class="container-sm-height full-height d-flex flex-column">
+                      <div class="card-header  ">
+                        <div class="card-title text-black hint-text">
+                          <span class="font-montserrat fs-11 all-caps">File Processed <i class="fa fa-chevron-right"></i>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="p-l-20 p-r-20">
+                        
+                        <h1 class="text-success semi-bold" id="customerCount"></h1>
+                        <div class="clearfix"></div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <!-- END WIDGET -->
+                  </div>
+                </div>
+        </div>
     </div>
     <div class="container-fluid p-t-25">
       <div class="row">
@@ -553,6 +646,9 @@
 
               $('#loading').addClass('hide');
               $('#customerCount').html(response.customerCount);
+              $('#autotunedFileCountToday').html(response.autotunedFileCountToday);
+              $('#totalFileCountToday').html(response.totalFileCountToday);
+              $('#AvgRTToday').html(response.AvgRTToday);
               $('#brandsTable').html(response.brandsTable);
               $('#countryTable').html(response.countryTable);
 
