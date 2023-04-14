@@ -187,7 +187,7 @@
                 </div>
                 <div class="p-l-20 p-r-20">
                   
-                  <h1 class="text-success semi-bold" id="autotunedFileCountSevendays"></h1>
+                  <h1 class="text-success semi-bold" id="totalsevenDaysCount"></h1>
                   <span class="text-success" style="font-size: 20px;" id="autotunedFileCountSevendays"></span>
                   (Avg. Response Time <span class="text-success" style="font-size: 20px;" id="AvgRTSevendays"></span>)
                   <div class="clearfix"></div>
@@ -206,14 +206,17 @@
                   <div class="container-sm-height full-height d-flex flex-column">
                     <div class="card-header  ">
                       <div class="card-title text-black hint-text">
-                        <span class="font-montserrat fs-11 all-caps">File Processed <i class="fa fa-chevron-right"></i>
+                        <span class="font-montserrat fs-11 all-caps">File Processed (30 days) <i class="fa fa-chevron-right"></i>
                         </span>
                       </div>
                     </div>
                     <div class="p-l-20 p-r-20">
                       
-                      <h1 class="text-success semi-bold" id="customerCount"></h1>
+                      <h1 class="text-success semi-bold" id="total30DaysCount"></h1>
+                      <span class="text-success" style="font-size: 20px;" id="autotunedFileCount30days"></span>
+                      (Avg. Response Time <span class="text-success" style="font-size: 20px;" id="AvgRT30days"></span>)
                       <div class="clearfix"></div>
+                      
                     </div>
                     
                   </div>
@@ -234,8 +237,11 @@
                       </div>
                       <div class="p-l-20 p-r-20">
                         
-                        <h1 class="text-success semi-bold" id="customerCount"></h1>
-                        <div class="clearfix"></div>
+                        <h1 class="text-success semi-bold" id="total365DaysCount"></h1>
+                      <span class="text-success" style="font-size: 20px;" id="autotunedFileCount365days"></span>
+                      (Avg. Response Time <span class="text-success" style="font-size: 20px;" id="AvgRT365days"></span>)
+                      <div class="clearfix"></div>
+
                       </div>
                       
                     </div>
@@ -654,6 +660,12 @@
               $('#autotunedFileCountSevendays').html(response.autotunedFileCountSevendays);
               $('#totalsevenDaysCount').html(response.totalsevenDaysCount);
               $('#AvgRTSevendays').html(response.AvgRTSevendays);
+              $('#autotunedFileCount30days').html(response.autotunedFileCount30days);
+              $('#total30DaysCount').html(response.total30DaysCount);
+              $('#AvgRT365days').html(response.AvgRT30days);
+              $('#autotunedFileCount365days').html(response.autotunedFileCount365days);
+              $('#total365DaysCount').html(response.total365DaysCount);
+              $('#AvgRT30days').html(response.AvgRT365days);
               $('#brandsTable').html(response.brandsTable);
               $('#countryTable').html(response.countryTable);
 
