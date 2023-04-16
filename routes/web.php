@@ -32,40 +32,40 @@ Route::get('/', function () {
 
  Route::get('/tasks', function () {
 
-    $users = User::all();
+    // $users = User::all();
 
-    foreach($users as $user){
+    // foreach($users as $user){
         
-        RoleUser::where('user_id', $user->id)->delete();
+    //     RoleUser::where('user_id', $user->id)->delete();
 
-        if($user->is_admin){
-            $new = new RoleUser();
-            $new->user_id = $user->id;
-            $new->role_id = 1;
-            $new->save();
-        }
+    //     if($user->is_admin){
+    //         $new = new RoleUser();
+    //         $new->user_id = $user->id;
+    //         $new->role_id = 1;
+    //         $new->save();
+    //     }
 
-        if($user->is_head){
-            $new = new RoleUser();
-            $new->user_id = $user->id;
-            $new->role_id = 2;
-            $new->save();
-        }
+    //     if($user->is_head){
+    //         $new = new RoleUser();
+    //         $new->user_id = $user->id;
+    //         $new->role_id = 2;
+    //         $new->save();
+    //     }
 
-        if($user->is_engineer){
-            $new = new RoleUser();
-            $new->user_id = $user->id;
-            $new->role_id = 3;
-            $new->save();
-        }
+    //     if($user->is_engineer){
+    //         $new = new RoleUser();
+    //         $new->user_id = $user->id;
+    //         $new->role_id = 3;
+    //         $new->save();
+    //     }
 
-        if($user->is_customer){
-            $new = new RoleUser();
-            $new->user_id = $user->id;
-            $new->role_id = 4;
-            $new->save();
-        }
-    } 
+    //     if($user->is_customer){
+    //         $new = new RoleUser();
+    //         $new->user_id = $user->id;
+    //         $new->role_id = 4;
+    //         $new->save();
+    //     }
+    // } 
 
     // $comments = Comment::all();
 
