@@ -30,7 +30,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
- Route::get('/tasks', function () {
+//  Route::get('/tasks', function () {
 
     // $users = User::all();
 
@@ -153,7 +153,7 @@ Route::get('/', function () {
 
 //  }
 
- });
+//  });
 
 Route::post('/change_status', [App\Http\Controllers\ServicesController::class, 'changeStatus'])->name('change-status');
 
