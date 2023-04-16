@@ -87,8 +87,8 @@ class FileEngineerTable extends LivewireDatatable
 
             Column::callback(['assigned_to'], function($id){
                 return User::findOrFail($id)->name;
-            })->label('Assigned to')
-            ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))->searchable(),
+            })->label('Assigned to'),
+            // ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))->searchable(),
 
             DateColumn::name('created_at')
                 ->label('Upload Date')->sortable()->filterable(),
