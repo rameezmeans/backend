@@ -240,7 +240,7 @@ class FilesDatatable extends LivewireDatatable
             Column::callback(['assigned_to'], function($assigned_to){
                 return User::findOrFail($assigned_to)->name;
             })->label('Assigned to')
-            ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))
+            // ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))
             ->searchable(),
     
             DateColumn::callback('response_time', function($rt){
