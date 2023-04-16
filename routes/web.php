@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessagesController;
 use App\Models\Comment;
 use App\Models\File;
+use App\Models\Role;
+use App\Models\RoleUser;
 use App\Models\Service;
 use App\Models\Tool;
 use App\Models\User;
@@ -28,7 +30,42 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//  Route::get('/tasks', function () {
+ Route::get('/tasks', function () {
+
+    $users = User::all();
+
+    foreach($users as $user){
+        
+        RoleUser::where('user_id', $user->id)->delete();
+
+        if($user->is_admin){
+            $new = new RoleUser();
+            $new->user_id = $user->id;
+            $new->role_id = 1;
+            $new->save();
+        }
+
+        if($user->is_head){
+            $new = new RoleUser();
+            $new->user_id = $user->id;
+            $new->role_id = 2;
+            $new->save();
+        }
+
+        if($user->is_engineer){
+            $new = new RoleUser();
+            $new->user_id = $user->id;
+            $new->role_id = 3;
+            $new->save();
+        }
+
+        if($user->is_customer){
+            $new = new RoleUser();
+            $new->user_id = $user->id;
+            $new->role_id = 4;
+            $new->save();
+        }
+    } 
 
     // $comments = Comment::all();
 
@@ -116,7 +153,7 @@ Route::get('/', function () {
 
 //  }
 
-//  });
+ });
 
 Route::post('/change_status', [App\Http\Controllers\ServicesController::class, 'changeStatus'])->name('change-status');
 
