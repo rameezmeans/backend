@@ -8,7 +8,7 @@
   <div class="content sm-gutter">
     <!-- START CONTAINER FLUID -->
     <div class="container-fluid p-t-20">
-      @if(Auth::user()->is_admin || Auth::user()->is_head)
+      @if(Auth::user()->is_admin() || Auth::user()->is_head())
       <div class="row">
         <div class="col-sm-12 col-xl-12">
           <div class="form-group form-group-default input-group">

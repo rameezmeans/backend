@@ -48,7 +48,7 @@
         <li class="m-t-30 ">
           <a href="{{ route('files') }}" class="detailed">
             <span class="title">Files</span>
-            @if(Auth::user()->is_admin)
+            @if(Auth::user()->is_admin())
               
                 <span id="file-count" class="badge badged-warning text-black @if(count_of_files() == 0) hide @endif">{{count_of_files()}}</span>
               
@@ -57,7 +57,7 @@
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
         </li>
 
-        @if(Auth::user()->is_admin || Auth::user()->is_head)
+        @if(Auth::user()->is_admin() || Auth::user()->is_head())
         <li class="m-t-30 ">
           <a href="javascript:;">
             <span class="title">Reports</span>

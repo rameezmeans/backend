@@ -6,6 +6,7 @@ use App\Models\Credit;
 use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\FrontEnd;
+use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
@@ -31,9 +32,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $engineers = User::where('is_engineer', 1)->get();
-        $customers = User::where('is_customer', 1)->where('front_end_id', 1)->get();
-        $engineersCount = User::where('is_engineer', 1)->count();
+        $engineers = get_engineers();
+        $customers = get_customers(1);
+        $engineersCount = sizeof($engineers);
 
         $frontends = FrontEnd::all();
 
@@ -49,9 +50,7 @@ class HomeController extends Controller
 
     public function getFrontendData(Request $request){
 
-        $customerCount = User::where('is_customer', 1)
-        ->where('front_end_id', $request->frontend_id)
-        ->count();
+        $customerCount = sizeof(get_customers($request->frontend_id));
 
         // today
 
@@ -147,8 +146,17 @@ class HomeController extends Controller
             $AvgRT365days = round( $totalTime365days / $autotunedFileCount365days , 2)." sec" ;
         }
 
-        $topCountriesObj = User::where('is_customer', 1)
-        ->where('front_end_id', $request->frontend_id)
+        $customerID = Role::where('name', 'customer')->first()->id;
+
+        // $topCountriesObj = User::where('is_customer', 1)
+        // ->where('front_end_id', $request->frontend_id)
+        // ->groupBy('country')
+        // ->selectRaw('count(*) as count,country')
+        // ->get();
+
+        $topCountriesObj = User::join('roles_users', 'roles_users.user_id', '=', 'users.id')
+        ->where('roles_users.role_id', 4)
+        ->where('front_end_id', 1)
         ->groupBy('country')
         ->selectRaw('count(*) as count,country')
         ->get();
@@ -210,7 +218,7 @@ class HomeController extends Controller
 
         $customerOptions = '<option value="all_customers">All Customers</option>';
 
-        $customers = User::where('is_customer', 1)->where('front_end_id', $request->frontend_id)->get();
+        $customers = get_customers($request->frontend_id);
 
         foreach($customers as $customer){
             $customerOptions .= '<option value="'.$customer->id.'">'.$customer->name.'</option>';
@@ -255,7 +263,7 @@ class HomeController extends Controller
         $average = 0;
 
         if($request->reponse_engineer == 'all_engineers'){
-            $engineers = User::where('is_engineer', 1)->get();
+            $engineers = get_engineers();
 
             foreach($engineers as $engineer){
 
@@ -481,8 +489,7 @@ class HomeController extends Controller
         $grandTotal = Credit::where('credits', '>', 0)
         ->sum('credits');
 
-        $customers = User::where('is_customer', 1)
-        ->count();
+        $customers = sizeof(get_customers());
 
         $avgTotal = $grandTotal / $customers;
 

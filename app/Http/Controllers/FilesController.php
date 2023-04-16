@@ -25,6 +25,7 @@ use App\Models\FileUrl;
 use App\Models\Key;
 use App\Models\Log;
 use App\Models\ProcessedFile;
+use App\Models\RoleUser;
 use App\Models\Service;
 use App\Models\Tool;
 use GuzzleHttp\Client as GuzzleHttpClient;
@@ -558,7 +559,7 @@ class FilesController extends Controller
         $file->save();
 
         $customer = User::findOrFail($file->user_id);
-        $admin = User::where('is_admin', 1)->first();
+        $admin = User::findOrFail(RoleUser::where('role_id', 1)->first()->user_id);
     
         // $template = EmailTemplate::where('name', 'Status Change')->first();
         $template = EmailTemplate::findOrFail(8);
@@ -649,7 +650,7 @@ class FilesController extends Controller
         $file->support_status = "closed";
         $file->save();
         $customer = User::findOrFail($file->user_id);
-        $admin = User::where('is_admin', 1)->first();
+        $admin = get_admin();
     
         // $template = EmailTemplate::where('name', 'Message To Client')->first();
         $template = EmailTemplate::findOrFail(7);
@@ -817,7 +818,7 @@ class FilesController extends Controller
             $file->save();
 
         $customer = User::findOrFail($file->user_id);
-        $admin = User::where('is_admin', 1)->first();
+        $admin = get_admin();
     
         // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
         $template = EmailTemplate::findOrFail(6);
@@ -881,7 +882,7 @@ class FilesController extends Controller
     }
 
     public function feedbackReports(){
-        $engineers = User::where('is_engineer', 1)->get();
+        $engineers = get_engineers();
         return view('files.feedback_reports', ['engineers' => $engineers]);
     }
 
@@ -891,7 +892,7 @@ class FilesController extends Controller
     }
 
     public function reports(){
-        $engineers = User::where('is_engineer', 1)->get();
+        $engineers = get_engineers();
         return view('files.reports', ['engineers' => $engineers]);
     }
 
@@ -1197,10 +1198,10 @@ class FilesController extends Controller
      */
     public function show($id)
     {
-        if(Auth::user()->is_admin){
+        if(Auth::user()->is_admin()){
             $file = File::where('id', $id)->where('is_credited', 1)->first();
         }
-        else if(Auth::user()->is_engineer){
+        else if(Auth::user()->is_engineer()){
             $file = File::where('id',$id)->where('is_credited', 1)->first();
             // $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
         }
@@ -1220,7 +1221,7 @@ class FilesController extends Controller
         ->where('Engine', $file->engine)
         ->first();
         
-        $engineers = User::where('is_engineer', 1)->get();
+        $engineers = get_engineers();
         $withoutTypeArray = $file->files->toArray();
         $unsortedTimelineObjects = [];
 
@@ -1396,7 +1397,7 @@ class FilesController extends Controller
                 $file->save();
 
             $customer = User::findOrFail($file->user_id);
-            $admin = User::where('is_admin', 1)->first();
+            $admin = get_admin();
         
             // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
             $template = EmailTemplate::findOrFail(6);

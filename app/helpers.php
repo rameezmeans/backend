@@ -1,7 +1,10 @@
 <?php
 
 use App\Models\File;
+use App\Models\Role;
+use App\Models\RoleUser;
 use App\Models\Tool;
+use App\Models\User;
 use App\Models\Vehicle;
 
 function fullescape($in)
@@ -572,6 +575,59 @@ function getFlags($code){
     if($code == 'ZA') return '🇿🇦';
     if($code == 'ZM') return '🇿🇲';
     return '🏳';
+}
+
+if(!function_exists('get_admin')){
+
+    function get_admin(){
+        $admin = Role::where('name', 'admin')->first();
+        return User::findOrFail(RoleUser::where('role_id', $admin->id)->first()->user_id);
+    }
+}
+
+if(!function_exists('get_head')){
+
+    function get_head(){
+        $head = Role::where('name', 'head')->first();
+        return User::findOrFail(RoleUser::where('role_id', $head->id)->first()->user_id);
+    }
+}
+
+if(!function_exists('get_engineers')){
+
+    function get_engineers(){
+
+        $engineerRole = Role::where('name', 'engineer')->first();
+        $userRoles = RoleUser::where('role_id', $engineerRole->id)->get();
+        
+        $engineers = [];
+        foreach($userRoles as $user){
+            $engineers []=  User::findOrFail($user->user_id);
+        }
+
+        return $engineers;
+
+    }
+}
+
+if(!function_exists('get_customers')){
+
+    function get_customers($frontendID = 1){
+
+        $customerRole = Role::where('name', 'customer')->first();
+        $userRoles = RoleUser::where('role_id', $customerRole->id)->get();
+        
+        $customers = [];
+        foreach($userRoles as $user){
+            $user = User::findOrFail($user->user_id);
+            if($user->front_end_id == $frontendID){
+                $customers []=  $user;
+            }
+        }
+
+        return $customers;
+
+    }
 }
 
 
