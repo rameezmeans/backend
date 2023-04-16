@@ -388,7 +388,7 @@ class HomeController extends Controller
             }
         }
 
-        $totalEngineers = User::where('is_engineer', 1)->count();
+        $totalEngineers = sizeof(get_engineers());
 
         $avgTotal = EngineerFileNote::count() / $totalEngineers;
 
@@ -580,7 +580,7 @@ class HomeController extends Controller
             }
         }
 
-        $totalEngineers = User::where('is_engineer', 1)->count();
+        $totalEngineers = sizeof(get_engineers());
 
         if($request->engineer_files == "all_engineers"){
             $files = File::whereBetween('created_at', array($start, $end))->where('front_end_id', $request->frontend_id)->where('is_credited', 1)->get();

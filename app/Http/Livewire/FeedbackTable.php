@@ -76,9 +76,9 @@ class FeedbackTable extends LivewireDatatable
             ->filterable($feedbacks),
             Column::callback(['assigned_to'], function($assigned_to){
                 return User::findOrFail($assigned_to)->name;
-            })->label('Assigned to')
-            ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))
-            ->searchable(),
+            })->label('Assigned to'),
+            // ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))
+            // ->searchable(),
             DatetimeColumn::name('created_at')
             ->label('Date')->sortable()->format('d/m/Y h:i A')->filterable(),
         ];
