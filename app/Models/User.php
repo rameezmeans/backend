@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -68,6 +69,50 @@ class User extends Authenticatable
 
     public function tools_slave(){
         return $this->hasMany(UserTool::class, 'user_id', 'id')->where('type', 'slave'); 
+    }
+
+    public function role(){
+        return $this->hasOne(RoleUser::class, 'user_id', 'id');
+    }
+
+    public function is_admin(){
+
+        if(Role::findOrFail($this->role->id)->name == 'admin'){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function is_customer(){
+        
+        if(Role::findOrFail($this->role->id)->name == 'customer'){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function is_head(){
+        
+        if(Role::findOrFail($this->role->id)->name == 'head'){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function is_engineer(){
+        
+        if(Role::findOrFail($this->role->id)->name == 'head'){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public function tools_master(){

@@ -30,7 +30,36 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//  Route::get('/tasks', function () {
+ Route::get('/tasks', function () {
+
+    $topCountriesObj = User::join('roles_users', 'roles_users.user_id', '=', 'users.id')
+        ->where('roles_users.role_id', 4)
+        ->where('front_end_id', 1)
+        ->groupBy('country')
+        ->selectRaw('count(*) as count,country')
+        ->get();
+
+        // dd($topCountriesObj);
+
+    // $engineerRole = Role::where('name', 'engineer')->first();
+
+    // $userRoles = RoleUser::where('role_id', $engineerRole->id)->get();
+
+    // $engineers = User::where('is_engineer', 1)->get();
+
+    // $engineers = [];
+    // foreach($userRoles as $user){
+            
+    //         $engineers []=  User::findOrFail($user->user_id);
+    // }
+
+//    dd($engineers);
+    
+    // dd(Auth::user()->is_admin());
+
+    // $admin = get_admin();
+
+    // dd($admin);
 
     // $users = User::all();
 
@@ -153,7 +182,7 @@ Route::get('/', function () {
 
 //  }
 
-//  });
+ });
 
 Route::post('/change_status', [App\Http\Controllers\ServicesController::class, 'changeStatus'])->name('change-status');
 

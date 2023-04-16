@@ -150,7 +150,7 @@
                       
                         @endif
 
-                        @if(Auth::user()->is_admin)
+                        @if(Auth::user()->is_admin())
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Assigned To</p>
@@ -279,7 +279,7 @@
                         </div>
                         @endif
 
-                        @if(Auth::user()->is_admin or Auth::user()->is_head)
+                        @if(Auth::user()->is_admin() or Auth::user()->is_head())
                           <div class="text-center m-t-20">                    
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('edit-file', $file->id)}}"><span class="bold">Edit File</span></a>
@@ -746,7 +746,7 @@
               </div>
               <div class="row">
                 <div class="col-lg-12">
-                  @if(Auth::user()->is_admin or Auth::user()->is_head)
+                  @if(Auth::user()->is_admin() or Auth::user()->is_head())
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Assign This File to An Engineer</p>
                       <form action="{{route('assign-engineer')}}" method="POST">
@@ -790,7 +790,7 @@
                     </form>
                     <div class="clearfix"></div>
                   </div>
-                  @if(Auth::user()->is_admin or Auth::user()->is_head)
+                  @if(Auth::user()->is_admin() or Auth::user()->is_head())
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Support Status</p>
                       <form action="{{route('change-support-status')}}" method="POST">

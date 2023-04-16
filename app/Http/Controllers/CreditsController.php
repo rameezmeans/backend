@@ -6,6 +6,8 @@ use App\Models\Credit;
 use App\Models\FrontEnd;
 use App\Models\Group;
 use App\Models\Price;
+use App\Models\Role;
+use App\Models\RoleUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use PDF;
@@ -24,7 +26,7 @@ class CreditsController extends Controller
     }
 
     public function credits() {
-        $customers = User::where('is_customer', 1)->get();
+        $customers = get_customers();
         return view('credits.credits', ['customers' =>$customers]);
     }
 
@@ -38,13 +40,35 @@ class CreditsController extends Controller
         $html = '';
         
         if($request->group == 'all_groups'){
-            $users = User::where('is_customer', 1)->get();
+            $users = get_customers();
         }
         else if($request->group == 'no_group'){
-            $users = User::where('is_customer', 1)->whereNull('group_id')->get();
+            
+            $customerRole = Role::where('name', 'customer')->first();
+            $userRoles = RoleUser::where('role_id', $customerRole->id)->get();
+            
+            $users = [];
+            foreach($userRoles as $user){
+                $user = User::findOrFail($user->user_id);
+                if($user->group_id == NULL){
+                    $users []=  $user;
+                }
+            }
+            
         }
         else{
-            $users = User::where('is_customer', 1)->where('group_id', $request->group)->get();
+            
+            $customerRole = Role::where('name', 'customer')->first();
+            $userRoles = RoleUser::where('role_id', $customerRole->id)->get();
+            
+            $users = [];
+            foreach($userRoles as $user){
+                $user = User::findOrFail($user->user_id);
+                if($user->group_id){
+                    $users []=  $user;
+                }
+            }
+
         }
 
         $data = [];
