@@ -154,8 +154,9 @@ class HomeController extends Controller
         // ->selectRaw('count(*) as count,country')
         // ->get();
 
-        $topCountriesObj = User::join('roles_users', 'roles_users.user_id', '=', 'users.id')
-        ->where('roles_users.role_id', 4)
+        $customerRole = Role::where('name','customer')->first();
+
+        $topCountriesObj = User::where('role_id', $customerRole->id)
         ->where('front_end_id', 1)
         ->groupBy('country')
         ->selectRaw('count(*) as count,country')
