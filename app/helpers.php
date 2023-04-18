@@ -581,7 +581,7 @@ if(!function_exists('get_admin')){
 
     function get_admin(){
         $admin = Role::where('name', 'admin')->first();
-        return User::findOrFail(RoleUser::where('role_id', $admin->id)->first()->user_id);
+        return User::where('role_id', $admin->id)->first();
     }
 }
 
@@ -589,7 +589,7 @@ if(!function_exists('get_head')){
 
     function get_head(){
         $head = Role::where('name', 'head')->first();
-        return User::findOrFail(RoleUser::where('role_id', $head->id)->first()->user_id);
+        return User::where('role_id', $head->id)->first();
     }
 }
 
@@ -598,13 +598,7 @@ if(!function_exists('get_engineers')){
     function get_engineers(){
 
         $engineerRole = Role::where('name', 'engineer')->first();
-        $userRoles = RoleUser::where('role_id', $engineerRole->id)->get();
-        
-        $engineers = [];
-        foreach($userRoles as $user){
-            $engineers []=  User::findOrFail($user->user_id);
-        }
-
+        $engineers = User::where('role_id', $engineerRole->id)->get();
         return $engineers;
 
     }
@@ -612,24 +606,22 @@ if(!function_exists('get_engineers')){
 
 if(!function_exists('get_customers')){
 
-    function get_customers($frontendID = 1){
+    function get_customers($frontendID = 0){
 
         $customerRole = Role::where('name', 'customer')->first();
-        $userRoles = RoleUser::where('role_id', $customerRole->id)->get();
         
-        $customers = [];
-        foreach($userRoles as $user){
-            $user = User::findOrFail($user->user_id);
-            if($user->front_end_id == $frontendID){
-                $customers []=  $user;
-            }
+        if($frontendID == 0){
+            $customers = User::where('role_id', $customerRole->id)->get();
         }
-
+        else{
+            $customers = User::where('role_id', $customerRole->id)
+            ->where('front_end_id', $frontendID)->get();
+        }
+        
         return $customers;
 
     }
 }
-
 
 if(!function_exists('get_dropdown_image')){
 
