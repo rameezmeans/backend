@@ -71,13 +71,9 @@ class User extends Authenticatable
         return $this->hasMany(UserTool::class, 'user_id', 'id')->where('type', 'slave'); 
     }
 
-    public function role(){
-        return $this->hasOne(RoleUser::class, 'user_id', 'id');
-    }
-
-     public function is_admin(){
+    public function is_admin(){
         
-        if(Role::findOrFail($this->role->role_id)->name == 'admin'){
+        if(Role::findOrFail($this->role_id)->name == 'admin'){
             return true;
         }
         else{
@@ -87,7 +83,7 @@ class User extends Authenticatable
 
     public function is_customer(){
         
-        if(Role::findOrFail($this->role->role_id)->name == 'customer'){
+        if(Role::findOrFail($this->role_id)->name == 'customer'){
             return true;
         }
         else{
@@ -97,7 +93,7 @@ class User extends Authenticatable
 
     public function is_head(){
         
-        if(Role::findOrFail($this->role->role_id)->name == 'head'){
+        if(Role::findOrFail($this->role_id)->name == 'head'){
             return true;
         }
         else{
@@ -107,7 +103,7 @@ class User extends Authenticatable
 
     public function is_engineer(){
         
-        if(Role::findOrFail($this->role->role_id)->name == 'engineer'){
+        if(Role::findOrFail($this->role_id)->name == 'engineer'){
             return true;
         }
         else{
