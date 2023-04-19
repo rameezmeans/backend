@@ -1198,13 +1198,15 @@ class FilesController extends Controller
      */
     public function show($id)
     {
-        if(Auth::user()->is_admin()){
-            $file = File::where('id', $id)->where('is_credited', 1)->first();
-        }
-        else if(Auth::user()->is_engineer()){
-            $file = File::where('id',$id)->where('is_credited', 1)->first();
-            // $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
-        }
+
+        $file = File::where('id',$id)->where('is_credited', 1)->first();
+        // if(Auth::user()->is_admin() || Auth::user()->is_head()){
+        //     $file = File::where('id', $id)->where('is_credited', 1)->first();
+        // }
+        // else if(Auth::user()->is_engineer()){
+        //     $file = File::where('id',$id)->where('is_credited', 1)->first();
+        //     // $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
+        // }
 
         if(!$file){
             abort(404);
