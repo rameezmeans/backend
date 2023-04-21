@@ -611,11 +611,15 @@ if(!function_exists('get_customers')){
         $customerRole = Role::where('name', 'customer')->first();
         
         if($frontendID == 0){
-            $customers = User::where('role_id', $customerRole->id)->get();
+            $customers = User::where('role_id', $customerRole->id)
+            ->where('name' ,'!=', 'Live Chat')
+            ->get();
         }
         else{
             $customers = User::where('role_id', $customerRole->id)
-            ->where('front_end_id', $frontendID)->get();
+            ->where('front_end_id', $frontendID)
+            ->where('name' ,'!=', 'Live Chat')
+            ->get();
         }
         
         return $customers;
