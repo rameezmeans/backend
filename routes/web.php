@@ -5,6 +5,7 @@ use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\SubdealerGroupsController;
 use App\Models\Comment;
 use App\Models\File;
 use App\Models\Role;
@@ -457,3 +458,9 @@ Route::get('upload_engineers_file/{folder_path}/{file_name}', [AlientechTestCont
 Route::get('download_encoded_file/{folder_id}', [AlientechTestController::class, 'downloadEncodedFile'])->name('download-encoded-file');
 Route::get('close_all', [AlientechTestController::class, 'closeAllSlots'])->name('close-all');
 Route::get('show_all', [AlientechTestController::class, 'showAllSlots'])->name('show-all');
+
+Route::get('subdealer_groups', [SubdealerGroupsController::class, 'index'])->name('subdealer-groups');
+Route::get('create_subdealer_group', [SubdealerGroupsController::class, 'create'])->name('create-subdealer-group');
+Route::get('delete_subdealer_group', [SubdealerGroupsController::class, 'delete'])->name('delete-subdealer-group');
+Route::post('add_subdealer_group', [SubdealerGroupsController::class, 'add'])->name('add-subdealer-group');
+Route::post('update_subdealer_group/{id}', [SubdealerGroupsController::class, 'update'])->name('update-subdealer-group');

@@ -13,6 +13,12 @@ class SubdealerGroupsController extends Controller
         $this->middleware('auth');
     }
 
-    
+    public function index(){
+        return view('subdealer_groups.index');
+    }
+
+    public function create(){
+        return view('subdealer_groups.create');
+    }
 
 }
