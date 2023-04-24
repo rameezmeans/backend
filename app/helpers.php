@@ -613,6 +613,7 @@ if(!function_exists('get_customers')){
         if($frontendID == 0){
             $customers = User::where('role_id', $customerRole->id)
             ->where('name' ,'!=', 'Live Chat')
+            ->whereNotNull('front_end_id')
             ->get();
         }
         else{
