@@ -10,7 +10,7 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                    <h3>Tools</h3>
+                    <h3>Subdealer Groups</h3>
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
@@ -30,7 +30,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+                                @foreach($subdealers as $subdealer)
+                                    <tr role="row" class="redirect-click" data-redirect="{{ route('edit-subdealer-group', [$subdealer->id]) }}">
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$subdealer->name}}</p>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -62,6 +62,8 @@ class UsersController extends Controller
             'password' => ['required', 'string', 'min:8'],
         ]);
 
+        $customerID = Role::where('name', 'customer')->first()->id;
+
         $customer = new User();
         $customer->name = $request->name;
 
@@ -78,20 +80,11 @@ class UsersController extends Controller
         $customer->company_name = $request->company_name;
         $customer->company_id = $request->company_id;
         $customer->group_id = $request->group_id;
-        // $customer->is_customer = 1;
         $customer->front_end_id = $request->front_end_id;
+        $customer->role_id = $customerID;
 
         $customer->save();
-
-        $customerID = Role::where('name', 'customer')->first()->id;
-
-        $role = new RoleUser();
-        $role->user_id = $customer->id;
-        $role->role_id = $customerID;
-        $role->save();
-
-        $this->addCredits($customer->group->bonus_credits, $customer);
-
+        
        return redirect()->route('customers')->with(['success' => 'Customer added, successfully.']);
     }
 
@@ -188,15 +181,11 @@ class UsersController extends Controller
         $engineer->status ="doesnot_matter";
         $engineer->company_name = "doesnot_matter";
         $engineer->company_id = "doesnot_matter";
-        
-        $engineer->save();
 
         $engineerID = Role::where('name', 'engineer')->first()->id;
+        $engineer->role_id = $engineerID;
 
-        $role = new RoleUser();
-        $role->user_id = $engineer->id;
-        $role->role_id = $engineerID;
-        $role->save();
+        $engineer->save();
 
        return redirect()->route('engineers')->with(['success' => 'Engineer added, successfully.']);
 

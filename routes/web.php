@@ -461,6 +461,28 @@ Route::get('show_all', [AlientechTestController::class, 'showAllSlots'])->name('
 
 Route::get('subdealer_groups', [SubdealerGroupsController::class, 'index'])->name('subdealer-groups');
 Route::get('create_subdealer_group', [SubdealerGroupsController::class, 'create'])->name('create-subdealer-group');
-Route::get('delete_subdealer_group', [SubdealerGroupsController::class, 'delete'])->name('delete-subdealer-group');
+Route::post('delete_subdealer_group', [SubdealerGroupsController::class, 'delete'])->name('delete-subdealer-group');
 Route::post('add_subdealer_group', [SubdealerGroupsController::class, 'add'])->name('add-subdealer-group');
-Route::post('update_subdealer_group/{id}', [SubdealerGroupsController::class, 'update'])->name('update-subdealer-group');
+Route::post('update_subdealer_group', [SubdealerGroupsController::class, 'update'])->name('update-subdealer-group');
+Route::get('edit_subdealer_group/{id}', [SubdealerGroupsController::class, 'edit'])->name('edit-subdealer-group');
+
+Route::get('create_subdealer_customer/{id}', [SubdealerGroupsController::class, 'createCustomer'])->name('create-subdealer-customer');
+Route::post('add_subdealer_customer', [SubdealerGroupsController::class, 'addCustomer'])->name('add-subdealer-customer');
+Route::get('edit_subdealer_customer/{id}', [SubdealerGroupsController::class, 'editCustomer'])->name('edit-subdealer-customer');
+Route::post('update_subdealer_customer', [SubdealerGroupsController::class, 'updateCustomer'])->name('update-subdealer-customer');
+Route::post('delete_subdealer_customer', [SubdealerGroupsController::class, 'deleteUser'])->name('delete-subdealer-customer');
+
+Route::get('create_subdealer_engineer/{id}', [SubdealerGroupsController::class, 'createEngineer'])->name('create-subdealer-engineer');
+Route::post('add_subdealer_engineer', [SubdealerGroupsController::class, 'addEngineer'])->name('add-subdealer-engineer');
+Route::get('edit_subdealer_engineer/{id}', [SubdealerGroupsController::class, 'editEngineer'])->name('edit-subdealer-engineer');
+Route::post('update_subdealer_engineer', [SubdealerGroupsController::class, 'updateEngineer'])->name('update-subdealer-engineer');
+Route::post('delete_subdealer_engineer', [SubdealerGroupsController::class, 'deleteUser'])->name('delete-subdealer-engineer');
+
+Route::get('create_subdealer/{id}', [SubdealerGroupsController::class, 'createSubdealer'])->name('create-subdealer');
+Route::post('add_subdealer', [SubdealerGroupsController::class, 'addSubdealer'])->name('add-subdealer');
+Route::get('edit_subdealer/{id}', [SubdealerGroupsController::class, 'editSubdealer'])->name('edit-subdealer');
+Route::post('update_subdealer', [SubdealerGroupsController::class, 'updateSubdealer'])->name('update-subdealer');
+Route::post('delete_subdealer', [SubdealerGroupsController::class, 'deleteUser'])->name('delete-subdealer');
+
+Route::get('create_subdealer_egnineer/{id}', [SubdealerGroupsController::class, 'createEngineer'])->name('create-subdealer-engineer');
+Route::get('create_subdealer_subdealer/{id}', [SubdealerGroupsController::class, 'createSubdealer'])->name('create-subdealer');
