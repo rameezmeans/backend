@@ -750,12 +750,26 @@ class FilesController extends Controller
 
         $newFileName = str_replace('#', '', $fileName);
         $newFileName = str_replace(' ', '_', $newFileName);
+
+        if($file->subdealer_group_id){
+            $attachment->move(public_path('/../../subportal/public'.$file->file_path),$newFileName);
+
+        }
         
-        $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+        else{
+            $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+        }
         
         if($encode){
 
-            $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+            if($file->subdealer_group_id){
+
+                $path = public_path('/../../subportal/public'.$file->file_path).$newFileName;
+            }
+            else{
+                $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+
+            }
             $encodingType = $request->encoding_type;
 
             if($file->alientech_file){ // if slot id is assigned
