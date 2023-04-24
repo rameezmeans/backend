@@ -10,34 +10,42 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                  @if(isset($engineer))
+                  @if(isset($subdealer))
                   <h5>
-                    Edit Engineer
+                    Edit Subdealer Group
                   </h5>
                 @else
                   <h5>
-                    Add Engineer
+                    Add Subdealer Group
                   </h5>
                 @endif
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
-                    <button data-redirect="{{route('engineers')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Engineers</span>
+                    <button data-redirect="{{route('subdealer-groups')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Subdealer Groups</span>
                     </button>
+                    @if(isset($subdealer))
+                      <button data-redirect="{{route('create-subdealer-customer', ['id' => $subdealer->id])}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Subdealer Customer</span>
+                      </button>
+                      <button data-redirect="{{route('create-subdealer-engineer', ['id' => $subdealer->id])}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Subdealer Engineer</span>
+                      </button>
+                      <button data-redirect="{{route('create-subdealer', ['id' => $subdealer->id])}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Subdealer</span>
+                      </button>
+                    @endif
                     {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                 </div>
                 </div>
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
-              <form class="" role="form" method="POST" action="@if(isset($subdealerGroup)){{route('update-subdealer-group')}}@else{{ route('add-subdealer-group') }}@endif" enctype="multipart/form-data">
+              <form class="" role="form" method="POST" action="@if(isset($subdealer)){{route('update-subdealer-group')}}@else{{ route('add-subdealer-group') }}@endif" enctype="multipart/form-data">
                 @csrf
-                @if(isset($subdealerGroup))
-                  <input name="id" type="hidden" value="{{ $subdealerGroup->id }}">
+                @if(isset($subdealer))
+                  <input name="id" type="hidden" value="{{ $subdealer->id }}">
                 @endif
                 <div class="form-group form-group-default required ">
                   <label>Name</label>
-                  <input value="@if(isset($subdealerGroup)) {{ $subdealerGroup->name }} @else{{old('name') }}@endif"  name="name" type="text" class="form-control" required>
+                  <input value="@if(isset($subdealer)){{$subdealer->name}}@else{{old('name')}}@endif"  name="name" type="text" class="form-control" required>
                 </div>
                 @error('name')
                   <span class="text-danger" role="alert">
@@ -45,12 +53,128 @@
                   </span>
                 @enderror
                 <div class="text-center m-t-40">                    
-                  <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($subdealerGroup)) Update @else Add @endif</span></button>
-                  @if(isset($subdealerGroup))
-                    <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$subdealerGroup->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button>
+                  <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($subdealer)) Update @else Add @endif</span></button>
+                  @if(isset($subdealer))
+                    <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$subdealer->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button>
                   @endif
                 </div>
               </form>
+
+              <h3>
+                Subdealers
+              </h3>
+              <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                <div>
+                    <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                        <thead>
+                            <tr role="row">
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Email</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Phone</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($subdealers as $subdealer)
+                                <tr role="row" class="redirect-click" data-redirect="{{ route('edit-subdealer', $subdealer->id) }}">
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>{{$subdealer->name}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>{{$subdealer->email}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>{{$subdealer->phone}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>{{$subdealer->created_at->diffForHumans()}}</p>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+              
+              <h3>
+                Customers
+              </h3>
+              <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                <div>
+                    <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                        <thead>
+                            <tr role="row">
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Portal</th> --}}
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Email</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Phone</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Country</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($customers as $customer)
+                            <tr role="row" class="redirect-click" data-redirect="{{ route('edit-subdealer-customer', $customer->id) }}">
+                                <td class="v-align-middle semi-bold sorting_1">
+                                    <p>{{$customer->name}}</p>
+                                </td>
+                                {{-- <td class="v-align-middle semi-bold sorting_1">
+                                  <p><label class="label @if($customer->frontend->id == 1) text-white bg-primary @else text-black bg-warning @endif">{{$customer->frontend->name}}</label></p>
+                              </td> --}}
+                                <td class="v-align-middle semi-bold sorting_1">
+                                  <p>{{$customer->email}}</p>
+                                </td>
+                                <td class="v-align-middle semi-bold sorting_1">
+                                  <p>{{$customer->phone}}</p>
+                                </td>
+                                <td class="v-align-middle semi-bold sorting_1">
+                                  <p>{{code_to_country($customer->country)}}</p>
+                                </td>
+                                <td class="v-align-middle semi-bold sorting_1">
+                                  <p>{{$customer->created_at->diffForHumans()}}</p>
+                              </td>
+                            </tr>
+                          @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3>
+              Enginneers
+            </h3>
+            <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+              <div>
+                  <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                      <thead>
+                          <tr role="row">
+                              <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                              <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Email</th>
+                              <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Phone</th>
+                              <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          @foreach ($engineers as $engineer)
+                              <tr role="row" class="redirect-click" data-redirect="{{ route('edit-subdealer-engineer', $engineer->id) }}">
+                                  <td class="v-align-middle semi-bold sorting_1">
+                                      <p>{{$engineer->name}}</p>
+                                  </td>
+                                  <td class="v-align-middle semi-bold sorting_1">
+                                      <p>{{$engineer->email}}</p>
+                                  </td>
+                                  <td class="v-align-middle semi-bold sorting_1">
+                                      <p>{{$engineer->phone}}</p>
+                                  </td>
+                                  <td class="v-align-middle semi-bold sorting_1">
+                                      <p>{{$engineer->created_at->diffForHumans()}}</p>
+                                  </td>
+                              </tr>
+                          @endforeach
+                      </tbody>
+                  </table>
+              </div>
+          </div>
                 
             </div>
           </div>
@@ -94,7 +218,7 @@
                                 timer: 3000
                             });
 
-                            window.location.href = '/engineers';
+                            window.location.href = '/subdealer_groups';
                         }
                     });            
                 }
