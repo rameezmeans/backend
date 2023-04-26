@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\SubdealerGroup;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
@@ -30,6 +32,27 @@ class SubdealerGroupsController extends Controller
     public function create(){
 
         return view('subdealer_groups.create');
+        
+    }
+
+    public function changePermission(Request $request){
+        
+        if($request->switchStatus == 'true'){
+            $new = new Permission();
+            $new->permission = $request->permission;
+            $new->subdealer_group_id = $request->subdealer_group_id;
+            $new->save();
+        }
+        else if($request->switchStatus == 'false'){
+            Permission::where('permission', $request->permission)
+            ->where('subdealer_group_id', $request->subdealer_group_id)->delete();
+        }
+
+        return response('permission updated', 200);
+    }
+
+    public function editPermissions($id){
+        return view('subdealer_groups.edit_permission', ['subdealerID' => $id]);
         
     }
 

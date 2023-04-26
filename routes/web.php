@@ -483,6 +483,8 @@ Route::post('add_subdealer', [SubdealerGroupsController::class, 'addSubdealer'])
 Route::get('edit_subdealer/{id}', [SubdealerGroupsController::class, 'editSubdealer'])->name('edit-subdealer');
 Route::post('update_subdealer', [SubdealerGroupsController::class, 'updateSubdealer'])->name('update-subdealer');
 Route::post('delete_subdealer', [SubdealerGroupsController::class, 'deleteUser'])->name('delete-subdealer');
+Route::get('edit_permissions/{id}', [SubdealerGroupsController::class, 'editPermissions'])->name('edit-permissions');
+Route::post('change_permission', [SubdealerGroupsController::class, 'changePermission'])->name('change-permission');
 
 Route::get('create_subdealer_egnineer/{id}', [SubdealerGroupsController::class, 'createEngineer'])->name('create-subdealer-engineer');
 Route::get('create_subdealer_subdealer/{id}', [SubdealerGroupsController::class, 'createSubdealer'])->name('create-subdealer');

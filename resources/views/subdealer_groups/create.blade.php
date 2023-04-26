@@ -10,6 +10,18 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
+                  <button data-redirect="{{route('subdealer-groups')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Subdealer Groups</span>
+                  </button>
+                  @if(isset($subdealer))
+                    <button data-redirect="{{route('create-subdealer-customer', ['id' => $subdealer->id])}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Subdealer Customer</span>
+                    </button>
+                    <button data-redirect="{{route('create-subdealer-engineer', ['id' => $subdealer->id])}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Subdealer Engineer</span>
+                    </button>
+                    <button data-redirect="{{route('create-subdealer', ['id' => $subdealer->id])}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Subdealer</span>
+                    </button>
+                    <button data-redirect="{{route('edit-permissions', ['id' => $subdealer->id])}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Set Permissions</span>
+                    </button>
+                  @endif
                   @if(isset($subdealer))
                   <h5>
                     Edit Subdealer Group
@@ -22,16 +34,7 @@
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
-                    <button data-redirect="{{route('subdealer-groups')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Subdealer Groups</span>
-                    </button>
-                    @if(isset($subdealer))
-                      <button data-redirect="{{route('create-subdealer-customer', ['id' => $subdealer->id])}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Subdealer Customer</span>
-                      </button>
-                      <button data-redirect="{{route('create-subdealer-engineer', ['id' => $subdealer->id])}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Subdealer Engineer</span>
-                      </button>
-                      <button data-redirect="{{route('create-subdealer', ['id' => $subdealer->id])}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Subdealer</span>
-                      </button>
-                    @endif
+                    
                     {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                 </div>
                 </div>

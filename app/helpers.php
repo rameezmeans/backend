@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\File;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\Tool;
@@ -625,6 +626,20 @@ if(!function_exists('get_customers')){
         
         return $customers;
 
+    }
+}
+
+if(!function_exists('get_permission')){
+
+    function get_permission($subdealerID, $permission){
+        $permission = Permission::where('permission', $permission)
+            ->where('subdealer_group_id', $subdealerID)->first();
+
+        if($permission){
+            return true;
+        }
+
+        return false;
     }
 }
 

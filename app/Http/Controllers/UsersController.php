@@ -84,6 +84,8 @@ class UsersController extends Controller
         $customer->role_id = $customerID;
 
         $customer->save();
+
+        $this->addCredits($customer->group->bonus_credits, $customer);
         
        return redirect()->route('customers')->with(['success' => 'Customer added, successfully.']);
     }
