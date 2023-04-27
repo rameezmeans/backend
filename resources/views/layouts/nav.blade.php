@@ -60,12 +60,7 @@
         
 
         @if(Auth::user()->is_admin() || Auth::user()->is_head())
-        <li class="m-t-30 ">
-          <a href="{{ route('subdealer-groups') }}" class="detailed">
-            <span class="title">Subdealer Groups</span>
-          </a>
-          <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
-        </li>
+       
         <li class="m-t-30 ">
           <a href="javascript:;">
             <span class="title">Reports</span>
@@ -100,6 +95,10 @@
           </a>
           <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
           <ul class="sub-menu">
+            <li class="m-t-30 ">
+              <a href="{{ route('subdealer-groups') }}">Subdealer Groups</a>
+              <span class="icon-thumbnail">Sg</span>
+            </li>
             <li class="">
               <a href="{{ route('vehicles') }}">Vehicles</a>
               <span class="icon-thumbnail">Ve</span>
