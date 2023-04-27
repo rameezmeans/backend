@@ -320,7 +320,7 @@ if(!function_exists('code_to_country')){
 if(!function_exists('count_of_files')){
 
     function count_of_files(){
-        return File::where('checked_by', 'customer')->where('is_credited', 1)->count();
+        return File::where('checked_by', 'customer')->whereNull('subdealer_group_id')->where('is_credited', 1)->count();
     }
 }
 

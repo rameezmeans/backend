@@ -29,7 +29,8 @@ class FilesDatatable extends LivewireDatatable
             ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
             ->orderBy('ss', 'asc')
             ->orderBy('s', 'asc')
-            ->where('is_credited', 1);
+            ->where('is_credited', 1)
+            ->whereNull('subdealer_group_id');
             
         // }
         // else if(Auth::user()->is_engineer()){
