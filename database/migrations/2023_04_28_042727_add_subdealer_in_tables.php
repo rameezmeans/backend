@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('news_feed', function (Blueprint $table) {
+        Schema::table('news_feeds', function (Blueprint $table) {
             $table->foreignId('subdealer_group_id')->nullable();
         });
 
