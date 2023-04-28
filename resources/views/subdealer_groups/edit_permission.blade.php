@@ -86,6 +86,42 @@
                                         <p><input data-subdealer_group_id={{$subdealerID}} data-permission="transactions" class="active" type="checkbox" data-init-plugin="switchery" @if(get_permission($subdealerID, 'transactions')) checked="checked" @endif /></p>
                                     </td>
                                 </tr>
+
+                                <tr>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Email Templates</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p><input data-subdealer_group_id={{$subdealerID}} data-permission="email_templates" class="active" type="checkbox" data-init-plugin="switchery" @if(get_permission($subdealerID, 'email_templates')) checked="checked" @endif /></p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Messages Templates</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p><input data-subdealer_group_id={{$subdealerID}} data-permission="messages_templates" class="active" type="checkbox" data-init-plugin="switchery" @if(get_permission($subdealerID, 'messages_templates')) checked="checked" @endif /></p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Reminder Manager</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p><input data-subdealer_group_id={{$subdealerID}} data-permission="reminder_manager" class="active" type="checkbox" data-init-plugin="switchery" @if(get_permission($subdealerID, 'reminder_manager')) checked="checked" @endif /></p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>News Feed</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p><input data-subdealer_group_id={{$subdealerID}} data-permission="news_feed" class="active" type="checkbox" data-init-plugin="switchery" @if(get_permission($subdealerID, 'news_feed')) checked="checked" @endif /></p>
+                                    </td>
+                                </tr>
                                 
                             </tbody>
                         </table>

@@ -56,9 +56,7 @@
           </a>
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
         </li>
-
         
-
         @if(Auth::user()->is_admin() || Auth::user()->is_head())
        
         <li class="m-t-30 ">

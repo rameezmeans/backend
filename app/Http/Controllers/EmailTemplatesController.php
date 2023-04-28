@@ -46,7 +46,7 @@ class EmailTemplatesController extends Controller
     public function update(Request $request) {
 
         $template = EmailTemplate::findOrFail($request->id);
-        $template->name = $request->name;
+        // $template->name = $request->name;
         $template->html = $request->html;
         $template->save();
 
