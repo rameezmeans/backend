@@ -59,7 +59,7 @@ class VehiclesController extends Controller
         $comment->ecu = $request->ecu;
         $comment->generation = $request->generation;
         $comment->model = $request->model;
-        $comment->option = "discarded";
+//        $comment->option = "discarded";
         $comment->service_id = $request->service_id;
         $comment->comments = $request->comments;
         $comment->comment_type = $request->comment_type;
