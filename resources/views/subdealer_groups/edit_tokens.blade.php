@@ -27,7 +27,7 @@
                     
                     <div class="form-group form-group-default required ">
                       <label>Alientech Key</label>
-                      <input value="{{$alienTechKey->value}}"  name="alientech_access_token" type="text" class="form-control" required>
+                      <input value="@if($alienTechKey){{$alienTechKey->value}}@endif"  name="alientech_access_token" type="text" class="form-control" required>
                     </div>
                     @error('name')
                       <span class="text-danger" role="alert">
