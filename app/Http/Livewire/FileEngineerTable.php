@@ -42,7 +42,7 @@ class FileEngineerTable extends LivewireDatatable
             })
             ->label('Vehicle'),
 
-            Column::callback('[id]', function($id){
+            Column::callback(['id'], function($id){
                 $all = "";
                 $file = File::findOrFail($id);
 
