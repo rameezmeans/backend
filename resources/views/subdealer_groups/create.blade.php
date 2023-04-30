@@ -21,6 +21,8 @@
                     </button>
                     <button data-redirect="{{route('edit-permissions', ['id' => $subdealer->id])}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Set Permissions</span>
                     </button>
+                    <button data-redirect="{{route('edit-tokens', ['id' => $subdealer->id])}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Set Tokens</span>
+                    </button>
                   @endif
                   @if(isset($subdealer))
                   <h5>

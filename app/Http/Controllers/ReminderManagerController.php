@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ReminderManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReminderManagerController extends Controller
 {
@@ -20,6 +21,7 @@ class ReminderManagerController extends Controller
      */
     public function index()
     {
+        
         $manager = $this->getManager();
         return view('reminder_manager.index', [ 'manager' => $manager ]);
     }
@@ -33,7 +35,7 @@ class ReminderManagerController extends Controller
     }
 
     public function getManager(){
-
+        
         $reminderManagers = ReminderManager::all();
         $manager = [];
         foreach($reminderManagers as $row){

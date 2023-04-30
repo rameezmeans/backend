@@ -148,36 +148,7 @@ class FilesController extends Controller
         dd('all_closed');
         exit;
     }
-
-    public function fileCopyAndPath(){
-
-        // $files = File::all();
-
-        // foreach($files as $file){
-        
-        //     $toPath = public_path('/../../portal/public/uploads/'.$file->file_attached);
-
-        //     $inPath = public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/');
-            
-        //     if (!file_exists($inPath )) {
-        //         mkdir($inPath , 0777, true);
-        //     }
-
-        //     $flag = copy( $toPath, $inPath.$file->file_attached);
-
-        //     $file->file_path = '/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/';
-        //     $file->save();
-
-        //     $engineerFiles = RequestFile::where('file_id', $file->id)->get();
-
-        //     foreach($engineerFiles as $f){
-        //         $flag = copy( $toPath, $inPath.$f->request_file);
-        //     }
-
-            
-        // }
-    }
-
+    
     public function liveFiles(){
 
         return view('files.live_files');    

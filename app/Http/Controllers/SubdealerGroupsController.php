@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\Key;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RoleUser;
@@ -26,6 +27,106 @@ class SubdealerGroupsController extends Controller
 
         $subdealers = SubdealerGroup::all();
         return view('subdealer_groups.index', ['subdealers' => $subdealers]);
+
+    }
+
+    public function editTokens($id){
+        $alienTechKey = Key::where('subdealer_group_id', $id)
+        ->where('key', 'alientech_access_token')->first();
+
+        $sid = Key::where('subdealer_group_id', $id)
+        ->where('key', 'twilio_sid')->first();
+
+        $twilioToken = Key::where('subdealer_group_id', $id)
+        ->where('key', 'twilio_token')->first();
+
+        $twilioNumber = Key::where('subdealer_group_id', $id)
+        ->where('key', 'twilio_number')->first();
+
+
+        return view('subdealer_groups.edit_tokens', 
+        [
+            'subdealerID' => $id,
+            'alienTechKey' => $alienTechKey,
+            'sid' => $sid,
+            'twilioToken' => $twilioToken,
+            'twilioNumber' => $twilioNumber,
+        
+        ]);
+        
+    }
+
+    public function updateTokens(Request $request){
+        
+        $alienTechKey = Key::where('subdealer_group_id', $request->id)
+        ->where('key', 'alientech_access_token')->first();
+
+        if($alienTechKey){
+            
+            $alienTechKey->key = 'alientech_access_token';
+            $alienTechKey->value = $request->alientech_access_token;
+            $alienTechKey->save();
+        }
+        else{
+            $new = new Key();
+            $new->subdealer_group_id = $request->id;
+            $new->key = 'alientech_access_token';
+            $new->value =  $request->alientech_access_token;
+            $new->save();
+        }
+
+        $sid = Key::where('subdealer_group_id', $request->id)
+        ->where('key', 'twilio_sid')->first();
+
+        if($sid){
+            
+            $sid->key = 'twilio_sid';
+            $sid->value = $request->twilio_sid;
+            $sid->save();
+        }
+        else{
+            $new = new Key();
+            $new->subdealer_group_id = $request->id;
+            $new->key = 'twilio_sid';
+            $new->value =  $request->twilio_sid;
+            $new->save();
+        }
+
+        $twilioToken = Key::where('subdealer_group_id', $request->id)
+        ->where('key', 'twilio_token')->first();
+
+        if($twilioToken){
+            
+            $twilioToken->key = 'twilio_token';
+            $twilioToken->value = $request->twilio_token;
+            $twilioToken->save();
+        }
+        else{
+            $new = new Key();
+            $new->subdealer_group_id = $request->id;
+            $new->key = 'twilio_token';
+            $new->value =  $request->twilio_token;
+            $new->save();
+        }
+
+        $twilioNumber = Key::where('subdealer_group_id', $request->id)
+        ->where('key', 'twilio_number')->first();
+
+        if($twilioNumber){
+            
+            $twilioNumber->key = 'twilio_number';
+            $twilioNumber->value = $request->twilio_number;
+            $twilioNumber->save();
+        }
+        else{
+            $new = new Key();
+            $new->subdealer_group_id = $request->id;
+            $new->key = 'twilio_number';
+            $new->value =  $request->twilio_number;
+            $new->save();
+        }
+
+        return redirect()->route('edit-tokens', ['id' => $request->id])->with(['success' => 'Token updated.']);
 
     }
 
@@ -389,7 +490,11 @@ class SubdealerGroupsController extends Controller
         $customers = User::where('subdealer_group_id', $id)->where('role_id', $customerID)->get();
 
         $engineerID = Role::where('name', 'engineer')->first()->id;
-        $engineers = User::where('subdealer_group_id', $id)->where('role_id', $engineerID)->get();
+        $headID = Role::where('name', 'head')->first()->id;
+        $engineers = User::where('subdealer_group_id', $id)
+        ->where('role_id', $engineerID)
+        ->orWhere('role_id', $headID)->where('subdealer_group_id', $id)
+        ->get();
 
         $subdealerID = Role::where('name', 'subdealer')->first()->id;
         $subdealers = User::where('subdealer_group_id', $id)->where('role_id', $subdealerID)->get();
