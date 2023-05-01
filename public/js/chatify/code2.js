@@ -685,9 +685,11 @@ clientListenChannel.bind("file-uploaded", function (data) {
     $("#file-count").removeClass("hide");
     $("#file-count").html(data.count);
     $(this).uiSound({ play: "hover" });
+
     Push.create("ECU Tech customer File upload!", {
         body: "File has been uploaded.",
         timeout: 5000,
+        link: "https://backend.ecutech.gr/files",
     });
 });
 

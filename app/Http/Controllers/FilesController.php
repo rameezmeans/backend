@@ -1184,15 +1184,20 @@ class FilesController extends Controller
     public function show($id)
     {
 
-        $file = File::where('id',$id)->where('type', 'master')->orWhereNotNull('assigned_from')->where('is_credited', 1)->first();
-        // if(Auth::user()->is_admin() || Auth::user()->is_head()){
-        //     $file = File::where('id', $id)->where('is_credited', 1)->first();
-        // }
-        // else if(Auth::user()->is_engineer()){
-        //     $file = File::where('id',$id)->where('is_credited', 1)->first();
-        //     // $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
-        // }
+        $file = File::where('id',$id)->where(function($q){
 
+            $q->where('type', 'master');
+            
+
+        })->where('is_credited', 1)
+        ->orWhere(function($q){
+            
+            $q->where('type', 'subdealer');
+            $q->whereNotNull('assigned_from');
+            
+        })->where('id',$id)
+        ->where('is_credited', 1)->first();
+        
         if(!$file){
             abort(404);
         }
@@ -1201,7 +1206,7 @@ class FilesController extends Controller
             $file->checked_by = 'seen';
             $file->save();
         }
-
+        
         $vehicle = Vehicle::where('Make', $file->brand)
         ->where('Model', $file->model)
         ->where('Generation', $file->version)
