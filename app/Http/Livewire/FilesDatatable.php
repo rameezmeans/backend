@@ -30,7 +30,8 @@ class FilesDatatable extends LivewireDatatable
             ->orderBy('ss', 'asc')
             ->orderBy('s', 'asc')
             ->where('is_credited', 1)
-            ->whereNull('subdealer_group_id');
+            
+            ->where('type', 'master')->orWhereNotNull('assigned_from');
             
         // }
         // else if(Auth::user()->is_engineer()){
