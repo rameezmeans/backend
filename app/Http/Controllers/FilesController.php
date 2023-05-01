@@ -1184,7 +1184,7 @@ class FilesController extends Controller
     public function show($id)
     {
 
-        $file = File::where('id',$id)->orWhereNotNull('assigned_from')->where('type', 'master')->where('is_credited', 1)->first();
+        $file = File::where('id',$id)->where('type', 'master')->orWhereNotNull('assigned_from')->where('is_credited', 1)->first();
         // if(Auth::user()->is_admin() || Auth::user()->is_head()){
         //     $file = File::where('id', $id)->where('is_credited', 1)->first();
         // }

@@ -320,7 +320,8 @@ if(!function_exists('code_to_country')){
 if(!function_exists('count_of_files')){
 
     function count_of_files(){
-        return File::where('checked_by', 'customer')->orWhereNotNull('assigned_from')->where('type', 'master')->where('is_credited', 1)->count();
+        $count =  File::where('checked_by', 'customer')->where('type', 'master')->orWhereNotNull('assigned_from')->where('is_credited', 1)->count();
+        return $count;
     }
 }
 
