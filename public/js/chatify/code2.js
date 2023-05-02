@@ -698,6 +698,7 @@ clientListenChannel.bind("file-shared", function (data) {
     console.log("file shared");
     $("#file-count").removeClass("hide");
     $("#file-count").html(data.count);
+    console.log("count" + data.count);
     $(this).uiSound({ play: "hover" });
 
     Push.create("ECU Tech customer File Shared!", {
