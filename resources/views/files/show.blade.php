@@ -284,11 +284,11 @@
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('edit-file', $file->id)}}"><span class="bold">Edit File</span></a>
                             
-                              <form method="POST" action="{{route('delete-file')}}">
+                              {{-- <form method="POST" action="{{route('delete-file')}}">
                                 @csrf
-                                <input type="hidden" value="{{$file->id}}" name="id">
-                                <button type="submit" class="btn btn-danger btn-cons m-b-10"><span class="bold">Delete File</span></button>
-                              </form>
+                                <input type="hidden" value="{{$file->id}}" name="id"> --}}
+                                <button type="button" class="btn btn-danger btn-delete btn-cons m-b-10" data-file_id={{$file->id}}><span class="bold">Delete File</span></button>
+                              {{-- </form> --}}
                           </div>
                         @endif
                         
@@ -955,6 +955,62 @@
           )
         }
       });
+
+    });
+
+    $(document).on('click', '.btn-delete', function(e){
+      e.preventDefault();
+
+      let file_id = $(this).data('file_id');
+      
+  const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+  })
+
+    swalWithBootstrapButtons.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes, delete it!',
+  cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+      console.log(file_id);
+      $.ajax({
+                url: "/delete_file",
+                type: "POST",
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    'id': file_id
+                },
+                success: function(d) {
+                  swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your File has been deleted.',
+                    'success'
+                  );
+
+                  window.location.href = '/files';  
+                }
+            });
+
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Uploaded file is safe :)',
+          'error'
+        )
+      }
+    });
 
     });
 

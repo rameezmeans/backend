@@ -694,6 +694,20 @@ clientListenChannel.bind("file-uploaded", function (data) {
 });
 
 // listen on message delete event
+clientListenChannel.bind("file-shared", function (data) {
+    console.log("file shared");
+    $("#file-count").removeClass("hide");
+    $("#file-count").html(data.count);
+    $(this).uiSound({ play: "hover" });
+
+    Push.create("ECU Tech customer File Shared!", {
+        body: "File has been shared.",
+        timeout: 5000,
+        link: "https://backend.ecutech.gr/files",
+    });
+});
+
+// listen on message delete event
 clientListenChannel.bind("client-messageDelete", function (data) {
     $("body").find(`.message-card[data-id=${data.id}]`).remove();
 });

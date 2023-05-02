@@ -65,6 +65,7 @@ class FilesController extends Controller
     }
 
     public function delete(Request $request){
+        
         $file = File::findOrFail($request->id);
 
         FileService::where('file_id', $file->id)->delete();
@@ -79,7 +80,7 @@ class FilesController extends Controller
         
         $file->delete();
 
-        return redirect()->route('files')->with(['success' => 'File deleted.']);
+        return response()->json( 'deleted' );
 
     }
 

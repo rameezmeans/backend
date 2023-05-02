@@ -592,7 +592,10 @@ if(!function_exists('get_head')){
 
     function get_head(){
         $head = Role::where('name', 'head')->first();
-        return User::where('role_id', $head->id)->first();
+        
+        return User::where('role_id', $head->id)
+        ->whereNull('subdealer_group_id')
+        ->first();
     }
 }
 
