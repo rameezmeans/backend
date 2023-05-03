@@ -94,6 +94,10 @@
           <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
           <ul class="sub-menu">
             <li class="m-t-30 ">
+              <a href="{{ route('packages') }}">Packages</a>
+              <span class="icon-thumbnail">Pa</span>
+            </li>
+            <li class="m-t-30 ">
               <a href="{{ route('subdealer-groups') }}">Subdealer Groups</a>
               <span class="icon-thumbnail">Sg</span>
             </li>

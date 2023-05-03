@@ -5,6 +5,7 @@ use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\SubdealerGroupsController;
 use App\Models\Comment;
 use App\Models\File;
@@ -490,3 +491,12 @@ Route::post('change_permission', [SubdealerGroupsController::class, 'changePermi
 Route::get('create_subdealer_egnineer/{id}', [SubdealerGroupsController::class, 'createEngineer'])->name('create-subdealer-engineer');
 Route::get('create_subdealer_subdealer/{id}', [SubdealerGroupsController::class, 'createSubdealer'])->name('create-subdealer');
 Route::post('update_tokens', [SubdealerGroupsController::class, 'updateTokens'])->name('update-tokens');
+
+Route::get('packages', [PackageController::class, 'index'])->name('packages');
+Route::get('edit_package/{id}', [PackageController::class, 'edit'])->name('edit-package');
+Route::get('create_package', [PackageController::class, 'create'])->name('create-package');
+Route::post('store_package', [PackageController::class, 'store'])->name('store-package');
+Route::post('update_package', [PackageController::class, 'update'])->name('update-package');
+Route::post('delete_package', [PackageController::class, 'delete'])->name('delete-package');
+Route::post('change_status_package', [PackageController::class, 'changeStatus'])->name('change-status-package');
+
