@@ -7,6 +7,8 @@ use App\Models\Key;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RoleUser;
+use App\Models\Service;
+use App\Models\ServiceSubdealerGroup;
 use App\Models\Subdealer;
 use App\Models\SubdealerGroup;
 use App\Models\User;
@@ -24,10 +26,40 @@ class SubdealerGroupsController extends Controller
         $this->middleware('auth');
     }
 
+    public function addSubdealerGroupPrice(Request $request){
+        
+        dd($request->all());
+    }
+
+    public function getCreditsServiceGroup(Request $request){
+        $record = ServiceSubdealerGroup::where('service_id', $request->service_id)
+        ->where('subdealer_group_id', $request->subdealer_group_id)
+        ->first();
+
+        if($record)
+            return $record->credits;
+        else
+            return 0;
+    }
+
+    public function setPrice($id){
+
+        $subdealerGroups = SubdealerGroup::all();
+        $service = Service::findOrFail($id);
+        
+        
+        return view('subdealers.set_group_price', [
+
+            'subdealerGroups' => $subdealerGroups, 
+            'service' => $service
+        ]);
+
+    }
+
     public function groups(){
 
-        $subdealers = Subdealer::all();
-        return view('subdealers.index', ['subdealers' => $subdealers]);
+        $subdealerGroups = SubdealerGroup::all();
+        return view('subdealers.groups', ['subdealerGroups' => $subdealerGroups]);
 
     }
 
@@ -136,6 +168,12 @@ class SubdealerGroupsController extends Controller
 
         return redirect()->route('edit-tokens', ['id' => $request->id])->with(['success' => 'Token updated.']);
 
+    }
+
+    public function createGroup(){
+
+        return view('subdealers.create_group');
+        
     }
 
     public function create(){
@@ -485,9 +523,15 @@ class SubdealerGroupsController extends Controller
         $subdealer->delete();
     }
 
-    public function delete(Request $request){
+    public function deleteGroup(Request $request){
 
         $subdealer = SubdealerGroup::findOrFail($request->id);
+        $subdealer->delete();
+    }
+
+    public function delete(Request $request){
+
+        $subdealer = Subdealer::findOrFail($request->id);
         $subdealer->delete();
     }
 
@@ -516,6 +560,25 @@ class SubdealerGroupsController extends Controller
         
     }
 
+    public function editGroup($id){
+        
+        $subdealerGroup = SubdealerGroup::findOrFail($id);
+        return view('subdealers.create_group', 
+        [   'subdealerGroup' => $subdealerGroup,
+        ]);
+        
+    }
+
+    public function updateGroup(Request $request){
+
+        $subdealer = SubdealerGroup::findOrFail($request->id);
+        $subdealer->name= $request->name;
+        $subdealer->save();
+
+        return redirect()->route('subdealer-groups')->with(['success' => 'Subdealer Group updated.']);
+
+    }
+
     public function update(Request $request){
 
         $subdealer = Subdealer::findOrFail($request->id);
@@ -523,6 +586,16 @@ class SubdealerGroupsController extends Controller
         $subdealer->save();
 
         return redirect()->route('subdealers-entity')->with(['success' => 'Subdealer updated.']);
+
+    }
+
+    public function addGroup(Request $request){
+
+        $subdealer = new SubdealerGroup();
+        $subdealer->name= $request->name;
+        $subdealer->save();
+
+        return redirect()->route('subdealer-groups')->with(['success' => 'Subdealer Group added.']);
 
     }
 

@@ -419,6 +419,7 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
+
                 <div class="form-group form-group-default required ">
                   <label>Customer Group</label>
                   <select class="full-width" data-init-plugin="select2" name="group_id">
@@ -433,6 +434,7 @@
                     <strong>{{ $message }}</strong>
                 </span>
               @enderror
+              
               <div class="form-group form-group-default required ">
                 <label>Frontend</label>
                 <select class="full-width" data-init-plugin="select2" name="front_end_id">

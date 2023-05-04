@@ -12,6 +12,7 @@ use App\Models\File;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\Service;
+use App\Models\ServiceSubdealerGroup;
 use App\Models\Tool;
 use App\Models\User;
 use App\Models\UserTool;
@@ -34,12 +35,22 @@ Route::get('/', function () {
 
  Route::get('/tasks', function () {
 
-    $topCountriesObj = User::join('roles_users', 'roles_users.user_id', '=', 'users.id')
-        ->where('roles_users.role_id', 4)
-        ->where('front_end_id', 1)
-        ->groupBy('country')
-        ->selectRaw('count(*) as count,country')
-        ->get();
+    $services = Service::all();
+
+    foreach($services as $s){
+        $record = new ServiceSubdealerGroup();
+        $record->service_id = $s->id;
+        $record->subdealer_group_id = 1;
+        $record->credits = $s->credits;
+        $record->save();
+    }
+
+    // $topCountriesObj = User::join('roles_users', 'roles_users.user_id', '=', 'users.id')
+    //     ->where('roles_users.role_id', 4)
+    //     ->where('front_end_id', 1)
+    //     ->groupBy('country')
+    //     ->selectRaw('count(*) as count,country')
+    //     ->get();
 
         // dd($topCountriesObj);
 
@@ -470,6 +481,15 @@ Route::post('add_subdealer_entity', [SubdealerGroupsController::class, 'add'])->
 Route::post('update_subdealer_entity', [SubdealerGroupsController::class, 'update'])->name('update-subdealer-entity');
 Route::get('edit_subdealer_entity/{id}', [SubdealerGroupsController::class, 'edit'])->name('edit-subdealer-entity');
 
+Route::get('subdealer_groups', [SubdealerGroupsController::class, 'groups'])->name('subdealer-groups');
+Route::get('create_subdealer_group', [SubdealerGroupsController::class, 'createGroup'])->name('create-subdealer-group');
+Route::post('delete_subdealer_group', [SubdealerGroupsController::class, 'deleteGroup'])->name('delete-subdealer-group');
+Route::post('add_subdealer_group', [SubdealerGroupsController::class, 'addGroup'])->name('add-subdealer-group');
+Route::post('update_subdealer_group', [SubdealerGroupsController::class, 'updateGroup'])->name('update-subdealer-group');
+Route::get('edit_subdealer_group/{id}', [SubdealerGroupsController::class, 'editGroup'])->name('edit-subdealer-group');
+
+Route::get('set_group_price/{id}', [SubdealerGroupsController::class, 'setPrice'])->name('set-group-price');
+
 Route::get('create_subdealer_customer/{id}', [SubdealerGroupsController::class, 'createCustomer'])->name('create-subdealer-customer');
 Route::post('add_subdealer_customer', [SubdealerGroupsController::class, 'addCustomer'])->name('add-subdealer-customer');
 Route::get('edit_subdealer_customer/{id}', [SubdealerGroupsController::class, 'editCustomer'])->name('edit-subdealer-customer');
@@ -490,6 +510,8 @@ Route::post('delete_subdealer', [SubdealerGroupsController::class, 'deleteUser']
 Route::get('edit_permissions/{id}', [SubdealerGroupsController::class, 'editPermissions'])->name('edit-permissions');
 Route::get('edit_tokens/{id}', [SubdealerGroupsController::class, 'editTokens'])->name('edit-tokens');
 Route::post('change_permission', [SubdealerGroupsController::class, 'changePermission'])->name('change-permission');
+Route::post('add_subdealer_group_price', [SubdealerGroupsController::class, 'addSubdealerGroupPrice'])->name('add-subdealer-group-price');
+Route::post('get_credits_from_service_group', [SubdealerGroupsController::class, 'getCreditsServiceGroup'])->name('get-credits-from-service-group');
 
 Route::get('create_subdealer_egnineer/{id}', [SubdealerGroupsController::class, 'createEngineer'])->name('create-subdealer-engineer');
 Route::get('create_subdealer_subdealer/{id}', [SubdealerGroupsController::class, 'createSubdealer'])->name('create-subdealer');
