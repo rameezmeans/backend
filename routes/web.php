@@ -35,15 +35,15 @@ Route::get('/', function () {
 
  Route::get('/tasks', function () {
 
-    $services = Service::all();
+    // $services = Service::all();
 
-    foreach($services as $s){
-        $record = new ServiceSubdealerGroup();
-        $record->service_id = $s->id;
-        $record->subdealer_group_id = 1;
-        $record->credits = $s->credits;
-        $record->save();
-    }
+    // foreach($services as $s){
+    //     $record = new ServiceSubdealerGroup();
+    //     $record->service_id = $s->id;
+    //     $record->subdealer_group_id = 1;
+    //     $record->credits = $s->credits;
+    //     $record->save();
+    // }
 
     // $topCountriesObj = User::join('roles_users', 'roles_users.user_id', '=', 'users.id')
     //     ->where('roles_users.role_id', 4)
