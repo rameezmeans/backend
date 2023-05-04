@@ -10,7 +10,7 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                  <button data-redirect="{{route('subdealer-groups')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Subdealer Groups</span>
+                  <button data-redirect="{{route('subdealers-entity')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Subdealers</span>
                   </button>
                   @if(isset($subdealer))
                     <button data-redirect="{{route('create-subdealer-customer', ['id' => $subdealer->id])}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Subdealer Customer</span>
@@ -26,11 +26,11 @@
                   @endif
                   @if(isset($subdealer))
                   <h5>
-                    Edit Subdealer Group
+                    Edit Subdealer
                   </h5>
                 @else
                   <h5>
-                    Add Subdealer Group
+                    Add Subdealer
                   </h5>
                 @endif
                 </div>
@@ -43,7 +43,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
-              <form class="" role="form" method="POST" action="@if(isset($subdealer)){{route('update-subdealer-group')}}@else{{ route('add-subdealer-group') }}@endif" enctype="multipart/form-data">
+              <form class="" role="form" method="POST" action="@if(isset($subdealer)){{route('update-subdealer-entity')}}@else{{ route('add-subdealer-entity') }}@endif" enctype="multipart/form-data">
                 @csrf
                 @if(isset($subdealer))
                   <input name="id" type="hidden" value="{{ $subdealer->id }}">
@@ -195,7 +195,7 @@
 
       $( document ).ready(function(event) {
 
-        let url = "{{route('delete-subdealer-group')}}";
+        let url = "{{route('delete-subdealer')}}";
         
         $('.btn-delete').click(function() {
           Swal.fire({

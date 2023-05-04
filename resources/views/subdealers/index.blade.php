@@ -14,7 +14,7 @@
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
-                    <button data-redirect="{{ route('create-subdealer-group') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Create Subdealer Group</span>
+                    <button data-redirect="{{ route('create-subdealer-entity') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Create Subdealer Group</span>
                     </button>
                 </div>
                 </div>
@@ -31,7 +31,7 @@
                             </thead>
                             <tbody>
                                 @foreach($subdealers as $subdealer)
-                                    <tr role="row" class="redirect-click" data-redirect="{{ route('edit-subdealer-group', [$subdealer->id]) }}">
+                                    <tr role="row" class="redirect-click" data-redirect="{{ route('edit-subdealer-entity', [$subdealer->id]) }}">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$subdealer->name}}</p>
                                         </td>

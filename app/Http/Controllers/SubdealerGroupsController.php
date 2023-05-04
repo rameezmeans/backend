@@ -7,6 +7,7 @@ use App\Models\Key;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RoleUser;
+use App\Models\Subdealer;
 use App\Models\SubdealerGroup;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,10 +24,17 @@ class SubdealerGroupsController extends Controller
         $this->middleware('auth');
     }
 
+    public function groups(){
+
+        $subdealers = Subdealer::all();
+        return view('subdealers.index', ['subdealers' => $subdealers]);
+
+    }
+
     public function index(){
 
-        $subdealers = SubdealerGroup::all();
-        return view('subdealer_groups.index', ['subdealers' => $subdealers]);
+        $subdealers = Subdealer::all();
+        return view('subdealers.index', ['subdealers' => $subdealers]);
 
     }
 
@@ -484,7 +492,7 @@ class SubdealerGroupsController extends Controller
     }
 
     public function edit($id){
-        $subdealer = SubdealerGroup::findOrFail($id);
+        $subdealer = Subdealer::findOrFail($id);
 
         $customerID = Role::where('name', 'customer')->first()->id;
         $customers = User::where('subdealer_group_id', $id)->where('role_id', $customerID)->get();
@@ -499,7 +507,7 @@ class SubdealerGroupsController extends Controller
         $subdealerID = Role::where('name', 'subdealer')->first()->id;
         $subdealers = User::where('subdealer_group_id', $id)->where('role_id', $subdealerID)->get();
 
-        return view('subdealer_groups.create', 
+        return view('subdealers.create', 
         [   'subdealer' => $subdealer, 
             'customers' => $customers,
             'engineers' => $engineers,
@@ -510,21 +518,21 @@ class SubdealerGroupsController extends Controller
 
     public function update(Request $request){
 
-        $subdealer = SubdealerGroup::findOrFail($request->id);
+        $subdealer = Subdealer::findOrFail($request->id);
         $subdealer->name= $request->name;
         $subdealer->save();
 
-        return redirect()->route('subdealer-groups')->with(['success' => 'Subdealer updated.']);
+        return redirect()->route('subdealers-entity')->with(['success' => 'Subdealer updated.']);
 
     }
 
     public function add(Request $request){
 
-        $subdealer = new SubdealerGroup();
+        $subdealer = new Subdealer();
         $subdealer->name= $request->name;
         $subdealer->save();
 
-        return redirect()->route('subdealer-groups')->with(['success' => 'Subdealer added.']);
+        return redirect()->route('subdealers-entity')->with(['success' => 'Subdealer added.']);
 
     }
 

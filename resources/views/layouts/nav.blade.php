@@ -98,6 +98,10 @@
               <span class="icon-thumbnail">Pa</span>
             </li>
             <li class="m-t-30 ">
+              <a href="{{ route('subdealers-entity') }}">Subdealers</a>
+              <span class="icon-thumbnail">Sg</span>
+            </li>
+            <li class="m-t-30 ">
               <a href="{{ route('subdealer-groups') }}">Subdealer Groups</a>
               <span class="icon-thumbnail">Sg</span>
             </li>
