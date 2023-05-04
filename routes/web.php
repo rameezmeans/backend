@@ -35,6 +35,8 @@ Route::get('/', function () {
 
  Route::get('/tasks', function () {
 
+    abort(404);
+
     // $services = Service::all();
 
     // foreach($services as $s){
