@@ -374,6 +374,21 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
+
+                <div class="form-group form-group-default required ">
+                  <label>Group ID</label>
+                  @foreach ($subdealerGroups as $group)
+                    <select class="full-width" data-init-plugin="select2" name="subdealer_own_group_id">
+                      <option @if(isset($subdealer) && $subdealer->subdealer_own_group_id == $group->id) selected @endif  value="{{$group->id}}">{{$group->name}}</option>
+                    </select>
+                  @endforeach
+                </div>
+                @error('status')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($subdealer)) Update @else Add @endif</span></button>
                   @if(isset($subdealer))

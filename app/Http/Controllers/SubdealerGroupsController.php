@@ -27,7 +27,7 @@ class SubdealerGroupsController extends Controller
     }
 
     public function addSubdealerGroupPrice(Request $request){
-        
+
         dd($request->all());
     }
 
@@ -205,26 +205,27 @@ class SubdealerGroupsController extends Controller
 
     public function createCustomer($subdealerID){
 
-        return view('subdealer_groups.create_customer', ['subdealerID' => $subdealerID]);
+        return view('subdealers.create_customer', ['subdealerID' => $subdealerID]);
         
     }
 
     public function editCustomer($id){
         $customer = User::findOrFail($id);
         $subdealerID = $customer->subdealer_group_id;
-        return view('subdealer_groups.create_customer', ['customer' => $customer, 'subdealerID' => $subdealerID]);
+        return view('subdealers.create_customer', ['customer' => $customer, 'subdealerID' => $subdealerID]);
     } 
 
     public function editEngineer($id){
         $engineer = User::findOrFail($id);
         $subdealerID = $engineer->subdealer_group_id;
-        return view('subdealer_groups.create_engineer', ['engineer' => $engineer, 'subdealerID' => $subdealerID]);
+        return view('subdealers.create_engineer', ['engineer' => $engineer, 'subdealerID' => $subdealerID]);
     } 
 
     public function editSubdealer($id){
         $subdealer = User::findOrFail($id);
         $subdealerID = $subdealer->subdealer_group_id;
-        return view('subdealer_groups.create_subdealer', ['subdealer' => $subdealer, 'subdealerID' => $subdealerID]);
+        $subdealerGroups = SubdealerGroup::all();
+        return view('subdealers.create_subdealer', ['subdealerGroups' => $subdealerGroups, 'subdealer' => $subdealer, 'subdealerID' => $subdealerID]);
     } 
 
     public function updateCustomer(Request $request){
@@ -285,7 +286,7 @@ class SubdealerGroupsController extends Controller
         
         $customer->save();
 
-        return redirect()->route('edit-subdealer-group', ['id' => $customer->subdealer_group_id])->with(['success' => 'Customer added, successfully.']);
+        return redirect()->route('edit-subdealer-entity', ['id' => $customer->subdealer_group_id])->with(['success' => 'Customer added, successfully.']);
 
     }
 
@@ -333,7 +334,7 @@ class SubdealerGroupsController extends Controller
 
         $subdealerID = $request->subdealer_id;
 
-        return redirect()->route('edit-subdealer-group', ['id' => $subdealerID])->with(['success' => 'Engineer Updated, successfully.']);
+        return redirect()->route('edit-subdealer-entity', ['id' => $subdealerID])->with(['success' => 'Engineer Updated, successfully.']);
     
     }
 
@@ -377,11 +378,12 @@ class SubdealerGroupsController extends Controller
         $subdealer->zip = $request->zip;
         $subdealer->city = $request->city;
         $subdealer->country = $request->country;
+        $subdealer->subdealer_own_group_id = $request->subdealer_own_group_id;
         $subdealer->save();
-
+        
         $subdealerID = $request->subdealer_id;
 
-        return redirect()->route('edit-subdealer-group', ['id' => $subdealerID])->with(['success' => 'Engineer Updated, successfully.']);
+        return redirect()->route('edit-subdealer-entity', ['id' => $subdealerID])->with(['success' => 'Engineer Updated, successfully.']);
     
     }
     
@@ -427,7 +429,7 @@ class SubdealerGroupsController extends Controller
         $customer->subdealer_group_id = $subdealerID;
         $customer->save();
 
-        return redirect()->route('edit-subdealer-group', ['id' => $subdealerID])->with(['success' => 'Customer added, successfully.']);
+        return redirect()->route('edit-subdealer-entity', ['id' => $subdealerID])->with(['success' => 'Customer added, successfully.']);
 
     }
 
@@ -465,7 +467,7 @@ class SubdealerGroupsController extends Controller
         $engineer->subdealer_group_id = $subdealerID;
         $engineer->save();
 
-       return redirect()->route('edit-subdealer-group', ['id' => $subdealerID])->with(['success' => 'Engineer added, successfully.']);
+       return redirect()->route('edit-subdealer-entity', ['id' => $subdealerID])->with(['success' => 'Engineer added, successfully.']);
 
     }
 
@@ -501,19 +503,21 @@ class SubdealerGroupsController extends Controller
         $engineerID = Role::where('name', 'subdealer')->first()->id;
         $subdealer->role_id = $engineerID;
         $subdealer->subdealer_group_id = $subdealerID;
+        $subdealer->subdealer_own_group_id = $request->subdealer_own_group_id;
+
         $subdealer->save();
 
-       return redirect()->route('edit-subdealer-group', ['id' => $subdealerID])->with(['success' => 'Engineer added, successfully.']);
+       return redirect()->route('edit-subdealer-entity', ['id' => $subdealerID])->with(['success' => 'Engineer added, successfully.']);
 
     }
 
     public function createEngineer($subdealerID){
-        return view('subdealer_groups.create_engineer', ['subdealerID' => $subdealerID]);
+        return view('subdealers.create_engineer', ['subdealerID' => $subdealerID]);
     }
 
     public function createSubdealer($subdealerID){
 
-        return view('subdealer_groups.create_subdealer', ['subdealerID' => $subdealerID]);
+        return view('subdealers.create_subdealer', ['subdealerID' => $subdealerID]);
         
     }
 
