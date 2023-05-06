@@ -24,7 +24,7 @@ class FilesDatatable extends LivewireDatatable
     {
         // if(Auth::user()->is_admin() || Auth::user()->is_head()){
             // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
-            $files = File::select('*')
+            $files = File::select('*', 'id as row_id')
             ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
             ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
             ->orderBy('ss', 'asc')
@@ -258,10 +258,11 @@ class FilesDatatable extends LivewireDatatable
     }
 
     public function rowClasses($row, $loop)
-    {   if($row->checked_by == 'customer'){
-            return 'bg-gray-500 hover:bg-gray-300 divide-x divide-gray-100 text-sm text-white redirect-click-file '.$row->id;
+    {  
+        if($row->checked_by == 'customer'){
+            return 'bg-gray-500 hover:bg-gray-300 divide-x divide-gray-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
         }
 
-            return 'hover:bg-gray-300 divide-x divide-gray-100 text-sm text-gray-900 ' . ($loop->even ? 'bg-gray-100' : 'bg-gray-50').' redirect-click-file '.$row->id;
+            return 'hover:bg-gray-300 divide-x divide-gray-100 text-sm text-gray-900 ' . ($loop->even ? 'bg-gray-100' : 'bg-gray-50').' '.$row->row_id.' redirect-click-file '.$row->row_id;
     }
 }
