@@ -501,6 +501,9 @@ class FilesController extends Controller
 
         $subject = "ECU Tech: Task Assigned!";
 
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getManager();
+
         if($this->manager['eng_assign_eng_email']){
 
             \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject]));
@@ -581,6 +584,9 @@ class FilesController extends Controller
         $message2 = str_replace("#status", $file->status ,$message2);
         
         $subject = "ECU Tech: File Status Changed!";
+
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getManager();
 
         if($this->manager['status_change_cus_email']){
             \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
@@ -671,7 +677,10 @@ class FilesController extends Controller
 
         // $message1 = "Hi, Status changed for a file by Customer: " .$customer->name;
         // $message2 = "Hi, Status changed for a file by Customer: " .$file->name;
-       
+
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getManager();
+
         $subject = "ECU Tech: Engineer replied to your support message!";
         if($this->manager['msg_eng_cus_email']){
             \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
@@ -849,6 +858,9 @@ class FilesController extends Controller
         $message2 = str_replace("#customer", $file->name ,$message);
         
         $subject = "ECU Tech: Engineer uploaded a file in reply.";
+
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getManager();
 
         if($this->manager['eng_file_upload_cus_email']){
             \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
@@ -1262,6 +1274,9 @@ class FilesController extends Controller
     }
 
     public function saveMoreFiles($id, $alientechFileID){
+
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getManager();
 
         $token = Key::where('key', 'alientech_access_token')->first()->value;
 
