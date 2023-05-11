@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('subdealers', function (Blueprint $table) {
-            $table->foreignId('subdealer_own_group_id')->nullable();
+            // $table->foreignId('subdealer_own_group_id')->nullable();
         });
     }
 

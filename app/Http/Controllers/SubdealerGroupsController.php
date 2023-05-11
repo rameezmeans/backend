@@ -45,9 +45,12 @@ class SubdealerGroupsController extends Controller
     public function getCreditsServiceGroup(Request $request){
 
         $group = SubdealerGroup::findOrFail($request->subdealer_own_group_id)->first();
+        
         foreach($group->subdealers as $dealer){
-            $record = ServiceSubdealerGroup::where('subdealer_group_id', $dealer->id)
+            
+            $record = ServiceSubdealerGroup::where('subdealer_group_id', $dealer->subdealer_group_id)
             ->where('service_id', $request->service_id)->first();
+            
             return $record->master_credits;
         }
     }
