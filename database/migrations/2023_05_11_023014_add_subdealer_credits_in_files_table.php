@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('services_subdealer_groups', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('subdealer_group_id');
-            $table->foreignId('service_id');
-            $table->integer('master_credits')->default(0);
-            $table->timestamps();
+        Schema::table('files', function (Blueprint $table) {
+            $table->integer('subdealer_credits')->default(0);
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('services_subdealer_groups');
+        Schema::table('files', function (Blueprint $table) {
+            //
+        });
     }
 };

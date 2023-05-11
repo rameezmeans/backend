@@ -35,7 +35,7 @@
                 
                 <div class="form-group form-group-default required ">
                     <label>Subdealer Group</label>
-                    <select class="full-width" data-init-plugin="select2" name="subdealer_group_id" id="subdealer_group_id">
+                    <select class="full-width" data-init-plugin="select2" name="subdealer_own_group_id" id="subdealer_own_group_id">
                       @foreach($subdealerGroups as $group)
                         <option value="{{$group->id}}">{{$group->name}}</option>
                       @endforeach
@@ -77,18 +77,18 @@
 
       $( document ).ready(function(event) {
 
-            let subdealer_group_id = $("#subdealer_group_id").val();
+            let subdealer_own_group_id = $("#subdealer_own_group_id").val();
             let service_id = $("#service_id").val();
 
-            get_credits_from_subdealer_group_id_and_service_id(subdealer_group_id, service_id);
+            get_credits_from_subdealer_group_id_and_service_id(subdealer_own_group_id, service_id);
 
-            function get_credits_from_subdealer_group_id_and_service_id(subdealer_group_id, service_id){
+            function get_credits_from_subdealer_group_id_and_service_id(subdealer_own_group_id, service_id){
                 $.ajax({
                         url: "/get_credits_from_service_group",
                         type: "POST",
                         data: {
                             service_id: service_id,
-                            subdealer_group_id: subdealer_group_id,
+                            subdealer_own_group_id: subdealer_own_group_id,
                         },
                         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
                         success: function(credits) {

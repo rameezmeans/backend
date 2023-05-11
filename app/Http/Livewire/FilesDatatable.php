@@ -232,8 +232,14 @@ class FilesDatatable extends LivewireDatatable
             })
             ->label('Options'),
 
-            Column::callback('credits', function($credits){
-                return '<lable class="label bg-danger text-white">'.$credits.'</lable>';
+            Column::callback(['id', 'credits'], function($id){
+                $file = File::findOrFail($id);
+                
+                if($file->assigned_from)
+                    return '<lable class="label bg-danger text-white">'.$file->subdealer_credits.'</lable>';
+                else
+                    return '<lable class="label bg-danger text-white">'.$file->credits.'</lable>';
+
             }) ->label('Credits'),
 
             DatetimeColumn::name('created_at')
