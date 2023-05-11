@@ -7,6 +7,20 @@
       <!-- START CONTAINER FLUID -->
         <div class=" container-fluid   container-fixed-lg bg-white">
 
+          @if (Session::get('success'))
+                <div class="pgn-wrapper" data-position="top" style="top: 59px;">
+                    <div class="pgn push-on-sidebar-open pgn-bar">
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                            {{ Session::get('success') }}
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @php
+              Session::forget('success')
+            @endphp
+
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
@@ -43,27 +57,74 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
-              <form class="" role="form" method="POST" action="@if(isset($subdealer)){{route('update-subdealer-entity')}}@else{{ route('add-subdealer-entity') }}@endif" enctype="multipart/form-data">
-                @csrf
-                @if(isset($subdealer))
-                  <input name="id" type="hidden" value="{{ $subdealer->id }}">
-                @endif
-                <div class="form-group form-group-default required ">
-                  <label>Name</label>
-                  <input value="@if(isset($subdealer)){{$subdealer->name}}@else{{old('name')}}@endif"  name="name" type="text" class="form-control" required>
-                </div>
-                @error('name')
-                  <span class="text-danger" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-                @enderror
-                <div class="text-center m-t-40">                    
-                  <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($subdealer)) Update @else Add @endif</span></button>
+              <div class="row">
+                <div class="col-xl-9">
+                <form class="" role="form" method="POST" action="@if(isset($subdealer)){{route('update-subdealer-entity')}}@else{{ route('add-subdealer-entity') }}@endif" enctype="multipart/form-data">
+                  @csrf
                   @if(isset($subdealer))
-                    <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$subdealer->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button>
+                    <input name="id" type="hidden" value="{{ $subdealer->id }}">
                   @endif
+                  <div class="form-group form-group-default required ">
+                    <label>Name</label>
+                    <input value="@if(isset($subdealer)){{$subdealer->name}}@else{{old('name')}}@endif"  name="name" type="text" class="form-control" required>
+                  </div>
+                  @error('name')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+                  <div class="form-group form-group-default">
+                    <label>Frontend URL</label>
+                    <input value="@if(isset($subdealer->subdealers_data)){{$subdealer->subdealers_data->frontend_url}}@else{{old('frontend_url')}}@endif"  name="frontend_url" type="text" class="form-control">
+                  </div>
+                  @error('frontend_url')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+                  <div class="form-group form-group-default">
+                    <label>Backend URL</label>
+                    <input value="@if(isset($subdealer->subdealers_data)){{$subdealer->subdealers_data->backend_url}}@else{{old('backend_url')}}@endif"  name="backend_url" type="text" class="form-control">
+                  </div>
+                  @error('backend_url')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+                  <div class="form-group form-group-default">
+                    <label>Colour Scheme</label>
+                    <input value="@if(isset($subdealer->subdealers_data)){{$subdealer->subdealers_data->colour_scheme}}@else{{old('colour_scheme')}}@endif"  name="colour_scheme" type="text" class="form-control">
+                  </div>
+                  @error('colour_scheme')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+                  <div class="form-group form-group-default">
+                    <label>Logo</label>
+                    <input name="logo" type="file" class="form-control">
+                  </div>
+                  <div class="text-center m-t-40">                    
+                    <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($subdealer)) Update @else Add @endif</span></button>
+                    @if(isset($subdealer))
+                      <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$subdealer->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button>
+                    @endif
+                  </div>
                 </div>
-              </form>
+                <div class="col-xl-3">
+                  @if(isset($subdealer->subdealers_data->logo))
+                  <div class="card social-card share  col1" >
+                    <div class="card-header ">
+                      <h5 class="text-black pull-left">Logo Preview</h5>
+                    </div>
+                    <div class="card-description">
+                        <img src="{{ url('icons').'/'.$subdealer->subdealers_data->logo }}" alt="{{$subdealer->name}}">
+                    </div>
+                  </div>
+                @endif
+                </div>
+                </form>
+              </div>
               @if(isset($subdealer))
               <h3>
                 Subdealers

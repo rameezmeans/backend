@@ -11,6 +11,7 @@ use App\Models\Service;
 use App\Models\ServiceSubdealerGroup;
 use App\Models\Subdealer;
 use App\Models\SubdealerGroup;
+use App\Models\SubdealersData;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -96,7 +97,7 @@ class SubdealerGroupsController extends Controller
         ->where('key', 'twilio_number')->first();
 
 
-        return view('subdealer_groups.edit_tokens', 
+        return view('subdealers.edit_tokens', 
         [
             'subdealerID' => $id,
             'alienTechKey' => $alienTechKey,
@@ -211,7 +212,7 @@ class SubdealerGroupsController extends Controller
     }
 
     public function editPermissions($id){
-        return view('subdealer_groups.edit_permission', ['subdealerID' => $id]);
+        return view('subdealers.edit_permission', ['subdealerID' => $id]);
         
     }
 
@@ -528,8 +529,8 @@ class SubdealerGroupsController extends Controller
     }
 
     public function createSubdealer($subdealerID){
-
-        return view('subdealers.create_subdealer', ['subdealerID' => $subdealerID]);
+        $subdealerGroups = SubdealerGroup::all();
+        return view('subdealers.create_subdealer', ['subdealerID' => $subdealerID, 'subdealerGroups' => $subdealerGroups]);
         
     }
 
@@ -601,7 +602,43 @@ class SubdealerGroupsController extends Controller
         $subdealer->name= $request->name;
         $subdealer->save();
 
-        return redirect()->route('subdealers-entity')->with(['success' => 'Subdealer updated.']);
+        if(!$subdealer->subdealers_data){
+
+            $subdealerData = new SubdealersData();
+            $subdealerData->frontend_url = $request->frontend_url;
+            $subdealerData->backend_url = $request->backend_url;
+            $subdealerData->colour_scheme = $request->colour_scheme;
+            $subdealerData->subdealer_id = $subdealer->id;
+
+            if($request->file('logo')){
+                $file = $request->file('logo');
+                $fileName = $file->getClientOriginalName();
+                $file->move(public_path('icons'),$fileName);
+                $subdealerData->logo = $fileName;
+            }
+
+            $subdealerData->save();
+
+        }
+        else{
+
+            $subdealerData = SubdealersData::findOrFail($subdealer->subdealers_data->id);
+            $subdealerData->frontend_url = $request->frontend_url;
+            $subdealerData->backend_url = $request->backend_url;
+            $subdealerData->colour_scheme = $request->colour_scheme;
+            $subdealerData->subdealer_id = $subdealer->id;
+
+            if($request->file('logo')){
+                $file = $request->file('logo');
+                $fileName = $file->getClientOriginalName();
+                $file->move(public_path('icons'),$fileName);
+                $subdealerData->logo = $fileName;
+            }
+
+            $subdealerData->save();
+        }
+        
+        return redirect()->back()->with(['success' => 'Subdealer updated.']);
 
     }
 
