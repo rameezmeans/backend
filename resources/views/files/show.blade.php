@@ -410,7 +410,12 @@
                       <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left">Credits Paid</p>
                         <div class="pull-right">
-                          <span class="label label-danger">{{$file->credits}}<span>
+                         
+                          @if($file->assigned_from)
+                            <span class="label label-danger">{{$file->subdealer_credits}}<span>
+                          @else
+                            <span class="label label-danger">{{$file->credits}}<span>
+                          @endif
                         </div>
                         <div class="clearfix"></div>
                       </div>
