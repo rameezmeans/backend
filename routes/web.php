@@ -527,3 +527,5 @@ Route::post('update_package', [PackageController::class, 'update'])->name('updat
 Route::post('delete_package', [PackageController::class, 'delete'])->name('delete-package');
 Route::post('change_status_package', [PackageController::class, 'changeStatus'])->name('change-status-package');
 
+
+
