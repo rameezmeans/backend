@@ -534,7 +534,7 @@ class FilesController extends Controller
         $file->save();
 
         $customer = User::findOrFail($file->user_id);
-        $admin = User::findOrFail(RoleUser::where('role_id', 1)->first()->user_id);
+        $admin = get_admin();
     
         // $template = EmailTemplate::where('name', 'Status Change')->first();
         $template = EmailTemplate::findOrFail(8);
