@@ -526,6 +526,3 @@ Route::post('store_package', [PackageController::class, 'store'])->name('store-p
 Route::post('update_package', [PackageController::class, 'update'])->name('update-package');
 Route::post('delete_package', [PackageController::class, 'delete'])->name('delete-package');
 Route::post('change_status_package', [PackageController::class, 'changeStatus'])->name('change-status-package');
-
-
-
