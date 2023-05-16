@@ -30,8 +30,12 @@ class FilesDatatable extends LivewireDatatable
             ->orderBy('ss', 'asc')
             ->orderBy('s', 'asc')
             ->where('is_credited', 1)
+            ->where(function ($query) {
+                $query->where('type', '=', 'master')
+                      ->orWhereNotNull('assigned_from');
+            });
             
-            ->where('type', 'master')->orWhereNotNull('assigned_from');
+            // ->where('type', 'master')->orWhereNotNull('assigned_from');
             
         // }
         // else if(Auth::user()->is_engineer()){
