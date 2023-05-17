@@ -62,6 +62,13 @@
             <a href="#" data-toggle="tab" data-target="#slide4"><span>Logs</span></a>
           </li>
           
+          @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id)
+            <li class="nav-item">
+              <a href="#" data-toggle="tab" data-target="#slide5"><span>Upload Slave Decrypted File</span></a>
+            </li>
+          @endif
+
+
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
@@ -82,11 +89,16 @@
                               <a href="{{ route('download', [$file->id, $file->file_attached]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                               </a>
 
-                            @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
+                            @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id || $file->tool_id != $kess3Label->id)
                               @if($file->decoded_files)
                                 @foreach($file->decoded_files as $decodedFile)
-                                  <a href="{{ route('download', [$file->id, $decodedFile->name.'.'.$decodedFile->extension]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$decodedFile->extension}})</span>
-                                  </a>
+                                  @if( $decodedFile->extension && $decodedFile->extension != "")
+                                    <a href="{{ route('download', [$file->id, $decodedFile->name.'.'.$decodedFile->extension]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$decodedFile->extension}})</span>
+                                    </a>
+                                  @else
+                                    <a href="{{ route('download', [$file->id, $decodedFile->name]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File</span>
+                                    </a>
+                                  @endif
                                 @endforeach
                               @endif
                             @endif
@@ -842,6 +854,32 @@
 
               </div>
             </div>
+           
+            @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id)
+              <div class="tab-pane slide-left" id="slide5">
+                <div class="card card-default">
+                  <div class="card-header ">
+                    <div class="card-title">
+                    
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h5>
+                      Upload Decrypted File
+                    </h5>
+                    <form method="POST" action="{{route('upload-decrypted-file')}}" enctype="multipart/form-data" class="" role="form">
+                      @csrf
+                      <input type="hidden" name="file_id" value="{{$file->id}}">
+                      <div class="form-group form-group-default required ">
+                        <label>Decrypted File</label>
+                        <input name="decrypted_file" type="file" class="form-control" required="">
+                      </div>
+                      <button class="btn btn-success">Upload</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            @endif
         </div>
       </div>
     </div>

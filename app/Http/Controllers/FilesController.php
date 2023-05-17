@@ -64,6 +64,31 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
 
+    public function uploadDecryptedFile(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+        
+        if($request->file('decrypted_file')){
+
+            $attachment = $request->file('decrypted_file');
+            $fileName = $attachment->getClientOriginalName();
+            $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$fileName);
+            
+        }
+
+        $processFile = new ProcessedFile();
+        $processFile->file_id = $file->id;
+        $processFile->type = 'decoded';
+        $processFile->name = $fileName;
+        $processFile->save();
+
+        $file->checking_status = 'unchecked';
+        $file->save();
+
+        return redirect()->back()->with(['success' => 'Decryption file, successfully.']);
+
+    }
+
     public function delete(Request $request){
         
         $file = File::findOrFail($request->id);
