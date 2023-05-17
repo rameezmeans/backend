@@ -1089,7 +1089,19 @@
 
 <script>
 
-let engineerFileDrop= new Dropzone(".encoded-dropzone", {});
+let engineerFileDrop= new Dropzone(".encoded-dropzone", {
+  accept: function(file, done) {
+            console.log(file);
+            if (file.type == "application/zip" || file.type == "application/x-rar") {
+                console.log('failed');
+                
+            }
+            else{
+                done();
+            }
+            
+        }
+});
 
     engineerFileDrop.on("success", function(file) {
 
