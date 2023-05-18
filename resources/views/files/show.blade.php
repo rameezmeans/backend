@@ -61,11 +61,13 @@
           <li class="nav-item">
             <a href="#" data-toggle="tab" data-target="#slide4"><span>Logs</span></a>
           </li>
-          
-          @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id)
-            <li class="nav-item">
-              <a href="#" data-toggle="tab" data-target="#slide5"><span>Upload Slave Decrypted File</span></a>
-            </li>
+
+          @if($file->decoded_files->isEmpty())
+            @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id)
+              <li class="nav-item">
+                <a href="#" data-toggle="tab" data-target="#slide5"><span>Upload Slave Decrypted File</span></a>
+              </li>
+            @endif
           @endif
 
 
@@ -90,7 +92,7 @@
                               </a>
 
                             @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id || $file->tool_id != $kess3Label->id)
-                              @if($file->decoded_files)
+                              @if(!$file->decoded_files->isEmpty())
                                 @foreach($file->decoded_files as $decodedFile)
                                   @if( $decodedFile->extension && $decodedFile->extension != "")
                                     <a href="{{ route('download', [$file->id, $decodedFile->name.'.'.$decodedFile->extension]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$decodedFile->extension}})</span>
@@ -867,7 +869,7 @@
                     <h5>
                       Upload Decrypted File
                     </h5>
-                    <form method="POST" action="{{route('upload-decrypted-file')}}" enctype="multipart/form-data" class="" role="form">
+                    <form method="POST" action="{{route('search')}}" enctype="multipart/form-data" class="" role="form">
                       @csrf
                       <input type="hidden" name="file_id" value="{{$file->id}}">
                       <div class="form-group form-group-default required ">
@@ -1132,7 +1134,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
             console.log(file);
             if (file.type == "application/zip" || file.type == "application/x-rar") {
                 console.log('failed');
-                
+                window.alert("Can not upload zip.");                
             }
             else{
                 done();

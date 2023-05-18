@@ -64,13 +64,31 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
 
-    public function uploadDecryptedFile(Request $request){
+    public function changeCheckingStatus(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+
+        if($file->checking_status == 'unchecked'){
+            $file->checking_status = 'fail';
+            $file->save();
+            return  response()->json( ['msg' => 'File was not found.', 'fail' => 1, 'file_id' => $file->id] );
+        }
+        if($file->checking_status == 'completed'){
+            return response()->json( ['msg' => 'File found.', 'fail' => 2, 'file_id' => $file->id] );
+        }
+        return response()->json( ['msg' => 'File Status does not change.', 'fail' => 0, 'file_id' => $file->id] );
+    }
+
+    public function search(Request $request){
 
         $file = File::findOrFail($request->file_id);
         
         if($request->file('decrypted_file')){
 
             $attachment = $request->file('decrypted_file');
+
+            
+
             $fileName = $attachment->getClientOriginalName();
             $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$fileName);
             
@@ -79,16 +97,23 @@ class FilesController extends Controller
         $processFile = new ProcessedFile();
         $processFile->file_id = $file->id;
         $processFile->type = 'decoded';
-        $processFile->name = $fileName;
+        $processFile->name = explode(".", $fileName)[0];
+
+        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+
+        if($ext != ""){
+            $processFile->extension = $ext;
+        }
+
         $processFile->save();
 
         $file->checking_status = 'unchecked';
         $file->save();
 
-        return redirect()->back()->with(['success' => 'Decryption file, successfully.']);
+        return view('files.search', ['file' => $file]);
 
     }
-
+    
     public function delete(Request $request){
         
         $file = File::findOrFail($request->id);
