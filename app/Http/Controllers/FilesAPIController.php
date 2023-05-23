@@ -114,14 +114,14 @@ class FilesAPIController extends Controller
 
                 $path = public_path('/../../portal/public'.$file->file_path.$request->tuned_file);
 
-                if($file->alientech_file){ // if slot id is assigned
-                    $slotID = $file->alientech_file->slot_id;
-                    $encodingType = $this->getEncodingType($file);
-                    (new AlientechController)->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType );
-                }
-
                 if($file->custom_options == NULL){
-                
+
+                    if($file->alientech_file){ // if slot id is assigned
+                        $slotID = $file->alientech_file->slot_id;
+                        $encodingType = $this->getEncodingType($file);
+                        (new AlientechController)->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType );
+                    }
+                    
                     $engineerFile = new RequestFile();
                     $engineerFile->request_file = $request->tuned_file;
                     $engineerFile->file_type = 'engineer_file';
