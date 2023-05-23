@@ -83,12 +83,19 @@ class FilesController extends Controller
 
         $file = File::findOrFail($request->file_id);
         
+        if($request->download_directly == 'download' && $request->custom_options ){
+            
+            $file->custom_options = implode(',', $request->custom_options);
+            $file->save();
+        }
+        else{
+            $file->custom_options = 0;
+            $file->save();
+        }
+        
         if($request->file('decrypted_file')){
 
             $attachment = $request->file('decrypted_file');
-
-            
-
             $fileName = $attachment->getClientOriginalName();
             $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$fileName);
             

@@ -23,6 +23,7 @@
                 <div class="card-body text-center">
                     <img class="image-responsive-height demo-mw-50 loading" src="assets/img/demo/progress.svg" alt="Progress">
                     <h5 class="msg hide"></h5>
+                    <a href="" class="btn btn-success download-btn hide">Download</a>
                 </div>
             </div>
           </div>
@@ -56,6 +57,14 @@
                 $('.msg').html('File Found. Ready for donwload and customer is notified.');
             }
         }
+        if(data.status == 'download'){
+                $('.loading').addClass('hide');
+                $('.msg').removeClass('hide');
+                $(".download-btn").attr("href", data.download_link);
+                $('.download-btn').removeClass('hide');
+                $('.msg').html('File Found and can be donwloaded.');
+        }
+
         else{
             if(file_id == page_file_id){
                 $('.loading').addClass('hide');
@@ -80,13 +89,13 @@
                         success: function(d) {
                             console.log(d);
 
-                            if(d.fail == 1 && d.file_id == file_id){
+                            if(d.fail == 1 && d.file_id == page_file_id){
                                 $('.loading').addClass('hide');
                                 $('.msg').removeClass('hide');
                                 $('.msg').html(d.msg);
                             }
 
-                            if(d.fail == 0 && d.file_id == file_id){
+                            if(d.fail == 0 && d.file_id == page_file_id){
                                 $('.loading').addClass('hide');
                                 $('.msg').removeClass('hide');
                                 $('.msg').html(d.msg);
@@ -94,8 +103,8 @@
                         }
                     });
             
-        }, 90000);
-        // }, 3000);
+        // }, 90000);
+        }, 50000);
 
     });
 

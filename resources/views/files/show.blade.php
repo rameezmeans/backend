@@ -634,28 +634,6 @@
                         <!-- BEGIN From Them Message  !-->
                         @foreach($messages as $message)
                          
-                          {{-- @if(isset($message['request_file'])) --}}
-                            {{-- @if($message['engineer'] == 0)
-
-                                <div class="chat-bubble from-them bg-success">
-                              
-                                  File Type: {{ ucfirst($message['file_type']) }}<br>
-                                  @if(isset($message['ecu_file_select']))
-                                    ECU: {{ str_replace("_"," ",ucfirst($message['ecu_file_select']))}}<br>
-                                  @endif
-                                  @if(isset($message['gearbox_file_select']))
-                                    Gearbox: {{ str_replace("_"," ",ucfirst($message['gearbox_file_select']))}}<br>
-                                  @endif
-                                  File Type: {{ ucfirst($message['tool_type']) }}<br>
-                                  Tools: {{ ucfirst($message['master_tools']) }}<br>
-                                  <div class="text-center  m-t-10"><a href="{{route('download', $message['request_file'])}}" class="text-danger">Download</a></div>
-                                  </div>
-                              @endif --}}
-                              
-                              {{-- <div class="message clearfix">
-                            </div>
-                            
-                          @endif --}}
                           @if(isset($message['egnineers_internal_notes']))
                             @if($message['engineer'])
                             <div class="message clearfix">
@@ -875,6 +853,28 @@
                       <div class="form-group form-group-default required ">
                         <label>Decrypted File</label>
                         <input name="decrypted_file" type="file" class="form-control" required="">
+                       
+                      </div>
+                      <div class="radio radio-success">
+                        <input class="download_directly" type="radio" checked="checked" value="direct" name="download_directly" id="direct">
+                        <label for="direct">Send Directly</label>
+                        <input class="download_directly" type="radio"  value="download" name="download_directly" id="download">
+                        <label for="download">Download with Custom Options</label>
+                      </div>
+                      <div class="options-show hide">
+                      <h5 class="m-t-20">Custome Options</h5>
+                      <div class="radio radio-success">
+                        @if(!$file->options_services->isEmpty())
+                          @foreach($file->options_services as $option)
+                          <div class="checkbox check-success">
+                            <input checked name="custom_options[]" type="checkbox" value="{{$option->service_id}}" id="{{$option->service_id}}">
+                            <label for="{{$option->service_id}}">{{\App\Models\Service::findOrFail($option->service_id)->name}}</label>
+                          </div>
+                          @endforeach
+                        @else
+                          <p>No Options.</p>
+                        @endif
+                      </div>
                       </div>
                       <button class="btn btn-success">Upload</button>
                     </form>
@@ -931,6 +931,17 @@
 @section('pagespecificscripts')
   <script type="text/javascript">
   $(document).ready(function(){
+
+    $(".download_directly").change(function(e){
+      let val = $(this).val();
+
+      if(val == 'direct'){
+        $('.options-show').addClass('hide');
+      }
+      else{
+        $('.options-show').removeClass('hide');
+      }
+    });
 
     $(document).on('click', '.fa-edit', function(e){
 

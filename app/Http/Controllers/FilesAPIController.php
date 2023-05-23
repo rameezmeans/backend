@@ -30,14 +30,28 @@ class FilesAPIController extends Controller
 
             $options = NULL;
 
-            if($file->options_services){
-                foreach($file->options_services as $o){
-                    $options .= \App\Models\Service::FindOrFail( $o->service_id )->name.',';
+            if($file->custom_options == NULL){
+
+                if($file->options_services){
+                    foreach($file->options_services as $o){
+                        $options .= \App\Models\Service::FindOrFail( $o->service_id )->name.',';
+                    }
+                    $options = rtrim($options, ",");
                 }
-                $options = rtrim($options, ",");
+                else{
+                    $options = $file->options;
+                }
             }
             else{
-                $options = $file->options;
+                if($file->custom_options !== ''){
+                    $customOptions = explode(',', $file->custom_options);
+                    foreach($customOptions as $op){
+                        if($op != 0){
+                            $options .= \App\Models\Service::FindOrFail( $op )->name.',';
+                        }
+                    }
+                    $options = rtrim($options, ",");
+                }
             }
                 
                 $temp = [];
@@ -96,7 +110,7 @@ class FilesAPIController extends Controller
                 copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
                 public_path('/../../portal/public'.$file->file_path.$request->tuned_file) );
 
-                unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
+                // unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
                 $path = public_path('/../../portal/public'.$file->file_path.$request->tuned_file);
 
@@ -105,41 +119,59 @@ class FilesAPIController extends Controller
                     $encodingType = $this->getEncodingType($file);
                     (new AlientechController)->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType );
                 }
+
+                if($file->custom_options == NULL){
                 
-                $engineerFile = new RequestFile();
-                $engineerFile->request_file = $request->tuned_file;
-                $engineerFile->file_type = 'engineer_file';
-                $engineerFile->tool_type = 'not_relevant';
-                $engineerFile->master_tools = 'not_relevant';
-                $engineerFile->file_id = $file->id;
-                $engineerFile->engineer = true;
-                $engineerFile->save();
+                    $engineerFile = new RequestFile();
+                    $engineerFile->request_file = $request->tuned_file;
+                    $engineerFile->file_type = 'engineer_file';
+                    $engineerFile->tool_type = 'not_relevant';
+                    $engineerFile->master_tools = 'not_relevant';
+                    $engineerFile->file_id = $file->id;
+                    $engineerFile->engineer = true;
+                    $engineerFile->save();
 
-                if($file->status == 'submitted'){
-                    $file->status = 'completed';
-                    $file->support_status = "closed";
-                    $file->checked_by = 'engineer';
-                    $file->save();
-                }
+                    if($file->status == 'submitted'){
+                        $file->status = 'completed';
+                        $file->support_status = "closed";
+                        $file->checked_by = 'engineer';
+                        $file->save();
+                    }
 
-                if(!$file->response_time){
+                    if(!$file->response_time){
 
-                    $file->reupload_time = Carbon::now();
-                    $file->save();
+                        $file->reupload_time = Carbon::now();
+                        $file->save();
+            
+                        $file->response_time = (new FilesController)->getResponseTimeAuto($file);
+                        $file->save();
+            
+                    }
+                    
+                    if($flag){
+
+                        Chatify::push("private-chatify-download", 'download-button', [
+                            'status' => 'completed',
+                            'file_id' => $file->id
+                        ]);
         
-                    $file->response_time = (new FilesController)->getResponseTimeAuto($file);
-                    $file->save();
-        
+                        return response()->json('status changed.');
+                    }
+
                 }
+                else{
 
-                if($flag){
+                    if($flag){
 
-                    Chatify::push("private-chatify-download", 'download-button', [
-                        'status' => 'completed',
-                        'file_id' => $file->id
-                    ]);
-    
-                    return response()->json('status changed.');
+                        Chatify::push("private-chatify-download", 'download-button', [
+                            'status' => 'download',
+                            'file_id' => $file->id,
+                            'download_link' =>  route('download', [$file->id, $request->tuned_file])
+                        ]);
+        
+                        return response()->json('status changed.');
+                    }
+
                 }
 
             }
