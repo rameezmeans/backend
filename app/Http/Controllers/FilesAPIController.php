@@ -81,12 +81,16 @@ class FilesAPIController extends Controller
         $name = "";
 
         foreach($file->decoded_files as $d){
-            if($d->extension == 'dec'){
+            if($d->extension != '')
                 $name = $d->name.'.'.$d->extension;
-            }
-            else if ($d->extension == 'mpc'){
-                $name = $d->name.'.'.$d->extension;
-            }
+            else
+                $name = $d->name;
+            // if($d->extension == 'dec'){
+            //     $name = $d->name.'.'.$d->extension;
+            // }
+            // else if ($d->extension == 'mpc'){
+            //     $name = $d->name.'.'.$d->extension;
+            // }
         }
 
         return $name;
@@ -121,7 +125,7 @@ class FilesAPIController extends Controller
                         $encodingType = $this->getEncodingType($file);
                         (new AlientechController)->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType );
                     }
-                    
+
                     $engineerFile = new RequestFile();
                     $engineerFile->request_file = $request->tuned_file;
                     $engineerFile->file_type = 'engineer_file';
