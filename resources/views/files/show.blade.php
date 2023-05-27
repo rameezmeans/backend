@@ -225,7 +225,62 @@
 
                       <div class="col-lg-6">
                         <h5 class="">Vehicle Information</h5>
-                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        @if($file->name)
+                          <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Customer Name</p>
+                            <div class="pull-right">
+                              <span class="label label-success">{{$file->name}}<span>
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        @endif
+                        @if($file->phone)
+                          <div class="b-grey b-t p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Phone</p>
+                            <div class="pull-right">
+                              <span class="label label-success">{{$file->phone}}<span>
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        @endif
+                        @if($file->email)
+                          <div class="b-grey b-t p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Email</p>
+                            <div class="pull-right">
+                              <span class="label label-success">{{$file->email}}<span>
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        @endif
+                        @if($file->license_plate)
+                          <div class=" b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">License Plate</p>
+                            <div class="pull-right">
+                              <span class="label label-success">{{$file->license_plate}}<span>
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        @endif
+                        @if($file->model_year)
+                        <div class=" b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Model Year</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{$file->model_year}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                      @endif
+                      @if($file->vin_number)
+                      <div class="b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <p class="pull-left">Vin Number</p>
+                        <div class="pull-right">
+                          <span class="label label-success">{{$file->vin_number}}<span>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    @endif
+
+                        <div class="b-t b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Brand</p>
                           <div class="pull-right">
                             <span class="label label-success">{{$file->brand}}<span>
@@ -239,15 +294,7 @@
                           </div>
                           <div class="clearfix"></div>
                         </div>
-        
-                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Vin Number</p>
-                          <div class="pull-right">
-                            <span class="label label-success">{{$file->vin_number}}<span>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-        
+                        
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Version</p>
                           <div class="pull-right">
