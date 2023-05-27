@@ -90,14 +90,15 @@ class FilesDatatable extends LivewireDatatable
             ->filterable(File::groupBy('status')->pluck('status')->toArray())
             ->label('Status')->searchable(),
 
-            Column::callback(['id'], function($id){
+            Column::callback(['stage'], function($stage){
 
-                $file = File::findOrFail($id);
+                return '<lable class="label label-success text-white">'.$stage.'</lable>';
+                // $file = File::findOrFail($id);
                 
-                if($file->stage_services){
-                    return '<img alt="{{$file->stages}}" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
-                                        <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
-                }
+                // if($file->stage_services){
+                //     return '<img alt="{{$file->stages}}" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
+                //                         <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
+                // }
             
             })
             ->filterable(Service::where('type', 'tunning')->pluck('name')->toArray())
