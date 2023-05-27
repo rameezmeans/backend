@@ -1161,6 +1161,8 @@ class FilesController extends Controller
         if($file->generation){
             $commentObj->where('generation', $file->generation);
         }
+
+        $commentObj->whereNull('subdealer_group_id');
         
         return $commentObj->get();
     }
@@ -1324,7 +1326,7 @@ class FilesController extends Controller
         else{
             $comments = null;
         }
-        // dd($file->options_services()->get() );
+        
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
 
         return view('files.show', [ 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
