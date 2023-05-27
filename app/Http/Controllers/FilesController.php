@@ -869,6 +869,9 @@ class FilesController extends Controller
             $file->checked_by = 'engineer';
             $file->save();
 
+            $file->revisions = $file->files->count();
+            $file->save();
+
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
     

@@ -44,18 +44,16 @@ Route::get('/', function () {
     //     $f->save();
     // }
 
-    // $files = File::all();
+    $files = File::all();
 
-    // foreach($files as $file){
+    foreach($files as $file){
+        
+        $file->revisions = $file->files->count();
+        $file->save();
+        
+    }
 
-    //     if($file->stage_services()->first()){
-    //         $service = Service::findOrFail($file->stage_services()->first()->service_id);
-    //         $file->stage = $service->name;
-    //         $file->save();
-    //     }
-    // }
-
-    abort(404);
+    // abort(404);
 
     // $services = Service::all();
 
