@@ -35,7 +35,17 @@ Route::get('/', function () {
 
  Route::get('/tasks', function () {
 
-    abort(404);
+    $files = File::all();
+
+    foreach($files as $file){
+        $service = Service::findOrFail($file->stage_services()->first()->service_id);
+
+        $file->stage = $service->name;
+        $file->save();
+        
+    }
+
+    // abort(404);
 
     // $services = Service::all();
 
