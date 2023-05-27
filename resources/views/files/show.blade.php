@@ -439,6 +439,16 @@
 
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Uploaded Files</h5>
+
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Counter</p>
+                          <div class="pull-right">
+                           
+                              <label class="label bg-info text-white">{{$file->files->count()}}</label>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
                             @foreach($messages as $message)
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)

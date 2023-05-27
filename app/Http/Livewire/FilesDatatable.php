@@ -64,9 +64,18 @@ class FilesDatatable extends LivewireDatatable
                 
             })->label('Vehicle'),
 
+            Column::callback(['id', 'status'], function ($id) {
+
+                $file = File::findOrFail($id);
+
+                return '<lable class="label bg-info text-white">'.$file->files->count().'</lable>';
+                
+                
+            })->label('Counter'),
+
             Column::callback('support_status', function($supportStatus){
                 if($supportStatus == 'open'){
-                    return '<lable class="label bg-danger text-white">'.$supportStatus.'</lable>';
+                    return '<label class="label bg-danger text-white">'.$supportStatus.'</label>';
                 }
                 else{
                     return '<lable class="label bg-success text-black">'.$supportStatus.'</lable>';
