@@ -44,16 +44,16 @@ Route::get('/', function () {
     //     $f->save();
     // }
 
-    $files = File::all();
+    // $files = File::all();
 
-    foreach($files as $file){
-        
-        $file->revisions = $file->files->count();
-        $file->save();
-        
-    }
+    // foreach($files as $file){
 
-    // abort(404);
+    //     $file->revisions = $file->files->count();
+    //     $file->save();
+        
+    // }
+
+    abort(404);
 
     // $services = Service::all();
 
