@@ -36,13 +36,13 @@ Route::get('/', function () {
 
  Route::get('/tasks', function () {
 
-    $feedbacks = FileFeedback::all();
+    // $feedbacks = FileFeedback::all();
 
-    foreach($feedbacks as $f){
-        $stage = File::findOrFail($f->file_id)->stage;
-        $f->stage = $stage;
-        $f->save();
-    }
+    // foreach($feedbacks as $f){
+    //     $stage = File::findOrFail($f->file_id)->stage;
+    //     $f->stage = $stage;
+    //     $f->save();
+    // }
 
     // $files = File::all();
 
@@ -55,7 +55,7 @@ Route::get('/', function () {
     //     }
     // }
 
-    // abort(404);
+    abort(404);
 
     // $services = Service::all();
 
