@@ -21,7 +21,11 @@
             @endphp
           <div class="card card-transparent m-t-40">
               <div class="card-header">
+                 
                 <a class="btn btn-success pull-right" href={{route('vehicle', $vehicle->id)}}>View Vehicle</a>
+                @if(request()->query('file'))
+                <a class="btn btn-success pull-right m-r-10" href={{route('file', request()->query('file'))}}>Go Back to File</a>
+              @endif
               </div>
             <div class="card-body">
               @if($hasECU)
