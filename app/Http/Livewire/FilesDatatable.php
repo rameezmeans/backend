@@ -104,10 +104,10 @@ class FilesDatatable extends LivewireDatatable
                 // return '<lable class="label label-success text-white">'.$stage.'</lable>';
                 $file = File::findOrFail($id);
                 
-                // if($file->stage_services){
+                if($file->stage_services){
                 return '<img alt="{{$file->stage}}" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
                                         <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
-                // }
+                }
             
             })
             ->filterable(Service::where('type', 'tunning')->pluck('name')->toArray())
