@@ -71,7 +71,7 @@ class FilesDatatable extends LivewireDatatable
                 return '<lable class="label bg-info text-white">'.$file->files->count().'</lable>';
                 
                 
-            })->label('Counter'),
+            })->label('Revisions'),
 
             Column::callback('support_status', function($supportStatus){
                 if($supportStatus == 'open'){
