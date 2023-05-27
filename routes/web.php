@@ -38,13 +38,12 @@ Route::get('/', function () {
     $files = File::all();
 
     foreach($files as $file){
+
         if($file->stage_services()->first()){
             $service = Service::findOrFail($file->stage_services()->first()->service_id);
+            $file->stage = $service->name;
+            $file->save();
         }
-
-        $file->stage = $service->name;
-        $file->save();
-
     }
 
     // abort(404);
