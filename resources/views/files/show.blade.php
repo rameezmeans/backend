@@ -280,6 +280,16 @@
                       </div>
                     @endif
 
+                    @if($file->file_type)
+                    <div class="b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                      <p class="pull-left">File Type</p>
+                      <div class="pull-right">
+                        <span class="label label-success">{{$file->file_type}}<span>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    @endif
+
                         <div class="b-t b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Brand</p>
                           <div class="pull-right">
