@@ -64,7 +64,7 @@ class FilesDatatable extends LivewireDatatable
                 
             })->label('Vehicle'),
 
-            NumberColumn::name('revisions')->label('Revisions')->sortable(),
+            NumberColumn::name('revisions')->label('Revisions')->sortable()->filterable(),
 
             Column::callback('support_status', function($supportStatus){
                 if($supportStatus == 'open'){
