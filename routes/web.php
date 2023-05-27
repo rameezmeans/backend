@@ -9,6 +9,7 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\SubdealerGroupsController;
 use App\Models\Comment;
 use App\Models\File;
+use App\Models\FileFeedback;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\Service;
@@ -35,6 +36,14 @@ Route::get('/', function () {
 
  Route::get('/tasks', function () {
 
+    $feedbacks = FileFeedback::all();
+
+    foreach($feedbacks as $f){
+        $stage = File::findOrFail($f->file_id)->stage;
+        $f->stage = $stage;
+        $f->save();
+    }
+
     // $files = File::all();
 
     // foreach($files as $file){
@@ -46,7 +55,7 @@ Route::get('/', function () {
     //     }
     // }
 
-    abort(404);
+    // abort(404);
 
     // $services = Service::all();
 
