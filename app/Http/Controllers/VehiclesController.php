@@ -39,6 +39,8 @@ class VehiclesController extends Controller
         
         $noteExists = VehiclesNote::where('ecu', $request->ecu)
         ->where('vehicle_id', $request->vehicle_id)->first();
+
+        dd($noteExists);
         
         if($noteExists){
             $note = $noteExists;
@@ -46,7 +48,7 @@ class VehiclesController extends Controller
         else{
             $note = new VehiclesNote();
         }
-        
+
         $note->ecu = $request->ecu;
         $note->vehicle_id = $request->vehicle_id;
         $note->notes = $request->notes;
