@@ -23,9 +23,11 @@
               <div class="card-header">
                  
                 <a class="btn btn-success pull-right" href={{route('vehicle', $vehicle->id)}}>View Vehicle</a>
+                
                 @if(request()->query('file'))
-                <a class="btn btn-success pull-right m-r-10" href={{route('file', request()->query('file'))}}>Go Back to File</a>
-              @endif
+                  <a class="btn btn-success pull-right m-r-10" href={{route('file', request()->query('file'))}}>Go Back to File</a>
+                @endif
+
               </div>
             <div class="card-body">
               @if($hasECU)
@@ -85,6 +87,9 @@
                                 <div class="m-t-20">
                                   <label>Engineer's Note</label>
                                   <form role="form" action="{{route('add-engineer-comment')}}" method="POST">
+                                    @if(request()->query('file'))
+                                        <input type="hidden" name="file" value="{{request()->query('file')}}">
+                                      @endif
                                     @csrf
                                     <input type="hidden" id="vehicle_id" name="vehicle_id" value="{{$vehicle->id}}">
                                     <input type="hidden" name="ecu" id="ecu" value="{{$ecu}}">
@@ -140,6 +145,11 @@
                                         @endif
                                     <form role="form" action="{{route('add-option-comments')}}" method="POST" class="m-t-10">
                                       @csrf
+
+                                      @if(request()->query('file'))
+                                        <input type="hidden" name="file" value="{{request()->query('file')}}">
+                                      @endif
+
                                       <input type="hidden" name="engine" value="{{$vehicle->Engine}}">
                                       <input type="hidden" name="make" value="{{$vehicle->Make}}">
                                       <input type="hidden" name="ecu" value="{{$ecu}}">
@@ -211,6 +221,9 @@
                                         @endif
                                     <form role="form" action="{{route('add-option-comments')}}" method="POST" class="m-t-10">
                                       @csrf
+                                      @if(request()->query('file'))
+                                        <input type="hidden" name="file" value="{{request()->query('file')}}">
+                                      @endif
                                       <input type="hidden" name="engine" value="{{$vehicle->Engine}}">
                                       <input type="hidden" name="make" value="{{$vehicle->Make}}">
                                       <input type="hidden" name="ecu" value="{{$ecu}}">

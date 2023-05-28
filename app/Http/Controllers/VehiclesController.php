@@ -37,11 +37,26 @@ class VehiclesController extends Controller
 
     public function addEngineerComment(Request $request){
         
-        $note = new VehiclesNote();
+        $noteExists = VehiclesNote::where('ecu', $request->ecu)
+        ->where('vehicle_id', $request->vehicle_id)->first();
+        
+        if($noteExists){
+            $note = $noteExists;
+        }
+        else{
+            $note = new VehiclesNote();
+        }
+        
         $note->ecu = $request->ecu;
         $note->vehicle_id = $request->vehicle_id;
         $note->notes = $request->notes;
         $note->save();
+
+        $fileID = $request->file;
+
+        if($fileID)
+            return redirect()->route('add-comments', [$request->vehicle_id, 'file' => $fileID])->with('success',  'Note added, successfully.');
+
 
         return redirect()->route('add-comments', $request->vehicle_id)->with('success',  'Note added, successfully.');
 
@@ -53,13 +68,14 @@ class VehiclesController extends Controller
 
     public function addOptionComments(Request $request){
 
+        $fileID = $request->file;
+
         $comment = new Comment();
         $comment->engine = $request->engine;
         $comment->make = $request->make;
         $comment->ecu = $request->ecu;
         $comment->generation = $request->generation;
         $comment->model = $request->model;
-//        $comment->option = "discarded";
         $comment->service_id = $request->service_id;
         $comment->comments = $request->comments;
         $comment->comment_type = $request->comment_type;
@@ -69,7 +85,11 @@ class VehiclesController extends Controller
         $texts['greek'] =  $request->greek_comments;
 
         $this->translationObj->store($comment->id, 'Comment', $texts);
-
+        
+        if($fileID){
+            return redirect()->route('add-comments', [$request->id, 'file' => $fileID])->with('success',  'Comment added, successfully.');
+        }
+        
         return redirect()->route('add-comments', $request->id)->with('success',  'Comment added, successfully.');
 
     }
@@ -111,8 +131,6 @@ class VehiclesController extends Controller
             abort('404');
         }
 
-        // dd($includedOptionsForDownload);
-        
         return view('vehicles.add_comments', 
         [
             'vehicle' => $vehicle, 
