@@ -479,6 +479,17 @@
                         <div class="clearfix"></div>
                       </div>
                       @endif
+
+                      @if($file->vmax_off_comments)
+                      <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <p class="pull-left text-danger">VMAX OFF Comments</p>
+                        <br>
+                        <div class="m-l-20">
+                          {{$file->vmax_off_comments}}
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      @endif
                      
                       <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left">Credits Paid</p>
