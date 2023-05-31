@@ -44,6 +44,15 @@
                           <strong>{{ $message }}</strong>
                       </span>
                     @enderror
+                    <div class="form-group form-group-default required ">
+                      <label>Label</label>
+                      <input value="@if(isset($service)) {{ $service->label }} @else{{old('label') }}@endif"  name="label" type="text" class="form-control" required>
+                    </div>
+                    @error('label')
+                      <span class="text-danger" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
                       <div class="form-group form-group-default required ">
                         <label>Credits</label>
                         <input value="@if(isset($service)){{$service->credits}}@else{{old('credits') }}@endif" name="credits" min="0" type="number" class="form-control" required>
