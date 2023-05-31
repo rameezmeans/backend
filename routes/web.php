@@ -36,16 +36,16 @@ Route::get('/', function () {
 
  Route::get('/tasks', function () {
 
-    // abort(404);
+    abort(404);
 
-    $services = Service::all();
+    // $services = Service::all();
 
-    foreach($services as $service){
-        $service->label = $service->name;
-        $service->save();
-    }
+    // foreach($services as $service){
+    //     $service->label = $service->name;
+    //     $service->save();
+    // }
 
-    dd('end');
+    // dd('end');
 
 
 
