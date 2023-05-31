@@ -19,8 +19,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta content="" name="description" />
     <meta content="" name="author" />
-    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/plugins/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/plugins/fontawesome/all.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/plugins/pace/pace-theme-flash.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/plugins/font-awesome/css/font-awesome.css') }}" rel="stylesheet" type="text/css" />
@@ -37,12 +37,12 @@
     <link href="{{url('assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet" type="text/css" media="screen">
     <link href="{{ url('pages/css/pages-icons.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ url('assets/plugins/dropzone/css/dropzone.css')}} " rel="stylesheet" type="text/css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url('assets/plugins/toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
     <link class="main-stylesheet" href="{{ url('pages/css/pages.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url('assets/plugins/toastr/toastify.min.css') }}">
     {{-- <link class="main-stylesheet" href="{{ url('pages/css/style.css') }}" rel="stylesheet" type="text/css" /> --}}
     {{-- @vite('resources/js/push.js', 'node_modules/push.js/bin/push.min.js') --}}
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js"></script>
+    <script type="text/javascript" src="{{ url('assets/plugins/pushjs/push.min.js') }}"></script>
     @livewireStyles
     <style>
        [x-cloak] {
@@ -64,7 +64,7 @@
    </div>
    @include('chat.chatview')
    <!-- BEGIN VENDOR JS -->
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+   <script type="text/javascript" src="{{ url('assets/plugins/toastify/toastify-js.js') }}"></script>
    <script src="{{ url('assets/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/jquery/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/modernizr.custom.js') }}" type="text/javascript"></script>
@@ -92,8 +92,8 @@
    <script src="{{url('assets/plugins/mapplic/js/mapplic.js') }}"></script>
    <script src="{{url('assets/plugins/rickshaw/rickshaw.min.js') }}"></script>
    <script src="{{url('assets/plugins/moment/moment.min.js')}}"></script>
-   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+   <script src="{{ url('assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
+   <script src="{{ url('assets/plugins/toastr/toastr.min.js') }}"></script>
    <script src="{{url('assets/plugins/jquery-metrojs/MetroJs.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/skycons/skycons.js') }}" type="text/javascript"></script>
@@ -153,11 +153,11 @@
 
    </style>
 
-  <script src='https://unpkg.com/nprogress@0.2.0/nprogress.js'></script>
+  <script src="{{ url('assets/plugins/nprogress/nprogress.js') }}""></script>
   <script src="{{ asset('js/chatify/autosize.js') }}"></script>
 
   {{-- styles --}}
-  <link rel='stylesheet' href='https://unpkg.com/nprogress@0.2.0/nprogress.css'/>
+  <link rel='stylesheet' href="{{ url('assets/plugins/nprogress/nprogress.css') }}" />
 
    <script src="https://js.pusher.com/7.0.3/pusher.min.js"></script>
    <script >
@@ -187,7 +187,7 @@
    <script src="{{url('assets/plugins/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
    <script src="{{url('assets/plugins/jquery-nestable/jquery.nestable.js')}}" type="text/javascript"></script>
    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js" type="text/javascript"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+   <script src="{{ url('assets/plugins/charts/charts.js') }}"></script>
    
    <script type="text/javascript">
       
