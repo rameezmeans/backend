@@ -66,6 +66,7 @@ class ServicesController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|max:255|min:3',
+            'label' => 'required|max:255|min:3',
             'type' => 'required',
             'credits' => 'required',
             'icon' => 'required',
@@ -76,6 +77,7 @@ class ServicesController extends Controller
 
         $created = new Service();
         $created->name = $validated['name'];
+        $created->label = $validated['label'];
         $created->type = $validated['type'];
         $created->vehicle_type = implode( ',', $validated['vehicle_type'] );
         $created->credits = $validated['credits'];
@@ -105,6 +107,7 @@ class ServicesController extends Controller
     {
         $service = Service::findOrFail($request->id);
         $service->name = $request->name;
+        $service->label = $request->label;
         $service->credits = $request->credits;
         $service->type = $request->type;
         $service->vehicle_type = implode( ',', $request->vehicle_type );

@@ -22,7 +22,7 @@ class FilesAPIController extends Controller
         foreach($files as $file){
 
             if($file->stage_services){
-                $stage = \App\Models\Service::FindOrFail( $file->stage_services->service_id )->name;
+                $stage = \App\Models\Service::FindOrFail( $file->stage_services->service_id )->label;
             }
             else{
                 $stage = $file->stages;
@@ -34,7 +34,7 @@ class FilesAPIController extends Controller
 
                 if($file->options_services){
                     foreach($file->options_services as $o){
-                        $options .= \App\Models\Service::FindOrFail( $o->service_id )->name.',';
+                        $options .= \App\Models\Service::FindOrFail( $o->service_id )->label.',';
                     }
                     $options = rtrim($options, ",");
                 }
@@ -47,7 +47,7 @@ class FilesAPIController extends Controller
                     $customOptions = explode(',', $file->custom_options);
                     foreach($customOptions as $op){
                         if($op != 0){
-                            $options .= \App\Models\Service::FindOrFail( $op )->name.',';
+                            $options .= \App\Models\Service::FindOrFail( $op )->label.',';
                         }
                     }
                     $options = rtrim($options, ",");

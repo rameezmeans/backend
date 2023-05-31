@@ -45,7 +45,7 @@
                       </span>
                     @enderror
                     <div class="form-group form-group-default required ">
-                      <label>Label</label>
+                      <label>Label (To show to LUA)</label>
                       <input value="@if(isset($service)) {{ $service->label }} @else{{old('label') }}@endif"  name="label" type="text" class="form-control" required>
                     </div>
                     @error('label')

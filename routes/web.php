@@ -36,6 +36,19 @@ Route::get('/', function () {
 
  Route::get('/tasks', function () {
 
+    // abort(404);
+
+    $services = Service::all();
+
+    foreach($services as $service){
+        $service->label = $service->name;
+        $service->save();
+    }
+
+    dd('end');
+
+
+
     // $feedbacks = FileFeedback::all();
 
     // foreach($feedbacks as $f){
@@ -53,7 +66,7 @@ Route::get('/', function () {
         
     // }
 
-    abort(404);
+   
 
     // $services = Service::all();
 
