@@ -158,6 +158,7 @@ class HomeController extends Controller
 
         $topCountriesObj = User::where('role_id', $customerRole->id)
         ->where('front_end_id', 1)
+        ->whereNotIN('id', [65,80])
         ->groupBy('country')
         ->selectRaw('count(*) as count,country')
         ->get();
