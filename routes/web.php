@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AlientechTestController;
+use App\Http\Controllers\CombinationsController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -559,3 +560,11 @@ Route::post('store_package', [PackageController::class, 'store'])->name('store-p
 Route::post('update_package', [PackageController::class, 'update'])->name('update-package');
 Route::post('delete_package', [PackageController::class, 'delete'])->name('delete-package');
 Route::post('change_status_package', [PackageController::class, 'changeStatus'])->name('change-status-package');
+
+Route::get('combinations', [CombinationsController::class, 'index'])->name('combinations');
+Route::get('edit_combination/{id}', [CombinationsController::class, 'edit'])->name('edit-combination');
+Route::get('create_combination', [CombinationsController::class, 'create'])->name('create-combination');
+Route::post('add_combination', [CombinationsController::class, 'store'])->name('add-combination');
+Route::post('update_combination', [CombinationsController::class, 'update'])->name('update-combination');
+Route::post('delete_combination', [CombinationsController::class, 'delete'])->name('delete-combination');
+
