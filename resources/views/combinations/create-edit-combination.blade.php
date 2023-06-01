@@ -61,9 +61,9 @@
                 <div class="form-group form-group-default required form-group-default-select2">
                     <label>Services</label>
                     
-                        <select id="services" @if($combination) disabled @endif name="services[]" class=" full-width" data-init-plugin="select2" multiple>
+                        <select id="services" @if(isset($combination)) disabled @endif name="services[]" class=" full-width" data-init-plugin="select2" multiple>
                             @foreach ($services as $service)
-                                <option @if(in_array($service->id, $selectedServices)) selected @endif data-credits="{{$service->credits}}" value="{{$service->id}}">{{$service->name}}</option>
+                                <option @if(isset($selectedServices)) @if(in_array($service->id, $selectedServices)) selected @endif @endif data-credits="{{$service->credits}}" value="{{$service->id}}">{{$service->name}}</option>
                             @endforeach
                         </select>
                     
