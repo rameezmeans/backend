@@ -40,35 +40,16 @@ class CreditsController extends Controller
         $html = '';
         
         if($request->group == 'all_groups'){
+            
             $users = get_customers();
         }
         else if($request->group == 'no_group'){
-            
-            $customerRole = Role::where('name', 'customer')->first();
-            $userRoles = RoleUser::where('role_id', $customerRole->id)->get();
-            
-            $users = [];
-            foreach($userRoles as $user){
-                $user = User::findOrFail($user->user_id);
-                if($user->group_id == NULL){
-                    $users []=  $user;
-                }
-            }
-            
+
+            $users = get_customers();
         }
         else{
-            
-            $customerRole = Role::where('name', 'customer')->first();
-            $userRoles = RoleUser::where('role_id', $customerRole->id)->get();
-            
-            $users = [];
-            foreach($userRoles as $user){
-                $user = User::findOrFail($user->user_id);
-                if($user->group_id){
-                    $users []=  $user;
-                }
-            }
 
+            $users = get_customers();
         }
 
         $data = [];
