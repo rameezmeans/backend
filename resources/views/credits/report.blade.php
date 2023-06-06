@@ -53,7 +53,7 @@
                 </div>
                
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
-                    <div id="NoClients">No Clients</div>
+                    <div id="NoClients" class="hide">No Clients</div>
                     <div id="progress" class="text-center">
                         <div class="progress-circle-indeterminate m-t-45" style="">
                         </div>
