@@ -40,16 +40,33 @@ class CreditsController extends Controller
         $html = '';
         
         if($request->group == 'all_groups'){
-            
             $users = get_customers();
         }
         else if($request->group == 'no_group'){
-
-            $users = get_customers();
+             
+            $userRoles = get_customers();
+            
+            $users = [];
+            foreach($userRoles as $user){
+                
+                if($user->group_id == NULL){
+                    $users []=  $user;
+                }
+            }
+            
         }
         else{
+            
+            $userRoles = get_customers();
+            
+            $users = [];
+            foreach($userRoles as $user){
+                
+                if ($user->group_id == $request->group ){
+                    $users []=  $user;
+                }
+            }
 
-            $users = get_customers();
         }
 
         $data = [];
