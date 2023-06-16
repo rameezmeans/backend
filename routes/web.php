@@ -261,6 +261,7 @@ Route::post('/search', [App\Http\Controllers\FilesController::class, 'search'])-
 Route::post('get_change_status', [App\Http\Controllers\FilesController::class, 'changeCheckingStatus'])->name('get-change-status');
 
 Route::get('/download/{id}/{file}', [App\Http\Controllers\FilesController::class,'download'])->name('download');
+Route::get('/download-encrypted/{id}/{file}', [App\Http\Controllers\FilesController::class,'downloadEncrypted'])->name('download-encrypted');
 Route::get('/download_decoded/{id}/{file}', [App\Http\Controllers\FilesController::class,'downloadDecoded'])->name('download-decoded');
 Route::get('/get_access_token', [App\Http\Controllers\FilesController::class,'getAccessToken'])->name('get-access-token');
 Route::get('/decode_file', [App\Http\Controllers\FilesController::class,'decodeFile'])->name('decode-file');

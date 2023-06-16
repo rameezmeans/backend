@@ -474,6 +474,57 @@ class FilesController extends Controller
 
     
 
+    public function downloadEncrypted( $id,$fileName ) {
+
+        $file = File::findOrFail($id); 
+
+        $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
+        
+        if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id){
+
+            $notProcessedAlientechFile = AlientechFile::where('file_id', $file->id)
+            ->where('purpose', 'decoded')
+            ->where('type', 'download')
+            ->where('processed', 0)
+            ->first();
+
+            if($notProcessedAlientechFile){
+               
+                $fileNameEncoded = $this->alientechObj->downloadEncodedFile($id, $notProcessedAlientechFile, $fileName);
+                $notProcessedAlientechFile->processed = 1;
+                $notProcessedAlientechFile->save();
+                
+                $file_path = public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'.$fileNameEncoded);
+                return response()->download($file_path);
+            }
+            else{
+                $encodedFileNameToBe = $fileName.'_encoded_api';
+                $processedFile = ProcessedFile::where('name', $encodedFileNameToBe)->first();
+
+                if($processedFile){
+
+                if($processedFile->extension != ''){
+                    $finalFileName = $processedFile->name.'.'.$processedFile->extension;
+                }
+                else{
+                    $finalFileName = $processedFile->name;
+                }
+            }else{
+                $finalFileName = $fileName;
+            }
+
+                $file_path = public_path('/../../portal/public/'.$file->file_path).$finalFileName;
+                return response()->download($file_path);
+
+            }
+
+        }
+        else{
+            $file_path = public_path('/../../portal/public/'.$file->file_path).$fileName;
+            return response()->download($file_path);
+        }
+    }
+
     public function download($id,$file_name) {
         $file = File::findOrFail($id);
         $path = public_path('/../../portal/public'.$file->file_path);

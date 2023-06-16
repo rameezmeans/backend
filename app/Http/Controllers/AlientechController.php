@@ -19,7 +19,98 @@ class AlientechController extends Controller
 
         $this->token = Key::where('key', 'alientech_access_token')->first()->value;
     }
+
+    public function downloadEncodedFile($id, $notProcessedAlientechFile, $modifiedfileName) {
+        
+        $file = File::findOrFail($id);
+
+        $alientechObj = $notProcessedAlientechFile;
+        
+        $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechObj->guid;
+
+        $headers = [
+            'X-Alientech-ReCodAPI-LLC' => $this->token,
+        ];
+  
+        $response = Http::withHeaders($headers)->get($getsyncOpURL);
+        $responseBody = json_decode($response->getBody(), true);
+
+        if(!isset($responseBody['result']['name'])){
+            $this->makeLogEntry($file->id, 'error', 'line 41; file is not uploaded successfully.');
+            return $modifiedfileName;
+        }
+        else{
+
+        $var = $responseBody['result']['name'];
+
+        $fileName = substr($var, strrpos($var, '/') + 1);
+        $fileName = str_replace('#', '', $fileName);
+        $fileName = $fileName.'_'.$file->id;
+
+        $slotGuid = $responseBody['slotGUID'];
+        
+        $result = $responseBody['result'];
+        
+        if( isset($result['encodedFileURL']) ){
+            
+            $url = $result['encodedFileURL'];
+
+            $headers = [
+                'X-Alientech-ReCodAPI-LLC' => $this->token,
+            ];
     
+            $response = Http::withHeaders($headers)->get($url);
+            $responseBody = json_decode($response->getBody(), true);
+
+            // $base64_string = $responseBody['data'];
+            $base64Data = $responseBody['data'];
+            $contents   = base64_decode($base64Data);
+
+            // specify the path and filename for the downloaded file
+            $filepath = $responseBody['name'];
+            $encodedFileNameToBe = $modifiedfileName.'_encoded_api';
+            $pathAndNameArrayEncoded = $this->getFileNameEncoded($filepath, $file, $encodedFileNameToBe);
+            
+            // save the decoded string to a file
+            $flag = file_put_contents(public_path('/../../portal/public/'.$pathAndNameArrayEncoded['path']), $contents);
+
+           $this->closeOneSlot($slotGuid);
+
+            $processFile = new ProcessedFile();
+            $processFile->file_id = $file->id;
+            $processFile->type = 'encoded';
+            $processFile->name = $pathAndNameArrayEncoded['name'];
+            $processFile->extension = $pathAndNameArrayEncoded['extension'];
+            $processFile->save();
+
+            if($pathAndNameArrayEncoded['extension'] != '')
+                return $pathAndNameArrayEncoded['name'].'.'.$pathAndNameArrayEncoded['extension'];
+            else
+                return $pathAndNameArrayEncoded['name'];
+
+            }
+        }
+    }
+    
+    public function getFileNameEncoded($path, $file, $fileNameToBe){
+        
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+
+        if($extension != ''){
+            $path = $file->file_path.$fileNameToBe.'.'.$extension;
+            $name = $fileNameToBe;
+        }
+        else{
+            $path = $file->file_path.$fileNameToBe;
+            $name = $fileNameToBe;
+        }
+
+        return array(
+            'path' => $path,
+            'name' => $name,
+            'extension' => $extension
+        );
+    }
     
      /**
      * Show the form for processing a file.

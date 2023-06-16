@@ -521,7 +521,7 @@
                             @foreach($messages as $message)
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
-                            <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                                 <p class="pull-left">{{$message['request_file']}}</p>
                                 <div class="pull-right">
                                   @isset($message['type'])
@@ -534,8 +534,18 @@
                                     </a>
                                     <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a>
                                 </div>
-                                
-                                  <div class="clearfix"></div>
+
+                                <div class="clearfix"></div>
+                                  @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
+                                  <div>
+                                    <p>Please click on "Download Encrypted" Button to download and test the system. This way user will get Encrypted file or you will get the error so that you can process the file, manually.</p>
+                                  </div>
+                                  <div class="text-center">
+                                    <a href="{{ route('download-encrypted',[$message['file_id'], $message['request_file']]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download Encrypted</span>
+                                    </a>
+                                  </div>
+                                  @endif
+                                <div class="clearfix"></div>
                             </div>
         
                         @endif
