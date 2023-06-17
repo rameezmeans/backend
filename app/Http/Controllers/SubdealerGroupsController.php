@@ -83,6 +83,40 @@ class SubdealerGroupsController extends Controller
 
     }
 
+    public function editMasterTokens(){
+
+        $alienTechKey = Key::whereNull('subdealer_group_id')
+        ->where('key', 'alientech_access_token')->first();
+
+        $sid = Key::whereNull('subdealer_group_id')
+        ->where('key', 'twilio_sid')->first();
+
+        $twilioToken = Key::whereNull('subdealer_group_id')
+        ->where('key', 'twilio_token')->first();
+
+        $twilioNumber = Key::whereNull('subdealer_group_id')
+        ->where('key', 'twilio_number')->first();
+
+        $skey = Key::whereNull('subdealer_group_id')
+        ->where('key', 'stripe_key')->first();
+
+        $ssecret = Key::whereNull('subdealer_group_id')
+        ->where('key', 'stripe_secret')->first();
+
+
+        return view('subdealers.edit_master_tokens', 
+        [   
+            'alienTechKey' => $alienTechKey,
+            'sid' => $sid,
+            'twilioToken' => $twilioToken,
+            'twilioNumber' => $twilioNumber,
+            'skey' => $skey,
+            'ssecret' => $ssecret,
+        
+        ]);
+        
+    }
+
     public function editTokens($id){
         $alienTechKey = Key::where('subdealer_group_id', $id)
         ->where('key', 'alientech_access_token')->first();
@@ -107,6 +141,108 @@ class SubdealerGroupsController extends Controller
         
         ]);
         
+    }
+
+    public function updateMasterTokens(Request $request){
+        
+        $alienTechKey = Key::whereNull('subdealer_group_id')
+        ->where('key', 'alientech_access_token')->first();
+
+        if($alienTechKey){
+            
+            $alienTechKey->key = 'alientech_access_token';
+            $alienTechKey->value = $request->alientech_access_token;
+            $alienTechKey->save();
+        }
+        else{
+            $new = new Key();
+            $new->key = 'alientech_access_token';
+            $new->value =  $request->alientech_access_token;
+            $new->save();
+        }
+
+        $sid = Key::whereNull('subdealer_group_id')
+        ->where('key', 'twilio_sid')->first();
+
+        if($sid){
+            
+            $sid->key = 'twilio_sid';
+            $sid->value = $request->twilio_sid;
+            $sid->save();
+        }
+        else{
+            $new = new Key();
+            $new->key = 'twilio_sid';
+            $new->value =  $request->twilio_sid;
+            $new->save();
+        }
+
+        $twilioToken = Key::where('subdealer_group_id', $request->id)
+        ->where('key', 'twilio_token')->first();
+
+        if($twilioToken){
+            
+            $twilioToken->key = 'twilio_token';
+            $twilioToken->value = $request->twilio_token;
+            $twilioToken->save();
+        }
+        else{
+            $new = new Key();
+            $new->key = 'twilio_token';
+            $new->value =  $request->twilio_token;
+            $new->save();
+        }
+
+        $twilioNumber = Key::whereNull('subdealer_group_id')
+        ->where('key', 'twilio_number')->first();
+
+        if($twilioNumber){
+            
+            $twilioNumber->key = 'twilio_number';
+            $twilioNumber->value = $request->twilio_number;
+            $twilioNumber->save();
+        }
+        else{
+            $new = new Key();
+            $new->key = 'twilio_number';
+            $new->value =  $request->twilio_number;
+            $new->save();
+        }
+
+        $stripeKey = Key::whereNull('subdealer_group_id')
+        ->where('key', 'stripe_key')->first();
+
+        if($stripeKey){
+            
+            $stripeKey->key = 'stripe_key';
+            $stripeKey->value = $request->stripe_key;
+            $stripeKey->save();
+        }
+        else{
+            $new = new Key();
+            $new->key = 'stripe_key';
+            $new->value =  $request->stripe_key;
+            $new->save();
+        }
+
+        $stripeSecret = Key::whereNull('subdealer_group_id')
+        ->where('key', 'stripe_secret')->first();
+
+        if($stripeSecret){
+            
+            $stripeKey->key = 'stripe_secret';
+            $stripeKey->value = $request->stripe_secret;
+            $stripeKey->save();
+        }
+        else{
+            $new = new Key();
+            $new->key = 'stripe_secret';
+            $new->value =  $request->stripe_secret;
+            $new->save();
+        }
+
+        return redirect()->route('edit-master-tokens')->with(['success' => 'Token updated.']);
+
     }
 
     public function updateTokens(Request $request){

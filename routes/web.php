@@ -546,6 +546,7 @@ Route::post('update_subdealer', [SubdealerGroupsController::class, 'updateSubdea
 Route::post('delete_subdealer', [SubdealerGroupsController::class, 'deleteUser'])->name('delete-subdealer');
 Route::get('edit_permissions/{id}', [SubdealerGroupsController::class, 'editPermissions'])->name('edit-permissions');
 Route::get('edit_tokens/{id}', [SubdealerGroupsController::class, 'editTokens'])->name('edit-tokens');
+Route::get('edit_tokens_master', [SubdealerGroupsController::class, 'editMasterTokens'])->name('edit-master-tokens');
 Route::post('change_permission', [SubdealerGroupsController::class, 'changePermission'])->name('change-permission');
 Route::post('add_subdealer_group_price', [SubdealerGroupsController::class, 'addSubdealerGroupPrice'])->name('add-subdealer-group-price');
 Route::post('get_credits_from_service_group', [SubdealerGroupsController::class, 'getCreditsServiceGroup'])->name('get-credits-from-service-group');
@@ -553,6 +554,7 @@ Route::post('get_credits_from_service_group', [SubdealerGroupsController::class,
 Route::get('create_subdealer_egnineer/{id}', [SubdealerGroupsController::class, 'createEngineer'])->name('create-subdealer-engineer');
 Route::get('create_subdealer_subdealer/{id}', [SubdealerGroupsController::class, 'createSubdealer'])->name('create-subdealer');
 Route::post('update_tokens', [SubdealerGroupsController::class, 'updateTokens'])->name('update-tokens');
+Route::post('update_master_tokens', [SubdealerGroupsController::class, 'updateMasterTokens'])->name('update-master-tokens');
 
 Route::get('packages', [PackageController::class, 'index'])->name('packages');
 Route::get('edit_package/{id}', [PackageController::class, 'edit'])->name('edit-package');

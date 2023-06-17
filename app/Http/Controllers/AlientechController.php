@@ -17,7 +17,7 @@ class AlientechController extends Controller
 
     public function __construct(){
 
-        $this->token = Key::where('key', 'alientech_access_token')->first()->value;
+        $this->token = Key::where('key', 'alientech_access_token')->whereNull('subdealer_group_id')->first()->value;
     }
 
     public function downloadEncodedFile($id, $notProcessedAlientechFile, $modifiedfileName) {

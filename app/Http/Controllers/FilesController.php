@@ -549,9 +549,21 @@ class FilesController extends Controller
     public function sendMessage($receiver, $message)
     {
         try {
-            $accountSid = env("TWILIO_SID");
-            $authToken = env("TWILIO_AUTH_TOKEN");
-            $twilioNumber = env("TWILIO_NUMBER"); 
+            
+            // $accountSid = env("TWILIO_SID");
+            // $authToken = env("TWILIO_AUTH_TOKEN");
+            // $twilioNumber = env("TWILIO_NUMBER"); 
+
+            $accountSid = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_sid')->first();
+
+            $authToken = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_token')->first();
+
+            $twilioNumber = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_number')->first();
+
+
             $client = new Client($accountSid, $authToken);
 
             $message = $client->messages
