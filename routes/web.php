@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\PaymentAccountsController;
 use App\Http\Controllers\SubdealerGroupsController;
 use App\Models\Comment;
 use App\Models\File;
@@ -571,3 +572,9 @@ Route::post('add_combination', [CombinationsController::class, 'store'])->name('
 Route::post('update_combination', [CombinationsController::class, 'update'])->name('update-combination');
 Route::post('delete_combination', [CombinationsController::class, 'delete'])->name('delete-combination');
 
+Route::get('payment_accounts', [PaymentAccountsController::class, 'index'])->name('payment-accounts');
+Route::get('create_payment_account', [PaymentAccountsController::class, 'create'])->name('create-payment-account');
+Route::get('edit_payment_account/{id}', [PaymentAccountsController::class, 'edit'])->name('edit-payment-account');
+Route::post('add_account', [PaymentAccountsController::class, 'store'])->name('add-account');
+Route::post('update_account', [PaymentAccountsController::class, 'update'])->name('update-account');
+Route::post('delete_payment_account', [PaymentAccountsController::class, 'destroy'])->name('delete-payment-account');

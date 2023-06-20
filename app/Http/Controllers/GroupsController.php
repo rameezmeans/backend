@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\PaymentAccount;
 use Illuminate\Http\Request;
 
 class GroupsController extends Controller
@@ -23,8 +24,16 @@ class GroupsController extends Controller
     }
 
     public function edit($id){
+
         $group = Group::findOrFail($id);
-        return view('groups.groups_create_edit', [ 'group' => $group ]);
+        $accounts = PaymentAccount::all();
+        $paymentAccount = null;
+
+        if($group->payment_account_id){
+            $paymentAccount = PaymentAccount::findOrFail($group->payment_account_id);
+        }
+        
+        return view('groups.groups_create_edit', [ 'paymentAccount' => $paymentAccount, 'group' => $group, 'accounts' => $accounts ]);
     }
 
     public function add(Request $request){
@@ -57,9 +66,10 @@ class GroupsController extends Controller
         $group->discount = $request->discount;
         $group->raise = $request->raise;
         $group->bonus_credits = $request->bonus_credits;
+        $group->payment_account_id = $request->payment_account_id;
         $group->save();
 
-        return redirect()->route('groups')->with(['success' => 'Group added, successfully.']);
+        return redirect()->route('groups')->with(['success' => 'Group updated, successfully.']);
 
     }
 
