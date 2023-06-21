@@ -615,7 +615,7 @@ if(!function_exists('get_engineers')){
 if(!function_exists('validate_VAT')){
 
     function validate_VAT($vat){
-        return VatValidator::validate($vat);
+        return VatValidator::validateExistence($vat);
     }
 }
 

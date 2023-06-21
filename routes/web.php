@@ -44,23 +44,23 @@ Route::get('/', function () {
 
  Route::get('/tasks', function () {
 
-    $customer = new Buyer([
-        'name'          => 'John Doe',
-        'custom_fields' => [
-            'email' => 'test@example.com',
-        ],
-    ]);
+    // $customer = new Buyer([
+    //     'name'          => 'John Doe',
+    //     'custom_fields' => [
+    //         'email' => 'test@example.com',
+    //     ],
+    // ]);
     
-    $item = (new InvoiceItem())->title('Service 1')->pricePerUnit(2);
+    // $item = (new InvoiceItem())->title('Service 1')->pricePerUnit(2);
 
-        $invoice = Invoice::make()
-            ->buyer($customer)
-            ->discountByPercent(10)
-            ->taxRate(15)
-            ->shipping(1.99)
-            ->addItem($item);
+    //     $invoice = Invoice::make()
+    //         ->buyer($customer)
+    //         ->discountByPercent(10)
+    //         ->taxRate(15)
+    //         ->shipping(1.99)
+    //         ->addItem($item);
 
-        return $invoice->stream();
+    //     return $invoice->stream();
 
 //     var_dump(extension_loaded('soap'));
 //     var_dump( get_cfg_var('cfg_file_path') );
