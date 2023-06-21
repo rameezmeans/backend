@@ -8,6 +8,8 @@ use App\Models\Tool;
 use App\Models\User;
 use App\Models\Vehicle;
 
+use Danielebarbaro\LaravelVatEuValidator\Facades\VatValidatorFacade as VatValidator;
+
 function fullescape($in)
 
 {
@@ -607,6 +609,13 @@ if(!function_exists('get_engineers')){
         $engineers = User::where('role_id', $engineerRole->id)->get();
         return $engineers;
 
+    }
+}
+
+if(!function_exists('validate_VAT')){
+
+    function validate_VAT($vat){
+        return VatValidator::validateExistence($vat);
     }
 }
 

@@ -21,6 +21,8 @@ use App\Models\User;
 use App\Models\UserTool;
 use Illuminate\Support\Facades\Hash;
 
+use Danielebarbaro\LaravelVatEuValidator\Facades\VatValidatorFacade as VatValidator;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +40,8 @@ Route::get('/', function () {
 
  Route::get('/tasks', function () {
 
+    // $test = VatValidator::validateExistence('EL998413602');
+    // dd($test);
     abort(404);
 
     // $services = Service::all();
