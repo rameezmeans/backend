@@ -40,10 +40,13 @@ Route::get('/', function () {
 
  Route::get('/tasks', function () {
 
+    var_dump(extension_loaded('soap'));
+    var_dump( get_cfg_var('cfg_file_path') );
+exit;
     // $test = VatValidator::validateExistence('EL998413602');
     // dd($test);
-    phpinfo();
-    abort(404);
+    // phpinfo();
+    // abort(404);
 
     // $services = Service::all();
 
