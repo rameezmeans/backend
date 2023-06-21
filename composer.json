@@ -16,6 +16,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.0",
+        "laraveldaily/laravel-invoices": "^3.0",
         "livewire/livewire": "^2.12",
         "maatwebsite/excel": "^3.1",
         "mediconesystems/livewire-datatables": "^0.10.0",
