@@ -67,7 +67,7 @@ Route::get('/', function () {
 // exit;
     // $test = VatValidator::validateExistence('EL998413602');
     // dd($test);
-    // phpinfo();
+    phpinfo();
     // abort(404);
 
     // $services = Service::all();
