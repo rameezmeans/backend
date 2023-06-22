@@ -7,6 +7,18 @@ use Illuminate\Http\Request;
 
 class PaymentAccountsController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('adminOnly');
+    }
+    
     /**
      * Display a listing of the resource.
      *
