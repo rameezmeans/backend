@@ -47,7 +47,7 @@
         
         <li class="m-t-30 ">
           <a href="{{ route('files') }}" class="detailed">
-            <span class="title">Files</span>
+            <span class="title" style="width: 80% !important;">Files</span>
             @if(Auth::user()->is_admin())
               
                 <span id="file-count" class="badge badged-warning text-black @if(count_of_files() == 0) hide @endif">{{count_of_files()}}</span>
