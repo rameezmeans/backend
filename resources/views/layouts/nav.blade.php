@@ -86,29 +86,58 @@
           </a>
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
         </li>
+
         <li class="m-t-30 ">
           <a href="javascript:;">
-            <span class="title">Settings</span>
+            <span class="title">Customers</span>
             <span class=" arrow"></span>
           </a>
           <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
           <ul class="sub-menu">
-            <li class="m-t-30 ">
-              <a href="{{ route('payment-accounts') }}">Payment Accounts</a>
-              <span class="icon-thumbnail">Pa</span>
+            <li class="">
+              <a href="{{ route('customers') }}">Customers</a>
+              <span class="icon-thumbnail">Cu</span>
             </li>
-            <li class="m-t-30 ">
-              <a href="{{ route('edit-master-tokens') }}">Master Tokens</a>
-              <span class="icon-thumbnail">Mt</span>
+            <li class="">
+              <a href="{{ route('groups') }}">Customer Groups</a>
+              <span class="icon-thumbnail">Gr</span>
+            </li>
+          </ul>
+        </li>
+
+        <li class="m-t-30 ">
+          <a href="javascript:;">
+            <span class="title">Vehicles & Services</span>
+            <span class=" arrow"></span>
+          </a>
+          <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
+          <ul class="sub-menu">
+            <li class="">
+              <a href="{{ route('vehicles') }}">Vehicles</a>
+              <span class="icon-thumbnail">Ve</span>
+            </li>
+            <li class="">
+              <a href="{{ route('services') }}">Services</a>
+              <span class="icon-thumbnail">Se</span>
+            </li>
+            <li class="">
+              <a href="{{ route('sorting-services') }}">Sorting Services</a>
+              <span class="icon-thumbnail">Sr</span>
             </li>
             <li class="m-t-30 ">
               <a href="{{ route('combinations') }}">Combinations</a>
               <span class="icon-thumbnail">Co</span>
             </li>
-            <li class="m-t-30 ">
-              <a href="{{ route('packages') }}">Packages</a>
-              <span class="icon-thumbnail">Pa</span>
-            </li>
+          </ul>
+        </li>
+
+        <li class="m-t-30 ">
+          <a href="javascript:;">
+            <span class="title">Subdealers</span>
+            <span class=" arrow"></span>
+          </a>
+          <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
+          <ul class="sub-menu">
             <li class="m-t-30 ">
               <a href="{{ route('subdealers-entity') }}">Subdealers</a>
               <span class="icon-thumbnail">Sg</span>
@@ -117,30 +146,73 @@
               <a href="{{ route('subdealer-groups') }}">Subdealer Groups</a>
               <span class="icon-thumbnail">Sg</span>
             </li>
-            <li class="">
-              <a href="{{ route('vehicles') }}">Vehicles</a>
-              <span class="icon-thumbnail">Ve</span>
-            </li>
-            <li class="">
-              <a href="{{ route('services') }}">Services</a>
-              <span class="icon-thumbnail">Sr</span>
-            </li>
-            <li class="">
-              <a href="{{ route('sorting-services') }}">Sorting Services</a>
-              <span class="icon-thumbnail">Sr</span>
+          </ul>
+        </li>
+
+        <li class="m-t-30 ">
+          <a href="javascript:;">
+            <span class="title">Credits And Payments</span>
+            <span class=" arrow"></span>
+          </a>
+          <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
+          <ul class="sub-menu">
+            <li class="m-t-30 ">
+              <a href="{{ route('packages') }}">Packages</a>
+              <span class="icon-thumbnail">Pa</span>
             </li>
             <li class="">
               <a href="{{ route('unit-price') }}">Unit Price</a>
               <span class="icon-thumbnail">UP</span>
             </li>
+          </ul>
+        </li>
+
+        <li class="m-t-30 ">
+          <a href="javascript:;">
+            <span class="title">Messaging</span>
+            <span class=" arrow"></span>
+          </a>
+          <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
+          <ul class="sub-menu">
             <li class="">
-              <a href="{{route('customers')}}">Customers</a>
-              <span class="icon-thumbnail">Cu</span>
+              <a href="{{ route('feeds') }}">Notifications</a>
+              <span class="icon-thumbnail">NF</span>
             </li>
             <li class="">
-              <a href="{{ route('groups') }}">Customer Groups</a>
-              <span class="icon-thumbnail">Gr</span>
+              <a href="{{ route('email-templates') }}">Email Templates</a>
+              <span class="icon-thumbnail">ET</span>
             </li>
+            <li class="">
+              <a href="{{ route('message-templates') }}">SMS Templates</a>
+              <span class="icon-thumbnail">MT</span>
+            </li>
+            <li class="">
+              <a href="{{ route('work-hours') }}">Working Hours</a>
+              <span class="icon-thumbnail">WH</span>
+            </li>
+            <li class="">
+              <a href="{{ route('reminder-manager') }}">Messaging Manager</a>
+              <span class="icon-thumbnail">Rm</span>
+          </ul>
+        </li>
+        
+        <li class="m-t-30 ">
+          <a href="javascript:;">
+            <span class="title">Platform Settings</span>
+            <span class=" arrow"></span>
+          </a>
+          <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
+          <ul class="sub-menu">
+            <li class="m-t-30 ">
+              <a href="{{ route('payment-accounts') }}">Payment Method</a>
+              <span class="icon-thumbnail">Pa</span>
+            </li>
+            <li class="m-t-30 ">
+              <a href="{{ route('edit-master-tokens') }}">Services tokens</a>
+              <span class="icon-thumbnail">Mt</span>
+            </li>
+            
+            
             <li class="">
               <a href="{{ route('engineers') }}">Engineers</a>
               <span class="icon-thumbnail">En</span>
@@ -149,26 +221,7 @@
               <a href="{{ route('tools') }}">Tools</a>
               <span class="icon-thumbnail">To</span>
             </li>
-            <li class="">
-              <a href="{{ route('feeds') }}">News Feed</a>
-              <span class="icon-thumbnail">NF</span>
-            </li>
-            <li class="">
-              <a href="{{ route('email-templates') }}">Email Templates</a>
-              <span class="icon-thumbnail">ET</span>
-            </li>
-            <li class="">
-              <a href="{{ route('message-templates') }}">Message Templates</a>
-              <span class="icon-thumbnail">MT</span>
-            </li>
-            <li class="">
-              <a href="{{ route('work-hours') }}">Work Hours</a>
-              <span class="icon-thumbnail">WH</span>
-            </li>
-            <li class="">
-              <a href="{{ route('reminder-manager') }}">Reminder Manager</a>
-              <span class="icon-thumbnail">Rm</span>
-            </li>
+            
             <li class="">
               <a href="{{ route('frontends') }}">Frontends</a>
               <span class="icon-thumbnail">Fr</span>
@@ -177,10 +230,11 @@
             {{-- <li class="">
               <a href="{{ route(config('chatify.routes.prefix'))}}">Chat</a>
               <span class="icon-thumbnail">Ch</span>
-            </li> --}}
-           
+            </li>
+           --}}
+
           </ul>
-        </li>
+        </li> 
         <li class="m-t-30 ">
           <a href="{{ route('numbers') }}" class="detailed">
             <span class="title">Bosch ECU Numbers</span>

@@ -20,7 +20,7 @@ use App\Models\Tool;
 use App\Models\User;
 use App\Models\UserTool;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Http;
 // use Danielebarbaro\LaravelVatEuValidator\Facades\VatValidatorFacade as VatValidator;
 
 use LaravelDaily\Invoices\Invoice;
@@ -43,6 +43,17 @@ Route::get('/', function () {
 });
 
  Route::get('/tasks', function () {
+
+    // $response = Http::withBasicAuth('Authentication','a7ef453f3cab8b780e2961732cc3fa77064ed8ea')
+    // ->get('https://api.elorus.com/v1.1/invoices/');
+
+    // // $response = Http::withHeaders([
+    // //     'Authorization' => 'a7ef453f3cab8b780e2961732cc3fa77064ed8ea',
+    // // ])->get('https://api.elorus.com/v1.1/invoices/');
+
+    // dd($response->body());
+    
+    abort(404);
 
     // $customer = new Buyer([
     //     'name'          => 'John Doe',
