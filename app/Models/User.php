@@ -43,6 +43,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function payment_account(){
+        $group = $this->group;
+        $account = PaymentAccount::findOrFail($group->payment_account_id);
+        return $account;
+    }
+
     public function sum(){
         return Credit::where('user_id', $this->id)->sum('credits'); 
     }

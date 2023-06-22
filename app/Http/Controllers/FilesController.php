@@ -186,8 +186,6 @@ class FilesController extends Controller
         $response = Http::withHeaders($headers)->get($url);
         $responseBody = json_decode($response->getBody(), true);
 
-        // dd($responseBody);
-
         foreach($responseBody as $row){
 
             if($row['isClosed'] == false){
@@ -215,15 +213,12 @@ class FilesController extends Controller
     public function updateFileVehicle(Request $request) {
         
         $this->validate($request, [
-            // 'brand' => 'required',
-            // 'model' => 'required',
             'engine' => 'required',
             'version' => 'required'
         ]);
 
         $file = File::findOrFail($request->id);
-        // $file->brand = $request->brand;
-        // $file->model = $request->model;
+
         $file->version = $request->version;
         $file->engine = $request->engine;
         $file->ecu = $request->ecu;

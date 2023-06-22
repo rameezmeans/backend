@@ -12,6 +12,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use PDF;
 
+use LaravelDaily\Invoices\Invoice;
+use LaravelDaily\Invoices\Classes\Party;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
+
 class CreditsController extends Controller
 {
     /**
@@ -235,12 +239,13 @@ class CreditsController extends Controller
     }
 
     public function unitPrice(){
-        $creditPrice = Price::where('label', 'credit_price')->first();
+        $creditPrice = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->first();
         return view('credits.unit_price', ['creditPrice' => $creditPrice]);
     }
 
     public function updatePrice(Request $request){
-        $creditPrice = Price::where('label', 'credit_price')->first(); 
+        $creditPrice = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->first();
+
 
         if($creditPrice){
             $creditPrice->label = "credit_price";
@@ -266,7 +271,68 @@ class CreditsController extends Controller
     public function makePDF(Request $request)
     {
         $invoice = Credit::findOrFail($request->id);
-        $pdf = PDF::loadView('credits.invoice', ['invoice' => $invoice]);
-        return $pdf->download($invoice->invoice_id.'.pdf');
+
+        $user = User::findOrFail($invoice->user_id);
+
+        $account = $user->payment_account();
+
+        $price = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->first();
+
+        $client = new Party([
+            'name'          => $account->senders_name,
+            'phone'         => $account->senders_phone_number,
+            'custom_fields' => [
+                'address'        => $account->senders_address,
+            ],
+        ]);
+
+        $customer = new Party([
+            'name'          => $user->name,
+            'address'       => $user->address,
+        ]);
+
+        $items = [
+            (new InvoiceItem())
+                ->title('Tuning Credits')
+                ->description('You can use these credits to buy the services.')
+                ->pricePerUnit($price->value)
+                ->quantity($invoice->credits)
+                ->tax($invoice->tax),
+        ];
+
+        $notes = [
+            $account->note,
+        ];
+        $notes = implode("<br>", $notes);
+
+        $invoice = Invoice::make('invoice')
+            ->series($invoice->invoice_id)
+            ->status(__('invoices::invoice.paid'))
+            ->serialNumberFormat('{SERIES}')
+            ->seller($client)
+            ->buyer($customer)
+            ->dateFormat('d/m/Y')
+            // ->payUntilDays(14)
+            ->currencySymbol('€')
+            ->currencyCode('EUR')
+            ->currencyFormat('{SYMBOL}{VALUE}')
+            ->currencyThousandsSeparator('.')
+            ->currencyDecimalPoint(',')
+            ->filename($invoice->invoice_id)
+            ->addItems($items)
+            ->notes($notes)
+            ->logo(public_path('/company_logos/'.$account->companys_logo))
+            // You can additionally save generated invoice to configured disk
+            ->save('public');
+
+        // $link = $invoice->url();
+        // Then send email to party with link
+
+        // And return invoice itself to browser or have a different view
+        return $invoice->download();
+
+        // dd($invoice);
+        // $pdf = PDF::loadView('credits.invoice', ['invoice' => $invoice]);
+        // return $pdf->download($invoice->invoice_id.'.pdf');
     }
 }

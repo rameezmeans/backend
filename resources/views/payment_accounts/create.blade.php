@@ -30,6 +30,8 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
+              <div class="row">
+              <div class="col-xl-9">
               <form class="" role="form" method="POST" action="@if(isset($account)){{route('update-account')}}@else{{ route('add-account') }}@endif" enctype="multipart/form-data">
                 @csrf
                 @if(isset($account))
@@ -65,6 +67,68 @@
                     </span>
                   @enderror
 
+                  <div class="form-group form-group-default ">
+                    <label>Sender's name</label>
+                    <input value="@if(isset($account)){{ $account->senders_name }}@else{{old('senders_name') }}@endif"  name="senders_name" type="text" class="form-control">
+                  </div>
+                  @error('senders_name')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+
+                  <div class="form-group form-group-default ">
+                    <label>Sender's Phone Number</label>
+                    <input value="@if(isset($account)){{ $account->senders_phone_number }}@else{{old('senders_phone_number') }}@endif"  name="senders_phone_number" type="text" class="form-control">
+                  </div>
+                  @error('senders_phone_number')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+
+                  <div class="form-group form-group-default ">
+                    <label>Sender's Address</label>
+                    <input value="@if(isset($account)){{ $account->senders_address }}@else{{old('senders_address') }}@endif"  name="senders_address" type="text" class="form-control">
+                  </div>
+                  @error('senders_address')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+
+                  <div class="form-group form-group-default ">
+                    <label>Invoice Prefix</label>
+                    <input value="@if(isset($account)){{ $account->prefix }}@else{{old('prefix') }}@endif"  name="prefix" type="text" class="form-control">
+                  </div>
+                  @error('prefix')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+
+                  <div class="form-group form-group-default ">
+                    <label>Note</label>
+                    <input value="@if(isset($account)){{ $account->note }}@else{{old('note') }}@endif"  name="note" type="text" class="form-control">
+                  </div>
+                  @error('note')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+
+                  <div class="form-group form-group-default ">
+                    <label>Company's Logo</label>
+                    <input value="@if(isset($account)){{ $account->companys_logo }}@else{{old('companys_logo') }}@endif"  name="companys_logo" type="file" class="form-control">
+                  </div>
+
+                 
+                  <div class="checkbox check-success m-t-20">
+                    <input type="checkbox" name="elorus" @if(isset($account) && $account->elorus) checked="checked" @endif @if(isset($account) && $account->elorus) value={{$account->elorus}} @endif id="checkbox2">
+                    <label for="checkbox2">Send Invoices to Elorus</label>
+                  </div>
+                 
+
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($account)) Update @else Add @endif</span></button>
                   @if(isset($account))
@@ -72,6 +136,20 @@
                   @endif
                 </div>
               </form>
+              </div>
+              <div class="col-lg-3">
+                @if(isset($account))
+                  <div class="card social-card share  col1" >
+                    <div class="card-header ">
+                      <h5 class="text-black pull-left">Logo Preview</h5>
+                    </div>
+                    <div class="card-description">
+                        <img src="{{ url('company_logos').'/'.$account->companys_logo }}" alt="Stage 0">
+                    </div>
+                  </div>
+                @endif
+              </div>
+            </div>
                 
             </div>
           </div>

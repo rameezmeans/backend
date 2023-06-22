@@ -131,7 +131,7 @@
     <body>
         {{-- Header --}}
         @if($invoice->logo)
-            <img src="{{ $invoice->getLogo() }}" alt="logo" height="100">
+            <img src="{{ $invoice->getLogo() }}" alt="logo" height="50" width="20%">
         @endif
 
         <table class="table mt-5">
@@ -263,7 +263,7 @@
                         <th scope="col" class="text-right border-0">{{ __('invoices::invoice.discount') }}</th>
                     @endif
                     @if($invoice->hasItemTax)
-                        <th scope="col" class="text-right border-0">{{ __('invoices::invoice.tax') }}</th>
+                        <th scope="col" class="text-right border-0"></th> 
                     @endif
                     <th scope="col" class="text-right border-0 pr-0">{{ __('invoices::invoice.sub_total') }}</th>
                 </tr>
@@ -293,12 +293,12 @@
                     @endif
                     @if($invoice->hasItemTax)
                         <td class="text-right">
-                            {{ $invoice->formatCurrency($item->tax) }}
+                            {{-- {{ $invoice->formatCurrency($item->tax) }} --}}
                         </td>
                     @endif
 
                     <td class="text-right pr-0">
-                        {{ $invoice->formatCurrency($item->sub_total_price) }}
+                        {{ $invoice->formatCurrency($item->quantity*$item->price_per_unit) }}
                     </td>
                 </tr>
                 @endforeach
@@ -368,7 +368,7 @@
             {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
         </p>
         <p>
-            {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
+            {{-- {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }} --}}
         </p>
 
         <script type="text/php">

@@ -80,10 +80,37 @@ class PaymentAccountsController extends Controller
      */
     public function update(Request $request)
     {
+
         $account = PaymentAccount::findOrFail($request->id);
         $account->name = $request->name;
         $account->key = $request->key;
         $account->secret = $request->secret;
+        $account->senders_name = $request->senders_name;
+        $account->senders_phone_number = $request->senders_phone_number;
+        $account->senders_address = $request->senders_address;
+        $account->prefix = $request->prefix;
+        $account->note = $request->note;
+
+        if(!$account->elorus){
+            if(isset($request->elorus) && $request->elorus == 'on'){
+                $account->elorus = true;
+            }
+            else{
+                $account->elorus = false;
+            }
+        }
+        else{
+            $account->elorus = false;
+        }
+
+        if(isset($request->companys_logo)){
+
+            $file = $request->file('companys_logo');
+            $fileName = $file->getClientOriginalName();
+            $file->move(public_path('company_logos'),$fileName);
+            $account->companys_logo = $fileName;
+        }
+
         $account->save();
 
         return redirect()->route('payment-accounts')->with('success', 'Account updated, successfully.');

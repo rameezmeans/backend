@@ -94,8 +94,8 @@
                                                         <td class="v-align-middle semi-bold sorting_1">
                                                             <p><span class="label  @if($credit->gifted) label-info @else label-warning @endif text-black">@if($credit->price_payed == 0) {{ 'Admin Entry' }} @else €{{$credit->price_payed}} @endif</span></p>
                                                         </td>
-                                                        <td class="v-align-middle semi-bold sorting_1">
-                                                            <p><span class="label  @if($credit->gifted) label-info @else label-warning @endif">@if($credit->stripe_id){{$credit->stripe_id}} @else @if($credit->gifted) {{ 'Gifted' }} @else {{ 'Direct Transaction' }} @endif @endif</span></p>
+                                                        <td class="v-align-middle semi-bold sorting_1" >
+                                                            <p style="width: 200px;"><span class="label  @if($credit->gifted) label-info @else label-warning @endif">@if($credit->stripe_id){{$credit->stripe_id}} @else @if($credit->gifted) {{ 'Gifted' }} @else {{ 'Direct Transaction' }} @endif @endif</span></p>
                                                         </td>
                                                         <td class="v-align-middle semi-bold sorting_1">
                                                             <p>{{$credit->message_to_credit}}</p>
@@ -103,7 +103,11 @@
                                                         <td class="v-align-middle semi-bold sorting_1">
                                                             <p><span class="label  @if($credit->gifted) label-info @else label-success @endif">{{\Carbon\Carbon::parse($credit->created_at)->format('d/m/Y')}}</span></p>
                                                         </td>
-                                                        <td><a href="{{ route('pdfview',['id'=>$credit->id]) }}" class="btn btn-sm btn-primary"><i class="pg-printer"></i></a></td>
+                                                        <td>
+                                                            @if(!$credit->gifted)
+                                                                <a href="{{ route('pdfview',['id'=>$credit->id]) }}" class="btn btn-sm btn-primary"><i class="pg-printer"></i></a>
+                                                            @endif
+                                                        </td>
                                                         <td><a href="{{ route('update-credit',['id'=>$credit->id]) }}" class="btn btn-sm btn-success">Edit</a></td>
                                                     </tr>
                                                 @endif
