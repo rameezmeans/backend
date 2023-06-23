@@ -204,7 +204,7 @@
           <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
           <ul class="sub-menu">
             <li class="m-t-30 ">
-              <a href="{{ route('payment-accounts') }}">Payment Method</a>
+              <a href="{{ route('payment-accounts') }}">Payment Methods</a>
               <span class="icon-thumbnail">Pa</span>
             </li>
             <li class="m-t-30 ">
