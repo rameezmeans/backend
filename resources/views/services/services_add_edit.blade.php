@@ -14,7 +14,9 @@
                 <div class="card-header ">
                   <div class="pull-right">
                       <button data-redirect="{{ route('services') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Servies</span></button>
-                      <button data-redirect="{{ route('set-group-price', ['id' => $service->id]) }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Set Subdealer Price</span></button>
+                      @if(isset($service))
+                        <button data-redirect="{{ route('set-group-price', ['id' => $service->id]) }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Set Subdealer Price</span></button>
+                      @endif
                   </div>
                   <div class="card-title">
                     @if(isset($service))
