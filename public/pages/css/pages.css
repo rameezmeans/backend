@@ -4676,7 +4676,7 @@ body:not(.horizontal-app-menu) .pgn-wrapper[data-position^="top-"] {
 body.menu-pin .pgn-wrapper[data-position$="-left"],
 body.menu-pin .pgn-wrapper[data-position="top"],
 body.menu-pin .pgn-wrapper[data-position="bottom"] {
-    left: 250px;
+    left: 290px;
 }
 body.horizontal-app-menu .pgn-wrapper {
     z-index: 799;
