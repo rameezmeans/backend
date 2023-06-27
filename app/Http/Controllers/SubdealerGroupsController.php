@@ -83,39 +83,39 @@ class SubdealerGroupsController extends Controller
 
     }
 
-    public function editMasterTokens(){
+    // public function editMasterTokens(){
 
-        $alienTechKey = Key::whereNull('subdealer_group_id')
-        ->where('key', 'alientech_access_token')->first();
+    //     $alienTechKey = Key::whereNull('subdealer_group_id')
+    //     ->where('key', 'alientech_access_token')->first();
 
-        $sid = Key::whereNull('subdealer_group_id')
-        ->where('key', 'twilio_sid')->first();
+    //     $sid = Key::whereNull('subdealer_group_id')
+    //     ->where('key', 'twilio_sid')->first();
 
-        $twilioToken = Key::whereNull('subdealer_group_id')
-        ->where('key', 'twilio_token')->first();
+    //     $twilioToken = Key::whereNull('subdealer_group_id')
+    //     ->where('key', 'twilio_token')->first();
 
-        $twilioNumber = Key::whereNull('subdealer_group_id')
-        ->where('key', 'twilio_number')->first();
+    //     $twilioNumber = Key::whereNull('subdealer_group_id')
+    //     ->where('key', 'twilio_number')->first();
 
-        $skey = Key::whereNull('subdealer_group_id')
-        ->where('key', 'stripe_key')->first();
+    //     $skey = Key::whereNull('subdealer_group_id')
+    //     ->where('key', 'stripe_key')->first();
 
-        $ssecret = Key::whereNull('subdealer_group_id')
-        ->where('key', 'stripe_secret')->first();
+    //     $ssecret = Key::whereNull('subdealer_group_id')
+    //     ->where('key', 'stripe_secret')->first();
 
 
-        return view('subdealers.edit_master_tokens', 
-        [   
-            'alienTechKey' => $alienTechKey,
-            'sid' => $sid,
-            'twilioToken' => $twilioToken,
-            'twilioNumber' => $twilioNumber,
-            'skey' => $skey,
-            'ssecret' => $ssecret,
+    //     return view('subdealers.edit_master_tokens', 
+    //     [   
+    //         'alienTechKey' => $alienTechKey,
+    //         'sid' => $sid,
+    //         'twilioToken' => $twilioToken,
+    //         'twilioNumber' => $twilioNumber,
+    //         'skey' => $skey,
+    //         'ssecret' => $ssecret,
         
-        ]);
+    //     ]);
         
-    }
+    // }
 
     public function editTokens($id){
         $alienTechKey = Key::where('subdealer_group_id', $id)

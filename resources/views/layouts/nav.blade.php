@@ -125,28 +125,28 @@
               <span class="icon-thumbnail">Sr</span>
             </li>
             <li class="m-t-30 ">
-              <a href="{{ route('combinations') }}">Combinations</a>
-              <span class="icon-thumbnail">Co</span>
+                <a href="{{ route('combinations') }}">Combinations</a>
+                <span class="icon-thumbnail">Co</span>
             </li>
           </ul>
         </li>
 
         <li class="m-t-30 ">
-          <a href="javascript:;">
-            <span class="title">Subdealers</span>
-            <span class=" arrow"></span>
-          </a>
-          <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
-          <ul class="sub-menu">
-            <li class="m-t-30 ">
-              <a href="{{ route('subdealers-entity') }}">Subdealers</a>
-              <span class="icon-thumbnail">Sg</span>
-            </li>
-            <li class="m-t-30 ">
-              <a href="{{ route('subdealer-groups') }}">Subdealer Groups</a>
-              <span class="icon-thumbnail">Sg</span>
-            </li>
-          </ul>
+            <a href="javascript:;">
+                <span class="title">Subdealers</span>
+                <span class=" arrow"></span>
+            </a>
+            <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
+            <ul class="sub-menu">
+                <li class="m-t-30 ">
+                    <a href="{{ route('subdealers-entity') }}">Subdealers</a>
+                    <span class="icon-thumbnail">Sg</span>
+                </li>
+                <li class="m-t-30 ">
+                    <a href="{{ route('subdealer-groups') }}">Subdealer Groups</a>
+                    <span class="icon-thumbnail">Sg</span>
+                </li>
+            </ul>
         </li>
 
         <li class="m-t-30 ">
@@ -207,11 +207,11 @@
               <a href="{{ route('payment-accounts') }}">Payment Methods</a>
               <span class="icon-thumbnail">Pa</span>
             </li>
-            <li class="m-t-30 ">
+
+            {{-- <li class="m-t-30 ">
               <a href="{{ route('edit-master-tokens') }}">Services tokens</a>
               <span class="icon-thumbnail">Mt</span>
-            </li>
-            
+            </li> --}}
             
             <li class="">
               <a href="{{ route('engineers') }}">Engineers</a>
