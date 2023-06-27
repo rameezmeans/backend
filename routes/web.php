@@ -73,45 +73,45 @@ Route::get('/', function () {
 
     // dd($client);
     
-    $res = Http::withHeaders([
-        'authorization' => 'Token 32fd4c0b90ac267da4c548ea4410b126db2eaf53',
-        'x-elorus-organization' => '2772131882920314815',
-        'X-elorus-demo' => true,
-    ])
-    ->post('https://api.elorus.com/v1.1/invoices/', [
-        'custom_id' => '5678',
-        "draft" => true,
-        'documenttype' => '2772131884178605198',
-        'sequence_flat' => 'T',
-        'date' => '2023-06-23',
-        'client' => '2772582140070593687',
-        "currency_code"=> "EUR",
-        "exchange_rate"=> "1.000000",
-        "total" => "136.40",
-		"payable" => "136.40",
-        "calculator_mode"=> "initial",
-        'billing_address' => [
-            'address_line' => 'testing',
-            'city' => 'testing',
-            'zip' => 'testing',
-            'country' => 'NL',
-        ],
-        'items' => array([
-            'product' => '2772809614431881006',
-            'title' => 'Tuning Credit',
-            'quantity' => '3.0',
-            'unit_measure' => '0',
-            'unit_value' => '10.00',
-            'unit_total' => '10.00',
-            'mydata_classification_category' => 'category1_3',
-            'mydata_classification_type' => 'E3_561_001',
-            'taxes' => ['2772131887844427342'],
-        ]),
-        'mydata_document_type' => '2.1',
+    // $res = Http::withHeaders([
+    //     'authorization' => 'Token 32fd4c0b90ac267da4c548ea4410b126db2eaf53',
+    //     'x-elorus-organization' => '2772131882920314815',
+    //     'X-elorus-demo' => true,
+    // ])
+    // ->post('https://api.elorus.com/v1.1/invoices/', [
+    //     'custom_id' => '5678',
+    //     "draft" => true,
+    //     'documenttype' => '2772131884178605198',
+    //     'sequence_flat' => 'T',
+    //     'date' => '2023-06-23',
+    //     'client' => '2772582140070593687',
+    //     "currency_code"=> "EUR",
+    //     "exchange_rate"=> "1.000000",
+    //     "total" => "136.40",
+	// 	"payable" => "136.40",
+    //     "calculator_mode"=> "initial",
+    //     'billing_address' => [
+    //         'address_line' => 'testing',
+    //         'city' => 'testing',
+    //         'zip' => 'testing',
+    //         'country' => 'NL',
+    //     ],
+    //     'items' => array([
+    //         'product' => '2772809614431881006',
+    //         'title' => 'Tuning Credit',
+    //         'quantity' => '3.0',
+    //         'unit_measure' => '0',
+    //         'unit_value' => '10.00',
+    //         'unit_total' => '10.00',
+    //         'mydata_classification_category' => 'category1_3',
+    //         'mydata_classification_type' => 'E3_561_001',
+    //         'taxes' => ['2772131887844427342'],
+    //     ]),
+    //     'mydata_document_type' => '2.1',
         
-    ]);
+    // ]);
 
-    dd($res->body());
+    // dd($res->body());
     
     abort(404);
 
