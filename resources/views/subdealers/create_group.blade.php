@@ -46,6 +46,21 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
+                @if(isset($subdealerGroup))
+                  <div class="form-group form-group-default required ">
+                    <label>Payment Account</label>
+                    <select name="payment_account_id" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                      @foreach($accounts as $account)
+                        <option @if(isset($paymentAccount) && $paymentAccount->id == $account->id) {{ 'selected' }} @endif value="{{$account->id}}">{{$account->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  @error('payment_account_id')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+                @endif
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($subdealerGroup)) Update @else Add @endif</span></button>
                   @if(isset($subdealerGroup))

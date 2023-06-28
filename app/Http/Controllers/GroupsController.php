@@ -26,7 +26,7 @@ class GroupsController extends Controller
     public function edit($id){
 
         $group = Group::findOrFail($id);
-        $accounts = PaymentAccount::all();
+        $accounts = PaymentAccount::whereNull('subdealer_group_id')->get();
         $paymentAccount = null;
 
         if($group->payment_account_id){

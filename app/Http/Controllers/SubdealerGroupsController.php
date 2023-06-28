@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Group;
 use App\Models\Key;
+use App\Models\PaymentAccount;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RoleUser;
@@ -714,10 +715,20 @@ class SubdealerGroupsController extends Controller
     }
 
     public function editGroup($id){
-        
         $subdealerGroup = SubdealerGroup::findOrFail($id);
+
+        $accounts = PaymentAccount::whereNotNull('subdealer_group_id')->get();
+        $paymentAccount = null;
+
+        if($subdealerGroup->payment_account_id){
+            $paymentAccount = PaymentAccount::findOrFail($subdealerGroup->payment_account_id);
+        }
+        
         return view('subdealers.create_group', 
+        
         [   'subdealerGroup' => $subdealerGroup,
+            'paymentAccount' => $paymentAccount, 
+            'accounts' => $accounts
         ]);
         
     }
@@ -726,6 +737,7 @@ class SubdealerGroupsController extends Controller
 
         $subdealer = SubdealerGroup::findOrFail($request->id);
         $subdealer->name= $request->name;
+        $subdealer->payment_account_id= $request->payment_account_id;
         $subdealer->save();
 
         return redirect()->route('subdealer-groups')->with(['success' => 'Subdealer Group updated.']);
