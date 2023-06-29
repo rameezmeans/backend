@@ -30,7 +30,16 @@ class CreditsController extends Controller
     }
 
     public function credits() {
-        $customers = get_customers();
+
+        $customerRole = Role::where('name', 'customer')->first();
+        $subdealerRole = Role::where('name', 'subdealer')->first();
+
+        $customers = User::where('role_id', $customerRole->id)
+        ->where('name' ,'!=', 'Live Chat')
+        ->where('name' ,'!=', 'Live Chat Sub')
+        ->orWhere('role_id', $subdealerRole->id)
+        ->get();
+
         return view('credits.credits', ['customers' =>$customers]);
     }
 
@@ -278,27 +287,62 @@ class CreditsController extends Controller
 
         $price = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->first();
 
+        $discount = null;
+        
+        if($invoice->type == 'package'){
+            $discount = ($invoice->credits * $price->value) - $invoice->price_payed;
+        }
+        
         $client = new Party([
             'name'          => $account->senders_name,
             'phone'         => $account->senders_phone_number,
+            'vat'         => $account->company_id,
+            'code'         => $account->zip,
+            'city'         => $account->city,
+            'country'         => $account->country,
             'custom_fields' => [
+                'company'         => $account->company,
                 'address'        => $account->senders_address,
             ],
         ]);
 
         $customer = new Party([
             'name'          => $user->name,
-            'address'       => $user->address,
+            'vat'       => $user->company_id,
+            'code'       => $user->zip,
+            'city'       => $user->city,
+            'country'       => $user->country,
+            'phone'         => $user->phone,
+            'custom_fields' => [
+                'company'         => $user->company_name,
+                'address'        => $user->address,
+            ],
         ]);
+        
+        if($discount){
 
-        $items = [
-            (new InvoiceItem())
-                ->title('Tuning Credits')
-                ->description('You can use these credits to buy the services.')
-                ->pricePerUnit($price->value)
-                ->quantity($invoice->credits)
-                ->tax($invoice->tax),
-        ];
+            $items = [
+                (new InvoiceItem())
+                        ->title('Tuning Credits Package')
+                    ->description('You can use these credits to buy the services.')
+                    ->pricePerUnit($invoice->price_without_tax)
+                    ->quantity(1)
+                    ->tax($invoice->tax),
+                   
+            ];
+        }
+        else{
+
+            $items = [
+                (new InvoiceItem())
+                    ->title('Tuning Credits')
+                    ->description('You can use these credits to buy the services.')
+                    ->pricePerUnit($price->value)
+                    ->quantity($invoice->credits)
+                    ->tax($invoice->tax),
+            ];
+
+        }
 
         $notes = [
             $account->note,
@@ -329,10 +373,7 @@ class CreditsController extends Controller
         // Then send email to party with link
 
         // And return invoice itself to browser or have a different view
-        return $invoice->download();
 
-        // dd($invoice);
-        // $pdf = PDF::loadView('credits.invoice', ['invoice' => $invoice]);
-        // return $pdf->download($invoice->invoice_id.'.pdf');
+        return $invoice->download();
     }
 }

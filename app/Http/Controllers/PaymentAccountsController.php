@@ -26,7 +26,7 @@ class PaymentAccountsController extends Controller
      */
     public function index()
     {
-        $accounts = PaymentAccount::all();
+        $accounts = PaymentAccount::whereNull('subdealer_group_id')->get();
 
         return view('payment_accounts.index', ['accounts' => $accounts]);
     }
@@ -79,7 +79,10 @@ class PaymentAccountsController extends Controller
      */
     public function edit($id)
     {
-        $account = PaymentAccount::findOrFail($id);
+        $account = PaymentAccount::where('id',$id)
+        ->whereNull('subdealer_group_id')
+        ->first();
+
         return view('payment_accounts.create', ['account' => $account]);
     }
 
@@ -93,13 +96,21 @@ class PaymentAccountsController extends Controller
     public function update(Request $request)
     {
 
-        $account = PaymentAccount::findOrFail($request->id);
+        $account = PaymentAccount::where('id',$request->id)
+        ->whereNull('subdealer_group_id')
+        ->first();
+
         $account->name = $request->name;
         $account->key = $request->key;
         $account->secret = $request->secret;
         $account->senders_name = $request->senders_name;
         $account->senders_phone_number = $request->senders_phone_number;
         $account->senders_address = $request->senders_address;
+        $account->zip = $request->zip;
+        $account->city = $request->city;
+        $account->country = $request->country;
+        $account->company_id = $request->company_id;
+        $account->company = $request->company;
         $account->prefix = $request->prefix;
         $account->note = $request->note;
 

@@ -431,7 +431,7 @@ Route::get('/create_group', [App\Http\Controllers\GroupsController::class,'creat
 Route::get('/edit-group/{id}', [App\Http\Controllers\GroupsController::class,'edit'])->name('edit-group');
 Route::post('/add-group', [App\Http\Controllers\GroupsController::class,'add'])->name('add-group');
 Route::post('/update-group', [App\Http\Controllers\GroupsController::class,'update'])->name('update-group');
-Route::post('/delete_group', [App\Http\Controllers\GroupsController::class,'delete'])->name('delete-group');
+// Route::post('/delete_group', [App\Http\Controllers\GroupsController::class,'delete'])->name('delete-group');
 
 Route::get('/customers', [App\Http\Controllers\UsersController::class,'Customers'])->name('customers');
 Route::get('/create_customer', [App\Http\Controllers\UsersController::class,'createCustomer'])->name('create-customer');

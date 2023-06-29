@@ -44,8 +44,14 @@ class User extends Authenticatable
     ];
 
     public function payment_account(){
-        $group = $this->group;
-        $account = PaymentAccount::findOrFail($group->payment_account_id);
+        if($this->subdealer_group_id){
+            $group = SubdealerGroup::findOrFail($this->subdealer_own_group_id);
+            $account = PaymentAccount::findOrFail($group->payment_account_id);
+        }
+        else{
+            $group = $this->group;
+            $account = PaymentAccount::findOrFail($group->payment_account_id);
+        }
         return $account;
     }
 
