@@ -717,7 +717,7 @@ class SubdealerGroupsController extends Controller
     public function editGroup($id){
         $subdealerGroup = SubdealerGroup::findOrFail($id);
 
-        $accounts = PaymentAccount::whereNotNull('subdealer_group_id')->get();
+        $accounts = PaymentAccount::whereNull('subdealer_group_id')->get();
         $paymentAccount = null;
 
         if($subdealerGroup->payment_account_id){
