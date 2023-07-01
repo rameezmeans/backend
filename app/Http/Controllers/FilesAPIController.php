@@ -15,7 +15,9 @@ class FilesAPIController extends Controller
 {
     public function files(){
 
-        $files = File::where('checking_status', 'unchecked')->get();
+        $files = File::where('checking_status', 'unchecked')->where('type', 'master')
+        ->whereNull('subdealer_group_id')
+        ->get();
 
         $arrFiles = [];
 
