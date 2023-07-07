@@ -2,7 +2,7 @@
 
 @section('pagespecificstyles')
 <style>
-    .table tbody tr td .checkbox label::after{
+    .table tbody tr td .fg label::after{
         left: 3px !important;
     }
 </style>

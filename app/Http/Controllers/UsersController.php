@@ -23,24 +23,7 @@ class UsersController extends Controller
 
     public function Customers(){
 
-        // 'type' => 'user',
-        //         'from_id' => Auth::user()->id,
-        //         'to_id' => $request['id'],
-        //         'body' 
-        
         $customers = get_customers();
-        
-        // foreach($customers as $customer){
-        //     $id = mt_rand(9, 999999999) + time();
-        //     $newMessage = new ChMessage();
-        //     $newMessage->id = $id;
-        //     $newMessage->type = 'engineer';
-        //     $newMessage->from_id = 65;
-        //     $newMessage->to_id = $customer->id;
-        //     $newMessage->body = "Greetings! Feel free to write Us.";
-        //     $newMessage->save();
-
-        // }
 
         return view('groups.customers', ['customers' => $customers]);
     } 
@@ -82,6 +65,13 @@ class UsersController extends Controller
         $customer->group_id = $request->group_id;
         $customer->front_end_id = $request->front_end_id;
         $customer->role_id = $customerID;
+
+        if($request->exclude_vat_check == 'on'){
+            $customer->exclude_vat_check = 1;
+        }
+        else{
+            $customer->exclude_vat_check = 0;
+        }
 
         $customer->save();
 
@@ -139,6 +129,13 @@ class UsersController extends Controller
         $customer->company_id = $request->company_id;
         $customer->group_id = $request->group_id;
         $customer->front_end_id = $request->front_end_id;
+
+        if($request->exclude_vat_check == 'on'){
+            $customer->exclude_vat_check = 1;
+        }
+        else{
+            $customer->exclude_vat_check = 0;
+        }
 
         $customer->save();
 

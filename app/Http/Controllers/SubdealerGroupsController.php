@@ -529,11 +529,19 @@ class SubdealerGroupsController extends Controller
         $subdealer->city = $request->city;
         $subdealer->country = $request->country;
         $subdealer->subdealer_own_group_id = $request->subdealer_own_group_id;
+
+        if($request->exclude_vat_check == 'on'){
+            $subdealer->exclude_vat_check = 1;
+        }
+        else{
+            $subdealer->exclude_vat_check = 0;
+        }
+        
         $subdealer->save();
         
         $subdealerID = $request->subdealer_id;
 
-        return redirect()->route('edit-subdealer-entity', ['id' => $subdealerID])->with(['success' => 'Engineer Updated, successfully.']);
+        return redirect()->route('edit-subdealer-entity', ['id' => $subdealerID])->with(['success' => 'Subdealer Updated, successfully.']);
     
     }
     
@@ -602,14 +610,14 @@ class SubdealerGroupsController extends Controller
         $engineer->password = Hash::make($request->password);
         $engineer->email = $request->email;
         $engineer->phone = $request->phone;
-        $engineer->language = "doesnot_matter";
+        $engineer->language = 'English';
         $engineer->address = $request->address;
         $engineer->zip = $request->zip;
         $engineer->city = $request->city;
         $engineer->country = $request->country;
-        $engineer->status ="doesnot_matter";
-        $engineer->company_name = "doesnot_matter";
-        $engineer->company_id = "doesnot_matter";
+        $engineer->status = NULL;
+        $engineer->company_name = NULL;
+        $engineer->company_id = NULL;
         $engineer->front_end_id = NULL;
 
         $engineerID = Role::where('name', 'engineer')->first()->id;
@@ -640,14 +648,14 @@ class SubdealerGroupsController extends Controller
         $subdealer->password = Hash::make($request->password);
         $subdealer->email = $request->email;
         $subdealer->phone = $request->phone;
-        $subdealer->language = "doesnot_matter";
+        $subdealer->language = "English";
         $subdealer->address = $request->address;
         $subdealer->zip = $request->zip;
         $subdealer->city = $request->city;
         $subdealer->country = $request->country;
-        $subdealer->status ="doesnot_matter";
-        $subdealer->company_name = "doesnot_matter";
-        $subdealer->company_id = "doesnot_matter";
+        $subdealer->status = NULL;
+        $subdealer->company_name = NULL;
+        $subdealer->company_id = NULL;
         $subdealer->front_end_id = NULL;
 
         $engineerID = Role::where('name', 'subdealer')->first()->id;
@@ -715,9 +723,12 @@ class SubdealerGroupsController extends Controller
     }
 
     public function editGroup($id){
+
         $subdealerGroup = SubdealerGroup::findOrFail($id);
 
-        $accounts = PaymentAccount::whereNull('subdealer_group_id')->get();
+        $accounts = PaymentAccount::whereNotNull('subdealer_group_id')
+        ->get();
+        
         $paymentAccount = null;
 
         if($subdealerGroup->payment_account_id){

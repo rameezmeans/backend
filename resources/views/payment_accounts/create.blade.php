@@ -430,7 +430,7 @@
 
                  
                   <div class="checkbox check-success m-t-20">
-                    <input type="checkbox" name="elorus" @if(isset($account) && $account->elorus) checked="checked" @endif @if(isset($account) && $account->elorus) value={{$account->elorus}} @endif id="checkbox2">
+                    <input type="checkbox" name="elorus" @if(isset($account) && $account->elorus) checked="checked" @endif id="checkbox2">
                     <label for="checkbox2">Send Invoices to Elorus</label>
                   </div>
                  

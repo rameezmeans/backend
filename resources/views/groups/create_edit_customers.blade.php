@@ -449,6 +449,12 @@
                   <strong>{{ $message }}</strong>
               </span>
             @enderror
+
+            <div class="checkbox check-success m-t-20">
+              <input type="checkbox" name="exclude_vat_check" @if(isset($customer) && $customer->exclude_vat_check) checked="checked" @endif id="checkbox2">
+              <label for="checkbox2">Exclude VAT Checks</label>
+            </div>
+            
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($customer)) Update @else Add @endif</span></button>
                   @if(isset($customer))

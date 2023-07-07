@@ -94,8 +94,7 @@ class PaymentAccountsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
-    {
-
+    {   
         $account = PaymentAccount::where('id',$request->id)
         ->whereNull('subdealer_group_id')
         ->first();
@@ -114,16 +113,11 @@ class PaymentAccountsController extends Controller
         $account->prefix = $request->prefix;
         $account->note = $request->note;
 
-        if(!$account->elorus){
-            if(isset($request->elorus) && $request->elorus == 'on'){
-                $account->elorus = true;
-            }
-            else{
-                $account->elorus = false;
-            }
+        if($request->elorus == 'on' || $request->elorus == 1){
+            $account->elorus = 1;
         }
         else{
-            $account->elorus = false;
+            $account->elorus = 0;
         }
 
         if(isset($request->companys_logo)){

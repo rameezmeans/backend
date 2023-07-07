@@ -421,6 +421,11 @@
                   </span>
                 @enderror
 
+                <div class="checkbox check-success m-t-20">
+                  <input type="checkbox" name="exclude_vat_check" @if(isset($customer) && $customer->exclude_vat_check) checked="checked" @endif id="checkbox2">
+                  <label for="checkbox2">Exclude VAT Checks</label>
+                </div>
+
                 {{-- <div class="form-group form-group-default required ">
                   <label>Customer Group</label>
                   <select class="full-width" data-init-plugin="select2" name="group_id">

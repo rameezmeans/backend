@@ -15,7 +15,7 @@ class GroupsController extends Controller
     }
 
     public function index(){
-        $groups = Group::all();
+        $groups = Group::whereNull('subdealer_group_id')->get();
         return view('groups.groups', ['groups' => $groups]);
     }
 
@@ -25,7 +25,10 @@ class GroupsController extends Controller
 
     public function edit($id){
 
-        $group = Group::findOrFail($id);
+        $group = Group::where('id',$id)->whereNull('subdealer_group_id')->first();
+        if(!$group){
+            abort(404);
+        }
         $accounts = PaymentAccount::whereNull('subdealer_group_id')->get();
         $paymentAccount = null;
 
