@@ -83,6 +83,7 @@
                                         </thead>
                                         <tbody>
                                             @foreach($credits as $credit)
+
                                                 @if($credit->credits > 0)
                                                     <tr role="row">
                                                         <td class="v-align-middle semi-bold sorting_1">
@@ -134,6 +135,12 @@
                             <tbody>
                                 @foreach($credits as $credit)
                                     @if($credit->credits < 0)
+                                        @php 
+                                            if($credit->file_id){
+                                                $file = \App\Models\File::findOrFail($credit->file_id);
+                                            }
+                                            
+                                        @endphp
                                         <tr role="row">
                                             <td class="v-align-middle semi-bold sorting_1">
                                                 <p><span class="label ">{{$credit->invoice_id}}</span></p>
@@ -142,7 +149,16 @@
                                                 <p><span class="label label-danger">{{-1*(int)$credit->credits}}</span></p>
                                             </td>
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p>@if($credit->file_id)  <a href="{{route('file', $credit->file_id)}}"> {{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}</a> @else<span class="label label-danger">{{$credit->message_to_credit}}</span>@endif</p>
+
+                                                @if($credit->file_id)
+
+                                                    @if($file->subdealer_group_id)
+                                                        <p>{{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}</p>
+                                                    @else
+                                                        <p>@if($credit->file_id)  <a href="{{route('file', $credit->file_id)}}"> {{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}</a> @else<span class="label label-danger">{{$credit->message_to_credit}}</span>@endif</p>
+                                                    @endif
+
+                                                @endif
                                             </td>
                                             <td class="v-align-middle semi-bold sorting_1">
                                                 <p><span class="label label-success">{{\Carbon\Carbon::parse($credit->created_at)->format('d/m/Y')}}</span></p>
@@ -150,7 +166,11 @@
                                             {{-- <td><button class="btn btn-sm btn-primary"><i class="pg-printer"></i></button></td> --}}
                                             <td>
                                                 @if($credit->file_id)
-                                                    <a href="{{route('file', $credit->file_id)}}" class="btn btn-sm btn-primary"><i class="fa fa-file"></i></a>
+                                                    @if($file->subdealer_group_id)
+                                                        <span class="label label-danger text-white">LUA Entry</span>
+                                                    @else
+                                                        <a href="{{route('file', $credit->file_id)}}" class="btn btn-sm btn-primary"><i class="fa fa-file"></i></a>
+                                                    @endif
                                                 @else
                                                     <span class="label label-warning text-black">Manual Entry</span>
 
