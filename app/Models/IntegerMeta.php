@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class IntegerMeta extends Model
 {
     use HasFactory;
+
+    public $table = 'integer_meta';
 }

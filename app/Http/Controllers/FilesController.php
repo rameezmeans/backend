@@ -466,9 +466,7 @@ class FilesController extends Controller
         ->with('success', 'Engineer note successfully Edited!')
         ->with('tab','chat');
     }
-
     
-
     public function downloadEncrypted( $id,$fileName ) {
 
         $file = File::findOrFail($id); 
