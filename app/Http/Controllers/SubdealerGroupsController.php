@@ -710,6 +710,12 @@ class SubdealerGroupsController extends Controller
         ->orWhere('role_id', $headID)->where('subdealer_group_id', $id)
         ->get();
 
+        $subdealerTypes = [
+            'lazy' => 'Lazy',
+            'brainiac' => 'Brainiac',
+            'smart' => 'Smart',
+        ];
+        
         $subdealerID = Role::where('name', 'subdealer')->first()->id;
         $subdealers = User::where('subdealer_group_id', $id)->where('role_id', $subdealerID)->get();
 
@@ -717,15 +723,15 @@ class SubdealerGroupsController extends Controller
         [   'subdealer' => $subdealer, 
             'customers' => $customers,
             'engineers' => $engineers,
-            'subdealers' => $subdealers
+            'subdealers' => $subdealers,
+            'subdealerTypes' => $subdealerTypes
         ]);
         
     }
 
-    public function editGroup($id){
+    public function editGroup($id, Request $request){
 
         $subdealerGroup = SubdealerGroup::findOrFail($id);
-
         $accounts = PaymentAccount::whereNotNull('subdealer_group_id')
         ->get();
         
@@ -746,10 +752,11 @@ class SubdealerGroupsController extends Controller
 
     public function updateGroup(Request $request){
 
-        $subdealer = SubdealerGroup::findOrFail($request->id);
-        $subdealer->name= $request->name;
-        $subdealer->payment_account_id= $request->payment_account_id;
-        $subdealer->save();
+        $subdealerGroup = SubdealerGroup::findOrFail($request->id);
+        $subdealerGroup->tax = $request->tax;
+        $subdealerGroup->name= $request->name;
+        $subdealerGroup->payment_account_id= $request->payment_account_id;
+        $subdealerGroup->save();
 
         return redirect()->route('subdealer-groups')->with(['success' => 'Subdealer Group updated.']);
 
@@ -768,6 +775,8 @@ class SubdealerGroupsController extends Controller
             $subdealerData->backend_url = $request->backend_url;
             $subdealerData->colour_scheme = $request->colour_scheme;
             $subdealerData->subdealer_id = $subdealer->id;
+            $subdealerData->lua_search_charges = $request->lua_search_charges;
+            $subdealerData->type = $request->type;
 
             if($request->file('logo')){
                 $file = $request->file('logo');
@@ -785,6 +794,8 @@ class SubdealerGroupsController extends Controller
             $subdealerData->frontend_url = $request->frontend_url;
             $subdealerData->backend_url = $request->backend_url;
             $subdealerData->colour_scheme = $request->colour_scheme;
+            $subdealerData->lua_search_charges = $request->lua_search_charges;
+            $subdealerData->type = $request->type;
             $subdealerData->subdealer_id = $subdealer->id;
 
             if($request->file('logo')){

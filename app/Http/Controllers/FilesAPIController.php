@@ -120,45 +120,48 @@ class FilesAPIController extends Controller
                 $fileService->file_id = $file->id;
                 $fileService->save();
 
-                if( $request->options && sizeof($request->options) > 0 ){
-                    foreach($request->options as $option){
+                    if( $request->options && sizeof($request->options) > 0 ){
+                        foreach($request->options as $option){
 
-                        $optionService = Service::FindOrFail($option);
-                        $fileOption = new FileService();
-                        $fileOption->type = 'option';
-                        $fileOption->credits = $optionService->credits;
-                        $servieCredits += $optionService->credits;
-                        $fileOption->service_id = $optionService->id;
-                        $fileOption->file_id = $file->id;
-                        $fileOption->save();
-                    } 
-                }
+                            $optionService = Service::FindOrFail($option);
+                            $fileOption = new FileService();
+                            $fileOption->type = 'option';
+                            $fileOption->credits = $optionService->credits;
+                            $servieCredits += $optionService->credits;
+                            $fileOption->service_id = $optionService->id;
+                            $fileOption->file_id = $file->id;
+                            $fileOption->save();
+                        } 
+                    }
 
-                $totalCredits = 0;
-        
-                $stage = Service::findOrFail($file->stage_services->service_id);
+                    $totalCredits = 0;
 
-                if($stage->subdealerGroup){
-                    $totalCredits += $stage->subdealerGroup->subdealer_credits;
-                }
-                else{
-                    $totalCredits += $stage->credits;
-                }
+                    if($request->subdealer_group_id){
+            
+                    $stage = Service::findOrFail($file->stage_services->service_id);
 
-                if( $file->options_services && sizeof($file->options_services) > 0 ){
-                    foreach($file->options_services as $option){
-                        $optionService = Service::FindOrFail($option->service_id);
-                        if($optionService->subdealerGroup){
-                            $totalCredits += $optionService->subdealerGroup->master_credits;
-                        }
-                        else{
-                            $totalCredits += $optionService->credits;
+                    if($stage->subdealerGroup){
+                        $totalCredits += $stage->subdealerGroup->subdealer_credits;
+                    }
+                    else{
+                        $totalCredits += $stage->credits;
+                    }
+
+                    if( $file->options_services && sizeof($file->options_services) > 0 ){
+                        foreach($file->options_services as $option){
+                            $optionService = Service::FindOrFail($option->service_id);
+                            if($optionService->subdealerGroup){
+                                $totalCredits += $optionService->subdealerGroup->master_credits;
+                            }
+                            else{
+                                $totalCredits += $optionService->credits;
+                            }
                         }
                     }
                 }
 
                 $file->credits = $servieCredits;
-                $file->subdealer_credits = $servieCredits;
+                $file->subdealer_credits = $totalCredits;
                 $file->save();
 
                 $credit->file_id = $file->id;

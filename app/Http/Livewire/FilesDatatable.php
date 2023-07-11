@@ -30,7 +30,7 @@ class FilesDatatable extends LivewireDatatable
         ->where('is_credited', 1)
         ->where(function ($query) {
             $query->where('type', '=', 'master')
-                    ->orWhereNotNull('assigned_from');
+                    ->orWhereNotNull('assigned_from')->where('type', '=', 'subdealer');
         });
         
         return $files;

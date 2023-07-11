@@ -60,6 +60,15 @@
                         <strong>{{ $message }}</strong>
                     </span>
                   @enderror
+                  <div class="form-group form-group-default required ">
+                    <label>Tax</label>
+                    <input value="@if(isset($subdealerGroup)){{$subdealerGroup->tax}}@else{{old('tax')}}@endif"  name="tax" type="number" min="0" class="form-control" required>
+                  </div>
+                  @error('tax')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
                 @endif
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($subdealerGroup)) Update @else Add @endif</span></button>

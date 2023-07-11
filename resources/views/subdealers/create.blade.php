@@ -73,6 +73,28 @@
                         <strong>{{ $message }}</strong>
                     </span>
                   @enderror
+                  <div class="form-group form-group-default ">
+                    <label>LUA search Charges</label>
+                    <input value="@if(isset($subdealer)){{$subdealer->subdealers_data->lua_search_charges}}@else{{old('lua_search_charges')}}@endif"  name="lua_search_charges" type="number" class="form-control">
+                  </div>
+                  @error('name')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+                  <div class="form-group form-group-default required ">
+                    <label>Subdealer Type</label>
+                    <select name="type" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                      @foreach($subdealerTypes as $key => $type)
+                        <option @if($key == $subdealer->subdealers_data->type) {{ 'selected' }} @endif value="{{$key}}">{{$type}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  @error('payment_account_id')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
                   <div class="form-group form-group-default">
                     <label>Frontend URL</label>
                     <input value="@if(isset($subdealer->subdealers_data)){{$subdealer->subdealers_data->frontend_url}}@else{{old('frontend_url')}}@endif"  name="frontend_url" type="text" class="form-control">
