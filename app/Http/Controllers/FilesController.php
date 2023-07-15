@@ -730,7 +730,8 @@ class FilesController extends Controller
 
             $attachment = $request->file('engineers_attachement');
             $fileName = $attachment->getClientOriginalName();
-            $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$fileName);
+            $model = str_replace('/', '', $file->model );
+            $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$model.'/'.$file->id.'/'),$fileName);
             $reply->engineers_attachement = $fileName;
         }
 
