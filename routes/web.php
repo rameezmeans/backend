@@ -42,6 +42,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/info', function () {
+    dd(phpinfo());
+});
+
  Route::get('/tasks', function () {
 
     // $response = Http::withHeaders([
