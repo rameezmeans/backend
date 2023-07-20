@@ -29,14 +29,18 @@ class GroupsController extends Controller
         if(!$group){
             abort(404);
         }
-        $accounts = PaymentAccount::whereNull('subdealer_group_id')->get();
+        $stripeAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','stripe')->get();
+        $paypalAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','paypal')->get();
         $paymentAccount = null;
 
         if($group->payment_account_id){
             $paymentAccount = PaymentAccount::findOrFail($group->payment_account_id);
         }
         
-        return view('groups.groups_create_edit', [ 'paymentAccount' => $paymentAccount, 'group' => $group, 'accounts' => $accounts ]);
+        return view('groups.groups_create_edit', [ 'paymentAccount' => $paymentAccount, 'group' => $group, 
+        'stripeAccounts' => $stripeAccounts ,
+        'paypalAccounts' => $paypalAccounts 
+    ]);
     }
 
     public function add(Request $request){
@@ -69,7 +73,8 @@ class GroupsController extends Controller
         $group->discount = $request->discount;
         $group->raise = $request->raise;
         $group->bonus_credits = $request->bonus_credits;
-        $group->payment_account_id = $request->payment_account_id;
+        $group->stripe_payment_account_id = $request->stripe_payment_account_id;
+        $group->paypal_payment_account_id = $request->paypal_payment_account_id;
         $group->save();
 
         return redirect()->route('groups')->with(['success' => 'Group updated, successfully.']);

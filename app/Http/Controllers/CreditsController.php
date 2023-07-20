@@ -283,7 +283,12 @@ class CreditsController extends Controller
 
         $user = User::findOrFail($invoice->user_id);
 
-        $account = $user->payment_account();
+        if($invoice->type == 'stripe'){
+            $account = $user->stripe_payment_account();
+        }
+        else{
+            $account = $user->paypal_payment_account();
+        }
 
         $price = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->first();
 

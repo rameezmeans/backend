@@ -83,7 +83,7 @@ class FilesAPIController extends Controller
 
             $credit->credits = -1*$servieCredits;
             $credit->price_payed = $servieCredits*$price;
-            $credit->invoice_id = 'INV-'.$customer->payment_account()->prefix.mt_rand(1000,9999);
+            $credit->invoice_id = 'INV-'.$customer->stripe_payment_account()->prefix.mt_rand(1000,9999);
             $credit->user_id = $customer->id;
             $credit->save();
 

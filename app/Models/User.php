@@ -43,14 +43,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function payment_account(){
+    public function stripe_payment_account(){
         if($this->subdealer_group_id){
             $group = SubdealerGroup::findOrFail($this->subdealer_own_group_id);
-            $account = PaymentAccount::findOrFail($group->payment_account_id);
+            $account = PaymentAccount::findOrFail($group->stripe_payment_account_id);
         }
         else{
             $group = $this->group;
-            $account = PaymentAccount::findOrFail($group->payment_account_id);
+            $account = PaymentAccount::findOrFail($group->stripe_payment_account_id);
+        }
+        return $account;
+    }
+
+    public function paypal_payment_account(){
+        if($this->subdealer_group_id){
+            $group = SubdealerGroup::findOrFail($this->subdealer_own_group_id);
+            $account = PaymentAccount::findOrFail($group->paypal_payment_account_id);
+        }
+        else{
+            $group = $this->group;
+            $account = PaymentAccount::findOrFail($group->paypal_payment_account_id);
         }
         return $account;
     }
