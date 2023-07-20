@@ -424,6 +424,14 @@
                   @enderror
 
                   <div class="form-group form-group-default ">
+                    <label>Payment Type</label>
+                    <select name="type" id="type" class="full-width type" data-init-plugin="select2">
+                      <option @if(isset($account) && $account->type == 'stripe') selected @endif value="stripe">Stripe</option>
+                      <option @if(isset($account) && $account->type == 'paypal') selected @endif value="paypal">Paypal</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group form-group-default ">
                     <label>Company's Logo</label>
                     <input value="@if(isset($account)){{ $account->companys_logo }}@else{{old('companys_logo') }}@endif"  name="companys_logo" type="file" class="form-control">
                   </div>

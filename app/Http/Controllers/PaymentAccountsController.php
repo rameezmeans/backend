@@ -108,6 +108,7 @@ class PaymentAccountsController extends Controller
         $account->zip = $request->zip;
         $account->city = $request->city;
         $account->country = $request->country;
+        $account->type = $request->type;
         $account->company_id = $request->company_id;
         $account->company = $request->company;
         $account->prefix = $request->prefix;
