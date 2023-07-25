@@ -858,7 +858,10 @@ class FilesController extends Controller
         }
         
         else{
-            $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+            if($file->front_end_id == 1)
+                $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+            else
+                $attachment->move(public_path('/../../tuningX/public'.$file->file_path),$newFileName);
         }
         
         if($encode){
