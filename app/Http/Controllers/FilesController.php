@@ -520,7 +520,13 @@ class FilesController extends Controller
 
     public function download($id,$file_name) {
         $file = File::findOrFail($id);
-        $path = public_path('/../../portal/public'.$file->file_path);
+
+        if($file->front_end_id == 1){
+            $path = public_path('/../../portal/public'.$file->file_path);
+        }
+        else{
+            $path = public_path('/../../tuningX/public'.$file->file_path);
+        }
         $file_path = $path.$file_name;
         return response()->download($file_path);
     }
