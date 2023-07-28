@@ -672,7 +672,7 @@ clientListenChannel.bind("client-contactItem", function (data) {
             ? updateContactItem(data.update_to)
             : console.error("[Contact Item updates] Updating failed!");
     }
-    $(this).uiSound({ play: "hover" });
+    // $(this).uiSound({ play: "hover" });
     Push.create("ECU Tech New message", {
         body: "Customer sent a new message in chat.",
         timeout: 5000,
@@ -684,13 +684,13 @@ clientListenChannel.bind("file-uploaded", function (data) {
     console.log("file uploaded");
     $("#file-count").removeClass("hide");
     $("#file-count").html(data.count);
-    $(this).uiSound({ play: "hover" });
 
-    Push.create("ECU Tech customer File upload!", {
+    let obj = Push.create("ECU Tech customer File upload!", {
         body: "File has been uploaded.",
         timeout: 5000,
-        link: "https://backend.ecutech.gr/files",
     });
+
+    console.log(obj);
 });
 
 // listen on message delete event
@@ -699,7 +699,7 @@ clientListenChannel.bind("file-shared", function (data) {
     $("#file-count").removeClass("hide");
     $("#file-count").html(data.count);
     console.log("count" + data.count);
-    $(this).uiSound({ play: "hover" });
+    // $(this).uiSound({ play: "hover" });
 
     Push.create("ECU Tech customer File Shared!", {
         body: "File has been shared.",

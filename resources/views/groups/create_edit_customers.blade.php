@@ -391,8 +391,8 @@
                 <div class="form-group form-group-default required ">
                   <label>Status</label>
                   <select class="full-width" data-init-plugin="select2" name="status">
-                    <option @if(isset($customer) && $customer->status == 'French') selected @endif  value="Company">Company</option>
-                    <option @if(isset($customer) && $customer->status == 'Private') selected @endif  value="Private">Private</option>
+                    <option @if(isset($customer) && $customer->status == 'company') selected @endif  value="company">Company</option>
+                    <option @if(isset($customer) && $customer->status == 'private') selected @endif  value="private">Private</option>
                     <option @if(isset($customer) && $customer->status == 'entrepreneur_microentreprise') selected @endif  value="entrepreneur_microentreprise">Auto Entrepreneur / Microentreprise</option>
                   </select>
                 </div>
