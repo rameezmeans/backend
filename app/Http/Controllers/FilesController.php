@@ -64,6 +64,14 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
 
+    public function support($id){
+
+        $requestFile = RequestFile::findOrFail($id);
+        $file = File::findOrFail($requestFile->file_id);
+
+        return view('files.support', ['requestFile' => $requestFile, 'file' => $file]);
+    }
+
     public function changeCheckingStatus(Request $request){
 
         $file = File::findOrFail($request->file_id);
@@ -743,6 +751,7 @@ class FilesController extends Controller
 
         $reply->engineer = true;
         $reply->file_id = $request->file_id;
+        $reply->request_file_id = $request->request_file_id;
         $reply->save();
         
         $file->support_status = "closed";

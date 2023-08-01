@@ -50,9 +50,12 @@
           <li class="nav-item">
             <a href="#"  @if(!Session::has('tab')) class="active" @endif data-toggle="tab" data-target="#slide1"><span>Task</span></a>
           </li>
+
+          @if($file->front_end_id == 1)
           <li class="nav-item">
             <a href="#" data-toggle="tab" @if(Session::get('tab') == 'chat') class="active" @endif data-target="#slide2"><span>Chat and Support</span></a>
           </li>
+          @endif
           
           <li class="nav-item">
             <a href="#" data-toggle="tab" data-target="#slide3"><span>Admin Tasks</span></a>
@@ -530,6 +533,7 @@
                                   <a href="#" class="btn-sm btn-info btn-cons"> <span class="bold">{{$message['type']}}</span>
                                   </a>
                                   @endisset
+                                    <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
                                     <a href="{{ route('download',[$message['file_id'], $message['request_file']]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
                                     </a>
                                     <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a>
@@ -697,6 +701,7 @@
               </div>
             </div>
           </div>
+          @if($file->front_end_id == 1)
           <div class="tab-pane slide-left @if(Session::get('tab') == 'chat') active @endif" id="slide2">
             <div class="row">
               <div class="col-lg-12">
@@ -819,6 +824,7 @@
               </div>
             </div>
           </div>
+          @endif
             <div class="tab-pane slide-left" id="slide3">
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
