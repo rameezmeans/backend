@@ -20,4 +20,8 @@ class RequestFile extends Model
     function engineer_file_notes(){
         return $this->hasMany(EngineerFileNote::class, 'request_file_id', 'id');
     }
+
+    public function file_internel_events(){
+        return $this->hasMany(FileInternalEvent::class, 'request_file_id', 'id');
+    }
 }

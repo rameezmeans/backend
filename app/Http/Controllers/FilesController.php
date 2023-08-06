@@ -69,6 +69,10 @@ class FilesController extends Controller
         $requestFile = RequestFile::findOrFail($id);
         $file = File::findOrFail($requestFile->file_id);
 
+        if($file->front_end_id == 1){
+            abort(404);
+        }
+
         return view('files.support', ['requestFile' => $requestFile, 'file' => $file]);
     }
 

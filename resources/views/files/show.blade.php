@@ -533,7 +533,9 @@
                                   <a href="#" class="btn-sm btn-info btn-cons"> <span class="bold">{{$message['type']}}</span>
                                   </a>
                                   @endisset
-                                    <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
+                                    @if($file->front_end_id == 2)
+                                      <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
+                                    @endif
                                     <a href="{{ route('download',[$message['file_id'], $message['request_file']]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
                                     </a>
                                     <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a>
