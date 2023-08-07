@@ -476,12 +476,26 @@ class FilesAPIController extends Controller
                 $tunnedFile->file_id = $file->id;
                 $tunnedFile->save();
 
+
+                if($file->front_end_id == 1){
+
                 copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
                 public_path('/../../portal/public'.$file->file_path.$request->tuned_file) );
 
                 // unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
                 $path = public_path('/../../portal/public'.$file->file_path.$request->tuned_file);
+                }
+                else{
+
+                copy( public_path('/../../tuningX/public/uploads/filesready'.'/'.$request->tuned_file), 
+                public_path('/../../tuningX/public'.$file->file_path.$request->tuned_file) );
+
+                // unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
+
+                $path = public_path('/../../tuningX/public'.$file->file_path.$request->tuned_file);
+
+                }
 
                 if($file->custom_options == NULL){
 
