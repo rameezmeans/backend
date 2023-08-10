@@ -77,7 +77,7 @@
                 @endif
                 <div class="form-group form-group-default required ">
                   <label>Phone</label>
-                  <input value="@if(isset($customer)) {{ $customer->phone }} @else{{old('phone') }}@endif"  name="phone" type="text" class="form-control" required>
+                  <input value="@if(isset($customer)){{ $customer->phone }}@else{{old('phone') }}@endif"  name="phone" type="text" class="form-control" required>
                 </div>
                 @error('phone')
                   <span class="text-danger" role="alert">
@@ -100,7 +100,7 @@
                 @enderror
                 <div class="form-group form-group-default required ">
                   <label>Address</label>
-                  <input value="@if(isset($customer)) {{ $customer->address }} @else{{old('address') }}@endif"  name="address" type="text" class="form-control" required>
+                  <input value="@if(isset($customer)){{ $customer->address }}@else{{old('address') }}@endif"  name="address" type="text" class="form-control" required>
                 </div>
                 @error('address')
                   <span class="text-danger" role="alert">
@@ -109,7 +109,7 @@
                 @enderror
                 <div class="form-group form-group-default required ">
                   <label>Zip</label>
-                  <input value="@if(isset($customer)) {{ $customer->zip }} @else{{old('zip') }}@endif"  name="zip" type="text" class="form-control" required>
+                  <input value="@if(isset($customer)){{ $customer->zip }}@else{{old('zip') }}@endif"  name="zip" type="text" class="form-control" required>
                 </div>
                 @error('zip')
                   <span class="text-danger" role="alert">
@@ -118,7 +118,7 @@
                 @enderror
                 <div class="form-group form-group-default required ">
                   <label>City</label>
-                  <input value="@if(isset($customer)) {{ $customer->city }} @else{{old('city') }}@endif"  name="city" type="text" class="form-control" required>
+                  <input value="@if(isset($customer)){{ $customer->city }}@else{{old('city') }}@endif"  name="city" type="text" class="form-control" required>
                 </div>
                 @error('city')
                   <span class="text-danger" role="alert">
@@ -403,7 +403,7 @@
                 @enderror
                 <div class="form-group form-group-default required ">
                   <label>Company Name</label>
-                  <input value="@if(isset($customer)) {{ $customer->company_name }} @else{{old('company_name') }}@endif"  name="company_name" type="text" class="form-control" required>
+                  <input value="@if(isset($customer)){{ $customer->company_name }}@else{{old('company_name') }}@endif"  name="company_name" type="text" class="form-control" required>
                 </div>
                 @error('company_name')
                   <span class="text-danger" role="alert">
@@ -412,7 +412,7 @@
                 @enderror
                 <div class="form-group form-group-default required ">
                   <label>Company ID</label>
-                  <input value="@if(isset($customer)) {{ $customer->company_id }} @else{{old('company_id') }}@endif"  name="company_id" type="text" class="form-control" required>
+                  <input value="@if(isset($customer)){{ $customer->company_id }}@else{{old('company_id') }}@endif"  name="company_id" type="text" class="form-control" required>
                 </div>
                 @error('company_id')
                   <span class="text-danger" role="alert">
