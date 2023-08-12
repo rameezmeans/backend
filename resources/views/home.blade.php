@@ -623,13 +623,6 @@
 @section('pagespecificscripts')
 <script type="text/javascript">
     $(document).ready(function(){
-
-      let obj = Push.create("ECU Tech customer File upload!", {
-        body: "File has been uploaded.",
-        timeout: 5000,
-      }); 
-
-      console.log(obj);
       
       function set_and_get_response_time(){
         let reponse_engineer = $('#reponse_engineer').val();
