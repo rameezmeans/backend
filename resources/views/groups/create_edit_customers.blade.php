@@ -420,6 +420,16 @@
                   </span>
                 @enderror
 
+                <div class="form-group form-group-default">
+                  <label>EVC Customer ID</label>
+                  <input value="@if(isset($customer)){{ $customer->evc_customer_id }}@else{{old('evc_customer_id') }}@endif"  name="evc_customer_id" type="text" class="form-control">
+                </div>
+                @error('evc_customer_id')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+
                 <div class="form-group form-group-default required ">
                   <label>Customer Group</label>
                   <select class="full-width" data-init-plugin="select2" name="group_id">

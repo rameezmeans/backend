@@ -62,6 +62,7 @@ class UsersController extends Controller
         $customer->status = $request->status;
         $customer->company_name = $request->company_name;
         $customer->company_id = $request->company_id;
+        $customer->evc_customer_id = $request->evc_customer_id;
         $customer->group_id = $request->group_id;
         $customer->front_end_id = $request->front_end_id;
         $customer->role_id = $customerID;
@@ -127,6 +128,7 @@ class UsersController extends Controller
         $customer->status = $request->status;
         $customer->company_name = $request->company_name;
         $customer->company_id = $request->company_id;
+        $customer->evc_customer_id = $request->evc_customer_id;
         $customer->group_id = $request->group_id;
         $customer->front_end_id = $request->front_end_id;
 

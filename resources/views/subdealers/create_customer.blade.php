@@ -420,7 +420,7 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
-
+                
                 <div class="checkbox check-success m-t-20">
                   <input type="checkbox" name="exclude_vat_check" @if(isset($customer) && $customer->exclude_vat_check) checked="checked" @endif id="checkbox2">
                   <label for="checkbox2">Exclude VAT Checks</label>
