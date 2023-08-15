@@ -22,34 +22,83 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
-                <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
-                    <div>
-                        <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
-                            <thead>
-                                <tr role="row">
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 10%;">Active</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($packages as $package)
-                                    <tr role="row" class="redirect-click" data-redirect="{{ route('edit-package', $package->id) }}">
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$package->name}}</p>
-                                        </td>
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$package->created_at->diffForHumans()}}</p>
-                                        </td>
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p><input data-package_id={{$package->id}} class="active" type="checkbox" data-init-plugin="switchery" @if($package->active) checked="checked" @endif onclick="status_change()"/></p>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+
+                <ul class="nav nav-tabs nav-tabs-fillup m-t-0" data-init-reponsive-tabs="dropdownfx">
+             
+                    <li class="nav-item">
+                      <a href="#" class="active" data-toggle="tab" data-target="#slide1"><span>Service Packages</span></a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" data-toggle="tab" data-target="#slide2"><span>EVC Packages</span></a>
+                    </li>
+                  </ul>
+    
+                  <div class="tab-content">
+                    <div class="tab-pane slide-left active" id="slide1">
+                        <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                            <div>
+                                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 10%;">Active</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($packages as $package)
+                                            <tr role="row" class="redirect-click" data-redirect="{{ route('edit-package', $package->id) }}">
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{$package->name}}</p>
+                                                </td>
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{$package->created_at->diffForHumans()}}</p>
+                                                </td>
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p><input data-package_id={{$package->id}} class="active" type="checkbox" data-init-plugin="switchery" @if($package->active) checked="checked" @endif onclick="status_change()"/></p>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane slide-left" id="slide2">
+                        <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                            <div>
+                                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 10%;">Active</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($evcPackages as $package)
+                                            <tr role="row" class="redirect-click" data-redirect="{{ route('edit-package', $package->id) }}">
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{$package->name}}</p>
+                                                </td>
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{$package->created_at->diffForHumans()}}</p>
+                                                </td>
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p><input data-package_id={{$package->id}} class="active" type="checkbox" data-init-plugin="switchery" @if($package->active) checked="checked" @endif onclick="status_change()"/></p>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                
+
+
             </div>
           </div>
         </div>

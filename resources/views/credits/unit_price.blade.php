@@ -22,45 +22,94 @@
             @endphp
             <!-- START card -->
 
-          <div class="card card-transparent m-t-40">
-            <div class="card-header ">
-                <div class="card-title">
-                 
-                  <h5>
-                    Unit Credit Price
-                  </h5>
-                
+            <ul class="nav nav-tabs nav-tabs-fillup m-t-40" data-init-reponsive-tabs="dropdownfx">
+             
+              <li class="nav-item">
+                <a href="#" class="active" data-toggle="tab" data-target="#slide1"><span>Service Credit Price</span></a>
+              </li>
+              <li class="nav-item">
+                <a href="#" data-toggle="tab" data-target="#slide2"><span>EVC Credit Price</span></a>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <div class="tab-pane slide-left active" id="slide1">
+                <div class="card card-transparent m-t-20">
+                  <div class="card-header ">
+                      <div class="card-title">
+                       
+                        <h5>
+                          Unit Credit Price
+                        </h5>
+                      
+                      </div>
+                      
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="card-body">
+                    <form class="" role="form" method="POST" action="{{route('update-price')}}" enctype="multipart/form-data">
+                      @csrf
+                     
+                      <div class="form-group form-group-default required ">
+                        <label>Price in Euros</label>
+                        <input value="@if(isset($creditPrice)){{ $creditPrice->value }}@endif"  name="credit_price" type="number" class="form-control" required>
+                      </div>
+                      @error('credit_price')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                      <div class="text-center m-t-20">                    
+                        <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
+                        
+                      </div>
+                    </form>
+                      
+                  </div>
                 </div>
-                <div class="pull-right">
-                <div class="col-xs-12">
-                    {{-- <button data-redirect="{{route('engineers')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Engineers</span>
-                    </button> --}}
-                    {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
+
+              </div>
+              <div class="tab-pane slide-left" id="slide2">
+              
+                <div class="card card-transparent m-t-20">
+                  <div class="card-header ">
+                      <div class="card-title">
+                       
+                        <h5>
+                          EVC Credit Price
+                        </h5>
+                      
+                      </div>
+                      
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="card-body">
+                    <form class="" role="form" method="POST" action="{{route('update-price')}}" enctype="multipart/form-data">
+                      @csrf
+                     
+                      <div class="form-group form-group-default required ">
+                        <label>Price in Euros</label>
+                        <input value="@if(isset($evcCreditPrice)){{ $evcCreditPrice->value }}@endif"  name="evc_credit_price" type="number" class="form-control" required>
+                      </div>
+                      @error('credit_price')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                      <div class="text-center m-t-20">                    
+                        <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
+                        
+                      </div>
+                    </form>
+                      
+                  </div>
                 </div>
-                </div>
-                <div class="clearfix"></div>
+
+              </div>
             </div>
-            <div class="card-body">
-              <form class="" role="form" method="POST" action="{{route('update-price')}}" enctype="multipart/form-data">
-                @csrf
-               
-                <div class="form-group form-group-default required ">
-                  <label>Price in Euros</label>
-                  <input value="@if(isset($creditPrice)){{ $creditPrice->value }}@endif"  name="credit_price" type="number" class="form-control" required>
-                </div>
-                @error('credit_price')
-                  <span class="text-danger" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-                @enderror
-                <div class="text-center m-t-40">                    
-                  <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
-                  
-                </div>
-              </form>
-                
-            </div>
-          </div>
+
+          
+
         </div>
     </div>
 </div>

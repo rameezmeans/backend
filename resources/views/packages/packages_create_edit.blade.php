@@ -16,7 +16,7 @@
                   </h5>
                 @else
                   <h5>
-                    Add Package
+                    Add Service/EVC Package
                   </h5>
                 @endif
                 </div>
@@ -30,7 +30,9 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
-              <form class="" role="form" method="POST" action="@if(isset($package)){{route('update-package')}}@else{{ route('store-package') }}@endif" enctype="multipart/form-data">
+              @if(isset($package))
+
+              <form class="" role="form" method="POST" action="{{route('update-package')}}" enctype="multipart/form-data">
                 @csrf
                 @if(isset($package))
                   <input name="id" type="hidden" value="{{ $package->id }}">
@@ -80,6 +82,157 @@
                   @endif
                 </div>
               </form>
+
+              @else
+
+              <ul class="nav nav-tabs nav-tabs-fillup m-t-0" data-init-reponsive-tabs="dropdownfx">
+             
+                <li class="nav-item">
+                  <a href="#" class="active" data-toggle="tab" data-target="#slide1"><span>Create Service Package</span></a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" data-toggle="tab" data-target="#slide2"><span>Create EVC Package</span></a>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane slide-left active" id="slide1">
+                  <div class="card card-transparent m-t-20">
+                    <div class="card-header ">
+                        <div class="card-title">
+                         
+                          <h5>
+                            Create Service Package
+                          </h5>
+                        
+                        </div>
+                        
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="card-body">
+
+                      <form class="" role="form" method="POST" action="{{route('store-package')}}" enctype="multipart/form-data">
+                        @csrf
+                        <input name="type" type="hidden" value="service">
+                        <div class="form-group form-group-default required ">
+                          <label>Name</label>
+                          <input value="@if(isset($package)){{$package->name}}@else{{old('name') }}@endif"  name="name" type="text" class="form-control" required>
+                        </div>
+                        @error('name')
+                          <span class="text-danger" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                        @enderror
+                        <div class="form-group form-group-default required ">
+                            <label>Credits</label>
+                            <input value="@if(isset($package)){{$package->credits}}@else{{old('credits') }}@endif"  name="credits" type="number" class="form-control" required>
+                          </div>
+                          @error('credits')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+                          <div class="form-group form-group-default required ">
+                            <label>Actual Price</label>
+                            <input value="@if(isset($package)){{$package->actual_price}}@else{{old('actual_price') }}@endif"  name="actual_price" type="number" class="form-control" required>
+                          </div>
+                          @error('actual_price')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+        
+                          <div class="form-group form-group-default required ">
+                            <label>Discounted Price</label>
+                            <input value="@if(isset($package)){{$package->discounted_price}}@else{{old('discounted_price') }}@endif"  name="discounted_price" type="number" class="form-control" required>
+                          </div>
+                          @error('discounted_price')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+        
+                        <div class="text-center m-t-40">                    
+                          <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($package)) Update @else Add @endif</span></button>
+                          @if(isset($package))
+                            <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$package->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button>
+                          @endif
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane slide-left" id="slide2">
+                  <div class="card card-transparent m-t-20">
+                    <div class="card-header ">
+                        <div class="card-title">
+                         
+                          <h5>
+                            Create EVC Package
+                          </h5>
+                        
+                        </div>
+                        
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="card-body">
+                      
+                      <form class="" role="form" method="POST" action="{{route('store-package')}}" enctype="multipart/form-data">
+                        @csrf
+                        <input name="type" type="hidden" value="evc">
+                        <div class="form-group form-group-default required ">
+                          <label>Name</label>
+                          <input value="@if(isset($package)){{$package->name}}@else{{old('name') }}@endif"  name="name" type="text" class="form-control" required>
+                        </div>
+                        @error('name')
+                          <span class="text-danger" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                        @enderror
+                        <div class="form-group form-group-default required ">
+                            <label>Credits</label>
+                            <input value="@if(isset($package)){{$package->credits}}@else{{old('credits') }}@endif"  name="credits" type="number" class="form-control" required>
+                          </div>
+                          @error('credits')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+                          <div class="form-group form-group-default required ">
+                            <label>Actual Price</label>
+                            <input value="@if(isset($package)){{$package->actual_price}}@else{{old('actual_price') }}@endif"  name="actual_price" type="number" class="form-control" required>
+                          </div>
+                          @error('actual_price')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+        
+                          <div class="form-group form-group-default required ">
+                            <label>Discounted Price</label>
+                            <input value="@if(isset($package)){{$package->discounted_price}}@else{{old('discounted_price') }}@endif"  name="discounted_price" type="number" class="form-control" required>
+                          </div>
+                          @error('discounted_price')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+        
+                        <div class="text-center m-t-40">                    
+                          <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($package)) Update @else Add @endif</span></button>
+                          @if(isset($package))
+                            <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$package->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button>
+                          @endif
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              @endif
                 
             </div>
           </div>

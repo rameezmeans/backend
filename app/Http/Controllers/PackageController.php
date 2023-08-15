@@ -14,8 +14,10 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $packages = Package::all();
-        return view('packages.index', ['packages' => $packages]);
+        $packages = Package::whereNull('subdealer_group_id')->where('type', 'service')->get();
+        $evcPackages = Package::whereNull('subdealer_group_id')->where('type', 'evc')->get();
+       
+        return view('packages.index', ['packages' => $packages, 'evcPackages' => $evcPackages]);
     }
 
     /**
@@ -48,6 +50,7 @@ class PackageController extends Controller
         $package->credits = $request->credits;
         $package->actual_price = $request->actual_price;
         $package->discounted_price = $request->discounted_price;
+        $package->type = $request->type;
         $package->save();
 
         return redirect()->route('packages')->with(['success' => 'Package created!']);

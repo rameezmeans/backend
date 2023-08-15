@@ -249,23 +249,39 @@ class CreditsController extends Controller
 
     public function unitPrice(){
         $creditPrice = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->first();
-        return view('credits.unit_price', ['creditPrice' => $creditPrice]);
+        $evcCreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
+        return view('credits.unit_price', ['creditPrice' => $creditPrice, 'evcCreditPrice' => $evcCreditPrice]);
     }
 
     public function updatePrice(Request $request){
         $creditPrice = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->first();
+        $evcCfreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
 
-
-        if($creditPrice){
-            $creditPrice->label = "credit_price";
-            $creditPrice->value = $request->credit_price;
-            $creditPrice->save();
+        if($request->credit_price){
+            if($creditPrice){
+                $creditPrice->label = "credit_price";
+                $creditPrice->value = $request->credit_price;
+                $creditPrice->save();
+            }
+            else {
+                $newPrice = new Price();
+                $newPrice->label = "credit_price";
+                $newPrice->value = $request->credit_price;
+                $newPrice->save();
+            }
         }
-        else {
-            $newPrice = new Price();
-            $newPrice->label = "credit_price";
-            $newPrice->value = $request->credit_price;
-            $newPrice->save();
+        else{
+            if($evcCfreditPrice){
+                $evcCfreditPrice->label = "evc_credit_price";
+                $evcCfreditPrice->value = $request->evc_credit_price;
+                $evcCfreditPrice->save();
+            }
+            else {
+                $evcCfreditPrice = new Price();
+                $evcCfreditPrice->label = "evc_credit_price";
+                $evcCfreditPrice->value = $request->evc_credit_price;
+                $evcCfreditPrice->save();
+            }
         }
 
         return redirect()->route('unit-price')->with(['success' => 'Price updated, successfully.']);
