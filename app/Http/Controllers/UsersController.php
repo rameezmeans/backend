@@ -9,8 +9,10 @@ use App\Models\Group;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\User;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Laravel\Ui\Presets\React;
 
 class UsersController extends Controller
@@ -76,7 +78,25 @@ class UsersController extends Controller
 
         $customer->save();
 
-        $this->addCredits($customer->group->bonus_credits, $customer);
+        if($customer->evc_customer_id){
+
+            try{
+
+                $response = Http::get('https://evc.de/services/api_resellercredits.asp?apiid=j34sbc93hb90&username=161134&password=MAgWVTqhIBitL0wn&verb=addcustomer&customer='.$customer->evc_customer_id);
+
+                $body = $response->body();
+
+            }
+
+            catch(ConnectionException $e){
+                
+            }
+
+        }
+
+        if($customer->group->bonus_credits > 0){
+            $this->addCredits($customer->group->bonus_credits, $customer);
+        }
         
        return redirect()->route('customers')->with(['success' => 'Customer added, successfully.']);
     }
@@ -141,7 +161,25 @@ class UsersController extends Controller
 
         $customer->save();
 
-        $this->addCredits($customer->group->bonus_credits, $customer);
+        if($customer->evc_customer_id){
+
+            try{
+
+                $response = Http::get('https://evc.de/services/api_resellercredits.asp?apiid=j34sbc93hb90&username=161134&password=MAgWVTqhIBitL0wn&verb=addcustomer&customer='.$customer->evc_customer_id);
+
+                $body = $response->body();
+
+            }
+
+            catch(ConnectionException $e){
+                
+            }
+
+        }
+
+        if($customer->group->bonus_credits > 0){
+            $this->addCredits($customer->group->bonus_credits, $customer);
+        }
 
         return redirect()->route('customers')->with(['success' => 'Customer updated, successfully.']);
 
