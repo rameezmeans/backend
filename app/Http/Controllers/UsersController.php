@@ -145,7 +145,7 @@ class UsersController extends Controller
         ->where('id','!=', $request->id)
         ->first();
 
-        if($anyOtherUserWithSameUniqueEVCCustomerID){
+        if($anyOtherUserWithSameUniqueEVCCustomerID && $request->evc_customer_id){
 
             $validated = $request->validate([
                 'name' => ['required', 'string', 'max:255'],
