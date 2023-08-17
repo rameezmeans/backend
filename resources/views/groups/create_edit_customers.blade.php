@@ -47,7 +47,7 @@
                 @enderror
                 <div class="form-group form-group-default required ">
                   <label>Email</label>
-                  <input value="@if(isset($customer)){{$customer->email}}@else{{old('email')}}@endif"  name="email" type="text" class="form-control" required>
+                  <input disabled value="@if(isset($customer)){{$customer->email}}@else{{old('email')}}@endif"  name="email" type="text" class="form-control" required>
                 </div>
                 @error('email')
                   <span class="text-danger" role="alert">
@@ -422,7 +422,7 @@
 
                 <div class="form-group form-group-default">
                   <label>EVC Customer ID</label>
-                  <input value="@if(isset($customer)){{ $customer->evc_customer_id }}@else{{old('evc_customer_id') }}@endif"  name="evc_customer_id" type="text" class="form-control">
+                  <input value="@if(isset($customer)){{ $customer->evc_customer_id }}@else{{old('evc_customer_id')}}@endif"  name="evc_customer_id" type="text" class="form-control">
                 </div>
                 @error('evc_customer_id')
                   <span class="text-danger" role="alert">

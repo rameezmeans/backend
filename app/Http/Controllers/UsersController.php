@@ -31,21 +31,44 @@ class UsersController extends Controller
     } 
 
     public function addCustomer(Request $request){
+        
 
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:255'],
-            'language' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string', 'max:255'],
-            'zip' => ['required', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:255'],
-            'country' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'string', 'max:255'],
-            'company_name' => ['required', 'string', 'max:255'],
-            'company_id' => ['string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
-        ]);
+        if($request->evc_customer_id){
+
+            $validated = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'string', 'max:255'],
+                'language' => ['required', 'string', 'max:255'],
+                'address' => ['required', 'string', 'max:255'],
+                'zip' => ['required', 'string', 'max:255'],
+                'city' => ['required', 'string', 'max:255'],
+                'country' => ['required', 'string', 'max:255'],
+                'status' => ['required', 'string', 'max:255'],
+                'company_name' => ['required', 'string', 'max:255'],
+                'company_id' => ['string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8'],
+                'evc_customer_id' => ['unique:users'],
+            ]);
+        }
+        else{
+
+            $validated = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'string', 'max:255'],
+                'language' => ['required', 'string', 'max:255'],
+                'address' => ['required', 'string', 'max:255'],
+                'zip' => ['required', 'string', 'max:255'],
+                'city' => ['required', 'string', 'max:255'],
+                'country' => ['required', 'string', 'max:255'],
+                'status' => ['required', 'string', 'max:255'],
+                'company_name' => ['required', 'string', 'max:255'],
+                'company_id' => ['string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8'],
+            ]);
+
+        }
 
         $customerID = Role::where('name', 'customer')->first()->id;
 
@@ -116,21 +139,50 @@ class UsersController extends Controller
 
     public function updateCustomer(Request $request){
 
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:255'],
-            'language' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string', 'max:255'],
-            'zip' => ['required', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:255'],
-            'country' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'string', 'max:255'],
-            'company_name' => ['required', 'string', 'max:255'],
-            'company_id' => ['string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-        ]);
+       
+
+        $anyOtherUserWithSameUniqueEVCCustomerID = User::where('evc_customer_id', $request->evc_customer_id)
+        ->where('id','!=', $request->id)
+        ->first();
+
+        if($anyOtherUserWithSameUniqueEVCCustomerID){
+
+            $validated = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'string', 'max:255'],
+                'language' => ['required', 'string', 'max:255'],
+                'address' => ['required', 'string', 'max:255'],
+                'zip' => ['required', 'string', 'max:255'],
+                'city' => ['required', 'string', 'max:255'],
+                'country' => ['required', 'string', 'max:255'],
+                'status' => ['required', 'string', 'max:255'],
+                'company_name' => ['required', 'string', 'max:255'],
+                'company_id' => ['string', 'max:255'],
+                'evc_customer_id' => ['unique:users'],
+                // 'email' => ['required', 'string', 'email', 'max:255'],
+            ]);
+
+        }
+        else{
+
+            $validated = $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'string', 'max:255'],
+                'language' => ['required', 'string', 'max:255'],
+                'address' => ['required', 'string', 'max:255'],
+                'zip' => ['required', 'string', 'max:255'],
+                'city' => ['required', 'string', 'max:255'],
+                'country' => ['required', 'string', 'max:255'],
+                'status' => ['required', 'string', 'max:255'],
+                'company_name' => ['required', 'string', 'max:255'],
+                'company_id' => ['string', 'max:255'],
+                // 'email' => ['required', 'string', 'email', 'max:255'],
+            ]);
+        }
+
 
         $customer = User::findOrFail($request->id);
+
         $customer->name = $request->name;
         
 
@@ -138,7 +190,7 @@ class UsersController extends Controller
             $customer->password = Hash::make(trim($request->password));
         }
 
-        $customer->email = trim($request->email);
+        // $customer->email = trim($request->email);
         $customer->phone = $request->phone;
         $customer->language = $request->language;
         $customer->address = $request->address;
