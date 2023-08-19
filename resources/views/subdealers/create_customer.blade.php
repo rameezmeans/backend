@@ -420,6 +420,21 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
+
+                <div class="form-group form-group-default required ">
+                  <label>Customer Group</label>
+                  <select class="full-width" data-init-plugin="select2" name="group_id">
+                    @foreach($groups as $group)
+                      <option @if(isset($customer) && $customer->group_id == $group->id) selected @endif value="{{$group->id}}">{{$group->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+              
+              @error('group_id')
+                <span class="text-danger" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+              @enderror
                 
                 <div class="checkbox check-success m-t-20">
                   <input type="checkbox" name="exclude_vat_check" @if(isset($customer) && $customer->exclude_vat_check) checked="checked" @endif id="checkbox2">

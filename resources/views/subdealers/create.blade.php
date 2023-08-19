@@ -86,7 +86,7 @@
                     <label>Subdealer Type</label>
                     <select name="type" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
                       @foreach($subdealerTypes as $key => $type)
-                        <option @if($key == $subdealer->subdealers_data->type) {{ 'selected' }} @endif value="{{$key}}">{{$type}}</option>
+                        <option @if(isset($subdealer) && $key == $subdealer->subdealers_data->type) {{ 'selected' }} @endif value="{{$key}}">{{$type}}</option>
                       @endforeach
                     </select>
                   </div>

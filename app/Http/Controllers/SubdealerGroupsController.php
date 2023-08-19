@@ -328,7 +328,13 @@ class SubdealerGroupsController extends Controller
 
     public function create(){
 
-        return view('subdealer_groups.create');
+        $subdealerTypes = [
+            'lazy' => 'Lazy',
+            'brainiac' => 'Brainiac',
+            'smart' => 'Smart',
+        ];
+
+        return view('subdealers.create', [ 'subdealerTypes' => $subdealerTypes ]);
         
     }
 
@@ -362,7 +368,8 @@ class SubdealerGroupsController extends Controller
     public function editCustomer($id){
         $customer = User::findOrFail($id);
         $subdealerID = $customer->subdealer_group_id;
-        return view('subdealers.create_customer', ['customer' => $customer, 'subdealerID' => $subdealerID]);
+        $groups = Group::where('subdealer_group_id', $subdealerID)->get();
+        return view('subdealers.create_customer', ['customer' => $customer, 'subdealerID' => $subdealerID, 'groups' => $groups]);
     } 
 
     public function editEngineer($id){
@@ -615,7 +622,7 @@ class SubdealerGroupsController extends Controller
         $engineer->zip = $request->zip;
         $engineer->city = $request->city;
         $engineer->country = $request->country;
-        $engineer->status = NULL;
+        $engineer->status = 'private';
         $engineer->company_name = NULL;
         $engineer->company_id = NULL;
         $engineer->front_end_id = NULL;
@@ -649,11 +656,11 @@ class SubdealerGroupsController extends Controller
         $subdealer->email = $request->email;
         $subdealer->phone = $request->phone;
         $subdealer->language = "English";
+        $subdealer->status = "company";
         $subdealer->address = $request->address;
         $subdealer->zip = $request->zip;
         $subdealer->city = $request->city;
         $subdealer->country = $request->country;
-        $subdealer->status = NULL;
         $subdealer->company_name = NULL;
         $subdealer->company_id = NULL;
         $subdealer->front_end_id = NULL;
@@ -827,6 +834,28 @@ class SubdealerGroupsController extends Controller
         $subdealer = new Subdealer();
         $subdealer->name= $request->name;
         $subdealer->save();
+
+        $data = new SubdealersData();
+        $data->lua_search_charges = $request->lua_search_charges;
+        $data->subdealer_id = $subdealer->id;
+        $data->type = $request->type;
+        $data->frontend_url = $request->frontend_url;
+        $data->backend_url = $request->backend_url;
+        $data->colour_scheme = $request->colour_scheme;
+
+        if($request->file('logo')){
+            $file = $request->file('logo');
+            $fileName = $file->getClientOriginalName();
+            $file->move(public_path('icons'),$fileName);
+            $data->logo = $fileName;
+        }
+        else{
+            $data->logo = "test.png";
+        }
+
+        $data->save();
+
+        
 
         return redirect()->route('subdealers-entity')->with(['success' => 'Subdealer added.']);
 
