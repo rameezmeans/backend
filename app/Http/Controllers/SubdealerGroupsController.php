@@ -83,41 +83,7 @@ class SubdealerGroupsController extends Controller
         return view('subdealers.index', ['subdealers' => $subdealers]);
 
     }
-
-    // public function editMasterTokens(){
-
-    //     $alienTechKey = Key::whereNull('subdealer_group_id')
-    //     ->where('key', 'alientech_access_token')->first();
-
-    //     $sid = Key::whereNull('subdealer_group_id')
-    //     ->where('key', 'twilio_sid')->first();
-
-    //     $twilioToken = Key::whereNull('subdealer_group_id')
-    //     ->where('key', 'twilio_token')->first();
-
-    //     $twilioNumber = Key::whereNull('subdealer_group_id')
-    //     ->where('key', 'twilio_number')->first();
-
-    //     $skey = Key::whereNull('subdealer_group_id')
-    //     ->where('key', 'stripe_key')->first();
-
-    //     $ssecret = Key::whereNull('subdealer_group_id')
-    //     ->where('key', 'stripe_secret')->first();
-
-
-    //     return view('subdealers.edit_master_tokens', 
-    //     [   
-    //         'alienTechKey' => $alienTechKey,
-    //         'sid' => $sid,
-    //         'twilioToken' => $twilioToken,
-    //         'twilioNumber' => $twilioNumber,
-    //         'skey' => $skey,
-    //         'ssecret' => $ssecret,
-        
-    //     ]);
-        
-    // }
-
+    
     public function editTokens($id){
         $alienTechKey = Key::where('subdealer_group_id', $id)
         ->where('key', 'alientech_access_token')->first();
@@ -705,6 +671,7 @@ class SubdealerGroupsController extends Controller
     }
 
     public function edit($id){
+
         $subdealer = Subdealer::findOrFail($id);
 
         $customerID = Role::where('name', 'customer')->first()->id;
@@ -854,8 +821,6 @@ class SubdealerGroupsController extends Controller
         }
 
         $data->save();
-
-        
 
         return redirect()->route('subdealers-entity')->with(['success' => 'Subdealer added.']);
 
