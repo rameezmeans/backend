@@ -13,11 +13,11 @@ class RequestFile extends Model
     ];
     use HasFactory;
 
-    function file_feedback(){
+    public function file_feedback(){
         return $this->hasOne(FileFeedback::class, 'request_file_id', 'id');
     }
 
-    function engineer_file_notes(){
+    public function engineer_file_notes(){
         return $this->hasMany(EngineerFileNote::class, 'request_file_id', 'id');
     }
 
