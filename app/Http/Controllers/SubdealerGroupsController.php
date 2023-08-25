@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmailTemplate;
 use App\Models\Group;
 use App\Models\Key;
+use App\Models\MessageTemplate;
 use App\Models\PaymentAccount;
 use App\Models\Permission;
+use App\Models\Price;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\Service;
@@ -327,11 +330,13 @@ class SubdealerGroupsController extends Controller
 
     public function createCustomer($subdealerID){
 
-        return view('subdealers.create_customer', ['subdealerID' => $subdealerID]);
+        $groups = Group::where('subdealer_group_id', $subdealerID)->get();
+        return view('subdealers.create_customer', ['subdealerID' => $subdealerID, 'groups' => $groups]);
         
     }
 
     public function editCustomer($id){
+        
         $customer = User::findOrFail($id);
         $subdealerID = $customer->subdealer_group_id;
         $groups = Group::where('subdealer_group_id', $subdealerID)->get();
@@ -821,6 +826,103 @@ class SubdealerGroupsController extends Controller
         }
 
         $data->save();
+
+        $alientTechKey = new Key();
+        $alientTechKey->key = 'alientech_access_token';
+        $alientTechKey->value = '9fSkh2kilF8';
+        $alientTechKey->subdealer_group_id = $subdealer->id;
+        $alientTechKey->save();
+
+        $alientTechKey = new Key();
+        $alientTechKey->key = 'twilio_sid';
+        $alientTechKey->value = 'ACa66083ca269399421ba5c5d31d497bd9';
+        $alientTechKey->subdealer_group_id = $subdealer->id;
+        $alientTechKey->save();
+
+        $alientTechKey = new Key();
+        $alientTechKey->key = 'twilio_number';
+        $alientTechKey->value = '+14059134112';
+        $alientTechKey->subdealer_group_id = $subdealer->id;
+        $alientTechKey->save();
+
+        $alientTechKey = new Key();
+        $alientTechKey->key = 'twilio_token';
+        $alientTechKey->value = '130c5fe7d4c2d39fa76ab6c01dafa495';
+        $alientTechKey->subdealer_group_id = $subdealer->id;
+        $alientTechKey->save();
+
+        $creditPriceAlreayd = Price::whereNull('subdealer_group_id')->where('label', 'credit_price')->first();
+        $evcCreditPriceAlreayd = Price::whereNull('subdealer_group_id')->where('label', 'evc_credit_price')->first();
+
+        $creditPrice = new Price();
+        $creditPrice->label = 'credit_price';
+        $creditPrice->value = $creditPriceAlreayd->value;
+        $creditPrice->subdealer_group_id = $subdealer->id;
+        $creditPrice->save();
+
+        $evcCreditPrice = new Price();
+        $evcCreditPrice->label = 'evc_credit_price';
+        $evcCreditPrice->value = $evcCreditPriceAlreayd->value;
+        $evcCreditPrice->subdealer_group_id = $subdealer->id;
+        $evcCreditPrice->save();
+
+        $testGroup = Group::where('name', 'Test')->first();
+
+        $newVat24Group = new Group();
+        $newVat24Group->name = 'VAT0';
+        $newVat24Group->subdealer_group_id = $subdealer->id;
+        $newVat24Group->tax = 0.0;
+        $newVat24Group->discount = 0.0;
+        $newVat24Group->raise = 0.0;
+        $newVat24Group->bonus_credits = 0.0;
+        $newVat24Group->slug = 'VAT0';
+        $newVat24Group->stripe_payment_account_id = $testGroup->stripe_payment_account_id;
+        $newVat24Group->paypal_payment_account_id = $testGroup->paypal_payment_account_id;
+        $newVat24Group->save();
+
+        $newVat24Group = new Group();
+        $newVat24Group->name = 'VAT24';
+        $newVat24Group->subdealer_group_id = $subdealer->id;
+        $newVat24Group->tax = 24.0;
+        $newVat24Group->discount = 0.0;
+        $newVat24Group->raise = 0.0;
+        $newVat24Group->bonus_credits = 0.0;
+        $newVat24Group->slug = 'VAT24';
+        $newVat24Group->stripe_payment_account_id = $testGroup->stripe_payment_account_id;
+        $newVat24Group->paypal_payment_account_id = $testGroup->paypal_payment_account_id;
+        $newVat24Group->save();
+
+        $newVat24Group = new Group();
+        $newVat24Group->name = 'NVAT0';
+        $newVat24Group->subdealer_group_id = $subdealer->id;
+        $newVat24Group->tax = 0.0;
+        $newVat24Group->discount = 0.0;
+        $newVat24Group->raise = 0.0;
+        $newVat24Group->bonus_credits = 0.0;
+        $newVat24Group->slug = 'NVAT0';
+        $newVat24Group->stripe_payment_account_id = $testGroup->stripe_payment_account_id;
+        $newVat24Group->paypal_payment_account_id = $testGroup->paypal_payment_account_id;
+        $newVat24Group->save();
+
+        $allEmailTemplates = EmailTemplate::whereNull('subdealer_group_id')->get();
+
+        foreach($allEmailTemplates as $e){
+            $emailTemplate = new EmailTemplate();
+            $emailTemplate->name = $e->name;
+            $emailTemplate->html = $e->html;
+            $emailTemplate->subdealer_group_id = $subdealer->id;
+            $emailTemplate->save();
+        }
+
+        $allMessageTemplates = MessageTemplate::whereNull('subdealer_group_id')->get();
+
+        foreach($allMessageTemplates as $m){
+            $messageTemplate = new MessageTemplate();
+            $messageTemplate->name = $m->name;
+            $messageTemplate->text = $m->text;
+            $messageTemplate->subdealer_group_id = $subdealer->id;
+            $messageTemplate->save();
+        }
 
         return redirect()->route('subdealers-entity')->with(['success' => 'Subdealer added.']);
 

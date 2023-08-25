@@ -615,7 +615,22 @@ if(!function_exists('get_engineers')){
 if(!function_exists('validate_VAT')){
 
     function validate_VAT($vat){
-        return VatValidator::validateExistence($vat);
+
+        $temp = 0;
+
+        do{
+
+            try{
+                $flag = VatValidator::validate($vat);
+            }catch(Danielebarbaro\LaravelVatEuValidator\Vies\ViesException $e){
+                $temp = 0;
+                continue;
+            }
+            $temp = 1;
+        }while($temp > 0);
+
+        return $flag;
+
     }
 }
 
