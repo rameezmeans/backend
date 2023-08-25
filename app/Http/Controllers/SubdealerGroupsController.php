@@ -599,7 +599,19 @@ class SubdealerGroupsController extends Controller
         $engineer->front_end_id = NULL;
 
         $engineerID = Role::where('name', 'engineer')->first()->id;
-        $engineer->role_id = $engineerID;
+        $headID = Role::where('name', 'head')->first()->id;
+
+        $firstEngineer = User::where('role_id', $headID)
+        ->where('subdealer_group_id', $subdealerID)
+        ->first();
+
+        if($firstEngineer){
+            $engineer->role_id = $engineerID;
+        }
+        else{
+            $engineer->role_id = $headID;
+        }
+
         $engineer->subdealer_group_id = $subdealerID;
         $engineer->save();
 
