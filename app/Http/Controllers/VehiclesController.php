@@ -100,8 +100,7 @@ class VehiclesController extends Controller
 
         $trimmedECUs = [];
         $options = null;
-        $comments = null;
-
+        
         $hasECU = 0;
         $includedOptionsForDownload = [];
 
@@ -181,7 +180,12 @@ class VehiclesController extends Controller
 
     public function getOptions($ecu, $vehicle, $type){
 
-        $commentObj = Comment::where('engine', $vehicle->Engine)->where('comment_type', $type);
+        $commentObj = Comment::where('engine', $vehicle->Engine)
+        ->where('comment_type', $type)
+        ->whereNull('subdealer_group_id');
+
+        // $commentObj = Comment::where('engine', $vehicle->Engine)
+        // ->where('comment_type', $type);
 
         if($vehicle->Make){
             $commentObj->where('make', $vehicle->Make);
@@ -222,7 +226,12 @@ class VehiclesController extends Controller
     
     public function getComments($vehicle, $type){
 
-        $commentObj = Comment::where('comment_type', $type)->where('engine', $vehicle->Engine);
+        $commentObj = Comment::where('comment_type', $type)
+        ->where('engine', $vehicle->Engine)
+        ->whereNull('subdealer_group_id');
+
+        // $commentObj = Comment::where('comment_type', $type)
+        // ->where('engine', $vehicle->Engine);
 
         if($vehicle->Make){
             $commentObj->where('make', $vehicle->Make);

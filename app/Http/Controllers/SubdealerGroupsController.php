@@ -792,6 +792,7 @@ class SubdealerGroupsController extends Controller
         else{
 
             $subdealerData = SubdealersData::findOrFail($subdealer->subdealers_data->id);
+
             $subdealerData->frontend_url = $request->frontend_url;
             $subdealerData->backend_url = $request->backend_url;
             $subdealerData->colour_scheme = $request->colour_scheme;
