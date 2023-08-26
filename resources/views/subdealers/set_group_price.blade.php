@@ -33,7 +33,7 @@
                 
                 <input id="service_id" name="service_id" type="hidden" value="{{ $service->id }}">
                 
-                <div class="form-group form-group-default required ">
+                {{-- <div class="form-group form-group-default required ">
                     <label>Subdealer Group</label>
                     <select class="full-width" data-init-plugin="select2" name="subdealer_own_group_id" id="subdealer_own_group_id">
                       @foreach($subdealerGroups as $group)
@@ -46,7 +46,7 @@
                   <span class="text-danger" role="alert">
                       <strong>{{ $message }}</strong>
                   </span>
-                @enderror
+                @enderror --}}
 
                 <div class="form-group form-group-default required ">
                   <label>Credits</label>

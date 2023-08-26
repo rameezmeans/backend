@@ -30,7 +30,7 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        $services = Service::orderBy('created_at', 'desc')->whereNULL('subdealer_group_id')->get();
+        $services = Service::orderBy('created_at', 'desc')->get();
         return view('services.services', ['services' => $services]);
     }
 

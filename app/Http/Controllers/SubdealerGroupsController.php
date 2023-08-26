@@ -33,16 +33,26 @@ class SubdealerGroupsController extends Controller
 
     public function addSubdealerGroupPrice(Request $request){
 
-        $group = SubdealerGroup::findOrFail($request->subdealer_own_group_id)->first();
+        $record = ServiceSubdealerGroup::where('service_id', $request->service_id)->first();
         
-        foreach($group->subdealers as $dealer){
-            $record = ServiceSubdealerGroup::where('subdealer_group_id', $dealer->id)
-            ->where('service_id', $request->service_id)->first();
+        if($record){
+        
             $record->master_credits = $request->credits;
+            $record->active = 1;
             $record->save();
-            
         }
+        else{
 
+            $service = Service::findOrFail($request->service_id);
+
+            $newRecord = new ServiceSubdealerGroup();
+            $newRecord->service_id = $service->id;
+            $newRecord->master_credits = $request->credits;
+            $newRecord->subdealer_credits = $service->credits;
+            $newRecord->active = 1;
+            $newRecord->save();
+
+        }
         return Redirect::back()->with(['success' => 'Subdealer credits changed.']);
 
     }
