@@ -31,7 +31,19 @@ class ServicesController extends Controller
     public function index()
     {
         $services = Service::orderBy('created_at', 'desc')->get();
-        return view('services.services', ['services' => $services]);
+
+        $sharedServices = Service::orderBy('sorting', 'asc')
+        ->join('services_subdealer_groups', 'services_subdealer_groups.service_id', '=', 'services.id' )
+        
+        ->select('*','services.id AS id',
+          'services.credits AS credits',
+          'services.created_at AS created_at'
+          )
+        
+        
+        ->get();
+
+        return view('services.services', ['services' => $services, 'sharedServices' => $sharedServices]);
     }
 
     /**
