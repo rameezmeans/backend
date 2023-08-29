@@ -47,19 +47,32 @@
                   </span>
                 @enderror
                 @if(isset($subdealerGroup))
-                  <div class="form-group form-group-default required ">
-                    <label>Payment Account</label>
-                    <select name="payment_account_id" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
-                      @foreach($accounts as $account)
-                        <option @if(isset($paymentAccount) && $paymentAccount->id == $account->id) {{ 'selected' }} @endif value="{{$account->id}}">{{$account->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                  @error('payment_account_id')
-                    <span class="text-danger" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                  @enderror
+                <div class="form-group form-group-default required ">
+                  <label>Stripe Payment Account</label>
+                  <select name="stripe_payment_account_id" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                    @foreach($stripeAccounts as $account)
+                      <option @if(isset($paymentAccount) && $stripePaymentAccount->id == $account->id) {{ 'selected' }} @endif value="{{$account->id}}">{{$account->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+                @error('stripe_payment_account_id')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+                <div class="form-group form-group-default required ">
+                  <label>Paypal Payment Account</label>
+                  <select name="paypal_payment_account_id" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                    @foreach($paypalAccounts as $account)
+                      <option @if(isset($paymentAccount) && $paypalPaymentAccount->id == $account->id) {{ 'selected' }} @endif value="{{$account->id}}">{{$account->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+                @error('stripe_payment_account_id')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
                   <div class="form-group form-group-default required ">
                     <label>Tax</label>
                     <input value="@if(isset($subdealerGroup)){{$subdealerGroup->tax}}@else{{old('tax')}}@endif"  name="tax" type="number" min="0" class="form-control" required>

@@ -17,9 +17,11 @@ use App\Models\Subdealer;
 use App\Models\SubdealerGroup;
 use App\Models\SubdealersData;
 use App\Models\User;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 
 class SubdealerGroupsController extends Controller
@@ -110,6 +112,12 @@ class SubdealerGroupsController extends Controller
         $twilioNumber = Key::where('subdealer_group_id', $id)
         ->where('key', 'twilio_number')->first();
 
+        $evcUsername = Key::where('subdealer_group_id', $id)
+        ->where('key', 'evc_username')->first();
+
+        $evcPassword = Key::where('subdealer_group_id', $id)
+        ->where('key', 'evc_password')->first();
+
 
         return view('subdealers.edit_tokens', 
         [
@@ -118,6 +126,8 @@ class SubdealerGroupsController extends Controller
             'sid' => $sid,
             'twilioToken' => $twilioToken,
             'twilioNumber' => $twilioNumber,
+            'evcUsername' => $evcUsername,
+            'evcPassword' => $evcPassword,
         
         ]);
         
@@ -295,8 +305,63 @@ class SubdealerGroupsController extends Controller
             $new->save();
         }
 
-        return redirect()->route('edit-tokens', ['id' => $request->id])->with(['success' => 'Token updated.']);
+        $evcUsername = Key::where('subdealer_group_id', $request->id)
+        ->where('key', 'evc_username')->first();
 
+        if($evcUsername){
+            
+            $evcUsername->key = 'evc_username';
+            $evcUsername->value = $request->evc_username;
+            $evcUsername->save();
+        }
+        else{
+            $new = new Key();
+            $new->subdealer_group_id = $request->id;
+            $new->key = 'evc_username';
+            $new->value =  $request->evc_username;
+            $new->save();
+        }
+
+        $evcPassword = Key::where('subdealer_group_id', $request->id)
+        ->where('key', 'evc_password')->first();
+
+        if($evcPassword){
+            
+            $evcPassword->key = 'evc_password';
+            $evcPassword->value = $request->evc_password;
+            $evcPassword->save();
+        }
+        else{
+            $new = new Key();
+            $new->subdealer_group_id = $request->id;
+            $new->key = 'evc_password';
+            $new->value =  $request->evc_password;
+            $new->save();
+        }
+
+        try{
+
+                $response = Http::get('https://evc.de/services/api_resellercredits.asp?apiid=j34sbc93hb90&username=161134&password=MAgWVTqhIBitL0wn&verb=addcustomer&customer='.$request->evc_username);
+
+                $body = $response->body();
+
+                $ok = substr($body, 0, 2);
+                
+                if($ok == 'ok'){
+                    return redirect()->back()->with('success', 'Tokens updated and EVC account is created, successfully!');
+                }
+                else{
+                    return redirect()->back()->with('success', 'Tokens updated but EVC function remained unchanged!');
+                }
+
+            }
+
+            catch(ConnectionException $e){
+                return redirect()->back()->with('danger', 'Tokens updated and EVC account is not created!');
+            }
+
+            return redirect()->back()->with('success', 'Tokens edited, successfully!');
+            
     }
 
     public function createGroup(){
@@ -733,20 +798,27 @@ class SubdealerGroupsController extends Controller
     public function editGroup($id, Request $request){
 
         $subdealerGroup = SubdealerGroup::findOrFail($id);
-        $accounts = PaymentAccount::whereNotNull('subdealer_group_id')
-        ->get();
-        
-        $paymentAccount = null;
 
-        if($subdealerGroup->payment_account_id){
-            $paymentAccount = PaymentAccount::findOrFail($subdealerGroup->payment_account_id);
+        $stripeAccounts = PaymentAccount::where('type','stripe')->get();
+        $paypalAccounts = PaymentAccount::where('type','paypal')->get();
+        
+        if($subdealerGroup->stripe_payment_account_id){
+            $stripePaymentAccount = PaymentAccount::findOrFail($subdealerGroup->stripe_payment_account_id);
+        }
+
+        $paypalPaymentAccount = null;
+
+        if($subdealerGroup->paypal_payment_account_id){
+            $paypalPaymentAccount = PaymentAccount::findOrFail($subdealerGroup->paypal_payment_account_id);
         }
         
         return view('subdealers.create_group', 
         
-        [   'subdealerGroup' => $subdealerGroup,
-            'paymentAccount' => $paymentAccount, 
-            'accounts' => $accounts
+        [   'stripePaymentAccount' => $stripePaymentAccount, 
+        'paypalPaymentAccount' => $paypalPaymentAccount,
+        'subdealerGroup' => $subdealerGroup, 
+        'stripeAccounts' => $stripeAccounts ,
+        'paypalAccounts' => $paypalAccounts 
         ]);
         
     }
@@ -756,7 +828,8 @@ class SubdealerGroupsController extends Controller
         $subdealerGroup = SubdealerGroup::findOrFail($request->id);
         $subdealerGroup->tax = $request->tax;
         $subdealerGroup->name= $request->name;
-        $subdealerGroup->payment_account_id= $request->payment_account_id;
+        $subdealerGroup->stripe_payment_account_id= $request->stripe_payment_account_id;
+        $subdealerGroup->paypal_payment_account_id= $request->paypal_payment_account_id;
         $subdealerGroup->save();
 
         return redirect()->route('subdealer-groups')->with(['success' => 'Subdealer Group updated.']);

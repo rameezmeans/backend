@@ -7,6 +7,20 @@
       <!-- START CONTAINER FLUID -->
         <div class=" container-fluid container-fixed-lg bg-white">
 
+          @if (Session::get('success'))
+                <div class="pgn-wrapper" data-position="top" style="top: 59px;">
+                    <div class="pgn push-on-sidebar-open pgn-bar">
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                            {{ Session::get('success') }}
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @php
+              Session::forget('success')
+            @endphp
+
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title"><h3>Tokens</h3>
@@ -58,6 +72,24 @@
                         <input value="@if($twilioNumber){{$twilioNumber->value}}@endif"  name="twilio_number" type="text" class="form-control" required>
                       </div>
                       @error('twilio_number')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                      <div class="form-group form-group-default required ">
+                        <label>EVC Username</label>
+                        <input value="@if($evcUsername){{$evcUsername->value}}@endif"  name="evc_username" type="text" class="form-control" required>
+                      </div>
+                      @error('evc_username')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                      <div class="form-group form-group-default required ">
+                        <label>EVC Password</label>
+                        <input value="@if($evcPassword){{$evcPassword->value}}@endif"  name="evc_password" type="text" class="form-control" required>
+                      </div>
+                      @error('evc_password')
                         <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

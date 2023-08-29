@@ -31,13 +31,19 @@ class GroupsController extends Controller
         }
         $stripeAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','stripe')->get();
         $paypalAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','paypal')->get();
-        $paymentAccount = null;
-
-        if($group->payment_account_id){
-            $paymentAccount = PaymentAccount::findOrFail($group->payment_account_id);
-        }
         
-        return view('groups.groups_create_edit', [ 'paymentAccount' => $paymentAccount, 'group' => $group, 
+        if($group->stripe_payment_account_id){
+            $stripePaymentAccount = PaymentAccount::findOrFail($group->stripe_payment_account_id);
+        }
+
+        if($group->paypal_payment_account_id){
+            $paypalPaymentAccount = PaymentAccount::findOrFail($group->paypal_payment_account_id);
+        }
+
+        return view('groups.groups_create_edit', [ 
+        'stripePaymentAccount' => $stripePaymentAccount, 
+        'paypalPaymentAccount' => $paypalPaymentAccount,
+        'group' => $group, 
         'stripeAccounts' => $stripeAccounts ,
         'paypalAccounts' => $paypalAccounts 
     ]);
