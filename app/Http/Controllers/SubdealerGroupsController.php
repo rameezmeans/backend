@@ -117,7 +117,7 @@ class SubdealerGroupsController extends Controller
 
         $evcPassword = Key::where('subdealer_group_id', $id)
         ->where('key', 'evc_password')->first();
-        
+
         return view('subdealers.edit_tokens', 
         [
             'subdealerID' => $id,
@@ -800,6 +800,8 @@ class SubdealerGroupsController extends Controller
 
         $stripeAccounts = PaymentAccount::where('type','stripe')->get();
         $paypalAccounts = PaymentAccount::where('type','paypal')->get();
+        $stripePaymentAccount = null;
+        $paypalPaymentAccount = null;
         
         if($subdealerGroup->stripe_payment_account_id){
             $stripePaymentAccount = PaymentAccount::findOrFail($subdealerGroup->stripe_payment_account_id);
