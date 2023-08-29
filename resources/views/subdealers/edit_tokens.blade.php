@@ -80,6 +80,7 @@
                         <label>EVC Username</label>
                         <input value="@if($evcUsername){{$evcUsername->value}}@endif"  name="evc_username" type="text" class="form-control" required>
                       </div>
+                      
                       @error('evc_username')
                         <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
