@@ -117,8 +117,6 @@ class SubdealerGroupsController extends Controller
 
         $evcPassword = Key::where('subdealer_group_id', $id)
         ->where('key', 'evc_password')->first();
-
-        dd($evcUsername);
         
         return view('subdealers.edit_tokens', 
         [
