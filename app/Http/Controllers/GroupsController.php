@@ -32,6 +32,9 @@ class GroupsController extends Controller
         $stripeAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','stripe')->get();
         $paypalAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','paypal')->get();
         
+        $stripePaymentAccount = [];
+        $paypalPaymentAccount = [];
+
         if($group->stripe_payment_account_id){
             $stripePaymentAccount = PaymentAccount::findOrFail($group->stripe_payment_account_id);
         }

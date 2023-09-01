@@ -106,7 +106,12 @@
                                                         </td>
                                                         <td>
                                                             @if(!$credit->gifted)
-                                                                <a href="{{ route('pdfview',['id'=>$credit->id]) }}" class="btn btn-sm btn-primary"><i class="pg-printer"></i></a>
+                                                                @if(!$credit->elorus_permalink)
+                                                                <a href="{{ route('pdfview',['id'=>$credit->id]) }}" target="_blank" class="btn btn-sm btn-primary"><i class="pg-printer"></i></a>
+
+                                                                @else
+                                                                <a href="{{ $credit->elorus_permalink }}" target="_blank" class="btn btn-sm btn-primary"><i class="pg-printer"></i></a>
+                                                                @endif
                                                             @endif
                                                         </td>
                                                         <td><a href="{{ route('update-credit',['id'=>$credit->id]) }}" class="btn btn-sm btn-success">Edit</a></td>
