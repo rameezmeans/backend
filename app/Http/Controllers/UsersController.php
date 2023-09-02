@@ -203,6 +203,7 @@ class UsersController extends Controller
         $customer->evc_customer_id = $request->evc_customer_id;
         $customer->group_id = $request->group_id;
         $customer->front_end_id = $request->front_end_id;
+        $customer->elorus_id = null;
 
         if($request->exclude_vat_check == 'on'){
             $customer->exclude_vat_check = 1;
