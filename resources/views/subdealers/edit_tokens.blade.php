@@ -40,7 +40,7 @@
                     <input name="id" type="hidden" value="{{ $subdealerID }}">
                     
                     <div class="form-group form-group-default required ">
-                      <label>Alientech Key</label>
+                      <label>Alientech API Key</label>
                       <input value="@if($alienTechKey){{$alienTechKey->value}}@endif"  name="alientech_access_token" type="text" class="form-control" required>
                     </div>
                     @error('name')
@@ -77,7 +77,7 @@
                         </span>
                       @enderror
                       <div class="form-group form-group-default required ">
-                        <label>EVC Username</label>
+                        <label>EVC API Username</label>
                         <input value="@if($evcUsername){{$evcUsername->value}}@endif"  name="evc_username" type="text" class="form-control" required>
                       </div>
                       
@@ -87,7 +87,7 @@
                         </span>
                       @enderror
                       <div class="form-group form-group-default required ">
-                        <label>EVC Password</label>
+                        <label>EVC API Password</label>
                         <input value="@if($evcPassword){{$evcPassword->value}}@endif"  name="evc_password" type="text" class="form-control" required>
                       </div>
                       @error('evc_password')
