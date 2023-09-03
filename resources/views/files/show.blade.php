@@ -154,6 +154,14 @@
                           </div>
                           <div class="clearfix"></div>
                         </div>
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Original File</p>
+                          <div class="pull-right">
+                            <span class="label @if($file->is_original == 1) text-white bg-danger @else text-black bg-success @endif">@if($file->is_original) Yes @else No @endif<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
                         
                         @if($file->request_type)
 
