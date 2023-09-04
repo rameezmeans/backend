@@ -75,6 +75,16 @@
                     </span>
                   @enderror
 
+                  <div class="form-group form-group-default required ">
+                    <label>Description</label>
+                    <textarea name="desc" class="form-control">@if(isset($package)){{$package->desc}}@endif</textarea>
+                  </div>
+                  @error('desc')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($package)) Update @else Add @endif</span></button>
                   @if(isset($package))
@@ -151,6 +161,16 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                           @enderror
+
+                          <div class="form-group form-group-default required ">
+                            <label>Description</label>
+                            <textarea name="desc" class="form-control">@if(isset($package)){{$package->desc}}@endif</textarea>
+                          </div>
+                          @error('desc')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
         
                         <div class="text-center m-t-40">                    
                           <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($package)) Update @else Add @endif</span></button>
@@ -214,6 +234,16 @@
                             <input value="@if(isset($package)){{$package->discounted_price}}@else{{old('discounted_price') }}@endif"  name="discounted_price" type="number" class="form-control" required>
                           </div>
                           @error('discounted_price')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+
+                          <div class="form-group form-group-default required ">
+                            <label>Description</label>
+                            <textarea name="desc" class="form-control">@if(isset($package)){{$package->desc}}@endif</textarea>
+                          </div>
+                          @error('desc')
                             <span class="text-danger" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

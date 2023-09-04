@@ -57,6 +57,7 @@ class PackageController extends Controller
         $package->actual_price = $request->actual_price;
         $package->discounted_price = $request->discounted_price;
         $package->type = $request->type;
+        $package->desc = $request->desc;
         $package->save();
 
         return redirect()->route('packages')->with(['success' => 'Package created!']);
@@ -123,6 +124,7 @@ class PackageController extends Controller
         $package->credits = $request->credits;
         $package->actual_price = $request->actual_price;
         $package->discounted_price = $request->discounted_price;
+        $package->desc = $request->desc;
         $package->save();
 
         return redirect()->route('packages')->with(['success' => 'Package updated!']);
