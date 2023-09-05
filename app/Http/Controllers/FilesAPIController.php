@@ -570,7 +570,7 @@ class FilesAPIController extends Controller
                         Chatify::push("private-chatify-download", 'download-button', [
                             'status' => 'download',
                             'file_id' => $file->id,
-                            'download_link' =>  route('download', [$file->id, $request->tuned_file, true])
+                            'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
                         ]);
         
                         return response()->json('status changed.');

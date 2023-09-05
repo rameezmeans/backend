@@ -88,21 +88,22 @@
                           <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="" style="width: 30%;">
                           <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                           @if($file->original_file_id)
-                            <a href="{{ route('download', [$file->original_file_id, $file->file_attached]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                            <a href="{{ route('download', [$file->original_file_id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                             </a>
                           @else
-                              <a href="{{ route('download', [$file->id, $file->file_attached]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                              <a href="{{ route('download', [$file->id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                               </a>
 
                             {{-- @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id) --}}
                             @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id || $file->tool_id != $kess3Label->id)
                               @if(!$file->decoded_files->isEmpty())
                                 @foreach($file->decoded_files as $decodedFile)
+                                  {{-- @php dd($decodedFile->name); @endphp --}}
                                   @if( $decodedFile->extension && $decodedFile->extension != "")
-                                    <a href="{{ route('download', [$file->id, $decodedFile->name.'.'.$decodedFile->extension]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$decodedFile->extension}})</span>
+                                    <a href="{{ route('download', [$file->id, $decodedFile->name.'.'.$decodedFile->extension, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$decodedFile->extension}})</span>
                                     </a>
                                   @else
-                                    <a href="{{ route('download', [$file->id, $decodedFile->name]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File</span>
+                                    <a href="{{ route('download', [$file->id, $decodedFile->name, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File</span>
                                     </a>
                                   @endif
                                 @endforeach
@@ -545,7 +546,7 @@
                                     @if($file->front_end_id == 2)
                                       <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
                                     @endif
-                                    <a href="{{ route('download',[$message['file_id'], $message['request_file']]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
+                                    <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
                                     </a>
                                     <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a>
                                 </div>
@@ -556,7 +557,7 @@
                                     <p>Please click on "Download Encrypted" Button to download and test the system. This way user will get Encrypted file or you will get the error so that you can process the file, manually.</p>
                                   </div>
                                   <div class="text-center">
-                                    <a href="{{ route('download-encrypted',[$message['file_id'], $message['request_file']]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download Encrypted</span>
+                                    <a href="{{ route('download-encrypted',[$message['file_id'], $message['request_file'], false]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download Encrypted</span>
                                     </a>
                                   </div>
                                   @endif
@@ -751,7 +752,7 @@
                                 <br>
                                 @if(isset($message['engineers_attachement']))
                                   <div class="text-center m-t-10">
-                                    <a href="{{route('download',[$message['file_id'], $message['engineers_attachement']])}}" class="text-danger">Download</a>
+                                    <a href="{{route('download',[$message['file_id'], $message['engineers_attachement'], 0])}}" class="text-danger">Download</a>
                                   </div>
                                 @endif
                                 <br>
@@ -765,7 +766,7 @@
                                     {{ $message['egnineers_internal_notes'] }}<br>
                                     @if(isset($message['engineers_attachement']))
                                       <div class="text-center m-t-10">
-                                        <a href="{{route('download',[$message['file_id'], $message['engineers_attachement']])}}" class="text-danger">Download</a>
+                                        <a href="{{route('download',[$message['file_id'], $message['engineers_attachement'], 0])}}" class="text-danger">Download</a>
                                       </div>
                                     @endif
                                     <br>
@@ -782,7 +783,7 @@
                                 {{ $message['file_url'] }}<br>
                                 @if(isset($message['file_url_attachement']))
                                       <div class="text-center m-t-10">
-                                        <a href="{{route('download',[$message['file_id'], $message['file_url_attachement']])}}" class="text-danger">Download</a>
+                                        <a href="{{route('download',[$message['file_id'], $message['file_url_attachement'], 0])}}" class="text-danger">Download</a>
                                       </div>
                                     @endif
                               </div>

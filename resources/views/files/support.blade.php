@@ -89,7 +89,7 @@
                                   <br>
                                   @if(isset($message['engineers_attachement']))
                                     <div class="text-center m-t-10">
-                                      <a href="{{route('download',[$message['file_id'], $message['engineers_attachement']])}}" class="text-danger">Download</a>
+                                      <a href="{{route('download',[$message['file_id'], $message['engineers_attachement'], 0])}}" class="text-danger">Download</a>
                                     </div>
                                   @endif
                                   <br>
@@ -103,7 +103,7 @@
                                       {{ $message['egnineers_internal_notes'] }}<br>
                                       @if(isset($message['engineers_attachement']))
                                         <div class="text-center m-t-10">
-                                          <a href="{{route('download',[$message['file_id'], $message['engineers_attachement']])}}" class="text-danger">Download</a>
+                                          <a href="{{route('download',[$message['file_id'], $message['engineers_attachement'], 0])}}" class="text-danger">Download</a>
                                         </div>
                                       @endif
                                       <br>
@@ -120,7 +120,7 @@
                                   {{ $message['file_url'] }}<br>
                                   @if(isset($message['file_url_attachement']))
                                         <div class="text-center m-t-10">
-                                          <a href="{{route('download',[$message['file_id'], $message['file_url_attachement']])}}" class="text-danger">Download</a>
+                                          <a href="{{route('download',[$message['file_id'], $message['file_url_attachement'], 0])}}" class="text-danger">Download</a>
                                         </div>
                                       @endif
                                 </div>
@@ -205,15 +205,12 @@
 
                         @foreach($requestFile->file_internel_events as $message)
                            
-                        
-        
-                          
                             <div class="message clearfix">
                               <div class="chat-bubble from-them bg-success">
                                   {{ $message['events_internal_notes'] }}<br>
                                   @if(isset($message['events_attachement']))
                                     <div class="text-center m-t-10">
-                                      <a href="{{route('download',[$message['file_id'], $message['events_attachement']])}}" class="text-danger">Download</a>
+                                      <a href="{{route('download',[$message['file_id'], $message['events_attachement'], 0])}}" class="text-danger">Download</a>
                                     </div>
                                   @endif
                                   <br>

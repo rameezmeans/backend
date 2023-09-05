@@ -119,7 +119,11 @@ class FilesController extends Controller
 
             $attachment = $request->file('decrypted_file');
             $fileName = $attachment->getClientOriginalName();
-            $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$fileName);
+
+            if($file->front_end_id == 1)
+                $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$fileName);
+            else
+                $attachment->move(public_path('/../../tuningX/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$fileName);
             
         }
 
@@ -543,17 +547,13 @@ class FilesController extends Controller
     public function download($id,$file_name, $deleteFile = false) {
         $file = File::findOrFail($id);
 
-        // dd($file_name);
-
-        // dd($deleteFile);
-
         if($file->front_end_id == 1){
             $path = public_path('/../../portal/public'.$file->file_path);
         }
         else{
             $path = public_path('/../../tuningX/public'.$file->file_path);
         }
-        
+
         $file_path = $path.$file_name;
 
         if($deleteFile){
