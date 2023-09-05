@@ -430,6 +430,7 @@ class FilesAPIController extends Controller
                 
                 $temp = [];
                 $temp['file_id'] = $file->id;
+                $temp['frontend'] = $file->front_end_id;
                 $temp['stage'] = $stage;
                 $temp['options'] = $options;
 
