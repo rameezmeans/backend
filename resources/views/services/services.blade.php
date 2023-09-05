@@ -51,7 +51,7 @@
                 <div class="card-body">
                     <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                         <div>
-                            <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                            <table class="table service-table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                                 <thead>
                                     <tr role="row">
                                         <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
@@ -118,7 +118,7 @@
             <div class="card-body">
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
-                        <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                        <table class="table evc-table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
@@ -177,6 +177,16 @@
 
 <script type="text/javascript">
     $( document ).ready(function(event) {
+
+        let table = $('.service-table').DataTable({
+          "aaSorting": [],
+
+        });
+
+        let table2 = $('.evc-table').DataTable({
+          "aaSorting": [],
+
+        });
         
         let switchStatus = true;
         $(document).on('change', '.active', function(e) {
