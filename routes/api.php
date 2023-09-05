@@ -34,7 +34,7 @@ Route::post('get_total_credits', [App\Http\Controllers\FilesAPIController::class
 Route::post('add_credits', [App\Http\Controllers\FilesAPIController::class, 'addSubdealersCredits']);
 Route::post('subtract_credits', [App\Http\Controllers\FilesAPIController::class, 'subtractSubdealersCredits']);
 
-Route::get('lua/files', [App\Http\Controllers\FilesAPIController::class, 'files'])->name('api-get-files');
+Route::get('lua/files/{frontend_id}', [App\Http\Controllers\FilesAPIController::class, 'files'])->name('api-get-files');
 Route::post('lua/file/set_checking_status', [App\Http\Controllers\FilesAPIController::class, 'setCheckingStatus'])->name('api-set-checking-status');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

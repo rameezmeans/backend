@@ -376,10 +376,11 @@ class FilesAPIController extends Controller
         return response()->json($tools);
     }
 
-    public function files(){
+    public function files($frontendID){
 
         $files = File::where('checking_status', 'unchecked')->where('type', 'master')
         ->whereNull('subdealer_group_id')
+        ->where('front_end_id', $frontendID)
         ->get();
 
         $arrFiles = [];
