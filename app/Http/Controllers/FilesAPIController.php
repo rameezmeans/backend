@@ -507,6 +507,7 @@ class FilesAPIController extends Controller
 
                 $path = public_path('/../../portal/public'.$file->file_path.$request->tuned_file);
                 }
+
                 else{
 
                 copy( public_path('/../../tuningX/public/uploads/filesready'.'/'.$request->tuned_file), 
@@ -518,7 +519,7 @@ class FilesAPIController extends Controller
 
                 }
 
-                if($file->custom_options == NULL){
+                // if($file->custom_options == NULL){
 
                     if($file->alientech_file){ // if slot id is assigned
                         $slotID = $file->alientech_file->slot_id;
@@ -555,28 +556,36 @@ class FilesAPIController extends Controller
                     if($flag){
 
                         Chatify::push("private-chatify-download", 'download-button', [
-                            'status' => 'completed',
-                            'file_id' => $file->id
-                        ]);
-        
-                        return response()->json('status changed.');
-                    }
-
-                }
-                else{
-
-                    if($flag){
-
-                        Chatify::push("private-chatify-download", 'download-button', [
                             'status' => 'download',
                             'file_id' => $file->id,
                             'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
                         ]);
         
                         return response()->json('status changed.');
+
+                        // Chatify::push("private-chatify-download", 'download-button', [
+                        //     'status' => 'completed',
+                        //     'file_id' => $file->id
+                        // ]);
+        
+                        // return response()->json('status changed.');
                     }
 
-                }
+                // }
+                // else{
+
+                //     // if($flag){
+
+                //     //     Chatify::push("private-chatify-download", 'download-button', [
+                //     //         'status' => 'download',
+                //     //         'file_id' => $file->id,
+                //     //         'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
+                //     //     ]);
+        
+                //     //     return response()->json('status changed.');
+                //     // }
+
+                // }
 
             }
         }
