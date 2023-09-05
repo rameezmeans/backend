@@ -438,8 +438,8 @@ class FilesAPIController extends Controller
                         $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$this->getFileToShowToLUA($file);
                     }
                     else{
-                        $temp['location'] = 'https://tuningx.test'.$file->file_path.$this->getFileToShowToLUA($file);
-                        // $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$this->getFileToShowToLUA($file);
+                        // $temp['location'] = 'https://tuningx.test'.$file->file_path.$this->getFileToShowToLUA($file);
+                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$this->getFileToShowToLUA($file);
                     }
                 }
                 else{
