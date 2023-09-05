@@ -386,16 +386,20 @@ class FilesAPIController extends Controller
 
         foreach($files as $file){
 
-            if($file->stage_services){
-                $stage = \App\Models\Service::FindOrFail( $file->stage_services->service_id )->label;
+            if($file->custom_stage != NULL){
+                $stage = \App\Models\Service::FindOrFail( $file->custom_stage )->label;
             }
             else{
-                $stage = $file->stages;
+                if($file->stage_services){
+                    $stage = \App\Models\Service::FindOrFail( $file->stage_services->service_id )->label;
+                }
             }
 
             $options = NULL;
 
-            if($file->custom_options == NULL){
+            // dd($file->custom_options);
+
+            if($file->custom_options === NULL){
 
                 if($file->options_services){
                     foreach($file->options_services as $o){
@@ -404,11 +408,12 @@ class FilesAPIController extends Controller
                     $options = rtrim($options, ",");
                 }
                 else{
-                    $options = $file->options;
+                    $options = null;
                 }
             }
             else{
-                if($file->custom_options !== ''){
+
+                if(!empty($file->custom_options)){
                     $customOptions = explode(',', $file->custom_options);
                     foreach($customOptions as $op){
                         if($op != 0){
@@ -416,6 +421,10 @@ class FilesAPIController extends Controller
                         }
                     }
                     $options = rtrim($options, ",");
+                }
+                else{
+                    
+                    $options = "";
                 }
             }
                 
@@ -425,11 +434,23 @@ class FilesAPIController extends Controller
                 $temp['options'] = $options;
 
                 if($file->decoded_files->count() > 0){
-                    $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$this->getFileToShowToLUA($file);
+                    if($file->front_end_id == 1){
+                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$this->getFileToShowToLUA($file);
+                    }
+                    else{
+                        $temp['location'] = 'https://tuningx.test'.$file->file_path.$this->getFileToShowToLUA($file);
+                        // $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$this->getFileToShowToLUA($file);
+                    }
                 }
                 else{
+
+                    if($file->front_end_id == 1){
                     
-                    $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached;
+                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached;
+                    }
+                    else{
+                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->file_attached;
+                    }
 
                 }
 
@@ -549,7 +570,7 @@ class FilesAPIController extends Controller
                         Chatify::push("private-chatify-download", 'download-button', [
                             'status' => 'download',
                             'file_id' => $file->id,
-                            'download_link' =>  route('download', [$file->id, $request->tuned_file])
+                            'download_link' =>  route('download', [$file->id, $request->tuned_file, true])
                         ]);
         
                         return response()->json('status changed.');

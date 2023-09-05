@@ -95,13 +95,23 @@ class FilesController extends Controller
 
         $file = File::findOrFail($request->file_id);
         
+        if($request->download_directly == 'download' && $request->custom_stage ){
+            
+            $file->custom_stage = $request->custom_stage;
+            $file->save();
+        }
+        else{
+            $file->custom_stage = NULL;
+            $file->save();
+        }
+        
         if($request->download_directly == 'download' && $request->custom_options ){
             
             $file->custom_options = implode(',', $request->custom_options);
             $file->save();
         }
         else{
-            $file->custom_options = 0;
+            $file->custom_options = '';
             $file->save();
         }
         
@@ -530,8 +540,12 @@ class FilesController extends Controller
         }
     }
 
-    public function download($id,$file_name) {
+    public function download($id,$file_name, $deleteFile = false) {
         $file = File::findOrFail($id);
+
+        // dd($file_name);
+
+        // dd($deleteFile);
 
         if($file->front_end_id == 1){
             $path = public_path('/../../portal/public'.$file->file_path);
@@ -539,8 +553,16 @@ class FilesController extends Controller
         else{
             $path = public_path('/../../tuningX/public'.$file->file_path);
         }
+        
         $file_path = $path.$file_name;
-        return response()->download($file_path);
+
+        if($deleteFile){
+            return response()->download($file_path)->deleteFileAfterSend(true);
+        }
+        else{
+            return response()->download($file_path);
+        }
+
     }
 
     public function deleteMessage(Request $request)
@@ -1408,10 +1430,24 @@ class FilesController extends Controller
         else{
             $comments = null;
         }
+
+        $selectedOptions = [];
+
+        foreach($file->options_services as $selected){
+            $selectedOptions []= $selected->service_id;
+        }
+
+        $options = Service::where('type', 'option')
+        ->whereNull('subdealer_group_id')
+        ->where('active', 1)->get();
+
+        $stages = Service::where('type', 'tunning')
+        ->whereNull('subdealer_group_id')
+        ->where('active', 1)->get();
         
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
 
-        return view('files.show', [ 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
+        return view('files.show', ['selectedOptions' => $selectedOptions, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
     }
 
     public function saveMoreFiles($id, $alientechFileID){

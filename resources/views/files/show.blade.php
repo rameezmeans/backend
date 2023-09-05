@@ -968,21 +968,36 @@
                         <input class="download_directly" type="radio"  value="download" name="download_directly" id="download">
                         <label for="download">Download with Custom Options</label>
                       </div>
+
+                      <div class="stages-show hide">
+                        <h5 class="m-t-20">Stages Options</h5>
+                        @foreach($stages as $stage)
+                          <div class="radio radio-success">
+                            <input class="stages" type="radio" @if($file->stage_services->service_id == $stage->id) checked="checked" @endif value="{{$stage->id}}" name="custom_stage" id="{{$stage->id}}">
+                            <label for="{{$stage->id}}">{{$stage->name}}</label>
+                          </div>
+                        @endforeach
+                      </div>
+
                       <div class="options-show hide">
                       <h5 class="m-t-20">Custome Options</h5>
                       <div class="radio radio-success">
-                        @if(!$file->options_services->isEmpty())
-                          @foreach($file->options_services as $option)
-                          <div class="checkbox check-success">
-                            <input checked name="custom_options[]" type="checkbox" value="{{$option->service_id}}" id="{{$option->service_id}}">
-                            <label for="{{$option->service_id}}">{{\App\Models\Service::findOrFail($option->service_id)->name}}</label>
-                          </div>
-                          @endforeach
-                        @else
-                          <p>No Options.</p>
-                        @endif
+                         @if(!$file->options_services->isEmpty())
+                          {{-- @foreach($file->options_services as $option) --}}
+                            @if(!$options->isEmpty())
+                              @foreach($options as $option)
+                                <div class="checkbox check-success">
+                                  <input @if(in_array($option->id, $selectedOptions)) checked @endif name="custom_options[]" type="checkbox" value="{{$option->id}}" id="{{$option->id}}">
+                                  <label for="{{$option->id}}">{{$option->name}} - ({{$option->vehicle_type}})</label>
+                                </div>
+                              @endforeach
+                            @endif
+                          @else
+                            <p>No Options.</p>
+                          @endif
                       </div>
                       </div>
+
                       <button class="btn btn-success">Upload</button>
                     </form>
                   </div>
@@ -1044,9 +1059,11 @@
 
       if(val == 'direct'){
         $('.options-show').addClass('hide');
+        $('.stages-show').addClass('hide');
       }
       else{
         $('.options-show').removeClass('hide');
+        $('.stages-show').removeClass('hide');
       }
     });
 
