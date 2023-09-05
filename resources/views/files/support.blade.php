@@ -51,7 +51,7 @@
               <div class="col-lg-12">
             
                   <div class="widget-16 card no-border widget-loader-circle">
-                    <div class=" bg-warning-light">
+                    <div class="@if($file->front_end_id == 1) bg-primary-light @elseif($file->front_end_id == 2) bg-warning-light @endif">
                       <div class="text-center">
                         <div class="card-title">
                             <img style="width: 15%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
@@ -181,9 +181,9 @@
 
       <div class="row column-seperation">
         <div class="col-lg-12">
-      
+          {{-- @php dd($file->front_end_id); @endphp --}}
             <div class="widget-16 card no-border widget-loader-circle">
-              <div class=" bg-warning-light">
+              <div class="@if($file->front_end_id == 1) bg-primary-light @elseif($file->front_end_id == 2) bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 15%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">

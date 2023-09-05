@@ -51,11 +51,20 @@
             <a href="#"  @if(!Session::has('tab')) class="active" @endif data-toggle="tab" data-target="#slide1"><span>Task</span></a>
           </li>
 
-          @if($file->front_end_id == 1)
+          @if( ($file->front_end_id == 1 && $file->subdealer_group_id == NULL) )
+         
+            <li class="nav-item">
+              <a href="#" data-toggle="tab" @if(Session::get('tab') == 'chat') class="active" @endif data-target="#slide2"><span>Chat and Support</span></a>
+            </li>
+          
+          @endif
+
+          {{-- @php dd($file->subdealer_group_id); @endphp
+          @if($file->subdealer_group_id == NULL)
           <li class="nav-item">
             <a href="#" data-toggle="tab" @if(Session::get('tab') == 'chat') class="active" @endif data-target="#slide2"><span>Chat and Support</span></a>
           </li>
-          @endif
+          @endif --}}
           
           <li class="nav-item">
             <a href="#" data-toggle="tab" data-target="#slide3"><span>Admin Tasks</span></a>
@@ -543,7 +552,7 @@
                                   <a href="#" class="btn-sm btn-info btn-cons"> <span class="bold">{{$message['type']}}</span>
                                   </a>
                                   @endisset
-                                    @if($file->front_end_id == 2)
+                                    @if(!($file->front_end_id == 1 && $file->subdealer_group_id == NULL))
                                       <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
                                     @endif
                                     <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
@@ -713,7 +722,7 @@
               </div>
             </div>
           </div>
-          @if($file->front_end_id == 1)
+          @if(($file->front_end_id == 1 && $file->subdealer_group_id == NULL))
           <div class="tab-pane slide-left @if(Session::get('tab') == 'chat') active @endif" id="slide2">
             <div class="row">
               <div class="col-lg-12">

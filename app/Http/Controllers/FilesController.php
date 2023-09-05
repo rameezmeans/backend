@@ -69,7 +69,7 @@ class FilesController extends Controller
         $requestFile = RequestFile::findOrFail($id);
         $file = File::findOrFail($requestFile->file_id);
 
-        if($file->front_end_id == 1){
+        if(($file->front_end_id == 1 && $file->subdealer_group_id == NULL)){
             abort(404);
         }
 
@@ -545,10 +545,16 @@ class FilesController extends Controller
     }
 
     public function download($id,$file_name, $deleteFile = false) {
+
         $file = File::findOrFail($id);
 
         if($file->front_end_id == 1){
-            $path = public_path('/../../portal/public'.$file->file_path);
+            if($file->subdealer_group_id){
+                $path = public_path('/../../subportal/public'.$file->file_path);
+            }
+            else{
+                $path = public_path('/../../portal/public'.$file->file_path);
+            }
         }
         else{
             $path = public_path('/../../tuningX/public'.$file->file_path);
@@ -771,7 +777,19 @@ class FilesController extends Controller
             $attachment = $request->file('engineers_attachement');
             $fileName = $attachment->getClientOriginalName();
             $model = str_replace('/', '', $file->model );
-            $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$model.'/'.$file->id.'/'),$fileName);
+
+            if($file->front_end_id == 1){
+                
+                if($file->subdealer_group_id)
+                    $attachment->move(public_path('/../../subportal/public/uploads/'.$file->brand.'/'.$model.'/'.$file->id.'/'),$fileName);
+                else
+                    $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$model.'/'.$file->id.'/'),$fileName);
+            }
+            else{
+                $attachment->move(public_path('/../../tuningX/public/uploads/'.$file->brand.'/'.$model.'/'.$file->id.'/'),$fileName);
+
+            }
+
             $reply->engineers_attachement = $fileName;
         }
 
