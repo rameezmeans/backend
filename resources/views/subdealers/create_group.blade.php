@@ -63,8 +63,8 @@
                 <div class="form-group form-group-default required ">
                   <label>Paypal Payment Account</label>
                   <select name="paypal_payment_account_id" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
-                    @foreach($paypalAccounts as $account)
-                      <option @if(isset($paymentAccount) && $paypalPaymentAccount->id == $account->id) {{ 'selected' }} @endif value="{{$account->id}}">{{$account->name}}</option>
+                    @foreach($paypalAccounts as $paypalaccount)
+                      <option @if(isset($paypalPaymentAccount) && $paypalPaymentAccount->id == $paypalaccount->id) {{ 'selected' }} @endif value="{{$paypalaccount->id}}">{{$paypalaccount->name}}</option>
                     @endforeach
                   </select>
                 </div>

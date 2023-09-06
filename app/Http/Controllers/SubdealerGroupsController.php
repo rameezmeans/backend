@@ -825,7 +825,7 @@ class SubdealerGroupsController extends Controller
     }
 
     public function updateGroup(Request $request){
-
+        
         $subdealerGroup = SubdealerGroup::findOrFail($request->id);
         $subdealerGroup->tax = $request->tax;
         $subdealerGroup->name= $request->name;
