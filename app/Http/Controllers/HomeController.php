@@ -6,6 +6,7 @@ use App\Models\Credit;
 use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\FrontEnd;
+use App\Models\ReminderManager;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
+    private $manager;
     /**
      * Create a new controller instance.
      *
@@ -23,6 +25,14 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $reminderManagers = ReminderManager::whereNull('subdealer_group_id')->get();
+        $manager = [];
+        foreach($reminderManagers as $row){
+            $temp[$row->type] = $row->active;
+            $manager = array_merge($manager, $temp);
+        }
+
+        $this->manager = $manager;
     }
 
     /**
@@ -32,6 +42,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // dd($this->manager['file_upload_admin_email']);
         $engineers = get_engineers();
         $customers = get_customers(1);
         $engineersCount = sizeof($engineers);
