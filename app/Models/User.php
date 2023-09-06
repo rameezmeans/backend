@@ -68,7 +68,7 @@ class User extends Authenticatable
     }
 
     public function sum(){
-        return Credit::where('user_id', $this->id)->sum('credits'); 
+        return Credit::where('user_id', $this->id)->where('is_evc', 0)->sum('credits'); 
     }
 
     public function purchased(){
@@ -76,19 +76,19 @@ class User extends Authenticatable
     }
 
     public function spent(){
-        return Credit::where('user_id', $this->id)->where('credits', '<', 0)->whereNotNull('file_id')->sum('credits'); 
+        return Credit::where('user_id', $this->id)->where('is_evc', 0)->where('credits', '<', 0)->whereNotNull('file_id')->sum('credits'); 
     }
 
     public function total_credits(){
-        return Credit::where('user_id', '=', $this->id)->sum('credits');
+        return Credit::where('user_id', '=', $this->id)->where('is_evc', 0)->sum('credits');
     }
 
     public function amount(){
-        return Credit::where('user_id', $this->id)->sum('price_payed'); 
+        return Credit::where('user_id', $this->id)->where('is_evc', 0)->sum('price_payed'); 
     }
 
     public function credits(){
-        return $this->hasMany(Credit::class)->orderby('created_at', 'desc'); 
+        return $this->hasMany(Credit::class)->where('is_evc', 0)->orderby('created_at', 'desc'); 
     }
 
     public function tools_slave(){
