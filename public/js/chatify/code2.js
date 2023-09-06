@@ -612,12 +612,19 @@ var channel = pusher.subscribe(`${channelName}.${auth_id}`);
 var clientSendChannel;
 var clientListenChannel;
 
+// const channelNameNew = "private-chatify-new";
+// var channelNew = pusher.subscribe(`${channelNameNew}.${auth_id}`);
+// var channelNew;
+
+// console.log(channelNew);
+
 function initClientChannel() {
     if (getMessengerId()) {
         clientSendChannel = pusher.subscribe(
             `${channelName}.${getMessengerId()}`
         );
         clientListenChannel = pusher.subscribe(`${channelName}.${auth_id}`);
+        // channelNew = pusher.subscribe(`${channelNameNew}.${auth_id}`);
     }
 }
 initClientChannel();
