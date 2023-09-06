@@ -488,6 +488,8 @@ class FilesAPIController extends Controller
         
         $file = File::findOrFail($request->file_id);
 
+        $chatID = env('CHAT_USER_ID');
+
         if($file->checking_status == 'unchecked'){
             $file->checking_status = $request->checking_status;
             $flag = $file->save();
@@ -559,7 +561,7 @@ class FilesAPIController extends Controller
 
                         if($file->front_end_id == 1){
 
-                            Chatify::push("private-chatify-download-portal", 'download-button', [
+                            Chatify::push("private-chatify-download-portal".$chatID, 'download-button', [
                                 'status' => 'download',
                                 'file_id' => $file->id,
                                 'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
@@ -568,7 +570,7 @@ class FilesAPIController extends Controller
 
                         else if($file->front_end_id == 2){
 
-                            Chatify::push("private-chatify-download-tuningx", 'download-button', [
+                            Chatify::push("private-chatify-download-tuningx".$chatID, 'download-button', [
                                 'status' => 'download',
                                 'file_id' => $file->id,
                                 'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
@@ -605,9 +607,11 @@ class FilesAPIController extends Controller
             }
         }
 
+        
+
         if($file->front_end_id == 1){
 
-            Chatify::push("private-chatify-download-portal", 'download-button', [
+            Chatify::push("private-chatify-download-portal".$chatID, 'download-button', [
                 'status' => 'fail',
                 'file_id' => $file->id
             ]);
@@ -615,7 +619,7 @@ class FilesAPIController extends Controller
         }
         else if($file->front_end_id == 2){
             
-            Chatify::push("private-chatify-download-tuningx", 'download-button', [
+            Chatify::push("private-chatify-download-tuningx".$chatID, 'download-button', [
                 'status' => 'fail',
                 'file_id' => $file->id
             ]);
