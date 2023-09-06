@@ -563,7 +563,7 @@ class FilesAPIController extends Controller
                             'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
                         ]);
         
-                        return response()->json('status changed.');
+                        return response()->json('file found.');
 
                         // Chatify::push("private-chatify-download", 'download-button', [
                         //     'status' => 'completed',
@@ -597,7 +597,7 @@ class FilesAPIController extends Controller
             'file_id' => $file->id
         ]);
         
-        return response()->json('status not changed.');
+        return response()->json('search failed.');
 
     }
 
