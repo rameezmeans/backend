@@ -557,11 +557,24 @@ class FilesAPIController extends Controller
                     
                     if($flag){
 
-                        Chatify::push("private-chatify-download", 'download-button', [
-                            'status' => 'download',
-                            'file_id' => $file->id,
-                            'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
-                        ]);
+                        if($file->front_end_id == 1){
+
+                            Chatify::push("private-chatify-download-portal", 'download-button', [
+                                'status' => 'download',
+                                'file_id' => $file->id,
+                                'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
+                            ]);
+                        }
+
+                        else if($file->front_end_id == 2){
+
+                            Chatify::push("private-chatify-download-tuningx", 'download-button', [
+                                'status' => 'download',
+                                'file_id' => $file->id,
+                                'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
+                            ]);
+
+                        }
         
                         return response()->json('file found.');
 
@@ -592,10 +605,21 @@ class FilesAPIController extends Controller
             }
         }
 
-        Chatify::push("private-chatify-download", 'download-button', [
-            'status' => 'fail',
-            'file_id' => $file->id
-        ]);
+        if($file->front_end_id == 1){
+
+            Chatify::push("private-chatify-download-portal", 'download-button', [
+                'status' => 'fail',
+                'file_id' => $file->id
+            ]);
+
+        }
+        else if($file->front_end_id == 2){
+            
+            Chatify::push("private-chatify-download-tuningx", 'download-button', [
+                'status' => 'fail',
+                'file_id' => $file->id
+            ]);
+        }
         
         return response()->json('search failed.');
 
