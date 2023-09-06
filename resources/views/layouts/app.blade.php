@@ -194,6 +194,16 @@
       Dropzone.autoDiscover = false;
 
       $( document ).ready(function(event) {
+
+        clientListenChannel.bind("test", function (data) {
+          console.log(data);
+          let obj = Push.create("ECU Tech customer File upload!", {
+              body: "Testing completed.",
+              timeout: 5000,
+          });
+
+          console.log(obj);
+      });
         
         $('.datepicker').datepicker({
           format: "dd/mm/yyyy",
