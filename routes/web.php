@@ -663,11 +663,13 @@ Route::get('create_subdealer_subdealer/{id}', [SubdealerGroupsController::class,
 Route::post('update_tokens', [SubdealerGroupsController::class, 'updateTokens'])->name('update-tokens');
 Route::post('update_master_tokens', [SubdealerGroupsController::class, 'updateMasterTokens'])->name('update-master-tokens');
 
-Route::get('packages', [PackageController::class, 'index'])->name('packages');
-Route::get('subdealer-packages', [PackageController::class, 'fmsPackages'])->name('fms-packages');
+Route::get('fms_subdealer_packages', [PackageController::class, 'fmsPackages'])->name('fms-packages');
 Route::get('fms_edit_package/{id}', [PackageController::class, 'fmsEdit'])->name('fms-edit-package');
-Route::get('create_package', [PackageController::class, 'create'])->name('create-package');
 Route::get('fms_create_package', [PackageController::class, 'fmsCreate'])->name('fms-create-package');
+
+Route::get('packages', [PackageController::class, 'index'])->name('packages');
+Route::get('create_package', [PackageController::class, 'create'])->name('create-package');
+Route::get('edit_package/{id}', [PackageController::class, 'edit'])->name('edit-package');
 Route::post('store_package', [PackageController::class, 'store'])->name('store-package');
 Route::post('update_package', [PackageController::class, 'update'])->name('update-package');
 Route::post('delete_package', [PackageController::class, 'delete'])->name('delete-package');
