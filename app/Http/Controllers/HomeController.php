@@ -41,8 +41,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        // dd($this->manager['file_upload_admin_email']);
+    {   
         $engineers = get_engineers();
         $customers = get_customers(1);
         $engineersCount = sizeof($engineers);
