@@ -13,6 +13,19 @@ class PackageController extends Controller
         $this->middleware('auth');
     }
 
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fmsPackages()
+    {
+        $packages = Package::whereNull('subdealer_group_id')->where('type', 'service')->where('from_master_subdealer', 1)->get();
+        $evcPackages = Package::whereNull('subdealer_group_id')->where('type', 'evc')->where('from_master_subdealer', 1)->get();
+
+        return view('packages.fms_packages', ['packages' => $packages, 'evcPackages' => $evcPackages]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,10 +33,20 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $packages = Package::whereNull('subdealer_group_id')->where('type', 'service')->get();
-        $evcPackages = Package::whereNull('subdealer_group_id')->where('type', 'evc')->get();
+        $packages = Package::whereNull('subdealer_group_id')->where('type', 'service')->where('from_master_subdealer', 0)->get();
+        $evcPackages = Package::whereNull('subdealer_group_id')->where('type', 'evc')->where('from_master_subdealer', 0)->get();
        
         return view('packages.index', ['packages' => $packages, 'evcPackages' => $evcPackages]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fmsCreate()
+    {
+        return view('packages.fms_create_edit');
     }
 
     /**
@@ -58,8 +81,19 @@ class PackageController extends Controller
         $package->discounted_price = $request->discounted_price;
         $package->type = $request->type;
         $package->desc = $request->desc;
+
+        if(isset($request->from_master_subdealer)){
+            $package->from_master_subdealer = $request->from_master_subdealer;
+        }
+        else{
+            $package->from_master_subdealer = 0;
+        }
+
         $package->save();
 
+        if($package->from_master_subdealer){
+            return redirect()->route('fms-packages')->with(['success' => 'Package created!']);
+        }
         return redirect()->route('packages')->with(['success' => 'Package created!']);
 
     }
@@ -85,6 +119,18 @@ class PackageController extends Controller
     {
         $package = Package::findOrFail($id);
         return view('packages.packages_create_edit', ['package' => $package]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Package  $package
+     * @return \Illuminate\Http\Response
+     */
+    public function fmsEdit($id)
+    {
+        $package = Package::findOrFail($id);
+        return view('packages.fms_create_edit', ['package' => $package]);
     }
 
     /**
@@ -127,7 +173,19 @@ class PackageController extends Controller
         $package->desc = $request->desc;
         $package->save();
 
-        return redirect()->route('packages')->with(['success' => 'Package updated!']);
+        if(isset($request->from_master_subdealer)){
+            $package->from_master_subdealer = $request->from_master_subdealer;
+        }
+        else{
+            $package->from_master_subdealer = 0;
+        }
+
+        $package->save();
+
+        if($package->from_master_subdealer){
+            return redirect()->route('fms-packages')->with(['success' => 'Package udpated!']);
+        }
+        return redirect()->route('packages')->with(['success' => 'Package udpated!']);
     }
 
     /**

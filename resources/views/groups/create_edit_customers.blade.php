@@ -47,7 +47,7 @@
                 @enderror
                 <div class="form-group form-group-default required ">
                   <label>Email</label>
-                  <input disabled value="@if(isset($customer)){{$customer->email}}@else{{old('email')}}@endif"  name="email" type="text" class="form-control" required>
+                  <input @if(isset($customer)) disabled @endif value="@if(isset($customer)){{$customer->email}}@else{{old('email')}}@endif"  name="email" type="text" class="form-control" required>
                 </div>
                 @error('email')
                   <span class="text-danger" role="alert">

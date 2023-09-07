@@ -160,6 +160,10 @@
               <a href="{{ route('packages') }}">Packages</a>
               <span class="icon-thumbnail">Pa</span>
             </li>
+            <li class="m-t-30 ">
+              <a href="{{ route('fms-packages') }}">Packages For Subdealers</a>
+              <span class="icon-thumbnail">Pa</span>
+            </li>
             <li class="">
               <a href="{{ route('unit-price') }}">Unit Price</a>
               <span class="icon-thumbnail">UP</span>
