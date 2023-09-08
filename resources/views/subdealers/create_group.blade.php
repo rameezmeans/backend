@@ -75,7 +75,7 @@
                 @enderror
                   <div class="form-group form-group-default required ">
                     <label>Tax</label>
-                    <input value="@if(isset($subdealerGroup)){{$subdealerGroup->tax}}@else{{old('tax')}}@endif"  name="tax" type="number" min="0" class="form-control" required>
+                    <input value="@if(isset($subdealerGroup)){{$subdealerGroup->tax}}@else{{old('tax')}}@endif"  name="tax" type="text" min="0" class="form-control" required>
                   </div>
                   @error('tax')
                     <span class="text-danger" role="alert">

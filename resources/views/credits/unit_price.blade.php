@@ -52,7 +52,7 @@
                      
                       <div class="form-group form-group-default required ">
                         <label>Price in Euros</label>
-                        <input value="@if(isset($creditPrice)){{ $creditPrice->value }}@endif"  name="credit_price" type="number" class="form-control" required>
+                        <input value="@if(isset($creditPrice)){{ $creditPrice->value }}@endif"  name="credit_price" type="text" class="form-control" required>
                       </div>
                       @error('credit_price')
                         <span class="text-danger" role="alert">
@@ -89,7 +89,7 @@
                      
                       <div class="form-group form-group-default required ">
                         <label>Price in Euros</label>
-                        <input value="@if(isset($evcCreditPrice)){{ $evcCreditPrice->value }}@endif"  name="evc_credit_price" type="number" class="form-control" required>
+                        <input value="@if(isset($evcCreditPrice)){{ $evcCreditPrice->value }}@endif"  name="evc_credit_price" type="text" class="form-control" required>
                       </div>
                       @error('credit_price')
                         <span class="text-danger" role="alert">

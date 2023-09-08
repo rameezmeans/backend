@@ -75,7 +75,7 @@
                   @enderror
                   <div class="form-group form-group-default ">
                     <label>LUA search Charges</label>
-                    <input value="@if(isset($subdealer)){{$subdealer->subdealers_data->lua_search_charges}}@else{{old('lua_search_charges')}}@endif"  name="lua_search_charges" type="number" class="form-control">
+                    <input value="@if(isset($subdealer)){{$subdealer->subdealers_data->lua_search_charges}}@else{{old('lua_search_charges')}}@endif"  name="lua_search_charges" type="text" class="form-control">
                   </div>
                   @error('name')
                     <span class="text-danger" role="alert">

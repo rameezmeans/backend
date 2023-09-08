@@ -58,7 +58,7 @@
                   @enderror
                   <div class="form-group form-group-default required ">
                     <label>Actual Price</label>
-                    <input value="@if(isset($package)){{$package->actual_price}}@else{{old('actual_price') }}@endif"  name="actual_price" type="number" class="form-control" required>
+                    <input value="@if(isset($package)){{$package->actual_price}}@else{{old('actual_price') }}@endif"  name="actual_price" type="text" class="form-control" required>
                   </div>
                   @error('actual_price')
                     <span class="text-danger" role="alert">
@@ -68,7 +68,7 @@
 
                   <div class="form-group form-group-default required ">
                     <label>Discounted Price</label>
-                    <input value="@if(isset($package)){{$package->discounted_price}}@else{{old('discounted_price') }}@endif"  name="discounted_price" type="number" class="form-control" required>
+                    <input value="@if(isset($package)){{$package->discounted_price}}@else{{old('discounted_price') }}@endif"  name="discounted_price" type="text" class="form-control" required>
                   </div>
                   @error('discounted_price')
                     <span class="text-danger" role="alert">
@@ -146,7 +146,7 @@
                           @enderror
                           <div class="form-group form-group-default required ">
                             <label>Actual Price</label>
-                            <input value="@if(isset($package)){{$package->actual_price}}@else{{old('actual_price') }}@endif"  name="actual_price" type="number" class="form-control" required>
+                            <input value="@if(isset($package)){{$package->actual_price}}@else{{old('actual_price') }}@endif"  name="actual_price" type="text" class="form-control" required>
                           </div>
                           @error('actual_price')
                             <span class="text-danger" role="alert">
@@ -156,7 +156,7 @@
         
                           <div class="form-group form-group-default required ">
                             <label>Discounted Price</label>
-                            <input value="@if(isset($package)){{$package->discounted_price}}@else{{old('discounted_price') }}@endif"  name="discounted_price" type="number" class="form-control" required>
+                            <input value="@if(isset($package)){{$package->discounted_price}}@else{{old('discounted_price') }}@endif"  name="discounted_price" type="text" class="form-control" required>
                           </div>
                           @error('discounted_price')
                             <span class="text-danger" role="alert">
@@ -224,7 +224,7 @@
                           @enderror
                           <div class="form-group form-group-default required ">
                             <label>Actual Price</label>
-                            <input value="@if(isset($package)){{$package->actual_price}}@else{{old('actual_price') }}@endif"  name="actual_price" type="number" class="form-control" required>
+                            <input value="@if(isset($package)){{$package->actual_price}}@else{{old('actual_price') }}@endif"  name="actual_price" type="text" class="form-control" required>
                           </div>
                           @error('actual_price')
                             <span class="text-danger" role="alert">
@@ -234,7 +234,7 @@
         
                           <div class="form-group form-group-default required ">
                             <label>Discounted Price</label>
-                            <input value="@if(isset($package)){{$package->discounted_price}}@else{{old('discounted_price') }}@endif"  name="discounted_price" type="number" class="form-control" required>
+                            <input value="@if(isset($package)){{$package->discounted_price}}@else{{old('discounted_price') }}@endif"  name="discounted_price" type="text" class="form-control" required>
                           </div>
                           @error('discounted_price')
                             <span class="text-danger" role="alert">

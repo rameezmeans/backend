@@ -37,7 +37,7 @@
                 @enderror
                 <div class="form-group form-group-default required ">
                   <label>Tax</label>
-                  <input value="@if(isset($group)){{$group->tax}}@else{{old('tax')}}@endif"  name="tax" type="number" min="0" class="form-control" required>
+                  <input value="@if(isset($group)){{$group->tax}}@else{{old('tax')}}@endif"  name="tax" type="text" min="0" class="form-control" required>
                 </div>
                 @error('tax')
                   <span class="text-danger" role="alert">
@@ -46,7 +46,7 @@
                 @enderror
                 <div class="form-group form-group-default required ">
                   <label>Discount</label>
-                  <input value="@if(isset($group)){{$group->discount}}@else{{old('discount')}}@endif" name="discount" min="0" type="number" class="form-control" required>
+                  <input value="@if(isset($group)){{$group->discount}}@else{{old('discount')}}@endif" name="discount" min="0" type="text" class="form-control" required>
                 </div>
                 @error('credits')
                   <span class="text-danger" role="alert">
@@ -55,7 +55,7 @@
                 @enderror
                 <div class="form-group form-group-default required ">
                   <label>Raise</label>
-                  <input value="@if(isset($group)){{$group->raise}}@else{{old('raise')}}@endif" name="raise" min="0" type="number" class="form-control" required>
+                  <input value="@if(isset($group)){{$group->raise}}@else{{old('raise')}}@endif" name="raise" min="0" type="text" class="form-control" required>
                 </div>
                 @error('raise')
                   <span class="text-danger" role="alert">
