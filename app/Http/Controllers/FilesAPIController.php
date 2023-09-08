@@ -561,7 +561,7 @@ class FilesAPIController extends Controller
 
                         if($file->front_end_id == 1){
 
-                            Chatify::push("private-chatify-download-portal".$chatID, 'download-button', [
+                            Chatify::push("private-chatify-download-portal", 'download-button', [
                                 'status' => 'download',
                                 'file_id' => $file->id,
                                 'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
@@ -570,7 +570,7 @@ class FilesAPIController extends Controller
 
                         else if($file->front_end_id == 2){
 
-                            Chatify::push("private-chatify-download-tuningx".$chatID, 'download-button', [
+                            Chatify::push("private-chatify-download-tuningx", 'download-button', [
                                 'status' => 'download',
                                 'file_id' => $file->id,
                                 'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
@@ -606,12 +606,10 @@ class FilesAPIController extends Controller
 
             }
         }
-
         
-
         if($file->front_end_id == 1){
 
-            Chatify::push("private-chatify-download-portal".$chatID, 'download-button', [
+            Chatify::push("private-chatify-download-portal", 'download-button', [
                 'status' => 'fail',
                 'file_id' => $file->id
             ]);
@@ -619,7 +617,7 @@ class FilesAPIController extends Controller
         }
         else if($file->front_end_id == 2){
             
-            Chatify::push("private-chatify-download-tuningx".$chatID, 'download-button', [
+            Chatify::push("private-chatify-download-tuningx", 'download-button', [
                 'status' => 'fail',
                 'file_id' => $file->id
             ]);
