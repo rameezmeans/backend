@@ -3,6 +3,20 @@
 @section('pagespecificstyles')
   <style>
 
+#circle{
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background:#f55753;
+  border-radius:50%;
+  -moz-border-radius:50%;
+  -webkit-border-radius:50%;
+  line-height:20px;
+  vertical-align:middle;
+  text-align:center;
+  color:white;
+  }
+
   .chat-view .chat-bubble {
       padding: 12px 24px !important;
   }
@@ -553,6 +567,15 @@
                                   </a>
                                   @endisset
                                     @if(!($file->front_end_id == 1 && $file->subdealer_group_id == NULL))
+                                      @php
+                                        $messageFile = \App\Models\RequestFile::findOrFail($message['id']);
+
+                                        
+                                      @endphp
+
+                                      @if(count($messageFile->engineer_file_notes_have_unseen_messages))
+                                      <span id="circle"></span>
+                                      @endif
                                       <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
                                     @endif
                                     <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>

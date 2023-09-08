@@ -69,6 +69,11 @@ class FilesController extends Controller
         $requestFile = RequestFile::findOrFail($id);
         $file = File::findOrFail($requestFile->file_id);
 
+        foreach($file->engineer_file_notes as $f){
+            $f->sent_by = NULL;
+            $f->save();
+        }
+
         if(($file->front_end_id == 1 && $file->subdealer_group_id == NULL)){
             abort(404);
         }

@@ -21,6 +21,10 @@ class RequestFile extends Model
         return $this->hasMany(EngineerFileNote::class, 'request_file_id', 'id');
     }
 
+    public function engineer_file_notes_have_unseen_messages(){
+        return $this->hasMany(EngineerFileNote::class, 'request_file_id', 'id')->where('sent_by', 'engineer');
+    }
+
     public function file_internel_events(){
         return $this->hasMany(FileInternalEvent::class, 'request_file_id', 'id');
     }
