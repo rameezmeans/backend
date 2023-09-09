@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Credit;
 use App\Models\FrontEnd;
 use App\Models\Group;
+use App\Models\Key;
 use App\Models\Price;
 use App\Models\Role;
 use App\Models\RoleUser;
@@ -27,6 +28,21 @@ class CreditsController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('adminOnly');
+    }
+
+    public function updateDefaultTemplate(Request $request) {
+        
+        $defaultTemplateID = Key::where('key', 'default_elorus_template_id')->first();
+        $defaultTemplateID->value = $request->default_elorus_template_id;
+        $defaultTemplateID->save();
+
+        return redirect()->route('default-elorus-template')->with(['success' => 'Default Template ID for Elorus updated, successfully.']);
+
+        
+    }
+    public function defaultTemplate() {
+        $defaultTemplateID = Key::where('key', 'default_elorus_template_id')->first();
+        return view('credits.default_elorus_template', ['defaultTemplateID' => $defaultTemplateID]);
     }
 
     public function credits() {

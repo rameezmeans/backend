@@ -168,6 +168,10 @@
               <a href="{{ route('unit-price') }}">Unit Price</a>
               <span class="icon-thumbnail">UP</span>
             </li>
+            <li class="">
+              <a href="{{ route('default-elorus-template') }}">Default Elorus Template ID</a>
+              <span class="icon-thumbnail">UP</span>
+            </li>
           </ul>
         </li>
 
@@ -226,10 +230,10 @@
               <span class="icon-thumbnail">To</span>
             </li>
             
-            <li class="">
+            {{-- <li class="">
               <a href="{{ route('frontends') }}">Frontends</a>
               <span class="icon-thumbnail">Fr</span>
-            </li>
+            </li> --}}
            
             {{-- <li class="">
               <a href="{{ route(config('chatify.routes.prefix'))}}">Chat</a>

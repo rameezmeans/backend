@@ -85,6 +85,7 @@ class GroupsController extends Controller
         $group->bonus_credits = $request->bonus_credits;
         $group->stripe_payment_account_id = $request->stripe_payment_account_id;
         $group->paypal_payment_account_id = $request->paypal_payment_account_id;
+        $group->elorus_template_id = $request->elorus_template_id;
         $group->save();
 
         return redirect()->route('groups')->with(['success' => 'Group updated, successfully.']);

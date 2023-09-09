@@ -98,6 +98,15 @@
                         <strong>{{ $message }}</strong>
                     </span>
                   @enderror
+                  <div class="form-group form-group-default required ">
+                    <label>Elorus Template ID</label>
+                    <input value="@if(isset($group)){{$group->elorus_template_id}}@else{{old('elorus_template_id')}}@endif" name="elorus_template_id" min="0" type="text" class="form-control">
+                  </div>
+                  @error('elorus_template_id')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
                 @endif
 
                 <div class="text-center m-t-40">                    

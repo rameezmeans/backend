@@ -467,6 +467,8 @@ Route::post('/update_bosch_number', [App\Http\Controllers\BoschECUNumbersControl
 Route::post('/delete_bosch_number', [App\Http\Controllers\BoschECUNumbersController::class, 'delete'])->name('delete-number');
 
 Route::get('/unit_price', [App\Http\Controllers\CreditsController::class, 'unitPrice'])->name('unit-price');
+Route::get('/default_elorus_template', [App\Http\Controllers\CreditsController::class, 'defaultTemplate'])->name('default-elorus-template');
+Route::post('/udpate_default_elorus_template', [App\Http\Controllers\CreditsController::class, 'updateDefaultTemplate'])->name('update-default-eloru-template-id');
 Route::get('/credits', [App\Http\Controllers\CreditsController::class, 'Credits'])->name('credits');
 Route::get('/edit_credit/{id}', [App\Http\Controllers\CreditsController::class, 'EditCredit'])->name('edit-credit');
 Route::get('/update_credit/{id}', [App\Http\Controllers\CreditsController::class, 'UpdateIndividualCredit'])->name('update-credit');
@@ -484,12 +486,12 @@ Route::get('/edit-feeds/{id}', [App\Http\Controllers\NewsFeedsController::class,
 Route::post('/change_status_feeds', [App\Http\Controllers\NewsFeedsController::class, 'changeStatus'])->name('change-status-feeds');
 Route::post('/delete_feed', [App\Http\Controllers\NewsFeedsController::class, 'delete'])->name('delete-feed');
 
-Route::get('/frontends', [App\Http\Controllers\FrontEndController::class, 'index'])->name('frontends');
-Route::get('/create_frontend', [App\Http\Controllers\FrontEndController::class, 'create'])->name('create-frontend');
-Route::post('/post_frontend', [App\Http\Controllers\FrontEndController::class, 'store'])->name('post-frontend');
-Route::post('/update_frontend', [App\Http\Controllers\FrontEndController::class, 'update'])->name('update-frontend');
-Route::post('/delete_frontend', [App\Http\Controllers\FrontEndController::class, 'destroy'])->name('delete-frontend');
-Route::get('/edit_frontend/{id}', [App\Http\Controllers\FrontEndController::class, 'edit'])->name('edit-frontend');
+// Route::get('/frontends', [App\Http\Controllers\FrontEndController::class, 'index'])->name('frontends');
+// Route::get('/create_frontend', [App\Http\Controllers\FrontEndController::class, 'create'])->name('create-frontend');
+// Route::post('/post_frontend', [App\Http\Controllers\FrontEndController::class, 'store'])->name('post-frontend');
+// Route::post('/update_frontend', [App\Http\Controllers\FrontEndController::class, 'update'])->name('update-frontend');
+// Route::post('/delete_frontend', [App\Http\Controllers\FrontEndController::class, 'destroy'])->name('delete-frontend');
+// Route::get('/edit_frontend/{id}', [App\Http\Controllers\FrontEndController::class, 'edit'])->name('edit-frontend');
 
 
 Route::get('/email_templates', [App\Http\Controllers\EmailTemplatesController::class, 'index'])->name('email-templates');

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\File;
+use App\Models\Key;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RoleUser;
@@ -54,6 +55,13 @@ function encodeURIComponent($str) {
 function decodeURIComponent($str) {
     $revert = array('#'=>'%23');
     return strtr(rawurlencode($str), $revert);
+}
+
+if(!function_exists('default_elorus_id')){
+    function default_elorus_id(){
+        $defaultTemplateID = Key::where('key', 'default_elorus_template_id')->first();
+        return $defaultTemplateID->value;
+    }
 }
 
 if(!function_exists('code_to_country')){
