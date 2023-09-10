@@ -138,9 +138,7 @@ class UsersController extends Controller
     } 
 
     public function updateCustomer(Request $request){
-
-       
-
+        
         $anyOtherUserWithSameUniqueEVCCustomerID = User::where('evc_customer_id', $request->evc_customer_id)
         ->where('id','!=', $request->id)
         ->first();
