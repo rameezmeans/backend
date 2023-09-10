@@ -624,6 +624,16 @@ function initClientChannel() {
 }
 initClientChannel();
 
+clientListenChannel.bind("test", function (data) {
+    console.log(data);
+    let obj = Push.create("ECU Tech customer File upload!", {
+        body: "Testing completed. cod.js",
+        timeout: 5000,
+    });
+
+    console.log(obj);
+});
+
 // Listen to messages, and append if data received
 channel.bind("messaging", function (data) {
     if (data.from_id == getMessengerId() && data.to_id == auth_id) {

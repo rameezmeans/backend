@@ -199,14 +199,15 @@
 
       $( document ).ready(function(event) {
 
-        // const channelNameNew = "private-chatify-new";
-        // var channelNew = pusher.subscribe(`${channelNameNew}.${auth_id}`);
+        const channelNameNew = "private-chatify-new";
+        var channelNew = pusher.subscribe(`${channelNameNew}`);
 
 
         // const channelNameNew = "private-chatify-new";
         // var channelNew = pusher.subscribe(`${channelName}.${auth_id}`);
 
-        console.log(clientListenChannel);
+        console.log(channelNew);
+        // console.log(clientListenChannel);
 
         // channelNew.bind("test", function (data) {
         //   console.log(data);
@@ -225,6 +226,17 @@
           console.log(obj);
         
         });
+
+        // clientListenChannel.bind("test", function (data) {
+        //   console.log(data);
+        //   let obj = Push.create("ECU Tech customer File upload!", {
+        //       body: "Testing completed.",
+        //       timeout: 5000,
+        //   });
+
+        //   console.log(obj);
+        
+        // });
         
         $('.datepicker').datepicker({
           format: "dd/mm/yyyy",

@@ -562,48 +562,21 @@ class FilesAPIController extends Controller
                         if($file->front_end_id == 1){
 
                             Chatify::push("private-chatify-download-portal-".$chatID, 'download-button', [
-                                'status' => 'download',
-                                'file_id' => $file->id,
-                                'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
+                                'status' => 'fail',
+                                'file_id' => $file->id
                             ]);
+                
                         }
-
                         else{
-
+                            
                             Chatify::push("private-chatify-download-tuningx-".$chatID, 'download-button', [
-                                'status' => 'download',
-                                'file_id' => $file->id,
-                                'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
+                                'status' => 'fail',
+                                'file_id' => $file->id
                             ]);
-
-                        }
         
                         return response()->json('file found.');
 
-                        // Chatify::push("private-chatify-download", 'download-button', [
-                        //     'status' => 'completed',
-                        //     'file_id' => $file->id
-                        // ]);
-        
-                        // return response()->json('status changed.');
                     }
-
-                // }
-                // else{
-
-                //     // if($flag){
-
-                //     //     Chatify::push("private-chatify-download", 'download-button', [
-                //     //         'status' => 'download',
-                //     //         'file_id' => $file->id,
-                //     //         'download_link' =>  route('download', [$file->id, $request->tuned_file, 1])
-                //     //     ]);
-        
-                //     //     return response()->json('status changed.');
-                //     // }
-
-                // }
-
             }
         }
         

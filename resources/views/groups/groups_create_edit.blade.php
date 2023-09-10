@@ -107,7 +107,19 @@
                         <strong>{{ $message }}</strong>
                     </span>
                   @enderror
-                @endif
+                
+                  <span class="text-danger">We must not leave this empty at all. This will mess up financial records on Elorus. </span>
+                <div class="form-group form-group-default required ">
+                  <label>Elorus Tax ID</label>
+                  
+                  <input value="@if(isset($group)){{$group->elorus_tax_id}}@else{{old('elorus_tax_id')}}@endif" name="elorus_tax_id" min="0" type="text" class="form-control">
+                </div>
+                @error('elorus_tax_id')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+              @endif
 
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($group)) Update @else Add @endif</span></button>
