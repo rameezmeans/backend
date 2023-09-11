@@ -292,7 +292,7 @@ class AlientechTestController extends Controller
         $responseAgian = Http::withHeaders($headers)->get($url);
         $responseBodyAgain = json_decode($responseAgian->getBody(), true);
 
-        dd($responseBodyAgain);
+        // dd($responseBodyAgain);
         
     }
 }

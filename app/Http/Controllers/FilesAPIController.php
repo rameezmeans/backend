@@ -599,7 +599,7 @@ class FilesAPIController extends Controller
         return response()->json('search failed.');
 
     }
-
+    }
     public function getEncodingType($file){
 
         $extensionArr = [];

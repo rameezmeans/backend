@@ -393,6 +393,8 @@ class AlientechController extends Controller
         curl_close ($ch);
         $response = json_decode($result);
 
+        dd($response);
+
         if($response == NULL){
             $this->makeLogEntry($tempFileID, 'error', 'Too Much Slots are opened');
         }
@@ -424,7 +426,7 @@ class AlientechController extends Controller
     public function saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType ){
 
             $this->reopen($slotID);
-
+            
             if($encodingType == 'dec'){
                 $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/OBDModified';
             }
@@ -453,6 +455,8 @@ class AlientechController extends Controller
             $result=curl_exec ($ch);
             curl_close ($ch);
             $response = json_decode($result);
+
+            dd($response);
             
             if( isset($response->guid) ){
 
