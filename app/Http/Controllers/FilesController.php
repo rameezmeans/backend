@@ -537,7 +537,14 @@ class FilesController extends Controller
                 $finalFileName = $fileName;
             }
 
+            if($file->front_end_id == 1){
+
                 $file_path = public_path('/../../portal/public/'.$file->file_path).$finalFileName;
+            }
+            else{
+
+                $file_path = public_path('/../../tuningx/public/'.$file->file_path).$finalFileName;
+            }
                 return response()->download($file_path);
 
             }
