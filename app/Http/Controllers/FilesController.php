@@ -543,7 +543,7 @@ class FilesController extends Controller
             }
             else{
 
-                $file_path = public_path('/../../tuningx/public/'.$file->file_path).$finalFileName;
+                $file_path = public_path('/../../tuningX/public/'.$file->file_path).$finalFileName;
             }
                 return response()->download($file_path);
 
