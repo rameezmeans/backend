@@ -23,7 +23,7 @@ class AlientechController extends Controller
     public function downloadEncodedFile($id, $notProcessedAlientechFile, $modifiedfileName) {
         
         $file = File::findOrFail($id);
-
+        
         $alientechObj = $notProcessedAlientechFile;
         
         $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechObj->guid;
@@ -71,8 +71,14 @@ class AlientechController extends Controller
             $encodedFileNameToBe = $modifiedfileName.'_encoded_api';
             $pathAndNameArrayEncoded = $this->getFileNameEncoded($filepath, $file, $encodedFileNameToBe);
             
-            // save the decoded string to a file
-            $flag = file_put_contents(public_path('/../../portal/public/'.$pathAndNameArrayEncoded['path']), $contents);
+            if($file->front_end_id == 1){
+                // save the decoded string to a file
+                $flag = file_put_contents(public_path('/../../portal/public/'.$pathAndNameArrayEncoded['path']), $contents);
+            }
+            else{
+                // save the decoded string to a file
+                $flag = file_put_contents(public_path('/../../tuningX/public/'.$pathAndNameArrayEncoded['path']), $contents);
+            }
 
            $this->closeOneSlot($slotGuid);
 
@@ -456,8 +462,6 @@ class AlientechController extends Controller
             curl_close ($ch);
             $response = json_decode($result);
 
-            dd($response);
-            
             if( isset($response->guid) ){
 
             if($encodingType == 'dec'){

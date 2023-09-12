@@ -577,28 +577,28 @@ class FilesAPIController extends Controller
                         return response()->json('file found.');
 
                     }
+                }
             }
-        }
         
-        if($file->front_end_id == 1){
+            if($file->front_end_id == 1){
 
-            Chatify::push("private-chatify-download-portal", 'download-button', [
-                'status' => 'fail',
-                'file_id' => $file->id
-            ]);
+                Chatify::push("private-chatify-download-portal", 'download-button', [
+                    'status' => 'fail',
+                    'file_id' => $file->id
+                ]);
 
-        }
-        else{
+            }
+            else{
+                
+                Chatify::push("private-chatify-download-tuningx", 'download-button', [
+                    'status' => 'fail',
+                    'file_id' => $file->id
+                ]);
+            }
             
-            Chatify::push("private-chatify-download-tuningx", 'download-button', [
-                'status' => 'fail',
-                'file_id' => $file->id
-            ]);
-        }
-        
-        return response()->json('search failed.');
+            return response()->json('search failed.');
 
-    }
+        }
     }
     public function getEncodingType($file){
 

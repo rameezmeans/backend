@@ -517,8 +517,17 @@ class FilesController extends Controller
                 $fileNameEncoded = $this->alientechObj->downloadEncodedFile($id, $notProcessedAlientechFile, $fileName);
                 $notProcessedAlientechFile->processed = 1;
                 $notProcessedAlientechFile->save();
+
+                if($file->front_end_id == 1){
+
+                    $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+                }
+                else{
+
+                    $file_path = public_path('/../../tuningX/public/'.$file->file_path).$fileNameEncoded;
+                }
                 
-                $file_path = public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'.$fileNameEncoded);
+                
                 return response()->download($file_path);
             }
             else{
@@ -936,8 +945,10 @@ class FilesController extends Controller
                 $path = public_path('/../../subportal/public'.$file->file_path).$newFileName;
             }
             else{
-                $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
-
+                if($file->front_end_id == 1)
+                    $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                else
+                    $path = public_path('/../../tuningX/public'.$file->file_path).$newFileName;
             }
             $encodingType = $request->encoding_type;
 
@@ -1535,6 +1546,7 @@ class FilesController extends Controller
             $filepath = $responseBody['name'];
 
             $pathAndNameArrayEncoded = $this->getFileName($filepath, $file, 'encoded');
+            
             
             // save the decoded string to a file
             $flag = file_put_contents($pathAndNameArrayEncoded['path'], $contents);
