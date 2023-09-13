@@ -562,9 +562,7 @@ class FilesAPIController extends Controller
                     }
                     
                     if($flag){
-
-                        dd($flag);
-
+                        
                         if($file->front_end_id == 1){
 
                             Chatify::push("private-chatify-download-portal-".$chatID, 'download-button', [
