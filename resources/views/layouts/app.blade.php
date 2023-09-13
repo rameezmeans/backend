@@ -216,7 +216,7 @@
         //       timeout: 5000,
         //   });
 
-        clientListenChannel.bind("test", function (data) {
+        channelNew.bind("test", function (data) {
           console.log(data);
           let obj = Push.create("ECU Tech customer File upload!", {
               body: "Testing completed.",
