@@ -486,8 +486,6 @@ class FilesAPIController extends Controller
 
     public function setCheckingStatus(Request $request){
 
-        
-        
         $file = File::findOrFail($request->file_id);
 
         $chatID = env('CHAT_USER_ID');
@@ -505,29 +503,27 @@ class FilesAPIController extends Controller
                 $tunnedFile->save();
 
 
-                if($file->front_end_id == 1){
+                    if($file->front_end_id == 1){
 
-                copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
-                public_path('/../../portal/public'.$file->file_path.$request->tuned_file) );
+                        copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                        public_path('/../../portal/public'.$file->file_path.$request->tuned_file) );
 
-                // unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
+                        // unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                $path = public_path('/../../portal/public'.$file->file_path.$request->tuned_file);
+                        $path = public_path('/../../portal/public'.$file->file_path.$request->tuned_file);
                 
-                }
+                    }
 
-                else{
+                    else{
 
-                copy( public_path('/../../tuningX/public/uploads/filesready'.'/'.$request->tuned_file), 
-                public_path('/../../tuningX/public'.$file->file_path.$request->tuned_file) );
+                        copy( public_path('/../../tuningX/public/uploads/filesready'.'/'.$request->tuned_file), 
+                        public_path('/../../tuningX/public'.$file->file_path.$request->tuned_file) );
 
-                // unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
+                        // unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                $path = public_path('/../../tuningX/public'.$file->file_path.$request->tuned_file);
+                        $path = public_path('/../../tuningX/public'.$file->file_path.$request->tuned_file);
 
-                }
-
-                // if($file->custom_options == NULL){
+                    }
 
                     if($file->alientech_file){ // if slot id is assigned
                         $slotID = $file->alientech_file->slot_id;
@@ -579,30 +575,30 @@ class FilesAPIController extends Controller
                             ]);
         
                         }
-                    return response()->json('file found.');
+                        return response()->json('file found.');
+                    }
                 }
-            }
 
-            else{
-        
-                if($file->front_end_id == 1){
-    
-                    Chatify::push("private-chatify-download-portal", 'download-button', [
-                        'status' => 'fail',
-                        'file_id' => $file->id
-                    ]);
-    
-                }
                 else{
+            
+                    if($file->front_end_id == 1){
+        
+                        Chatify::push("private-chatify-download-portal", 'download-button', [
+                            'status' => 'fail',
+                            'file_id' => $file->id
+                        ]);
+        
+                    }
+                    else{
+                        
+                        Chatify::push("private-chatify-download-tuningx", 'download-button', [
+                            'status' => 'fail',
+                            'file_id' => $file->id
+                        ]);
+                    }
                     
-                    Chatify::push("private-chatify-download-tuningx", 'download-button', [
-                        'status' => 'fail',
-                        'file_id' => $file->id
-                    ]);
+                    return response()->json('search failed.');
                 }
-                
-                return response()->json('search failed.');
-            }
 
             }
 
@@ -626,8 +622,6 @@ class FilesAPIController extends Controller
             
             return response()->json('search failed.');
         }
-        
-
         
     }
     public function getEncodingType($file){
