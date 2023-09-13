@@ -485,12 +485,15 @@ class FilesAPIController extends Controller
     }
 
     public function setCheckingStatus(Request $request){
+
+        
         
         $file = File::findOrFail($request->file_id);
 
         $chatID = env('CHAT_USER_ID');
 
         if($file->checking_status == 'unchecked'){
+
             $file->checking_status = $request->checking_status;
             $flag = $file->save();
 
@@ -510,6 +513,7 @@ class FilesAPIController extends Controller
                 // unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
                 $path = public_path('/../../portal/public'.$file->file_path.$request->tuned_file);
+                
                 }
 
                 else{
@@ -559,6 +563,8 @@ class FilesAPIController extends Controller
                     
                     if($flag){
 
+                        dd($flag);
+
                         if($file->front_end_id == 1){
 
                             Chatify::push("private-chatify-download-portal-".$chatID, 'download-button', [
@@ -579,6 +585,8 @@ class FilesAPIController extends Controller
                     }
                 }
             }
+
+            }
         
             if($file->front_end_id == 1){
 
@@ -597,8 +605,9 @@ class FilesAPIController extends Controller
             }
             
             return response()->json('search failed.');
+        
 
-        }
+        
     }
     public function getEncodingType($file){
 
