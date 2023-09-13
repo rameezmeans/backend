@@ -624,6 +624,7 @@ class FilesAPIController extends Controller
         }
         
     }
+    
     public function getEncodingType($file){
 
         $extensionArr = [];
