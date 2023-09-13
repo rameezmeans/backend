@@ -578,13 +578,35 @@ class FilesAPIController extends Controller
                                 'file_id' => $file->id
                             ]);
         
-                        return response()->json('file found.');
-
-                    }
+                        }
+                    return response()->json('file found.');
                 }
             }
 
+            else{
+        
+                if($file->front_end_id == 1){
+    
+                    Chatify::push("private-chatify-download-portal", 'download-button', [
+                        'status' => 'fail',
+                        'file_id' => $file->id
+                    ]);
+    
+                }
+                else{
+                    
+                    Chatify::push("private-chatify-download-tuningx", 'download-button', [
+                        'status' => 'fail',
+                        'file_id' => $file->id
+                    ]);
+                }
+                
+                return response()->json('search failed.');
             }
+
+            }
+
+            else{
         
             if($file->front_end_id == 1){
 
@@ -603,6 +625,7 @@ class FilesAPIController extends Controller
             }
             
             return response()->json('search failed.');
+        }
         
 
         
