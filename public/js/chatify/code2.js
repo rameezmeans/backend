@@ -629,6 +629,29 @@ function initClientChannel() {
 }
 initClientChannel();
 
+channel.bind("test", function (data) {
+    console.log(data);
+    let obj = Push.create("ECU Tech customer File upload!", {
+        body: "Testing completed.",
+        timeout: 5000,
+    });
+
+    console.log(obj);
+
+    // console.log(data);
+    // if (data.from_id == getMessengerId() && data.to_id == auth_id) {
+    // // $(".messages").find(".message-hint").remove();
+    // $("#conversation").append(data.message);
+    // $("#conversation").animate({ scrollTop: 100000 }, 1000);
+    // scrollToBottom(messagesContainer);
+    // makeSeen(true, from_id);
+    // remove unseen counter for the user from the contacts list
+    // $(".messenger-list-item[data-contact=" + getMessengerId() + "]")
+    //     .find("tr>td>b")
+    //     .remove();
+    // }
+});
+
 // Listen to messages, and append if data received
 channel.bind("messaging", function (data) {
     // console.log(data);
