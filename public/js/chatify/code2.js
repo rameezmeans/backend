@@ -629,6 +629,9 @@ function initClientChannel() {
 }
 initClientChannel();
 
+// const newestChannelName = "private-chatify-newest";
+// var newestChannel = pusher.subscribe(`${newestChannelName}`);
+
 channel.bind("test", function (data) {
     console.log(data);
     let obj = Push.create("ECU Tech customer File upload!", {
