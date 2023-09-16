@@ -19,8 +19,22 @@ class EmailTemplatesController extends Controller
     }
 
     public function index() {
-        $templates = EmailTemplate::where('id', '!=', 9)->get();
-        return view('email_templates.index', ['templates' => $templates]);
+
+        $tuningxTemplates = EmailTemplate::where('id', '!=', 9)
+        ->whereNull('subdealer_group_id')
+        ->where('front_end_id', 2)
+        ->get();
+
+        $ecutechTemplates = EmailTemplate::where('id', '!=', 9)
+        ->whereNull('subdealer_group_id')
+        ->where('front_end_id', 1)
+        ->get();
+
+        return view('email_templates.index',
+        [
+            'ecutechTemplates' => $ecutechTemplates,
+            'tuningxTemplates' => $tuningxTemplates,
+        ]);
     }
 
     public function add() {

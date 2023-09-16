@@ -27,13 +27,27 @@
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
-                    <button data-redirect="{{ route('add-template') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i><span class="bold">Add Template</span>
-                    </button>
+                    {{-- <button data-redirect="{{ route('add-template') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i><span class="bold">Add Template</span>
+                    </button> --}}
                 </div>
                 </div>
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
+
+                <ul class="nav nav-tabs nav-tabs-fillup m-t-0" data-init-reponsive-tabs="dropdownfx">
+             
+                    <li class="nav-item">
+                      <a href="#" class="active" data-toggle="tab" data-target="#slide1"><span>ECU Tech</span></a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" data-toggle="tab" data-target="#slide2"><span>TuningX</span></a>
+                    </li>
+                  </ul>
+
+                  <div class="tab-content">
+                    <div class="tab-pane slide-left active" id="slide1">
+
               <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                 <div>
                     <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
@@ -43,10 +57,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($templates as $template)
-                                <tr role="row" class="redirect-click" data-redirect="{{ route('edit-template', $template->id) }}">
+                            @foreach ($ecutechTemplates as $template1)
+                                <tr role="row" class="redirect-click" data-redirect="{{ route('edit-template', $template1->id) }}">
                                     <td class="v-align-middle semi-bold sorting_1">
-                                        <p>{{$template->name}}</p>
+                                        <p>{{$template1->name}}</p>
                                     </td>
                                 </tr>
                             @endforeach
@@ -54,6 +68,35 @@
                     </table>
                 </div>
             </div>
+
+                    </div>
+
+                    <div class="tab-pane slide-left" id="slide2">
+
+                        <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                            <div>
+                                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($tuningxTemplates as $template2)
+                                            <tr role="row" class="redirect-click" data-redirect="{{ route('edit-template', $template2->id) }}">
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{$template2->name}}</p>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                  </div>
             </div>
           </div>
         </div>
