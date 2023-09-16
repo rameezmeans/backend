@@ -20,8 +20,22 @@ class MessageTemplatesController extends Controller
 
     public function index() {
         
-        $templates = MessageTemplate::all();
-        return view('message_templates.index', ['templates' => $templates]);
+        // $templates = MessageTemplate::all();
+
+        $tuningxTemplates = MessageTemplate::
+        whereNull('subdealer_group_id')
+        ->where('front_end_id', 2)
+        ->get();
+
+        $ecutechTemplates = MessageTemplate::
+        whereNull('subdealer_group_id')
+        ->where('front_end_id', 1)
+        ->get();
+
+        return view('message_templates.index', [
+            'ecutechTemplates' => $ecutechTemplates,
+            'tuningxTemplates' => $tuningxTemplates,
+        ]);
 
     }
 
