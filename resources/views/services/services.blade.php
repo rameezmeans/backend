@@ -61,7 +61,8 @@
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Tuning-X Credits</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Vehicle Type</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Date Created</th>
-                                        <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Active</th>
+                                        <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">ECU Tech Active</th>
+                                        <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">TuningX Active</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -90,6 +91,9 @@
                                             </td>
                                             <td class="v-align-middle">
                                                 <p><input data-service_id={{$service->id}} class="active" type="checkbox" data-init-plugin="switchery" @if($service->active) checked="checked" @endif onclick="status_change()"/></p>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                <p><input data-service_id={{$service->id}} class="tuningx_active" type="checkbox" data-init-plugin="switchery" @if($service->tuningx_active) checked="checked" @endif onclick="status_tuningx_change()"/></p>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -128,7 +132,6 @@
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
                                     <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 42px;">Type</th>
                                     <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 342px;">Description</th>
-                                    <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Credits</th>
                                     <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Credits</th>
                                     <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Vehicle Type</th>
                                     <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Date Created</th>
@@ -224,7 +227,44 @@
                 }
             });  
         }
+   
+
+    // let switchTuningxStatus = true;
+    //     $(document).on('change', '.tuningx_active', function(e) {
+    //         let service_id = $(this).data('service_id');
+    //         console.log(service_id);
+    //         if ($(this).is(':checked')) {
+    //             switchTuningxStatus = $(this).is(':checked');
+    //             console.log(switchTuningxStatus);
+    //         }
+    //         else {
+    //             switchTuningxStatus = $(this).is(':checked');
+    //             console.log(switchTuningxStatus);
+    //         }
+
+    //         change_tuningx_status(service_id, switchTuningxStatus);
+    //     });
+    
+
+    //     function change_tuningx_status(service_id, status){
+    //         $.ajax({
+    //             url: "/change_tuningx_status",
+    //             type: "POST",
+    //             data: {
+    //                 "_token": "{{ csrf_token() }}",
+    //                 "service_id": service_id,
+    //                 "status": status,
+    //             },
+    //             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+    //             success: function(response) {
+                    
+    //             }
+    //         });  
+    //     }
+
     });
+    
+
 </script>
 
 @endsection

@@ -464,6 +464,89 @@ class FilesAPIController extends Controller
         return response()->json($arrFiles);
     }
 
+
+
+    public function filesversions(){
+    
+        $files = File::where('checking_status_versions', '0')
+        ->get();
+    
+        $arrFiles = [];
+    
+        foreach($files as $file){
+    
+            if($file->stage_services){
+                $stage = \App\Models\Service::FindOrFail( $file->stage_services->service_id )->label;
+            }
+            else{
+                $stage = $file->stages;
+            }
+    
+            $options = NULL;
+    
+            if($file->custom_options == NULL){
+    
+                if($file->options_services){
+                    foreach($file->options_services as $o){
+                        $options .= \App\Models\Service::FindOrFail( $o->service_id )->label.',';
+                    }
+                    $options = rtrim($options, ",");
+                }
+                else{
+                    $options = $file->options;
+                }
+            }
+            else{
+                if($file->custom_options !== ''){
+                    $customOptions = explode(',', $file->custom_options);
+                    foreach($customOptions as $op){
+                        if($op != 0){
+                            $options .= \App\Models\Service::FindOrFail( $op )->label.',';
+                        }
+                    }
+                    $options = rtrim($options, ",");
+                }
+            }
+                
+                $temp = [];
+                $temp['file_id'] = $file->id;
+                $temp['stage'] = $stage;
+                $temp['options'] = $options;
+    
+                if($file->decoded_files->count() > 0){
+                    if($file->front_end_id =='1'){
+                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$this->getFileToShowToLUA($file);
+                    }
+                    
+                    if($file->front_end_id !='1'){
+                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$this->getFileToShowToLUA($file);
+                    }                    
+                    
+                }
+                else{
+                    if($file->front_end_id =='1'){
+                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached;
+                    }
+                    if($file->front_end_id !='1'){
+                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->file_attached;
+                    }
+                }
+    
+                $temp['checked'] = $file->checking_status;
+                $temp['checked-versions'] = $file->checking_status_versions;
+            
+            $arrFiles []= $temp;
+        }
+    
+        return response()->json($arrFiles);
+    }
+
+
+
+
+
+
+
     public function getFileToShowToLUA($file){
 
         $name = "";

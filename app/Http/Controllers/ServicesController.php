@@ -184,6 +184,24 @@ class ServicesController extends Controller
         return response()->json(['success' => 'status changed']);
     }
 
+    /**
+     * update the services to DB.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function changeTuningxStatus(Request $request)
+    {
+        $service = Service::findOrFail($request->service_id);
+        if($request->status == 'true'){
+            $service->tuningx_active = true;
+        }
+        else{
+            $service->tuningx_active = false;
+        }
+        $service->save();
+        return response()->json(['success' => 'status changed']);
+    }
+
      /**
      * delete the services to DB.
      *

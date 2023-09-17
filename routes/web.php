@@ -337,6 +337,12 @@ Route::get('/info', function () {
 
  });
 
+
+
+Route::match(['get', 'post'], '/makelua', [App\Http\Controllers\makelua::class, 'Makelua']);
+
+
+
 Route::post('/change_status', [App\Http\Controllers\ServicesController::class, 'changeStatus'])->name('change-status');
 
 Auth::routes(['register' => false]);
