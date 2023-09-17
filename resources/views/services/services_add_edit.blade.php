@@ -56,7 +56,7 @@
                       </span>
                     @enderror
                       <div class="form-group form-group-default required ">
-                        <label>Credits</label>
+                        <label>ECU Tech Credits</label>
                         <input value="@if(isset($service)){{$service->credits}}@else{{old('credits') }}@endif" name="credits" min="0" type="number" class="form-control" required>
                       </div>
                     @error('credits')
@@ -64,6 +64,15 @@
                           <strong>{{ $message }}</strong>
                       </span>
                     @enderror
+                    <div class="form-group form-group-default required ">
+                      <label>Tuning-X Credits</label>
+                      <input value="@if(isset($service)){{$service->tuningx_credits}}@else{{old('credits') }}@endif" name="tuningx_credits" min="0" type="number" class="form-control" required>
+                    </div>
+                  @error('credits')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
                     <div class="form-group form-group-default form-group-default-select2 required">
                       <label class="">Type</label>
                       <select name="type" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">

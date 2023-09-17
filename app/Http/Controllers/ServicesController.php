@@ -81,6 +81,7 @@ class ServicesController extends Controller
             'label' => 'required|max:255|min:3',
             'type' => 'required',
             'credits' => 'required',
+            'tuningx_credits' => 'required',
             'icon' => 'required',
             'description' => 'required',
             'greek_description' => '',
@@ -93,6 +94,7 @@ class ServicesController extends Controller
         $created->type = $validated['type'];
         $created->vehicle_type = implode( ',', $validated['vehicle_type'] );
         $created->credits = $validated['credits'];
+        $created->tuningx_credits = $validated['tuningx_credits'];
         $created->description = $validated['description'];
 
         $file = $request->file('icon');
@@ -121,6 +123,7 @@ class ServicesController extends Controller
         $service->name = $request->name;
         $service->label = $request->label;
         $service->credits = $request->credits;
+        $service->tuningx_credits = $request->tuningx_credits;
         $service->type = $request->type;
         $service->vehicle_type = implode( ',', $request->vehicle_type );
     
