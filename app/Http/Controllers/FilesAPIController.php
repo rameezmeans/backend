@@ -512,11 +512,11 @@ class FilesAPIController extends Controller
     
                 if($file->decoded_files->count() > 0){
                     if($file->front_end_id =='1'){
-                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_decoded_file;
+                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_decoded_file();
                     }
                     
                     if($file->front_end_id !='1'){
-                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->final_decoded_file;
+                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->final_decoded_file();
                     }                    
                     
                 }
