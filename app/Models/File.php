@@ -134,7 +134,7 @@ class File extends Model
 
         }
 
-        return '';
+        return null;
         
     }
 
