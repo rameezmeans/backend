@@ -90,7 +90,7 @@
                                                 <p>{{$service->created_at->diffForHumans()}}</p>
                                             </td>
                                             <td class="v-align-middle">
-                                                <p><input data-service_id={{$service->id}} class="active" type="checkbox" data-init-plugin="switchery" @if($service->active) checked="checked" @endif onclick="status_change()"/></p>
+                                                <p><input data-service_id={{$service->id}} class="stage_active" type="checkbox" data-init-plugin="switchery" @if($service->active) checked="checked" @endif onclick="status_change()"/></p>
                                             </td>
                                             <td class="v-align-middle">
                                                 <p><input data-service_id={{$service->id}} class="tuningx_active" type="checkbox" data-init-plugin="switchery" @if($service->tuningx_active) checked="checked" @endif onclick="status_tuningx_change()"/></p>
@@ -197,7 +197,7 @@
         });
         
         let switchStatus = true;
-        $(document).on('change', '.active', function(e) {
+        $(document).on('change', '.stage_active', function(e) {
             let service_id = $(this).data('service_id');
             console.log(service_id);
             if ($(this).is(':checked')) {
@@ -227,40 +227,39 @@
                 }
             });  
         }
-   
+    
+    let switchTuningxStatus = true;
+        $(document).on('change', '.tuningx_active', function(e) {
+            let service_id = $(this).data('service_id');
+            console.log(service_id);
+            if ($(this).is(':checked')) {
+                switchTuningxStatus = $(this).is(':checked');
+                console.log(switchTuningxStatus);
+            }
+            else {
+                switchTuningxStatus = $(this).is(':checked');
+                console.log(switchTuningxStatus);
+            }
 
-    // let switchTuningxStatus = true;
-    //     $(document).on('change', '.tuningx_active', function(e) {
-    //         let service_id = $(this).data('service_id');
-    //         console.log(service_id);
-    //         if ($(this).is(':checked')) {
-    //             switchTuningxStatus = $(this).is(':checked');
-    //             console.log(switchTuningxStatus);
-    //         }
-    //         else {
-    //             switchTuningxStatus = $(this).is(':checked');
-    //             console.log(switchTuningxStatus);
-    //         }
-
-    //         change_tuningx_status(service_id, switchTuningxStatus);
-    //     });
+            change_tuningx_status(service_id, switchTuningxStatus);
+        });
     
 
-    //     function change_tuningx_status(service_id, status){
-    //         $.ajax({
-    //             url: "/change_tuningx_status",
-    //             type: "POST",
-    //             data: {
-    //                 "_token": "{{ csrf_token() }}",
-    //                 "service_id": service_id,
-    //                 "status": status,
-    //             },
-    //             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-    //             success: function(response) {
+        function change_tuningx_status(service_id, status){
+            $.ajax({
+                url: "/change_tuningx_status",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "service_id": service_id,
+                    "status": status,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
                     
-    //             }
-    //         });  
-    //     }
+                }
+            });  
+        }
 
     });
     

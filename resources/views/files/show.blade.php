@@ -1212,6 +1212,7 @@
                                         echo 'error decoding';
                                     } else {
                                         foreach ($arrayversionslua as $arrayversionlua) {
+                                            
                                             ?>
                                             <div class="col-lg-12">
                                                 <h5>

@@ -344,6 +344,7 @@ Route::match(['get', 'post'], '/makelua', [App\Http\Controllers\makelua::class, 
 
 
 Route::post('/change_status', [App\Http\Controllers\ServicesController::class, 'changeStatus'])->name('change-status');
+Route::post('/change_tuningx_status', [App\Http\Controllers\ServicesController::class, 'changeTuningxStatus'])->name('change-tuningx-status');
 
 Auth::routes(['register' => false]);
 
