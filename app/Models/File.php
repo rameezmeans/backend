@@ -93,6 +93,57 @@ class File extends Model
         return $this->hasMany(ProcessedFile::class, 'file_id', 'id')->where('type', 'decoded');
     }
 
+    public function final_decoded_file(){
+
+        if($this->decoded_files->count() > 0){
+
+            $sizeArray = [];
+
+            foreach($this->decoded_files as $d){
+
+                if($d->extension != ''){
+                    $name = $d->name.'.'.$d->extension;
+                }
+                else{
+                    $name = $d->name;
+                }
+
+                if($this->front_end_id == 1){
+                    $path = public_path('/../../portal/public'.$this->file_path.$name);
+                }
+                else{
+                    $path = public_path('/../../tuningX/public'.$this->file_path.$name);
+                }
+                
+                $temp ['size']= filesize($path);
+                $temp ['file_name']= $name;
+                $sizeArray []= $temp;
+
+            }
+
+            if(sizeOf($sizeArray) == 1){
+
+                return $sizeArray[0]['file_name'];
+            }
+            else{
+    
+                usort($sizeArray, array($this,'sortById'));
+                return $sizeArray[0]['file_name'];
+    
+            }
+
+        }
+        else{
+            return null;
+        }
+        
+    }
+
+    public function sortById($x, $y) {
+
+        return $y['size'] - $x['size'];
+    }
+
     public function decoded_file(){
         return $this->hasOne(ProcessedFile::class, 'file_id', 'id')->where('type', 'decoded');
     }

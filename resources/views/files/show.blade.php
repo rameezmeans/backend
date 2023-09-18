@@ -1630,7 +1630,19 @@
 
         var file_id = "<? echo  $file->id;?>"; // Adding the variable lol with the value "ok"
         formData.append("file_id", file_id);
+        
+        var numberofDecodedFiles = "<? echo $file->decoded_files->count();?>";
+
+        console.log(numberofDecodedFiles);
+
+        /*
+          if(numberofDecodedFiles > 0) 
+          then 
+          var file_loc ="<? echo $file->final_decoded_file;?>";
+        */
+
         var file_loc ="<? echo $file->file_attached;?>";
+        
         formData.append("file_loc", file_loc);
         formData.append("database", 'FDB');
         

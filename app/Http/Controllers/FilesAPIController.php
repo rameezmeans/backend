@@ -378,7 +378,8 @@ class FilesAPIController extends Controller
 
     public function files($frontendID){
 
-        $files = File::where('checking_status', 'unchecked')->where('type', 'master')
+        $files = File::where('checking_status', 'unchecked')
+        // ->where('type', 'master')
         ->whereNull('subdealer_group_id')
         ->where('front_end_id', $frontendID)
         ->get();
@@ -397,8 +398,6 @@ class FilesAPIController extends Controller
             }
 
             $options = NULL;
-
-            // dd($file->custom_options);
 
             if($file->custom_options === NULL){
 
@@ -437,11 +436,11 @@ class FilesAPIController extends Controller
 
                 if($file->decoded_files->count() > 0){
                     if($file->front_end_id == 1){
-                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$this->getFileToShowToLUA($file);
+                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_decoded_file();
                     }
                     else{
                         // $temp['location'] = 'https://tuningx.test'.$file->file_path.$this->getFileToShowToLUA($file);
-                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$this->getFileToShowToLUA($file);
+                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->final_decoded_file();
                     }
                 }
                 else{
@@ -463,8 +462,6 @@ class FilesAPIController extends Controller
 
         return response()->json($arrFiles);
     }
-
-
 
     public function filesversions(){
     
@@ -515,11 +512,11 @@ class FilesAPIController extends Controller
     
                 if($file->decoded_files->count() > 0){
                     if($file->front_end_id =='1'){
-                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$this->getFileToShowToLUA($file);
+                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_decoded_file;
                     }
                     
                     if($file->front_end_id !='1'){
-                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$this->getFileToShowToLUA($file);
+                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->final_decoded_file;
                     }                    
                     
                 }
@@ -541,12 +538,6 @@ class FilesAPIController extends Controller
         return response()->json($arrFiles);
     }
 
-
-
-
-
-
-
     public function getFileToShowToLUA($file){
 
         $name = "";
@@ -556,12 +547,6 @@ class FilesAPIController extends Controller
                 $name = $d->name.'.'.$d->extension;
             else
                 $name = $d->name;
-            // if($d->extension == 'dec'){
-            //     $name = $d->name.'.'.$d->extension;
-            // }
-            // else if ($d->extension == 'mpc'){
-            //     $name = $d->name.'.'.$d->extension;
-            // }
         }
 
         return $name;
