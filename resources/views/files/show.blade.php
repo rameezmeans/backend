@@ -1635,11 +1635,7 @@
 
         console.log(numberofDecodedFiles);
 
-        /*
-          if(numberofDecodedFiles > 0) 
-          then 
-          var file_loc ="<? echo $file->final_decoded_file;?>";
-        */
+        
 
         var file_loc ="<? echo $file->file_attached;?>";
         
