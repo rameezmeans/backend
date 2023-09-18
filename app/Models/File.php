@@ -133,10 +133,8 @@ class File extends Model
             }
 
         }
-        else{
-            return null;
-        }
         
+
     }
 
     public function sortById($x, $y) {
