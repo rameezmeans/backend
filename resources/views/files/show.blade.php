@@ -591,6 +591,19 @@
                                     @endif
                                     <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
                                     </a>
+                                    
+                                    <?
+                                      if($message['visible'] == "0"){
+                                      ?>
+                                    
+                                      <a href="#" class="btn-sm btn-success btn-cons m-b-10" id="setvisible" data-id="<? echo  $message['id'];?>">
+                                        set visible
+                                      </a>
+                                    
+                                      <?
+                                      }
+                                    ?>                                    
+                                    
                                     <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a>
                                 </div>
 
@@ -1937,9 +1950,18 @@
 
         var file_id = "<? echo  $file->id;?>";
         formData.append("file_id", file_id);
-
-        var file_loc ="<? echo $file->file_attached;?>"; //this need to be the decrypted file
         
+        <?php
+        if($file->final_decoded_file() !== null){
+          ?>
+        var file_loc ="<? echo $file->final_decoded_file();?>"; //this need to be the decrypted file
+          <?php
+        }else{
+          ?>
+        var file_loc ="<? echo $file->file_attached;?>"; //this need to be the decrypted file
+        <?php
+      }
+      ?>
         
         
         formData.append("file_loc", file_loc);
