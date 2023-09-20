@@ -124,6 +124,7 @@ class ServicesController extends Controller
         $service->label = $request->label;
         $service->credits = $request->credits;
         $service->tuningx_credits = $request->tuningx_credits;
+        $service->tuningx_slave_credits = $request->tuningx_slave_credits;
         $service->type = $request->type;
         $service->vehicle_type = implode( ',', $request->vehicle_type );
     
