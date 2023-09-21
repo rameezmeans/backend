@@ -61,10 +61,9 @@
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Tuning-X Master Credits</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Tuning-X Slave Credits</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Vehicle Type</th>
-                                        <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Date Created</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">ECU Tech Active</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">TuningX Active</th>
-
+                                        <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Date Created</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 342px;">Description</th>
                                     </tr>
                                 </thead>
@@ -76,7 +75,7 @@
                                                 <p>{{$service->name}}</p>
                                             </td>
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p>@if($service->type == 'tunning') Stage @else Option @endif</p>
+                                                <span class="label label-info">@if($service->type == 'tunning') Stage @else Option @endif</span>
                                             </td>
                                            
                                             <td class="v-align-middle">
@@ -89,17 +88,20 @@
                                                 <p><label class="label bg-warning ">{{$service->tuningx_slave_credits}}</label></p>
                                             </td>
                                             <td class="v-align-middle">
-                                                <p>{{$service->vehicle_type}}</p>
+                                                <span class="label label-info">{{$service->vehicle_type}}</span>
                                             </td>
-                                            <td class="v-align-middle">
-                                                <p>{{$service->created_at->diffForHumans()}}</p>
-                                            </td>
+                                           
                                             <td class="v-align-middle">
                                                 <p><input data-service_id={{$service->id}} class="stage_active" type="checkbox" data-init-plugin="switchery" @if($service->active) checked="checked" @endif onclick="status_change()"/></p>
                                             </td>
                                             <td class="v-align-middle">
                                                 <p><input data-service_id={{$service->id}} class="tuningx_active" type="checkbox" data-init-plugin="switchery" @if($service->tuningx_active) checked="checked" @endif onclick="status_tuningx_change()"/></p>
                                             </td>
+                                           
+                                            <td class="v-align-middle">
+                                                <p>{{$service->created_at->diffForHumans()}}</p>
+                                            </td>
+
                                             <td class="v-align-middle">
                                                 <p>{{$service->description}}</p>
                                             </td>
