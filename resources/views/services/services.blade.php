@@ -56,7 +56,7 @@
                                     <tr role="row">
                                         <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 42px;">Type</th>
-                                        <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 342px;">Description</th>
+                                        
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">ECU Tech Credits</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Tuning-X Master Credits</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Tuning-X Slave Credits</th>
@@ -64,6 +64,8 @@
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Date Created</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">ECU Tech Active</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">TuningX Active</th>
+
+                                        <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 342px;">Description</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,11 +76,9 @@
                                                 <p>{{$service->name}}</p>
                                             </td>
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p>{{ucfirst($service->type)}}</p>
+                                                <p>@if($service->type == 'tunning') Stage @else Option @endif</p>
                                             </td>
-                                            <td class="v-align-middle">
-                                                <p>{{$service->description}}</p>
-                                            </td>
+                                           
                                             <td class="v-align-middle">
                                                 <p><label class="label bg-primary text-white">{{$service->credits}}</label></p>
                                             </td>
@@ -99,6 +99,9 @@
                                             </td>
                                             <td class="v-align-middle">
                                                 <p><input data-service_id={{$service->id}} class="tuningx_active" type="checkbox" data-init-plugin="switchery" @if($service->tuningx_active) checked="checked" @endif onclick="status_tuningx_change()"/></p>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                <p>{{$service->description}}</p>
                                             </td>
                                         </tr>
                                     @endforeach
