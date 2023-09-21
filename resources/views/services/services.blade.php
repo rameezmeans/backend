@@ -70,6 +70,7 @@
                                     @foreach ($services as $service)
                                         <tr role="row" class="redirect-click" data-redirect="{{ route('edit-service', $service->id) }}">
                                             <td class="v-align-middle semi-bold sorting_1">
+                                                <img alt="{{$service->name}}" width="33" height="33" data-src-retina="" data-src="" src="{{ url('icons').'/'.\App\Models\Service::findOrFail($service->id)->icon }}">
                                                 <p>{{$service->name}}</p>
                                             </td>
                                             <td class="v-align-middle semi-bold sorting_1">
