@@ -64,13 +64,16 @@ class ServicesController extends Controller
     public function setCreditPrice(Request $request){
 
         $allValues = $request->all();
+
+        $service = Service::findOrFail($request->id);
+        $service->tuningx_credits = $allValues['tuningx_credits'];
+        $service->tuningx_slave_credits = $allValues['tuningx_slave_credits'];
+        $service->save();
         
         unset($allValues['_token']);
         unset($allValues['id']);
         unset($allValues['tuningx_slave_credits']);
         unset($allValues['tuningx_credits']);
-
-        // dd($allValues);
 
         foreach($allValues as $key => $value){
             $keyArray = explode('-', $key);
@@ -79,7 +82,7 @@ class ServicesController extends Controller
 
                 $record = StagesOptionsCredit::where('option_id', $keyArray[1])
                 ->where('stage_id', $keyArray[2])->first();
-                
+
                 $record->master_credits = $value;
                 $record->save();
 
@@ -110,7 +113,6 @@ class ServicesController extends Controller
         $service = Service::findOrFail($id);
         $modelInstance = Translation::where('model_id', $service->id)->where('model', 'Service')->first();
         $vehicleTypes = explode(',', $service->vehicle_type);
-
         // $stages = Service::where('type', 'tunning')
         // ->where('active', 1)
         // ->whereNull('subdealer_group_id')

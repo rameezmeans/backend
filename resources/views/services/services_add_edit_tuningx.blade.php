@@ -191,12 +191,12 @@
 
                             <div class="form-group form-group-default required col-md-6" style="padding-left: 7px;">
                                 <label>Tuning-X Master Credits</label>
-                                <input value="@if(isset($service)){{$service->tuningx_credits}}@else{{old('tuningx_slave_credits') }}@endif" name="tuningx_slave_credits" min="0" type="number" class="form-control" required>
+                                <input value="@if(isset($service)){{$service->tuningx_credits}}@endif" name="tuningx_credits" min="0" type="number" class="form-control" required>
                             </div>
 
                             <div class="form-group form-group-default required col-md-6">
                                 <label>Tuning-X Slave Credits</label>
-                                <input value="@if(isset($service)){{$service->tuningx_slave_credits}}@else{{old('tuningx_credits') }}@endif" name="tuningx_credits" min="0" type="number" class="form-control" required>
+                                <input value="@if(isset($service)){{$service->tuningx_slave_credits}}@endif" name="tuningx_slave_credits" min="0" type="number" class="form-control" required>
                             </div>
                         </div>
 
