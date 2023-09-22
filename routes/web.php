@@ -365,6 +365,7 @@ Route::post('/update_service', [App\Http\Controllers\ServicesController::class, 
 Route::post('/delete_service', [App\Http\Controllers\ServicesController::class, 'delete'])->name('delete-service');
 Route::get('/sorting_services', [App\Http\Controllers\ServicesController::class, 'sortingServices'])->name('sorting-services');
 Route::post('/sort_services', [App\Http\Controllers\ServicesController::class, 'saveSorting'])->name('sort-services');
+Route::post('/set-credit-prices', [App\Http\Controllers\ServicesController::class, 'setCreditPrice'])->name('set-credit-prices');
 
 // Route::get('/files', [App\Http\Controllers\FilesController::class, 'index'])->name('files');
 Route::get('/files', [App\Http\Controllers\FilesController::class, 'liveFiles'])->name('files');

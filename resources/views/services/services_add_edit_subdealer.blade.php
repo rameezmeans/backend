@@ -64,24 +64,6 @@
                           <strong>{{ $message }}</strong>
                       </span>
                     @enderror
-                    <div class="form-group form-group-default required ">
-                      <label>Tuning-X Master Credits</label>
-                      <input value="@if(isset($service)){{$service->tuningx_credits}}@else{{old('tuningx_credits') }}@endif" name="tuningx_credits" min="0" type="number" class="form-control" required>
-                    </div>
-                    @error('tuningx_credits')
-                      <span class="text-danger" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
-                    <div class="form-group form-group-default required ">
-                      <label>Tuning-X Slave Credits</label>
-                      <input value="@if(isset($service)){{$service->tuningx_slave_credits}}@else{{old('tuningx_slave_credits') }}@endif" name="tuningx_slave_credits" min="0" type="number" class="form-control" required>
-                    </div>
-                    @error('tuningx_credits')
-                      <span class="text-danger" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
                     <div class="form-group form-group-default form-group-default-select2 required">
                       <label class="">Type</label>
                       <select name="type" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">

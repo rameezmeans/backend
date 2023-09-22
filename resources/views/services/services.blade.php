@@ -20,7 +20,7 @@
               Session::forget('success')
             @endphp
 
-<ul class="nav nav-tabs nav-tabs-fillup m-t-40" data-init-reponsive-tabs="dropdownfx">
+    <ul class="nav nav-tabs nav-tabs-fillup m-t-40" data-init-reponsive-tabs="dropdownfx">
              
     <li class="nav-item">
       <a href="#" class="active" data-toggle="tab" data-target="#slide1"><span>All Services</span></a>
@@ -79,14 +79,16 @@
                                             </td>
                                            
                                             <td class="v-align-middle">
-                                                <p><label class="label bg-primary text-white">{{$service->credits}}</label></p>
+                                                <span class="label bg-primary text-white">{{$service->credits}}</span>
+                                            </td>
+                                            
+                                            <td class="v-align-middle">
+                                                <span class="label bg-warning ">{{$service->tuningx_credits}}</span>
                                             </td>
                                             <td class="v-align-middle">
-                                                <p><label class="label bg-warning ">{{$service->tuningx_credits}}</label></p>
+                                                <span class="label bg-warning ">{{$service->tuningx_slave_credits}}</span>
                                             </td>
-                                            <td class="v-align-middle">
-                                                <p><label class="label bg-warning ">{{$service->tuningx_slave_credits}}</label></p>
-                                            </td>
+
                                             <td class="v-align-middle">
                                                 <span class="label label-info">{{$service->vehicle_type}}</span>
                                             </td>
@@ -103,7 +105,12 @@
                                             </td>
 
                                             <td class="v-align-middle">
-                                                <p>{{$service->description}}</p>
+                                                <p 
+                                                style="display:inline-block;
+                                                
+                                                height: 100px;
+                                                overflow:hidden !important;"
+                                                >{{$service->description}}</p>
                                             </td>
                                         </tr>
                                     @endforeach
