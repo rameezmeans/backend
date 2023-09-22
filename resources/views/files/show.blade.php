@@ -570,6 +570,148 @@
                                 @if($message['engineer'] == 1)
                             <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                                 <p class="pull-left">{{$message['request_file']}}</p>
+                                
+                                
+                                
+                                
+                                
+                <?
+                                $madeproject = DB::table('lua_make_project')
+                                ->where('requestfile', $message['id'])
+                                ->limit(1)
+                                ->select('id', 'orifile', 'modfile', 'name','requestfile','olsname')
+                                ->first();
+                                
+                                
+                                if(!empty($madeproject)){
+                                  ?>
+                                
+                                  <p class="pull-right">
+                                     <?
+                                     echo $madeproject->olsname;
+                                     ?>
+                                  </p>  
+                                  <?
+                                }else{
+                                  
+                                  
+                                $file_path = $file->file_path; // Replace this with the actual file path
+                                
+                                // Get the file extension
+                                $file_extension = pathinfo($file_path, PATHINFO_EXTENSION);
+                                
+                                // Check if the file extension is "slave"
+                                  if ($file_extension !== "slave") {
+                                  ?>
+                                
+                                  <p class="pull-right">
+                                    <a href="#" class="btn-sm btn-info btn-cons makeproject" id="makeproject" data-requestfileid="<? echo $message['id'];?>"  data-moddedfile="<? echo $message['request_file'];?>" data-original="<? echo $file->file_attached;?>" data-path="<? echo $file->file_path;?>">
+                                      Make project and set ok
+                                    </a>
+                                  </p>
+                                  <?
+                                
+                                  } else {
+                                  $file_path = $message['request_file']; // Replace this with the actual file path
+                                  $new_extension = "bin";
+                                  
+                                  // Use pathinfo to extract the file's base name
+                                  $file_info = pathinfo($file_path);
+                                  $base_name = $file_info['filename'];
+                                  
+                                  // Concatenate the new extension
+                                  $new_file_path = $file_info['dirname'] . '/' . $base_name . '.' . $new_extension;
+                                  
+                                  $file_path = $file->file_attached; // Replace this with the actual file path
+                                  $new_extension = "bin";
+                                  
+                                  // Use pathinfo to extract the file's base name
+                                  $file_info = pathinfo($file_path);
+                                  $base_name = $file_info['filename'];
+                                  
+                                  // Concatenate the new extension
+                                  $new_file_path_ori = $file_info['dirname'] . '/' . $base_name . '.' . $new_extension;
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  ?>
+                                
+                                  <p class="pull-right">
+                                    <a href="#" class="btn-sm btn-info btn-cons makeproject" id="makeproject" data-requestfileid="<? echo $message['id'];?>"  data-moddedfile="<? echo $new_file_path;?>" data-original="<? echo $new_file_path_ori;?>" data-path="<? echo $file->file_path;?>">
+                                      Make project and set ok
+                                    </a>
+                                  </p>  
+                                
+                                  <?
+                                  }                 
+                                  
+                                  
+                                }
+                                
+                                ?>
+                                
+                                <?
+                                  if($message['visible'] == "0"){
+                                  ?>
+                                
+                                <p class="pull-right">
+                                  <a href="#" class="btn-sm btn-success btn-cons m-b-10" id="setvisible" data-id="<? echo  $message['id'];?>">
+                                    set visible
+                                  </a>
+                                </p>
+                                
+                                  <?
+                                  }
+                                ?>
+                                <br/>
+                                                <?
+                                                $data = json_decode($message['lua_command'], true);
+                                                
+                                                if ($message['lua_command'] === null){
+                                                  
+                                                }else{
+                                                    foreach ($data as $item) {
+                                                      ?>
+                                                        <p class="pull-left"><? echo $item['mod'] . ' => ' . $item['name'];?></p>
+
+                                    <br/>
+                                                        <?
+                                                    }
+                                                  }
+                                                ?>
+                                                
+                                                <?
+                                                            $data = json_decode($message['lua_command_fdb'], true);
+                                                            
+                                                            if ($message['lua_command_fdb'] === null){
+                                                              
+                                                            }else{
+                                                                foreach ($data as $item) {
+                                                                  ?>
+                                                                    <p class="pull-left"><? echo $item['mod'] . ' => ' . $item['name'];?><b> FDB FILE</b></p>
+                                                                    <?
+                                                                }
+                                                              }
+                                                            ?>                                                  
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
                                 <div class="pull-right">
                                   @isset($message['type'])
                                  
