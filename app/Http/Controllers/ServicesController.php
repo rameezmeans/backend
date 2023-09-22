@@ -113,11 +113,7 @@ class ServicesController extends Controller
         $service = Service::findOrFail($id);
         $modelInstance = Translation::where('model_id', $service->id)->where('model', 'Service')->first();
         $vehicleTypes = explode(',', $service->vehicle_type);
-        // $stages = Service::where('type', 'tunning')
-        // ->where('active', 1)
-        // ->whereNull('subdealer_group_id')
-        // ->get();
-
+        
         $stages = Service::where('type', 'tunning')
         ->whereNull('subdealer_group_id')
         ->get();
