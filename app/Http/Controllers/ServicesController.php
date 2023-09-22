@@ -121,20 +121,6 @@ class ServicesController extends Controller
         $options = Service::where('type', 'option')
         ->whereNull('subdealer_group_id')
         ->get();
-
-        // foreach($options as $option){
-
-        //     foreach($stages as $stage){
-        //         $new = new StagesOptionsCredit();
-        //         $new->stage_id = $stage->id;
-        //         $new->option_id = $option->id;
-        //         $new->master_credits = $option->credits;
-        //         $new->slave_credits = $option->credits;
-        //         $new->save();
-        //     }
-        // }
-
-        // dd('here');
         
         if($service->subdealer_group_id && $service->hasSubdealer){
             return view('services.services_add_edit_subdealer', [ 'modelInstance' => $modelInstance, 'service' => $service, 'vehicleTypes' => $vehicleTypes ]);
