@@ -58,7 +58,7 @@ class ServicesController extends Controller
      */
     public function create()
     {
-        return view('services.services_add_edit');
+        return view('services.services_add_edit_subdealer');
     }
 
     public function setCreditPrice(Request $request){
@@ -151,7 +151,7 @@ class ServicesController extends Controller
         $created = new Service();
         $created->name = $validated['name'];
         $created->label = $validated['label'];
-        $created->type = $validated['type'];
+        $created->type = 'option'; // only options are created because stages will do a big problem in stages_options_credtis table
         $created->vehicle_type = implode( ',', $validated['vehicle_type'] );
         $created->credits = $validated['credits'];
         $created->tuningx_credits = $validated['tuningx_credits'];
@@ -164,10 +164,25 @@ class ServicesController extends Controller
 
         $created->save();
 
+        $stages = Service::where('type', 'tunning')
+        ->whereNull('subdealer_group_id')
+        ->get();
+
+        foreach($stages as $stage){
+            $record = new StagesOptionsCredit();
+            $record->stage_id = $stage->id; 
+            $record->option_id = $created->id; 
+            $record->master_credits = $created->credits; 
+            $record->slave_credits = $created->credits; 
+            $record->save();
+        }
+
         $texts['english'] =  $validated['description'];
         $texts['greek'] =  $validated['greek_description'];
 
         $this->translationObj->store($created->id, 'Service', $texts);
+
+
 
         return redirect()->route('services')->with(['success' => 'Service added, successfully.']);
     }

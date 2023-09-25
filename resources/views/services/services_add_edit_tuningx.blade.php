@@ -116,7 +116,7 @@
                     <div class="form-group form-group-default form-group-default-select2 required">
                       <label class="">Type</label>
                       <select name="type" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
-                          <option @if(isset($service) && $service->type == 'tunning') {{ 'selected' }} @elseif(old('type') == 'tunning') {{ 'selected' }} @endif value="tunning">Tuning</option>
+                          {{-- <option @if(isset($service) && $service->type == 'tunning') {{ 'selected' }} @elseif(old('type') == 'tunning') {{ 'selected' }} @endif value="tunning">Tuning</option> --}}
                           <option @if(isset($service) && $service->type == 'option') {{ 'selected' }} @elseif(old('type') == 'option') {{ 'selected' }} @endif  value="option">Option</option>
                       </select>
                     </div>

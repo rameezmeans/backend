@@ -34,6 +34,9 @@
                   
                   <form class="" role="form" method="POST" action="@if(isset($service)){{route('update-service')}}@else{{ route('add-service') }}@endif" enctype="multipart/form-data">
                     @csrf
+                    {{-- @if($errors->any())
+                        {{ implode('', $errors->all('<div>:message</div>')) }}
+                    @endif --}}
                     @if(isset($service))
                       <input name="id" type="hidden" value="{{ $service->id }}">
                     @endif
@@ -64,10 +67,28 @@
                           <strong>{{ $message }}</strong>
                       </span>
                     @enderror
+                    <div class="form-group form-group-default required ">
+                      <label>Tuning-X Master Credits</label>
+                      <input value="@if(isset($service)){{$service->tuningx_credits}}@else{{old('tuningx_credits') }}@endif" name="tuningx_credits" min="0" type="number" class="form-control" required>
+                    </div>
+                    @error('tuningx_credits')
+                      <span class="text-danger" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+                    <div class="form-group form-group-default required ">
+                      <label>Tuning-X Slave Credits</label>
+                      <input value="@if(isset($service)){{$service->tuningx_slave_credits}}@else{{old('tuningx_slave_credits') }}@endif" name="tuningx_slave_credits" min="0" type="number" class="form-control" required>
+                    </div>
+                    @error('tuningx_credits')
+                      <span class="text-danger" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
                     <div class="form-group form-group-default form-group-default-select2 required">
                       <label class="">Type</label>
                       <select name="type" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
-                          <option @if(isset($service) && $service->type == 'tunning') {{ 'selected' }} @elseif(old('type') == 'tunning') {{ 'selected' }} @endif value="tunning">Tuning</option>
+                          {{-- <option @if(isset($service) && $service->type == 'tunning') {{ 'selected' }} @elseif(old('type') == 'tunning') {{ 'selected' }} @endif value="tunning">Tuning</option> --}}
                           <option @if(isset($service) && $service->type == 'option') {{ 'selected' }} @elseif(old('type') == 'option') {{ 'selected' }} @endif  value="option">Option</option>
                       </select>
                     </div>
