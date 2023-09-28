@@ -783,7 +783,7 @@ class FilesAPIController extends Controller
     }
 
     public function setStatusAndEmail(Request $request){
-        
+
         $file = File::findOrFail($request->file_id);
 
         $file->status = 'completed';
@@ -802,6 +802,8 @@ class FilesAPIController extends Controller
         }
 
         $this->sendMail($file);
+
+        return response()->json('status changed and email sent to the client.');
 
     }
 
