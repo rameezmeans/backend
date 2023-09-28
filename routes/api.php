@@ -38,6 +38,7 @@ Route::get('lua/files/{frontend_id}', [App\Http\Controllers\FilesAPIController::
 Route::get('lua/filesversions', [App\Http\Controllers\FilesAPIController::class, 'filesversions'])->name('api-get-files');
 
 Route::post('lua/file/set_checking_status', [App\Http\Controllers\FilesAPIController::class, 'setCheckingStatus'])->name('api-set-checking-status');
+Route::post('lua/file/set_status_and_email', [App\Http\Controllers\FilesAPIController::class, 'setStatusAndEmail'])->name('set-status-and-email');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

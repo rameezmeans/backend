@@ -643,6 +643,9 @@ class FilesAPIController extends Controller
                             ]);
         
                         }
+
+                        $this->sendMail($file);
+
                         return response()->json('file found.');
                     }
                 }
@@ -692,6 +695,72 @@ class FilesAPIController extends Controller
         }
         
     }
+
+    public function sendMail($file){
+
+        $customer = User::findOrFail($file->user_id);
+        $admin = get_admin();
+    
+        // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
+        $template = EmailTemplate::findOrFail(6);
+
+        $html1 = $template->html;
+
+        $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+        $html1 = str_replace("#customer_name", $customer->name ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
+        
+        $tunningType = $this->emailStagesAndOption($file);
+        
+        $html1 = str_replace("#tuning_type", $tunningType,$html1);
+        $html1 = str_replace("#status", $file->status,$html1);
+        $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+        $html2 = $template->html;
+
+        $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+        $html2 = str_replace("#customer_name", $file->name ,$html2);
+        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
+        
+        $tunningType = $this->emailStagesAndOption($file);
+
+        $html2 = str_replace("#tuning_type", $tunningType,$html2);
+        $html2 = str_replace("#status", $file->status,$html2);
+        $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+
+        $optionsMessage = "";
+        if($file->options){
+            foreach($file->options() as $option) {
+                $optionsMessage .= ",".$option." ";
+            }
+        }
+
+        // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
+        $messageTemplate = MessageTemplate::findOrFail(7);
+
+        $message = $messageTemplate->text;
+
+        $message1 = str_replace("#customer", $customer->name ,$message);
+        $message2 = str_replace("#customer", $file->name ,$message);
+        
+        $subject = "ECU Tech: Engineer uploaded a file in reply.";
+
+        $manager = (new ReminderManagerController())->getManager();
+
+        if($manager['eng_file_upload_cus_email']){
+            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+        }
+        if($manager['eng_file_upload_admin_email']){
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        }
+        
+        if($manager['eng_file_upload_admin_sms']){
+            $this->sendMessage($admin->phone, $message1);
+        }
+        if($manager['eng_file_upload_cus_sms']){
+            $this->sendMessage($customer->phone, $message2);
+        }
+    }
     
     public function getEncodingType($file){
 
@@ -711,6 +780,29 @@ class FilesAPIController extends Controller
         }
 
         return $e;
+    }
+
+    public function setStatusAndEmail(Request $request){
+        
+        $file = File::findOrFail($request->file_id);
+
+        $file->status = 'completed';
+        $file->support_status = "closed";
+        $file->checked_by = 'engineer';
+        $file->save();
+
+        if(!$file->response_time){
+
+            $file->reupload_time = Carbon::now();
+            $file->save();
+
+            $file->response_time = (new FilesController)->getResponseTimeAuto($file);
+            $file->save();
+
+        }
+
+        $this->sendMail($file);
+
     }
 
     public function emailStagesAndOption($file){
