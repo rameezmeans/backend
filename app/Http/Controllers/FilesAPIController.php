@@ -433,7 +433,7 @@ class FilesAPIController extends Controller
                 $temp['frontend'] = $file->front_end_id;
                 $temp['stage'] = $stage;
                 $temp['options'] = $options;
-                
+
                 if($file->decoded_files->count() > 0){
                     if($file->front_end_id == 1){
                         $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_decoded_file();
@@ -459,8 +459,6 @@ class FilesAPIController extends Controller
             
             $arrFiles []= $temp;
         }
-
-
 
         return response()->json($arrFiles);
     }
