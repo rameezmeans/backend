@@ -379,7 +379,7 @@ class FilesAPIController extends Controller
     public function files($frontendID){
 
         $files = File::where('checking_status', 'unchecked')
-        ->where('type', 'master') // because slave files are supposed to decoded
+        // ->where('type', 'master') // because slave files are supposed to decoded
         ->whereNull('subdealer_group_id')
         ->where('front_end_id', $frontendID)
         ->get();
@@ -433,7 +433,7 @@ class FilesAPIController extends Controller
                 $temp['frontend'] = $file->front_end_id;
                 $temp['stage'] = $stage;
                 $temp['options'] = $options;
-
+                
                 if($file->decoded_files->count() > 0){
                     if($file->front_end_id == 1){
                         $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_decoded_file();
@@ -460,7 +460,7 @@ class FilesAPIController extends Controller
             $arrFiles []= $temp;
         }
 
-        
+
 
         return response()->json($arrFiles);
     }
