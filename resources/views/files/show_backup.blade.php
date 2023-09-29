@@ -108,11 +108,13 @@
                   <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                     
                     @if($file->tool_type == 'slave')
-                    <form method="POST" action="{{route('flip-decoded-mode')}}">
-                      @csrf
-                      <input type="hidden" name="file_id" value="{{$file->id}}">
-                    <button type='submit' class="btn @if($file->decoded_mode == 1) btn-danger @else btn-success @endif">@if($file->decoded_mode == 1) Decoded Mode @else Normal Mode @endif</button>
-                    </form>
+                      @if(!$file->decoded_files->isEmpty())
+                        <form method="POST" action="{{route('flip-decoded-mode')}}">
+                          @csrf
+                          <input type="hidden" name="file_id" value="{{$file->id}}">
+                        <button type='submit' class="btn @if($file->decoded_mode == 1) btn-danger @else btn-success @endif">@if($file->decoded_mode == 1) Decoded Mode @else Normal Mode @endif</button>
+                        </form>
+                      @endif
                     @endif
 
                     <div class="text-center">
