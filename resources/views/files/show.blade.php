@@ -118,12 +118,14 @@
                 <div class="widget-16 card no-border widget-loader-circle">
                   <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
 
+                    @if($file->tool_type == 'slave')
                     <form method="POST" action="{{route('flip-decoded-mode')}}">
                       @csrf
                       <input type="hidden" name="file_id" value="{{$file->id}}">
                     <button type='submit' class="btn @if($file->decoded_mode == 1) btn-danger @else btn-success @endif">@if($file->decoded_mode == 1) Decoded Mode @else Normal Mode @endif</button>
                     </form>
-                    
+                    @endif
+
                     <div class="text-center">
                       <div class="card-title">
                           <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="" style="width: 30%;">
