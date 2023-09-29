@@ -64,6 +64,31 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
 
+    public function flipDecodedMode(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+
+        if($file->decoded_mode == 1){
+            
+            $file->file_attached = $file->file_attached_backup;
+            $file->file_attached_backup = null;
+            $file->decoded_mode = 0;
+            $file->save();
+
+        }
+
+        else if ($file->decoded_mode == 0){
+
+            $file->file_attached_backup = $file->file_attached;
+            $file->file_attached = $file->final_decoded_file();
+            $file->decoded_mode = 1;
+            $file->save();
+
+        }
+
+        return redirect()->back()
+        ->with('success', 'File Decoded mode is updated!');
+    }
     public function support($id){
 
         $requestFile = RequestFile::findOrFail($id);

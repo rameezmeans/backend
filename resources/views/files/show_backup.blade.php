@@ -106,16 +106,27 @@
                 
                 <div class="widget-16 card no-border widget-loader-circle">
                   <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                    
+                    <form method="POST" action="{{route('flip-decoded-mode')}}">
+                      @csrf
+                      <input type="hidden" name="file_id" value="{{$file->id}}">
+                    <button type='submit' class="btn @if($file->decoded_mode == 1) btn-danger @else btn-success @endif">@if($file->decoded_mode == 1) Decoded Mode @else Normal Mode @endif</button>
+                    </form>
+
                     <div class="text-center">
                       <div class="card-title">
                           <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="" style="width: 30%;">
                           <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                           @if($file->original_file_id)
-                            <a href="{{ route('download', [$file->original_file_id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
-                            </a>
-                          @else
-                              <a href="{{ route('download', [$file->id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                              
+                              <a href="{{ route('download', [$file->original_file_id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                               </a>
+                            
+                          @else
+                              @if($file->decoded_mode == 0)
+                                <a href="{{ route('download', [$file->id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                                </a>
+                              @endif
 
                             {{-- @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id) --}}
                             @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id || $file->tool_id != $kess3Label->id)
