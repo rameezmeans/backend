@@ -1487,8 +1487,13 @@ class FilesController extends Controller
         ->where('active', 1)->get();
         
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
-
-        return view('files.show', ['selectedOptions' => $selectedOptions, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
+        
+        if(env('APP_ENV') == 'production'){
+            return view('files.show', ['selectedOptions' => $selectedOptions, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
+        }
+        else{
+            return view('files.show_local', ['selectedOptions' => $selectedOptions, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
+        }
     }
 
     public function saveMoreFiles($id, $alientechFileID){
