@@ -379,7 +379,7 @@ class FilesAPIController extends Controller
     public function files($frontendID){
 
         $files = File::where('checking_status', 'unchecked')
-        // ->where('type', 'master')
+        ->where('type', 'master') // because slave files are supposed to decoded
         ->whereNull('subdealer_group_id')
         ->where('front_end_id', $frontendID)
         ->get();
@@ -459,6 +459,8 @@ class FilesAPIController extends Controller
             
             $arrFiles []= $temp;
         }
+
+        
 
         return response()->json($arrFiles);
     }
