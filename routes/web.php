@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentAccountsController;
+use App\Http\Controllers\ReminderManagerController;
 use App\Http\Controllers\SubdealerGroupsController;
 use App\Models\Comment;
 use App\Models\File;
@@ -51,7 +52,7 @@ Route::get('/info', function () {
 
 
 Route::get('/manager', function () {
-    $manager = (new ReminderManager())->getManager();
+    $manager = (new ReminderManagerController())->getManager();
     dd($manager);
 });
 

@@ -38,7 +38,6 @@ class ReminderManagerController extends Controller
         
         $reminderManagers = ReminderManager::whereNull('subdealer_group_id')->get();
         $manager = [];
-        
         foreach($reminderManagers as $row){
             $temp[$row->type] = $row->active;
             $manager = array_merge($manager, $temp);
