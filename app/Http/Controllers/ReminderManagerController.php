@@ -20,23 +20,27 @@ class ReminderManagerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        
-        $manager = $this->getManager();
-        return view('reminder_manager.index', [ 'manager' => $manager ]);
+    {   
+        $ecuTechManager = $this->getManager(1);
+        $tuningxManager = $this->getManager(2);
+        return view('reminder_manager.index', [ 'ecuTechManager' => $ecuTechManager, 'tuningxManager' => $tuningxManager ]);
     }
 
     public function setStatus(Request $request){
         
-        $field = ReminderManager::where('type', $request->field)->first();
+        $field = ReminderManager::where('type', $request->field)
+        ->where('front_end_id', $request->front_end_id)
+        ->first();
         $field->active = $request->checked === 'true'? true: false;
         $field->save();
 
     }
 
-    public function getManager(){
+    public function getManager($frontendID){
         
-        $reminderManagers = ReminderManager::whereNull('subdealer_group_id')->get();
+        $reminderManagers = ReminderManager::whereNull('subdealer_group_id')
+        ->where('front_end_id', $frontendID)
+        ->get();
         $manager = [];
         foreach($reminderManagers as $row){
             $temp[$row->type] = $row->active;
