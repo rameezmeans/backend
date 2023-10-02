@@ -36,6 +36,19 @@ class ReminderManagerController extends Controller
 
     }
 
+    public function getAllManager(){
+        
+        $reminderManagers = ReminderManager::whereNull('subdealer_group_id')
+        ->get();
+        $manager = [];
+        foreach($reminderManagers as $row){
+            $temp[$row->type] = $row->active;
+            $manager = array_merge($manager, $temp);
+        }
+
+        return $manager;
+    }
+
     public function getManager($frontendID){
         
         $reminderManagers = ReminderManager::whereNull('subdealer_group_id')

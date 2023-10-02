@@ -60,7 +60,7 @@ class FilesController extends Controller
     {
         $this->alientechObj = new AlientechController();
         $reminderManager = new ReminderManagerController();
-        $this->manager = $reminderManager->getManager();
+        $this->manager = $reminderManager->getAllManager();
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
 
