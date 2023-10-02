@@ -674,7 +674,7 @@ class FilesController extends Controller
         $customer = User::findOrFail($file->user_id);
         
         //    $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
-        $template = EmailTemplate::findOrFail(1);
+        $template = EmailTemplate::where('slug', 'eng-assign')->where('front_end_id', $file->front_end_id)->first();
 
         $html = $template->html;
 
@@ -698,7 +698,7 @@ class FilesController extends Controller
 
         // $messageTemplate = MessageTemplate::where('name', 'Engineer Assignment')->first();
 
-        $messageTemplate = MessageTemplate::findOrFail(1);
+        $messageTemplate = MessageTemplate::where('slug', 'eng-assign')->where('front_end_id', $file->front_end_id)->first();
 
         $message = $messageTemplate->text;
 
@@ -742,7 +742,7 @@ class FilesController extends Controller
         $admin = get_admin();
     
         // $template = EmailTemplate::where('name', 'Status Change')->first();
-        $template = EmailTemplate::findOrFail(8);
+        $template = EmailTemplate::where('slug', 'sta-cha')->where('front_end_id', $file->front_end_id)->first();
 
         $html1 = $template->html;
 
@@ -778,7 +778,7 @@ class FilesController extends Controller
         }
 
         // $messageTemplate = MessageTemplate::where('name', 'Status Change')->first();
-        $messageTemplate = MessageTemplate::findOrFail(6);
+        $messageTemplate = MessageTemplate::where('slug', 'sta-cha')->where('front_end_id', $file->front_end_id)->first();
 
         $message = $messageTemplate->text;
 
@@ -850,7 +850,7 @@ class FilesController extends Controller
         $admin = get_admin();
     
         // $template = EmailTemplate::where('name', 'Message To Client')->first();
-        $template = EmailTemplate::findOrFail(7);
+        $template = EmailTemplate::where('slug', 'mess-to-client')->where('front_end_id', $file->front_end_id)->first();
 
         $html1 = $template->html;
 
@@ -887,7 +887,7 @@ class FilesController extends Controller
         }
 
         // $messageTemplate = MessageTemplate::where('name', 'Message To Client')->first();
-        $messageTemplate = MessageTemplate::findOrFail(4);
+        $messageTemplate = MessageTemplate::where('slug', 'mess-to-client')->where('front_end_id', $file->front_end_id)->first();
 
         $message = $messageTemplate->text;
 
@@ -1044,7 +1044,7 @@ class FilesController extends Controller
         $admin = get_admin();
     
         // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
-        $template = EmailTemplate::findOrFail(6);
+        $template = EmailTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
 
         $html1 = $template->html;
 
@@ -1078,7 +1078,7 @@ class FilesController extends Controller
         }
 
         // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
-        $messageTemplate = MessageTemplate::findOrFail(7);
+        $messageTemplate = MessageTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
 
         $message = $messageTemplate->text;
 
@@ -1658,7 +1658,9 @@ class FilesController extends Controller
             $admin = get_admin();
         
             // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
-            $template = EmailTemplate::findOrFail(6);
+            $template = EmailTemplate::where('slug', 'file-up-from-eng')
+            ->where('front_end_id', $file->front_end_id)
+            ->first();
 
             $html1 = $template->html;
 
@@ -1692,7 +1694,8 @@ class FilesController extends Controller
             }
 
             // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
-            $messageTemplate = MessageTemplate::findOrFail(7);
+            $messageTemplate = MessageTemplate::where('slug', 'file-up-from-eng')
+            ->where('front_end_id', $file->front_end_id)->first();
 
             $message = $messageTemplate->text;
 
