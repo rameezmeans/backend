@@ -715,7 +715,12 @@ class FilesController extends Controller
 
         $message = str_replace("#customer", $customer->name ,$message);
 
-        $subject = "ECU Tech: Task Assigned!";
+        if($file->front_end_id == 1){
+            $subject = "ECU Tech: Task Assigned!";
+        }
+        else{
+            $subject = "TuningX: Task Assigned!";
+        }
 
         $reminderManager = new ReminderManagerController();
         $this->manager = $reminderManager->getAllManager();
@@ -799,7 +804,12 @@ class FilesController extends Controller
         $message2 = str_replace("#customer", $file->name ,$message);
         $message2 = str_replace("#status", $file->status ,$message2);
         
-        $subject = "ECU Tech: File Status Changed!";
+        if($file->front_end_id == 1){
+            $subject = "ECU Tech: File Status Changed!";
+        }
+        else{
+            $subject = "TuningX: File Status Changed!";
+        }
 
         $reminderManager = new ReminderManagerController();
         $this->manager = $reminderManager->getAllManager();
@@ -911,7 +921,14 @@ class FilesController extends Controller
         $reminderManager = new ReminderManagerController();
         $this->manager = $reminderManager->getAllManager();
 
-        $subject = "ECU Tech: Engineer replied to your support message!";
+        if($file->front_end_id == 1){
+            $subject = "ECU Tech: Engineer replied to your support message!";
+        }
+        else{
+            $subject = "Tuningx: Engineer replied to your support message!";
+        }
+
+
         if($this->manager['msg_eng_cus_email'.$file->front_end_id]){
             \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
@@ -1098,7 +1115,12 @@ class FilesController extends Controller
         $message1 = str_replace("#customer", $customer->name ,$message);
         $message2 = str_replace("#customer", $file->name ,$message);
         
-        $subject = "ECU Tech: Engineer uploaded a file in reply.";
+        if($file->front_end_id == 1){
+            $subject = "ECU Tech: Engineer uploaded a file in reply.";
+        }
+        else{
+            $subject = "TuningX: Engineer uploaded a file in reply.";
+        }
 
         $reminderManager = new ReminderManagerController();
         $this->manager = $reminderManager->getAllManager();
@@ -1715,7 +1737,12 @@ class FilesController extends Controller
             $message1 = str_replace("#customer", $customer->name ,$message);
             $message2 = str_replace("#customer", $file->name ,$message);
             
-            $subject = "ECU Tech: Engineer uploaded a file in reply.";
+            if($file->front_end_id == 1){
+                $subject = "ECU Tech: Engineer uploaded a file in reply.";
+            }
+            else{
+                $subject = "TuningX: Engineer uploaded a file in reply.";
+            }
 
             if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
                 \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
