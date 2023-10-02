@@ -369,7 +369,7 @@
                                             <td class="v-align-middle semi-bold sorting_1">Customer File Upload</td>
                                             <td class="v-align-middle">
                                                 <div class="checkbox check-success ">
-                                                    <input type="checkbox" @if($tuningxManager['file_upload_admin_email']) checked @endif id="file_upload_admin_email2" id="file_upload_admin_email" data-frontend_id='2'>
+                                                    <input type="checkbox" @if($tuningxManager['file_upload_admin_email']) checked @endif id="file_upload_admin_email2" data-id="file_upload_admin_email" data-frontend_id='2'>
                                                     <label for="file_upload_admin_email2" class="">Enable Email</label>
                                                 </div>
                                             </td>
