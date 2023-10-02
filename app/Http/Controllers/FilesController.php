@@ -653,7 +653,7 @@ class FilesController extends Controller
 
             $message = $client->messages
                   ->create($receiver, // to
-                           ["body" => $message, "from" => "ecutech"]
+                           ["body" => $message, "from" => "TuningX"]
             );
 
             \Log::info('message sent to:'.$receiver);
