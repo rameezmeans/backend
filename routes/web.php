@@ -13,6 +13,7 @@ use App\Models\Comment;
 use App\Models\File;
 use App\Models\FileFeedback;
 use App\Models\Key;
+use App\Models\ReminderManager;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\Service;
@@ -47,6 +48,13 @@ Route::get('/', function () {
 Route::get('/info', function () {
     dd(phpinfo());
 });
+
+
+Route::get('/manager', function () {
+    $manager = (new ReminderManager())->getManager();
+    dd($manager);
+});
+
 
 Route::get('/test_sms', function () {
     try {
