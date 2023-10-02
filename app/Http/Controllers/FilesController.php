@@ -1068,6 +1068,7 @@ class FilesController extends Controller
         $tunningType = $this->emailStagesAndOption($file);
 
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
+        $html2 = str_replace("#response_time", $file->response_time,$html2);
         $html2 = str_replace("#status", $file->status,$html2);
         $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
 
