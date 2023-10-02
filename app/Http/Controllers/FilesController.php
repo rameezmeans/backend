@@ -1054,7 +1054,7 @@ class FilesController extends Controller
         
         $tunningType = $this->emailStagesAndOption($file);
         
-        $html1 = str_replace("#response_time", $file->response_time,$html1);
+        $html1 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html1);
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
         $html1 = str_replace("#file_url", route('file', $file->id),$html1);
@@ -1068,7 +1068,7 @@ class FilesController extends Controller
         $tunningType = $this->emailStagesAndOption($file);
 
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
-        $html2 = str_replace("#response_time", $file->response_time,$html2);
+        $html2 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html2);
         $html2 = str_replace("#status", $file->status,$html2);
         $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
 
