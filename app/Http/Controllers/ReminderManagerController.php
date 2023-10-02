@@ -42,7 +42,7 @@ class ReminderManagerController extends Controller
         ->get();
         $manager = [];
         foreach($reminderManagers as $row){
-            $temp[$row->type] = $row->active;
+            $temp[$row->type.$row->front_end_id] = $row->active;;
             $manager = array_merge($manager, $temp);
         }
 

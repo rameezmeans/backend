@@ -707,14 +707,14 @@ class FilesController extends Controller
         $subject = "ECU Tech: Task Assigned!";
 
         $reminderManager = new ReminderManagerController();
-        $this->manager = $reminderManager->getManager();
+        $this->manager = $reminderManager->getAllManager();
 
-        if($this->manager['eng_assign_eng_email']){
+        if($this->manager['eng_assign_eng_email'.$file->front_end_id]){
 
             \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject]));
         }
 
-        if($this->manager['eng_assign_eng_sms']){
+        if($this->manager['eng_assign_eng_sms'.$file->front_end_id]){
         
             $this->sendMessage($engineer->phone, $message);
         }
@@ -791,20 +791,20 @@ class FilesController extends Controller
         $subject = "ECU Tech: File Status Changed!";
 
         $reminderManager = new ReminderManagerController();
-        $this->manager = $reminderManager->getManager();
+        $this->manager = $reminderManager->getAllManager();
 
-        if($this->manager['status_change_cus_email']){
+        if($this->manager['status_change_cus_email'.$file->front_end_id]){
             \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
         }
 
-        if($this->manager['status_change_admin_email']){
+        if($this->manager['status_change_admin_email'.$file->front_end_id]){
             \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
         }
 
-        if($this->manager['status_change_admin_sms']){
+        if($this->manager['status_change_admin_sms'.$file->front_end_id]){
             $this->sendMessage($admin->phone, $message1);
         }
-        if($this->manager['status_change_cus_sms']){
+        if($this->manager['status_change_cus_sms'.$file->front_end_id]){
             $this->sendMessage($customer->phone, $message2);
         }
 
@@ -898,21 +898,21 @@ class FilesController extends Controller
         // $message2 = "Hi, Status changed for a file by Customer: " .$file->name;
 
         $reminderManager = new ReminderManagerController();
-        $this->manager = $reminderManager->getManager();
+        $this->manager = $reminderManager->getAllManager();
 
         $subject = "ECU Tech: Engineer replied to your support message!";
-        if($this->manager['msg_eng_cus_email']){
+        if($this->manager['msg_eng_cus_email'.$file->front_end_id]){
             \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
         }
-        if($this->manager['msg_eng_admin_email']){
+        if($this->manager['msg_eng_admin_email'.$file->front_end_id]){
             \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
         }
         
-        if($this->manager['msg_eng_admin_sms']){
+        if($this->manager['msg_eng_admin_sms'.$file->front_end_id]){
             
             $this->sendMessage($admin->phone, $message1);
         }
-        if($this->manager['msg_eng_cus_sms']){
+        if($this->manager['msg_eng_cus_sms'.$file->front_end_id]){
             $this->sendMessage($customer->phone, $message2);
         }
 
@@ -1088,19 +1088,19 @@ class FilesController extends Controller
         $subject = "ECU Tech: Engineer uploaded a file in reply.";
 
         $reminderManager = new ReminderManagerController();
-        $this->manager = $reminderManager->getManager();
+        $this->manager = $reminderManager->getAllManager();
 
-        if($this->manager['eng_file_upload_cus_email']){
+        if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
             \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
         }
-        if($this->manager['eng_file_upload_admin_email']){
+        if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
             \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
         }
         
-        if($this->manager['eng_file_upload_admin_sms']){
+        if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
             $this->sendMessage($admin->phone, $message1);
         }
-        if($this->manager['eng_file_upload_cus_sms']){
+        if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
             $this->sendMessage($customer->phone, $message2);
         }
         
@@ -1525,7 +1525,7 @@ class FilesController extends Controller
     public function saveMoreFiles($id, $alientechFileID){
 
         $reminderManager = new ReminderManagerController();
-        $this->manager = $reminderManager->getManager();
+        $this->manager = $reminderManager->getAllManager();
 
         $token = Key::where('key', 'alientech_access_token')->first()->value;
 
@@ -1701,17 +1701,17 @@ class FilesController extends Controller
             
             $subject = "ECU Tech: Engineer uploaded a file in reply.";
 
-            if($this->manager['eng_file_upload_cus_email']){
+            if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
                 \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
             }
-            if($this->manager['eng_file_upload_admin_email']){
+            if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
                 \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
             }
             
-            if($this->manager['eng_file_upload_admin_sms']){
+            if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
                 $this->sendMessage($admin->phone, $message1);
             }
-            if($this->manager['eng_file_upload_cus_sms']){
+            if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
                 $this->sendMessage($customer->phone, $message2);
             }
 
