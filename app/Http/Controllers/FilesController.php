@@ -639,14 +639,14 @@ class FilesController extends Controller
             // $authToken = env("TWILIO_AUTH_TOKEN");
             // $twilioNumber = env("TWILIO_NUMBER"); 
 
-            $accountSid = Key::whereNull('subdealer_group_id')
-            ->where('key', 'twilio_sid')->first();
+        $accountSid = Key::whereNull('subdealer_group_id')
+        ->where('key', 'twilio_sid')->first()->value;
 
-            $authToken = Key::whereNull('subdealer_group_id')
-            ->where('key', 'twilio_token')->first();
+        $authToken = Key::whereNull('subdealer_group_id')
+        ->where('key', 'twilio_token')->first()->value;
 
-            $twilioNumber = Key::whereNull('subdealer_group_id')
-            ->where('key', 'twilio_number')->first();
+        $twilioNumber = Key::whereNull('subdealer_group_id')
+        ->where('key', 'twilio_number')->first()->value;
 
 
             $client = new Client($accountSid, $authToken);
@@ -909,6 +909,7 @@ class FilesController extends Controller
         }
         
         if($this->manager['msg_eng_admin_sms']){
+            
             $this->sendMessage($admin->phone, $message1);
         }
         if($this->manager['msg_eng_cus_sms']){

@@ -12,6 +12,7 @@ use App\Http\Controllers\SubdealerGroupsController;
 use App\Models\Comment;
 use App\Models\File;
 use App\Models\FileFeedback;
+use App\Models\Key;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\Service;
@@ -26,6 +27,7 @@ use Illuminate\Support\Facades\Http;
 use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
+use Twilio\Rest\Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +46,40 @@ Route::get('/', function () {
 
 Route::get('/info', function () {
     dd(phpinfo());
+});
+
+Route::get('/test_sms', function () {
+    try {
+            
+        // $accountSid = env("TWILIO_SID");
+        // $authToken = env("TWILIO_AUTH_TOKEN");
+        // $twilioNumber = env("TWILIO_NUMBER"); 
+
+        $accountSid = Key::whereNull('subdealer_group_id')
+        ->where('key', 'twilio_sid')->first()->value;
+
+        $authToken = Key::whereNull('subdealer_group_id')
+        ->where('key', 'twilio_token')->first()->value;
+
+        $twilioNumber = Key::whereNull('subdealer_group_id')
+        ->where('key', 'twilio_number')->first()->value;
+
+
+        $client = new Client($accountSid, $authToken);
+
+        $message = $client->messages
+              ->create('+923218612198', // to
+                       ["body" => 'testing from local backend', "from" => "ecutech"]
+        );
+
+        dd($message);
+
+        \Log::info('message sent to:'.'+923218612198');
+
+    } catch (\Exception $e) {
+        dd($e->getMessage());
+        \Log::info($e->getMessage());
+    }
 });
 
  Route::get('/tasks', function () {
