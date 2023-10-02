@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
 class AllMails extends Mailable
 {
@@ -30,9 +31,18 @@ class AllMails extends Mailable
      */
     public function envelope()
     {
-        return new Envelope(
-            subject:  $this->details['subject'],
-        );
+        if($this->details['front_end_id'] == 1){
+            return new Envelope(
+                subject:  $this->details['subject'],
+                from: new Address('info@ecutech.gr', 'ECU Tech')
+            );
+        }
+        else{
+            return new Envelope(
+                subject:  $this->details['subject'],
+                from: new Address('info@tuning-x.com', 'Tuning-X | Performance Excellence')
+            );
+        }
     }
 
     /**
@@ -46,6 +56,7 @@ class AllMails extends Mailable
             view: 'files.email',
             with: [
                 'html' => $this->details['html'],
+                
             ]
         );
     }

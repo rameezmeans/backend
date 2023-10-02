@@ -711,7 +711,7 @@ class FilesController extends Controller
 
         if($this->manager['eng_assign_eng_email'.$file->front_end_id]){
 
-            \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject]));
+            \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
 
         if($this->manager['eng_assign_eng_sms'.$file->front_end_id]){
@@ -794,11 +794,11 @@ class FilesController extends Controller
         $this->manager = $reminderManager->getAllManager();
 
         if($this->manager['status_change_cus_email'.$file->front_end_id]){
-            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
 
         if($this->manager['status_change_admin_email'.$file->front_end_id]){
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
 
         if($this->manager['status_change_admin_sms'.$file->front_end_id]){
@@ -902,10 +902,10 @@ class FilesController extends Controller
 
         $subject = "ECU Tech: Engineer replied to your support message!";
         if($this->manager['msg_eng_cus_email'.$file->front_end_id]){
-            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
         if($this->manager['msg_eng_admin_email'.$file->front_end_id]){
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
         
         if($this->manager['msg_eng_admin_sms'.$file->front_end_id]){
@@ -1093,10 +1093,10 @@ class FilesController extends Controller
         $this->manager = $reminderManager->getAllManager();
 
         if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
-            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
         if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
         
         if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
@@ -1707,10 +1707,10 @@ class FilesController extends Controller
             $subject = "ECU Tech: Engineer uploaded a file in reply.";
 
             if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
-                \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+                \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
             }
             if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
-                \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+                \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
             }
             
             if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){

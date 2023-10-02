@@ -22,8 +22,10 @@ use App\Models\ServiceSubdealerGroup;
 use App\Models\Tool;
 use App\Models\User;
 use App\Models\UserTool;
+use Faker\Provider\ar_EG\Address;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 // use Danielebarbaro\LaravelVatEuValidator\Facades\VatValidatorFacade as VatValidator;
 
 use LaravelDaily\Invoices\Invoice;
@@ -52,44 +54,51 @@ Route::get('/info', function () {
 
 
 Route::get('/manager', function () {
-    $manager = (new ReminderManagerController())->getManager();
+    $manager = (new ReminderManagerController())->getAllManager();
     dd($manager);
 });
 
+Route::get('/send_email', function () {
 
-Route::get('/test_sms', function () {
-    try {
-            
-        // $accountSid = env("TWILIO_SID");
-        // $authToken = env("TWILIO_AUTH_TOKEN");
-        // $twilioNumber = env("TWILIO_NUMBER"); 
+    Mail::to('xrkalix@gmail.com')
+    ->send(new \App\Mail\AllMails([ 'html' => 'testing mail.', 'subject' => 'testing', 'front_end_id' => 2 ]));
 
-        $accountSid = Key::whereNull('subdealer_group_id')
-        ->where('key', 'twilio_sid')->first()->value;
-
-        $authToken = Key::whereNull('subdealer_group_id')
-        ->where('key', 'twilio_token')->first()->value;
-
-        $twilioNumber = Key::whereNull('subdealer_group_id')
-        ->where('key', 'twilio_number')->first()->value;
-
-
-        $client = new Client($accountSid, $authToken);
-
-        $message = $client->messages
-              ->create('+923218612198', // to
-                       ["body" => 'testing from local backend', "from" => "ecutech"]
-        );
-
-        dd($message);
-
-        \Log::info('message sent to:'.'+923218612198');
-
-    } catch (\Exception $e) {
-        dd($e->getMessage());
-        \Log::info($e->getMessage());
-    }
 });
+
+
+// Route::get('/test_sms', function () {
+//     try {
+            
+//         // $accountSid = env("TWILIO_SID");
+//         // $authToken = env("TWILIO_AUTH_TOKEN");
+//         // $twilioNumber = env("TWILIO_NUMBER"); 
+
+//         $accountSid = Key::whereNull('subdealer_group_id')
+//         ->where('key', 'twilio_sid')->first()->value;
+
+//         $authToken = Key::whereNull('subdealer_group_id')
+//         ->where('key', 'twilio_token')->first()->value;
+
+//         $twilioNumber = Key::whereNull('subdealer_group_id')
+//         ->where('key', 'twilio_number')->first()->value;
+
+
+//         $client = new Client($accountSid, $authToken);
+
+//         $message = $client->messages
+//               ->create('+923218612198', // to
+//                        ["body" => 'testing from local backend', "from" => "ecutech"]
+//         );
+
+//         dd($message);
+
+//         \Log::info('message sent to:'.'+923218612198');
+
+//     } catch (\Exception $e) {
+//         dd($e->getMessage());
+//         \Log::info($e->getMessage());
+//     }
+// });
 
  Route::get('/tasks', function () {
 
