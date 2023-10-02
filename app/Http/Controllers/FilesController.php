@@ -631,7 +631,7 @@ class FilesController extends Controller
         return response('File deleted', 200);
     }
 
-    public function sendMessage($receiver, $message)
+    public function sendMessage($receiver, $message, $frontendID)
     {
         try {
             
@@ -651,10 +651,21 @@ class FilesController extends Controller
 
             $client = new Client($accountSid, $authToken);
 
-            $message = $client->messages
-                  ->create($receiver, // to
-                           ["body" => $message, "from" => "TuningX"]
-            );
+            if($frontendID == 2)
+            {
+                $message = $client->messages
+                    ->create($receiver, // to
+                            ["body" => $message, "from" => "TuningX"]
+                );
+            }
+            else{
+
+                $message = $client->messages
+                    ->create($receiver, // to
+                            ["body" => $message, "from" => "ECUTech"]
+                );
+
+            }
 
             \Log::info('message sent to:'.$receiver);
 
@@ -716,7 +727,7 @@ class FilesController extends Controller
 
         if($this->manager['eng_assign_eng_sms'.$file->front_end_id]){
         
-            $this->sendMessage($engineer->phone, $message);
+            $this->sendMessage($engineer->phone, $message, $file->front_end_id);
         }
         
         return Redirect::back()->with(['success' => 'Engineer Assigned to File.']);
@@ -802,10 +813,10 @@ class FilesController extends Controller
         }
 
         if($this->manager['status_change_admin_sms'.$file->front_end_id]){
-            $this->sendMessage($admin->phone, $message1);
+            $this->sendMessage($admin->phone, $message1, $file->front_end_id);
         }
         if($this->manager['status_change_cus_sms'.$file->front_end_id]){
-            $this->sendMessage($customer->phone, $message2);
+            $this->sendMessage($customer->phone, $message2, $file->front_end_id);
         }
 
         return Redirect::back()->with(['success' => 'File status changed.']);
@@ -910,10 +921,10 @@ class FilesController extends Controller
         
         if($this->manager['msg_eng_admin_sms'.$file->front_end_id]){
             
-            $this->sendMessage($admin->phone, $message1);
+            $this->sendMessage($admin->phone, $message1, $file->front_end_id);
         }
         if($this->manager['msg_eng_cus_sms'.$file->front_end_id]){
-            $this->sendMessage($customer->phone, $message2);
+            $this->sendMessage($customer->phone, $message2, $file->front_end_id);
         }
 
         $old = File::findOrFail($request->file_id);
@@ -1100,10 +1111,10 @@ class FilesController extends Controller
         }
         
         if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
-            $this->sendMessage($admin->phone, $message1);
+            $this->sendMessage($admin->phone, $message1, $file->front_end_id);
         }
         if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
-            $this->sendMessage($customer->phone, $message2);
+            $this->sendMessage($customer->phone, $message2, $file->front_end_id);
         }
         
         return response('file uploaded', 200);
@@ -1714,10 +1725,10 @@ class FilesController extends Controller
             }
             
             if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
-                $this->sendMessage($admin->phone, $message1);
+                $this->sendMessage($admin->phone, $message1, $file->front_end_id);
             }
             if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
-                $this->sendMessage($customer->phone, $message2);
+                $this->sendMessage($customer->phone, $message2, $file->front_end_id);
             }
 
             }
