@@ -46,6 +46,7 @@ use Yajra\DataTables\DataTables;
 
 use PDO;
 use stdClass;
+use Symfony\Component\Mailer\Exception\TransportException;
 
 class FilesController extends Controller
 {
@@ -727,7 +728,14 @@ class FilesController extends Controller
 
         if($this->manager['eng_assign_eng_email'.$file->front_end_id]){
 
-            \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+            try{
+
+                \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+            
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+            }
         }
 
         if($this->manager['eng_assign_eng_sms'.$file->front_end_id]){
@@ -815,11 +823,26 @@ class FilesController extends Controller
         $this->manager = $reminderManager->getAllManager();
 
         if($this->manager['status_change_cus_email'.$file->front_end_id]){
-            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+            try{
+                
+                \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+            }
         }
 
         if($this->manager['status_change_admin_email'.$file->front_end_id]){
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+            try{
+                \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+            }
         }
 
         if($this->manager['status_change_admin_sms'.$file->front_end_id]){
@@ -930,10 +953,23 @@ class FilesController extends Controller
 
 
         if($this->manager['msg_eng_cus_email'.$file->front_end_id]){
-            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+            try{
+                \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+            }
         }
         if($this->manager['msg_eng_admin_email'.$file->front_end_id]){
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+            try{
+                \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+            }
         }
         
         if($this->manager['msg_eng_admin_sms'.$file->front_end_id]){
@@ -1126,10 +1162,24 @@ class FilesController extends Controller
         $this->manager = $reminderManager->getAllManager();
 
         if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
-            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+            try{
+                \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+            }
+
         }
         if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+            try{
+                \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+            }
         }
         
         if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
@@ -1745,10 +1795,23 @@ class FilesController extends Controller
             }
 
             if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
-                \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+                try{
+                    \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                }
             }
             if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
-                \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                
+                try{
+                    \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                }
             }
             
             if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
