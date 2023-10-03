@@ -238,7 +238,7 @@
                       <h5 class="text-black pull-left">Icon Preview</h5>
                     </div>
                     <div class="card-description">
-                        <img src="{{ url('icons').'/'.$service->icon }}" alt="Stage 0">
+                        <img src="{{ url('icons').'/'.$service->icon }}" alt="{{$service->name}}">
                     </div>
                   </div>
                 @endif
