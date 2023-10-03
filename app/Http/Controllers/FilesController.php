@@ -763,12 +763,12 @@ class FilesController extends Controller
 
         $file->status = $request->status;
         
-
         $customer = User::findOrFail($file->user_id);
 
         $credit = new Credit();
         $credit->credits = $file->credits;
         $credit->user_id = $customer->id;
+        $credit->file_id = $file->id;
         $credit->stripe_id = NULL;
 
         $credit->gifted = 1;
