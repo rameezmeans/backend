@@ -2234,13 +2234,15 @@
 
     $(document).on('change', '#select_status', function(e){
 
-      if($(this).val() == 'rejected')
-      {
-        $('#reason_to_reject').removeClass('hide');
-      }
-      else{
-        $('#reason_to_reject').addClass('hide');
-      }
+        console.log($(this).val());
+
+        if($(this).val() == 'rejected')
+        {
+          $('#reason_to_reject').removeClass('hide');
+        }
+        else{
+          $('#reason_to_reject').addClass('hide');
+        }
 
     });
 
