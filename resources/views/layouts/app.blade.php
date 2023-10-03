@@ -20,7 +20,8 @@
     <meta content="" name="description" />
     <meta content="" name="author" />
     <link href="{{ url('assets/plugins/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('assets/plugins/fontawesome/all.min.css') }}" rel="stylesheet" type="text/css" />
+    {{-- <link href="{{ url('assets/plugins/fontawesome/all.min.css') }}" rel="stylesheet" type="text/css" /> --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
     <link href="{{ url('assets/plugins/pace/pace-theme-flash.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ url('assets/plugins/font-awesome/css/font-awesome.css') }}" rel="stylesheet" type="text/css" />

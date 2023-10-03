@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Controllers\ReminderManagerController;
 use App\Models\AlientechFile;
+use App\Models\Credit;
 use App\Models\FileFeedback;
 use App\Models\FileInternalEvent;
 use App\Models\FileService;
@@ -757,12 +758,36 @@ class FilesController extends Controller
     }
 
     public function changeStatus(Request $request){
-        
+
         $file = File::findOrFail($request->file_id);
+
         $file->status = $request->status;
-        $file->save();
+        
 
         $customer = User::findOrFail($file->user_id);
+
+        $credit = new Credit();
+        $credit->credits = $file->credits;
+        $credit->user_id = $customer->id;
+        $credit->stripe_id = NULL;
+
+        $credit->gifted = 1;
+        $credit->price_payed = 0;
+
+        if($request->reason_to_reject){
+            $credit->message_to_credit = $request->reason_to_reject;
+            $file->reason_to_reject = $request->reason_to_reject;
+        }
+        else{
+            $credit->message_to_credit = 'File rejected and refunded!';
+            $file->reason_to_reject = 'File rejected and refunded!';
+        }
+
+        $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
+        $credit->save();
+        
+        $file->save();
+
         $admin = get_admin();
     
         // $template = EmailTemplate::where('name', 'Status Change')->first();

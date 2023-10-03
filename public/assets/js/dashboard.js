@@ -114,7 +114,7 @@
         //Get from JSON data and build
 
         d3.json(
-            "http://pages.revox.io/json/min_sales_chart.json",
+            "https://pages.revox.io/json/min_sales_chart.json",
             function (data) {
                 // Widget-15
                 nv.addGraph(
@@ -139,9 +139,9 @@
                             .showYAxis(false)
                             .showLegend(false);
 
-                        d3.select(".widget-16-chart svg")
-                            .datum(data.siteVisits)
-                            .call(chart);
+                        // d3.select(".widget-16-chart svg")
+                        //     .datum(data.siteVisits)
+                        //     .call(chart);
 
                         nv.utils.windowResize(chart.update);
 
@@ -188,9 +188,9 @@
                             .showLegend(false)
                             .interactive(false);
 
-                        d3.select(".widget-7-chart svg")
-                            .datum(data.premarket)
-                            .call(chart);
+                        // d3.select(".widget-7-chart svg")
+                        //     .datum(data.premarket)
+                        //     .call(chart);
 
                         nv.utils.windowResize(chart.update);
 
@@ -228,9 +228,9 @@
                             .showLegend(false)
                             .interactive(false);
 
-                        d3.select(".widget-8-chart svg")
-                            .datum(data.siteVisits)
-                            .call(chart);
+                        // d3.select(".widget-8-chart svg")
+                        //     .datum(data.siteVisits)
+                        //     .call(chart);
 
                         nv.utils.windowResize(chart.update);
 
@@ -302,7 +302,7 @@
         $(".widget-7 .metro").liveTile();
 
         //NVD3 Charts
-        d3.json("http://pages.revox.io/json/charts.json", function (data) {
+        d3.json("https://pages.revox.io/json/charts.json", function (data) {
             // line chart
             (function () {
                 nv.addGraph(function () {
@@ -333,11 +333,11 @@
 
                     chart.yAxis.tickFormat(d3.format("d"));
 
-                    d3.select(".nvd3-line svg")
-                        .datum(data.nvd3.line)
-                        .transition()
-                        .duration(500)
-                        .call(chart);
+                    // d3.select(".nvd3-line svg")
+                    //     .datum(data.nvd3.line)
+                    //     .transition()
+                    //     .duration(500)
+                    //     .call(chart);
 
                     nv.utils.windowResize(chart.update);
 
@@ -373,11 +373,11 @@
                             .showYAxis(false)
                             .showLegend(false);
 
-                        d3.select(".widget-2-chart svg")
-                            .datum(data.nvd3.interpolated)
-                            .transition()
-                            .duration(500)
-                            .call(chart);
+                        // d3.select(".widget-2-chart svg")
+                        //     .datum(data.nvd3.interpolated)
+                        //     .transition()
+                        //     .duration(500)
+                        //     .call(chart);
 
                         nv.utils.windowResize(chart.update);
 
@@ -413,11 +413,11 @@
                             })
                             .showLegend(false);
 
-                        d3.select(".widget-4-chart svg")
-                            .datum(data.nvd3.productRevenue)
-                            .transition()
-                            .duration(500)
-                            .call(chart);
+                        // d3.select(".widget-4-chart svg")
+                        //     .datum(data.nvd3.productRevenue)
+                        //     .transition()
+                        //     .duration(500)
+                        //     .call(chart);
 
                         nv.utils.windowResize(function () {
                             // chart.update();

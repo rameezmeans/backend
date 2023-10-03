@@ -1090,17 +1090,21 @@
 
                   <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                     <p class="pull-left">File Status</p>
-                    <form action="{{route('change-status')}}" method="POST">
+                    <form action="{{route('change-status-file')}}" method="POST">
                       @csrf
                       <input type="hidden" name="file_id" value="{{$file->id}}">
                       <div class="">
-                        <select class="full-width" data-init-plugin="select2" name="status">
+                        <select class="full-width" data-init-plugin="select2" name="status" id="select_status">
                             <option @if(isset($file) && $file->status == "submitted") selected @endif value="submitted">Submitted</option>
                             <option @if(isset($file) && $file->status == "rejected") selected @endif value="rejected">Rejected</option>
                             <option @if(isset($file) && $file->status == "completed") selected @endif value="completed">Completed</option>
                             <option @if(isset($file) && $file->status == "processing") selected @endif value="processing">Processing</option>
                             <option @if(isset($file) && $file->status == "on_hold") selected @endif value="on_hold">On Hold</option>
                         </select>
+                        <div class="form-group m-t-10 hide" id="reason_to_reject">
+                          <label>Reason To Reject</label>
+                          <input type="text" class="form-control" name="reason_to_reject">
+                        </div>
                         <div class="text-center m-t-20">                    
                           <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Update</span></button>
                         </div>
@@ -2225,6 +2229,18 @@
           )
         }
       });
+
+    });
+
+    $(document).on('change', '#select_status', function(e){
+
+      if($(this).val() == 'rejected')
+      {
+        $('#reason_to_reject').removeClass('hide');
+      }
+      else{
+        $('#reason_to_reject').addClass('hide');
+      }
 
     });
 
