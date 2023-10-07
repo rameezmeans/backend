@@ -56,6 +56,14 @@ class File extends Model
         return $this->hasMany(FileUrl::class);
     }
 
+    public function stage_offer(){
+        return $this->hasOne(EngineerOptionsOffer::class, 'file_id', 'id')->where('type', 'stage');
+    }
+
+    public function options_offer(){
+        return $this->hasMany(EngineerOptionsOffer::class, 'file_id', 'id')->where('type', 'option');
+    }
+
     public function vehicle(){
         return Vehicle::where('Make', '=', $this->brand)
         ->where('Model', '=', $this->model)

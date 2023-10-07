@@ -30,6 +30,10 @@
     margin-top: 10px;
   }
 
+  .modal-open .select2-container {
+    z-index: 9999;
+  }
+
   .bg-warning-light {
     background-color: #fef6dd !important;
   }
@@ -163,6 +167,13 @@
                       @endif --}}
                       <div class="col-lg-6">
                         <h5 class="">General Information</h5>
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Status</p>
+                          <div class="pull-right">
+                            <span class="label @if($file->status == 'sumbitted') label-success @else label-danger @endif">{{$file->status}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Uploaded Time</p>
                           <div class="pull-right">
@@ -432,15 +443,31 @@
                      
         
                       <h5 class="m-t-40">Options And Credits</h5>
+
+                      @if($file->status == 'submitted')
+                        <button id="btn-options-change" class="btn btn-success m-b-20">Change Options</button>
+                      @endif
                         
                       @if($file->stages)
                         @if(\App\Models\Service::where('name', $file->stages)->first())
                           <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                             <p class="pull-left">Stage</p>
                             <div class="pull-right">
-                                <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
-                                <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span>
-                            </div>
+                                {{-- <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}"> --}}
+                                {{-- <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span> --}}
+
+                                @if($file->front_end_id == 2)
+                                  @if($file->tool_type == 'master')
+                                    <span class="text-black"> {{$stage['tuningx_credits']}} Credits </span>
+                                  @else
+                                    <span class="text-black"> {{$stage['tuningx_slave_credits']}} Credits </span>
+                                  @endif
+                                
+                                @else
+                                  <span class="text-black"> {{$stage['credits']}} Credits </span>
+                                @endif
+                                    
+                                </div>
                             <div class="clearfix"></div>
                           </div>
                         @endif
@@ -451,6 +478,18 @@
                           <div class="pull-right">
                               <img alt="{{\App\Models\Service::FindOrFail($file->stage_services->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}">
                               <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_services->service_id)->name }}</span>
+                              @php $stage = \App\Models\Service::FindOrFail($file->stage_services->service_id) @endphp
+                              @if($file->front_end_id == 2)
+                                  @if($file->tool_type == 'master')
+                                    <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
+                                  @else
+                                    <span class="text-white label-danger label"> {{$stage->tuningx_slave_credits}} </span>
+                                  @endif
+                              @else
+                                <span class="text-white label-danger label"> {{$stage->credits}} </span>
+                              @endif
+                              
+
                           </div>
                           <div class="clearfix"></div>
                         </div>
@@ -467,9 +506,20 @@
                         
                         @foreach($file->options_services()->get() as $option) 
                             @if(\App\Models\Service::where('id', $option->service_id)->first())
-                              <div class="p-l-20 b-b b-grey b-t p-b-10 p-t-10"> 
+                              <div class="p-l-20 b-b b-grey b-t p-b-10 p-t-10 p-r-20"> 
                                 <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
                                 {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  
+                                @php $option = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
+                                @if($file->front_end_id == 2)
+                                  @if($file->tool_type == 'master')
+                                    <span class="text-white label-danger label pull-right"> {{$option->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
+                                  @else
+                                    <span class="text-white label-danger label pull-right"> {{$option->optios_stage($file->stage_services->service_id)->first()->slave_credits}} </span>
+                                  @endif
+                              @else
+                                <span class="text-white label-danger label pull-right"> {{$option->credits}} </span>
+                              @endif
+
                               </div>
                             @endif
                             @if($comments)
@@ -532,7 +582,7 @@
                       @endif
 
                       @if($file->vmax_off_comments)
-                      <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                      <div class="p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left text-danger">VMAX OFF Comments</p>
                         <br>
                         <div class="m-l-20">
@@ -556,6 +606,8 @@
                       </div>
         
                       </div>
+
+                      
 
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Uploaded Files</h5>
@@ -616,6 +668,92 @@
                       @endforeach
                       </div>
 
+                      @if(\App\Models\Service::FindOrFail($file->stage_offer->service_id))
+
+                      @php $proposedCredits = 0; @endphp
+
+                      <div class="col-lg-6">
+                        <h5 class="m-t-40">Proposed Stage and Options</h5>
+                        
+                          <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Stage</p>
+                            <div class="pull-right">
+                                <img alt="{{\App\Models\Service::FindOrFail($file->stage_offer->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon }}">
+                                <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_offer->service_id)->name }}</span>
+                                @php $stage = \App\Models\Service::FindOrFail($file->stage_offer->service_id) @endphp
+                                @if($file->front_end_id == 2)
+                                    @if($file->tool_type == 'master')
+                                      <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
+                                      @php $proposedCredits += $stage->tuningx_credits; @endphp
+                                    @else
+                                      <span class="text-white label-danger label"> {{$stage->tuningx_slave_credits}} </span>
+                                      @php $proposedCredits += $stage->tuningx_slave_credits; @endphp
+                                    @endif
+                                @else
+                                  <span class="text-white label-danger label"> {{$stage->credits}} </span>
+                                  @php $proposedCredits += $stage->credits; @endphp
+                                @endif
+                                
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+
+                          <div class="b-b  b-grey p-l-20 p-r-20 p-t-10 p-b-10">
+                            <p class="pull-left">Options</p>
+                            <div class="clearfix"></div>
+                          </div>
+                        
+                          @foreach($file->options_offer as $option)
+                              
+                              @if(\App\Models\Service::FindOrFail($option->service_id))
+                                <div class="p-l-20  p-r-20 b-b b-grey  p-t-10 p-b-10"> 
+                                  <img alt="{{\App\Models\Service::FindOrFail($option->service_id)->name}}" width="40" height="40" 
+                                  data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                  data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                  src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
+                                  {{\App\Models\Service::FindOrFail($option->service_id)->name}}  
+                                  @php $option1 = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
+                                  @if($file->front_end_id == 2)
+                                    @if($file->tool_type == 'master')
+                                      <span class="text-white label-danger label pull-right"> {{$option1->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
+                                      @php $proposedCredits += $option1->optios_stage($file->stage_services->service_id)->first()->master_credits @endphp
+                                    @else
+                                      <span class="text-white label-danger label pull-right"> {{$option1->optios_stage($file->stage_services->service_id)->first()->slave_credits}} </span>
+                                      @php $proposedCredits += $option1->optios_stage($file->stage_services->service_id)->first()->slave_credits @endphp
+                                    @endif
+                                  @else
+                                    <span class="text-white label-danger label pull-right"> {{$option1->credits}} </span>
+                                    @php $proposedCredits += $option1->credits; @endphp
+                                  @endif
+                                </div>
+                              @endif
+                          @endforeach
+
+                          <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Credits Proposed</p>
+                            <div class="pull-right">
+                             
+                              
+                                <span class="label label-warning text-black">{{$proposedCredits}}<span>
+                              
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+
+                          <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Credits Difference</p>
+                            <div class="pull-right">
+                             
+                              
+                                <span class="label label-info text-black">{{$file->credits-$proposedCredits}}<span>
+                              
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        
+                        </div>
+                      @endif
+
                       {{-- <div class="col-xl-12">
                         <h5 class="m-t-40">Upload File</h5>
                         <!-- START card -->
@@ -644,7 +782,7 @@
                         <!-- END card -->
                       </div> --}}
                       
-
+                      @if($file->status == 'submitted')
                       <div class="col-xl-12 m-t-20">
                         <div class="card card-transparent flex-row">
                           <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
@@ -666,8 +804,9 @@
                           </ul>
                           <div class="tab-content bg-white full-width">
 
-                            {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
-                            @if($file->decoded_files) --}}
+                            {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3') --}}
+                            
+                           
 
                             <div class="tab-pane active show" id="tab3hellowWorld">
                               <div class="row column-seperation">
@@ -716,6 +855,7 @@
                               </div>
                             </div>
 
+                           
                             {{-- @endif
                             @endif --}}
 
@@ -753,6 +893,7 @@
                           </div>
                         </div>
                       </div>
+                      @endif
 
                     </div>
                   </div>
@@ -1100,12 +1241,111 @@
     <!-- /.modal-content -->
   </div>
 </div>
+
+<div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="engineerOptionsModal" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <p>File Credits: {{$file->credits}}</p>
+          <p>Proposed Credits:<span id="proposed_credits">0</span></p>
+          <p>Difference:<span id="credits_difference">0</span></p>
+        </div>
+        <div class="modal-body">
+          <form role="form" action="{{route('add-options-offer')}}" method="POST">
+            @csrf
+            
+            <input type="hidden" name="file_id" value="{{$file->id}}">
+            
+            <div class="form-group-attached ">
+              <h5>Propose Stages and Options</h5>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="">
+                    <select class="full-width form-control" data-init-plugin="select2" name="proposed_stage" id="proposed_stage">
+                      
+                      @foreach($stages as $stage)
+                        <option value="{{$stage->id}}" data-credits="@if($file->tool_type == 'master'){{$stage->tuningx_credits}}@else{{$stage->tuningx_slave_credits}}@endif" @if($file->stage_services->service_id == $stage->id) selected="selected" @endif>{{$stage->name}}</option>
+                      @endforeach
+                      
+                    </select>
+                </div>
+                <div class="col-md-12">
+                  <div class="">
+                    
+                    <select class=" full-width" data-init-plugin="select2" multiple name="proposed_options[]" id="proposed_options">
+                      @foreach($options as $option)
+                        <option value="{{$option->id}}" @if(in_array($option->id, $selectedOptions)) selected="selected" @endif  >{{$option->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+          <div class="row">
+            <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+              <button type="submit" class="btn btn-success btn-block m-t-5">Propose</button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
     
 @endsection
 
 @section('pagespecificscripts')
   <script type="text/javascript">
   $(document).ready(function(){
+
+    function calculate_proposed_credits(){
+
+      let proposed_stage = $('#proposed_stage').val();
+      let proposed_options = $('#proposed_options').val();
+      let tool_type = '{{$file->tool_type}}';
+      let file_credits = {{$file->credits}};
+
+      $.ajax({
+            url: "/get_total_proposed_credits",
+            type: "POST",
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                'tool_type': tool_type,
+                'proposed_stage': proposed_stage, 
+                'proposed_options': proposed_options, 
+            },
+            success: function(proposed_credits) {
+              console.log(proposed_credits);
+
+              let difference = proposed_credits - file_credits;
+
+              $('#proposed_credits').html(proposed_credits);
+              $('#credits_difference').html(difference);
+            }
+        });
+
+    }
+
+    $(document).on('change', '#proposed_options', function(e){
+
+      calculate_proposed_credits();
+
+    });
+
+    $(document).on('change', '#proposed_stage', function(e){
+
+      calculate_proposed_credits();
+
+    });
+
+    $(document).on('click', '#btn-options-change', function(e){
+      calculate_proposed_credits();
+      $('#engineerOptionsModal').modal('show');
+    });
 
     $(document).on('change', '#select_status', function(e){
 

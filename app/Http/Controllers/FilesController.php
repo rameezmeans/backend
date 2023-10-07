@@ -19,6 +19,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Controllers\ReminderManagerController;
 use App\Models\AlientechFile;
 use App\Models\Credit;
+use App\Models\EngineerOptionsOffer;
 use App\Models\FileFeedback;
 use App\Models\FileInternalEvent;
 use App\Models\FileService;
@@ -64,6 +65,34 @@ class FilesController extends Controller
         $reminderManager = new ReminderManagerController();
         $this->manager = $reminderManager->getAllManager();
         $this->middleware('auth',['except' => ['recordFeedback']]);
+    }
+
+    public function addOptionsOffer(Request $request){
+        
+        $file = File::findOrFail($request->file_id);
+        
+        $proposed = new EngineerOptionsOffer();
+        $proposed->file_id = $request->file_id;
+        $proposed->type = 'stage';
+        $proposed->service_id = $request->proposed_stage;
+        $proposed->save();
+
+        $proposedOptions = $request->proposed_options;
+        
+        if($proposedOptions){
+            foreach($proposedOptions as $o){
+                $proposed = new EngineerOptionsOffer();
+                $proposed->file_id = $request->file_id;
+                $proposed->type = 'option';
+                $proposed->service_id = $o;
+                $proposed->save();
+            }
+        }
+
+        $file->status = 'on_hold';
+        $file->save();
+    
+        return redirect()->back()->with(['success' => 'New stages and options proposed!']);
     }
 
     public function flipDecodedMode(Request $request){

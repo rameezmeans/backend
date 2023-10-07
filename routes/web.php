@@ -45,7 +45,14 @@ use Twilio\Rest\Client;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if(Auth::user()){
+        return redirect()->route('home');
+    }
+    else{
+        
+        return view('welcome');
+    }
+
 });
 
 Route::get('/info', function () {
@@ -399,6 +406,7 @@ Route::match(['get', 'post'], '/makelua', [App\Http\Controllers\makelua::class, 
 
 Route::post('/change_status', [App\Http\Controllers\ServicesController::class, 'changeStatus'])->name('change-status');
 Route::post('/change_tuningx_status', [App\Http\Controllers\ServicesController::class, 'changeTuningxStatus'])->name('change-tuningx-status');
+Route::post('/get_total_proposed_credits', [App\Http\Controllers\ServicesController::class, 'getTotalProposedCredits'])->name('get-total-proposed-credits');
 
 Auth::routes(['register' => false]);
 
@@ -428,6 +436,7 @@ Route::post('/get_download_button', [App\Http\Controllers\FilesController::class
 Route::post('/search', [App\Http\Controllers\FilesController::class, 'search'])->name('search');
 Route::post('get_change_status', [App\Http\Controllers\FilesController::class, 'changeCheckingStatus'])->name('get-change-status');
 Route::post('flip_decoded_mode', [App\Http\Controllers\FilesController::class, 'flipDecodedMode'])->name('flip-decoded-mode');
+Route::post('add_options_offer', [App\Http\Controllers\FilesController::class, 'addOptionsOffer'])->name('add-options-offer');
 
 Route::get('/download/{id}/{file}/{autoDelete}', [App\Http\Controllers\FilesController::class,'download'])->name('download');
 Route::get('/support/{id}', [App\Http\Controllers\FilesController::class,'support'])->name('support');

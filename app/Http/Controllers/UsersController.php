@@ -232,6 +232,29 @@ class UsersController extends Controller
             $this->addCredits($customer->group->bonus_credits, $customer);
         }
 
+        if($customer->elorus_id){
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://api.elorus.com/v1.1/contacts/'.$customer->elorus_id.'/');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"first_name\":\"$customer->name\", \"last_name\":\"\", \"vat_number\":\"$customer->company_id\",\"company\":\"$customer->company_name\",\"active\":true, \"is_supplier\":true}");
+
+            $headers = array();
+            $headers[] = 'Content-Type: application/json';
+            $headers[] = 'Authorization: Token 32fd4c0b90ac267da4c548ea4410b126db2eaf53';
+            $headers[] = 'X-Elorus-Organization: 1357060486331368800';
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+            $result = curl_exec($ch);
+            if (curl_errno($ch)) {
+                echo 'Error:' . curl_error($ch);
+            }
+            curl_close($ch);
+
+        }
+
         return redirect()->route('customers')->with(['success' => 'Customer updated, successfully.']);
 
     }

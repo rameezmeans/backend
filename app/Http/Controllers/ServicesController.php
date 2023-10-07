@@ -228,6 +228,40 @@ class ServicesController extends Controller
         return redirect()->route('services')->with(['success' => 'Service updated, successfully.']);
     }
 
+    public function getTotalProposedCredits(Request $request){
+
+        $proposedOptions = $request->proposed_options;
+        $toolType = $request->tool_type;
+        $proposedStage = $request->proposed_stage;
+
+        $totalProposedCredits = 0;
+
+        if($toolType == 'master'){
+
+            $totalProposedCredits += Service::findOrFail($proposedStage)->tuningx_credits;
+
+            if($proposedOptions){
+                foreach($proposedOptions as $o){
+                    $option = Service::findOrFail($o);
+                    $totalProposedCredits += $option->optios_stage($proposedStage)->first()->master_credits;
+                }
+            }
+        }
+        else{
+
+            $totalProposedCredits += Service::findOrFail($proposedStage)->tuningx_slave_credits;
+
+            if($proposedOptions){
+                foreach($proposedOptions as $o){
+                    $option = Service::findOrFail($o);
+                    $totalProposedCredits += $option->optios_stage($proposedStage)->first()->slave_credits;
+                }
+            }
+        }
+
+        return $totalProposedCredits;
+
+    }
     public function saveSorting(Request $request){
 
         $sorting = json_decode($request->sorting);

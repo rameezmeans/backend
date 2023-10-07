@@ -23,5 +23,10 @@ class Service extends Model
         
         return $this->hasOne( StagesOptionsCredit::class, 'stage_id', 'id' )->where('option_id', $optionID);
     }
+
+    public function optios_stage($stageID){
+        
+        return $this->hasOne( StagesOptionsCredit::class, 'option_id', 'id' )->where('stage_id', $stageID);
+    }
     
 }

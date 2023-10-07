@@ -444,6 +444,7 @@
                      
         
                       <h5 class="m-t-40">Options And Credits</h5>
+                      <button class="btn btn-success btn-options-change">Change Options</button>
                         
                       @if($file->stages)
                         @if(\App\Models\Service::where('name', $file->stages)->first())
@@ -647,10 +648,6 @@
                                   
                                   // Concatenate the new extension
                                   $new_file_path_ori = $file_info['dirname'] . '/' . $base_name . '.' . $new_extension;
-                                  
-                                  
-                                  
-                                  
                                   
                                   ?>
                                 
@@ -2159,6 +2156,10 @@
         $('.options-show').removeClass('hide');
         $('.stages-show').removeClass('hide');
       }
+    });
+
+    $(document).on('click', '.btn-options-change', function(e){
+      console.log('mog');
     });
 
     $(document).on('click', '.fa-edit', function(e){
