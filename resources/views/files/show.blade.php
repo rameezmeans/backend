@@ -1848,6 +1848,60 @@
     <!-- /.modal-content -->
   </div>
 </div>
+
+<div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="engineerOptionsModal" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <p>File Credits: {{$file->credits}}</p>
+          <p>Proposed Credits:<span id="proposed_credits">0</span></p>
+          <p>Difference:<span id="credits_difference">0</span></p>
+        </div>
+        <div class="modal-body">
+          <form role="form" action="{{route('add-options-offer')}}" method="POST">
+            @csrf
+            
+            <input type="hidden" name="file_id" value="{{$file->id}}">
+            
+            <div class="form-group-attached ">
+              <h5>Propose Stages and Options</h5>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="">
+                    <select class="full-width form-control" data-init-plugin="select2" name="proposed_stage" id="proposed_stage">
+                      
+                      @foreach($stages as $stage)
+                        <option value="{{$stage->id}}" data-credits="@if($file->tool_type == 'master'){{$stage->tuningx_credits}}@else{{$stage->tuningx_slave_credits}}@endif" @if($file->stage_services->service_id == $stage->id) selected="selected" @endif>{{$stage->name}}</option>
+                      @endforeach
+                      
+                    </select>
+                </div>
+                <div class="col-md-12">
+                  <div class="">
+                    
+                    <select class=" full-width" data-init-plugin="select2" multiple name="proposed_options[]" id="proposed_options">
+                      @foreach($options as $option)
+                        <option value="{{$option->id}}" @if(in_array($option->id, $selectedOptions)) selected="selected" @endif  >{{$option->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+          <div class="row">
+            <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+              <button type="submit" class="btn btn-success btn-block m-t-5">Propose</button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
     
 @endsection
 
