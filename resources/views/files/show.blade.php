@@ -17,6 +17,10 @@
   color:white;
   }
 
+  .modal-open .select2-container {
+    z-index: 9999;
+  }
+
   .chat-view .chat-bubble {
       padding: 12px 24px !important;
   }
