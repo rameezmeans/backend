@@ -1645,16 +1645,17 @@ class FilesController extends Controller
 
         $options = Service::where('type', 'option')
         ->whereNull('subdealer_group_id')
-        ->where('active', 1)->get();
+        ->where('active', 1)->get()
+        ->orWhere('tuingx_active', 1)->get()->whereNull('subdealer_group_id');
 
         $stages = Service::where('type', 'tunning')
         ->whereNull('subdealer_group_id')
-        ->where('active', 1)->get();
+        ->where('active', 1)->get()
+        ->orWhere('tuingx_active', 1)->get()->whereNull('subdealer_group_id');
         
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
 
         if(env('APP_ENV') == 'live'){
-            // dd($selectedOptions);
             return view('files.show', ['selectedOptions' => $selectedOptions, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
         }
         else{
