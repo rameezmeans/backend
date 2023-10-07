@@ -1645,12 +1645,12 @@ class FilesController extends Controller
 
         $options = Service::where('type', 'option')
         ->whereNull('subdealer_group_id')
-        ->where('active', 1)->get()
+        ->where('active', 1)
         ->orWhere('tuingx_active', 1)->whereNull('subdealer_group_id')->get();
 
         $stages = Service::where('type', 'tunning')
         ->whereNull('subdealer_group_id')
-        ->where('active', 1)->get()
+        ->where('active', 1)
         ->orWhere('tuingx_active', 1)->whereNull('subdealer_group_id')->get();
         
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
