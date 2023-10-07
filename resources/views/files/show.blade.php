@@ -460,6 +460,16 @@
                             <div class="pull-right">
                                 <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
                                 <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span>
+                                @php $stage = \App\Models\Service::FindOrFail($file->stage_services->service_id) @endphp
+                                @if($file->front_end_id == 2)
+                                    @if($file->tool_type == 'master')
+                                      <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
+                                    @else
+                                      <span class="text-white label-danger label"> {{$stage->tuningx_slave_credits}} </span>
+                                    @endif
+                                @else
+                                  <span class="text-white label-danger label"> {{$stage->credits}} </span>
+                                @endif
                             </div>
                             <div class="clearfix"></div>
                           </div>
@@ -490,6 +500,16 @@
                               <div class="p-l-20 b-b b-grey b-t p-b-10 p-t-10"> 
                                 <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
                                 {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  
+                                @php $option = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
+                                @if($file->front_end_id == 2)
+                                  @if($file->tool_type == 'master')
+                                    <span class="text-white label-danger label pull-right"> {{$option->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
+                                  @else
+                                    <span class="text-white label-danger label pull-right"> {{$option->optios_stage($file->stage_services->service_id)->first()->slave_credits}} </span>
+                                  @endif
+                              @else
+                                <span class="text-white label-danger label pull-right"> {{$option->credits}} </span>
+                              @endif
                               </div>
                             @endif
                             @if($comments)
