@@ -1274,8 +1274,8 @@
                   <div class="">
                     
                     <select class=" full-width" data-init-plugin="select2" multiple name="proposed_options[]" id="proposed_options">
-                      @foreach($options as $option)
-                        <option value="{{$option->id}}" @if(in_array($option->id, $selectedOptions)) selected="selected" @endif  >{{$option->name}}</option>
+                      @foreach($options as $option1)
+                        <option value="{{$option1->id}}" @if(in_array($option1->id, $selectedOptions)) selected="selected" @endif  >{{$option1->name}}</option>
                       @endforeach
                     </select>
                   </div>
