@@ -481,6 +481,16 @@
                           <div class="pull-right">
                               <img alt="{{\App\Models\Service::FindOrFail($file->stage_services->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}">
                               <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_services->service_id)->name }}</span>
+                              @php $stage = \App\Models\Service::FindOrFail($file->stage_services->service_id) @endphp
+                              @if($file->front_end_id == 2)
+                                  @if($file->tool_type == 'master')
+                                    <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
+                                  @else
+                                    <span class="text-white label-danger label"> {{$stage->tuningx_slave_credits}} </span>
+                                  @endif
+                              @else
+                                <span class="text-white label-danger label"> {{$stage->credits}} </span>
+                              @endif
                           </div>
                           <div class="clearfix"></div>
                         </div>
