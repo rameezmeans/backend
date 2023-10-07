@@ -763,7 +763,7 @@
                       @endforeach
                       </div>
 
-                      @if(\App\Models\Service::FindOrFail($file->stage_offer->service_id))
+                      @if($file->stage_offer)
 
                       @php $proposedCredits = 0; @endphp
 
@@ -2343,7 +2343,7 @@
     });
 
     $(document).on('click', '#btn-options-change', function(e){
-      
+
       calculate_proposed_credits();
       $('#engineerOptionsModal').modal('show');
 
