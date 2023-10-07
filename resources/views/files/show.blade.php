@@ -911,7 +911,7 @@
                         <!-- END card -->
                       </div> --}}
                       
-
+                      @if($file->status == 'submitted')
                       <div class="col-xl-12 m-t-20">
                         <div class="card card-transparent flex-row">
                           <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
@@ -1020,7 +1020,7 @@
                           </div>
                         </div>
                       </div>
-
+                      @endif
                     </div>
                   </div>
                 </div>
