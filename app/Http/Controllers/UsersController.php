@@ -239,7 +239,7 @@ class UsersController extends Controller
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
 
-            curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"first_name\":\"$customer->name\", \"last_name\":\"\", \"vat_number\":\"$customer->company_id\",\"company\":\"$customer->company_name\",\"active\":true, \"is_supplier\":true}");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"first_name\":\"$customer->name\", \"last_name\":\"\", \"vat_number\":\"$customer->company_id\",\"company\":\"$customer->company_name\",\"active\":true, \"is_supplier\":false}");
 
             $headers = array();
             $headers[] = 'Content-Type: application/json';
