@@ -911,7 +911,7 @@
                         <!-- END card -->
                       </div> --}}
                       
-                      @if($file->status == 'submitted')
+                      @if($file->status == 'submitted' || $file->status == 'completed')
                       <div class="col-xl-12 m-t-20">
                         <div class="card card-transparent flex-row">
                           <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
