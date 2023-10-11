@@ -788,32 +788,38 @@ class FilesController extends Controller
 
     public function changeStatus(Request $request){
 
+        dd($request->all());
+
         $file = File::findOrFail($request->file_id);
 
         $file->status = $request->status;
         
         $customer = User::findOrFail($file->user_id);
 
-        $credit = new Credit();
-        $credit->credits = $file->credits;
-        $credit->user_id = $customer->id;
-        $credit->file_id = $file->id;
-        $credit->stripe_id = NULL;
+        if($request->status == 'rejected'){
 
-        $credit->gifted = 1;
-        $credit->price_payed = 0;
+            $credit = new Credit();
+            $credit->credits = $file->credits;
+            $credit->user_id = $customer->id;
+            $credit->file_id = $file->id;
+            $credit->stripe_id = NULL;
 
-        if($request->reason_to_reject){
-            $credit->message_to_credit = $request->reason_to_reject;
-            $file->reason_to_reject = $request->reason_to_reject;
+            $credit->gifted = 1;
+            $credit->price_payed = 0;
+
+            if($request->reason_to_reject){
+                $credit->message_to_credit = $request->reason_to_reject;
+                $file->reason_to_reject = $request->reason_to_reject;
+            }
+            else{
+                $credit->message_to_credit = 'File rejected and refunded!';
+                $file->reason_to_reject = 'File rejected and refunded!';
+            }
+
+            $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
+            $credit->save();
+
         }
-        else{
-            $credit->message_to_credit = 'File rejected and refunded!';
-            $file->reason_to_reject = 'File rejected and refunded!';
-        }
-
-        $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
-        $credit->save();
         
         $file->save();
 
