@@ -228,33 +228,33 @@ class FilesController extends Controller
 
     }
 
-    public function getAccessToken(){
+    // public function getAccessToken(){
 
-        $apiURL = 'https://encodingapi.alientech.to/api/access-tokens/request';
-        $postInput = [
-            'clientApplicationGUID' => 'f8b0f518-8de7-4528-b8db-3995e1b787e9',
-            'secretKey' => "#5!/ThmmM*?;D\\jvjQ6%9/",
-        ];
+    //     $apiURL = 'https://encodingapi.alientech.to/api/access-tokens/request';
+    //     $postInput = [
+    //         'clientApplicationGUID' => 'f8b0f518-8de7-4528-b8db-3995e1b787e9',
+    //         'secretKey' => "#5!/ThmmM*?;D\\jvjQ6%9/",
+    //     ];
   
-        $headers = [
-            'Content-Type' => 'application/json'
-        ];
+    //     $headers = [
+    //         'Content-Type' => 'application/json'
+    //     ];
   
-        $response = Http::withHeaders($headers)->post($apiURL, $postInput);
+    //     $response = Http::withHeaders($headers)->post($apiURL, $postInput);
   
-        $statusCode = $response->status();
-        $responseBody = json_decode($response->getBody(), true);
+    //     $statusCode = $response->status();
+    //     $responseBody = json_decode($response->getBody(), true);
      
-        if(isset($responseBody['accessToken'])){
-            $key = new Key();
-            $key->key = 'alientech_access_token';
-            $key->value = $responseBody['accessToken'];
-            $key->save();
-            return $responseBody['accessToken'];
-        }
+    //     if(isset($responseBody['accessToken'])){
+    //         $key = new Key();
+    //         $key->key = 'alientech_access_token';
+    //         $key->value = $responseBody['accessToken'];
+    //         $key->save();
+    //         return $responseBody['accessToken'];
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 
     public function callbackKess3(Response $response){
         \Log::info($response);
