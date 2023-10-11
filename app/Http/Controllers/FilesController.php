@@ -787,9 +787,7 @@ class FilesController extends Controller
     }
 
     public function changeStatus(Request $request){
-
-        dd($request->all());
-
+        
         $file = File::findOrFail($request->file_id);
 
         $file->status = $request->status;
