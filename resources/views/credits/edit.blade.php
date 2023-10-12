@@ -142,7 +142,7 @@
                                     @if($credit->credits < 0)
                                         @php 
                                             if($credit->file_id){
-                                                $file = \App\Models\File::findOrFail($credit->file_id);
+                                                $file = \App\Models\File::where('id',$credit->file_id)->first();
                                             }
                                             
                                         @endphp
@@ -156,11 +156,15 @@
                                             <td class="v-align-middle semi-bold sorting_1">
 
                                                 @if($credit->file_id)
+                                                    @if($file)
+                                                        @if($file->subdealer_group_id)
+                                                            <p>{{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}</p>
+                                                        @else
+                                                            <p>@if($credit->file_id)  <a href="{{route('file', $credit->file_id)}}"> {{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}</a> @else<span class="label label-danger">{{$credit->message_to_credit}}</span>@endif</p>
+                                                        @endif
 
-                                                    @if($file->subdealer_group_id)
-                                                        <p>{{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}</p>
                                                     @else
-                                                        <p>@if($credit->file_id)  <a href="{{route('file', $credit->file_id)}}"> {{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}</a> @else<span class="label label-danger">{{$credit->message_to_credit}}</span>@endif</p>
+                                                        <p>Record Deleted: {{$credit->file_id}}</p>
                                                     @endif
 
                                                 @endif
@@ -171,11 +175,17 @@
                                             {{-- <td><button class="btn btn-sm btn-primary"><i class="pg-printer"></i></button></td> --}}
                                             <td>
                                                 @if($credit->file_id)
+                                                @if($file)
                                                     @if($file->subdealer_group_id)
                                                         <span class="label label-danger text-white">LUA Entry</span>
                                                     @else
                                                         <a href="{{route('file', $credit->file_id)}}" class="btn btn-sm btn-primary"><i class="fa fa-file"></i></a>
                                                     @endif
+
+                                                    @else
+                                                        <p>Record Deleted: {{$credit->file_id}}</p>
+                                                    @endif
+                                                    
                                                 @else
                                                     <span class="label label-warning text-black">Manual Entry</span>
 
