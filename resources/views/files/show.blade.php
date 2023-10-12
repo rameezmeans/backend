@@ -180,6 +180,13 @@
                       <div class="col-lg-6">
                         <h5 class="">General Information</h5>
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Status</p>
+                          <div class="pull-right">
+                            <span class="label @if($file->status == 'sumbitted') label-success @else label-danger @endif">{{$file->status}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Uploaded Time</p>
                           <div class="pull-right">
                             <span class="">{{\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A')}}<span>
