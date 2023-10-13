@@ -1812,40 +1812,12 @@
                                   </div>
                               
                             </div>
-            
-            
-            
-            
-            
-            
-            
-                            
-                            
+
                             
                           </div>
                         </div>                      
                                    
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
         </div>
       </div>
     </div>
@@ -2403,6 +2375,7 @@
     let proposed_options = $('#proposed_options').val();
     let tool_type = '{{$file->tool_type}}';
     let file_credits = {{$file->credits}};
+    let frontend_id = {{$file->front_end_id}};
 
     $.ajax({
           url: "/get_total_proposed_credits",
@@ -2412,8 +2385,10 @@
               'tool_type': tool_type,
               'proposed_stage': proposed_stage, 
               'proposed_options': proposed_options, 
+              'frontend_id': frontend_id,
           },
           success: function(proposed_credits) {
+
             console.log(proposed_credits);
 
             let difference = proposed_credits - file_credits;

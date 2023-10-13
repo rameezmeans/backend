@@ -233,28 +233,44 @@ class ServicesController extends Controller
         $proposedOptions = $request->proposed_options;
         $toolType = $request->tool_type;
         $proposedStage = $request->proposed_stage;
+        $frontendID = $request->frontend_id;
 
         $totalProposedCredits = 0;
 
-        if($toolType == 'master'){
+        if($frontendID == 1){
 
-            $totalProposedCredits += Service::findOrFail($proposedStage)->tuningx_credits;
+            $totalProposedCredits += Service::findOrFail($proposedStage)->credits;
 
             if($proposedOptions){
                 foreach($proposedOptions as $o){
                     $option = Service::findOrFail($o);
-                    $totalProposedCredits += $option->optios_stage($proposedStage)->first()->master_credits;
+                    $totalProposedCredits += $option->credits;
                 }
             }
+
         }
         else{
 
-            $totalProposedCredits += Service::findOrFail($proposedStage)->tuningx_slave_credits;
+            if($toolType == 'master'){
 
-            if($proposedOptions){
-                foreach($proposedOptions as $o){
-                    $option = Service::findOrFail($o);
-                    $totalProposedCredits += $option->optios_stage($proposedStage)->first()->slave_credits;
+                $totalProposedCredits += Service::findOrFail($proposedStage)->tuningx_credits;
+
+                if($proposedOptions){
+                    foreach($proposedOptions as $o){
+                        $option = Service::findOrFail($o);
+                        $totalProposedCredits += $option->optios_stage($proposedStage)->first()->master_credits;
+                    }
+                }
+            }
+            else{
+
+                $totalProposedCredits += Service::findOrFail($proposedStage)->tuningx_slave_credits;
+
+                if($proposedOptions){
+                    foreach($proposedOptions as $o){
+                        $option = Service::findOrFail($o);
+                        $totalProposedCredits += $option->optios_stage($proposedStage)->first()->slave_credits;
+                    }
                 }
             }
         }
