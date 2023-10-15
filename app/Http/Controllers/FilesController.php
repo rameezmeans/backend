@@ -67,6 +67,35 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
 
+    public function deleteFiles(Request $request){
+        $ids = $request->ids;
+        $files = File::whereIn('id', $ids)->get();
+        
+        foreach($files as $file){
+
+            FileService::where('file_id', $file->id)->delete();
+            ProcessedFile::where('file_id', $file->id)->delete();
+            RequestFile::where('file_id', $file->id)->delete();
+            FileInternalEvent::where('file_id', $file->id)->delete();
+            FileFeedback::where('file_id', $file->id)->delete();
+            AlientechFile::where('file_id', $file->id)->delete();
+            EngineerFileNote::where('file_id', $file->id)->delete();
+            FileUrl::where('file_id', $file->id)->delete();
+            Log::where('file_id', $file->id)->delete();
+            
+            $file->delete();
+        }
+
+
+    }
+
+    public function multiDelete(Request $request){
+
+        $files = File::orderBy('created_at', 'desc')->get();
+
+        return view('files.multi_delete', [ 'files' => $files ]);
+    }
+
     public function addOptionsOffer(Request $request){
 
         $file = File::findOrFail($request->file_id);

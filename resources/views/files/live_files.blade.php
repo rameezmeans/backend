@@ -38,7 +38,14 @@
             @endphp
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
-                <div class="card-title"><h3>Files</h3>
+                <div class="card-title">
+                  <h3>Files</h3>
+                </div>
+                <div class="pull-right">
+                  <div class="col-xs-12">
+                      <button data-redirect="{{route('multi-delete')}}" class="btn btn-success redirect-click"><i class="pg-plus_circle"></i> <span class="bold">Multi Delete</span>
+                      </button>
+                  </div>
                 </div>
                 <div class="clearfix"></div>
             </div>
