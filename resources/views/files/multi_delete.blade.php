@@ -4,9 +4,9 @@
 
 <style>
 
-.table tbody tr td .checkbox label::after {
+/* .table tbody tr td .checkbox label::after {
     left: 4px !important;
-}
+} */
 
 
 </style>
