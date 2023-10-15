@@ -100,7 +100,7 @@
     $( document ).ready(function(event) {
         var ids = [];
 
-        $('.checkbox-c').click(function() {
+        $(document).on('click', '.checkbox-c' ,function() {
 
             let value = $(this).val();
             
