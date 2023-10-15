@@ -56,7 +56,7 @@
                                                 </div>
                                             </td>
                                             <td class="">
-                                                <p>{{$file->id}}</p>
+                                                <span class="label @if($file->front_end_id == 1) bg-primary text-white @else label-warning text-black @endif">{{$file->id}}</span>
                                             </td>
                                             <td class="v-align-middle semi-bold sorting_1">
                                                 <p>{{$file->brand.' '.$file->engine.' '.$file->vehicle()->TORQUE_standard}}</p>
