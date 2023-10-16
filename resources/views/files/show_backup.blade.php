@@ -485,7 +485,7 @@
                             @if(\App\Models\Service::where('id', $option->service_id)->first())
                               <div class="p-l-20 b-b b-grey b-t p-b-10 p-t-10 p-r-20"> 
                                 <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
-                                {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  
+                                {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  ({{\App\Models\Service::where('id', $option->service_id)->first()->vehicle_type}})
                                 @php $option = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
                                 @if($file->front_end_id == 2)
                                   @if($file->tool_type == 'master')
@@ -1222,7 +1222,7 @@
                     
                     <select class=" full-width" data-init-plugin="select2" multiple name="proposed_options[]" id="proposed_options">
                       @foreach($options as $option1)
-                        <option value="{{$option1->id}}" @if(in_array($option1->id, $selectedOptions)) selected="selected" @endif  >{{$option1->name}}</option>
+                        <option value="{{$option1->id}}" @if(in_array($option1->id, $selectedOptions)) selected="selected" @endif  >{{$option1->name}}({{$option1->vehicle_type}}</option>
                       @endforeach
                     </select>
                   </div>
