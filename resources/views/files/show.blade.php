@@ -532,7 +532,7 @@
                             @if($comments)
                               @foreach($comments as $comment)
 
-                                  @if($option->service_id == $comment->service_id)
+                                  @if($option->id == $comment->service_id)
                                     <div class="p-l-20 p-b-10 p-t-10"> 
                                       {{$comment->comments}}
                                     

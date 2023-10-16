@@ -1487,23 +1487,24 @@ class FilesController extends Controller
 
     public function getComments($file){
 
-        $commentObj = Comment::where('engine', $file->engine);
+        // $commentObj = Comment::where('engine', $file->engine);
+        $commentObj = Comment::where('make', $file->brand);
 
-        if($file->brand){
-            $commentObj->where('make', $file->brand);
-        }
+        // if($file->brand){
+        //     $commentObj->where('make', $file->brand);
+        // }
 
-        if($file->Model){
-            $commentObj->where('model', $file->model);
-        }
+        // if($file->Model){
+        //     $commentObj->where('model', $file->model);
+        // }
 
         if($file->ecu){
             $commentObj->where('ecu', $file->ecu);
         }
 
-        if($file->generation){
-            $commentObj->where('generation', $file->generation);
-        }
+        // if($file->generation){
+        //     $commentObj->where('generation', $file->generation);
+        // }
 
         $commentObj->whereNull('subdealer_group_id');
         
@@ -1665,10 +1666,14 @@ class FilesController extends Controller
 
         if($file->ecu){
             $comments = $this->getComments($file);
+
+            // dd($comments);
         }
         else{
             $comments = null;
         }
+
+        // dd($comments);
 
         $selectedOptions = [];
 

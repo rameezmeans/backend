@@ -25,6 +25,13 @@
                 <div class="card-title"><h3>Multi Delete Files</h3>
                 </div>
 
+                <div class="pull-right">
+                    <div class="col-xs-12">
+                        <button data-redirect="{{route('files')}}" class="btn btn-success redirect-click"><i class="pg-plus_circle"></i> <span class="bold">Files</span>
+                        </button>
+                    </div>
+                  </div>
+
                 <div class="">
                     <div class="col-xs-12">
                         <button class="btn btn-danger hide" id="delete-selected"><i class="pg-plus_circle"></i> <span class="bold">Delete Selected</span>

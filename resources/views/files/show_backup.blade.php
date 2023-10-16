@@ -448,30 +448,7 @@
                         <button id="btn-options-change" class="btn btn-success m-b-20">Change Options</button>
                       @endif
                         
-                      @if($file->stages)
-                        @if(\App\Models\Service::where('name', $file->stages)->first())
-                          <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                            <p class="pull-left">Stage</p>
-                            <div class="pull-right">
-                                {{-- <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}"> --}}
-                                {{-- <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span> --}}
-
-                                @if($file->front_end_id == 2)
-                                  @if($file->tool_type == 'master')
-                                    <span class="text-black"> {{$stage['tuningx_credits']}} Credits </span>
-                                  @else
-                                    <span class="text-black"> {{$stage['tuningx_slave_credits']}} Credits </span>
-                                  @endif
-                                
-                                @else
-                                  <span class="text-black"> {{$stage['credits']}} Credits </span>
-                                @endif
-                                    
-                                </div>
-                            <div class="clearfix"></div>
-                          </div>
-                        @endif
-                      @else
+                      
                         @if(\App\Models\Service::FindOrFail($file->stage_services->service_id))
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Stage</p>
@@ -494,7 +471,7 @@
                           <div class="clearfix"></div>
                         </div>
                         @endif
-                      @endif
+                      
 
                       <div class="p-b-20">
 
@@ -522,10 +499,11 @@
 
                               </div>
                             @endif
+                              
                             @if($comments)
                               @foreach($comments as $comment)
-
-                                  @if($option->service_id == $comment->service_id)
+                                  
+                                  @if($option->id == $comment->service_id)
                                     <div class="p-l-20 p-b-10 p-t-10"> 
                                       {{$comment->comments}}
                                     
@@ -535,37 +513,6 @@
                               @endforeach
                             @endif
                         @endforeach
-                      @else
-                              
-                        <div class="b  b-grey p-l-20 p-r-20 p-t-10">
-                          <p class="pull-left">Options</p>
-                          <div class="clearfix"></div>
-                        </div>
-                      
-                        @foreach($file->options_services as $option)
-                            
-                            @if(\App\Models\Service::FindOrFail($option->service_id))
-                              <div class="p-l-20 b-b b-grey"> 
-                                <img alt="{{\App\Models\Service::FindOrFail($option->service_id)->name}}" width="40" height="40" 
-                                data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
-                                data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
-                                src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
-                                {{\App\Models\Service::FindOrFail($option->service_id)->name}}  
-                              </div>
-                            @endif
-                            @if($comments)
-                              @foreach($comments as $comment)
-                                  @if(\App\Models\Service::FindOrFail($option->service_id)->name == $comment->option)
-                                    <div class="p-l-20 p-b-10"> 
-                                      {{$comment->comments}}
-                                    
-                                    </div>
-                                    <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
-                                  @endif
-                              @endforeach
-                            @endif
-                        @endforeach
-
                       @endif
                       
                       </div>
