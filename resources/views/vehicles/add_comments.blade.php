@@ -129,7 +129,7 @@
                                                     data-src="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}" 
                                                     src="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}">
                                                     @endif
-                                                    {{ \App\Models\Service::findOrFail( $comment->service_id )->name}} <span style="font-size: 8px;">({{\App\Models\Service::findOrFail( $comment->service_id )->vehicle_type}}) ({{@if(\App\Models\Service::findOrFail( $comment->service_id )->front_end_id == 1) 'ECU Tech' @else 'TuningX' @endif}})  @if($comment->subdealer_group_id) (sub dealer) @endif</span>
+                                                    {{ \App\Models\Service::findOrFail( $comment->service_id )->name}} <span style="font-size: 8px;">({{\App\Models\Service::findOrFail( $comment->service_id )->vehicle_type}}) (@if(\App\Models\Service::findOrFail( $comment->service_id )->front_end_id == 1) {{'ECU Tech'}} @else {{'TuningX'}} @endif)  @if($comment->subdealer_group_id) (sub dealer) @endif</span>
                                                     <span class="m-l-20">
                                                       <i class="fa fa-pencil-square text-success btn-edit" data-id={{$comment->id}} data-comment="{{$comment->comments}}" data-greek-comment="@if($comment->translation){{$comment->translation->greek}}@endif"></i>
                                                       <i class="pg-trash text-danger btn-delete" data-id="{{$comment->id}}"></i>
