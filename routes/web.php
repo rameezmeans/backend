@@ -525,6 +525,7 @@ Route::get('/edit_engineer/{id}', [App\Http\Controllers\UsersController::class,'
 Route::post('/add-engineer', [App\Http\Controllers\UsersController::class,'addEngineer'])->name('add-engineer');
 Route::post('/update-engineer', [App\Http\Controllers\UsersController::class,'updateEngineer'])->name('update-engineer');
 Route::post('/delete_engineer', [App\Http\Controllers\UsersController::class,'deleteEngineer'])->name('delete-engineer');
+Route::get('/engineers_permissions/{id}', [App\Http\Controllers\UsersController::class,'engineersPermissions'])->name('engineers-permissions');
 
 Route::get('/tools', [App\Http\Controllers\ToolsController::class, 'index'])->name('tools');
 Route::get('/create_tool', [App\Http\Controllers\ToolsController::class, 'create'])->name('create-tool');

@@ -516,7 +516,7 @@
                             @if(\App\Models\Service::where('id', $option->service_id)->first())
                               <div class="p-l-20 b-b b-grey b-t p-b-10 p-t-10"> 
                                 <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
-                                {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  ({{\App\Models\Service::where('id', $option->service_id)->first()->vehicle_type}})
+                                {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  ({{\App\Models\Service::where('id', $option->service_id)->first()->vehicle_type}}) (@if(\App\Models\Service::findOrFail( $comment->service_id )->active == 1) {{'ECU Tech'}} @elseif(\App\Models\Service::findOrFail( $comment->service_id )->tuningx_active == 1) {{'TuningX'}} @endif)
                                 @php $option = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
                                 @if($file->front_end_id == 2)
                                   @if($file->tool_type == 'master')

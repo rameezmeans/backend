@@ -1666,14 +1666,10 @@ class FilesController extends Controller
 
         if($file->ecu){
             $comments = $this->getComments($file);
-
-            // dd($comments);
         }
         else{
             $comments = null;
         }
-
-        // dd($comments);
 
         $selectedOptions = [];
 

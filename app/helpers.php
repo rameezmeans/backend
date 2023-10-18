@@ -614,7 +614,9 @@ if(!function_exists('get_engineers')){
     function get_engineers(){
 
         $engineerRole = Role::where('name', 'engineer')->first();
-        $engineers = User::where('role_id', $engineerRole->id)->get();
+        $engineers = User::where('role_id', $engineerRole->id)
+        ->whereNull('subdealer_group_id')
+        ->orWhere('role_id', 2)->get()->whereNull('subdealer_group_id');
         return $engineers;
 
     }

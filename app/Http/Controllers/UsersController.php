@@ -23,6 +23,14 @@ class UsersController extends Controller
         $this->middleware('adminOnly');
     }
 
+    public function engineersPermissions($id){
+
+        $engineer = User::findOrFail($id);
+        
+        return view('engineers.edit_permissions', ['engineer' => $engineer]);
+
+    }
+
     public function Customers(){
 
         $customers = get_customers();
