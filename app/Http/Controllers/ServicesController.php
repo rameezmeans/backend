@@ -203,7 +203,11 @@ class ServicesController extends Controller
         $service = Service::findOrFail($request->id);
         $service->name = $request->name;
         $service->label = $request->label;
-        $service->credits = $request->credits;
+
+        if($request->credits)
+            $service->credits = $request->credits;
+        else
+            $service->credits = 0;
 
         if($service->type == 'option'){
             $service->tuningx_credits = $service->tuningx_credits;
@@ -213,9 +217,24 @@ class ServicesController extends Controller
             $service->tuningx_credits = $request->tuningx_credits;
             $service->tuningx_slave_credits = $request->tuningx_slave_credits;
         }
-        // $service->type = $request->type;
+        
         $service->vehicle_type = implode( ',', $request->vehicle_type );
     
+        $service->description = $request->description;
+
+        if($request->frontend == 'ecutech'){
+
+            $service->active = 1;
+            $service->tuningx_active = 0;
+
+        }
+        else if($request->frontend == 'tuningx'){
+
+            $service->active = 0;
+            $service->tuningx_active = 1;
+
+        }
+        
         $service->description = $request->description;
         $texts['english'] = $request->description;;
         $texts['greek'] = $request->greek_description;

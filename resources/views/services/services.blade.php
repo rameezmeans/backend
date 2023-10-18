@@ -83,7 +83,7 @@
                                             </td>
                                            
                                             <td class="v-align-middle">
-                                                <span class="">@if($service->tuningx_active) <span class="label bg-warning">TuningX</span> @elseif($service->active) <span class="label bg-primary">EcuTech</span> @endif</span>
+                                                <span class="">@if($service->tuningx_active) <span class="label bg-warning">TuningX</span> @elseif($service->active) <span class="label bg-primary text-white">EcuTech</span> @endif</span>
                                             </td>
 
                                             {{--
@@ -115,6 +115,7 @@
                                                 style="display:inline-block;
                                                 
                                                 /* height: 100px; */
+
                                                 overflow:hidden !important;"
                                                 >{{$service->description}}</p>
                                             </td>

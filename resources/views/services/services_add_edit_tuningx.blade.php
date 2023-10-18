@@ -52,9 +52,11 @@
                         <li class="nav-item">
                         <a href="#" class="active" data-toggle="tab" data-target="#slide1"><span>Service Information</span></a>
                         </li>
+                        @if($service->tuningx_active)
                         <li class="nav-item">
                         <a href="#" data-toggle="tab" data-target="#slide2"><span>Credits Charged</span></a>
                         </li>
+                        @endif
                     </ul>
                     @endif
 
@@ -84,6 +86,9 @@
                           <strong>{{ $message }}</strong>
                       </span>
                     @enderror
+
+                    @if($service->active)
+
                       <div class="form-group form-group-default required ">
                         <label>ECU Tech Credits</label>
                         <input value="@if(isset($service)){{$service->credits}}@else{{old('credits') }}@endif" name="credits" min="0" type="number" class="form-control" required>
@@ -93,6 +98,9 @@
                           <strong>{{ $message }}</strong>
                       </span>
                     @enderror
+
+                    @endif
+
                     @if($service->type == 'tunning')
                       <div class="form-group form-group-default required ">
                         <label>Tuning-X Master Credits</label>
@@ -164,10 +172,26 @@
                       <textarea name="greek_description" class="form-control">@if(isset($modelInstance)) {{ $modelInstance->greek }} @endif</textarea>
                     </div>
                     @error('greek_description')
-                    <span class="text-danger" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                  @enderror
+                      <span class="text-danger" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+
+                    <div class="form-group form-group-default">
+                      <label>Front End</label>
+                      <div class="radio radio-success">
+                        <input type="radio" @if($service->active) checked="checked" @endif value="ecutech" name="frontend" id="ecutech">
+                        <label for="ecutech">ECU Tech</label>
+                        <input type="radio" @if($service->tuningx_active) checked="checked" @endif value="tuningx" name="frontend" id="tuningx">
+                        <label for="tuningx">TuningX</label>
+                      </div>
+                    </div>
+                    @error('greek_description')
+                      <span class="text-danger" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+
                     <div class="text-center m-t-40">                    
                       <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($service)) Update @else Add @endif</span></button>
                       @if(isset($service))
