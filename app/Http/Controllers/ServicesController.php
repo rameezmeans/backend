@@ -31,7 +31,13 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        $services = Service::orderBy('created_at', 'desc')->whereNull('subdealer_group_id')->get();
+        $options = Service::orderBy('created_at', 'desc')
+        ->where('type', 'option')
+        ->whereNull('subdealer_group_id')->get();
+
+        $stages = Service::orderBy('created_at', 'desc')
+        ->where('type', 'tunning')
+        ->whereNull('subdealer_group_id')->get();
 
         $sharedServices = Service::orderBy('sorting', 'asc')
         
@@ -48,7 +54,7 @@ class ServicesController extends Controller
         
         $sharedServices = $servicesNotNull->merge($sharedServices);
 
-        return view('services.services', ['services' => $services, 'sharedServices' => $sharedServices]);
+        return view('services.services', ['options' => $options, 'stages' => $stages, 'sharedServices' => $sharedServices]);
     }
 
     /**
