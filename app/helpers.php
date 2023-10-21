@@ -8,6 +8,7 @@ use App\Models\RoleUser;
 use App\Models\Tool;
 use App\Models\User;
 use App\Models\Vehicle;
+use App\Models\EngineersPermission;
 
 use Danielebarbaro\LaravelVatEuValidator\Facades\VatValidatorFacade as VatValidator;
 
@@ -938,10 +939,39 @@ if(!function_exists('get_customers')){
 if(!function_exists('get_permission')){
 
     function get_permission($subdealerID, $permission){
-        $permission = Permission::where('permission', $permission)
+        $permissionObj = Permission::where('permission', $permission)
             ->where('subdealer_group_id', $subdealerID)->first();
 
-        if($permission){
+        if($permissionObj){
+            return true;
+        }
+
+        return false;
+    }
+}
+
+if(!function_exists('get_engineers_permission')){
+
+    function get_engineers_permission($engineerID, $permission){
+
+        $engineer = User::findOrFail($engineerID);
+
+        if($permission == 'head'){
+
+            if($engineer->role_id == 2){
+
+                return true;
+            }
+
+            return false;
+            
+        }
+
+        $permissionObj = EngineersPermission::where('permission', $permission)
+        ->where('engineer_id', $engineerID)->first();
+
+        if($permissionObj){
+
             return true;
         }
 

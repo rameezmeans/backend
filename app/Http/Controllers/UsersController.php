@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ChMessage;
 use App\Models\Credit;
+use App\Models\EngineersPermission;
 use App\Models\FrontEnd;
 use App\Models\Group;
 use App\Models\Role;
@@ -11,6 +12,7 @@ use App\Models\RoleUser;
 use App\Models\User;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Laravel\Ui\Presets\React;
@@ -20,10 +22,34 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('adminOnly');
+        // $this->middleware('adminOnly');
+    }
+
+    public function changeEngineerPermission(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
+        if($request->switchStatus == 'true'){
+            $new = new EngineersPermission();
+            $new->permission = $request->permission;
+            $new->engineer_id = $request->engineer_id;
+            $new->save();
+        }
+        else if($request->switchStatus == 'false'){
+            EngineersPermission::where('permission', $request->permission)
+            ->where('engineer_id', $request->engineer_id)->delete();
+        }
+
+        return response('permission updated', 200);
     }
 
     public function engineersPermissions($id){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
 
         $engineer = User::findOrFail($id);
         
@@ -33,12 +59,23 @@ class UsersController extends Controller
 
     public function Customers(){
 
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-customers')){
+
+
         $customers = get_customers();
 
         return view('groups.customers', ['customers' => $customers]);
+        }
+        else{
+            abort(404);
+        }
     } 
 
     public function addCustomer(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
         
 
         if($request->evc_customer_id){
@@ -133,20 +170,34 @@ class UsersController extends Controller
     }
 
     public function createCustomer(){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $groups = Group::all();
         $frontends = FrontEnd::all();
         return view('groups.create_edit_customers', ['groups' => $groups, 'frontends' => $frontends]);
     } 
 
     public function editCustomer($id){
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-customers')){
+
         $customer = User::findOrFail($id);
         $groups = Group::all();
         $frontends = FrontEnd::all();
         return view('groups.create_edit_customers', ['customer' => $customer, 'groups' => $groups, 'frontends' => $frontends]);
+        }
+        else{
+            abort(404);
+        }
     } 
 
     public function updateCustomer(Request $request){
-        
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-customers')){
+            
         $anyOtherUserWithSameUniqueEVCCustomerID = User::where('evc_customer_id', $request->evc_customer_id)
         ->where('id','!=', $request->id)
         ->first();
@@ -264,10 +315,19 @@ class UsersController extends Controller
         }
 
         return redirect()->route('customers')->with(['success' => 'Customer updated, successfully.']);
+    }
+    else{
+        abort(404);
+    }
 
     }
 
     public function addCredits($credits, $customer){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $credit = new Credit();
         $credit->credits = $credits;
         $credit->user_id = $customer->id;
@@ -278,6 +338,10 @@ class UsersController extends Controller
     }
 
     public function addEngineer(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
         
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -313,6 +377,10 @@ class UsersController extends Controller
     }
 
     public function updateEngineer(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
 
         $engineer = User::findOrFail($request->id);
 
@@ -359,26 +427,55 @@ class UsersController extends Controller
     }
 
     public function createEngineer(){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         return view('engineers.create_edit_engineers');
     }
 
     public function editEngineer($id){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $engineer = User::findOrfail($id);
         return view('engineers.create_edit_engineers', ['engineer' => $engineer]);
     }
 
     public function Engineers(){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $engineers = get_engineers();
         return view('engineers.engineers', ['engineers' => $engineers]);
     } 
 
     public function deleteCustomer(Request $request){
-        $customer = User::findOrFail($request->id);
-        $customer->delete();
-        $request->session()->put('success', 'Customer deleted, successfully.');
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'delete-customers')){
+            
+
+            $customer = User::findOrFail($request->id);
+            $customer->delete();
+            $request->session()->put('success', 'Customer deleted, successfully.');
+        
+        }
+        else{
+            return 'not deleteed';
+        }
     }
 
     public function deleteEngineer(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $engineer = User::findOrFail($request->id);
         $engineer->delete();
         $request->session()->put('success', 'Engineer deleted, successfully.');

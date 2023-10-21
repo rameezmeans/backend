@@ -468,7 +468,9 @@
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($customer)) Update @else Add @endif</span></button>
                   @if(isset($customer))
-                    <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$customer->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button>
+                    @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'delete-customers'))
+                      <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$customer->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button>
+                    @endif
                   @endif
                 </div>
               </form>

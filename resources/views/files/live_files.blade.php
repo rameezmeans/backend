@@ -43,8 +43,10 @@
                 </div>
                 <div class="pull-right">
                   <div class="col-xs-12">
+                    @if(Auth::user()->is_admin())
                       <button data-redirect="{{route('multi-delete')}}" class="btn btn-success redirect-click"><i class="pg-plus_circle"></i> <span class="bold">Multi Delete</span>
                       </button>
+                    @endif
                   </div>
                 </div>
                 <div class="clearfix"></div>

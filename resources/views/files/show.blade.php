@@ -84,9 +84,11 @@
           </li>
           @endif --}}
           
+          @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks'))
           <li class="nav-item">
             <a href="#" data-toggle="tab" data-target="#slide3"><span>Admin Tasks</span></a>
           </li>
+          @endif
           
           <li class="nav-item">
             <a href="#" data-toggle="tab" data-target="#slide4"><span>Logs</span></a>
@@ -177,7 +179,7 @@
                           <p class="text-danger">This File will provide you facility to download additional Decoded Files. Please refresh the page once or twice. Thanks.</p>
                         @endif
                       @endif --}}
-                      <div class="col-lg-6">
+                      <div class="col-lg-6  m-t-30">
                         <h5 class="">General Information</h5>
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Status</p>
@@ -186,7 +188,7 @@
                           </div>
                           <div class="clearfix"></div>
                         </div>
-                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Uploaded Time</p>
                           <div class="pull-right">
                             <span class="">{{\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A')}}<span>
@@ -297,9 +299,12 @@
                         
                       </div>
 
-                      <div class="col-lg-6">
-                        <h5 class="">Vehicle Information</h5>
-                        @if($file->name)
+                      @if(get_engineers_permission(Auth::user()->id, 'customer-contact-information'))
+
+                      <div class="col-lg-6  m-t-30">
+                        <h5 class="">Contact Information</h5>
+
+                      @if($file->name)
                           <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                             <p class="pull-left">Customer Name</p>
                             <div class="pull-right">
@@ -326,6 +331,12 @@
                             <div class="clearfix"></div>
                           </div>
                         @endif
+                      </div>
+                      @endif
+
+                      <div class="col-lg-6  m-t-30">
+                        <h5 class="">Vehicle Information</h5>
+                        
                         @if($file->license_plate)
                           <div class=" b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                             <p class="pull-left">License Plate</p>
@@ -456,8 +467,13 @@
         
                       <h5 class="m-t-40">Options And Credits</h5>
 
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
+
+
                       @if($file->status == 'submitted')
                         <button id="btn-options-change" class="btn btn-success m-b-20">Change Options</button>
+                      @endif
+
                       @endif
                         
                       @if($file->stages)
@@ -804,6 +820,8 @@
                       @endforeach
                       </div>
 
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
+
                       @if($file->stage_offer)
 
                       @php $proposedCredits = 0; @endphp
@@ -889,6 +907,7 @@
                         
                         </div>
                       @endif
+                      @endif
 
                       {{-- <div class="col-xl-12">
                         <h5 class="m-t-40">Upload File</h5>
@@ -919,6 +938,9 @@
                       </div> --}}
                       
                       @if($file->status == 'submitted' || $file->status == 'completed')
+
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
+                      
                       <div class="col-xl-12 m-t-20">
                         <div class="card card-transparent flex-row">
                           <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
@@ -1027,6 +1049,7 @@
                           </div>
                         </div>
                       </div>
+                      @endif
                       @endif
                     </div>
                   </div>
@@ -1158,6 +1181,7 @@
             </div>
           </div>
           @endif
+          @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks'))
             <div class="tab-pane slide-left" id="slide3">
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
@@ -1172,7 +1196,7 @@
               </div>
               <div class="row">
                 <div class="col-lg-12">
-                  @if(Auth::user()->is_admin() or Auth::user()->is_head())
+                  
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Assign This File to An Engineer</p>
                       <form action="{{route('assign-engineer')}}" method="POST">
@@ -1193,7 +1217,7 @@
                       </form>
                       <div class="clearfix"></div>
                     </div>
-                  @endif
+                  
 
                   <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                     <p class="pull-left">File Status</p>
@@ -1245,6 +1269,7 @@
                 </div>
               </div>
             </div>
+            @endif
             <div class="tab-pane slide-left" id="slide4">
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">

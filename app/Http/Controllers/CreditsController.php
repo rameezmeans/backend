@@ -11,6 +11,7 @@ use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PDF;
 
 use LaravelDaily\Invoices\Invoice;
@@ -27,10 +28,14 @@ class CreditsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('adminOnly');
+        // $this->middleware('adminOnly');
     }
 
     public function updateDefaultTemplate(Request $request) {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
         
         $defaultTemplateID = Key::where('key', 'default_elorus_template_id')->first();
         $defaultTemplateID->value = $request->default_elorus_template_id;
@@ -41,11 +46,19 @@ class CreditsController extends Controller
         
     }
     public function defaultTemplate() {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $defaultTemplateID = Key::where('key', 'default_elorus_template_id')->first();
         return view('credits.default_elorus_template', ['defaultTemplateID' => $defaultTemplateID]);
     }
 
     public function credits() {
+
+        if(Auth::user()->is_admin() || (get_engineers_permission(Auth::user()->id, 'show-transaction'))){
+            
 
         $customerRole = Role::where('name', 'customer')->first();
         $subdealerRole = Role::where('name', 'subdealer')->first();
@@ -57,14 +70,32 @@ class CreditsController extends Controller
         ->get();
 
         return view('credits.credits', ['customers' =>$customers]);
+        
+        }
+
+        else{
+            return abort(404);
+        }
     }
 
     public function creditsReports() {
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'credit-report')){
+            
+
         $groups = Group::all();
         return view('credits.report', ['groups' => $groups]);
+
+        }
+        else{
+        return abort(404);
+        }
     }
 
     public function getCreditsReport(Request $request) {
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'credit-report')){
+            
 
         $html = '';
         
@@ -201,10 +232,19 @@ class CreditsController extends Controller
             }
         }
 
+        }
+        else{
+            return abort(404);
+        }
+
         return response()->json(['html' =>$html], 200);
     }
 
     public function updateCredits(Request $request) {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
         
         $customer = User::findOrFail($request->user_id);
 
@@ -244,6 +284,10 @@ class CreditsController extends Controller
 
     public function setCreditInformation(Request $request) {
 
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $credit = Credit::findOrFail($request->id);
         $credit->price_payed = $request->price_payed;
         $credit->credits =$request->credits;
@@ -254,22 +298,46 @@ class CreditsController extends Controller
     }
 
     public function UpdateIndividualCredit($id) {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $credit = Credit::findOrFail($id);
         return view( 'credits.update-individual', ['credit' => $credit] );
     }
     public function EditCredit($id) {
-        $customer = User::findOrFail($id);
-        $credits = $customer->credits;
-        return view('credits.edit', ['customer' => $customer, 'credits' => $credits]);
+       
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-transaction')){
+            
+
+            $customer = User::findOrFail($id);
+            $credits = $customer->credits;
+            return view('credits.edit', ['customer' => $customer, 'credits' => $credits]);
+
+        }
+        else{
+            return abort(404);
+        }
     }
 
     public function unitPrice(){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $creditPrice = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->first();
         $evcCreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
         return view('credits.unit_price', ['creditPrice' => $creditPrice, 'evcCreditPrice' => $evcCreditPrice]);
     }
 
     public function updatePrice(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $creditPrice = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->first();
         $evcCfreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
 
@@ -311,6 +379,11 @@ class CreditsController extends Controller
      */
     public function makePDF(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $invoice = Credit::findOrFail($request->id);
 
         $user = User::findOrFail($invoice->user_id);

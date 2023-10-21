@@ -22,18 +22,47 @@ class FilesDatatable extends LivewireDatatable
 {
     public function builder()
     {
-        $files = File::select('*', 'id as row_id')
-        ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
-        ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
-        ->orderBy('ss', 'asc')
-        ->orderBy('s', 'asc')
-        ->where('is_credited', 1)
-        ->where(function ($query) {
-            $query->where('type', '=', 'master')
-                    ->orWhereNotNull('assigned_from')->where('type', '=', 'subdealer');
-        });
+
+        if(Auth::user()->is_admin()){
+            $files = $this->getAllFiles();
+        }
+        else{
+
+            if(get_engineers_permission(Auth::user()->id, 'show-all-files')){
+                $files = $this->getAllFiles();
+            }
+            else{
+
+                $files = File::select('*', 'id as row_id')
+                ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
+                ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
+                ->orderBy('ss', 'asc')
+                ->orderBy('s', 'asc')
+                ->where('is_credited', 1)
+                ->where('assigned_to', Auth::user()->id);
+                
+            }
+
+
+        }
         
         return $files;
+    }
+
+    public function getAllFiles(){
+
+            $files = File::select('*', 'id as row_id')
+                ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
+                ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
+                ->orderBy('ss', 'asc')
+                ->orderBy('s', 'asc')
+                ->where('is_credited', 1)
+                ->where(function ($query) {
+                $query->where('type', '=', 'master')
+                        ->orWhereNotNull('assigned_from')->where('type', '=', 'subdealer');
+            });
+
+            return $files;
     }
     
     public function columns()

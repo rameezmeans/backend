@@ -68,6 +68,11 @@ class FilesController extends Controller
     }
 
     public function deleteFiles(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $ids = $request->ids;
         $files = File::whereIn('id', $ids)->get();
         
@@ -91,12 +96,20 @@ class FilesController extends Controller
 
     public function multiDelete(Request $request){
 
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $files = File::orderBy('created_at', 'desc')->get();
 
         return view('files.multi_delete', [ 'files' => $files ]);
     }
 
     public function addOptionsOffer(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
 
         $file = File::findOrFail($request->file_id);
         
@@ -126,6 +139,10 @@ class FilesController extends Controller
 
     public function flipDecodedMode(Request $request){
 
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $file = File::findOrFail($request->file_id);
 
         if($file->decoded_mode == 1){
@@ -151,6 +168,10 @@ class FilesController extends Controller
     }
     public function support($id){
 
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $requestFile = RequestFile::findOrFail($id);
         $file = File::findOrFail($requestFile->file_id);
 
@@ -168,6 +189,10 @@ class FilesController extends Controller
 
     public function changeCheckingStatus(Request $request){
 
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $file = File::findOrFail($request->file_id);
 
         if($file->checking_status == 'unchecked'){
@@ -182,6 +207,10 @@ class FilesController extends Controller
     }
 
     public function search(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
 
         $file = File::findOrFail($request->file_id);
         
@@ -238,6 +267,10 @@ class FilesController extends Controller
     }
     
     public function delete(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
         
         $file = File::findOrFail($request->id);
 
@@ -286,10 +319,19 @@ class FilesController extends Controller
     // }
 
     public function callbackKess3(Response $response){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         \Log::info($response);
     }
 
     public function decodeFile(){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
 
         $token = Key::where('key', 'alientech_access_token')->first()->value;
 
@@ -327,6 +369,10 @@ class FilesController extends Controller
     }
     
     public function updateFileVehicle(Request $request) {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
         
         $this->validate($request, [
             'engine' => 'required',
@@ -352,6 +398,11 @@ class FilesController extends Controller
      */
     public function getModels(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $brand = $request->brand;
         
         $models = Vehicle::OrderBy('model', 'asc')->select('model')->whereNotNull('model')->distinct()->where('make', '=', $brand)->get();
@@ -366,6 +417,11 @@ class FilesController extends Controller
      */
     public function getVersions(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $model = $request->model;
         $brand = $request->brand;
 
@@ -384,6 +440,11 @@ class FilesController extends Controller
      */
     public function getEngines(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $model = $request->model;
         $brand = $request->brand;
         $version = $request->version;
@@ -404,6 +465,11 @@ class FilesController extends Controller
      */
     public function getECUs(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $model = $request->model;
         $brand = $request->brand;
         $version = $request->version;
@@ -429,7 +495,11 @@ class FilesController extends Controller
     }
 
     public function editFile($id) {
-        
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $file = File::findOrFail($id);
 
         $brandsObjects = Vehicle::OrderBy('make', 'asc')->select('make')->distinct()->get();
@@ -498,6 +568,10 @@ class FilesController extends Controller
 
     public function saveFeedbackEmailSchedual(Request $request) {
 
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
+
         $this->validate($request, [
             'days' => 'required|min:1',
             'time_of_day' => 'required',
@@ -556,6 +630,11 @@ class FilesController extends Controller
     }
 
     public function feedbackEmails() {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         //email template
         $feebdackTemplate = EmailTemplate::findOrFail(9);
         $schedual = Schedualer::take(1)->first();
@@ -563,6 +642,10 @@ class FilesController extends Controller
     }
 
     public function saveFeedbackEmailTemplate(Request $request) {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
 
         $feebdackTemplate = EmailTemplate::findOrFail(9);
         $feebdackTemplate->html = $request->new_template;
@@ -574,6 +657,10 @@ class FilesController extends Controller
 
     public function editMessage( Request $request ) {
 
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $message = EngineerFileNote::findOrFail($request->id);
         $message->egnineers_internal_notes = $request->message;
         $message->save();
@@ -584,6 +671,10 @@ class FilesController extends Controller
     }
     
     public function downloadEncrypted( $id,$fileName ) {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
 
         $file = File::findOrFail($id); 
 
@@ -679,6 +770,10 @@ class FilesController extends Controller
 
     public function deleteMessage(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
         $note = EngineerFileNote::findOrFail($request->note_id);
         $note->delete();
         return response('Note deleted', 200);
@@ -686,6 +781,11 @@ class FilesController extends Controller
 
     public function deleteUploadedFile(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $file = RequestFile::findOrFail($request->request_file_id);
         $file->delete();
         return response('File deleted', 200);
@@ -693,6 +793,11 @@ class FilesController extends Controller
 
     public function sendMessage($receiver, $message, $frontendID)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         try {
             
             // $accountSid = env("TWILIO_SID");
@@ -735,6 +840,10 @@ class FilesController extends Controller
     }
 
     public function assignEngineer(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
     
         $file = File::findOrFail($request->file_id);
         $file->assigned_to = $request->assigned_to;
@@ -808,6 +917,10 @@ class FilesController extends Controller
 
     public function changSupportStatus(Request $request){
 
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $file = File::findOrFail($request->file_id);
         $file->support_status = $request->support_status;
         $file->save();
@@ -816,6 +929,10 @@ class FilesController extends Controller
     }
 
     public function changeStatus(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
         
         $file = File::findOrFail($request->file_id);
 
@@ -944,6 +1061,11 @@ class FilesController extends Controller
 
     public function fileEngineersNotes(Request $request)
     {   
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $file = File::findOrFail($request->file_id);
 
         $reply = new EngineerFileNote();
@@ -1079,6 +1201,10 @@ class FilesController extends Controller
 
     public function makeLogEntry($fileID, $type, $message){
 
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $log = new Log();
         $log->file_id = $fileID;
         $log->type = $type;
@@ -1088,6 +1214,11 @@ class FilesController extends Controller
     }
 
     public function callbackKess3Complete(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         \Log::info( $request->all() );
     }
     
@@ -1280,22 +1411,50 @@ class FilesController extends Controller
     }
 
     public function feedbackReports(){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $engineers = get_engineers();
         return view('files.feedback_reports', ['engineers' => $engineers]);
     }
 
     public function feedbackReportsLive(){
-        
-        return view('files.feedback_reports_live');
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'feedback-report')){
+
+            return view('files.feedback_reports_live');
+
+        }
+        else{
+            return abort(404);
+        }
     }
 
     public function reports(){
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'engineers-report')){
+
         $engineers = get_engineers();
         return view('files.reports', ['engineers' => $engineers]);
+        }
+        else{
+            abort(404);
+        }
     }
 
     public function reportsEngineerLive(){
-        return view('files.report-engineers-live');
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'engineers-report')){
+
+            return view('files.report-engineers-live');
+        }
+
+        else{
+            abort(404);
+        }
+
     }
 
     public function getFileName($path, $file, $type){
@@ -1600,19 +1759,57 @@ class FilesController extends Controller
     public function show($id)
     {
 
-        $file = File::where('id',$id)->where(function($q){
+        if(Auth::user()->is_admin()){
 
-            $q->where('type', 'master');
-            
+            $file = File::where('id',$id)->where(function($q){
 
-        })->where('is_credited', 1)
-        ->orWhere(function($q){
-            
-            $q->where('type', 'subdealer');
-            $q->whereNotNull('assigned_from');
-            
-        })->where('id',$id)
-        ->where('is_credited', 1)->first();
+                $q->where('type', 'master');
+                
+
+            })->where('is_credited', 1)
+            ->orWhere(function($q){
+                
+                $q->where('type', 'subdealer');
+                $q->whereNotNull('assigned_from');
+                
+            })->where('id',$id)
+            ->where('is_credited', 1)->first();
+        }
+        else{
+
+            if(get_engineers_permission(Auth::user()->id, 'show-all-files')){
+
+                $file = File::where('id',$id)->where(function($q){
+
+                    $q->where('type', 'master');
+                    
+    
+                })->where('is_credited', 1)
+                ->orWhere(function($q){
+                    
+                    $q->where('type', 'subdealer');
+                    $q->whereNotNull('assigned_from');
+                    
+                })->where('id',$id)
+                ->where('is_credited', 1)->first();
+
+            }
+            else{
+
+                $file = File::where('id',$id)->where(function($q){
+
+                    $q->where('type', 'master');
+                    
+    
+                })
+                ->where('id',$id)
+                ->where('is_credited', 1)
+                ->where('assigned_to', Auth::user()->id)->first();
+
+            }
+
+
+        }
         
         if(!$file){
             abort(404);

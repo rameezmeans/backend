@@ -57,7 +57,7 @@
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
         </li>
         
-        @if(Auth::user()->is_admin() || Auth::user()->is_head())
+        @if(Auth::user()->is_admin())
        
         <li class="m-t-30 ">
           <a href="javascript:;">
@@ -80,12 +80,59 @@
             </li>
           </ul>
         </li>
+
+        @else
+
+
+        @if(get_engineers_permission(Auth::user()->id, 'engineer-report'))
+
+        <li class="m-t-30 ">
+          <a href="{{ route('reports') }}" class="detailed">
+            <span class="title">Engineer Reports</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+        </li>
+
+        @endif
+
+        @if(get_engineers_permission(Auth::user()->id, 'feedback-report'))
+
+        <li class="m-t-30 ">
+          <a href="{{ route('feedback-reports') }}" class="detailed">
+            <span class="title">Feedback Reports</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+        </li>
+
+        @endif
+
+        @if(get_engineers_permission(Auth::user()->id, 'credit-report'))
+
+        <li class="m-t-30 ">
+          <a href="{{ route('credits-reports') }}" class="detailed">
+            <span class="title">Credits Reports</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+        </li>
+
+        @endif
+
+        @endif
+
+        @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-transaction'))
         <li class="m-t-30 ">
           <a href="{{ route('credits') }}" class="detailed">
             <span class="title">Transactions</span>
           </a>
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
         </li>
+
+        @endif
+
+        @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-customers'))
+
+
+        @if(Auth::user()->is_admin())
 
         <li class="m-t-30 ">
           <a href="javascript:;">
@@ -98,12 +145,29 @@
               <a href="{{ route('customers') }}">Customers</a>
               <span class="icon-thumbnail">Cu</span>
             </li>
+            
             <li class="">
               <a href="{{ route('groups') }}">Customer Groups</a>
               <span class="icon-thumbnail">Gr</span>
             </li>
+            
           </ul>
         </li>
+
+        @else
+
+        <li class="m-t-30 ">
+          <a href="{{ route('customers') }}" class="detailed">
+            <span class="title">Customers</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+        </li>
+
+        @endif
+        @endif
+
+        @if(Auth::user()->is_admin())
+
 
         <li class="m-t-30 ">
           <a href="javascript:;">
@@ -120,6 +184,7 @@
               <a href="{{ route('services') }}">Services</a>
               <span class="icon-thumbnail">Se</span>
             </li>
+            @if(Auth::user()->is_admin())
             <li class="">
               <a href="{{ route('sorting-services') }}">Sorting Services</a>
               <span class="icon-thumbnail">Sr</span>
@@ -128,8 +193,33 @@
                 <a href="{{ route('combinations') }}">Combinations</a>
                 <span class="icon-thumbnail">Co</span>
             </li>
+            @endif
           </ul>
         </li>
+
+        @else
+
+        @if(get_engineers_permission(Auth::user()->id, 'view-vehicles'))
+           <li class="m-t-30 ">
+          <a href="{{ route('vehicles') }}" class="detailed">
+            <span class="title">Vehicles</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+        </li>
+        @endif
+
+        @if(get_engineers_permission(Auth::user()->id, 'view-services'))
+           <li class="m-t-30 ">
+          <a href="{{ route('services') }}" class="detailed">
+            <span class="title">Servcies</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+        </li>
+        @endif
+
+        @endif
+
+        @if(Auth::user()->is_admin())
 
         <li class="m-t-30 ">
             <a href="javascript:;">
@@ -175,6 +265,8 @@
           </ul>
         </li>
 
+        
+
         <li class="m-t-30 ">
           <a href="javascript:;">
             <span class="title">Messaging</span>
@@ -204,6 +296,8 @@
           </ul>
         </li>
         
+       
+
         <li class="m-t-30 ">
           <a href="javascript:;">
             <span class="title">Platform Settings</span>
@@ -249,7 +343,10 @@
           </a>
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
         </li>
+
         @endif
+
+        
       </ul>
       <div class="clearfix"></div>
     </div>

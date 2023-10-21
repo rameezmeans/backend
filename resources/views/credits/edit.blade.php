@@ -32,6 +32,7 @@
         @endif
         <div class="card card-transparent m-t-40">
             <div class="row p-b-20">
+                @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'add-transaction'))
                 <div class="col-lg-12 p-b-20">
                     <h3 class="text-center">{{$customer->name}}'s Credit Report</h3>
                     <h5 class="">Total Credits</h5>
@@ -64,6 +65,7 @@
                           </div>
                       </form>
                     </div>
+                    @endif
                     <div class="col-lg-12 m-b-20">
                         <div class="border border-1 p-1">
                         <h5 class="text-center">Credits Bought or Added</h5>

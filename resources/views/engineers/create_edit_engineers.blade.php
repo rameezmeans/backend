@@ -48,7 +48,7 @@
                 @enderror
                 <div class="form-group form-group-default required ">
                   <label>Email</label>
-                  <input value="@if(isset($engineer)) {{ $engineer->email }} @else{{old('email') }}@endif"  name="email" type="text" class="form-control" required>
+                  <input value="@if(isset($engineer)){{ $engineer->email }}@else{{old('email') }}@endif"  name="email" type="text" class="form-control" required>
                 </div>
                 @error('email')
                   <span class="text-danger" role="alert">
