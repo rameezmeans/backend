@@ -53,6 +53,8 @@
                                         <p><input data-engineer_id={{$engineer->id}} data-permission="customer-contact-information" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'customer-contact-information')) checked="checked" @endif /></p>
                                     </td>
                                 </tr>
+
+                                @if(heads_count() < 1)
                                 <tr>
                                     <td class="v-align-middle semi-bold sorting_1">
                                         <p>Head Of Engineers</p>
@@ -61,6 +63,24 @@
                                         <p><input data-engineer_id={{$engineer->id}} data-permission="head" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'head')) checked="checked" @endif /></p>
                                     </td>
                                 </tr>
+
+                                @elseif(heads_count() == 1)
+                                
+                               
+                                @if($engineer->is_head())
+
+                                <tr>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Head Of Engineers</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p><input data-engineer_id={{$engineer->id}} data-permission="head" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'head')) checked="checked" @endif /></p>
+                                    </td>
+                                </tr>
+
+                                @endif
+
+                                @endif
 
                                 <tr>
                                     <td class="v-align-middle semi-bold sorting_1">

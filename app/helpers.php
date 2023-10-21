@@ -936,6 +936,14 @@ if(!function_exists('get_customers')){
     }
 }
 
+if(!function_exists('heads_count')){
+
+    function heads_count(){
+        
+        return User::where('role_id', 2)->whereNULl('subdealer_group_id')->count();
+    }
+}
+
 if(!function_exists('get_permission')){
 
     function get_permission($subdealerID, $permission){
