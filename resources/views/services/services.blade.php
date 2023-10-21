@@ -29,9 +29,11 @@
     <li class="nav-item">
       <a href="#" data-toggle="tab" data-target="#slide2"><span>Options</span></a>
     </li>
+    @if(Auth::user()->is_admin())
     <li class="nav-item">
       <a href="#" data-toggle="tab" data-target="#slide3"><span>Services Shared With Subdealers</span></a>
     </li>
+    @endif
   </ul>
 
   <div class="tab-content">
@@ -202,6 +204,8 @@
         </div>
     </div>
 
+    @if(Auth::user()->is_admin())
+
     <div class="tab-pane slide-left" id="slide3">
 
         <!-- START card -->
@@ -269,6 +273,8 @@
         <!-- END card -->
 
     </div>
+
+    @endif
 
 
 </div>

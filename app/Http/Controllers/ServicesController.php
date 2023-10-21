@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\TranslationController;
 use App\Models\StagesOptionsCredit;
 use App\Models\Translation;
+use Illuminate\Support\Facades\Auth;
 
 class ServicesController extends Controller
 {
@@ -21,7 +22,7 @@ class ServicesController extends Controller
     {
         $this->translationObj = new TranslationController();
         $this->middleware('auth',['except' => ['getStages', 'getOptions']]);
-        $this->middleware('adminOnly', ['except' => ['getStages', 'getOptions']]);
+        // $this->middleware('adminOnly', ['except' => ['getStages', 'getOptions']]);
     }
 
     /**
@@ -31,30 +32,48 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        $options = Service::orderBy('created_at', 'desc')
-        ->where('type', 'option')
-        ->whereNull('subdealer_group_id')->get();
 
-        $stages = Service::orderBy('created_at', 'desc')
-        ->where('type', 'tunning')
-        ->whereNull('subdealer_group_id')->get();
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-services')){
 
-        $sharedServices = Service::orderBy('sorting', 'asc')
-        
-        ->join('services_subdealer_groups', 'services_subdealer_groups.service_id', '=', 'services.id' )
-        
-        ->select('*','services.id AS id',
-          'services.credits AS credits',
-          'services.created_at AS created_at'
-        )
-        
-        ->get();
+            $options = Service::orderBy('created_at', 'desc')
+            ->where('type', 'option')
+            ->whereNull('subdealer_group_id')->get();
 
-        $servicesNotNull = Service::orderBy('sorting', 'asc')->whereNotNull('subdealer_group_id')->get();
-        
-        $sharedServices = $servicesNotNull->merge($sharedServices);
+            $stages = Service::orderBy('created_at', 'desc')
+            ->where('type', 'tunning')
+            ->whereNull('subdealer_group_id')->get();
 
-        return view('services.services', ['options' => $options, 'stages' => $stages, 'sharedServices' => $sharedServices]);
+            if(Auth::user()->is_admin()){
+
+                $sharedServices = Service::orderBy('sorting', 'asc')
+                
+                ->join('services_subdealer_groups', 'services_subdealer_groups.service_id', '=', 'services.id' )
+                
+                ->select('*','services.id AS id',
+                'services.credits AS credits',
+                'services.created_at AS created_at'
+                )
+                
+                ->get();
+
+                $servicesNotNull = Service::orderBy('sorting', 'asc')->whereNotNull('subdealer_group_id')->get();
+        
+                $sharedServices = $servicesNotNull->merge($sharedServices);
+
+            }
+
+                if(Auth::user()->is_admin()){
+                    return view('services.services', ['options' => $options, 'stages' => $stages, 'sharedServices' => $sharedServices]);
+                }
+                
+                
+                return view('services.services', ['options' => $options, 'stages' => $stages]);
+            
+            }
+
+            else{
+                abort(404);
+            }
     }
 
     /**
@@ -64,10 +83,19 @@ class ServicesController extends Controller
      */
     public function create()
     {
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         return view('services.services_add_edit_subdealer');
     }
 
     public function setCreditPrice(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
 
         $allValues = $request->all();
 
@@ -116,6 +144,9 @@ class ServicesController extends Controller
      */
     public function edit($id)
     {
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-services')){
+
         $service = Service::findOrFail($id);
         $modelInstance = Translation::where('model_id', $service->id)->where('model', 'Service')->first();
         $vehicleTypes = explode(',', $service->vehicle_type);
@@ -134,6 +165,10 @@ class ServicesController extends Controller
 
         return view('services.services_add_edit_tuningx', ['modelInstance' => $modelInstance, 'stages' => $stages, 'service' => $service, 'vehicleTypes' => $vehicleTypes ]);
     }
+        else{
+            abort(404);
+        }
+    }
 
      /**
      * add the services to DB.
@@ -142,6 +177,11 @@ class ServicesController extends Controller
      */
     public function add(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $validated = $request->validate([
             'name' => 'required|max:255|min:3',
             'label' => 'required|max:255|min:3',
@@ -200,6 +240,9 @@ class ServicesController extends Controller
      */
     public function update(Request $request)
     {
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-services')){
+
         $service = Service::findOrFail($request->id);
         $service->name = $request->name;
         $service->label = $request->label;
@@ -251,6 +294,7 @@ class ServicesController extends Controller
         $service->save();
 
         return redirect()->route('services')->with(['success' => 'Service updated, successfully.']);
+        }
     }
 
     public function getTotalProposedCredits(Request $request){
@@ -305,6 +349,10 @@ class ServicesController extends Controller
     }
     public function saveSorting(Request $request){
 
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $sorting = json_decode($request->sorting);
         $sort = 1;
         foreach($sorting as $row){
@@ -319,6 +367,10 @@ class ServicesController extends Controller
 
     public function sortingServices(){
 
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $options = Service::orderBy('sorting', 'asc')->where('type', 'option')->where('active', 1)->orWhere('tuningx_active', 1)->where('type', 'option')->orderBy('sorting', 'asc')->get();  
         $stages =  Service::orderBy('sorting', 'asc')->where('active', 1)->where('type', 'tunning')->where('tuningx_active', 1)->orWhere('tuningx_active', 1)->where('type', 'tunning')->orderBy('sorting', 'asc')->get();
         return view('services.sorting', ['options' => $options, 'stages' => $stages]);
@@ -331,6 +383,11 @@ class ServicesController extends Controller
      */
     public function changeStatus(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $service = Service::findOrFail($request->service_id);
         if($request->status == 'true'){
             $service->active = true;
@@ -349,6 +406,11 @@ class ServicesController extends Controller
      */
     public function changeTuningxStatus(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $service = Service::findOrFail($request->service_id);
         if($request->status == 'true'){
             $service->tuningx_active = true;
@@ -367,9 +429,19 @@ class ServicesController extends Controller
      */
     public function delete(Request $request)
     {
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'delete-services')){
+            
+
         $service = Service::findOrFail($request->id);
         $service->delete();
         $request->session()->put('success', 'Service deleted, successfully.');
+        
+        }
+
+        else{
+        abort(404);
+        }
         
     }
 

@@ -9,6 +9,7 @@ use App\Models\Vehicle;
 use App\Models\VehiclesNote;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -21,21 +22,37 @@ class VehiclesController extends Controller
     {
         $this->translationObj = new TranslationController();
         $this->middleware('auth');
-        $this->middleware('adminOnly');
+        // $this->middleware('adminOnly');
     }
 
     public function index(){
 
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-vehicles')){
+
         $vehicles = Vehicle::all();
         return view('vehicles.vehicles', ['vehicles' => $vehicles]);
+
+        }
+        else{
+            abort(404);
+        }
     }
 
     public function liveVehicles(){
-        
-        return view('vehicles.vehicles-live');
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-vehicles')){
+            return view('vehicles.vehicles-live');
+        }
+        else{
+            abort(404);
+        }
     }
 
     public function addEngineerComment(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
         
         $noteExists = VehiclesNote::where('ecu', $request->ecu)
         ->where('vehicle_id', $request->vehicle_id)->first();
@@ -63,10 +80,19 @@ class VehiclesController extends Controller
     }
 
     public function create(){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         return view('vehicles.vehicles_create_edit');
     }
 
     public function addOptionComments(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
 
         $fileID = $request->file;
 
@@ -95,6 +121,10 @@ class VehiclesController extends Controller
     }
 
     public function addComments($id){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
 
         $vehicle = Vehicle::findOrFail($id);
 
@@ -144,17 +174,30 @@ class VehiclesController extends Controller
     }
 
     public function importVehicles(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         Excel::import(new VehiclesImport,request()->file);
         return redirect()->route('vehicles')->with('success',  'Vehicle added, successfully.');
     }
 
     public function importVehiclesView(){
 
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         return view('vehicles.import');
 
     }
 
     public function massDelete(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
 
         foreach($request->searchIDs as $id){
             Vehicle::FindOrFail($id)->delete();
@@ -164,6 +207,10 @@ class VehiclesController extends Controller
     }
 
     public function editOptionComment(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
 
         $comment = Comment::findOrFail($request->id);
         $comment->comments = $request->comments;
@@ -179,6 +226,10 @@ class VehiclesController extends Controller
     }
 
     public function getOptions($ecu, $vehicle, $type){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
 
         $commentObj = Comment::where('engine', $vehicle->Engine)
         ->where('comment_type', $type)
@@ -215,16 +266,28 @@ class VehiclesController extends Controller
 
     public function show($id){
 
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-vehicles')){
+            
+
         $vehicle = Vehicle::findOrFail($id);
         
         return view('vehicles.vehicles_create_edit', 
         [
             'vehicle' => $vehicle
         ]);
+    }
+
+    else{
+        abort(404);
+    }
 
     }
     
     public function getComments($vehicle, $type){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
 
         $commentObj = Comment::where('comment_type', $type)
         ->where('engine', $vehicle->Engine)
@@ -250,6 +313,11 @@ class VehiclesController extends Controller
 
     public function deleteComment(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $vehicle = Comment::findOrFail($request->id);
         
         $vehicle->delete();
@@ -259,14 +327,25 @@ class VehiclesController extends Controller
 
     public function delete(Request $request)
     {
-        $vehicle = Vehicle::findOrFail($request->id);
-        
-        $vehicle->delete();
-        $request->session()->put('success', 'Vehicle deleted, successfully.');
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'delete-vehicles')){
+            
+            $vehicle = Vehicle::findOrFail($request->id);
+            
+            $vehicle->delete();
+            $request->session()->put('success', 'Vehicle deleted, successfully.');
+        }
+        else{
+            abort(404);
+        }
 
     }
 
     public function add(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
 
         $this->validate($request, [
             'Name' => 'required',
@@ -315,6 +394,10 @@ class VehiclesController extends Controller
     }
 
     public function update(Request $request){
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-vehicles')){
+
+
         $vehicle = Vehicle::findOrFail($request->id);
         $vehicle->Name = $request->Name;
         $vehicle->Make = $request->Make;
@@ -345,6 +428,7 @@ class VehiclesController extends Controller
         $vehicle->Additional_options = $request->Additional_options;
         $vehicle->save();
         return redirect()->route('vehicles')->with('success',  'Vehicle updated, successfully.');
+        }
 
     }
 }

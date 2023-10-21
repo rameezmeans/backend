@@ -30,9 +30,11 @@
           </div>
           @if(isset($vehicle))
             @if($vehicle->Engine_ECU)
+            @if(Auth::user()->is_admin())
               <div class="pull-right">
                 <a class="btn btn-success" href="{{route('add-comments', $vehicle->id)}}">Add Comments</a>
               </div>
+            @endif
             @endif
           @endif
         <div class="clearfix"></div>
@@ -169,7 +171,12 @@
                     <div class="text-center m-t-40">                    
                       <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($vehicle)) Update @else Add @endif</span></button>
                       @if(isset($vehicle))
+
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'delete-vehicles'))
+
                         <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$vehicle->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button>
+
+                        @endif
                       @endif
                     </div>
                   @endif
@@ -342,8 +349,14 @@
                     <div class="text-center m-t-40">                    
                       <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($vehicle)) Update @else Add @endif</span></button>
                       @if(isset($vehicle))
+
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'delete-vehicle'))
+
                         <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$vehicle->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button>
                       @endif
+
+                      @endif
+
                     </div>
                   @endif
             </form>
