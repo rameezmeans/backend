@@ -2795,7 +2795,7 @@
                                       </div>
                                     </div>
                                     <div class="card-body no-scroll no-padding">
-                                      <form action="{{route('encoded-file-upload')}}" id="#encoded-dropzone-new-req{{$file->id}}" class="dropzone no-margin">
+                                      <form action="{{route('encoded-file-upload')}}" id="encoded-dropzone-new-req{{$file->id}}" class="dropzone no-margin">
                                         @csrf
                                         <input type="hidden" value="{{$file->id}}" name="file_id">
                                         @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
