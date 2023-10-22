@@ -662,7 +662,7 @@
                           <div class="clearfix"></div>
                         </div>
 
-                            @foreach($messages as $message)
+                            @foreach($file->files_and_messages_sorted() as $message)
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
                             <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -1098,12 +1098,12 @@
                       
                       <!-- END Header  !-->
                       <!-- BEGIN Conversation  !-->
-                      @if(!empty($messages))
+                      @if(!empty($file->files_and_messages_sorted()))
           
                       <div class="chat-inner" id="my-conversation" style="overflow: scroll !important; height:500px;">
                         <!-- END From Me Message  !-->
                         <!-- BEGIN From Them Message  !-->
-                        @foreach($messages as $message)
+                        @foreach($file->files_and_messages_sorted() as $message)
                          
                           @if(isset($message['egnineers_internal_notes']))
                             @if($message['engineer'])
@@ -2453,7 +2453,7 @@
                           <div class="clearfix"></div>
                         </div>
 
-                            @foreach($messages as $message)
+                            @foreach($file->files_and_messages_sorted() as $message)
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
                             <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -2889,12 +2889,12 @@
                       
                       <!-- END Header  !-->
                       <!-- BEGIN Conversation  !-->
-                      @if(!empty($messages))
+                      @if(!empty($file->files_and_messages_sorted()))
           
                       <div class="chat-inner" id="my-conversation" style="overflow: scroll !important; height:500px;">
                         <!-- END From Me Message  !-->
                         <!-- BEGIN From Them Message  !-->
-                        @foreach($messages as $message)
+                        @foreach($file->files_and_messages_sorted() as $message)
                          
                           @if(isset($message['egnineers_internal_notes']))
                             @if($message['engineer'])
