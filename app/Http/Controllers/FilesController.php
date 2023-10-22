@@ -1825,8 +1825,10 @@ class FilesController extends Controller
         if($file->checked_by == 'customer'){
             $file->checked_by = 'seen';
             $file->save();
-
-            foreach($file->new_requests as $new){
+        }
+        
+        foreach($file->new_requests as $new){
+            if($new->checked_by == 'customer'){
                 $new->checked_by = 'seen';
                 $new->save();
             }
