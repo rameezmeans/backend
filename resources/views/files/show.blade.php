@@ -3659,7 +3659,41 @@
 
     </div>
 
-    
+    <script>
+
+      window.onload = function() {
+      
+            let engineerFileDrop1 = new Dropzone("#encoded-dropzone-new-req{{$file->id}}", {
+              accept: function(file, done) {
+                        console.log(file);
+                        if (file.type == "application/zip" || file.type == "application/x-rar") {
+                            console.log('failed');
+                            window.alert("Can not upload zip.");                
+                        }
+                        else{
+                            done();
+                        }
+                        
+                    }
+            });
+            
+            engineerFileDrop1.on("success", function(file) {
+      
+                  console.log('mog');
+            
+                  engineerFileDrop1.removeFile(file);
+                  
+                  location.reload();
+                })
+                .on("complete", function(file) {
+                  location.reload();
+                }).on('error', function(e){
+                  
+                });
+      
+              };
+            
+            </script>
 
     @endforeach
 

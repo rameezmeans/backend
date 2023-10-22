@@ -1930,7 +1930,7 @@
                                       </div>
                                     </div>
                                     <div class="card-body no-scroll no-padding">
-                                      <form action="{{route('encoded-file-upload')}}" id="encoded-dropzone-new-req{{$file->id}}" class=" dropzone no-margin">
+                                      <form action="{{route('encoded-file-upload')}}" id="encoded-dropzone-new-req{{$file->id}}" class="dropzone no-margin">
                                         @csrf
                                         <input type="hidden" value="{{$file->id}}" name="file_id">
                                         @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
@@ -2331,19 +2331,17 @@ window.onload = function() {
       });
       
       engineerFileDrop1.on("success", function(file) {
-
-            console.log('mog');
       
-            engineerFileDrop1.removeFile(file);
+        engineerFileDrop1.removeFile(file);
             
             location.reload();
           })
           .on("complete", function(file) {
-            location.reload();
+            // location.reload();
           }).on('error', function(e){
             
           });
-
+          
         };
       
       </script>
