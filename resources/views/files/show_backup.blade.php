@@ -76,7 +76,7 @@
           @endforeach
           
         </ul>
-        
+
         <div class="tab-content bg-white">
           <div class="tab-pane active" id="tab4hellowWorld">
             
@@ -1930,7 +1930,7 @@
                                       </div>
                                     </div>
                                     <div class="card-body no-scroll no-padding">
-                                      <form action="{{route('encoded-file-upload')}}" class="encoded-dropzone dropzone no-margin">
+                                      <form action="{{route('encoded-file-upload')}}" id="encoded-dropzone-new-req{{$file->id}}" class=" dropzone no-margin">
                                         @csrf
                                         <input type="hidden" value="{{$file->id}}" name="file_id">
                                         @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
@@ -2312,6 +2312,42 @@
       </div>
     </div>
 
+    <script>
+
+window.onload = function() {
+
+      let engineerFileDrop1 = new Dropzone("#encoded-dropzone-new-req{{$file->id}}", {
+        accept: function(file, done) {
+                  console.log(file);
+                  if (file.type == "application/zip" || file.type == "application/x-rar") {
+                      console.log('failed');
+                      window.alert("Can not upload zip.");                
+                  }
+                  else{
+                      done();
+                  }
+                  
+              }
+      });
+      
+      engineerFileDrop1.on("success", function(file) {
+
+            console.log('mog');
+      
+            engineerFileDrop1.removeFile(file);
+            
+            location.reload();
+          })
+          .on("complete", function(file) {
+            location.reload();
+          }).on('error', function(e){
+            
+          });
+
+        };
+      
+      </script>
+
     @endforeach
     
   </div>
@@ -2689,38 +2725,34 @@
     });
   </script>
 
-
-
 <script>
 
-let engineerFileDrop= new Dropzone(".encoded-dropzone", {
-  accept: function(file, done) {
-            console.log(file);
-            if (file.type == "application/zip" || file.type == "application/x-rar") {
-                console.log('failed');
-                window.alert("Can not upload zip.");                
-            }
-            else{
-                done();
-            }
-            
-        }
-});
-
-    engineerFileDrop.on("success", function(file) {
-
-    engineerFileDrop.removeFile(file);
-      
-      location.reload();
-    })
-    .on("complete", function(file) {
-      // location.reload();
-    }).on('error', function(e){
-      
-    });
-
-</script>
-
-
+  let engineerFileDrop= new Dropzone(".encoded-dropzone", {
+    accept: function(file, done) {
+              console.log(file);
+              if (file.type == "application/zip" || file.type == "application/x-rar") {
+                  console.log('failed');
+                  window.alert("Can not upload zip.");                
+              }
+              else{
+                  done();
+              }
+              
+          }
+  });
+  
+      engineerFileDrop.on("success", function(file) {
+  
+      engineerFileDrop.removeFile(file);
+        
+        location.reload();
+      })
+      .on("complete", function(file) {
+        // location.reload();
+      }).on('error', function(e){
+        
+      });
+  
+  </script>
 
 @endsection
