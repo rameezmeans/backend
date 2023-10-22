@@ -1767,13 +1767,18 @@ class FilesController extends Controller
                 
 
             })->where('is_credited', 1)
+            ->whereNull('original_file_id')
             ->orWhere(function($q){
                 
                 $q->where('type', 'subdealer');
                 $q->whereNotNull('assigned_from');
                 
             })->where('id',$id)
-            ->where('is_credited', 1)->first();
+            ->where('is_credited', 1)
+            ->whereNull('original_file_id')
+            ->first();
+
+            
         }
         else{
 
@@ -1785,12 +1790,14 @@ class FilesController extends Controller
                     
     
                 })->where('is_credited', 1)
+                ->whereNull('original_file_id')
                 ->orWhere(function($q){
                     
                     $q->where('type', 'subdealer');
                     $q->whereNotNull('assigned_from');
                     
                 })->where('id',$id)
+                ->whereNull('original_file_id')
                 ->where('is_credited', 1)->first();
 
             }
@@ -1804,13 +1811,13 @@ class FilesController extends Controller
                 })
                 ->where('id',$id)
                 ->where('is_credited', 1)
+                ->whereNull('original_file_id')
                 ->where('assigned_to', Auth::user()->id)->first();
 
             }
 
-
         }
-        
+
         if(!$file){
             abort(404);
         }
@@ -1827,39 +1834,40 @@ class FilesController extends Controller
         ->first();
         
         $engineers = get_engineers();
-        $withoutTypeArray = $file->files->toArray();
-        $unsortedTimelineObjects = [];
-
-        foreach($withoutTypeArray as $r) {
-            $fileReq = RequestFile::findOrFail($r['id']);
-            if($fileReq->file_feedback){
-                $r['type'] = $fileReq->file_feedback->type;
-            }
-            $unsortedTimelineObjects []= $r;
-        } 
         
-        $createdTimes = [];
+        // $withoutTypeArray = $file->files->toArray();
+        // $unsortedTimelineObjects = [];
 
-        foreach($file->files->toArray() as $t) {
-            $createdTimes []= $t['created_at'];
-        } 
+        // foreach($withoutTypeArray as $r) {
+        //     $fileReq = RequestFile::findOrFail($r['id']);
+        //     if($fileReq->file_feedback){
+        //         $r['type'] = $fileReq->file_feedback->type;
+        //     }
+        //     $unsortedTimelineObjects []= $r;
+        // } 
+        
+        // $createdTimes = [];
+
+        // foreach($file->files->toArray() as $t) {
+        //     $createdTimes []= $t['created_at'];
+        // } 
     
-        foreach($file->engineer_file_notes->toArray() as $a) {
-            $unsortedTimelineObjects []= $a;
-            $createdTimes []= $a['created_at'];
-        }   
+        // foreach($file->engineer_file_notes->toArray() as $a) {
+        //     $unsortedTimelineObjects []= $a;
+        //     $createdTimes []= $a['created_at'];
+        // }   
 
-        foreach($file->file_internel_events->toArray() as $b) {
-            $unsortedTimelineObjects []= $b;
-            $createdTimes []= $b['created_at'];
-        } 
+        // foreach($file->file_internel_events->toArray() as $b) {
+        //     $unsortedTimelineObjects []= $b;
+        //     $createdTimes []= $b['created_at'];
+        // } 
 
-        foreach($file->file_urls->toArray() as $b) {
-            $unsortedTimelineObjects []= $b;
-            $createdTimes []= $b['created_at'];
-        } 
+        // foreach($file->file_urls->toArray() as $b) {
+        //     $unsortedTimelineObjects []= $b;
+        //     $createdTimes []= $b['created_at'];
+        // } 
 
-        array_multisort($createdTimes, SORT_ASC, $unsortedTimelineObjects);
+        // array_multisort($createdTimes, SORT_ASC, $unsortedTimelineObjects);
 
         if($file->ecu){
             $comments = $this->getComments($file);
@@ -1887,10 +1895,10 @@ class FilesController extends Controller
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
 
         if(env('APP_ENV') == 'live'){
-            return view('files.show', ['selectedOptions' => $selectedOptions, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show', ['selectedOptions' => $selectedOptions, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
         else{
-            return view('files.show_backup', ['selectedOptions' => $selectedOptions, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show_backup', ['selectedOptions' => $selectedOptions, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
     }
 

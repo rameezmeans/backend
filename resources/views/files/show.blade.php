@@ -62,6 +62,26 @@
           </div>
         </div>
       @endif
+
+      @if($file->new_requests)
+      <div class="card card-transparent">
+        <ul class="nav nav-tabs nav-tabs-simple nav-tabs-right bg-white" id="tab-4" role="tablist">
+            <li class="nav-item">
+              <a href="#" class="active" data-toggle="tab" role="tab" data-target="#tab4hellowWorld">Task {{$file->id}}</a>
+            </li>
+          @foreach($file->new_requests as $row)
+            <li class="nav-item">
+              <a href="#" data-toggle="tab" role="tab" data-target="#tab4FollowUs">Task {{$row->id}} (New Request)</a>
+            </li>
+          @endforeach
+          
+        </ul>
+        
+        <div class="tab-content bg-white">
+          <div class="tab-pane active" id="tab4hellowWorld">
+            
+          @endif
+
       <div class="card card-transparent m-t-40">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
@@ -1844,7 +1864,1808 @@
                                    
 
         </div>
-      </div>
+
+
+    @if($file->new_requests)
+    </div>
+    @foreach($file->new_requests as $file)
+    
+    <div class="tab-pane " id="tab4FollowUs">
+
+
+      <div class="card card-transparent m-t-40">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
+          <li class="nav-item">
+            <a href="#"  @if(!Session::has('tab')) class="active" @endif data-toggle="tab" data-target="#slide1"><span>Task</span></a>
+          </li>
+
+          @if( ($file->front_end_id == 1 && $file->subdealer_group_id == NULL) )
+         
+            <li class="nav-item">
+              <a href="#" data-toggle="tab" @if(Session::get('tab') == 'chat') class="active" @endif data-target="#slide2"><span>Chat and Support</span></a>
+            </li>
+          
+          @endif
+
+          {{-- @php dd($file->subdealer_group_id); @endphp
+          @if($file->subdealer_group_id == NULL)
+          <li class="nav-item">
+            <a href="#" data-toggle="tab" @if(Session::get('tab') == 'chat') class="active" @endif data-target="#slide2"><span>Chat and Support</span></a>
+          </li>
+          @endif --}}
+          
+          @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks'))
+          <li class="nav-item">
+            <a href="#" data-toggle="tab" data-target="#slide3"><span>Admin Tasks</span></a>
+          </li>
+          @endif
+          
+          <li class="nav-item">
+            <a href="#" data-toggle="tab" data-target="#slide4"><span>Logs</span></a>
+          </li>
+
+          {{-- @if($file->decoded_files->isEmpty()) --}}
+            @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id)
+              <li class="nav-item">
+                <a href="#" data-toggle="tab" data-target="#slide5"><span>Upload Slave Decrypted File</span></a>
+              </li>
+            @endif
+          {{-- @endif --}}
+
+          <li class="nav-item">
+            <a href="#" data-toggle="tab" data-target="#slide6"><span>Lua make file</span></a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="#" data-toggle="tab" data-target="#slide7"><span>Lua actions</span></a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="#" data-toggle="tab" data-target="#slide8"><span>Lua actions other databases</span></a>
+          </li>          
+
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane slide-left  @if(!Session::has('tab')) active @endif" id="slide1">
+            <div class="row column-seperation">
+              <div class="col-lg-12">
+                
+                <div class="widget-16 card no-border widget-loader-circle">
+                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+
+                    @if($file->tool_type == 'slave')
+                      @if(!$file->decoded_files->isEmpty())
+                        <form method="POST" action="{{route('flip-decoded-mode')}}">
+                          @csrf
+                          <input type="hidden" name="file_id" value="{{$file->id}}">
+                        <button type='submit' class="btn @if($file->decoded_mode == 1) btn-danger @else btn-success @endif">@if($file->decoded_mode == 1) Decoded Mode @else Normal Mode @endif</button>
+                        </form>
+                      @endif
+                    @endif
+
+                    <div class="text-center">
+                      <div class="card-title">
+                          <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="" style="width: 30%;">
+                          <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                          @if($file->original_file_id)
+                              
+                                <a href="{{ route('download', [$file->original_file_id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                                </a>
+                              
+                            @else
+                                
+                            @if($file->decoded_mode == 0)
+                              <a href="{{ route('download', [$file->id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                              </a>
+                            @endif
+
+                            {{-- @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id) --}}
+                            @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id || $file->tool_id != $kess3Label->id)
+                              @if(!$file->decoded_files->isEmpty())
+                                @foreach($file->decoded_files as $decodedFile)
+                                  {{-- @php dd($decodedFile->name); @endphp --}}
+                                  @if( $decodedFile->extension && $decodedFile->extension != "")
+                                    <a href="{{ route('download', [$file->id, $decodedFile->name.'.'.$decodedFile->extension, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$decodedFile->extension}})</span>
+                                    </a>
+                                  @else
+                                    <a href="{{ route('download', [$file->id, $decodedFile->name, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File</span>
+                                    </a>
+                                  @endif
+                                @endforeach
+                              @endif
+                            @endif
+                          @endif
+                        </div>
+                      </div>
+                      
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="card-body">
+
+                    <div class="row m-t-40">
+                      {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+                        @if($decodedAvailable == true)
+                          <p class="text-danger">This File will provide you facility to download additional Decoded Files. Please refresh the page once or twice. Thanks.</p>
+                        @endif
+                      @endif --}}
+                      <div class="col-lg-6  m-t-30">
+                        <h5 class="">General Information</h5>
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Status</p>
+                          <div class="pull-right">
+                            <span class="label @if($file->status == 'sumbitted') label-success @else label-danger @endif">{{$file->status}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Uploaded Time</p>
+                          <div class="pull-right">
+                            <span class="">{{\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A')}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+        
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Task ID</p>
+                          <div class="pull-right">
+                            <span class="label label-success">Task{{$file->id}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+        
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Customer Name</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{$file->user->name}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Frontend</p>
+                          <div class="pull-right">
+                            <span class="label @if($file->frontend->id == 1) text-white bg-primary @else text-black bg-warning @endif">{{$file->frontend->name}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Original File</p>
+                          <div class="pull-right">
+                            <span class="label @if($file->is_original == 1) text-white bg-danger @else text-white bg-success @endif">@if($file->is_original) Yes @else No @endif<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        
+                        @if($file->request_type)
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Requste Type</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{$file->request_type}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                      
+                        @endif
+
+                        @if(Auth::user()->is_admin())
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Assigned To</p>
+                          <div class="pull-right">
+                            @if($file->assigned_to)
+                              <span class="label label-success">{{$file->assigned->name}}<span>
+                            @else
+                              <span class="label label-success">No One<span>
+                            @endif
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Assigment Time</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{ \Carbon\Carbon::parse($file->assignment_time)->diffForHumans() }}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        @if($file->response_time)
+                        
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Engineer Upload Time</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{ \Carbon\Carbon::parse($file->reupload_time)->diffForHumans() }}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Response Time</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{ \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans()
+                             }}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        @endif
+
+                        @endif
+
+                        @if($file->additional_comments)
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <h4 class="pull-left text-bold text-danger">Important Comments from Client</h4>
+                          <br>
+                          <div class="m-l-10">
+                            {{$file->additional_comments}}
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        @endif
+                        
+                      </div>
+
+                      @if(get_engineers_permission(Auth::user()->id, 'customer-contact-information'))
+
+                      <div class="col-lg-6  m-t-30">
+                        <h5 class="">Contact Information</h5>
+
+                      @if($file->name)
+                          <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Customer Name</p>
+                            <div class="pull-right">
+                              <span class="label label-success">{{$file->name}}<span>
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        @endif
+                        @if($file->phone)
+                          <div class="b-grey b-t p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Phone</p>
+                            <div class="pull-right">
+                              <span class="label label-success">{{$file->phone}}<span>
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        @endif
+                        @if($file->email)
+                          <div class="b-grey b-t p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Email</p>
+                            <div class="pull-right">
+                              <span class="label label-success">{{$file->email}}<span>
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        @endif
+                      </div>
+                      @endif
+
+                      <div class="col-lg-6  m-t-30">
+                        <h5 class="">Vehicle Information</h5>
+                        
+                        @if($file->license_plate)
+                          <div class=" b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">License Plate</p>
+                            <div class="pull-right">
+                              <span class="label label-success">{{$file->license_plate}}<span>
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        @endif
+                        @if($file->model_year)
+                        <div class=" b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Model Year</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{$file->model_year}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                      @endif
+                      @if($file->vin_number)
+                      <div class="b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <p class="pull-left">Vin Number</p>
+                        <div class="pull-right">
+                          <span class="label label-success">{{$file->vin_number}}<span>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    @endif
+
+                    @if($file->file_type)
+                    <div class="b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                      <p class="pull-left">File Type</p>
+                      <div class="pull-right">
+                        <span class="label label-success">{{$file->file_type}}<span>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    @endif
+
+                        <div class="b-t b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Brand</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{$file->brand}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Model</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{$file->model}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Version</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{$file->version}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+        
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Engine</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{$file->engine}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+        
+                        @if($file->ecu)
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">ECU</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{$file->ecu}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        @endif
+        
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Gear Box</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{$file->gear_box}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        @if($file->getECUComment())
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <h5 class="pull-left">Engineer's Comments On ECU</h5>
+                          <br>
+                          <div class="m-l-10">
+                            @if($file->getECUComment()){{$file->getECUComment()->notes}}@endif
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        @endif
+
+                        @if(Auth::user()->is_admin() or Auth::user()->is_head())
+                          <div class="text-center m-t-20">                    
+                            <a class="btn btn-success btn-cons m-b-10" href="{{route('add-comments', [$vehicle->id, 'file='.$file->id])}}"><span class="bold">Go To Comments</span></a>
+                            <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
+                            <a class="btn btn-success btn-cons m-b-10" href="{{route('edit-file', $file->id)}}"><span class="bold">Edit File</span></a>
+                            
+                              {{-- <form method="POST" action="{{route('delete-file')}}">
+                                @csrf
+                                <input type="hidden" value="{{$file->id}}" name="id"> --}}
+                                <button type="button" class="btn btn-danger btn-delete btn-cons m-b-10" data-file_id={{$file->id}}><span class="bold">Delete File</span></button>
+                              {{-- </form> --}}
+                          </div>
+                        @endif
+                        
+                      </div>
+        
+                      <div class="col-lg-6">
+                        <h5 class="m-t-40">Reading Tool</h5>
+        
+                            
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Tool</p>
+                          <div class="pull-right">
+                              <img alt="{{$file->tool_id}}" width="50" height="" data-src-retina="{{ get_dropdown_image($file->tool_id) }}" data-src="{{ get_dropdown_image($file->tool_id) }}" src="{{ get_dropdown_image($file->tool_id) }}">
+                              <span class="" style="top: 2px; position:relative;">{{ \App\Models\Tool::findOrFail( $file->tool_id )->name }}({{$file->tool_type}})</span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                     
+        
+                      <h5 class="m-t-40">Options And Credits</h5>
+
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
+
+
+                      @if($file->status == 'submitted')
+                        <button id="btn-options-change" class="btn btn-success m-b-20">Change Options</button>
+                      @endif
+
+                      @endif
+                        
+                      @if($file->stages)
+                        @if(\App\Models\Service::where('name', $file->stages)->first())
+                          <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Stage</p>
+                            <div class="pull-right">
+                                <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
+                                <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span>
+                                @php $stage = \App\Models\Service::FindOrFail($file->stage_services->service_id) @endphp
+                                @if($file->front_end_id == 2)
+                                    @if($file->tool_type == 'master')
+                                      <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
+                                    @else
+                                      <span class="text-white label-danger label"> {{$stage->tuningx_slave_credits}} </span>
+                                    @endif
+                                @else
+                                  <span class="text-white label-danger label"> {{$stage->credits}} </span>
+                                @endif
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        @endif
+                      @else
+                        @if(\App\Models\Service::FindOrFail($file->stage_services->service_id))
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Stage</p>
+                          <div class="pull-right">
+                              <img alt="{{\App\Models\Service::FindOrFail($file->stage_services->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}">
+                              <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_services->service_id)->name }}</span>
+                              @php $stage = \App\Models\Service::FindOrFail($file->stage_services->service_id) @endphp
+                              @if($file->front_end_id == 2)
+                                  @if($file->tool_type == 'master')
+                                    <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
+                                  @else
+                                    <span class="text-white label-danger label"> {{$stage->tuningx_slave_credits}} </span>
+                                  @endif
+                              @else
+                                <span class="text-white label-danger label"> {{$stage->credits}} </span>
+                              @endif
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        @endif
+                      @endif
+
+                      <div class="p-b-20">
+
+                      @if(!$file->options_services()->get()->isEmpty())
+                        <div class="b  b-grey p-l-20 p-r-20 p-t-10 p-b-10">
+                          <p class="pull-left">Options</p>
+                          <div class="clearfix"></div>
+                        </div>
+                        
+                        @foreach($file->options_services()->get() as $option) 
+                            @if(\App\Models\Service::where('id', $option->service_id)->first())
+                              <div class="p-l-20 b-b b-grey b-t p-b-10 p-t-10"> 
+                                <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
+                                {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  ({{\App\Models\Service::where('id', $option->service_id)->first()->vehicle_type}}) (@if(\App\Models\Service::findOrFail( $option->service_id )->active == 1) {{'ECU Tech'}} @elseif(\App\Models\Service::findOrFail( $option->service_id )->tuningx_active == 1) {{'TuningX'}} @endif)
+                                @php $option = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
+                                @if($file->front_end_id == 2)
+                                  @if($file->tool_type == 'master')
+                                    <span class="text-white label-danger label pull-right"> {{$option->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
+                                  @else
+                                    <span class="text-white label-danger label pull-right"> {{$option->optios_stage($file->stage_services->service_id)->first()->slave_credits}} </span>
+                                  @endif
+                              @else
+                                <span class="text-white label-danger label pull-right"> {{$option->credits}} </span>
+                              @endif
+                              </div>
+                            @endif
+                            @if($comments)
+                              @foreach($comments as $comment)
+
+                                  @if($option->id == $comment->service_id)
+                                    <div class="p-l-20 p-b-10 p-t-10"> 
+                                      {{$comment->comments}}
+                                    
+                                    </div>
+                                    <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
+                                  @endif
+                              @endforeach
+                            @endif
+                        @endforeach
+                      @else
+                              
+                        <div class="b  b-grey p-l-20 p-r-20 p-t-10">
+                          <p class="pull-left">Options</p>
+                          <div class="clearfix"></div>
+                        </div>
+                      
+                        @foreach($file->options_services as $option)
+                            
+                            @if(\App\Models\Service::FindOrFail($option->service_id))
+                              <div class="p-l-20 b-b b-grey"> 
+                                <img alt="{{\App\Models\Service::FindOrFail($option->service_id)->name}}" width="40" height="40" 
+                                data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
+                                {{\App\Models\Service::FindOrFail($option->service_id)->name}}  
+                              </div>
+                            @endif
+                            @if($comments)
+                              @foreach($comments as $comment)
+                                  @if(\App\Models\Service::FindOrFail($option->service_id)->name == $comment->option)
+                                    <div class="p-l-20 p-b-10"> 
+                                      {{$comment->comments}}
+                                    
+                                    </div>
+                                    <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
+                                  @endif
+                              @endforeach
+                            @endif
+                        @endforeach
+
+                      @endif
+                      
+                      </div>
+                      
+                      @if($file->dtc_off_comments)
+                      <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <p class="pull-left text-danger">DTC OFF Comments</p>
+                        <br>
+                        <div class="m-l-20">
+                          {{$file->dtc_off_comments}}
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      @endif
+
+                      @if($file->vmax_off_comments)
+                      <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <p class="pull-left text-danger">VMAX OFF Comments</p>
+                        <br>
+                        <div class="m-l-20">
+                          {{$file->vmax_off_comments}}
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      @endif
+                     
+                      <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <p class="pull-left">Credits Paid</p>
+                        <div class="pull-right">
+                         
+                          @if($file->assigned_from)
+                            <span class="label label-danger">{{$file->subdealer_credits}}<span>
+                          @else
+                            <span class="label label-danger">{{$file->credits}}<span>
+                          @endif
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+        
+                      </div>
+
+                      <div class="col-lg-6">
+                        <h5 class="m-t-40">Uploaded Files</h5>
+
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Revisions</p>
+                          <div class="pull-right">
+                           
+                              <label class="label bg-info text-white">{{$file->files->count()}}</label>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                            @foreach($messages as $message)
+                              @if(isset($message['request_file']))
+                                @if($message['engineer'] == 1)
+                            <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                                <p class="pull-left">{{$message['request_file']}}</p>
+                                         
+                              <?
+                                $madeproject = DB::table('lua_make_project')
+                                ->where('requestfile', $message['id'])
+                                ->limit(1)
+                                ->select('id', 'orifile', 'modfile', 'name','requestfile','olsname')
+                                ->first();
+                                
+                                
+                                if(!empty($madeproject)){
+                                  ?>
+                                
+                                  <p class="pull-right">
+                                     <?
+                                     echo $madeproject->olsname;
+                                     ?>
+                                  </p>  
+                                  <?
+                                }else{
+                                  
+                                  
+                                $file_path = $file->file_path; // Replace this with the actual file path
+                                
+                                // Get the file extension
+                                $file_extension = pathinfo($file_path, PATHINFO_EXTENSION);
+                                
+                                // Check if the file extension is "slave"
+                                  if ($file_extension !== "slave") {
+                                  ?>
+                                
+                                  <p class="pull-right">
+                                    <a href="#" class="btn-sm btn-info btn-cons makeproject" id="makeproject" data-requestfileid="<? echo $message['id'];?>"  data-moddedfile="<? echo $message['request_file'];?>" data-original="<? echo $file->file_attached;?>" data-path="<? echo $file->file_path;?>">
+                                      Make project and set ok
+                                    </a>
+                                  </p>
+                                  <?
+                                
+                                  } else {
+                                  $file_path = $message['request_file']; // Replace this with the actual file path
+                                  $new_extension = "bin";
+                                  
+                                  // Use pathinfo to extract the file's base name
+                                  $file_info = pathinfo($file_path);
+                                  $base_name = $file_info['filename'];
+                                  
+                                  // Concatenate the new extension
+                                  $new_file_path = $file_info['dirname'] . '/' . $base_name . '.' . $new_extension;
+                                  
+                                  $file_path = $file->file_attached; // Replace this with the actual file path
+                                  $new_extension = "bin";
+                                  
+                                  // Use pathinfo to extract the file's base name
+                                  $file_info = pathinfo($file_path);
+                                  $base_name = $file_info['filename'];
+                                  
+                                  // Concatenate the new extension
+                                  $new_file_path_ori = $file_info['dirname'] . '/' . $base_name . '.' . $new_extension;
+                                  
+                                  ?>
+                                
+                                  <p class="pull-right">
+                                    <a href="#" class="btn-sm btn-info btn-cons makeproject" id="makeproject" data-requestfileid="<? echo $message['id'];?>"  data-moddedfile="<? echo $new_file_path;?>" data-original="<? echo $new_file_path_ori;?>" data-path="<? echo $file->file_path;?>">
+                                      Make project and set ok
+                                    </a>
+                                  </p>  
+                                
+                                  <?
+                                  }                 
+                                  
+                                  
+                                }
+                                
+                                ?>
+                                
+                                <?
+                                  if($message['visible'] == "0"){
+                                  ?>
+                                
+                                <p class="pull-right">
+                                  <a href="#" class="btn-sm btn-success btn-cons m-b-10" id="setvisible" data-id="<? echo  $message['id'];?>">
+                                    set visible
+                                  </a>
+                                </p>
+                                
+                                  <?
+                                  }
+                                ?>
+                                <br/>
+                                                <?
+                                                $data = json_decode($message['lua_command'], true);
+                                                
+                                                if ($message['lua_command'] === null){
+                                                  
+                                                }else{
+                                                    foreach ($data as $item) {
+                                                      ?>
+                                                        <p class="pull-left"><? echo $item['mod'] . ' => ' . $item['name'];?></p>
+
+                                    <br/>
+                                                        <?
+                                                    }
+                                                  }
+                                                ?>
+                                                
+                                                <?
+                                                            $data = json_decode($message['lua_command_fdb'], true);
+                                                            
+                                                            if ($message['lua_command_fdb'] === null){
+                                                              
+                                                            }else{
+                                                                foreach ($data as $item) {
+                                                                  ?>
+                                                                    <p class="pull-left"><? echo $item['mod'] . ' => ' . $item['name'];?><b> FDB FILE</b></p>
+                                                                    <?
+                                                                }
+                                                              }
+                                                            ?>                                                  
+                                
+                                <div class="pull-right">
+                                  @isset($message['type'])
+                                 
+                                 
+                                  <a href="#" class="btn-sm btn-info btn-cons"> <span class="bold">{{$message['type']}}</span>
+                                  </a>
+                                  @endisset
+                                    @if(!($file->front_end_id == 1 && $file->subdealer_group_id == NULL))
+                                      @php
+                                        $messageFile = \App\Models\RequestFile::findOrFail($message['id']);
+
+                                        
+                                      @endphp
+
+                                      @if(count($messageFile->engineer_file_notes_have_unseen_messages))
+                                      <span id="circle"></span>
+                                      @endif
+                                      <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
+                                    @endif
+                                    <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
+                                    </a>
+                                    
+                                    <?
+                                      if($message['visible'] == "0"){
+                                      ?>
+                                    
+                                      <a href="#" class="btn-sm btn-success btn-cons m-b-10" id="setvisible" data-id="<? echo  $message['id'];?>">
+                                        set visible
+                                      </a>
+                                    
+                                      <?
+                                      }
+                                    ?>                                    
+                                    
+                                    <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a>
+                                </div>
+
+                                <div class="clearfix"></div>
+                                  @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
+                                  <div>
+                                    <p>Please click on "Download Encrypted" Button to download and test the system. This way user will get Encrypted file or you will get the error so that you can process the file, manually.</p>
+                                  </div>
+                                  <div class="text-center">
+                                    <a href="{{ route('download-encrypted',[$message['file_id'], $message['request_file'], false]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download Encrypted</span>
+                                    </a>
+                                  </div>
+                                  @endif
+                                <div class="clearfix"></div>
+                            </div>
+        
+                        @endif
+                        @endif
+                      @endforeach
+                      </div>
+
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
+
+                      @if($file->stage_offer)
+
+                      @php $proposedCredits = 0; @endphp
+
+                      <div class="col-lg-6">
+                        <h5 class="m-t-40">Proposed Stage and Options</h5>
+                        
+                          <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Stage</p>
+                            <div class="pull-right">
+                                <img alt="{{\App\Models\Service::FindOrFail($file->stage_offer->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon }}">
+                                <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_offer->service_id)->name }}</span>
+                                @php $stage = \App\Models\Service::FindOrFail($file->stage_offer->service_id) @endphp
+                                @if($file->front_end_id == 2)
+                                    @if($file->tool_type == 'master')
+                                      <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
+                                      @php $proposedCredits += $stage->tuningx_credits; @endphp
+                                    @else
+                                      <span class="text-white label-danger label"> {{$stage->tuningx_slave_credits}} </span>
+                                      @php $proposedCredits += $stage->tuningx_slave_credits; @endphp
+                                    @endif
+                                @else
+                                  <span class="text-white label-danger label"> {{$stage->credits}} </span>
+                                  @php $proposedCredits += $stage->credits; @endphp
+                                @endif
+                                
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+
+                          <div class="b-b  b-grey p-l-20 p-r-20 p-t-10 p-b-10">
+                            <p class="pull-left">Options</p>
+                            <div class="clearfix"></div>
+                          </div>
+                        
+                          @foreach($file->options_offer as $option)
+                              
+                              @if(\App\Models\Service::FindOrFail($option->service_id))
+                                <div class="p-l-20  p-r-20 b-b b-grey  p-t-10 p-b-10"> 
+                                  <img alt="{{\App\Models\Service::FindOrFail($option->service_id)->name}}" width="40" height="40" 
+                                  data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                  data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                  src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
+                                  {{\App\Models\Service::FindOrFail($option->service_id)->name}}  
+                                  @php $option1 = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
+                                  @if($file->front_end_id == 2)
+                                    @if($file->tool_type == 'master')
+                                      <span class="text-white label-danger label pull-right"> {{$option1->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
+                                      @php $proposedCredits += $option1->optios_stage($file->stage_services->service_id)->first()->master_credits @endphp
+                                    @else
+                                      <span class="text-white label-danger label pull-right"> {{$option1->optios_stage($file->stage_services->service_id)->first()->slave_credits}} </span>
+                                      @php $proposedCredits += $option1->optios_stage($file->stage_services->service_id)->first()->slave_credits @endphp
+                                    @endif
+                                  @else
+                                    <span class="text-white label-danger label pull-right"> {{$option1->credits}} </span>
+                                    @php $proposedCredits += $option1->credits; @endphp
+                                  @endif
+                                </div>
+                              @endif
+                          @endforeach
+
+                          <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Credits Proposed</p>
+                            <div class="pull-right">
+                             
+                              
+                                <span class="label label-warning text-black">{{$proposedCredits}}<span>
+                              
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+
+                          <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <p class="pull-left">Credits Difference</p>
+                            <div class="pull-right">
+                             
+                              
+                                <span class="label label-info text-black">{{$file->credits-$proposedCredits}}<span>
+                              
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        
+                        </div>
+                      @endif
+                      @endif
+
+                      {{-- <div class="col-xl-12">
+                        <h5 class="m-t-40">Upload File</h5>
+                        <!-- START card -->
+                        <div class="card card-default">
+                          <div class="card-header ">
+                            <div class="card-title">
+                              Drag n' drop uploader
+                            </div>
+                            <div class="tools">
+                              <a class="collapse" href="javascript:;"></a>
+                              <a class="config" data-toggle="modal" href="#grid-config"></a>
+                              <a class="reload" href="javascript:;"></a>
+                              <a class="remove" href="javascript:;"></a>
+                            </div>
+                          </div>
+                          <div class="card-body no-scroll no-padding">
+                            <form action="{{route('request-file-upload')}}" class="simple-dropzone dropzone no-margin">
+                              @csrf
+                              <input type="hidden" value="{{$file->id}}" name="file_id">
+                              <div class="fallback">
+                                <input name="file" type="file" />
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                        <!-- END card -->
+                      </div> --}}
+                      
+                      @if($file->status == 'submitted' || $file->status == 'completed')
+
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
+                      
+                      <div class="col-xl-12 m-t-20">
+                        <div class="card card-transparent flex-row">
+                          <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
+
+                            {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+                              @if($file->decoded_files)
+                              <li class="nav-item">
+                                <a href="#" class="active show" data-toggle="tab" data-target="#tab3hellowWorld">Encode</a>
+                              </li>
+                              @endif
+                            @endif --}}
+
+                            <li class="nav-item">
+                              <a href="#" data-toggle="tab" data-target="#tab3FollowUs" class="">Upload</a>
+                            </li>
+                            {{-- <li class="nav-item">
+                              <a href="#" data-toggle="tab" data-target="#tab3Inspire">Three</a>
+                            </li> --}}
+                          </ul>
+                          <div class="tab-content bg-white full-width">
+
+                            {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+                            @if($file->decoded_files) --}}
+
+                            <div class="tab-pane active show" id="tab3hellowWorld">
+                              <div class="row column-seperation">
+                                
+                                <div class="col-xl-12 full-width">
+                                  <h5 class="">Upload Decoded File to Encode</h5>
+                                  <!-- START card -->
+                                  <div class="card card-default">
+                                    <div class="card-header ">
+                                      <div class="card-title">
+                                        Drag n' drop uploader
+                                      </div>
+                                      <div class="tools">
+                                        <a class="collapse" href="javascript:;"></a>
+                                        <a class="config" data-toggle="modal" href="#grid-config"></a>
+                                        <a class="reload" href="javascript:;"></a>
+                                        <a class="remove" href="javascript:;"></a>
+                                      </div>
+                                    </div>
+                                    <div class="card-body no-scroll no-padding">
+                                      <form action="{{route('encoded-file-upload')}}" class="encoded-dropzone dropzone no-margin">
+                                        @csrf
+                                        <input type="hidden" value="{{$file->id}}" name="file_id">
+                                        @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
+                                          <input type="hidden" value="1" name="encode">
+                                            @if($file->decoded_file)
+                                              @if($file->decoded_file->extension == 'dec')
+                                                <input type="hidden" value="dec" name="encoding_type">
+                                              @else
+                                                <input type="hidden" value="micro" name="encoding_type">
+                                              @endif
+                                            @endif
+                                          @else
+                                            <input type="hidden" value="0" name="encode">
+                                          @endif
+                                       
+                                        <div class="fallback">
+                                          <input name="file" type="file" />
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                  <!-- END card -->
+                                </div> 
+                                    
+                              </div>
+                            </div>
+
+                            {{-- @endif
+                            @endif --}}
+
+                            {{-- <div class="tab-pane  @if(!$file->decoded_files) active show @endif" id="tab3FollowUs">
+                              <div class="col-xl-12 full-width">
+                                <h5 class="">Upload File</h5>
+                                <!-- START card -->
+                                <div class="card card-default">
+                                  <div class="card-header ">
+                                    <div class="card-title">
+                                      Drag n' drop uploader
+                                    </div>
+                                    <div class="tools">
+                                      <a class="collapse" href="javascript:;"></a>
+                                      <a class="config" data-toggle="modal" href="#grid-config"></a>
+                                      <a class="reload" href="javascript:;"></a>
+                                      <a class="remove" href="javascript:;"></a>
+                                    </div>
+                                  </div>
+                                  <div class="card-body no-scroll no-padding">
+                                    <form action="{{route('request-file-upload')}}" class="simple-dropzone dropzone no-margin">
+                                      @csrf
+                                      <input type="hidden" value="{{$file->id}}" name="file_id">
+                                      <input type="hidden" value="0" name="encode">
+                                      <div class="fallback">
+                                        <input name="file" type="file" />
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                                <!-- END card -->
+                              </div> 
+                            </div> --}}
+
+                          </div>
+                        </div>
+                      </div>
+                      @endif
+                      @endif
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          @if(($file->front_end_id == 1 && $file->subdealer_group_id == NULL))
+          <div class="tab-pane slide-left @if(Session::get('tab') == 'chat') active @endif" id="slide2">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="widget-16 card no-border widget-loader-circle">
+                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                    <div class="text-center">
+                      <div class="card-title">
+                          <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                          <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                        </div>
+                      </div>
+                      
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="card-body">
+                    <div class="view chat-view bg-white clearfix">
+                      <!-- BEGIN Header  !-->
+                      
+                      <!-- END Header  !-->
+                      <!-- BEGIN Conversation  !-->
+                      @if(!empty($messages))
+          
+                      <div class="chat-inner" id="my-conversation" style="overflow: scroll !important; height:500px;">
+                        <!-- END From Me Message  !-->
+                        <!-- BEGIN From Them Message  !-->
+                        @foreach($messages as $message)
+                         
+                          @if(isset($message['egnineers_internal_notes']))
+                            @if($message['engineer'])
+                            <div class="message clearfix">
+                              <div class="chat-bubble bg-primary from-me text-white">
+                                {{ $message['egnineers_internal_notes'] }} 
+                                
+                                <i data-note_id="{{$message['id']}}" data-message="{{$message['egnineers_internal_notes']}}" class="fa fa-edit m-l-20"></i> 
+                                <i class="pg-trash delete-message" data-note_id="{{$message['id']}}"></i> 
+                                <br>
+                                @if(isset($message['engineers_attachement']))
+                                  <div class="text-center m-t-10">
+                                    <a href="{{route('download',[$message['file_id'], $message['engineers_attachement'], 0])}}" class="text-danger">Download</a>
+                                  </div>
+                                @endif
+                                <br>
+                                <small class="m-t-20" style="font-size: 8px; float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
+                              </div>
+                            </div>
+          
+                            @else
+                              <div class="message clearfix">
+                                <div class="chat-bubble from-them bg-success">
+                                    {{ $message['egnineers_internal_notes'] }}<br>
+                                    @if(isset($message['engineers_attachement']))
+                                      <div class="text-center m-t-10">
+                                        <a href="{{route('download',[$message['file_id'], $message['engineers_attachement'], 0])}}" class="text-danger">Download</a>
+                                      </div>
+                                    @endif
+                                    <br>
+                                    <br>
+                                    <small class="m-t-20" style="font-size: 8px;float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
+                                </div>
+                              </div>
+                            @endif
+                          @endif
+                          @if(isset($message['file_url']))
+                            
+                            <div class="message clearfix">
+                              <div class="chat-bubble bg-success from-them text-white">
+                                {{ $message['file_url'] }}<br>
+                                @if(isset($message['file_url_attachement']))
+                                      <div class="text-center m-t-10">
+                                        <a href="{{route('download',[$message['file_id'], $message['file_url_attachement'], 0])}}" class="text-danger">Download</a>
+                                      </div>
+                                    @endif
+                              </div>
+                            </div>
+          
+                            
+                          @endif
+                        @endforeach
+                        <!-- END From Them Message  !-->
+                        <!-- BEGIN From Me Message  !-->
+                        
+                        {{-- <div class="message clearfix">
+                          <div class="chat-bubble from-me">
+                            Did you check out Pages framework  ?
+                          </div>
+                        </div> --}}
+          
+                      </div>
+                      @endif
+                      <!-- BEGIN Conversation  !-->
+                      <!-- BEGIN Chat Input  !-->
+                      <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10 text-center">
+                        <form method="POST" action="{{ route('file-engineers-notes') }}" enctype="multipart/form-data">
+                          @csrf
+                          <input type="hidden" value="{{$file->id}}" name="file_id">
+                        <div class="row">
+                            <div class="col-6 no-padding">
+                              <input type="text" name="egnineers_internal_notes" class="form-control chat-input" data-chat-input="" data-chat-conversation="#my-conversation" placeholder="Reply to cusotmer." required>
+                              @error('egnineers_internal_notes')
+                                      <p class="text-danger" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </p>
+                              @enderror
+                             
+                            </div>
+                            <div  class="col-4 no-padding"> 
+                              <input class="m-t-10" type="file" name="engineers_attachement" style="float: :left;">
+                            </div>
+                            <div class="col-2 link text-master m-t-15 p-l-10 b-l b-grey col-top">
+                              <button class="btn btn-success" type="submit">Send</button>
+                            </div>
+                          
+                        </div>
+                      </form>
+                      </div>
+                      <!-- END Chat Input  !-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          @endif
+          @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks'))
+            <div class="tab-pane slide-left" id="slide3">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                <div class="text-center">
+                  <div class="card-title">
+                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <h4 class="m-t-20">Adminstrative Tasks</h4>
+                    </div>
+                  </div>
+                  
+                  <div class="clearfix"></div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  
+                    <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                      <p class="pull-left">Assign This File to An Engineer</p>
+                      <form action="{{route('assign-engineer')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="file_id" value="{{$file->id}}">
+                        <div class="">
+                          <select class="full-width" data-init-plugin="select2" name="assigned_to">
+                            <option disabled >Not Assigned</option>
+                            @foreach($engineers as $engineer)
+                              <option @if(isset($file) && $file->assigned_to == $engineer->id) selected @endif value="{{$engineer->id}}">{{$engineer->name}}</option>
+                            @endforeach
+                          </select>
+                          <div class="text-center m-t-20">                    
+                            <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Assign Engineer</span></button>
+                          </div>
+                        </div>
+                        
+                      </form>
+                      <div class="clearfix"></div>
+                    </div>
+                  
+
+                  <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                    <p class="pull-left">File Status</p>
+                    <form action="{{route('change-status-file')}}" method="POST">
+                      @csrf
+                      <input type="hidden" name="file_id" value="{{$file->id}}">
+                      <div class="">
+                        <select class="full-width" data-init-plugin="select2" name="status" id="select_status">
+                            <option @if(isset($file) && $file->status == "submitted") selected @endif value="submitted">Submitted</option>
+                            <option @if(isset($file) && $file->status == "rejected") selected @endif value="rejected">Rejected</option>
+                            <option @if(isset($file) && $file->status == "completed") selected @endif value="completed">Completed</option>
+                            <option @if(isset($file) && $file->status == "processing") selected @endif value="processing">Processing</option>
+                            <option @if(isset($file) && $file->status == "on_hold") selected @endif value="on_hold">On Hold</option>
+                        </select>
+                        <div class="form-group m-t-10 hide" id="reason_to_reject">
+                          <label>Reason To Reject</label>
+                          <input type="text" class="form-control" name="reason_to_reject">
+                        </div>
+                        <div class="text-center m-t-20">                    
+                          <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Update</span></button>
+                        </div>
+                      </div>
+                      
+                    </form>
+                    <div class="clearfix"></div>
+                  </div>
+                  @if(Auth::user()->is_admin() or Auth::user()->is_head())
+                    <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                      <p class="pull-left">Support Status</p>
+                      <form action="{{route('change-support-status')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="file_id" value="{{$file->id}}">
+                        <div class="">
+                          <select class="full-width" data-init-plugin="select2" name="support_status">
+                              <option disabled>Not Set</option>
+                              <option @if(isset($file) && $file->support_status == "open") selected @endif value="open">Open</option>
+                              <option @if(isset($file) && $file->support_status == "closed") selected @endif value="closed">Closed</option>
+                          </select>
+                          <div class="text-center m-t-20">                    
+                            <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Update</span></button>
+                          </div>
+                        </div>
+                        
+                      </form>
+                      <div class="clearfix"></div>
+                    </div>
+                  @endif
+                  <br>
+                </div>
+              </div>
+            </div>
+            @endif
+            <div class="tab-pane slide-left" id="slide4">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                <div class="text-center">
+                  <div class="card-title">
+                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <h4 class="m-t-20">Logs</h4>
+                    </div>
+                  </div>
+                  
+                  <div class="clearfix"></div>
+              </div>
+              <div class="row" style="">
+
+                @foreach($file->logs as $log)
+                  <div class="col-12 col-xl-12 @if($log->type == 'error') bg-danger-light @else bg-success-light @endif text-white m-b-10 m-t-10 m-l-10" style="height: 50px;">
+                    <p class="no-margin p-t-10 p-b-10">{{$log->message}}</p>
+                  </div>
+                @endforeach
+
+              </div>
+            </div>
+           
+            @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id)
+              <div class="tab-pane slide-left" id="slide5">
+                <div class="card card-default">
+                  <div class="card-header ">
+                    <div class="card-title">
+                    
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h5>
+                      Upload Decrypted File
+                    </h5>
+                    <form method="POST" action="{{route('search')}}" enctype="multipart/form-data" class="" role="form">
+                      @csrf
+                      <input type="hidden" name="file_id" value="{{$file->id}}">
+                      <div class="form-group form-group-default required ">
+                        <label>Decrypted File</label>
+                        <input name="decrypted_file" type="file" class="form-control" required="">
+                       
+                      </div>
+                      <div class="radio radio-success">
+                        <input class="download_directly" type="radio" checked="checked" value="direct" name="download_directly" id="direct">
+                        <label for="direct">Send Directly</label>
+                        <input class="download_directly" type="radio"  value="download" name="download_directly" id="download">
+                        <label for="download">Download with Custom Options</label>
+                      </div>
+
+                      <div class="stages-show hide">
+                        <h5 class="m-t-20">Stages Options</h5>
+                        @foreach($stages as $stage)
+                          <div class="radio radio-success">
+                            <input class="stages" type="radio" @if($file->stage_services->service_id == $stage->id) checked="checked" @endif value="{{$stage->id}}" name="custom_stage" id="{{$stage->id}}">
+                            <label for="{{$stage->id}}">{{$stage->name}}</label>
+                          </div>
+                        @endforeach
+                      </div>
+
+                      <div class="options-show hide">
+                      <h5 class="m-t-20">Custome Options</h5>
+                      <div class="radio radio-success">
+                         @if(!$file->options_services->isEmpty())
+                          {{-- @foreach($file->options_services as $option) --}}
+                            @if(!$options->isEmpty())
+                              @foreach($options as $option)
+                                <div class="checkbox check-success">
+                                  <input @if(in_array($option->id, $selectedOptions)) checked @endif name="custom_options[]" type="checkbox" value="{{$option->id}}" id="{{$option->id}}">
+                                  <label for="{{$option->id}}">{{$option->name}} - ({{$option->vehicle_type}})</label>
+                                </div>
+                              @endforeach
+                            @endif
+                          @else
+                            <p>No Options.</p>
+                          @endif
+                      </div>
+                      </div>
+
+                      <button class="btn btn-success">Upload</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            @endif
+            
+            
+            
+            
+            
+            
+           
+                       
+                        <div class="tab-pane slide-left" id="slide6">
+                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                            <div class="text-center">
+                              <div class="card-title">
+                                  <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                                  <h3>{{$file->brand}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <h4 class="m-t-20">Lua</h4>
+                                </div>
+                              </div>
+                              
+                              <div class="clearfix"></div>
+                          </div>
+                          <div class="row" style="">
+                            <div class="col-md-3">
+                              <?
+                                $mods = array();
+                              ?>
+                              
+                                    @if($file->stages)
+                                    @if(\App\Models\Service::where('name', $file->stages)->first())
+                                      <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                                        <div class="pull-right">
+                                            <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons2').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons2').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons2').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
+                                            <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span>
+                                            
+                                            <?
+                                              $value = \App\Models\Service::FindOrFail($file->stage_services->service_id)->label;
+                                            
+                                              array_push($mods, $value);
+                                            ?>                                
+                                        </div>
+                                        <div class="clearfix"></div>
+                                      </div>
+                                    @endif
+                                  @else
+                                    @if(\App\Models\Service::FindOrFail($file->stage_services->service_id))
+                                    <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                                      <div class="pull-right">
+                                          <img alt="{{\App\Models\Service::FindOrFail($file->stage_services->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon}}" data-src="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}" src="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}">
+                                          <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_services->service_id)->name }}</span>
+                                          
+                                          <?
+                                            $value = \App\Models\Service::FindOrFail($file->stage_services->service_id)->label;
+                                          
+                                            array_push($mods, $value);
+                                          ?>
+                                      </div>
+                                      <div class="clearfix"></div>
+                                    </div>
+                                    @endif
+                                  @endif
+                                  
+                                 @if(!$file->options_services()->get()->isEmpty())
+                                    <div class="b  b-grey p-l-20 p-r-20 p-t-10 p-b-10">
+                                    </div>
+                                    
+                                    @foreach($file->options_services()->get() as $option) 
+                                        @if(\App\Models\Service::where('id', $option->service_id)->first())
+                                          <div class="p-l-20 b-b b-grey b-t p-b-10 p-t-10"> 
+                                            <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons2').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons2').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons2').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
+                                            {{\App\Models\Service::where('id', $option->service_id)->first()->label}}
+                                            <?
+                                            $value = \App\Models\Service::where('id', $option->service_id)->first()->label;
+            
+                                            array_push($mods, $value);
+                                            ?>
+                                          </div>
+                                        @endif
+                                        @if($comments)
+                                          @foreach($comments as $comment)
+                                  
+                                              @if($option->service_id == $comment->service_id)
+                                                <div class="p-l-20 p-b-10 p-t-10"> 
+                                                  {{$comment->comments}}
+                                                
+                                                </div>
+                                                <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
+                                              @endif
+                                          @endforeach
+                                        @endif
+                                    @endforeach
+                                  @else
+                                          
+                                    <div class="b  b-grey p-l-20 p-r-20 p-t-10">
+                                    </div>
+                                  
+                                    @foreach($file->options_services as $option)
+                                        
+                                        @if(\App\Models\Service::FindOrFail($option->service_id))
+                                          <div class="p-l-20 b-b b-grey"> 
+                                            <img alt="{{\App\Models\Service::FindOrFail($option->service_id)->name}}" width="40" height="40" 
+                                            data-src-retina="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                            data-src="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                            src="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
+                                            {{\App\Models\Service::FindOrFail($option->service_id)->label}}  
+                                            <?
+                                            $value = \App\Models\Service::FindOrFail($option->service_id)->label;
+                                            
+                                            array_push($mods, $value);
+                                            ?>                              </div>
+                                        @endif
+                                        @if($comments)
+                                          @foreach($comments as $comment)
+                                              @if(\App\Models\Service::FindOrFail($option->service_id)->name == $comment->option)
+                                                <div class="p-l-20 p-b-10"> 
+                                                  {{$comment->comments}}
+                                                
+                                                </div>
+                                                <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
+                                              @endif
+                                          @endforeach
+                                        @endif
+                                    @endforeach
+                                  
+                                  @endif                      
+                                  
+                                  
+                            </div>
+                            <div class="col-md-4">
+<?php
+                            $servername = "127.0.0.1";
+                            $username = "admin_ecu_portal";
+                            $password = "e24BTBDTQMRBmC";
+                            $dbname = "admin_ecu_portal_db";
+                            
+                            // Create a PDO instance
+                            try {
+                                $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            
+                                // Query to get the latest version from the table 'lua_versions' where file_id = 1
+                                $query = "SELECT * FROM lua_versions WHERE File_Id = " . $file->id . " ORDER BY Id DESC LIMIT 1";
+                            
+                                // Execute the query
+                                $result = $conn->query($query);
+                            
+                                // Fetch the result as an associative array
+                                $latestVersion = $result->fetch(PDO::FETCH_ASSOC);
+                            
+                                // Declare and initialize the $arrayversionslua variable as an empty array
+                                $arrayversionslua = [];
+                            
+                                // Display the result
+                                if ($latestVersion) {
+                                    $arrayversionslua = json_decode($latestVersion['Respons'], true);
+                                    $jsonError = json_last_error();
+                                    $jsonErrorMsg = json_last_error_msg();
+                            
+                                    if ($jsonError !== JSON_ERROR_NONE) {
+                                        echo "JSON Error: $jsonErrorMsg (Code: $jsonError)";
+                                    }
+                            
+                                    if ($arrayversionslua === null) {
+                                        echo 'error decoding';
+                                    } else {
+                                        foreach ($arrayversionslua as $arrayversionlua) {
+                                            
+                                            ?>
+                                            <div class="col-lg-12">
+                                                <h5>
+                                                    <?php
+                                                    echo $arrayversionlua['name'] . ' // ' . $arrayversionlua['percentage'];
+                                                    ?>
+                            
+                                                </h5>
+                                                <?php
+                                                foreach ($arrayversionlua as $key => $value) {
+                                                    if (is_numeric($key) && $value !== 'Original') {
+                                                        ?>
+                                                        <p class="pull-left"><?php echo $value; ?></p>
+                                                        <div class="clearfix lijn"></div>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                            
+                                            </div>
+                            
+                                            <?php
+                            
+                                        }
+                                    }
+                                } else {
+                                    echo "No Lua versions found with file_id 1.";
+                                }
+                            } catch (PDOException $e) {
+                                echo "Connection failed: " . $e->getMessage();
+                            }
+                            
+                            // Close the connection
+                            $conn = null;
+                            ?>
+
+                              
+                              
+                              
+                              
+                            </div>
+                            <div class="col-md-5">
+                              <h4>Make new version</h4>
+                                  <?
+                                  foreach ($mods as $mod){
+                                    ?>
+                                      <div class="col-md-12">
+                                        <h5>
+                                      <?
+                                      print($mod);
+                                      ?>
+                                        </h5>
+            
+                                    <?
+            
+                                    if ($arrayversionslua === null) {
+                                          // Handle JSON decoding error
+                                      } else {
+                                        ?>
+                                        <select name="makelua[]" class="form-select">
+                                          <option value="">Nothing</option>
+                                          <?
+                                          foreach ($arrayversionslua as $arrayversionlua){
+                                            ?>
+                                                
+                                                
+                                              <?
+                                              foreach ($arrayversionlua as $key => $value) {
+                                                  if (is_numeric($key) && $value !== 'Original') {
+                                                    $modifiedString = str_replace('/', '-', $value);
+                                                      ?>
+                                                      <option value="<? echo $mod;?> // <? echo $arrayversionlua['name'];?> // <? echo $key;?>">
+                                                      <?php echo $arrayversionlua['name'].' // '.$arrayversionlua['percentage'].'% // '.$modifiedString;?>
+                                                      </option>
+                                                      <?
+                                                  }
+                                              }                                
+                                              ?>
+                                              
+                                            
+                                            <?
+                                            
+                                          }
+                                          
+                                      }                        
+                                      ?>
+                                        </select>
+                                      
+                                      </div>
+            
+                                    <?
+                                  }
+                                  ?>
+                                  <div class="col-md-12">
+                                    <h5>Send as version</h5>
+                                    <input type="radio" name="sendversion" value="1" id="sendversion">
+                                    <label>Yes</label>
+                                    <input type="radio" name="sendversion" value="0" id="sendversion">
+                                    <label>No</label>                        
+                                  </div>
+                                  <div class="col-md-12">
+                                    <h5>Name for version</h5>
+                                    <input type="text" name="nameforluacreation" id="nameforluacreation" value=""/><br/>
+                                    <button id="submitButton">Submit</button>
+                                  </div>
+                              
+                            </div>
+                          </div>
+                        </div>           
+                       
+                        <div class="tab-pane slide-left" id="slide7">
+                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                            <div class="text-center">
+                              <div class="card-title">
+                                  <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                                  <h3>{{$file->brand}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <h4 class="m-t-20">Lua</h4>
+                                </div>
+                              </div>
+                              
+                              <div class="clearfix"></div>
+                          </div>
+                          <div class="row" style="">
+                            <div class="col-md-12">
+                              <h2>Restart actions this file</h2>
+                              
+                                <a class="btn btn-success btn-cons m-b-10" href="#" id="getallversions"><span class="bold">Get all versions</span></a>
+                                <a class="btn btn-success btn-cons m-b-10" href="#" id="restartall"><span class="bold">Get all versions and retry lua</span></a>
+                                <a class="btn btn-success btn-cons m-b-10" href="#" id="Make other version"><span class="bold">Make other version</span></a>
+                              
+                              
+                            </div>
+                            
+                            <div class="col-md-12">
+                              <h2>Make project</h2>
+                                <a class="btn btn-success btn-cons m-b-10" href="#" id="copyaversiontoalloriginals"><span class="bold">Copy a project version to all originals</span></a>
+                            </div>                
+                            
+                            <div class="col-md-12">
+                              <h2>Restart actions all files</h2>
+                              
+                                <a class="btn btn-success btn-cons m-b-10" href="#" id="getallversionsalldefault"><span class="bold">Get all versions default database</span></a>
+                                <a class="btn btn-success btn-cons m-b-10" href="#" id="getallversionsalldefaultFDB"><span class="bold">Get all versions FDB database</span></a>
+                              
+                              
+                            </div>                
+                            
+                            
+                          </div>
+                        </div>                      
+                       
+                       
+                       
+                       
+                        <div class="tab-pane slide-left" id="slide8">
+                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                            <div class="text-center">
+                              <div class="card-title">
+                                  <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                                  <h3>{{$file->brand}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <h4 class="m-t-20">Lua</h4>
+                                </div>
+                              </div>
+                              
+                              <div class="clearfix"></div>
+                          </div>
+                          <div class="row" style="">
+                            <div class="col-md-12">
+                              <h2>Restart actions</h2>
+                              
+                                <a class="btn btn-success btn-cons m-b-10" href="#" id="getallversionsdatabase"><span class="bold">Get all versions from FDB</span></a>
+                              
+                              
+                            </div>
+            
+                            <div class="col-md-12">
+                              <h2>Make version FDB</h2>
+            <?
+                              $uncheckedRecords2 = DB::table('lua_versions_others')
+                                  ->where('dbname', 'Filesdatabase')
+                                  ->where('File_id', $file->id) // Replace $file->id with the actual file ID you're searching for
+                                  ->orderBy('id', 'desc') // Order the results by id in descending order
+                                  ->select('id', 'dbname', 'File_id', 'Respons')
+                                  ->first();
+                              
+                              if ($uncheckedRecords2) {
+                                  $jsonResponse = $uncheckedRecords2->Respons; // Access the 'Respons' property
+                              
+                                  // Parse the JSON response
+                                  $data = json_decode($jsonResponse, true);
+                              
+                                  // Initialize the maximum dynamic field index
+                                  $maxIndex = 0;
+                                  
+                                  // Determine the maximum dynamic field index from the JSON data
+                                  foreach ($data as $row) {
+                                      foreach ($row as $key => $value) {
+                                          if (is_numeric($key) && $key > $maxIndex) {
+                                              $maxIndex = $key;
+                                          }
+                                      }
+                                  }
+                              
+                                  // Start generating HTML table
+                                  echo '<table>';
+                                  echo '<tr><th>Name</th><th>Percentage</th>';
+                              
+                                  // Generate headers for dynamic fields
+                                  for ($i = 0; $i <= $maxIndex; $i++) {
+                                      echo '<th>Version ' . $i . '</th>';
+                                  }
+                              
+                                  echo '</tr>';
+                              
+                                  // Iterate through the data and populate table rows
+                                  foreach ($data as $row) {
+                                      echo '<tr>';
+                                      echo '<td>' . htmlspecialchars($row['name']) . '</td>';
+                                      echo '<td>' . htmlspecialchars($row['percentage']) . '</td>';
+                              
+                                      // Populate dynamic fields
+                                      for ($i = 0; $i <= $maxIndex; $i++) {
+                                          if (isset($row[$i])) {
+                                              echo '<td>' . htmlspecialchars($row[$i]) . '</td>';
+                                          } else {
+                                              echo '<td></td>';
+                                          }
+                                      }
+                              
+                                      echo '</tr>';
+                                  }
+                              
+                                  // Close the table
+                                  echo '</table>';
+                              } else {
+                                  echo "No records found.";
+                              }
+                              ?>
+                                  
+                                  
+                                </div>
+                                                
+                              
+                            </div>
+                            
+                            
+            
+            
+            
+                            <div class="col-md-12">
+                              <h4>Make new version</h4>
+                                  <?
+                                  if ($uncheckedRecords2){
+                                    foreach ($mods as $mod){
+                                    ?>
+                                      <div class="col-md-12">
+                                        <h5>
+                                      <?
+                                      print($mod);
+                                      ?>
+                                        </h5>
+                            
+                                    <?
+                            
+                                    if ($data === null) {
+                                          // Handle JSON decoding error
+                                      } else {
+                                        ?>
+                                        <select name="makelua2[]" class="form-select">
+                                          <option value="">Nothing</option>
+                                          <?
+                                          foreach ($data as $arrayversionlua){
+                                            ?>
+                                                
+                                                
+                                              <?
+                                              foreach ($arrayversionlua as $key => $value) {
+                                                  if (is_numeric($key) && $value !== 'Original') {
+                                                    $modifiedString = str_replace('/', '-', $value);
+                                                      ?>
+                                                      <option value="<? echo $mod;?> // <? echo $arrayversionlua['name'];?> // <? echo $key;?>">
+                                                      <?php echo $arrayversionlua['name'].' // '.$arrayversionlua['percentage'].'% // '.$modifiedString;?>
+                                                      </option>
+                                                      <?
+                                                  }
+                                              }                                
+                                              ?>
+                                              
+                                            
+                                            <?
+                                            
+                                          }
+                                          
+                                      }                        
+                                      ?>
+                                        </select>
+                                      
+                                      </div>
+                            
+                                    <?
+                                    }
+                                  }
+                                  ?>
+                                  <div class="col-md-12">
+                                    <h5>Send as version</h5>
+                                    <input type="radio" name="sendversion2" value="1" id="sendversion2">
+                                    <label>Yes</label>
+                                    <input type="radio" name="sendversion2" value="0" id="sendversion2">
+                                    <label>No</label>                        
+                                  </div>
+                                  <div class="col-md-12">
+                                    <h5>Name for version</h5>
+                                    <input type="text" name="nameforluacreation2" id="nameforluacreation2" value=""/><br/>
+                                    <button id="submitButtonFDB">Submit</button>
+                                  </div>
+                              
+                            </div>
+
+                            
+                          </div>
+                        </div>                      
+                                   
+
+        </div>
+
+
+    </div>
+    @endforeach
+
+  </div>
+</div>
+
+@endif
+
+      
     </div>
   </div>
 </div>

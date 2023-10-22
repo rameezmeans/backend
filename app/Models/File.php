@@ -13,8 +13,50 @@ class File extends Model
         return $this->hasMany(RequestFile::class); 
     }
 
+    public function files_and_messages_sorted(){
+        $withoutTypeArray = $this->files->toArray();
+        $unsortedTimelineObjects = [];
+
+        foreach($withoutTypeArray as $r) {
+            $fileReq = RequestFile::findOrFail($r['id']);
+            if($fileReq->file_feedback){
+                $r['type'] = $fileReq->file_feedback->type;
+            }
+            $unsortedTimelineObjects []= $r;
+        } 
+        
+        $createdTimes = [];
+
+        foreach($this->files->toArray() as $t) {
+            $createdTimes []= $t['created_at'];
+        } 
+    
+        foreach($this->engineer_file_notes->toArray() as $a) {
+            $unsortedTimelineObjects []= $a;
+            $createdTimes []= $a['created_at'];
+        }   
+
+        foreach($this->file_internel_events->toArray() as $b) {
+            $unsortedTimelineObjects []= $b;
+            $createdTimes []= $b['created_at'];
+        } 
+
+        foreach($this->file_urls->toArray() as $b) {
+            $unsortedTimelineObjects []= $b;
+            $createdTimes []= $b['created_at'];
+        } 
+
+        array_multisort($createdTimes, SORT_ASC, $unsortedTimelineObjects);
+
+        return $unsortedTimelineObjects;
+    }
+
     public function logs(){
         return $this->hasMany(Log::class); 
+    }
+
+    public function new_requests(){
+        return $this->hasMany(File::class, 'original_file_id', 'id'); 
     }
 
     public function tunned_files(){

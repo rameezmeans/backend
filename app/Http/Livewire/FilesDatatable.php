@@ -39,6 +39,7 @@ class FilesDatatable extends LivewireDatatable
                 ->orderBy('ss', 'asc')
                 ->orderBy('s', 'asc')
                 ->where('is_credited', 1)
+                ->whereNull('original_file_id')
                 ->where('assigned_to', Auth::user()->id);
                 
             }
@@ -57,6 +58,7 @@ class FilesDatatable extends LivewireDatatable
                 ->orderBy('ss', 'asc')
                 ->orderBy('s', 'asc')
                 ->where('is_credited', 1)
+                ->whereNull('original_file_id')
                 ->where(function ($query) {
                 $query->where('type', '=', 'master')
                         ->orWhereNotNull('assigned_from')->where('type', '=', 'subdealer');
