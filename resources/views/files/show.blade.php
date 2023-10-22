@@ -1877,13 +1877,13 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
           <li class="nav-item">
-            <a href="#"  @if(!Session::has('tab')) class="active" @endif data-toggle="tab" data-target="#slide1"><span>Task</span></a>
+            <a href="#"  @if(!Session::has('tab')) class="active" @endif data-toggle="tab" data-target="#slide1{{$file->id}}"><span>Task</span></a>
           </li>
 
           @if( ($file->front_end_id == 1 && $file->subdealer_group_id == NULL) )
          
             <li class="nav-item">
-              <a href="#" data-toggle="tab" @if(Session::get('tab') == 'chat') class="active" @endif data-target="#slide2"><span>Chat and Support</span></a>
+              <a href="#" data-toggle="tab" @if(Session::get('tab') == 'chat') class="active" @endif data-target="#slide2{{$file->id}}"><span>Chat and Support</span></a>
             </li>
           
           @endif
@@ -1897,38 +1897,38 @@
           
           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks'))
           <li class="nav-item">
-            <a href="#" data-toggle="tab" data-target="#slide3"><span>Admin Tasks</span></a>
+            <a href="#" data-toggle="tab" data-target="#slide3{{$file->id}}"><span>Admin Tasks</span></a>
           </li>
           @endif
           
           <li class="nav-item">
-            <a href="#" data-toggle="tab" data-target="#slide4"><span>Logs</span></a>
+            <a href="#" data-toggle="tab" data-target="#slide4{{$file->id}}"><span>Logs</span></a>
           </li>
 
           {{-- @if($file->decoded_files->isEmpty()) --}}
             @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id)
               <li class="nav-item">
-                <a href="#" data-toggle="tab" data-target="#slide5"><span>Upload Slave Decrypted File</span></a>
+                <a href="#" data-toggle="tab" data-target="#slide5{{$file->id}}"><span>Upload Slave Decrypted File</span></a>
               </li>
             @endif
           {{-- @endif --}}
 
           <li class="nav-item">
-            <a href="#" data-toggle="tab" data-target="#slide6"><span>Lua make file</span></a>
+            <a href="#" data-toggle="tab" data-target="#slide6{{$file->id}}"><span>Lua make file</span></a>
           </li>
           
           <li class="nav-item">
-            <a href="#" data-toggle="tab" data-target="#slide7"><span>Lua actions</span></a>
+            <a href="#" data-toggle="tab" data-target="#slide7{{$file->id}}"><span>Lua actions</span></a>
           </li>
           
           <li class="nav-item">
-            <a href="#" data-toggle="tab" data-target="#slide8"><span>Lua actions other databases</span></a>
+            <a href="#" data-toggle="tab" data-target="#slide8{{$file->id}}"><span>Lua actions other databases</span></a>
           </li>          
 
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
-          <div class="tab-pane slide-left  @if(!Session::has('tab')) active @endif" id="slide1">
+          <div class="tab-pane slide-left  @if(!Session::has('tab')) active @endif" id="slide1{{$file->id}}">
             <div class="row column-seperation">
               <div class="col-lg-12">
                 
@@ -2869,7 +2869,7 @@
             </div>
           </div>
           @if(($file->front_end_id == 1 && $file->subdealer_group_id == NULL))
-          <div class="tab-pane slide-left @if(Session::get('tab') == 'chat') active @endif" id="slide2">
+          <div class="tab-pane slide-left @if(Session::get('tab') == 'chat') active @endif" id="slide2{{$file->id}}">
             <div class="row">
               <div class="col-lg-12">
                 <div class="widget-16 card no-border widget-loader-circle">
@@ -2993,7 +2993,7 @@
           </div>
           @endif
           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks'))
-            <div class="tab-pane slide-left" id="slide3">
+            <div class="tab-pane slide-left" id="slide3{{$file->id}}">
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
@@ -3081,7 +3081,7 @@
               </div>
             </div>
             @endif
-            <div class="tab-pane slide-left" id="slide4">
+            <div class="tab-pane slide-left" id="slide4{{$file->id}}">
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
@@ -3105,7 +3105,7 @@
             </div>
            
             @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id)
-              <div class="tab-pane slide-left" id="slide5">
+              <div class="tab-pane slide-left" id="slide5{{$file->id}}">
                 <div class="card card-default">
                   <div class="card-header ">
                     <div class="card-title">
@@ -3174,7 +3174,7 @@
             
            
                        
-                        <div class="tab-pane slide-left" id="slide6">
+                        <div class="tab-pane slide-left" id="slide6{{$file->id}}">
                           <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
@@ -3441,7 +3441,7 @@
                           </div>
                         </div>           
                        
-                        <div class="tab-pane slide-left" id="slide7">
+                        <div class="tab-pane slide-left" id="slide7{{$file->id}}">
                           <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
@@ -3485,7 +3485,7 @@
                        
                        
                        
-                        <div class="tab-pane slide-left" id="slide8">
+                        <div class="tab-pane slide-left" id="slide8{{$file->id}}">
                           <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
