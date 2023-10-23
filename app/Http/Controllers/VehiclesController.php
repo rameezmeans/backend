@@ -290,7 +290,7 @@ class VehiclesController extends Controller
         }
 
         $commentObj = Comment::where('comment_type', $type)
-        ->where('engine', $vehicle->Engine)
+        // ->where('engine', $vehicle->Engine)
         ->whereNull('subdealer_group_id');
 
         // $commentObj = Comment::where('comment_type', $type)
@@ -300,13 +300,13 @@ class VehiclesController extends Controller
             $commentObj->where('make', $vehicle->Make);
         }
 
-        if($vehicle->Model){
-            $commentObj->where('model', $vehicle->Model);
-        }
+        // if($vehicle->Model){
+        //     $commentObj->where('model', $vehicle->Model);
+        // }
 
-        if($vehicle->Generation){
-            $commentObj->where('generation', $vehicle->Generation);
-        }
+        // if($vehicle->Generation){
+        //     $commentObj->where('generation', $vehicle->Generation);
+        // }
 
         return $commentObj->get();
     }

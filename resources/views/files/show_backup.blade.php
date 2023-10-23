@@ -474,7 +474,7 @@
 
 
                       @if($file->status == 'submitted')
-                        <button id="btn-options-change" class="btn btn-success m-b-20">Change Options</button>
+                        <button class="btn btn-success m-b-20 btn-options-change" data-file_id="{{$file->id}}">Change Options</button>
                       @endif
 
                       @endif
@@ -1594,7 +1594,7 @@
 
 
                       @if($file->status == 'submitted')
-                        <button id="btn-options-change" class="btn btn-success m-b-20">Change Options</button>
+                        <button class="btn btn-success m-b-20 btn-options-change" data-file_id="{{$file->id}}">Change Options</button>
                       @endif
 
                       @endif
@@ -2408,7 +2408,7 @@ window.onload = function() {
           <form role="form" action="{{route('add-options-offer')}}" method="POST">
             @csrf
             
-            <input type="hidden" name="file_id" value="{{$file->id}}">
+            <input type="hidden" name="file_id" id="proposed_file_id" value="{{$file->id}}">
             
             <div class="form-group-attached ">
               <h5>Propose Stages and Options</h5>
@@ -2416,20 +2416,14 @@ window.onload = function() {
                 <div class="col-md-12">
                   <div class="">
                     <select class="full-width form-control" data-init-plugin="select2" name="proposed_stage" id="proposed_stage">
-                      
-                      @foreach($stages as $stage)
-                        <option value="{{$stage->id}}" data-credits="@if($file->tool_type == 'master'){{$stage->tuningx_credits}}@else{{$stage->tuningx_slave_credits}}@endif" @if($file->stage_services->service_id == $stage->id) selected="selected" @endif>{{$stage->name}}</option>
-                      @endforeach
-                      
+                    
                     </select>
                 </div>
                 <div class="col-md-12">
                   <div class="">
                     
                     <select class=" full-width" data-init-plugin="select2" multiple name="proposed_options[]" id="proposed_options">
-                      @foreach($options as $option1)
-                        <option value="{{$option1->id}}" @if(in_array($option1->id, $selectedOptions)) selected="selected" @endif  >{{$option1->name}} ({{$option1->vehicle_type}})</option>
-                      @endforeach
+                      
                     </select>
                   </div>
                 </div>
@@ -2455,25 +2449,30 @@ window.onload = function() {
   <script type="text/javascript">
   $(document).ready(function(){
 
-    function calculate_proposed_credits(){
+    function fill_options_stage(file_id){
+            
+    }
+
+    function calculate_proposed_credits(file_id){
 
       let proposed_stage = $('#proposed_stage').val();
       let proposed_options = $('#proposed_options').val();
-      let tool_type = '{{$file->tool_type}}';
-      let file_credits = {{$file->credits}};
-      let frontend_id = {{$file->front_end_id}};
+      // let tool_type = '{{$file->tool_type}}';
+      // let file_credits = {{$file->credits}};
+      // let frontend_id = {{$file->front_end_id}};
 
       $.ajax({
             url: "/get_total_proposed_credits",
             type: "POST",
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
             data: {
-                'tool_type': tool_type,
+                'file_id': file_id,
                 'proposed_stage': proposed_stage, 
                 'proposed_options': proposed_options, 
-                'frontend_id': frontend_id
+                // 'frontend_id': frontend_id
             },
             success: function(proposed_credits) {
+
               console.log(proposed_credits);
 
               let difference = proposed_credits - file_credits;
@@ -2486,19 +2485,23 @@ window.onload = function() {
     }
 
     $(document).on('change', '#proposed_options', function(e){
-
-      calculate_proposed_credits();
+      let file_id = $(this).data('file_id');
+      calculate_proposed_credits(file_id);
 
     });
 
     $(document).on('change', '#proposed_stage', function(e){
 
-      calculate_proposed_credits();
+      let file_id = $(this).data('file_id');
+      calculate_proposed_credits(file_id);
 
     });
 
-    $(document).on('click', '#btn-options-change', function(e){
-      calculate_proposed_credits();
+    $(document).on('click', '.btn-options-change', function(e){
+
+      let file_id = $(this).data('file_id');
+      calculate_proposed_credits(file_id);
+      $('#proposed_file_id').val($(this).data('file_id'));
       $('#engineerOptionsModal').modal('show');
     });
 

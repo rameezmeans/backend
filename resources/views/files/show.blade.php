@@ -491,7 +491,7 @@
 
 
                       @if($file->status == 'submitted')
-                        <button id="btn-options-change" class="btn btn-success m-b-20">Change Options</button>
+                        <button data-file_id="{{$file->id}}" class="btn btn-success m-b-20 btn-options-change">Change Options</button>
                       @endif
 
                       @endif
@@ -2282,7 +2282,7 @@
 
 
                       @if($file->status == 'submitted')
-                        <button id="btn-options-change" class="btn btn-success m-b-20">Change Options</button>
+                        <button data-file_id="{{$file->id}}" class="btn btn-success m-b-20 btn-options-change">Change Options</button>
                       @endif
 
                       @endif
@@ -3758,7 +3758,7 @@
           <form role="form" action="{{route('add-options-offer')}}" method="POST">
             @csrf
             
-            <input type="hidden" name="file_id" value="{{$file->id}}">
+            <input type="hidden" name="file_id" id="options_file_id" value="">
             
             <div class="form-group-attached ">
               <h5>Propose Stages and Options</h5>
@@ -3767,9 +3767,7 @@
                   <div class="">
                     <select class="full-width form-control" data-init-plugin="select2" name="proposed_stage" id="proposed_stage">
                       
-                      @foreach($stages as $stage)
-                        <option value="{{$stage->id}}" data-credits="@if($file->tool_type == 'master'){{$stage->tuningx_credits}}@else{{$stage->tuningx_slave_credits}}@endif" @if($file->stage_services->service_id == $stage->id) selected="selected" @endif>{{$stage->name}}</option>
-                      @endforeach
+                      
                       
                     </select>
                 </div>
@@ -3777,9 +3775,7 @@
                   <div class="">
                     
                     <select class=" full-width" data-init-plugin="select2" multiple name="proposed_options[]" id="proposed_options">
-                      @foreach($options as $option)
-                        <option value="{{$option->id}}" @if(in_array($option->id, $selectedOptions)) selected="selected" @endif  >{{$option->name}}</option>
-                      @endforeach
+                      
                     </select>
                   </div>
                 </div>
@@ -4177,10 +4173,6 @@
       }
     });
 
-    $(document).on('click', '.btn-options-change', function(e){
-      console.log('mog');
-    });
-
     $(document).on('click', '.fa-edit', function(e){
 
       e.preventDefault();
@@ -4295,11 +4287,26 @@
 
     });
 
-    $(document).on('click', '#btn-options-change', function(e){
+    $(document).on('click', '.btn-options-change', function(e){
 
       calculate_proposed_credits();
-      $('#engineerOptionsModal').modal('show');
+      $('#options_file_id').val($(this).data('file_id'));
 
+      $.ajax({
+                url: "/get_current_options",
+                type: "POST",
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    'file_id': file_id
+                },
+                success: function(d) {
+                  
+                }
+            });
+
+
+      $('#engineerOptionsModal').modal('show');
+      
     });
 
     $(document).on('change', '#select_status', function(e){

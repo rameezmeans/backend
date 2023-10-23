@@ -6,6 +6,7 @@ use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\TranslationController;
+use App\Models\File;
 use App\Models\StagesOptionsCredit;
 use App\Models\Translation;
 use Illuminate\Support\Facades\Auth;
@@ -299,10 +300,11 @@ class ServicesController extends Controller
 
     public function getTotalProposedCredits(Request $request){
 
+        $file = File::findOrFail($request->file_id);
         $proposedOptions = $request->proposed_options;
-        $toolType = $request->tool_type;
+        $toolType = $file->tool_type;
         $proposedStage = $request->proposed_stage;
-        $frontendID = $request->frontend_id;
+        $frontendID = $file->frontend_id;
 
         $totalProposedCredits = 0;
 
@@ -347,6 +349,7 @@ class ServicesController extends Controller
         return $totalProposedCredits;
 
     }
+
     public function saveSorting(Request $request){
 
         if(!Auth::user()->is_admin()){
