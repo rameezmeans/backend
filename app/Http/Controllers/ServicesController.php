@@ -26,6 +26,207 @@ class ServicesController extends Controller
         // $this->middleware('adminOnly', ['except' => ['getStages', 'getOptions']]);
     }
 
+    public function onlyTotalProposedCredits(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+
+        $frontendID = $file->front_end_id;
+        $toolType = $file->tool_type;
+
+        $fileStageID = $request->proposed_stage;
+        $fileOptions = $request->proposed_options;
+
+        $proposedOptions = null;
+        
+        $totalProposedCredits = 0;
+
+        if($frontendID == 1){
+
+            $totalProposedCredits += Service::findOrFail($fileStageID)->credits;
+            
+            if($fileOptions){
+                foreach($fileOptions as $o){
+                    $option = Service::findOrFail($o);
+                    $totalProposedCredits += $option->credits;
+                }
+            }
+
+        }
+        else{
+
+            if($toolType == 'master'){
+
+                $totalProposedCredits += Service::findOrFail($fileStageID)->tuningx_credits;
+
+                if($fileOptions){
+                    foreach($fileOptions as $o){
+                        $option = Service::findOrFail($o);
+                        $totalProposedCredits += $option->optios_stage($fileStageID)->first()->master_credits;
+                    }
+                }
+            }
+            else{
+
+                $totalProposedCredits += Service::findOrFail($fileStageID)->tuningx_slave_credits;
+
+                if($fileOptions){
+                    foreach($fileOptions as $o){
+                        $option = Service::findOrFail($o);
+                        $totalProposedCredits += $option->optios_stage($fileStageID)->first()->slave_credits;
+                    }
+                }
+            }
+        }
+
+        return [
+            'proposed_credits' => $totalProposedCredits, 
+            'file_credits' => $file->credits
+        ];
+
+    }
+
+    public function getTotalProposedCredits(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+
+        $toolType = $file->tool_type;
+        $frontendID = $file->front_end_id;
+
+        $fileStage = $file->stage_services;
+        $fileOptions = $file->options_services;
+
+        $stage = Service::findOrFail($fileStage->service_id);
+
+        $proposedOptions = null;
+        
+        foreach($fileOptions as $op){
+            $proposedOptions []= $op->service_id;
+        }
+        
+        $totalProposedCredits = 0;
+
+        if($frontendID == 1){
+
+            $allStages = Service::where('type', 'tunning')->where('active', 1)->whereNull('subdealer_group_id')->get();
+
+            $stageOptions = '';
+
+            foreach($allStages as $stage) {
+
+                if($stage->id == $fileStage->service_id){
+                    $stageOptions .= '<option selected value="'.$stage->id.'">'.$stage->name.'</option>';
+                }
+                else{
+                    $stageOptions .= '<option value="'.$stage->id.'">'.$stage->name.'</option>';
+                }
+
+            }
+
+
+            $allOptions = Service::where('type', 'option')->where('active', 1)->whereNull('subdealer_group_id')->get();
+
+            $optionOptions = '';
+
+            foreach($allOptions as $option) {
+
+                if($proposedOptions){
+
+                    if(in_array($option->id, $proposedOptions))
+                    {
+                        $optionOptions .= '<option selected value="'.$option->id.'">'.$option->name.'</option>';
+                    }
+                    else{
+                        $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'</option>';
+                    }
+                }
+                else{
+                    $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'</option>';
+                }
+
+            }
+            
+            $totalProposedCredits += Service::findOrFail($fileStage->service_id)->credits;
+            
+            if($proposedOptions){
+                foreach($proposedOptions as $o){
+                    $option = Service::findOrFail($o);
+                    $totalProposedCredits += $option->credits;
+                }
+            }
+
+        }
+        else{
+
+            $allStages = Service::where('type', 'tunning')->where('tuningx_active', 1)->whereNull('subdealer_group_id')->get();
+
+            $stageOptions = '';
+
+            foreach($allStages as $stage) {
+
+                if($stage->id == $fileStage->service_id){
+                    $stageOptions .= '<option selected value="'.$stage->id.'">'.$stage->name.'</option>';
+                }
+                else{
+                    $stageOptions .= '<option value="'.$stage->id.'">'.$stage->name.'</option>';
+                }
+
+            }
+            
+            $allOptions = Service::where('type', 'option')->where('tuningx_active', 1)->whereNull('subdealer_group_id')->get();
+
+            $optionOptions = '';
+
+            foreach($allOptions as $option) {
+
+                if($proposedOptions){
+
+                    if(in_array($option->id, $proposedOptions))
+                    {
+                        $optionOptions .= '<option selected value="'.$option->id.'">'.$option->name.'</option>';
+                    }
+                    else{
+                        $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'</option>';
+                    }
+                }
+                else{
+                    $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'</option>';
+                }
+
+            }
+
+            if($toolType == 'master'){
+
+                $totalProposedCredits += Service::findOrFail($fileStage->service_id)->tuningx_credits;
+
+                if($proposedOptions){
+                    foreach($proposedOptions as $o){
+                        $option = Service::findOrFail($o);
+                        $totalProposedCredits += $option->optios_stage($fileStage->service_id)->first()->master_credits;
+                    }
+                }
+            }
+            else{
+
+                $totalProposedCredits += Service::findOrFail($fileStage->service_id)->tuningx_slave_credits;
+
+                if($proposedOptions){
+                    foreach($proposedOptions as $o){
+                        $option = Service::findOrFail($o);
+                        $totalProposedCredits += $option->optios_stage($fileStage->service_id)->first()->slave_credits;
+                    }
+                }
+            }
+        }
+
+        return [
+            'proposed_credits' => $totalProposedCredits, 
+            'stageOptions' => $stageOptions, 
+            'optionOptions' => $optionOptions, 
+            'file_credits' => $file->credits
+        ];
+
+    }
+
     /**
      * Show the services table.
      *
@@ -296,58 +497,6 @@ class ServicesController extends Controller
 
         return redirect()->route('services')->with(['success' => 'Service updated, successfully.']);
         }
-    }
-
-    public function getTotalProposedCredits(Request $request){
-
-        $file = File::findOrFail($request->file_id);
-        $proposedOptions = $request->proposed_options;
-        $toolType = $file->tool_type;
-        $proposedStage = $request->proposed_stage;
-        $frontendID = $file->frontend_id;
-
-        $totalProposedCredits = 0;
-
-        if($frontendID == 1){
-
-            $totalProposedCredits += Service::findOrFail($proposedStage)->credits;
-
-            if($proposedOptions){
-                foreach($proposedOptions as $o){
-                    $option = Service::findOrFail($o);
-                    $totalProposedCredits += $option->credits;
-                }
-            }
-
-        }
-        else{
-
-            if($toolType == 'master'){
-
-                $totalProposedCredits += Service::findOrFail($proposedStage)->tuningx_credits;
-
-                if($proposedOptions){
-                    foreach($proposedOptions as $o){
-                        $option = Service::findOrFail($o);
-                        $totalProposedCredits += $option->optios_stage($proposedStage)->first()->master_credits;
-                    }
-                }
-            }
-            else{
-
-                $totalProposedCredits += Service::findOrFail($proposedStage)->tuningx_slave_credits;
-
-                if($proposedOptions){
-                    foreach($proposedOptions as $o){
-                        $option = Service::findOrFail($o);
-                        $totalProposedCredits += $option->optios_stage($proposedStage)->first()->slave_credits;
-                    }
-                }
-            }
-        }
-
-        return $totalProposedCredits;
-
     }
 
     public function saveSorting(Request $request){

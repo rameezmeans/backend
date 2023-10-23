@@ -84,7 +84,7 @@
         @else
 
 
-        @if(get_engineers_permission(Auth::user()->id, 'engineer-report'))
+        @if(get_engineers_permission(Auth::user()->id, 'engineers-report'))
 
         <li class="m-t-30 ">
           <a href="{{ route('reports') }}" class="detailed">

@@ -2400,7 +2400,7 @@ window.onload = function() {
     <div class="modal-content-wrapper">
       <div class="modal-content">
         <div class="modal-header clearfix text-left">
-          <p>File Credits: {{$file->credits}}</p>
+          <p>File Credits: <span id="file_credits">0</span></p>
           <p>Proposed Credits:<span id="proposed_credits">0</span></p>
           <p>Difference:<span id="credits_difference">0</span></p>
         </div>
@@ -2408,7 +2408,7 @@ window.onload = function() {
           <form role="form" action="{{route('add-options-offer')}}" method="POST">
             @csrf
             
-            <input type="hidden" name="file_id" id="proposed_file_id" value="{{$file->id}}">
+            <input type="hidden" name="file_id" id="proposed_file_id" value="">
             
             <div class="form-group-attached ">
               <h5>Propose Stages and Options</h5>
@@ -2449,60 +2449,84 @@ window.onload = function() {
   <script type="text/javascript">
   $(document).ready(function(){
 
-    function fill_options_stage(file_id){
-            
-    }
-
-    function calculate_proposed_credits(file_id){
+    function re_calculate_proposed_credits(file_id){
 
       let proposed_stage = $('#proposed_stage').val();
       let proposed_options = $('#proposed_options').val();
-      // let tool_type = '{{$file->tool_type}}';
-      // let file_credits = {{$file->credits}};
-      // let frontend_id = {{$file->front_end_id}};
+
+      $.ajax({
+            url: "/only_total_proposed_credits",
+            type: "POST",
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                'proposed_stage': proposed_stage,
+                'file_id': file_id,
+                'proposed_options': proposed_options,
+            },
+            success: function(res) {
+              
+              let difference = res.proposed_credits - res.file_credits;
+
+              $('#file_credits').html(res.file_credits);
+              $('#proposed_credits').html(res.proposed_credits);
+              $('#credits_difference').html(difference);
+
+            }
+        });
+
+  }
+
+    function calculate_proposed_credits(file_id){
 
       $.ajax({
             url: "/get_total_proposed_credits",
             type: "POST",
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
             data: {
-                'file_id': file_id,
-                'proposed_stage': proposed_stage, 
-                'proposed_options': proposed_options, 
-                // 'frontend_id': frontend_id
+                'file_id': file_id
             },
-            success: function(proposed_credits) {
+            success: function(res) {
 
-              console.log(proposed_credits);
+              $('#proposed_stage').html(res.stageOptions);
+              $('#proposed_options').html(res.optionOptions);
 
-              let difference = proposed_credits - file_credits;
+              let difference = res.proposed_credits - res.file_credits;
 
-              $('#proposed_credits').html(proposed_credits);
+              console.log(difference);
+
+              $('#file_credits').html(res.file_credits);
+              $('#proposed_credits').html(res.proposed_credits);
               $('#credits_difference').html(difference);
+
             }
         });
 
     }
 
     $(document).on('change', '#proposed_options', function(e){
-      let file_id = $(this).data('file_id');
-      calculate_proposed_credits(file_id);
+      let file_id = $('#proposed_file_id').val();
+      re_calculate_proposed_credits(file_id);
 
     });
 
     $(document).on('change', '#proposed_stage', function(e){
-
-      let file_id = $(this).data('file_id');
-      calculate_proposed_credits(file_id);
+      let file_id = $('#proposed_file_id').val();
+      re_calculate_proposed_credits(file_id);
 
     });
 
     $(document).on('click', '.btn-options-change', function(e){
 
+      $('#proposed_stage').html('');
+      $('#proposed_options').html('');
+
       let file_id = $(this).data('file_id');
+      
       calculate_proposed_credits(file_id);
+
       $('#proposed_file_id').val($(this).data('file_id'));
       $('#engineerOptionsModal').modal('show');
+
     });
 
     $(document).on('change', '#select_status', function(e){

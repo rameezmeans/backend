@@ -66,7 +66,7 @@ class FilesController extends Controller
         $this->manager = $reminderManager->getAllManager();
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
-
+    
     public function deleteFiles(Request $request){
 
         if(!Auth::user()->is_admin()){
