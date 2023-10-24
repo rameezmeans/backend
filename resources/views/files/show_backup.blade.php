@@ -49,7 +49,7 @@
   <!-- START PAGE CONTENT -->
   <div class="content sm-gutter">
     <!-- START CONTAINER FLUID -->
-    <div class="container-fluid   container-fixed-lg bg-white">
+    <div class="container-fluid   container-fixed-lg bg-white m-t-50">
       @if(Session::has('success'))
         <div class="pgn-wrapper" data-position="top" style="top: 59px;">
           <div class="pgn push-on-sidebar-open pgn-bar">
