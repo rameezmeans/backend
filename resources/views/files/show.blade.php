@@ -3950,13 +3950,6 @@
     });
 </script>
 
-
-
-
-
-
-
-
 <script>
     // Add a common class "copy-button" to all the buttons you want to attach this functionality to
     var copyButtons = document.querySelectorAll(".copy-button");
