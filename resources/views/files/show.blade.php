@@ -77,7 +77,7 @@
           
         </ul>
         
-        <div class="tab-content bg-white">
+        <div class="tab-content bg-white" style="border-top: 1px solid rgba(0, 0, 0, 0.1); border-left: 1px solid rgba(0, 0, 0, 0.1);">
           <div class="tab-pane active" id="tab4hellowWorld">
             
           @endif
