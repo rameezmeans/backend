@@ -2615,6 +2615,12 @@ window.onload = function() {
 
       }
 
+      $(document).on('change', '#force_proposed_options', function(e){
+      let file_id = $('#force_proposed_file_id').val();
+      force_re_calculate_proposed_credits(file_id);
+
+    });
+
     $(document).on('change', '#proposed_options', function(e){
       let file_id = $('#proposed_file_id').val();
       re_calculate_proposed_credits(file_id);
@@ -2627,11 +2633,7 @@ window.onload = function() {
 
     });
 
-    $(document).on('change', '#force_proposed_options', function(e){
-      let file_id = $('#force_proposed_file_id').val();
-      force_re_calculate_proposed_credits(file_id);
-
-    });
+    
 
     $(document).on('click', '.btn-options-change', function(e){
 

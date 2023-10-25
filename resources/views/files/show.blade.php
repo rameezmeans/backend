@@ -491,7 +491,11 @@
 
 
                       @if($file->status == 'submitted')
-                        <button data-file_id="{{$file->id}}" class="btn btn-success m-b-20 btn-options-change">Change Options</button>
+                        <button data-file_id="{{$file->id}}" class="btn btn-success m-b-20 btn-options-change">Propose Options</button>
+                      @endif
+
+                      @if($file->status == 'completed')
+                        <button class="btn btn-success m-b-20 btn-options-change-force" data-file_id="{{$file->id}}">Change Options</button>
                       @endif
 
                       @endif
@@ -2282,7 +2286,11 @@
 
 
                       @if($file->status == 'submitted')
-                        <button data-file_id="{{$file->id}}" class="btn btn-success m-b-20 btn-options-change">Change Options</button>
+                        <button data-file_id="{{$file->id}}" class="btn btn-success m-b-20 btn-options-change">Propose Options</button>
+                      @endif
+
+                      @if($file->status == 'completed')
+                        <button class="btn btn-success m-b-20 btn-options-change-force" data-file_id="{{$file->id}}">Change Options</button>
                       @endif
 
                       @endif
@@ -3749,12 +3757,24 @@
   <div class="modal-dialog">
     <div class="modal-content-wrapper">
       <div class="modal-content">
+        <div class="progress-propose">
+          <div class="progress-bar-indeterminate" style=""></div>
+        </div>
         <div class="modal-header clearfix text-left">
-          <p>File Credits: {{$file->credits}}</p>
-          <p>Proposed Credits:<span id="proposed_credits">0</span></p>
-          <p>Difference:<span id="credits_difference">0</span></p>
+          <div id="propose-header" class="hide">
+            <p>File Credits: <span id="file_credits">0</span></p>
+            <p>Proposed Credits:<span id="proposed_credits">0</span></p>
+            <p>Difference:<span id="credits_difference">0</span></p>
+          </div>
+          <div id="force-header" class="hide">
+            <p>File Credits: <span id="force_file_credits">0</span></p>
+            <p>Proposed Credits:<span id="force_proposed_credits">0</span></p>
+            <p>Difference:<span id="force_credits_difference">0</span></p>
+          </div>
         </div>
         <div class="modal-body">
+          
+          <div id="propose-form" class="hide">
           <form role="form" action="{{route('add-options-offer')}}" method="POST">
             @csrf
             
@@ -3766,11 +3786,10 @@
                 <div class="col-md-12">
                   <div class="">
                     <select class="full-width form-control" data-init-plugin="select2" name="proposed_stage" id="proposed_stage">
-                      
-                      
-                      
+                    
                     </select>
                 </div>
+              </div>
                 <div class="col-md-12">
                   <div class="">
                     
@@ -3779,7 +3798,7 @@
                     </select>
                   </div>
                 </div>
-              </div>
+              
             </div>
          
           <div class="row">
@@ -3787,13 +3806,48 @@
               <button type="submit" class="btn btn-success btn-block m-t-5">Propose</button>
             </div>
           </div>
-        </form>
+          </form>
+
+          </div>
+          </div>
+
+          <div id="force-form" class="hide">
+
+            <form role="form" action="{{route('force-options-offer')}}" method="POST">
+              @csrf
+              
+              <input type="hidden" name="file_id" id="force_proposed_file_id" value="">
+              
+              <div class="form-group-attached ">
+                <h5>Propose Options</h5>
+                <div class="row">
+                  
+                  <div class="col-md-12">
+                    <div class="">
+                      
+                      <select class=" full-width" data-init-plugin="select2" multiple name="force_proposed_options[]" id="force_proposed_options">
+                        
+                      </select>
+                    </div>
+                  </div>
+                
+              </div>
+           
+            <div class="row">
+              <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+                <button type="submit" class="btn btn-success btn-block m-t-5">Change</button>
+              </div>
+            </div>
+            </form>
+
+          </div>
+          
+          
         </div>
       </div>
     </div>
     <!-- /.modal-content -->
   </div>
-</div>
     
 @endsection
 
@@ -4237,7 +4291,34 @@
 
     });
 
-    function re_calculate_proposed_credits(file_id){
+    function force_re_calculate_proposed_credits(file_id){
+
+      
+let force_proposed_options = $('#force_proposed_options').val();
+
+$.ajax({
+      url: "/force_only_total_proposed_credits",
+      type: "POST",
+      headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+      data: {
+          'force_proposed_options': force_proposed_options,
+          'file_id': file_id,
+          
+      },
+      success: function(res) {
+
+        let difference = res.proposed_credits - res.file_credits;
+
+        $('#force_file_credits').html(res.file_credits);
+        $('#force_proposed_credits').html(res.proposed_credits);
+        $('#force_credits_difference').html(difference);
+
+      }
+  });
+
+}
+
+function re_calculate_proposed_credits(file_id){
 
 let proposed_stage = $('#proposed_stage').val();
 let proposed_options = $('#proposed_options').val();
@@ -4252,7 +4333,7 @@ $.ajax({
           'proposed_options': proposed_options,
       },
       success: function(res) {
-        
+
         let difference = res.proposed_credits - res.file_credits;
 
         $('#file_credits').html(res.file_credits);
@@ -4266,6 +4347,8 @@ $.ajax({
 
 function calculate_proposed_credits(file_id){
 
+$('.progress-propose').removeClass('hide');
+
 $.ajax({
       url: "/get_total_proposed_credits",
       type: "POST",
@@ -4277,7 +4360,7 @@ $.ajax({
 
         $('#proposed_stage').html(res.stageOptions);
         $('#proposed_options').html(res.optionOptions);
-
+        
         let difference = res.proposed_credits - res.file_credits;
 
         console.log(difference);
@@ -4286,10 +4369,46 @@ $.ajax({
         $('#proposed_credits').html(res.proposed_credits);
         $('#credits_difference').html(difference);
 
+        $('.progress-propose').addClass('hide');
+
       }
   });
 
 }
+
+function force_calculate_proposed_credits(file_id){
+
+$('#force_proposed_options').html('');
+
+$.ajax({
+      url: "/get_total_proposed_credits",
+      type: "POST",
+      headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+      data: {
+          'file_id': file_id
+      },
+      success: function(res) {
+
+        $('#force_proposed_options').html(res.forceOptions);
+
+        let difference = res.proposed_credits - res.file_credits;
+
+        console.log(difference);
+
+        $('#force_file_credits').html(res.file_credits);
+        $('#force_proposed_credits').html(res.proposed_credits);
+        $('#force_credits_difference').html(difference);
+
+      }
+  });
+
+}
+
+$(document).on('change', '#force_proposed_options', function(e){
+let file_id = $('#force_proposed_file_id').val();
+force_re_calculate_proposed_credits(file_id);
+
+});
 
 $(document).on('change', '#proposed_options', function(e){
 let file_id = $('#proposed_file_id').val();
@@ -4303,19 +4422,54 @@ re_calculate_proposed_credits(file_id);
 
 });
 
-$(document).on('click', '.btn-options-change', function(e){
+    $(document).on('click', '.btn-options-change', function(e){
 
-$('#proposed_stage').html('');
-$('#proposed_options').html('');
+          $('#proposed_stage').html('');
+          $('#proposed_options').html('');
 
-let file_id = $(this).data('file_id');
+          let file_id = $(this).data('file_id');
 
-calculate_proposed_credits(file_id);
+          calculate_proposed_credits(file_id);
 
-$('#proposed_file_id').val($(this).data('file_id'));
-$('#engineerOptionsModal').modal('show');
+          $('#proposed_file_id').val($(this).data('file_id'));
 
-});
+          if($('#propose-header').hasClass('hide')){
+            
+            $('#propose-header').removeClass('hide');
+          }
+
+          if($('#propose-form').hasClass('hide')){
+            
+            $('#propose-form').removeClass('hide');
+          }
+
+          $('#engineerOptionsModal').modal('show');
+
+    });
+
+    $(document).on('click', '.btn-options-change-force', function(e){
+
+      $('#proposed_options_force').html('');
+
+      let file_id = $(this).data('file_id');
+
+      force_calculate_proposed_credits(file_id);
+
+      $('#force_proposed_file_id').val($(this).data('file_id'));
+
+      if($('#force-header').hasClass('hide')){
+        
+        $('#force-header').removeClass('hide');
+      }
+
+      if($('#force-form').hasClass('hide')){
+        
+        $('#force-form').removeClass('hide');
+      }
+
+      $('#engineerOptionsModal').modal('show');
+
+    });
 
 
 
