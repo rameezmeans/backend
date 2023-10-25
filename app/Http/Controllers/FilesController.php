@@ -122,38 +122,41 @@ class FilesController extends Controller
             }
         }
 
-        foreach($forceProposedOptions as $offer){
+        if($forceProposedOptions){
 
-                $option = new FileService();
-                $option->service_id = $offer; 
-                $option->type = 'option'; 
+            foreach($forceProposedOptions as $offer){
 
-                if($file->front_end_id == 1){
+                    $option = new FileService();
+                    $option->service_id = $offer; 
+                    $option->type = 'option'; 
 
-                    $proposedCredits += Service::findOrFail($offer)->credits;
-                    $option->credits = Service::findOrFail($offer)->credits;
+                    if($file->front_end_id == 1){
 
-                }
-                else{
+                        $proposedCredits += Service::findOrFail($offer)->credits;
+                        $option->credits = Service::findOrFail($offer)->credits;
 
-                    $service = Service::findOrFail($offer);
-
-                    if($file->tool_type == 'master'){
-
-                        $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
-                        $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
-    
                     }
                     else{
 
-                        $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
-                        $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                        $service = Service::findOrFail($offer);
+
+                        if($file->tool_type == 'master'){
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+        
+                        }
+                        else{
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                        }
+
                     }
 
-                }
-
-                $option->file_id = $fileID;
-                $option->save();
+                    $option->file_id = $fileID;
+                    $option->save();
+            }
         }
 
         $differece = $file->credits - $proposedCredits;
