@@ -474,7 +474,11 @@
 
 
                       @if($file->status == 'submitted')
-                        <button class="btn btn-success m-b-20 btn-options-change" data-file_id="{{$file->id}}">Change Options</button>
+                        <button class="btn btn-success m-b-20 btn-options-change" data-file_id="{{$file->id}}">Propose Options</button>
+                      @endif
+
+                      @if($file->status == 'completed')
+                        <button class="btn btn-success m-b-20 btn-options-change-force" data-file_id="{{$file->id}}">Change Options</button>
                       @endif
 
                       @endif
@@ -1591,7 +1595,11 @@
                       @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
                       
                       @if($file->status == 'submitted')
-                        <button class="btn btn-success m-b-20 btn-options-change" data-file_id="{{$file->id}}">Change Options</button>
+                        <button class="btn btn-success m-b-20 btn-options-change" data-file_id="{{$file->id}}">Propose Options</button>
+                      @endif
+
+                      @if($file->status == 'completed')
+                        <button class="btn btn-success m-b-20 btn-options-change-force" data-file_id="{{$file->id}}">Change Options</button>
                       @endif
 
                       @endif
@@ -2395,12 +2403,24 @@ window.onload = function() {
   <div class="modal-dialog">
     <div class="modal-content-wrapper">
       <div class="modal-content">
+        <div class="progress-propose">
+          <div class="progress-bar-indeterminate" style=""></div>
+        </div>
         <div class="modal-header clearfix text-left">
-          <p>File Credits: <span id="file_credits">0</span></p>
-          <p>Proposed Credits:<span id="proposed_credits">0</span></p>
-          <p>Difference:<span id="credits_difference">0</span></p>
+          <div id="propose-header" class="hide">
+            <p>File Credits: <span id="file_credits">0</span></p>
+            <p>Proposed Credits:<span id="proposed_credits">0</span></p>
+            <p>Difference:<span id="credits_difference">0</span></p>
+          </div>
+          <div id="force-header" class="hide">
+            <p>File Credits: <span id="force_file_credits">0</span></p>
+            <p>Proposed Credits:<span id="force_proposed_credits">0</span></p>
+            <p>Difference:<span id="force_credits_difference">0</span></p>
+          </div>
         </div>
         <div class="modal-body">
+          
+          <div id="propose-form" class="hide">
           <form role="form" action="{{route('add-options-offer')}}" method="POST">
             @csrf
             
@@ -2415,6 +2435,7 @@ window.onload = function() {
                     
                     </select>
                 </div>
+              </div>
                 <div class="col-md-12">
                   <div class="">
                     
@@ -2423,7 +2444,7 @@ window.onload = function() {
                     </select>
                   </div>
                 </div>
-              </div>
+              
             </div>
          
           <div class="row">
@@ -2431,19 +2452,82 @@ window.onload = function() {
               <button type="submit" class="btn btn-success btn-block m-t-5">Propose</button>
             </div>
           </div>
-        </form>
+          </form>
+
+          </div>
+          </div>
+
+          <div id="force-form" class="hide">
+
+            <form role="form" action="{{route('force-options-offer')}}" method="POST">
+              @csrf
+              
+              <input type="hidden" name="file_id" id="force_proposed_file_id" value="">
+              
+              <div class="form-group-attached ">
+                <h5>Propose Options</h5>
+                <div class="row">
+                  
+                  <div class="col-md-12">
+                    <div class="">
+                      
+                      <select class=" full-width" data-init-plugin="select2" multiple name="force_proposed_options[]" id="force_proposed_options">
+                        
+                      </select>
+                    </div>
+                  </div>
+                
+              </div>
+           
+            <div class="row">
+              <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+                <button type="submit" class="btn btn-success btn-block m-t-5">Change</button>
+              </div>
+            </div>
+            </form>
+
+          </div>
+          
+          
         </div>
       </div>
     </div>
     <!-- /.modal-content -->
   </div>
-</div>
-    
+
+
 @endsection
 
 @section('pagespecificscripts')
   <script type="text/javascript">
   $(document).ready(function(){
+
+    function force_re_calculate_proposed_credits(file_id){
+
+      
+      let force_proposed_options = $('#force_proposed_options').val();
+
+      $.ajax({
+            url: "/force_only_total_proposed_credits",
+            type: "POST",
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                'force_proposed_options': force_proposed_options,
+                'file_id': file_id,
+                
+            },
+            success: function(res) {
+
+              let difference = res.proposed_credits - res.file_credits;
+
+              $('#force_file_credits').html(res.file_credits);
+              $('#force_proposed_credits').html(res.proposed_credits);
+              $('#force_credits_difference').html(difference);
+
+            }
+        });
+
+      }
 
     function re_calculate_proposed_credits(file_id){
 
@@ -2460,7 +2544,7 @@ window.onload = function() {
                 'proposed_options': proposed_options,
             },
             success: function(res) {
-              
+
               let difference = res.proposed_credits - res.file_credits;
 
               $('#file_credits').html(res.file_credits);
@@ -2474,6 +2558,8 @@ window.onload = function() {
 
     function calculate_proposed_credits(file_id){
 
+      $('.progress-propose').removeClass('hide');
+
       $.ajax({
             url: "/get_total_proposed_credits",
             type: "POST",
@@ -2485,7 +2571,7 @@ window.onload = function() {
 
               $('#proposed_stage').html(res.stageOptions);
               $('#proposed_options').html(res.optionOptions);
-
+              
               let difference = res.proposed_credits - res.file_credits;
 
               console.log(difference);
@@ -2494,10 +2580,40 @@ window.onload = function() {
               $('#proposed_credits').html(res.proposed_credits);
               $('#credits_difference').html(difference);
 
+              $('.progress-propose').addClass('hide');
+
             }
         });
 
     }
+
+    function force_calculate_proposed_credits(file_id){
+
+      $('#force_proposed_options').html('');
+
+      $.ajax({
+            url: "/get_total_proposed_credits",
+            type: "POST",
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                'file_id': file_id
+            },
+            success: function(res) {
+
+              $('#force_proposed_options').html(res.forceOptions);
+
+              let difference = res.proposed_credits - res.file_credits;
+
+              console.log(difference);
+
+              $('#force_file_credits').html(res.file_credits);
+              $('#force_proposed_credits').html(res.proposed_credits);
+              $('#force_credits_difference').html(difference);
+
+            }
+        });
+
+      }
 
     $(document).on('change', '#proposed_options', function(e){
       let file_id = $('#proposed_file_id').val();
@@ -2511,6 +2627,12 @@ window.onload = function() {
 
     });
 
+    $(document).on('change', '#force_proposed_options', function(e){
+      let file_id = $('#force_proposed_file_id').val();
+      force_re_calculate_proposed_credits(file_id);
+
+    });
+
     $(document).on('click', '.btn-options-change', function(e){
 
       $('#proposed_stage').html('');
@@ -2521,8 +2643,43 @@ window.onload = function() {
       calculate_proposed_credits(file_id);
 
       $('#proposed_file_id').val($(this).data('file_id'));
-      $('#engineerOptionsModal').modal('show');
 
+      if($('#propose-header').hasClass('hide')){
+        
+        $('#propose-header').removeClass('hide');
+      }
+
+      if($('#propose-form').hasClass('hide')){
+        
+        $('#propose-form').removeClass('hide');
+      }
+
+      $('#engineerOptionsModal').modal('show');
+      
+    });
+
+    $(document).on('click', '.btn-options-change-force', function(e){
+
+      $('#proposed_options_force').html('');
+
+      let file_id = $(this).data('file_id');
+
+      force_calculate_proposed_credits(file_id);
+
+      $('#force_proposed_file_id').val($(this).data('file_id'));
+
+      if($('#force-header').hasClass('hide')){
+        
+        $('#force-header').removeClass('hide');
+      }
+
+      if($('#force-form').hasClass('hide')){
+        
+        $('#force-form').removeClass('hide');
+      }
+
+      $('#engineerOptionsModal').modal('show');
+      
     });
 
     $(document).on('change', '#select_status', function(e){

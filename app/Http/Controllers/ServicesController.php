@@ -85,6 +85,62 @@ class ServicesController extends Controller
 
     }
 
+    public function forceOnlyTotalProposedCredits(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+
+        $frontendID = $file->front_end_id;
+        $toolType = $file->tool_type;
+
+        $fileOptions = $request->force_proposed_options;
+        
+        $totalProposedCredits = 0;
+
+        if($frontendID == 1){
+
+            $totalProposedCredits += Service::findOrFail($file->stage_services->service_id)->credits;
+            
+            if($fileOptions){
+                foreach($fileOptions as $o){
+                    $option = Service::findOrFail($o);
+                    $totalProposedCredits += $option->credits;
+                }
+            }
+
+        }
+        else{
+
+            if($toolType == 'master'){
+
+                $totalProposedCredits += Service::findOrFail($file->stage_services->service_id)->tuningx_credits;
+
+                if($fileOptions){
+                    foreach($fileOptions as $o){
+                        $option = Service::findOrFail($o);
+                        $totalProposedCredits += $option->optios_stage($file->stage_services->service_id)->first()->master_credits;
+                    }
+                }
+            }
+            else{
+
+                $totalProposedCredits += Service::findOrFail($file->stage_services->service_id)->tuningx_slave_credits;
+
+                if($fileOptions){
+                    foreach($fileOptions as $o){
+                        $option = Service::findOrFail($o);
+                        $totalProposedCredits += $option->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                    }
+                }
+            }
+        }
+
+        return [
+            'proposed_credits' => $totalProposedCredits, 
+            'file_credits' => $file->credits
+        ];
+
+    }
+
     public function getTotalProposedCredits(Request $request){
 
         $file = File::findOrFail($request->file_id);
@@ -144,6 +200,19 @@ class ServicesController extends Controller
                 }
 
             }
+
+            $forceOptions = '';
+
+            if($proposedOptions){
+
+            foreach($proposedOptions as $o) {
+                    $option = Service::findOrFail($o);
+                    $forceOptions .= '<option selected value="'.$option->id.'">'.$option->name.'</option>';
+                    
+                    
+                }
+                
+            }
             
             $totalProposedCredits += Service::findOrFail($fileStage->service_id)->credits;
             
@@ -194,6 +263,19 @@ class ServicesController extends Controller
 
             }
 
+            $forceOptions = '';
+
+            if($proposedOptions){
+
+            foreach($proposedOptions as $o) {
+                    $option = Service::findOrFail($o);
+                    $forceOptions .= '<option selected value="'.$option->id.'">'.$option->name.'</option>';
+                    
+                    
+                }
+                
+            }
+
             if($toolType == 'master'){
 
                 $totalProposedCredits += Service::findOrFail($fileStage->service_id)->tuningx_credits;
@@ -222,6 +304,7 @@ class ServicesController extends Controller
             'proposed_credits' => $totalProposedCredits, 
             'stageOptions' => $stageOptions, 
             'optionOptions' => $optionOptions, 
+            'forceOptions' => $forceOptions, 
             'file_credits' => $file->credits
         ];
 

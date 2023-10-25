@@ -408,6 +408,7 @@ Route::post('/change_status', [App\Http\Controllers\ServicesController::class, '
 Route::post('/change_tuningx_status', [App\Http\Controllers\ServicesController::class, 'changeTuningxStatus'])->name('change-tuningx-status');
 Route::post('/get_total_proposed_credits', [App\Http\Controllers\ServicesController::class, 'getTotalProposedCredits'])->name('get-total-proposed-credits');
 Route::post('/only_total_proposed_credits', [App\Http\Controllers\ServicesController::class, 'onlyTotalProposedCredits'])->name('only-total-proposed-credits');
+Route::post('/force_only_total_proposed_credits', [App\Http\Controllers\ServicesController::class, 'forceOnlyTotalProposedCredits'])->name('force-only-total-proposed-credits');
 
 Auth::routes(['register' => false]);
 
@@ -438,6 +439,7 @@ Route::post('/search', [App\Http\Controllers\FilesController::class, 'search'])-
 Route::post('get_change_status', [App\Http\Controllers\FilesController::class, 'changeCheckingStatus'])->name('get-change-status');
 Route::post('flip_decoded_mode', [App\Http\Controllers\FilesController::class, 'flipDecodedMode'])->name('flip-decoded-mode');
 Route::post('add_options_offer', [App\Http\Controllers\FilesController::class, 'addOptionsOffer'])->name('add-options-offer');
+Route::post('force_options_offer', [App\Http\Controllers\FilesController::class, 'forceOptionsOffer'])->name('force-options-offer');
 Route::get('multi_delete', [App\Http\Controllers\FilesController::class, 'multiDelete'])->name('multi-delete');
 Route::post('delete_files', [App\Http\Controllers\FilesController::class, 'deleteFiles'])->name('delete-files');
 

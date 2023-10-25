@@ -94,6 +94,96 @@ class FilesController extends Controller
 
     }
 
+    public function forceOptionsOffer(Request $request){
+        
+        $fileID = $request->file_id;
+        $forceProposedOptions = $request->force_proposed_options;
+
+        $file = File::findOrFail($fileID);
+
+        foreach($file->options as $service){
+            $service->delete();
+        }
+
+        $proposedCredits = 0;
+
+        if($file->front_end_id == 1){
+            $proposedCredits += Service::findOrFail($file->stage_services->service_id)->credits;
+        }
+        else{
+            if($file->tool_type == 'master'){
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->tuningx_credits;
+
+            }
+            else{
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->tuningx_slave_credits;
+            }
+        }
+
+        foreach($forceProposedOptions as $offer){
+
+                $option = new FileService();
+                $option->service_id = $offer; 
+                $option->type = 'option'; 
+
+                if($file->front_end_id == 1){
+
+                    $proposedCredits += Service::findOrFail($offer)->credits;
+                    $option->credits = Service::findOrFail($offer)->credits;
+
+                }
+                else{
+
+                    $service = Service::findOrFail($offer);
+
+                    if($file->tool_type == 'master'){
+
+                        $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+                        $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+    
+                    }
+                    else{
+
+                        $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                        $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                    }
+
+                }
+
+                $option->file_id = $fileID;
+                $option->save();
+        }
+
+        $differece = $file->credits - $proposedCredits;
+
+        $user = User::findOrfail($file->user_id);
+
+        if( $differece > 0 ){
+
+            $credit = new Credit();
+            $credit->credits = $differece;
+            $credit->user_id = $user->id;
+            $credit->file_id = $file->id;
+            $credit->stripe_id = NULL;
+
+            $credit->gifted = 1;
+            $credit->price_payed = 0;
+            
+            $credit->message_to_credit = 'File options accepted and credits returned!';
+            
+            $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
+            $credit->save();
+        }
+
+        $file->credits = $proposedCredits;
+        
+        $file->save();
+
+        return redirect()->back()->with(['success' => 'options adjusted and credits returned!']);
+    }
+
     public function multiDelete(Request $request){
 
         if(!Auth::user()->is_admin()){
