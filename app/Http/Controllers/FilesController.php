@@ -240,9 +240,9 @@ class FilesController extends Controller
             $fileName = $attachment->getClientOriginalName();
 
             if($file->front_end_id == 1)
-                $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$fileName);
+                $attachment->move(public_path('/../../portal/public/uploads/'.$file->file_path),$fileName);
             else
-                $attachment->move(public_path('/../../tuningX/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$fileName);
+                $attachment->move(public_path('/../../tuningX/public/uploads/'.$file->file_path),$fileName);
             
         }
 
@@ -1080,12 +1080,12 @@ class FilesController extends Controller
             if($file->front_end_id == 1){
                 
                 if($file->subdealer_group_id)
-                    $attachment->move(public_path('/../../subportal/public/uploads/'.$file->brand.'/'.$model.'/'.$file->id.'/'),$fileName);
+                    $attachment->move(public_path('/../../subportal/public/uploads/'.$file->file_path),$fileName);
                 else
-                    $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$model.'/'.$file->id.'/'),$fileName);
+                    $attachment->move(public_path('/../../portal/public/uploads/'.$file->file_path),$fileName);
             }
             else{
-                $attachment->move(public_path('/../../tuningX/public/uploads/'.$file->brand.'/'.$model.'/'.$file->id.'/'),$fileName);
+                $attachment->move(public_path('/../../tuningX/public/uploads/'.$file->file_path),$fileName);
 
             }
 
