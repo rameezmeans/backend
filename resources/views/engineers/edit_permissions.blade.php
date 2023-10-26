@@ -24,7 +24,36 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
+
+                <ul class="nav nav-tabs nav-tabs-fillup d-none d-md-flex d-lg-flex d-xl-flex" data-init-reponsive-tabs="dropdownfx">
+                    
+                    <li class="nav-item">
+                      <a href="#" class="active show" data-toggle="tab" data-target="#slide1"><span>Dashboard And Head</span></a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" data-toggle="tab" data-target="#slide2" class=""><span>Files</span></a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" data-toggle="tab" data-target="#slide3" class=""><span>Reports</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#slide4" class=""><span>Transactions</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#slide5" class=""><span>Customers</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#slide6" class=""><span>Vehicles</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#slide7" class=""><span>Services</span></a>
+                    </li>
+
+                </ul>
                 
+                <div class="tab-content">
+                    <div class="tab-pane slide-left active" id="slide1">
+
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
                         <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
@@ -46,16 +75,6 @@
                                     </td>
                                 </tr>
                                 
-                                <tr role="row">
-
-                                    <td class="v-align-middle semi-bold sorting_1">
-                                        <p>Customer Contact Information</p>
-                                    </td>
-                                    <td class="v-align-middle semi-bold sorting_1">
-                                        <p><input data-engineer_id={{$engineer->id}} data-permission="customer-contact-information" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'customer-contact-information')) checked="checked" @endif /></p>
-                                    </td>
-                                </tr>
-
                                 @if(heads_count() < 1)
                                 <tr>
                                     <td class="v-align-middle semi-bold sorting_1">
@@ -84,12 +103,31 @@
 
                                 @endif
 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                    </div>
+
+                <div class="tab-pane slide-left" id="slide2">
+
+                <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                    <div>
+                        <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 80%;">Permission</th>
+                                    <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" >Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
                                 <tr>
                                     <td class="v-align-middle semi-bold sorting_1">
-                                        <p>Propose Options</p>
+                                        <p>Show Files</p>
                                     </td>
                                     <td class="v-align-middle semi-bold sorting_1">
-                                        <p><input data-engineer_id={{$engineer->id}} data-permission="propose-options" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'propose-options')) checked="checked" @endif /></p>
+                                        <p><input data-engineer_id={{$engineer->id}} data-permission="show-files" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'show-files')) checked="checked" @endif /></p>
                                     </td>
                                 </tr>
 
@@ -102,6 +140,25 @@
                                     </td>
                                 </tr>
 
+                                <tr role="row">
+
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Customer Contact Information</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p><input data-engineer_id={{$engineer->id}} data-permission="customer-contact-information" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'customer-contact-information')) checked="checked" @endif /></p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Propose Options</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p><input data-engineer_id={{$engineer->id}} data-permission="propose-options" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'propose-options')) checked="checked" @endif /></p>
+                                    </td>
+                                </tr>
+                                
                                 <tr>
                                     <td class="v-align-middle semi-bold sorting_1">
                                         <p>Submit File</p>
@@ -120,16 +177,25 @@
                                     </td>
                                 </tr>
 
-                                
-                                {{-- <tr>
-                                    <td class="v-align-middle semi-bold sorting_1">
-                                        <p>Reports</p>
-                                    </td>
-                                    <td class="v-align-middle semi-bold sorting_1">
-                                        <p><input data-engineer_id={{$engineer->id}} data-permission="reports" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'reports')) checked="checked" @endif /></p>
-                                    </td>
-                                </tr> --}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
+            <div class="tab-pane slide-left" id="slide3">
+
+                <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                    <div>
+                        <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 80%;">Permission</th>
+                                    <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" >Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+    
                                 <tr>
                                     <td class="v-align-middle semi-bold sorting_1">
                                         <p>Engineer's Reports</p>
@@ -156,6 +222,26 @@
                                         <p><input data-engineer_id={{$engineer->id}} data-permission="credit-report" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'credit-report')) checked="checked" @endif /></p>
                                     </td>
                                 </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane slide-left" id="slide4">
+
+                <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                    <div>
+                        <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 80%;">Permission</th>
+                                    <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" >Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
                                 <tr>
                                     <td class="v-align-middle semi-bold sorting_1">
@@ -184,6 +270,25 @@
                                     </td>
                                 </tr>
 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane slide-left" id="slide5">
+
+                <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                    <div>
+                        <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 80%;">Permission</th>
+                                    <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" >Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
                                 <tr>
                                     <td class="v-align-middle semi-bold sorting_1">
                                         <p>View Customer</p>
@@ -211,6 +316,25 @@
                                     </td>
                                 </tr>
 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane slide-left" id="slide6">
+
+                <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                    <div>
+                        <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 80%;">Permission</th>
+                                    <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" >Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
                                 <tr>
                                     <td class="v-align-middle semi-bold sorting_1">
                                         <p>View Vehicles</p>
@@ -237,6 +361,25 @@
                                         <p><input data-engineer_id={{$engineer->id}} data-permission="delete-vehicles" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'delete-vehicles')) checked="checked" @endif /></p>
                                     </td>
                                 </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane slide-left" id="slide7">
+
+                <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                    <div>
+                        <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 80%;">Permission</th>
+                                    <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" >Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
                                 <tr>
                                     <td class="v-align-middle semi-bold sorting_1">
@@ -269,12 +412,15 @@
                         </table>
                     </div>
                 </div>
-
             </div>
+
           </div>
         </div>
     </div>
 </div>
+</div>
+</div>
+
 @endsection
 
 
