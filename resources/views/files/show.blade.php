@@ -78,7 +78,7 @@
         </ul>
         
         <div class="tab-content bg-white" style="border-top: 1px solid rgba(0, 0, 0, 0.1); border-left: 1px solid rgba(0, 0, 0, 0.1);">
-          <div class="tab-pane active" id="tab4hellowWorld">
+          <div class="tab-pane slide-left active" id="tab4hellowWorld">
             
           @endif
 
@@ -1874,7 +1874,7 @@
     </div>
     @foreach($file->new_requests as $file)
     
-    <div class="tab-pane " id="tab4FollowUs">
+    <div class="tab-pane slide-left" id="tab4FollowUs">
 
 
       <div class="card card-transparent m-t-40">

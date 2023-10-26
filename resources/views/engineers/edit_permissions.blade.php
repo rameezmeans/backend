@@ -13,9 +13,12 @@
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
+                    
+                    <button data-redirect="{{route('engineers')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Engineers</span>
+                    </button>
                     <button data-redirect="{{route('edit-engineer', $engineer->id)}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Edit Engineer</span>
                     </button>
-                    {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
+                    
                 </div>
                 </div>
                 <div class="clearfix"></div>
@@ -29,7 +32,6 @@
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 80%;">Permission</th>
                                     <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" >Active</th>
-                                    
                                 </tr>
                             </thead>
                             <tbody>
