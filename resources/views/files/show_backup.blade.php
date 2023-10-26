@@ -2653,11 +2653,13 @@ window.onload = function() {
       if($('#propose-header').hasClass('hide')){
         
         $('#propose-header').removeClass('hide');
+        $('#force-header').addClass('hide');
       }
 
       if($('#propose-form').hasClass('hide')){
         
         $('#propose-form').removeClass('hide');
+        $('#force-form').addClass('hide');
       }
 
       $('#engineerOptionsModal').modal('show');
@@ -2677,11 +2679,13 @@ window.onload = function() {
       if($('#force-header').hasClass('hide')){
         
         $('#force-header').removeClass('hide');
+        $('#propose-header').addClass('hide');
       }
 
       if($('#force-form').hasClass('hide')){
         
         $('#force-form').removeClass('hide');
+        $('#force-header').addClass('hide');
       }
 
       $('#engineerOptionsModal').modal('show');
