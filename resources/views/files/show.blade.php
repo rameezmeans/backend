@@ -3757,10 +3757,11 @@
   <div class="modal-dialog">
     <div class="modal-content-wrapper">
       <div class="modal-content">
-        <div class="progress-propose">
-          <div class="progress-bar-indeterminate" style=""></div>
-        </div>
+        
         <div class="modal-header clearfix text-left">
+          <div class="progress-propose">
+            <div class="progress-bar-indeterminate" style=""></div>
+          </div>
           <div id="propose-header" class="hide">
             <p>File Credits: <span id="file_credits">0</span></p>
             <p>Proposed Credits:<span id="proposed_credits">0</span></p>
@@ -3806,10 +3807,11 @@
               <button type="submit" class="btn btn-success btn-block m-t-5">Propose</button>
             </div>
           </div>
+            </div>
           </form>
 
           </div>
-          </div>
+          
 
           <div id="force-form" class="hide">
 
@@ -3838,10 +3840,12 @@
                 <button type="submit" class="btn btn-success btn-block m-t-5">Change</button>
               </div>
             </div>
+              </div>
             </form>
 
           </div>
           
+        </div>
           
         </div>
       </div>
