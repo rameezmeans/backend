@@ -471,18 +471,23 @@
                             @endif
 
                             @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-vehicles'))
+
+                            <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
+
+                            @endif
+
+                            @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-file'))
+
+                              <a class="btn btn-success btn-cons m-b-10" href="{{route('edit-file', $file->id)}}"><span class="bold">Edit File</span></a>
                             
-                              <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
+                            @endif
+
+                            @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'delete-file'))
+                              
+                                <button type="button" class="btn btn-danger btn-delete btn-cons m-b-10" data-file_id={{$file->id}}><span class="bold">Delete File</span></button>
 
                             @endif
                             
-                            <a class="btn btn-success btn-cons m-b-10" href="{{route('edit-file', $file->id)}}"><span class="bold">Edit File</span></a>
-                            
-                              {{-- <form method="POST" action="{{route('delete-file')}}">
-                                @csrf
-                                <input type="hidden" value="{{$file->id}}" name="id"> --}}
-                                <button type="button" class="btn btn-danger btn-delete btn-cons m-b-10" data-file_id={{$file->id}}><span class="bold">Delete File</span></button>
-                              {{-- </form> --}}
                           </div>
                         
                         

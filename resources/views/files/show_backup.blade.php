@@ -463,8 +463,12 @@
                               <a class="btn btn-success btn-cons m-b-10" href="{{route('edit-file', $file->id)}}"><span class="bold">Edit File</span></a>
                             
                             @endif
+
+                            @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'delete-file'))
                               
                                 <button type="button" class="btn btn-danger btn-delete btn-cons m-b-10" data-file_id={{$file->id}}><span class="bold">Delete File</span></button>
+
+                            @endif
                               
                           </div>
                         
