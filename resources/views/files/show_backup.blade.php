@@ -142,6 +142,9 @@
                       <div class="card-title">
                           <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="" style="width: 30%;">
                           <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                          
+                          @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'download-client-file'))
+
                           @if($file->original_file_id)
                               
                               <a href="{{ route('download', [$file->original_file_id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
@@ -168,6 +171,8 @@
                                 @endforeach
                               @endif
                             @endif
+                          @endif
+
                           @endif
                         </div>
                       </div>
@@ -438,19 +443,24 @@
                         </div>
                         @endif
 
-                        @if(Auth::user()->is_admin() or Auth::user()->is_head())
-                          <div class="text-center m-t-20">                    
-                            <a class="btn btn-success btn-cons m-b-10" href="{{route('add-comments', [$vehicle->id, 'file='.$file->id])}}"><span class="bold">Go To Comments</span></a>
+                        
+                          <div class="text-center m-t-20"> 
+                            
+                            @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'see-comments'))
+
+                              <a class="btn btn-success btn-cons m-b-10" href="{{route('add-comments', [$vehicle->id, 'file='.$file->id])}}"><span class="bold">Go To Comments</span></a>
+
+                            @endif
+
+
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('edit-file', $file->id)}}"><span class="bold">Edit File</span></a>
                             
-                              {{-- <form method="POST" action="{{route('delete-file')}}">
-                                @csrf
-                                <input type="hidden" value="{{$file->id}}" name="id"> --}}
+                              
                                 <button type="button" class="btn btn-danger btn-delete btn-cons m-b-10" data-file_id={{$file->id}}><span class="bold">Delete File</span></button>
-                              {{-- </form> --}}
+                              
                           </div>
-                        @endif
+                        
                         
                       </div>
         
@@ -473,13 +483,13 @@
                       @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
 
 
-                      @if($file->status == 'submitted')
-                        <button class="btn btn-success m-b-20 btn-options-change" data-file_id="{{$file->id}}">Propose Options</button>
-                      @endif
+                        @if($file->status == 'submitted')
+                          <button class="btn btn-success m-b-20 btn-options-change" data-file_id="{{$file->id}}">Propose Options</button>
+                        @endif
 
-                      @if($file->status == 'completed')
-                        <button class="btn btn-success m-b-20 btn-options-change-force" data-file_id="{{$file->id}}">Change Options</button>
-                      @endif
+                        @if($file->status == 'completed')
+                          <button class="btn btn-success m-b-20 btn-options-change-force" data-file_id="{{$file->id}}">Change Options</button>
+                        @endif
 
                       @endif
                         
@@ -589,7 +599,7 @@
         
                       </div>
 
-                      
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
 
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Uploaded Files</h5>
@@ -649,6 +659,8 @@
                         @endif
                       @endforeach
                       </div>
+
+                      @endif
 
                       @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
 
@@ -1266,6 +1278,9 @@
                       <div class="card-title">
                           <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="" style="width: 30%;">
                           <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                          
+                          @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'download-client-file'))
+                          
                           @if($file->original_file_id)
                               
                               <a href="{{ route('download', [$file->original_file_id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
@@ -1293,6 +1308,9 @@
                               @endif
                             @endif
                           @endif
+
+                          @endif
+
                         </div>
                       </div>
                       
@@ -1562,7 +1580,7 @@
                         </div>
                         @endif
 
-                        @if(Auth::user()->is_admin() or Auth::user()->is_head())
+                        
                           <div class="text-center m-t-20">                    
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('add-comments', [$vehicle->id, 'file='.$file->id])}}"><span class="bold">Go To Comments</span></a>
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
@@ -1574,7 +1592,7 @@
                                 <button type="button" class="btn btn-danger btn-delete btn-cons m-b-10" data-file_id={{$file->id}}><span class="bold">Delete File</span></button>
                               {{-- </form> --}}
                           </div>
-                        @endif
+                        
                         
                       </div>
         
@@ -1709,7 +1727,7 @@
         
                       </div>
 
-                      
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
 
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Uploaded Files</h5>
@@ -1770,6 +1788,7 @@
                       @endforeach
                       </div>
 
+                      @endif
                       @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
 
 
@@ -2398,7 +2417,7 @@ window.onload = function() {
     <!-- /.modal-content -->
   </div>
 </div>
-
+@if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
 <div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="engineerOptionsModal" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog">
     <div class="modal-content-wrapper">
@@ -2498,7 +2517,7 @@ window.onload = function() {
     </div>
     <!-- /.modal-content -->
   </div>
-
+  @endif
 
 @endsection
 

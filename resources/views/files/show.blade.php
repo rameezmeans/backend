@@ -158,6 +158,9 @@
                       <div class="card-title">
                           <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="" style="width: 30%;">
                           <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                          
+                          @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'download-client-file'))
+                          
                           @if($file->original_file_id)
                               
                                 <a href="{{ route('download', [$file->original_file_id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
@@ -186,6 +189,9 @@
                               @endif
                             @endif
                           @endif
+
+                          @endif 
+
                         </div>
                       </div>
                       
@@ -455,10 +461,17 @@
                         </div>
                         @endif
 
-                        @if(Auth::user()->is_admin() or Auth::user()->is_head())
-                          <div class="text-center m-t-20">                    
-                            <a class="btn btn-success btn-cons m-b-10" href="{{route('add-comments', [$vehicle->id, 'file='.$file->id])}}"><span class="bold">Go To Comments</span></a>
+                        
+                          <div class="text-center m-t-20">  
+
+                            @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'see-comments'))
+
+                              <a class="btn btn-success btn-cons m-b-10" href="{{route('add-comments', [$vehicle->id, 'file='.$file->id])}}"><span class="bold">Go To Comments</span></a>
+
+                            @endif
+                            
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
+                            
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('edit-file', $file->id)}}"><span class="bold">Edit File</span></a>
                             
                               {{-- <form method="POST" action="{{route('delete-file')}}">
@@ -467,7 +480,7 @@
                                 <button type="button" class="btn btn-danger btn-delete btn-cons m-b-10" data-file_id={{$file->id}}><span class="bold">Delete File</span></button>
                               {{-- </form> --}}
                           </div>
-                        @endif
+                        
                         
                       </div>
         
@@ -653,7 +666,7 @@
                       </div>
         
                       </div>
-
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Uploaded Files</h5>
 
@@ -843,6 +856,8 @@
                         @endif
                       @endforeach
                       </div>
+
+                      @endif
 
                       @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
 
@@ -1953,6 +1968,9 @@
                       <div class="card-title">
                           <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="" style="width: 30%;">
                           <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                          
+                          @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'download-client-file'))
+                          
                           @if($file->original_file_id)
                               
                                 <a href="{{ route('download', [$file->original_file_id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
@@ -1981,6 +1999,9 @@
                               @endif
                             @endif
                           @endif
+
+                          @endif
+
                         </div>
                       </div>
                       
@@ -2250,19 +2271,17 @@
                         </div>
                         @endif
 
-                        @if(Auth::user()->is_admin() or Auth::user()->is_head())
+                        
                           <div class="text-center m-t-20">                    
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('add-comments', [$vehicle->id, 'file='.$file->id])}}"><span class="bold">Go To Comments</span></a>
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
                             <a class="btn btn-success btn-cons m-b-10" href="{{route('edit-file', $file->id)}}"><span class="bold">Edit File</span></a>
                             
-                              {{-- <form method="POST" action="{{route('delete-file')}}">
-                                @csrf
-                                <input type="hidden" value="{{$file->id}}" name="id"> --}}
+                              
                                 <button type="button" class="btn btn-danger btn-delete btn-cons m-b-10" data-file_id={{$file->id}}><span class="bold">Delete File</span></button>
-                              {{-- </form> --}}
+                              
                           </div>
-                        @endif
+                        
                         
                       </div>
         
@@ -2448,6 +2467,7 @@
                       </div>
         
                       </div>
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
 
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Uploaded Files</h5>
@@ -2638,6 +2658,8 @@
                         @endif
                       @endforeach
                       </div>
+
+                      @endif
 
                       @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
 
@@ -3752,7 +3774,7 @@
     <!-- /.modal-content -->
   </div>
 </div>
-
+@if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
 <div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="engineerOptionsModal" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog">
     <div class="modal-content-wrapper">
@@ -3852,7 +3874,7 @@
     </div>
     <!-- /.modal-content -->
   </div>
-    
+  @endif
 @endsection
 
 @section('pagespecificscripts')
@@ -4426,58 +4448,58 @@ re_calculate_proposed_credits(file_id);
 
 });
 
-    $(document).on('click', '.btn-options-change', function(e){
+$(document).on('click', '.btn-options-change', function(e){
 
-          $('#proposed_stage').html('');
-          $('#proposed_options').html('');
+$('#proposed_stage').html('');
+$('#proposed_options').html('');
 
-          let file_id = $(this).data('file_id');
+let file_id = $(this).data('file_id');
 
-          calculate_proposed_credits(file_id);
+calculate_proposed_credits(file_id);
 
-          if($('#propose-header').hasClass('hide')){
-        
-            $('#propose-header').removeClass('hide');
-            $('#force-header').addClass('hide');
-          }
+$('#proposed_file_id').val($(this).data('file_id'));
 
-          if($('#propose-form').hasClass('hide')){
-            
-            $('#propose-form').removeClass('hide');
-            $('#force-form').addClass('hide');
-          }
+if($('#propose-header').hasClass('hide')){
+  
+  $('#propose-header').removeClass('hide');
+  $('#force-header').addClass('hide');
+}
 
-          $('#engineerOptionsModal').modal('show');
+if($('#propose-form').hasClass('hide')){
+  
+  $('#propose-form').removeClass('hide');
+  $('#force-form').addClass('hide');
+}
 
-    });
+$('#engineerOptionsModal').modal('show');
 
-    $(document).on('click', '.btn-options-change-force', function(e){
+});
 
-      $('#proposed_options_force').html('');
+$(document).on('click', '.btn-options-change-force', function(e){
 
-      let file_id = $(this).data('file_id');
+$('#proposed_options_force').html('');
 
-      force_calculate_proposed_credits(file_id);
+let file_id = $(this).data('file_id');
 
-      $('#force_proposed_file_id').val($(this).data('file_id'));
+force_calculate_proposed_credits(file_id);
 
-      if($('#force-header').hasClass('hide')){
-        
-        $('#force-header').removeClass('hide');
-        $('#propose-header').addClass('hide');
-      }
+$('#force_proposed_file_id').val($(this).data('file_id'));
 
-      if($('#force-form').hasClass('hide')){
-        
-        $('#force-form').removeClass('hide');
-        $('#force-header').addClass('hide');
-      }
+if($('#force-header').hasClass('hide')){
+  
+  $('#force-header').removeClass('hide');
+  $('#propose-header').addClass('hide');
+}
 
-      $('#engineerOptionsModal').modal('show');
+if($('#force-form').hasClass('hide')){
+  
+  $('#force-form').removeClass('hide');
+  $('#force-header').addClass('hide');
+}
 
-    });
+$('#engineerOptionsModal').modal('show');
 
-
+});
 
     $(document).on('change', '#select_status', function(e){
 

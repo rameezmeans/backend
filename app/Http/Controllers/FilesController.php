@@ -458,7 +458,13 @@ class FilesController extends Controller
     
     public function liveFiles(){
 
-        return view('files.live_files');    
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
+            
+            return view('files.live_files');    
+        }
+        else{
+            return abort(404);
+        }
     }
     
     public function updateFileVehicle(Request $request) {
@@ -1852,6 +1858,8 @@ class FilesController extends Controller
     public function show($id)
     {
 
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
+
         if(Auth::user()->is_admin()){
 
             $file = File::where('id',$id)->where(function($q){
@@ -2000,6 +2008,13 @@ class FilesController extends Controller
         else{
             return view('files.show_backup', ['selectedOptions' => $selectedOptions, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
+
+    
+        }
+        else{
+            abort(404);
+        }
+    
     }
 
     public function saveMoreFiles($id, $alientechFileID){

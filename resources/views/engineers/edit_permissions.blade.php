@@ -140,6 +140,15 @@
                                     </td>
                                 </tr>
 
+                                <tr>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Download Client's File</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p><input data-engineer_id={{$engineer->id}} data-permission="download-client-file" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'download-client-file')) checked="checked" @endif /></p>
+                                    </td>
+                                </tr>
+
                                 <tr role="row">
 
                                     <td class="v-align-middle semi-bold sorting_1">
@@ -152,13 +161,31 @@
 
                                 <tr>
                                     <td class="v-align-middle semi-bold sorting_1">
-                                        <p>Propose Options</p>
+                                        <p>Propose And Change Options</p>
                                     </td>
                                     <td class="v-align-middle semi-bold sorting_1">
                                         <p><input data-engineer_id={{$engineer->id}} data-permission="propose-options" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'propose-options')) checked="checked" @endif /></p>
                                     </td>
                                 </tr>
-                                
+
+                                <tr>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>See Comments</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p><input data-engineer_id={{$engineer->id}} data-permission="see-comments" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'see-comments')) checked="checked" @endif /></p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Edit/Add/Delete Comments</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p><input data-engineer_id={{$engineer->id}} data-permission="add-comments" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'add-comments')) checked="checked" @endif /></p>
+                                    </td>
+                                </tr>
+
                                 <tr>
                                     <td class="v-align-middle semi-bold sorting_1">
                                         <p>Submit File</p>

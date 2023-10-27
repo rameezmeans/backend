@@ -45,17 +45,17 @@
           <span class="bg-success icon-thumbnail"><i class="pg-home"></i></span>
         </li>
         
+        @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files'))
+
         <li class="m-t-30 ">
           <a href="{{ route('files') }}" class="detailed">
             <span class="title" style="width: 80% !important;">Files</span>
-            @if(Auth::user()->is_admin())
-              
-                <span id="file-count" class="badge badged-warning text-black @if(count_of_files() == 0) hide @endif">{{count_of_files()}}</span>
-              
-            @endif
+              <span id="file-count" class="badge badged-warning text-black @if(count_of_files() == 0) hide @endif">{{count_of_files()}}</span>
           </a>
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
         </li>
+
+        @endif
         
         @if(Auth::user()->is_admin())
        

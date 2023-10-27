@@ -122,55 +122,59 @@ class VehiclesController extends Controller
 
     public function addComments($id){
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
-
-        $vehicle = Vehicle::findOrFail($id);
-
-        $trimmedECUs = [];
-        $options = null;
-        
-        $hasECU = 0;
-        $includedOptionsForDownload = [];
-
-        $options = Service::where('type', 'option')->get();
-        $downloadComments = $this->getComments($vehicle, 'download');
-    
-        $uploadComments = $this->getComments($vehicle, 'upload');
-
-        if($vehicle->Engine_ECU){
-
-            $hasECU = 1;
-            $ecus = explode(' / ', $vehicle->Engine_ECU);
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'see-comments')){
+            
+            $vehicle = Vehicle::findOrFail($id);
 
             $trimmedECUs = [];
-            foreach($ecus as $ecu){
-                $trimmedECUs []= trim($ecu);
+            $options = null;
+            
+            $hasECU = 0;
+            $includedOptionsForDownload = [];
+
+            $options = Service::where('type', 'option')->get();
+            
+            $downloadComments = $this->getComments($vehicle, 'download');
+
+            $uploadComments = $this->getComments($vehicle, 'upload');
+
+            if($vehicle->Engine_ECU){
+
+                $hasECU = 1;
+                $ecus = explode(' / ', $vehicle->Engine_ECU);
+
+                $trimmedECUs = [];
+                foreach($ecus as $ecu){
+                    $trimmedECUs []= trim($ecu);
+                }
+
+                foreach($trimmedECUs as $row){
+                    $includedOptionsForDownload [$row]=  $this->getOptions($row, $vehicle, 'download');
+                    $includedOptionsForUpload [$row]=  $this->getOptions($row, $vehicle, 'upload');
+                }
+
             }
 
-            foreach($trimmedECUs as $row){
-                $includedOptionsForDownload [$row]=  $this->getOptions($row, $vehicle, 'download');
-                $includedOptionsForUpload [$row]=  $this->getOptions($row, $vehicle, 'upload');
+            else{
+                abort('404');
             }
 
+            return view('vehicles.add_comments', 
+            [
+                'vehicle' => $vehicle, 
+                'ecus' => $trimmedECUs, 
+                'options' => $options,
+                'downloadComments' => $downloadComments,
+                'uploadComments' => $uploadComments,
+                'includedOptionsForUpload' => $includedOptionsForUpload,
+                'includedOptionsForDownload' => $includedOptionsForDownload,
+                'hasECU' => $hasECU,
+            ]);
         }
-
         else{
-            abort('404');
+            
+            abort(404);
         }
-
-        return view('vehicles.add_comments', 
-        [
-            'vehicle' => $vehicle, 
-            'ecus' => $trimmedECUs, 
-            'options' => $options,
-            'downloadComments' => $downloadComments,
-            'uploadComments' => $uploadComments,
-            'includedOptionsForUpload' => $includedOptionsForUpload,
-            'includedOptionsForDownload' => $includedOptionsForDownload,
-            'hasECU' => $hasECU,
-        ]);
     }
 
     public function importVehicles(Request $request){
@@ -227,41 +231,43 @@ class VehiclesController extends Controller
 
     public function getOptions($ecu, $vehicle, $type){
 
-        if(!Auth::user()->is_admin()){
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'see-comments')){
+            
+            // $commentObj = Comment::where('engine', $vehicle->Engine)
+            $commentObj = Comment::where('comment_type', $type)
+            ->whereNull('subdealer_group_id');
+
+            // $commentObj = Comment::where('engine', $vehicle->Engine)
+            // ->where('comment_type', $type);
+
+            if($vehicle->Make){
+                $commentObj->where('make', $vehicle->Make);
+            }
+
+            // if($vehicle->Model){
+            //     $commentObj->where('model', $vehicle->Model);
+            // }
+
+            if($vehicle->Engine_ECU){
+                $commentObj->where('ecu', $ecu);
+            }
+
+            // if($vehicle->Generation){
+            //     $commentObj->where('generation', $vehicle->Generation);
+            // }
+
+            $comments = $commentObj->get();
+
+            $options = [];
+            foreach($comments as $comment){
+                $options []= $comment->service_id;
+            }
+
+            return $options;
+        }
+        else{
             abort(404);
         }
-
-        $commentObj = Comment::where('engine', $vehicle->Engine)
-        ->where('comment_type', $type)
-        ->whereNull('subdealer_group_id');
-
-        // $commentObj = Comment::where('engine', $vehicle->Engine)
-        // ->where('comment_type', $type);
-
-        if($vehicle->Make){
-            $commentObj->where('make', $vehicle->Make);
-        }
-
-        if($vehicle->Model){
-            $commentObj->where('model', $vehicle->Model);
-        }
-
-        if($vehicle->Engine_ECU){
-            $commentObj->where('ecu', $ecu);
-        }
-
-        if($vehicle->Generation){
-            $commentObj->where('generation', $vehicle->Generation);
-        }
-
-        $comments = $commentObj->get();
-
-        $options = [];
-        foreach($comments as $comment){
-            $options []= $comment->service_id;
-        }
-
-        return $options;
     }
 
     public function show($id){
@@ -285,30 +291,35 @@ class VehiclesController extends Controller
     
     public function getComments($vehicle, $type){
 
-        if(!Auth::user()->is_admin()){
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'see-comments')){
+        
+            $commentObj = Comment::where('comment_type', $type)
+            // ->where('engine', $vehicle->Engine)
+            ->whereNull('subdealer_group_id');
+
+            // $commentObj = Comment::where('comment_type', $type)
+            // ->where('engine', $vehicle->Engine);
+
+            if($vehicle->Make){
+                $commentObj->where('make', $vehicle->Make);
+            }
+
+            // if($vehicle->Model){
+            //     $commentObj->where('model', $vehicle->Model);
+            // }
+
+            // if($vehicle->Generation){
+            //     $commentObj->where('generation', $vehicle->Generation);
+            // }
+
+            return $commentObj->get();
+        }
+
+        else{
             abort(404);
+        
         }
 
-        $commentObj = Comment::where('comment_type', $type)
-        // ->where('engine', $vehicle->Engine)
-        ->whereNull('subdealer_group_id');
-
-        // $commentObj = Comment::where('comment_type', $type)
-        // ->where('engine', $vehicle->Engine);
-
-        if($vehicle->Make){
-            $commentObj->where('make', $vehicle->Make);
-        }
-
-        // if($vehicle->Model){
-        //     $commentObj->where('model', $vehicle->Model);
-        // }
-
-        // if($vehicle->Generation){
-        //     $commentObj->where('generation', $vehicle->Generation);
-        // }
-
-        return $commentObj->get();
     }
 
     public function deleteComment(Request $request)

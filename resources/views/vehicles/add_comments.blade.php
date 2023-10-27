@@ -143,6 +143,7 @@
                                         @if($third == 0)
                                             <p>No Comments.</p>
                                         @endif
+                                        @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'add-comments'))
                                     <form role="form" action="{{route('add-option-comments')}}" method="POST" class="m-t-10">
                                       @csrf
 
@@ -169,6 +170,7 @@
                                           @endforeach
                                         </select>
                                       </div>
+                                      
                                       <div class="form-group-attached ">
                                         <div class="row">
                                           <div class="col-md-12">
@@ -187,7 +189,9 @@
                                           </div>
                                         </div>
                                       </div>
+                                     
                                   </form>
+                                  @endif
                                   </div>
 
                                   
@@ -219,6 +223,9 @@
                                         @if($third == 0)
                                             <p>No Comments.</p>
                                         @endif
+
+                                        @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'add-comments'))
+
                                     <form role="form" action="{{route('add-option-comments')}}" method="POST" class="m-t-10">
                                       @csrf
                                       @if(request()->query('file'))
@@ -260,6 +267,7 @@
                                         </div>
                                       </div>
                                   </form>
+                                  @endif
                                   </div>
                                 </div>
                                 
