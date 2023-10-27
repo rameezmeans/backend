@@ -2337,7 +2337,7 @@
 
     <script>
 
-window.onload = function() {
+    window.onload = function() {
 
       let engineerFileDrop1 = new Dropzone("#encoded-dropzone-new-req{{$file->id}}", {
         accept: function(file, done) {
@@ -2655,8 +2655,6 @@ window.onload = function() {
       re_calculate_proposed_credits(file_id);
 
     });
-
-    
 
     $(document).on('click', '.btn-options-change', function(e){
 

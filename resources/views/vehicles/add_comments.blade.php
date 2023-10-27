@@ -130,10 +130,12 @@
                                                     src="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}">
                                                     @endif
                                                     {{ \App\Models\Service::findOrFail( $comment->service_id )->name}} <span style="font-size: 8px;">({{\App\Models\Service::findOrFail( $comment->service_id )->vehicle_type}}) (@if(\App\Models\Service::findOrFail( $comment->service_id )->active == 1) {{'ECU Tech'}} @elseif(\App\Models\Service::findOrFail( $comment->service_id )->tuningx_active == 1) {{'TuningX'}} @endif)  @if($comment->subdealer_group_id) (sub dealer) @endif</span>
+                                                    @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'add-comments'))
                                                     <span class="m-l-20">
                                                       <i class="fa fa-pencil-square text-success btn-edit" data-id={{$comment->id}} data-comment="{{$comment->comments}}" data-greek-comment="@if($comment->translation){{$comment->translation->greek}}@endif"></i>
                                                       <i class="pg-trash text-danger btn-delete" data-id="{{$comment->id}}"></i>
                                                     </span>
+                                                    @endif
                                                 </div> 
 
                                                 <p> {{$comment->comments}}</p>
@@ -210,10 +212,13 @@
                                                     data-src="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}" 
                                                     src="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}">
                                                     {{ \App\Models\Service::findOrFail( $comment->service_id )->name}} <span style="font-size: 8px;">({{\App\Models\Service::findOrFail( $comment->service_id )->vehicle_type}}) @if($comment->subdealer_group_id) (sub dealer) @endif</span>
-                                                    <span class="m-l-20">
-                                                      <i class="fa fa-pencil-square text-success btn-edit" data-id={{$comment->id}} data-comment="{{$comment->comments}}" data-greek-comment="@if($comment->translation){{$comment->translation->greek}}@endif"></i>
-                                                      <i class="pg-trash text-danger btn-delete" data-id="{{$comment->id}}"></i>
-                                                    </span>
+                                                   
+                                                    @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'add-comments'))
+                                                      <span class="m-l-20">
+                                                        <i class="fa fa-pencil-square text-success btn-edit" data-id={{$comment->id}} data-comment="{{$comment->comments}}" data-greek-comment="@if($comment->translation){{$comment->translation->greek}}@endif"></i>
+                                                        <i class="pg-trash text-danger btn-delete" data-id="{{$comment->id}}"></i>
+                                                      </span>
+                                                    @endif
                                                 </div> 
 
                                                 <p> {{$comment->comments}}</p>
@@ -338,8 +343,6 @@
 
             $('#editModal').modal('show');
         });
-
-
     });
 
     $('.btn-delete').click(function() {

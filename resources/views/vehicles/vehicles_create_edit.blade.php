@@ -30,7 +30,7 @@
           </div>
           @if(isset($vehicle))
             @if($vehicle->Engine_ECU)
-            @if(Auth::user()->is_admin())
+            @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'see-comments'))
               <div class="pull-right">
                 <a class="btn btn-success" href="{{route('add-comments', $vehicle->id)}}">Add Comments</a>
               </div>
