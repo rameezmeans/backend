@@ -197,6 +197,25 @@
 
                                 <tr>
                                     <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Edit File</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p><input data-engineer_id={{$engineer->id}} data-permission="edit-file" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'edit-file')) checked="checked" @endif /></p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Delete File</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p><input data-engineer_id={{$engineer->id}} data-permission="delete-file" class="active" type="checkbox" data-init-plugin="switchery" @if(get_engineers_permission($engineer->id, 'delete-file')) checked="checked" @endif /></p>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td class="v-align-middle semi-bold sorting_1">
                                         <p>Admin's Tasks</p>
                                     </td>
                                     <td class="v-align-middle semi-bold sorting_1">

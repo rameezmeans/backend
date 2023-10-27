@@ -30,8 +30,10 @@
                 <div class="col-xs-12">
                     <a target="_blank" href="{{route('file', $file->id)}}" class="btn btn-success btn-cons m-b-10" type="button"><i class="pg-plus_circle"></i> <span class="bold">Back to File</span>
                     </a>
-                    <a target="_blank" href="{{route('vehicle', $file->vehicle()->id)}}" class="btn btn-success btn-cons m-b-10"><i class="pg-plus_circle"></i> <span class="bold">Go to Vehicle</span>
-                    </a>
+                    @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-vehicles'))
+                        <a target="_blank" href="{{route('vehicle', $file->vehicle()->id)}}" class="btn btn-success btn-cons m-b-10"><i class="pg-plus_circle"></i> <span class="bold">Go to Vehicle</span>
+                        </a>
+                    @endif
                     {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                 </div>
                 </div>
