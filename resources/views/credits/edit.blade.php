@@ -162,7 +162,7 @@
                                                         @if($file->subdealer_group_id)
                                                             <p>{{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}</p>
                                                         @else
-                                                            <p>@if($credit->file_id)  <a href="{{route('file', $credit->file_id)}}"> {{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }}</a> @else<span class="label label-danger">{{$credit->message_to_credit}}</span>@endif</p>
+                                                            <p>@if($credit->file_id)  @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')) <a href="{{route('file', $credit->file_id)}}"> @endif {{$credit->file->vehicle()->Name}} {{ $credit->file->engine }} {{ $credit->file->vehicle()->TORQUE_standard }} @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')) </a> @endif @else<span class="label label-danger">{{$credit->message_to_credit}}</span>@endif</p>
                                                         @endif
 
                                                     @else
@@ -181,7 +181,9 @@
                                                     @if($file->subdealer_group_id)
                                                         <span class="label label-danger text-white">LUA Entry</span>
                                                     @else
-                                                        <a href="{{route('file', $credit->file_id)}}" class="btn btn-sm btn-primary"><i class="fa fa-file"></i></a>
+                                                        @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files'))
+                                                            <a href="{{route('file', $credit->file_id)}}" class="btn btn-sm btn-primary"><i class="fa fa-file"></i></a>
+                                                        @endif
                                                     @endif
 
                                                     @else
