@@ -506,7 +506,7 @@ Route::get('/work_hours', [App\Http\Controllers\WorkHoursController::class,'inde
 Route::get('/edit_work_hour/{id}', [App\Http\Controllers\WorkHoursController::class,'edit'])->name('edit-work-hour');
 Route::post('/update_work_hour', [App\Http\Controllers\WorkHoursController::class,'update'])->name('update-work-hour');
 
-Route::get('/groups', [App\Http\Controllers\GroupsController::class,'index'])->name('customer.groups');
+// Route::get('/groups', [App\Http\Controllers\GroupsController::class,'index'])->name('customer.groups');
 
 Route::get('/groups', [App\Http\Controllers\GroupsController::class,'index'])->name('groups');
 Route::get('/group/{id}', [App\Http\Controllers\GroupsController::class,'show'])->name('group');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PaymentAccount;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentAccountsController extends Controller
 {
@@ -16,7 +17,7 @@ class PaymentAccountsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('adminOnly');
+        // $this->middleware('adminOnly');
     }
     
     /**
@@ -26,9 +27,15 @@ class PaymentAccountsController extends Controller
      */
     public function index()
     {
-        $accounts = PaymentAccount::whereNull('subdealer_group_id')->get();
 
-        return view('payment_accounts.index', ['accounts' => $accounts]);
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-payment-accounts')){
+            
+            $accounts = PaymentAccount::whereNull('subdealer_group_id')->get();
+            return view('payment_accounts.index', ['accounts' => $accounts]);
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**
@@ -38,6 +45,11 @@ class PaymentAccountsController extends Controller
      */
     public function create()
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         return view('payment_accounts.create');
 
     }
@@ -50,6 +62,11 @@ class PaymentAccountsController extends Controller
      */
     public function store(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $account = new PaymentAccount();
         $account->name = $request->name;
         $account->key = $request->key;
@@ -79,9 +96,16 @@ class PaymentAccountsController extends Controller
      */
     public function edit($id)
     {
-        $account = PaymentAccount::where('id',$id)
-        ->whereNull('subdealer_group_id')
-        ->first();
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-payment-accounts')){
+        
+            $account = PaymentAccount::where('id',$id)
+            ->whereNull('subdealer_group_id')
+            ->first();
+            }
+        
+        else{
+            return abort(404);
+        }
 
         return view('payment_accounts.create', ['account' => $account]);
     }
@@ -95,43 +119,50 @@ class PaymentAccountsController extends Controller
      */
     public function update(Request $request)
     {   
-        $account = PaymentAccount::where('id',$request->id)
-        ->whereNull('subdealer_group_id')
-        ->first();
 
-        $account->name = $request->name;
-        $account->key = $request->key;
-        $account->secret = $request->secret;
-        $account->senders_name = $request->senders_name;
-        $account->senders_phone_number = $request->senders_phone_number;
-        $account->senders_address = $request->senders_address;
-        $account->zip = $request->zip;
-        $account->city = $request->city;
-        $account->country = $request->country;
-        $account->type = $request->type;
-        $account->company_id = $request->company_id;
-        $account->company = $request->company;
-        $account->prefix = $request->prefix;
-        $account->note = $request->note;
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-payment-accounts')){
+            
+            $account = PaymentAccount::where('id',$request->id)
+            ->whereNull('subdealer_group_id')
+            ->first();
 
-        if($request->elorus == 'on' || $request->elorus == 1){
-            $account->elorus = 1;
+            $account->name = $request->name;
+            $account->key = $request->key;
+            $account->secret = $request->secret;
+            $account->senders_name = $request->senders_name;
+            $account->senders_phone_number = $request->senders_phone_number;
+            $account->senders_address = $request->senders_address;
+            $account->zip = $request->zip;
+            $account->city = $request->city;
+            $account->country = $request->country;
+            $account->type = $request->type;
+            $account->company_id = $request->company_id;
+            $account->company = $request->company;
+            $account->prefix = $request->prefix;
+            $account->note = $request->note;
+
+            if($request->elorus == 'on' || $request->elorus == 1){
+                $account->elorus = 1;
+            }
+            else{
+                $account->elorus = 0;
+            }
+
+            if(isset($request->companys_logo)){
+
+                $file = $request->file('companys_logo');
+                $fileName = $file->getClientOriginalName();
+                $file->move(public_path('company_logos'),$fileName);
+                $account->companys_logo = $fileName;
+            }
+
+            $account->save();
+
+            return redirect()->route('payment-accounts')->with('success', 'Account updated, successfully.');
         }
         else{
-            $account->elorus = 0;
+            abort(404);
         }
-
-        if(isset($request->companys_logo)){
-
-            $file = $request->file('companys_logo');
-            $fileName = $file->getClientOriginalName();
-            $file->move(public_path('company_logos'),$fileName);
-            $account->companys_logo = $fileName;
-        }
-
-        $account->save();
-
-        return redirect()->route('payment-accounts')->with('success', 'Account updated, successfully.');
     }
 
     /**
@@ -142,6 +173,11 @@ class PaymentAccountsController extends Controller
      */
     public function destroy(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $account = PaymentAccount::findOrFail($request->id);
         $account->delete();
     }

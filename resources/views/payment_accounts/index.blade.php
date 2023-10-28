@@ -28,8 +28,10 @@
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
-                    <button data-redirect="{{ route('create-payment-account') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Create Payment Account</span>
-                    </button>
+                    @if(Auth::user()->is_admin())
+                        <button data-redirect="{{ route('create-payment-account') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Create Payment Account</span>
+                        </button>
+                    @endif
                     {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                 </div>
                 </div>
@@ -46,7 +48,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($accounts as $account)
-                                    <tr role="row" class="redirect-click" data-redirect="{{ route('edit-payment-account', [$account->id]) }}">
+                                    <tr role="row" @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-payment-accounts')) class="redirect-click" data-redirect="{{ route('edit-payment-account', [$account->id]) }}" @endif>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$account->name}}</p>
                                         </td>

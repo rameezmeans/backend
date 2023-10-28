@@ -166,6 +166,17 @@
         @endif
         @endif
 
+        @if(get_engineers_permission(Auth::user()->id, 'view-groups'))
+
+        <li class="m-t-30 ">
+          <a href="{{ route('groups') }}" class="detailed">
+            <span class="title">Customer Groups</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+        </li>
+
+        @endif
+
         @if(Auth::user()->is_admin())
 
 
@@ -215,6 +226,17 @@
           </a>
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
         </li>
+        @endif
+
+        @if(get_engineers_permission(Auth::user()->id, 'view-payment-accounts'))
+
+        <li class="m-t-30 ">
+          <a href="{{ route('payment-accounts') }}" class="detailed">
+            <span class="title">Payment Methods</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+        </li>
+
         @endif
 
         @endif

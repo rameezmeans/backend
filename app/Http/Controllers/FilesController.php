@@ -361,25 +361,27 @@ class FilesController extends Controller
     
     public function delete(Request $request){
 
-        if(!Auth::user()->is_admin()){
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'delete-file')) {
+            
+            $file = File::findOrFail($request->id);
+
+            FileService::where('file_id', $file->id)->delete();
+            ProcessedFile::where('file_id', $file->id)->delete();
+            RequestFile::where('file_id', $file->id)->delete();
+            FileInternalEvent::where('file_id', $file->id)->delete();
+            FileFeedback::where('file_id', $file->id)->delete();
+            AlientechFile::where('file_id', $file->id)->delete();
+            EngineerFileNote::where('file_id', $file->id)->delete();
+            FileUrl::where('file_id', $file->id)->delete();
+            Log::where('file_id', $file->id)->delete();
+            
+            $file->delete();
+
+            return response()->json( 'deleted' );
+        }
+        else{
             return abort(404);
         }
-        
-        $file = File::findOrFail($request->id);
-
-        FileService::where('file_id', $file->id)->delete();
-        ProcessedFile::where('file_id', $file->id)->delete();
-        RequestFile::where('file_id', $file->id)->delete();
-        FileInternalEvent::where('file_id', $file->id)->delete();
-        FileFeedback::where('file_id', $file->id)->delete();
-        AlientechFile::where('file_id', $file->id)->delete();
-        EngineerFileNote::where('file_id', $file->id)->delete();
-        FileUrl::where('file_id', $file->id)->delete();
-        Log::where('file_id', $file->id)->delete();
-        
-        $file->delete();
-
-        return response()->json( 'deleted' );
 
     }
 
