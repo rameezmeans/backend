@@ -58,19 +58,18 @@ class CreditsController extends Controller
     public function credits() {
 
         if(Auth::user()->is_admin() || (get_engineers_permission(Auth::user()->id, 'show-transaction'))){
-            
-
-        $customerRole = Role::where('name', 'customer')->first();
-        $subdealerRole = Role::where('name', 'subdealer')->first();
-
-        $customers = User::where('role_id', $customerRole->id)
-        ->where('name' ,'!=', 'Live Chat')
-        ->where('name' ,'!=', 'Live Chat Sub')
-        ->orWhere('role_id', $subdealerRole->id)
-        ->get();
-
-        return view('credits.credits', ['customers' =>$customers]);
         
+            $customerRole = Role::where('name', 'customer')->first();
+            $subdealerRole = Role::where('name', 'subdealer')->first();
+
+            $customers = User::where('role_id', $customerRole->id)
+            ->where('name' ,'!=', 'Live Chat')
+            ->where('name' ,'!=', 'Live Chat Sub')
+            ->orWhere('role_id', $subdealerRole->id)
+            ->get();
+
+            return view('credits.credits', ['customers' =>$customers]);
+            
         }
 
         else{

@@ -208,8 +208,6 @@ class ServicesController extends Controller
             foreach($proposedOptions as $o) {
                     $option = Service::findOrFail($o);
                     $forceOptions .= '<option selected value="'.$option->id.'">'.$option->name.'</option>';
-                    
-                    
                 }
                 
             }

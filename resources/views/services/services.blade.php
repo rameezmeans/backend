@@ -145,15 +145,17 @@
                             <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Tuning-X Master Credits</th>
                             <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Tuning-X Slave Credits</th>
                             <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Vehicle Type</th>
-                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">ECU Tech Active</th>
-                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">TuningX Active</th>
+                            @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-services'))
+                                <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">ECU Tech Active</th>
+                                <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">TuningX Active</th>
+                            @endif
                             <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Date Created</th>
                             <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 342px;">Description</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($stages as $service)
-                            <tr role="row" class="redirect-click" data-redirect="{{ route('edit-service', $service->id) }}">
+                            <tr role="row" @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-services')) class="redirect-click" data-redirect="{{ route('edit-service', $service->id) }}" @endif>
                                 <td class="v-align-middle semi-bold sorting_1">
                                     <img alt="{{$service->name}}" width="33" height="33" data-src-retina="" data-src="" src="{{ url('icons').'/'.\App\Models\Service::findOrFail($service->id)->icon }}">
                                     <p>{{$service->name}}</p>
@@ -176,13 +178,14 @@
                                 <td class="v-align-middle">
                                     <span class="label label-info">{{$service->vehicle_type}}</span>
                                 </td>
-                               
-                                <td class="v-align-middle">
-                                    <p><input data-service_id={{$service->id}} class="stage_active" type="checkbox" data-init-plugin="switchery" @if($service->active) checked="checked" @endif onclick="status_change()"/></p>
-                                </td>
-                                <td class="v-align-middle">
-                                    <p><input data-service_id={{$service->id}} class="tuningx_active" type="checkbox" data-init-plugin="switchery" @if($service->tuningx_active) checked="checked" @endif onclick="status_tuningx_change()"/></p>
-                                </td>
+                                @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-services'))
+                                    <td class="v-align-middle">
+                                        <p><input data-service_id={{$service->id}} class="stage_active" type="checkbox" data-init-plugin="switchery" @if($service->active) checked="checked" @endif onclick="status_change()"/></p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        <p><input data-service_id={{$service->id}} class="tuningx_active" type="checkbox" data-init-plugin="switchery" @if($service->tuningx_active) checked="checked" @endif onclick="status_tuningx_change()"/></p>
+                                    </td>
+                                @endif
                                
                                 <td class="v-align-middle">
                                     <p>{{$service->created_at->diffForHumans()}}</p>
@@ -240,7 +243,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($sharedServices as $service)
-                                    <tr role="row" class="redirect-click" data-redirect="{{ route('edit-service', $service->id) }}">
+                                    <tr role="row" @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-services')) class="redirect-click" data-redirect="{{ route('edit-service', $service->id) }}" @endif>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$service->name}}</p>
                                         </td>

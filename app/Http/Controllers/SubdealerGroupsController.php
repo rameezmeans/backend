@@ -35,6 +35,10 @@ class SubdealerGroupsController extends Controller
 
     public function addSubdealerGroupPrice(Request $request){
 
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $record = ServiceSubdealerGroup::where('service_id', $request->service_id)->first();
         
         if($record){
@@ -74,6 +78,10 @@ class SubdealerGroupsController extends Controller
 
     public function setPrice($id){
 
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $subdealerGroups = SubdealerGroup::all();
         $service = Service::findOrFail($id);
         
@@ -87,6 +95,10 @@ class SubdealerGroupsController extends Controller
 
     public function groups(){
 
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $subdealerGroups = SubdealerGroup::all();
         return view('subdealers.groups', ['subdealerGroups' => $subdealerGroups]);
 
@@ -94,12 +106,21 @@ class SubdealerGroupsController extends Controller
 
     public function index(){
 
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $subdealers = Subdealer::all();
         return view('subdealers.index', ['subdealers' => $subdealers]);
 
     }
     
     public function editTokens($id){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
         $alienTechKey = Key::where('subdealer_group_id', $id)
         ->where('key', 'alientech_access_token')->first();
 
@@ -133,6 +154,10 @@ class SubdealerGroupsController extends Controller
     }
 
     public function updateMasterTokens(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
         
         $alienTechKey = Key::whereNull('subdealer_group_id')
         ->where('key', 'alientech_access_token')->first();
