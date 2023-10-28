@@ -53,7 +53,7 @@
                         </thead>
                         <tbody>
                           @foreach ($customers as $customer)
-                            <tr role="row" class="redirect-click" data-redirect="{{ route('edit-customer', $customer->id) }}">
+                            <tr role="row" class="@if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-customers')) redirect-click @endif" @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-customers')) data-redirect="{{ route('edit-customer', $customer->id) }}" @endif>
                                 <td class="v-align-middle semi-bold sorting_1">
                                     <p>{{$customer->name}}</p>
                                 </td>

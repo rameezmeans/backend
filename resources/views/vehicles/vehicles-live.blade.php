@@ -45,10 +45,12 @@
                     </div>
                     <div class="pull-right">
                         <div class="col-xs-12">
-                            <button data-redirect="{{ route('create-vehicle') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Vehicle</span>
-                            </button>
-                            <button data-redirect="{{ route('import-vehicles') }}" class="btn btn-green btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Import Vehicles</span>
-                            </button>
+                            @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-vehicles'))
+                                <button data-redirect="{{ route('create-vehicle') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Vehicle</span>
+                                </button>
+                                <button data-redirect="{{ route('import-vehicles') }}" class="btn btn-green btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Import Vehicles</span>
+                                </button>
+                            @endif
                             
                             {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                         </div>

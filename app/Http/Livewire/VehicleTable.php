@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Vehicle;
+use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
@@ -45,6 +46,8 @@ class VehicleTable extends LivewireDatatable
 
     public function rowClasses($row, $loop)
     {
-        return 'redirect-click-vehicle '.$row->id;
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-vehicles')){
+            return 'redirect-click-vehicle '.$row->id;
+        }
     }
 }

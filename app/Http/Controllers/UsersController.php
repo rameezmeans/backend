@@ -184,10 +184,10 @@ class UsersController extends Controller
 
         if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-customers')){
 
-        $customer = User::findOrFail($id);
-        $groups = Group::all();
-        $frontends = FrontEnd::all();
-        return view('groups.create_edit_customers', ['customer' => $customer, 'groups' => $groups, 'frontends' => $frontends]);
+            $customer = User::findOrFail($id);
+            $groups = Group::all();
+            $frontends = FrontEnd::all();
+            return view('groups.create_edit_customers', ['customer' => $customer, 'groups' => $groups, 'frontends' => $frontends]);
         }
         else{
             abort(404);
