@@ -617,19 +617,18 @@ class ServicesController extends Controller
     public function changeStatus(Request $request)
     {
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-services')){
 
-        $service = Service::findOrFail($request->service_id);
-        if($request->status == 'true'){
-            $service->active = true;
+            $service = Service::findOrFail($request->service_id);
+            if($request->status == 'true'){
+                $service->active = true;
+            }
+            else{
+                $service->active = false;
+            }
+            $service->save();
+            return response()->json(['success' => 'status changed']);
         }
-        else{
-            $service->active = false;
-        }
-        $service->save();
-        return response()->json(['success' => 'status changed']);
     }
 
     /**
@@ -640,19 +639,18 @@ class ServicesController extends Controller
     public function changeTuningxStatus(Request $request)
     {
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-services')){
 
-        $service = Service::findOrFail($request->service_id);
-        if($request->status == 'true'){
-            $service->tuningx_active = true;
+            $service = Service::findOrFail($request->service_id);
+            if($request->status == 'true'){
+                $service->tuningx_active = true;
+            }
+            else{
+                $service->tuningx_active = false;
+            }
+            $service->save();
+            return response()->json(['success' => 'status changed']);
         }
-        else{
-            $service->tuningx_active = false;
-        }
-        $service->save();
-        return response()->json(['success' => 'status changed']);
     }
 
      /**
