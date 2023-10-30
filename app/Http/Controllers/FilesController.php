@@ -601,7 +601,7 @@ class FilesController extends Controller
 
     public function editFile($id) {
 
-        if(!Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-file')){
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-file')){
         
             $file = File::findOrFail($id);
 
