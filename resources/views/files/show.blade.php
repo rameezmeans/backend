@@ -2255,7 +2255,7 @@
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">ECU</p>
                           <div class="pull-right">
-                            @if($file->ecu && $file->ecu != '')
+                            @if($file->ecu || $file->ecu != '')
                               <span class="label bg-warning">{{$file->ecu}}<span>
                             @else
                               <span class="label label-danger">NO ECU<span>
