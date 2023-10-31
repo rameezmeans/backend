@@ -123,9 +123,9 @@ class File extends Model
     public function getECUComment(){
 
         $vehicle = Vehicle::where('Make', '=', $this->brand)
-        ->where('Model', '=', $this->model)
-        ->where('Generation', '=', $this->version)
-        ->where('Engine', '=', $this->engine)
+        // ->where('Model', '=', $this->model)
+        // ->where('Generation', '=', $this->version)
+        // ->where('Engine', '=', $this->engine)
         ->first();
 
         return $vehicle->getComment($this->ecu);
