@@ -414,15 +414,17 @@
                           <div class="clearfix"></div>
                         </div>
         
-                        @if($file->ecu)
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">ECU</p>
                           <div class="pull-right">
-                            <span class="label label-success">{{$file->ecu}}<span>
+                            @if($file->ecu && $file->ecu != '')
+                              <span class="label bg-warning">{{$file->ecu}}<span>
+                            @else
+                              <span class="label label-danger">NO ECU<span>
+                            @endif
                           </div>
                           <div class="clearfix"></div>
                         </div>
-                        @endif
         
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Gear Box</p>
@@ -432,13 +434,15 @@
                           <div class="clearfix"></div>
                         </div>
 
-                        @if($file->getECUComment())
+                        @if( !empty( $file->getECUComment() ) )
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <h5 class="pull-left">Engineer's Comments On ECU</h5>
                           <br>
-                          <div class="m-l-10">
-                            @if($file->getECUComment()){{$file->getECUComment()->notes}}@endif
-                          </div>
+                          @foreach($file->getECUComment() as $comment)
+                            <div class="m-l-10">
+                              @if($comment->notes){{$comment->notes}}@endif
+                            </div>
+                          @endforeach
                           <div class="clearfix"></div>
                         </div>
                         @endif
@@ -1562,15 +1566,17 @@
                           <div class="clearfix"></div>
                         </div>
         
-                        @if($file->ecu)
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">ECU</p>
                           <div class="pull-right">
-                            <span class="label label-success">{{$file->ecu}}<span>
+                            @if($file->ecu && $file->ecu != '')
+                              <span class="label bg-warning">{{$file->ecu}}<span>
+                            @else
+                              <span class="label label-danger">NO ECU<span>
+                            @endif
                           </div>
                           <div class="clearfix"></div>
                         </div>
-                        @endif
         
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Gear Box</p>
@@ -1580,13 +1586,15 @@
                           <div class="clearfix"></div>
                         </div>
 
-                        @if($file->getECUComment())
+                        @if( !empty( $file->getECUComment() ) )
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <h5 class="pull-left">Engineer's Comments On ECU</h5>
                           <br>
-                          <div class="m-l-10">
-                            @if($file->getECUComment()){{$file->getECUComment()->notes}}@endif
-                          </div>
+                          @foreach($file->getECUComment() as $comment)
+                            <div class="m-l-10">
+                              @if($comment->notes){{$comment->notes}}@endif
+                            </div>
+                          @endforeach
                           <div class="clearfix"></div>
                         </div>
                         @endif

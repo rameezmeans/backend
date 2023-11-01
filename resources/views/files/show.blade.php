@@ -452,13 +452,15 @@
                           <div class="clearfix"></div>
                         </div>
 
-                        @if($file->getECUComment())
+                        @if( !empty( $file->getECUComment() ) )
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <h5 class="pull-left">Engineer's Comments On ECU</h5>
                           <br>
-                          <div class="m-l-10">
-                            @if($file->getECUComment()){{$file->getECUComment()->notes}}@endif
-                          </div>
+                          @foreach($file->getECUComment() as $comment)
+                            <div class="m-l-10">
+                              @if($comment->notes){{$comment->notes}}@endif
+                            </div>
+                          @endforeach
                           <div class="clearfix"></div>
                         </div>
                         @endif
@@ -2275,13 +2277,15 @@
                           <div class="clearfix"></div>
                         </div>
 
-                        @if($file->getECUComment())
+                        @if( !empty( $file->getECUComment() ) )
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <h5 class="pull-left">Engineer's Comments On ECU</h5>
                           <br>
-                          <div class="m-l-10">
-                            @if($file->getECUComment()){{$file->getECUComment()->notes}}@endif
-                          </div>
+                          @foreach($file->getECUComment() as $comment)
+                            <div class="m-l-10">
+                              @if($comment->notes){{$comment->notes}}@endif
+                            </div>
+                          @endforeach
                           <div class="clearfix"></div>
                         </div>
                         @endif
