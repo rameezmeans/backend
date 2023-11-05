@@ -109,6 +109,17 @@ Route::get('/send_email', function () {
 
  Route::get('/tasks', function () {
 
+    // $users = User::all();
+
+    // foreach($users as $user){
+
+    //     $user->test = 1;
+    //     $user->save();
+    // }
+
+    abort(404);
+    exit;
+
     // $response = Http::withHeaders([
     //     'authorization' => 'Token 32fd4c0b90ac267da4c548ea4410b126db2eaf53',
     //     'x-elorus-organization' => '2772131882920314815',
