@@ -119,6 +119,17 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
+
+                <div class="form-group form-group-default required ">
+                  <label>Zohobooks Tax ID</label>
+                  
+                  <input value="@if(isset($group)){{$group->zohobooks_tax_id}}@else{{old('zohobooks_tax_id')}}@endif" name="zohobooks_tax_id" min="0" type="text" class="form-control">
+                </div>
+                @error('zohobooks_tax_id')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
               @endif
 
                 <div class="text-center m-t-40">                    

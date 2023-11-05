@@ -112,6 +112,7 @@ class GroupsController extends Controller
             $group->paypal_payment_account_id = $request->paypal_payment_account_id;
             $group->elorus_template_id = $request->elorus_template_id;
             $group->elorus_tax_id = $request->elorus_tax_id;
+            $group->zohobooks_tax_id = $request->zohobooks_tax_id;
             $group->save();
 
             return redirect()->route('groups')->with(['success' => 'Group updated, successfully.']);
