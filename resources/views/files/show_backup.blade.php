@@ -192,7 +192,7 @@
                         <div class="b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Go To Customer</p>
                           <div class="pull-right">
-                            <button></button>
+                            <a href="{{route('edit-customer', $file->user->id)}}" class="btn-sm btn-success">{{$file->user->name}}</a>
                           </div>
                           <div class="clearfix"></div>
                         </div>
