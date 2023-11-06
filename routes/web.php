@@ -60,17 +60,17 @@ Route::get('/info', function () {
 });
 
 
-Route::get('/manager', function () {
-    $manager = (new ReminderManagerController())->getAllManager();
-    dd($manager);
-});
+// Route::get('/manager', function () {
+//     $manager = (new ReminderManagerController())->getAllManager();
+//     dd($manager);
+// });
 
-Route::get('/send_email', function () {
+// Route::get('/send_email', function () {
 
-    Mail::to('xrkalix@gmail.com')
-    ->send(new \App\Mail\AllMails([ 'html' => 'testing mail.', 'subject' => 'testing', 'front_end_id' => 2 ]));
+//     Mail::to('xrkalix@gmail.com')
+//     ->send(new \App\Mail\AllMails([ 'html' => 'testing mail.', 'subject' => 'testing', 'front_end_id' => 2 ]));
 
-});
+// });
 
 
 // Route::get('/test_sms', function () {
