@@ -140,6 +140,7 @@ class PaymentAccountsController extends Controller
             $account->company = $request->company;
             $account->prefix = $request->prefix;
             $account->note = $request->note;
+            $account->zohobooks_account_id = $request->zohobooks_account_id;
 
             if($request->elorus == 'on' || $request->elorus == 1){
                 $account->elorus = 1;
