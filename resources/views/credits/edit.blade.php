@@ -35,6 +35,9 @@
                 @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'add-transaction'))
                 <div class="col-lg-12 p-b-20">
                     <h3 class="text-center">{{$customer->name}}'s Credit Report</h3>
+                    <div class="text-center">
+                        <a href="{{route('edit-customer', $customer->id)}}" class="btn btn-success">Go To Customer Page</a>
+                    </div>
                     <h5 class="">Total Credits</h5>
                     <form action="{{route('update-credits')}}" method="POST">
                         @csrf
