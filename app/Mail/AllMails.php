@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Log;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -32,8 +31,6 @@ class AllMails extends Mailable
      */
     public function envelope()
     {
-
-        Log::info($this->details);
 
         if($this->details['front_end_id'] == 1){
             return new Envelope(
