@@ -24,8 +24,10 @@
                 <div class="col-xs-12">
                     <button data-redirect="{{route('engineers')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Engineers</span>
                     </button>
-                    <button data-redirect="{{route('engineers-permissions', $engineer->id)}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Engineer's Permissions</span>
-                    </button>
+                    @if(isset($engineer))
+                      <button data-redirect="{{route('engineers-permissions', $engineer->id)}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Engineer's Permissions</span>
+                      </button>
+                    @endif
                     {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                 </div>
                 </div>
