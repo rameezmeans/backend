@@ -71,7 +71,8 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-                "vender/munafio"
+                "vender/munafio",
+                "laravel/telescope"
             ]
         }
     },
