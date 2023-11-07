@@ -84,7 +84,7 @@ class ActiveFeedCron extends Command
         $html = str_replace('#file_url', env('PORTAL_URL').'file/'.$fileID, $html);
 
         $subject = "ECU Tech: Feedback Request";
-        \Mail::to($user->email)->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
+        \Mail::to($user->email)->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject, 'front_end_id' => $user->front_end_id]));
 
     }
     

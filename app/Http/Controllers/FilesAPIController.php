@@ -203,7 +203,7 @@ class FilesAPIController extends Controller
             $subject = "ECU Tech: Task Assigned!";
 
             if($manager['eng_assign_eng_email']){
-                \Mail::to($head->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+                \Mail::to($head->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
             }
             if($manager['eng_assign_eng_sms']){
                 $this->sendMessage($head->phone, $message);
@@ -234,7 +234,7 @@ class FilesAPIController extends Controller
             $subject = "ECU Tech: File Uploaded!";
 
             if($manager['file_upload_admin_email']){
-                \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject]));
+                \Mail::to($admin->email)->send(new \App\Mail\AllMails(['html' => $html, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
             }
 
             if($manager['file_upload_admin_sms']){
@@ -748,10 +748,10 @@ class FilesAPIController extends Controller
         $manager = (new ReminderManagerController())->getManager();
 
         if($manager['eng_file_upload_cus_email']){
-            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
         if($manager['eng_file_upload_admin_email']){
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
         
         if($manager['eng_file_upload_admin_sms']){
