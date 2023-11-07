@@ -902,9 +902,9 @@ class FilesController extends Controller
     public function sendMessage($receiver, $message, $frontendID)
     {
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
 
         try {
             
