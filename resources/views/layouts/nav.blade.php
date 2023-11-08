@@ -129,6 +129,16 @@
 
         @endif
 
+        @if(Auth::user()->is_admin())
+        <li class="m-t-30 ">
+          <a href="{{ route('original-files') }}" class="detailed">
+            <span class="title">Original Files</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+        </li>
+
+        @endif
+
         @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-customers'))
 
 

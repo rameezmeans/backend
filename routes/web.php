@@ -413,8 +413,6 @@ Route::get('/info', function () {
 
 Route::match(['get', 'post'], '/makelua', [App\Http\Controllers\makelua::class, 'Makelua']);
 
-
-
 Route::post('/change_status', [App\Http\Controllers\ServicesController::class, 'changeStatus'])->name('change-status');
 Route::post('/change_tuningx_status', [App\Http\Controllers\ServicesController::class, 'changeTuningxStatus'])->name('change-tuningx-status');
 Route::post('/get_total_proposed_credits', [App\Http\Controllers\ServicesController::class, 'getTotalProposedCredits'])->name('get-total-proposed-credits');
@@ -453,6 +451,10 @@ Route::post('add_options_offer', [App\Http\Controllers\FilesController::class, '
 Route::post('force_options_offer', [App\Http\Controllers\FilesController::class, 'forceOptionsOffer'])->name('force-options-offer');
 Route::get('multi_delete', [App\Http\Controllers\FilesController::class, 'multiDelete'])->name('multi-delete');
 Route::post('delete_files', [App\Http\Controllers\FilesController::class, 'deleteFiles'])->name('delete-files');
+
+Route::get('original_files', [App\Http\Controllers\OriginalFilesController::class, 'index'])->name('original-files');
+Route::get('download_original_file/{id}', [App\Http\Controllers\OriginalFilesController::class, 'download'])->name('download-original-file');
+Route::get('renaming', [App\Http\Controllers\OriginalFilesController::class, 'renaming'])->name('renaming-original-files');
 
 Route::get('/download/{id}/{file}/{autoDelete}', [App\Http\Controllers\FilesController::class,'download'])->name('download');
 Route::get('/support/{id}', [App\Http\Controllers\FilesController::class,'support'])->name('support');
