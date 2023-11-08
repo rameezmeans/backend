@@ -54,24 +54,24 @@ class OriginalFilesController extends Controller
 
     }
 
-    public function renaming(){
+    // public function renaming(){
 
-        $folder = public_path('/../../original_files_renaming_folder');
+    //     $folder = public_path('/../../original_files_renaming_folder');
 
-        foreach(glob($folder.'/*.*') as $file) {
-            rename($file, str_replace('--', '-', $file));
-        }
+    //     foreach(glob($folder.'/*.*') as $file) {
+    //         rename($file, str_replace('--', '-', $file));
+    //     }
 
-        foreach(glob($folder.'/*.*') as $file) {
-            rename($file, str_replace('--', '-', $file));
+    //     foreach(glob($folder.'/*.*') as $file) {
+    //         rename($file, str_replace('--', '-', $file));
 
-        }
+    //     }
 
-        foreach(glob($folder.'/*.*') as $file) {
-            rename($file, str_replace('-_', '_', $file));
+    //     foreach(glob($folder.'/*.*') as $file) {
+    //         rename($file, str_replace('-_', '_', $file));
 
-        }
+    //     }
 
-    }
+    // }
 
 }

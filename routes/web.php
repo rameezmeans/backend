@@ -22,6 +22,8 @@ use App\Models\ServiceSubdealerGroup;
 use App\Models\Tool;
 use App\Models\User;
 use App\Models\UserTool;
+use App\Models\Vehicle;
+use App\Models\VehiclesNote;
 use Faker\Provider\ar_EG\Address;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
@@ -108,6 +110,16 @@ Route::get('/info', function () {
 // });
 
  Route::get('/tasks', function () {
+
+    $notes = VehiclesNote::all();
+
+    foreach($notes as $note){
+        $vehicle = Vehicle::findOrFail($note->vehicle_id);
+        $note->make = $vehicle->Make;
+        $note->save();
+    }
+
+    dd($notes);
 
     // $users = User::all();
 
