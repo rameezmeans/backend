@@ -458,7 +458,7 @@
                           <br>
                           
                             <div class="m-l-10">
-                              {{$file->getECUComment()->notes}}@endif
+                              {{$file->getECUComment()->notes}}
                             </div>
                           
                           <div class="clearfix"></div>
@@ -2283,7 +2283,7 @@
                           <br>
                           
                             <div class="m-l-10">
-                              {{$file->getECUComment()->notes}}@endif
+                              {{$file->getECUComment()->notes}}
                             </div>
                           
                           <div class="clearfix"></div>
