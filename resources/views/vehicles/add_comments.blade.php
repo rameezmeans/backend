@@ -93,6 +93,7 @@
                                     @csrf
                                     <input type="hidden" id="vehicle_id" name="vehicle_id" value="{{$vehicle->id}}">
                                     <input type="hidden" name="ecu" id="ecu" value="{{$ecu}}">
+                                    <input type="hidden" name="make" id="make" value="{{$vehicle->Make}}">
                                     
                                     <div class="form-group-attached ">
                                       <div class="row">
@@ -109,6 +110,9 @@
                                   <div class="row">
                                     <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
                                       <button type="submit" class="btn btn-success btn-block m-t-5">Add Note</button>
+                                      @if($vehicle->getComment($ecu))
+                                        <button type="button" class="btn btn-danger btn-block m-t-5" data-note_id="{{$vehicle->getComment($ecu)->id}}"=>Delete Note</button>
+                                      @endif
                                     </div>
                                   </div>
                                 </form>
