@@ -131,9 +131,9 @@ class File extends Model
         $note = null;
         
         if($this->ecu){
-            $note = VehiclesNote::where('make', $this->make)->where('ecu', $this->ecu)->first();
+            $note = VehiclesNote::where('make', $this->brand)->where('ecu', $this->ecu)->first();
         }
-        
+
         return $note;
     }
 
