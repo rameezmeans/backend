@@ -13,7 +13,6 @@ class Vehicle extends Model
     ];
 
     public function getComment($ecu){
-        // dd($ecu);
-        return VehiclesNote::where('vehicle_id', $this->id)->where('ecu', $ecu)->first();
+        return VehiclesNote::where('make', $this->make)->where('ecu', $ecu)->first();
     }
 }
