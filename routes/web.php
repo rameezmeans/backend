@@ -111,15 +111,15 @@ Route::get('/info', function () {
 
  Route::get('/tasks', function () {
 
-    $notes = VehiclesNote::all();
+    // $notes = VehiclesNote::all();
 
-    foreach($notes as $note){
-        $vehicle = Vehicle::findOrFail($note->vehicle_id);
-        $note->make = $vehicle->Make;
-        $note->save();
-    }
+    // foreach($notes as $note){
+    //     $vehicle = Vehicle::findOrFail($note->vehicle_id);
+    //     $note->make = $vehicle->Make;
+    //     $note->save();
+    // }
 
-    dd($notes);
+    // dd($notes);
 
     // $users = User::all();
 
