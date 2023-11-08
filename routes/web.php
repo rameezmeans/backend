@@ -521,6 +521,7 @@ Route::get('/add_comments/{id}', [App\Http\Controllers\VehiclesController::class
 Route::post('/add-option-comments', [App\Http\Controllers\VehiclesController::class,'addOptionComments'])->name('add-option-comments');
 Route::post('/edit-option-comment', [App\Http\Controllers\VehiclesController::class,'editOptionComment'])->name('edit-option-comment');
 Route::post('/delete_comment', [App\Http\Controllers\VehiclesController::class,'deleteComment'])->name('delete-comment');
+Route::post('/delete_note', [App\Http\Controllers\VehiclesController::class,'deleteNote'])->name('delete-note');
 Route::post('/mass_delete', [App\Http\Controllers\VehiclesController::class,'massDelete'])->name('mass-delete');
 Route::get('/import_vehicles', [App\Http\Controllers\VehiclesController::class,'importVehiclesView'])->name('import-vehicles');
 Route::post('/import_vehicles_post', [App\Http\Controllers\VehiclesController::class,'importVehicles'])->name('import-vehicles-post');

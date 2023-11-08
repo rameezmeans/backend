@@ -323,6 +323,20 @@ class VehiclesController extends Controller
 
     }
 
+    public function deleteNote(Request $request)
+    {
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+
+        $vehicle = VehiclesNote::findOrFail($request->id);
+        
+        $vehicle->delete();
+        $request->session()->put('success', 'Vehicle Note deleted, successfully.');
+
+    }
+
     public function deleteComment(Request $request)
     {
 

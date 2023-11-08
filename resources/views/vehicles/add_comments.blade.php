@@ -111,7 +111,7 @@
                                     <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
                                       <button type="submit" class="btn btn-success btn-block m-t-5">Add Note</button>
                                       @if($vehicle->getComment($ecu))
-                                        <button type="button" class="btn btn-danger btn-block m-t-5" data-note_id="{{$vehicle->getComment($ecu)->id}}"=>Delete Note</button>
+                                        <button type="button" class="btn btn-danger btn-block m-t-5 delete-note" data-id="{{$vehicle->getComment($ecu)->id}}"=>Delete Note</button>
                                       @endif
                                     </div>
                                   </div>
@@ -362,6 +362,39 @@
             if (result.isConfirmed) {
                     $.ajax({
                         url: "/delete_comment",
+                        type: "POST",
+                        data: {
+                            id: $(this).data('id')
+                        },
+                        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your Record has been deleted.",
+                                type: "success",
+                                timer: 5000
+                            });
+
+                            location.reload();
+                        }
+                    });            
+                }
+            });
+        });
+
+        $('.delete-note').click(function() {
+          Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+            if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/delete_note",
                         type: "POST",
                         data: {
                             id: $(this).data('id')
