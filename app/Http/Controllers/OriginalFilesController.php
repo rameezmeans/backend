@@ -27,7 +27,9 @@ class OriginalFilesController extends Controller
         $fileName = $originalFile->Make;
         $fileName = $fileName.'-'.$originalFile->Generation;
         $fileName = $fileName.'-'.str_replace(' ', '_', $originalFile->Model);
-        $fileName = $fileName.'-'.str_replace(' ', '_', $originalFile->ProducerECU);
+
+        
+        $fileName = $fileName.'-'.str_replace('/', '-', str_replace(' ', '_', $originalFile->ProducerECU));
 
         if($originalFile->BuildECU)
             $fileName = $fileName.'-'.$originalFile->BuildECU;
