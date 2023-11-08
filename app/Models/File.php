@@ -122,22 +122,19 @@ class File extends Model
 
     public function getECUComment(){
 
-        $vehicles = Vehicle::where('Make', '=', $this->brand)
-        // ->where('Model', '=', $this->model)
-        // ->where('Generation', '=', $this->version)
-        // ->where('Engine', '=', $this->engine)
-        ->get();
+        // $vehicles = Vehicle::where('Make', '=', $this->brand)
+        // // ->where('Model', '=', $this->model)
+        // // ->where('Generation', '=', $this->version)
+        // // ->where('Engine', '=', $this->engine)
+        // ->get();
 
-        $notes = null;
-
-        foreach($vehicles as $vehicle){
-            if($vehicle->getComment($this->ecu)){
-                $notes []= $vehicle->getComment($this->ecu);
-            }
-
+        $note = null;
+        
+        if($this->ecu){
+            $note = VehiclesNote::where('make', $this->make)->where('ecu', $this->ecu)->first();
         }
         
-        return $notes;
+        return $note;
     }
 
     public function stage_services(){
