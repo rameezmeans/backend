@@ -11,6 +11,7 @@ use App\Http\Controllers\PaymentAccountsController;
 use App\Http\Controllers\ReminderManagerController;
 use App\Http\Controllers\SubdealerGroupsController;
 use App\Models\Comment;
+use App\Models\Credit;
 use App\Models\File;
 use App\Models\FileFeedback;
 use App\Models\Key;
@@ -110,6 +111,16 @@ Route::get('/info', function () {
 // });
 
  Route::get('/tasks', function () {
+
+    $credits = Credit::all();
+
+    foreach($credits as $credit){
+        $user = User::findOrFail($credit->user_id);
+        $credit->front_end_id = $user->front_end_id;
+        $credit->elorus_able = !$user->test;
+    }
+
+    dd('done');
 
     // $notes = VehiclesNote::all();
 
