@@ -120,8 +120,13 @@ Route::get('/info', function () {
         if($user->front_end_id){
             $credit->front_end_id = $user->front_end_id;
         }
-
-        $credit->elorus_able = !($user->test);
+        if($credit->credits > 0){
+            $credit->elorus_able = !($user->test);
+        }
+        else{
+            $credit->elorus_able = 0;
+        }
+        
         $credit->save();
     }
 
