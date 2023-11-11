@@ -117,7 +117,7 @@ Route::get('/info', function () {
     foreach($credits as $credit){
         $user = User::findOrFail($credit->user_id);
         $credit->front_end_id = $user->front_end_id;
-        $credit->elorus_able = ($user->test) ? 0: 1;
+        $credit->elorus_able = 1;
     }
 
     dd('done');
