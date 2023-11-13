@@ -112,25 +112,28 @@ Route::get('/info', function () {
 
  Route::get('/tasks', function () {
 
-    $credits = Credit::all();
+    // $credits = Credit::all();
 
-    foreach($credits as $credit){
-        $user = User::findOrFail($credit->user_id);
+    // foreach($credits as $credit){
+    //     $user = User::findOrFail($credit->user_id);
 
-        if($user->front_end_id){
-            $credit->front_end_id = $user->front_end_id;
-        }
-        if($credit->credits > 0){
-            $credit->elorus_able = !($user->test);
-        }
-        else{
-            $credit->elorus_able = 0;
-        }
-        
-        $credit->save();
-    }
+    //     if($user->front_end_id){
+    //         $credit->front_end_id = $user->front_end_id;
+    //     }
+    //     if($credit->credits > 0){
+    //         $credit->elorus_able = !($user->test);
+    //     }
+    //     else{
+    //         $credit->elorus_able = 0;
+    //     }
 
-    dd('done');
+    //     $credit->save();
+
+    // $credits 
+
+    // }
+
+    // dd('done');
 
     // $notes = VehiclesNote::all();
 
@@ -462,6 +465,8 @@ Route::post('/get_frontend_data', [App\Http\Controllers\HomeController::class, '
 Route::post('/get_credits_chart', [App\Http\Controllers\HomeController::class, 'getCreditsChart'])->name('get-credits-chart');
 Route::post('/get_support_chart', [App\Http\Controllers\HomeController::class, 'getSupportChart'])->name('get-support-chart');
 Route::post('/get_response_time_chart', [App\Http\Controllers\HomeController::class, 'getResponseTimeChart'])->name('get-response-time-chart');
+
+Route::get('/payment_logs', [App\Http\Controllers\PaymentLogController::class, 'customers'])->name('payment-logs');
 
 Route::get('/services', [App\Http\Controllers\ServicesController::class, 'index'])->name('services');
 Route::get('/create_service', [App\Http\Controllers\ServicesController::class, 'create'])->name('create-service');
