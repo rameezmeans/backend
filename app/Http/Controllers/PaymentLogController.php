@@ -62,7 +62,7 @@ class PaymentLogController extends Controller
 
         $paymentLogs = $customer->payment_logs;
         
-        return view('payment_logs.payments', [
+        return view('payment_logs.logs', [
             'paymentLogs' => $paymentLogs,
             'customer' => $customer
         ]);
