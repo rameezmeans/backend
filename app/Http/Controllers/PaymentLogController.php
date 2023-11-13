@@ -61,8 +61,6 @@ class PaymentLogController extends Controller
         $customer = User::findOrFail($id);
 
         $paymentLogs = $customer->payment_logs;
-
-        dd($paymentLogs);
         
         return view('payment_logs.logs', [
             'paymentLogs' => $paymentLogs,
