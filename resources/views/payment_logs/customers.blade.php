@@ -47,12 +47,12 @@
                                         </td>
 
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>@if($customer->group) @if($customer->stripe_payment_account()->elorus) <button class="btn btn-success">Enable</button> @else <button class="btn btn-danger">Disable</button> @endif @else 'No Group'@endif</p>
+                                            <p>@if($customer->group) @if($customer->stripe_payment_account()->elorus) <label class="label bg-success text-white">Enabled</label> @else <label class="label bg-danger text-white">Disabled</label> @endif @else 'No Group'@endif</p>
                                             
                                         </td>
 
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>@if($customer->group) @if($customer->paypal_payment_account()->elorus) <button class="btn btn-success">Enable</button> @else <button class="btn btn-danger">Disable</button> @endif @else 'No Group'@endif</p>
+                                            <p>@if($customer->group) @if($customer->paypal_payment_account()->elorus) <label class="label bg-success text-white">Enabled</label> @else <label class="label bg-danger text-white">Disabled</label> @endif @else 'No Group'@endif</p>
                                             
                                         </td>
 
@@ -68,7 +68,8 @@
                                         
                                         <td class="v-align-middle semi-bold sorting_1">
                                             
-                                            {{-- <a target="_blank" href="{{route('download-original-file', $file->id)}}" class="btn btn-success">Download</a> --}}
+                                            <a target="_blank" href="{{route('all-payments', $customer->id)}}" class="btn btn-success m-b-10">All Payments</a>
+                                            <a target="_blank" href="{{route('payment-logs', $customer->id)}}" class="btn btn-success">Payment Logs</a>
                                            
                                         </td>
                                     </tr>

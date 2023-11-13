@@ -130,6 +130,7 @@
         @endif
 
         @if(Auth::user()->is_admin())
+        
         <li class="m-t-30 ">
           <a href="{{ route('original-files') }}" class="detailed">
             <span class="title">Original Files</span>
@@ -138,7 +139,7 @@
         </li>
 
         <li class="m-t-30 ">
-          <a href="{{ route('payment-logs') }}" class="detailed">
+          <a href="{{ route('payment-and-customers') }}" class="detailed">
             <span class="title">Payment Logs</span>
           </a>
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>

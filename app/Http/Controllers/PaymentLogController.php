@@ -25,7 +25,39 @@ class PaymentLogController extends Controller
         ->whereNot('name', 'Live Chat Sub')
         ->whereNULL('subdealer_group_id')
         ->where('role_id', 4)->get();
-        
+
         return view('payment_logs.customers', ['customers' => $customers]);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function payments($id)
+    {
+        $customer = User::findOrFail($id);
+
+        $adminPayments = $customer->admin_payments;
+        $elorusPayments = $customer->elorus_payments;
+        $nonElorusPayments = $customer->non_elorus_payments;
+
+        return view('payment_logs.payments', [
+            'adminPayments' => $adminPayments,
+            'elorusPayments' => $elorusPayments,
+            'nonElorusPayments' => $nonElorusPayments
+        ]);
+
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function paymentLogs($id)
+    {
+
+    }
 }
+

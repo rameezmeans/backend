@@ -105,6 +105,30 @@ class User extends Authenticatable
         }
     }
 
+    public function admin_payments(){
+        
+        return $this->hasMany(Credit::class)->where('credits', '>', 0)->where('gifted', 1)->where('price_payed', 0); 
+    
+    }
+
+    public function elorus_payments(){
+        
+        return $this->hasMany(Credit::class)
+        ->where('credits', '>', 0)
+        ->whereNotNull('elorus_id')
+        ->where('price_payed','>', 0); 
+    
+    }
+
+    public function non_elorus_payments(){
+        
+        return $this->hasMany(Credit::class)
+        ->where('credits', '>', 0)
+        ->whereNull('elorus_id')
+        ->where('price_payed','>', 0); 
+    
+    }
+
     public function is_customer(){
         
         if(Role::findOrFail($this->role_id)->name == 'customer'){
