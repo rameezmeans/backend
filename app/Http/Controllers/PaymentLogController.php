@@ -57,7 +57,13 @@ class PaymentLogController extends Controller
      */
     public function paymentLogs($id)
     {
+        $customer = User::findOrFail($id);
 
+        $paymentLogs = $customer->payment_logs;
+        
+        return view('payment_logs.payments', [
+            'paymentLogs' => $paymentLogs,
+        ]);
     }
 }
 

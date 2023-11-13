@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('payment_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('payment_id');
+            $table->foreignId('user_id');
             $table->string('elorus_id')->nullable();
             $table->string('reason_to_skip_elorus_id')->nullable();
             $table->string('zohobooks_id')->nullable();

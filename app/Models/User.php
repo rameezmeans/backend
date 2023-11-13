@@ -106,6 +106,10 @@ class User extends Authenticatable
     }
 
     public function admin_payments(){
+
+    }
+
+    public function payment_logs(){
         
         return $this->hasMany(Credit::class)->where('credits', '>', 0)->where('gifted', 1)->where('price_payed', 0); 
     
