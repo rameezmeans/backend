@@ -12,11 +12,7 @@
                 <div class="card-title">
                     <h3>Customers and Payments</h3>
                 </div>
-                <div class="pull-right">
-                <div class="col-xs-12">
-                    
-                </div>
-                </div>
+                
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
