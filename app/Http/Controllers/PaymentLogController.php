@@ -45,7 +45,8 @@ class PaymentLogController extends Controller
         return view('payment_logs.payments', [
             'adminPayments' => $adminPayments,
             'elorusPayments' => $elorusPayments,
-            'nonElorusPayments' => $nonElorusPayments
+            'nonElorusPayments' => $nonElorusPayments,
+            'customer' => $customer
         ]);
 
     }
@@ -63,6 +64,7 @@ class PaymentLogController extends Controller
         
         return view('payment_logs.payments', [
             'paymentLogs' => $paymentLogs,
+            'customer' => $customer
         ]);
     }
 }
