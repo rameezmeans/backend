@@ -40,7 +40,7 @@
                             </thead>
                             <tbody>
                                 @if($paymentLogs)
-                                    @foreach ($paymentLogs as $p)
+                                    @foreach ($paymentLogs as $l)
                                         <tr role="row" class="">
                                             <td class="v-align-middle semi-bold sorting_1">
                                                 <p>{{$l->payment_id}}</p>
