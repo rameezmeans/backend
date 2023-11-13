@@ -64,7 +64,7 @@
                                                 <p>{{$l->email_sent}}</p>
                                             </td>
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p>{{$p->created_at->diffForHumans()}}</p>
+                                                <p>{{$l->created_at->diffForHumans()}}</p>
                                             </td>
                                         </tr>
                                     @endforeach
