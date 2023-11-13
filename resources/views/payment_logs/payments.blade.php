@@ -46,6 +46,7 @@
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Price</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus ID</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Zohobooks ID</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At(Readable)</th>
                                         </tr>
@@ -63,6 +64,11 @@
                                                 </td>
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>{{$p->elorus_id}}</p>
+                                                    
+                                                </td>
+
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{$p->zohobooks_id}}</p>
                                                     
                                                 </td>
 
@@ -92,7 +98,8 @@
                                         <tr role="row">
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Price</th>
-                                            {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus ID</th> --}}
+                                            
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Zohobooks ID</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At(Readable)</th>
                                         </tr>
@@ -109,6 +116,10 @@
                                                     
                                                 </td>
                                                 
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{$p->zohobooks_id}}</p>
+                                                    
+                                                </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>{{date('d/m/Y',strtotime($p->created_at))}}</p>
