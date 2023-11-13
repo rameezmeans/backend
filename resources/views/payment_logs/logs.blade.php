@@ -28,11 +28,47 @@
                         <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Payment</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Customer</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus ID</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Reason To Skip Elorus</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Zohobooks ID</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Reason To Skip Zohobooks ID</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Email Sent</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                
+                                @if($paymentLogs)
+                                    @foreach ($paymentLogs as $p)
+                                        <tr role="row" class="">
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>{{$l->payment_id}}</p>
+                                            </td>
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>{{$l->user_id}}</p>
+                                            </td>
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>{{$l->elorus_id}}</p>
+                                            </td>
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>{{$l->reason_to_skip_elorus_id}}</p>
+                                            </td>
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>{{$l->zohobooks_id}}</p>
+                                            </td>
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>{{$l->reason_to_skip_zohobooks_id}}</p>
+                                            </td>
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>{{$l->email_sent}}</p>
+                                            </td>
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>{{$p->created_at->diffForHumans()}}</p>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
