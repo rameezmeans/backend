@@ -52,6 +52,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if($elorusPayments)
                                         @foreach ($elorusPayments as $p)
                                             <tr role="row" class="">
                                                 <td class="v-align-middle semi-bold sorting_1">
@@ -83,6 +84,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -105,6 +107,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if($nonElorusPayments)
                                         @foreach ($nonElorusPayments as $p)
                                             <tr role="row" class="">
                                                 <td class="v-align-middle semi-bold sorting_1">
@@ -132,6 +135,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -153,6 +157,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if($adminPayments)
                                         @foreach ($adminPayments as $p)
                                             <tr role="row" class="">
                                                 <td class="v-align-middle semi-bold sorting_1">
@@ -176,6 +181,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
