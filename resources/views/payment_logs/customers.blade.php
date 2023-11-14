@@ -58,12 +58,12 @@
                                         </td>
 
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$customer->elorus_id}}</p>
+                                            <p>@if($customer->elorus_id)<a href="{{'https://ecutech.elorus.com/contacts/'.$customer->elorus_id}}">Go To Elorus Account</a>@else No Elorus @endif</p>
                                             
                                         </td>
 
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$customer->zohobooks_id}}</p>
+                                            <p>@if($customer->zohobooks_id)<a href="{{'https://books.zoho.com/app/8745725#/contacts/'.$customer->zohobooks_id}}">Zohobooks Account</a>@else No Zohobooks @endif</p>
                                             
                                         </td>
                                         

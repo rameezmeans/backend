@@ -37,15 +37,10 @@ class PaymentLogController extends Controller
     public function payments($id)
     {
         $customer = User::findOrFail($id);
-
-        $adminPayments = $customer->admin_payments;
-        $elorusPayments = $customer->elorus_payments;
-        $nonElorusPayments = $customer->non_elorus_payments;
-
+        $allPayments = $customer->all_payments;
+        
         return view('payment_logs.payments', [
-            'adminPayments' => $adminPayments,
-            'elorusPayments' => $elorusPayments,
-            'nonElorusPayments' => $nonElorusPayments,
+            'allPayments' => $allPayments,
             'customer' => $customer
         ]);
 

@@ -23,116 +23,66 @@
             </div>
             <div class="card-body">
 
-                <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
-                    <li class="nav-item">
-                      <a href="#" class="active" data-toggle="tab" data-target="#slide1"><span>Elorus Payments</span></a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" data-toggle="tab" data-target="#slide2"><span>Non Elorus Payment</span></a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="#" data-toggle="tab" data-target="#slide3"><span>Admin Entries</span></a>
-                    </li>
-                  </ul>
-
-                  <div class="tab-content">
-                    <div class="tab-pane slide-left active" id="slide1">
-
                         <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                             <div>
                                 <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                                     <thead>
                                         <tr role="row">
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Date</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Customer</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Grouop</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Price</th>
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus ID</th>
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Zohobooks ID</th>
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At(Readable)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if($elorusPayments)
-                                        @foreach ($elorusPayments as $p)
-                                            <tr role="row" class="">
-                                                <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{$p->credits}}</p>
-                                                    
-                                                </td>
-                                                <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>${{$p->price_payed}}</p>
-                                                    
-                                                </td>
-                                                <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{$p->elorus_id}}</p>
-                                                    
-                                                </td>
-
-                                                <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{$p->zohobooks_id}}</p>
-                                                    
-                                                </td>
-
-                                                <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{date('d/m/Y',strtotime($p->created_at))}}</p>
-                                                    
-                                                </td>
-
-                                                <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{$p->created_at->diffForHumans()}}</p>
-                                                    
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="tab-pane slide-left " id="slide2">
-
-                        <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
-                            <div>
-                                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
-                                    <thead>
-                                        <tr role="row">
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits</th>
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Price</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Admin Entry</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Zohobooks</th>
                                             
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Zohobooks ID</th>
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At(Readable)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if($nonElorusPayments)
-                                        @foreach ($nonElorusPayments as $p)
+                                        @if($allPayments)
+                                        @foreach ($allPayments as $p)
                                             <tr role="row" class="">
+
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{date('d/m/Y',strtotime($p->created_at))}}</p>
+                                                    
+                                                </td>
+
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{\App\Models\User::findOrFail($p->user_id)->name}}</p>
+                                                    
+                                                </td>
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{\App\Models\User::findOrFail($p->user_id)->group->name}}</p>
+                                                    
+                                                </td>
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>{{$p->credits}}</p>
                                                     
                                                 </td>
+
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>${{$p->price_payed}}</p>
                                                     
                                                 </td>
-                                                
+
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{$p->zohobooks_id}}</p>
+                                                    <p>@if($p->gifted) Yes @else No @endif</p>
                                                     
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{date('d/m/Y',strtotime($p->created_at))}}</p>
+                                                    <p>@if($p->elorus_id)<a class="btn btn-warning text-black" target="_blank" href="{{$p->elorus_permalink}}">Go To Elorus</a>@else No Elorus @endif</p>
                                                     
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{$p->created_at->diffForHumans()}}</p>
+                                                    <p>@if($p->zohobooks_id)<a class="btn btn-warning text-black" target="_blank" href="{{'https://books.zoho.com/app/8745725#/invoices/'.$p->zohobooks_id}}">Go To Zohobooks</a>@else No Zohobooks @endif</p>
                                                     
                                                 </td>
+
+                                               
                                             </tr>
                                         @endforeach
                                         @endif
@@ -140,59 +90,6 @@
                                 </table>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="tab-pane slide-left" id="slide3">
-
-                        <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
-                            <div>
-                                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
-                                    <thead>
-                                        <tr role="row">
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits</th>
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Note</th>
-                                            {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus ID</th> --}}
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At(Readable)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if($adminPayments)
-                                        @foreach ($adminPayments as $p)
-                                            <tr role="row" class="">
-                                                <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{$p->credits}}</p>
-                                                    
-                                                </td>
-                                                
-                                                <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{$p->message_to_credit}}</p>
-                                                    
-                                                </td>
-
-                                                <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{date('d/m/Y',strtotime($p->created_at))}}</p>
-                                                    
-                                                </td>
-
-                                                <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{$p->created_at->diffForHumans()}}</p>
-                                                    
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-                  </div>
-
-
-                
-
 
             </div>
           </div>
