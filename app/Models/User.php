@@ -110,7 +110,7 @@ class User extends Authenticatable
     }
 
     public function all_payments(){
-        return $this->hasMany(Credit::class)->where('credits', '>', 0); 
+        return $this->hasMany(Credit::class)->orderBy('created_at', 'desc')->where('credits', '>', 0); 
     }
 
     public function payment_logs(){
