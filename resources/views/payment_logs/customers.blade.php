@@ -69,7 +69,7 @@
                                         
                                         <td class="v-align-middle semi-bold sorting_1">
                                             
-                                            <a target="_blank" href="{{route('all-payments', $customer->id)}}" class="btn btn-success m-b-10">All Payments</a>
+                                            <a target="_blank" href="{{route('payments', $customer->id)}}" class="btn btn-success m-b-10">All Payments</a>
                                             <a target="_blank" href="{{route('payment-logs', $customer->id)}}" class="btn btn-success">Payment Logs</a>
                                            
                                         </td>

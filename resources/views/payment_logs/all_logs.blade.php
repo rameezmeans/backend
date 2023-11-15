@@ -10,8 +10,8 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                    <h3>{{$customer->name}}'s Logs</h3>
-                    <h5>Group: {{$customer->group->name}}</h5>
+                    <h3>All Logs</h3>
+                    
                 </div>
                 <div class="pull-right">
                     <div class="col-xs-12">
@@ -30,6 +30,8 @@
                             <thead>
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Date</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Customer</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Customer Group</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Invoice Number</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus Invoice Number</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits</th>
@@ -37,17 +39,25 @@
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Zohobooks</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Trouble Email Sent</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Actions</th>
+                                    {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Actions</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
-                                @if($paymentLogs)
-                                    @foreach ($paymentLogs as $l)
+                                @if($allPaymentLogs)
+                                    @foreach ($allPaymentLogs as $l)
                                         <tr role="row" class="">
 
                                             <td class="v-align-middle semi-bold sorting_1">
                                                 <p>{{date('d/m/Y',strtotime($l->created_at))}}</p>
                                                 
+                                            </td>
+
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>{{\App\Models\User::findOrFail($l->user_id)->name}}</p>
+                                            </td>
+
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>{{\App\Models\User::findOrFail($l->user_id)->group->name}}</p>
                                             </td>
 
                                             <td class="v-align-middle semi-bold sorting_1">
@@ -67,12 +77,12 @@
                                             </td>
 
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p>@if($l->elorus_id)<a class="btn btn-warning text-black" target="_blank" href="{{\App\Models\Credit::findOrFail($l->payment_id)->elorus_permalink}}">Go To Elorus</a>@else No Elorus @endif</p>
+                                                <p>@if($l->elorus_id)<a class="btn btn-warning text-black" target="_blank" href="{{\App\Models\Credit::findOrFail($l->payment_id)->elorus_permalink}}">To Elorus</a>@else No Elorus @endif</p>
                                                 
                                             </td>
 
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p>@if($l->zohobooks_id)<a class="btn btn-warning text-black" target="_blank" href="{{'https://books.zoho.com/app/8745725#/invoices/'.$l->zohobooks_id}}">Go To Zohobooks</a>@else No Zohobooks @endif</p>
+                                                <p>@if($l->zohobooks_id)<a class="btn btn-warning text-black" target="_blank" href="{{'https://books.zoho.com/app/8745725#/invoices/'.$l->zohobooks_id}}">To Zohobooks</a>@else No Zohobooks @endif</p>
                                                 
                                             </td>
 
@@ -81,9 +91,9 @@
                                                 
                                             </td>
 
-                                            <td class="v-align-middle semi-bold sorting_1">
+                                            {{-- <td class="v-align-middle semi-bold sorting_1">
                                                 
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 @endif

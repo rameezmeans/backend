@@ -139,10 +139,23 @@
         </li>
 
         <li class="m-t-30 ">
-          <a href="{{ route('payment-and-customers') }}" class="detailed">
+          <a href="javascript:;">
             <span class="title">Payment Logs</span>
+            <span class=" arrow"></span>
           </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+          <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
+          <ul class="sub-menu">
+            <li class="">
+              <a href="{{ route('payment-and-customers') }}">Customers</a>
+              <span class="icon-thumbnail">Cu</span>
+            </li>
+            
+            <li class="">
+              <a href="{{ route('all-payment-logs') }}">Payment Logs Report</a>
+              <span class="icon-thumbnail">Gr</span>
+            </li>
+            
+          </ul>
         </li>
 
         @endif

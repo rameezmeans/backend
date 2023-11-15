@@ -468,7 +468,8 @@ Route::post('/get_response_time_chart', [App\Http\Controllers\HomeController::cl
 
 Route::get('/payment_and_customers', [App\Http\Controllers\PaymentLogController::class, 'customers'])->name('payment-and-customers');
 Route::get('/payment_logs/{id}', [App\Http\Controllers\PaymentLogController::class, 'paymentLogs'])->name('payment-logs');
-Route::get('/all_payments/{id}', [App\Http\Controllers\PaymentLogController::class, 'payments'])->name('all-payments');
+Route::get('/payments/{id}', [App\Http\Controllers\PaymentLogController::class, 'payments'])->name('payments');
+Route::get('/all_payment_logs', [App\Http\Controllers\PaymentLogController::class, 'allPaymentLogs'])->name('all-payment-logs');
 
 Route::get('/services', [App\Http\Controllers\ServicesController::class, 'index'])->name('services');
 Route::get('/create_service', [App\Http\Controllers\ServicesController::class, 'create'])->name('create-service');
