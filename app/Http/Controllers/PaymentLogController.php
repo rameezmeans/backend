@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Credit;
 use App\Models\PaymentLog;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -61,6 +62,15 @@ class PaymentLogController extends Controller
         return view('payment_logs.logs', [
             'paymentLogs' => $paymentLogs,
             'customer' => $customer
+        ]);
+    }
+
+    public function allPayments(){
+        $allPayments = Credit::orderBy('created_at', 'desc')->get();
+        
+        return view('payment_logs.all_payments', [
+            'allPayments' => $allPayments,
+            
         ]);
     }
 

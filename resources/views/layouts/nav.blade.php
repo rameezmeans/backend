@@ -154,6 +154,11 @@
               <a href="{{ route('all-payment-logs') }}">Payment Logs Report</a>
               <span class="icon-thumbnail">Gr</span>
             </li>
+
+            <li class="">
+              <a href="{{ route('all-payments') }}">All Payment Report</a>
+              <span class="icon-thumbnail">Gr</span>
+            </li>
             
           </ul>
         </li>
