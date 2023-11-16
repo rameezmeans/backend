@@ -112,6 +112,8 @@ Route::get('/info', function () {
 
  Route::get('/tasks', function () {
 
+    dd(env('PORTAL_URL'));
+
     // $credits = Credit::all();
 
     // foreach($credits as $credit){
