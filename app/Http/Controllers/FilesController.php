@@ -1104,7 +1104,13 @@ class FilesController extends Controller
         
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html2);
-        $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+        
+        if($file->front_end_id){
+            $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+        }
+        else{
+            $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+        }
 
         $optionsMessage = "";
         if($file->options){
@@ -1241,7 +1247,13 @@ class FilesController extends Controller
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html2);
         $html2 = str_replace("#note", $request->egnineers_internal_notes,$html2);
-        $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+
+        if($file->front_end_id){
+            $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+        }
+        else{
+            $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+        }
 
         $optionsMessage = "";
         if($file->options){
@@ -1463,7 +1475,13 @@ class FilesController extends Controller
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html2);
         $html2 = str_replace("#status", $file->status,$html2);
-        $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+
+        if($file->front_end_id){
+            $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+        }
+        else{
+            $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+        }
 
         $optionsMessage = "";
         if($file->options){
@@ -2191,7 +2209,13 @@ class FilesController extends Controller
 
             $html2 = str_replace("#tuning_type", $tunningType,$html2);
             $html2 = str_replace("#status", $file->status,$html2);
-            $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+
+            if($file->front_end_id){
+                $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+            }
+            else{
+                $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+            }
 
             $optionsMessage = "";
             if($file->options){
