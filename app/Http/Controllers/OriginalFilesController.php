@@ -23,30 +23,14 @@ class OriginalFilesController extends Controller
     public function download($id){
 
         $originalFile = OriginalFile::findOrFail($id);
-
-        $fileName = $originalFile->Make;
-        $fileName = $fileName.'-'.$originalFile->Generation;
-        $fileName = $fileName.'-'.str_replace(' ', '_', $originalFile->Model);
-
         
-        $fileName = $fileName.'-'.str_replace('/', '-', str_replace(' ', '_', $originalFile->ProducerECU));
+        $fileName = '';
 
-        if($originalFile->BuildECU)
-            $fileName = $fileName.'-'.$originalFile->BuildECU;
+        if($originalFile->Software){
+            $fileName = $fileName.$originalFile->Software;
+        }
 
-        if($originalFile->ECUNrProd)
-            $fileName = $fileName.'-'.str_replace(' ', '_', $originalFile->ECUNrProd );
-
-        if($originalFile->ECUNrECU)
-            $fileName = $fileName.'-'.str_replace(' ', '_', $originalFile->ECUNrECU );
-
-        if($originalFile->SWVersion)
-            $fileName = $fileName.'-'.$originalFile->SWVersion;
-
-        if($originalFile->Software)
-            $fileName = $fileName.'-'.$originalFile->Software;
-
-        $fileName = $fileName.'_('.$originalFile->File.')';
+        $fileName = $fileName.'--'.preg_replace('/\.\w+$/', '', $originalFile->File);
         
         $filePath = public_path('/../../original_files/').$fileName;
 
