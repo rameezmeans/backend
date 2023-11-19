@@ -2103,7 +2103,6 @@ class FilesController extends Controller
 
             $pathAndNameArrayEncoded = $this->getFileName($filepath, $file, 'encoded');
             
-            
             // save the decoded string to a file
             $flag = file_put_contents($pathAndNameArrayEncoded['path'], $contents);
 

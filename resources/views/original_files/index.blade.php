@@ -25,10 +25,10 @@
                         <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Make</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Generation</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Producer</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Series</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Model</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">File</th>
+                                    {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">File</th> --}}
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Download</th>
                                 </tr>
                             </thead>
@@ -36,12 +36,12 @@
                                 @foreach ($originalFiles as $file)
                                     <tr role="row" class="">
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$file->Make}}</p>
+                                            <p>{{$file->Producer}}</p>
                                             
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             
-                                            <p>{{$file->Generation}}</p>
+                                            <p>{{$file->Series}}</p>
                                             
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
@@ -50,11 +50,11 @@
                                            
                                             
                                         </td>
-                                        <td class="v-align-middle semi-bold sorting_1">
+                                        {{-- <td class="v-align-middle semi-bold sorting_1">
                                             
                                             <p>{{$file->File}}</p>
                                            
-                                        </td>
+                                        </td> --}}
                                         <td class="v-align-middle semi-bold sorting_1">
                                             
                                             <a target="_blank" href="{{route('download-original-file', $file->id)}}" class="btn btn-success">Download</a>
