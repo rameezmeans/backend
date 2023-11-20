@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FrontEnd;
 use App\Models\Package;
 use Illuminate\Http\Request;
 
@@ -56,7 +57,8 @@ class PackageController extends Controller
      */
     public function create()
     {
-        return view('packages.packages_create_edit');
+        $frontends = FrontEnd::all();
+        return view('packages.packages_create_edit', ['frontends' => $frontends]);
     }
 
     /**
@@ -80,6 +82,7 @@ class PackageController extends Controller
         $package->actual_price = $request->actual_price;
         $package->discounted_price = $request->discounted_price;
         $package->type = $request->type;
+        $package->front_end_id = $request->front_end_id;
         $package->desc = $request->desc;
 
         if(isset($request->from_master_subdealer)){
@@ -118,7 +121,8 @@ class PackageController extends Controller
     public function edit($id)
     {
         $package = Package::findOrFail($id);
-        return view('packages.packages_create_edit', ['package' => $package]);
+        $frontends = FrontEnd::all();
+        return view('packages.packages_create_edit', ['package' => $package, 'frontends' => $frontends]);
     }
 
     /**
@@ -168,6 +172,7 @@ class PackageController extends Controller
         $package = Package::findOrFail($request->id);
         $package->name = $request->name;
         $package->credits = $request->credits;
+        $package->front_end_id = $request->front_end_id;
         $package->actual_price = $request->actual_price;
         $package->discounted_price = $request->discounted_price;
         $package->desc = $request->desc;

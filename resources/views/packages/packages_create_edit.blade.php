@@ -85,6 +85,15 @@
                     </span>
                   @enderror
 
+                  <div class="form-group form-group-default required ">
+                    <label>Frontend</label>
+                    <select class="full-width" data-init-plugin="select2" name="front_end_id">
+                      @foreach($frontends as $frontend)
+                        <option @if(isset($package) && $package->front_end_id == $frontend->id) selected @endif value="{{$frontend->id}}">{{$frontend->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($package)) Update @else Add @endif</span></button>
                   @if(isset($package))
@@ -171,6 +180,15 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                           @enderror
+
+                          <div class="form-group form-group-default required ">
+                            <label>Frontend</label>
+                            <select class="full-width" data-init-plugin="select2" name="front_end_id">
+                              @foreach($frontends as $frontend)
+                                <option @if(isset($package) && $package->front_end_id == $frontend->id) selected @endif value="{{$frontend->id}}">{{$frontend->name}}</option>
+                              @endforeach
+                            </select>
+                          </div>
         
                         <div class="text-center m-t-40">                    
                           <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($package)) Update @else Add @endif</span></button>
@@ -248,6 +266,15 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                           @enderror
+
+                          <div class="form-group form-group-default required ">
+                            <label>Frontend</label>
+                            <select class="full-width" data-init-plugin="select2" name="front_end_id">
+                              @foreach($frontends as $frontend)
+                                <option @if(isset($package) && $package->front_end_id == $frontend->id) selected @endif value="{{$frontend->id}}">{{$frontend->name}}</option>
+                              @endforeach
+                            </select>
+                          </div>
         
                         <div class="text-center m-t-40">                    
                           <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($package)) Update @else Add @endif</span></button>

@@ -41,6 +41,7 @@
                                     <thead>
                                         <tr role="row">
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Frontend</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 10%;">Active</th>
                                         </tr>
@@ -50,6 +51,9 @@
                                             <tr role="row" class="redirect-click" data-redirect="{{ route('edit-package', $package->id) }}">
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>{{$package->name}}</p>
+                                                </td>
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    @if($package->front_end_id == 1) <span class="label bg-primary text-white"> ECUTech </span> @else <span class="label bg-warning"> TuningX </span> @endif 
                                                 </td>
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>{{$package->created_at->diffForHumans()}}</p>
