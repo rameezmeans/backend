@@ -91,9 +91,9 @@ class VehiclesController extends Controller
 
     public function addOptionComments(Request $request){
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     abort(404);
+        // }
 
         $fileID = $request->file;
 
