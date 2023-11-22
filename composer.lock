@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a7e70922f2d10feaf4353cf75ef349a",
+    "content-hash": "b08c7995a86d1422760ca3ecaa4b4d8a",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -5345,6 +5345,70 @@
                 "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/8.4.0"
             },
             "time": "2021-12-11T13:40:54+00:00"
+        },
+        {
+            "name": "sevenspan/laravel-whatsapp",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/7span/laravel-whatsapp.git",
+                "reference": "82ca0fa05aa2c57943c6e0337dbd2f2ce56cddbb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/7span/laravel-whatsapp/zipball/82ca0fa05aa2c57943c6e0337dbd2f2ce56cddbb",
+                "reference": "82ca0fa05aa2c57943c6e0337dbd2f2ce56cddbb",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2.5||^8.0||^8.1||^8.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "SevenSpan\\WhatsApp\\Providers\\WhatsAppServiceProvider"
+                    ],
+                    "aliases": {
+                        "WhatsApp": "SevenSpan\\WhatsApp\\Facades\\WhatsApp"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SevenSpan\\WhatsApp\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nikunj Gadhiya",
+                    "email": "nikunjpgadhiya@gmail.com",
+                    "homepage": "https://github.com/nikunj320",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Hemratna Bhimani",
+                    "email": "hemratna.bhimani@gmail.com",
+                    "homepage": "https://github.com/hemratna",
+                    "role": "Developer"
+                }
+            ],
+            "description": "It uses whatsapp cloud API to send whatsapp messages.",
+            "homepage": "https://github.com/7span/laravel-whatsapp",
+            "keywords": [
+                "laravel",
+                "laravel-whatsapp",
+                "whatsapp"
+            ],
+            "support": {
+                "issues": "https://github.com/7span/laravel-whatsapp/issues",
+                "source": "https://github.com/7span/laravel-whatsapp/tree/v1.3.0"
+            },
+            "time": "2023-09-19T13:21:56+00:00"
         },
         {
             "name": "smsapi/php-client",

@@ -890,9 +890,9 @@ class FilesController extends Controller
     public function deleteUploadedFile(Request $request)
     {
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
 
         $file = RequestFile::findOrFail($request->request_file_id);
         $file->delete();
