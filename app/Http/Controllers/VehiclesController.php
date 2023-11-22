@@ -213,9 +213,9 @@ class VehiclesController extends Controller
 
     public function editOptionComment(Request $request){
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     abort(404);
+        // }
 
         $comment = Comment::findOrFail($request->id);
         $comment->comments = $request->comments;
@@ -340,9 +340,9 @@ class VehiclesController extends Controller
     public function deleteComment(Request $request)
     {
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     abort(404);
+        // }
 
         $vehicle = Comment::findOrFail($request->id);
         
