@@ -58,6 +58,8 @@
                                     <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Admin</th>
                                     <th style="width: 200px; color:  black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Engineer</th>
                                     <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Engineer</th>
+                                    <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Engineer</th>
+                                    <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Customer</th>
                                     <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Customer</th>
                                     <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Customer</th>
                             </thead>
@@ -78,8 +80,8 @@
                                 </td>
                                 <td class="v-align-middle semi-bold">
                                     <div class="checkbox check-success ">
-                                        <input type="checkbox" @if($ecuTechManager['eng_assign_admin_whatsapp']) checked @endif id="eng_assign_admin_sms" data-id="eng_assign_admin_sms" data-frontend_id='1'>
-                                        <label for="eng_assign_admin_sms" class="">Enable WhatsApp</label>
+                                        <input type="checkbox" @if($ecuTechManager['eng_assign_admin_whatsapp']) checked @endif id="eng_assign_admin_whatsapp" data-id="eng_assign_admin_whatsapp" data-frontend_id='1'>
+                                        <label for="eng_assign_admin_whatsapp" class="">Enable WhatsApp</label>
                                     </div>
                                 </td>
                                 <td class="v-align-middle">
@@ -94,10 +96,22 @@
                                         <label for="eng_assign_eng_sms" class="">Enable SMS</label>
                                     </div>
                                 </td>
+                                <td class="v-align-middle semi-bold">
+                                    <div class="checkbox check-success">
+                                        <input type="checkbox" @if($ecuTechManager['eng_assign_eng_whatsapp']) checked @endif id="eng_assign_eng_whatsapp" data-id="eng_assign_eng_whatsapp" data-frontend_id='1'>
+                                        <label for="eng_assign_eng_whatsapp" class="">Enable Whatsapp</label>
+                                    </div>
+                                </td>
                                 <td class="v-align-middle">
                                     {{-- <div class="checkbox check-success ">
                                         <input type="checkbox" @if($manager['eng_assign_cus_email']) checked @endif id="eng_assign_cus_email">
                                         <label for="eng_assign_cus_email" class="">Enable Email</label>
+                                    </div> --}}
+                                </td>
+                                <td class="v-align-middle semi-bold">
+                                    {{-- <div class="checkbox check-success ">
+                                        <input type="checkbox" @if($manager['eng_assign_cus_sms']) checked @endif id="eng_assign_cus_sms">
+                                        <label for="eng_assign_cus_sms" class="">Enable SMS</label>
                                     </div> --}}
                                 </td>
                                 <td class="v-align-middle semi-bold">
@@ -121,6 +135,12 @@
                                         <label for="file_upload_admin_sms" class="">Enable SMS</label>
                                     </div>
                                 </td>
+                                <td class="v-align-middle semi-bold">
+                                    <div class="checkbox check-success ">
+                                        <input type="checkbox" @if($ecuTechManager['file_upload_admin_whatsapp']) checked @endif id="file_upload_admin_whatsapp" data-id="file_upload_admin_whatsapp" data-frontend_id='1'>
+                                        <label for="file_upload_admin_whatsapp" class="">Enable WhatsApp</label>
+                                    </div>
+                                </td>
                                 <td class="v-align-middle">
                                     <div class="checkbox check-success ">
                                         <input type="checkbox" @if($ecuTechManager['file_upload_eng_email']) checked @endif id="file_upload_eng_email" data-id="file_upload_eng_email" data-frontend_id='1'>
@@ -133,7 +153,16 @@
                                         <label for="file_upload_eng_sms" class="">Enable SMS</label>
                                     </div>
                                 </td>
+                                <td class="v-align-middle semi-bold">
+                                    <div class="checkbox check-success ">
+                                        <input type="checkbox" @if($ecuTechManager['file_upload_eng_whatsapp']) checked @endif id="file_upload_eng_whatsapp" data-id="file_upload_eng_whatsapp" data-frontend_id='1'>
+                                        <label for="file_upload_eng_whatsapp" class="">Enable WhatsApp</label>
+                                    </div>
+                                </td>
                                 <td class="v-align-middle">
+                                    
+                                </td>
+                                <td class="v-align-middle semi-bold">
                                     
                                 </td>
                                 <td class="v-align-middle semi-bold">
@@ -154,8 +183,17 @@
                                         <label for="eng_file_upload_admin_sms" class="">Enable SMS</label>
                                     </div>
                                 </td>
+                                <td class="v-align-middle semi-bold">
+                                    <div class="checkbox check-success ">
+                                        <input type="checkbox" @if($ecuTechManager['eng_file_upload_admin_whatsapp']) checked @endif id="eng_file_upload_admin_whatsapp" data-id="eng_file_upload_admin_whatsapp" data-frontend_id='1'>
+                                        <label for="eng_file_upload_admin_whatsapp" class="">Enable WhatsApp</label>
+                                    </div>
+                                </td>
                                 <td class="v-align-middle">
                                     
+                                </td>
+                                <td class="v-align-middle semi-bold">
+                                   
                                 </td>
                                 <td class="v-align-middle semi-bold">
                                    
@@ -170,6 +208,12 @@
                                     <div class="checkbox check-success ">
                                         <input type="checkbox" @if($ecuTechManager['eng_file_upload_cus_sms']) checked @endif id="eng_file_upload_cus_sms" data-id="eng_file_upload_cus_sms" data-frontend_id='1'>
                                         <label for="eng_file_upload_cus_sms" class="">Enable SMS</label>
+                                    </div>
+                                </td>
+                                <td class="v-align-middle semi-bold">
+                                    <div class="checkbox check-success ">
+                                        <input type="checkbox" @if($ecuTechManager['eng_file_upload_cus_whatsapp']) checked @endif id="eng_file_upload_cus_whatsapp" data-id="eng_file_upload_cus_whatsapp" data-frontend_id='1'>
+                                        <label for="eng_file_upload_cus_whatsapp" class="">Enable WhatsApp</label>
                                     </div>
                                 </td>
                                 </tr>
@@ -187,6 +231,12 @@
                                         <label for="file_new_req_admin_sms" class="">Enable SMS</label>
                                     </div>
                                 </td>
+                                <td class="v-align-middle semi-bold">
+                                    <div class="checkbox check-success ">
+                                        <input type="checkbox" @if($ecuTechManager['file_new_req_admin_whatsapp']) checked @endif id="file_new_req_admin_whatsapp" data-id="file_new_req_admin_whatsapp" data-frontend_id='1'>
+                                        <label for="file_new_req_admin_whatsapp" class="">Enable WhatsApp</label>
+                                    </div>
+                                </td>
                                 <td class="v-align-middle">
                                     <div class="checkbox check-success ">
                                         <input type="checkbox" @if($ecuTechManager['file_new_req_eng_email']) checked @endif id="file_new_req_eng_email" data-id="file_new_req_eng_email" data-frontend_id='1'>
@@ -199,7 +249,16 @@
                                         <label for="file_new_req_eng_sms" class="">Enable SMS</label>
                                     </div>
                                 </td>
+                                <td class="v-align-middle semi-bold">
+                                    <div class="checkbox check-success ">
+                                        <input type="checkbox" @if($ecuTechManager['file_new_req_eng_whatsapp']) checked @endif id="file_new_req_eng_whatsapp" data-id="file_new_req_eng_whatsapp" data-frontend_id='1'>
+                                        <label for="file_new_req_eng_whatsapp" class="">Enable WhatsApp</label>
+                                    </div>
+                                </td>
                                 <td class="v-align-middle">
+                                    
+                                </td>
+                                <td class="v-align-middle semi-bold">
                                     
                                 </td>
                                 <td class="v-align-middle semi-bold">
@@ -220,6 +279,12 @@
                                         <label for="msg_cus_admin_sms" class="">Enable SMS</label>
                                     </div>
                                 </td>
+                                <td class="v-align-middle semi-bold">
+                                    <div class="checkbox check-success ">
+                                        <input type="checkbox" @if($ecuTechManager['msg_cus_admin_whatsapp']) checked @endif id="msg_cus_admin_whatsapp" data-id="msg_cus_admin_whatsapp" data-frontend_id='1'>
+                                        <label for="msg_cus_admin_whatsapp" class="">Enable WhatsApp</label>
+                                    </div>
+                                </td>
                                 <td class="v-align-middle">
                                     <div class="checkbox check-success ">
                                         <input type="checkbox" @if($ecuTechManager['msg_cus_eng_email']) checked @endif id="msg_cus_eng_email" data-id="msg_cus_eng_email" data-frontend_id='1'>
@@ -232,7 +297,16 @@
                                         <label for="msg_cus_eng_sms" class="">Enable SMS</label>
                                     </div>
                                 </td>
+                                <td class="v-align-middle semi-bold">
+                                    <div class="checkbox check-success ">
+                                        <input type="checkbox" @if($ecuTechManager['msg_cus_eng_whatsapp']) checked @endif id="msg_cus_eng_whatsapp" data-id="msg_cus_eng_whatsapp" data-frontend_id='1'>
+                                        <label for="msg_cus_eng_whatsapp" class="">Enable WhatsApp</label>
+                                    </div>
+                                </td>
                                 <td class="v-align-middle">
+                                    
+                                </td>
+                                <td class="v-align-middle semi-bold">
                                     
                                 </td>
                                 <td class="v-align-middle semi-bold">
@@ -253,7 +327,16 @@
                                             <label for="msg_eng_admin_sms" class="">Enable SMS</label>
                                         </div>
                                     </td>
+                                    <td class="v-align-middle semi-bold">
+                                        <div class="checkbox check-success ">
+                                            <input type="checkbox" @if($ecuTechManager['msg_eng_admin_whatsapp']) checked @endif id="msg_eng_admin_whatsapp" data-id="msg_eng_admin_whatsapp" data-frontend_id='1'>
+                                            <label for="msg_eng_admin_whatsapp" class="">Enable WhatsApp</label>
+                                        </div>
+                                    </td>
                                     <td class="v-align-middle">
+                                        
+                                    </td>
+                                    <td class="v-align-middle semi-bold">
                                         
                                     </td>
                                     <td class="v-align-middle semi-bold">
@@ -271,6 +354,12 @@
                                             <label for="msg_eng_cus_sms" class="">Enable SMS</label>
                                         </div>
                                     </td>
+                                    <td class="v-align-middle semi-bold">
+                                        <div class="checkbox check-success ">
+                                            <input type="checkbox" @if($ecuTechManager['msg_eng_cus_whatsapp']) checked @endif id="msg_eng_cus_whatsapp" data-id="msg_eng_cus_whatsapp" data-frontend_id='1'>
+                                            <label for="msg_eng_cus_whatsapp" class="">Enable WhatsApp</label>
+                                        </div>
+                                    </td>
                                     </tr>
                                     <tr role="row" class="odd">
                                         <td class="v-align-middle semi-bold sorting_1">Status Change</td>
@@ -286,10 +375,22 @@
                                                 <label for="status_change_admin_sms" class="">Enable SMS</label>
                                             </div>
                                         </td>
+                                        <td class="v-align-middle semi-bold">
+                                            <div class="checkbox check-success ">
+                                                <input type="checkbox" @if($ecuTechManager['status_change_admin_whatsapp']) checked @endif id="status_change_admin_whatsapp" data-id="status_change_admin_whatsapp" data-frontend_id='1'>
+                                                <label for="status_change_admin_whatsapp" class="">Enable WhatsApp</label>
+                                            </div>
+                                        </td>
                                         <td class="v-align-middle">
                                             {{-- <div class="checkbox check-success ">
                                                 <input type="checkbox" @if($manager['status_change_eng_email']) checked @endif id="status_change_eng_email">
                                                 <label for="status_change_eng_email" class="">Enable Email</label>
+                                            </div> --}}
+                                        </td>
+                                        <td class="v-align-middle semi-bold">
+                                            {{-- <div class="checkbox check-success ">
+                                                <input type="checkbox" @if($manager['status_change_eng_sms']) checked @endif id="status_change_eng_sms">
+                                                <label for="status_change_eng_sms" class="">Enable SMS</label>
                                             </div> --}}
                                         </td>
                                         <td class="v-align-middle semi-bold">
@@ -310,6 +411,12 @@
                                                 <label for="status_change_cus_sms" class="">Enable SMS</label>
                                             </div>
                                         </td>
+                                        <td class="v-align-middle semi-bold">
+                                            <div class="checkbox check-success ">
+                                                <input type="checkbox" @if($ecuTechManager['status_change_cus_whatsapp']) checked @endif id="status_change_cus_whatsapp" data-id="status_change_cus_whatsapp" data-frontend_id='1'>
+                                                <label for="status_change_cus_whatsapp" class="">Enable WhatsApp</label>
+                                            </div>
+                                        </td>
                                         </tr>
                             </tbody>
                             </table>
@@ -327,8 +434,11 @@
                                                 <th style="width:200px; color: black;" class="sorting_asc" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending text-black">Title</th>
                                                 <th style="width: 200px; color:black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Admin</th>
                                                 <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Admin</th>
+                                                <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Admin</th>
                                                 <th style="width: 200px; color:  black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Engineer</th>
                                                 <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Engineer</th>
+                                                <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Engineer</th>
+                                                <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Customer</th>
                                                 <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Customer</th>
                                                 <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Customer</th>
                                         </thead>
@@ -347,6 +457,12 @@
                                                     <label for="eng_assign_admin_sms2" class="">Enable SMS</label>
                                                 </div>
                                             </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($tuningxManager['eng_assign_admin_whatsapp']) checked @endif id="{{'eng_assign_admin_whatsap2'}}" data-id="{{'eng_assign_admin_whatsapp'}}" data-frontend_id='2'>
+                                                    <label for="eng_assign_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
                                             <td class="v-align-middle">
                                                 <div class="checkbox check-success ">
                                                     <input type="checkbox" @if($tuningxManager['eng_assign_eng_email']) checked @endif id="{{'eng_assign_eng_email2'}}" data-id="{{'eng_assign_eng_email'}}" data-frontend_id='2'>
@@ -359,10 +475,22 @@
                                                     <label for="eng_assign_eng_sms2" class="">Enable SMS</label>
                                                 </div>
                                             </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success">
+                                                    <input type="checkbox" @if($tuningxManager['eng_assign_eng_whatsapp']) checked @endif id="{{'eng_assign_eng_whatsapp2'}}" data-id="{{'eng_assign_eng_whatsapp'}}" data-frontend_id='2'>
+                                                    <label for="eng_assign_eng_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
                                             <td class="v-align-middle">
                                                 {{-- <div class="checkbox check-success ">
                                                     <input type="checkbox" @if($manager['eng_assign_cus_email']) checked @endif id="eng_assign_cus_email">
                                                     <label for="eng_assign_cus_email" class="">Enable Email</label>
+                                                </div> --}}
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                {{-- <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($manager['eng_assign_cus_sms']) checked @endif id="eng_assign_cus_sms">
+                                                    <label for="eng_assign_cus_sms" class="">Enable SMS</label>
                                                 </div> --}}
                                             </td>
                                             <td class="v-align-middle semi-bold">
@@ -386,6 +514,12 @@
                                                     <label for="file_upload_admin_sms2" class="">Enable SMS</label>
                                                 </div>
                                             </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($tuningxManager['file_upload_admin_whatsapp']) checked @endif id="file_upload_admin_whatsapp2"  data-id="file_upload_admin_whatsapp" data-frontend_id='2'>
+                                                    <label for="file_upload_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
                                             <td class="v-align-middle">
                                                 <div class="checkbox check-success ">
                                                     <input type="checkbox" @if($tuningxManager['file_upload_eng_email']) checked @endif id="file_upload_eng_email2" data-id="file_upload_eng_email" data-frontend_id='2'>
@@ -398,7 +532,16 @@
                                                     <label for="file_upload_eng_sms2" class="">Enable SMS</label>
                                                 </div>
                                             </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($tuningxManager['file_upload_eng_whatsapp']) checked @endif id="file_upload_eng_whatsapp2" data-id="file_upload_eng_whatsapp" data-frontend_id='2'>
+                                                    <label for="file_upload_eng_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
                                             <td class="v-align-middle">
+                                                
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
                                                 
                                             </td>
                                             <td class="v-align-middle semi-bold">
@@ -419,8 +562,17 @@
                                                     <label for="eng_file_upload_admin_sms2" class="">Enable SMS</label>
                                                 </div>
                                             </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($tuningxManager['eng_file_upload_admin_whatsapp']) checked @endif id="eng_file_upload_admin_whatsapp2" data-id="eng_file_upload_admin_whatsapp" data-frontend_id='2'>
+                                                    <label for="eng_file_upload_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
                                             <td class="v-align-middle">
                                                 
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                               
                                             </td>
                                             <td class="v-align-middle semi-bold">
                                                
@@ -435,6 +587,12 @@
                                                 <div class="checkbox check-success ">
                                                     <input type="checkbox" @if($tuningxManager['eng_file_upload_cus_sms']) checked @endif id="eng_file_upload_cus_sms2" data-id="eng_file_upload_cus_sms" data-frontend_id='2'>
                                                     <label for="eng_file_upload_cus_sms2" class="">Enable SMS</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($tuningxManager['eng_file_upload_cus_whatsapp']) checked @endif id="eng_file_upload_cus_whatsapp2" data-id="eng_file_upload_cus_whatsapp" data-frontend_id='2'>
+                                                    <label for="eng_file_upload_cus_whatsapp2" class="">Enable Whatsapp</label>
                                                 </div>
                                             </td>
                                             </tr>
@@ -452,6 +610,12 @@
                                                     <label for="file_new_req_admin_sms2" class="">Enable SMS</label>
                                                 </div>
                                             </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($tuningxManager['file_new_req_admin_whatsapp']) checked @endif id="file_new_req_admin_whatsapp2" data-id="file_new_req_admin_whatsapp" data-frontend_id='2'>
+                                                    <label for="file_new_req_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
                                             <td class="v-align-middle">
                                                 <div class="checkbox check-success ">
                                                     <input type="checkbox" @if($tuningxManager['file_new_req_eng_email']) checked @endif id="file_new_req_eng_email2" data-id="file_new_req_eng_email" data-frontend_id='2'>
@@ -464,7 +628,16 @@
                                                     <label for="file_new_req_eng_sms2" class="">Enable SMS</label>
                                                 </div>
                                             </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($tuningxManager['file_new_req_eng_whatsapp']) checked @endif id="file_new_req_eng_whatsapp2" data-id="file_new_req_eng_whatsapp" data-frontend_id='2'>
+                                                    <label for="file_new_req_eng_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
                                             <td class="v-align-middle">
+                                                
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
                                                 
                                             </td>
                                             <td class="v-align-middle semi-bold">
@@ -485,6 +658,12 @@
                                                     <label for="msg_cus_admin_sms2" class="">Enable SMS</label>
                                                 </div>
                                             </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($tuningxManager['msg_cus_admin_whatsapp']) checked @endif id="msg_cus_admin_whatsapp2" data-id="msg_cus_admin_whatsapp" data-frontend_id='2'>
+                                                    <label for="msg_cus_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
                                             <td class="v-align-middle">
                                                 <div class="checkbox check-success ">
                                                     <input type="checkbox" @if($tuningxManager['msg_cus_eng_email']) checked @endif id="msg_cus_eng_email2" data-id="msg_cus_eng_email" data-frontend_id='2'>
@@ -497,7 +676,16 @@
                                                     <label for="msg_cus_eng_sms2" class="">Enable SMS</label>
                                                 </div>
                                             </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($tuningxManager['msg_cus_eng_whatsapp']) checked @endif id="msg_cus_eng_whatsapp2" data-id="msg_cus_eng_whatsapp" data-frontend_id='2'>
+                                                    <label for="msg_cus_eng_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
                                             <td class="v-align-middle">
+                                                
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
                                                 
                                             </td>
                                             <td class="v-align-middle semi-bold">
@@ -518,7 +706,16 @@
                                                         <label for="msg_eng_admin_sms2" class="">Enable SMS</label>
                                                     </div>
                                                 </td>
+                                                <td class="v-align-middle semi-bold">
+                                                    <div class="checkbox check-success ">
+                                                        <input type="checkbox" @if($tuningxManager['msg_eng_admin_whatsapp']) checked @endif id="msg_eng_admin_whatsapp2" data-id="msg_eng_admin_whatsapp" data-frontend_id='2'>
+                                                        <label for="msg_eng_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                    </div>
+                                                </td>
                                                 <td class="v-align-middle">
+                                                    
+                                                </td>
+                                                <td class="v-align-middle semi-bold">
                                                     
                                                 </td>
                                                 <td class="v-align-middle semi-bold">
@@ -536,6 +733,12 @@
                                                         <label for="msg_eng_cus_sms2" class="">Enable SMS</label>
                                                     </div>
                                                 </td>
+                                                <td class="v-align-middle semi-bold">
+                                                    <div class="checkbox check-success ">
+                                                        <input type="checkbox" @if($tuningxManager['msg_eng_cus_whatsapp']) checked @endif id="msg_eng_cus_whatsapp2" data-id="msg_eng_cus_whatsapp" data-frontend_id='2'>
+                                                        <label for="msg_eng_cus_whatsapp2" class="">Enable Whatsapp</label>
+                                                    </div>
+                                                </td>
                                                 </tr>
                                                 <tr role="row" class="odd">
                                                     <td class="v-align-middle semi-bold sorting_1">Status Change</td>
@@ -551,6 +754,12 @@
                                                             <label for="status_change_admin_sms2" class="">Enable SMS</label>
                                                         </div>
                                                     </td>
+                                                    <td class="v-align-middle semi-bold">
+                                                        <div class="checkbox check-success ">
+                                                            <input type="checkbox" @if($tuningxManager['status_change_admin_whatsapp']) checked @endif id="status_change_admin_whatsapp2" data-id="status_change_admin_whatsapp" data-frontend_id='2'>
+                                                            <label for="status_change_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                        </div>
+                                                    </td>
                                                     <td class="v-align-middle">
                                                         {{-- <div class="checkbox check-success ">
                                                             <input type="checkbox" @if($manager['status_change_eng_email']) checked @endif id="status_change_eng_email">
@@ -563,6 +772,7 @@
                                                             <label for="status_change_eng_sms" class="">Enable SMS</label>
                                                         </div> --}}
                                                     </td>
+                                                    <td></td>
                                                     <td class="v-align-middle">
                                                         <div class="checkbox check-success ">
                                                             <input type="checkbox" @if($tuningxManager['status_change_cus_email']) checked @endif id="status_change_cus_email2" data-id="status_change_cus_email" data-frontend_id='2'>
@@ -573,6 +783,12 @@
                                                         <div class="checkbox check-success ">
                                                             <input type="checkbox" @if($tuningxManager['status_change_cus_sms']) checked @endif id="status_change_cus_sms2" data-id="status_change_cus_sms" data-frontend_id='2'>
                                                             <label for="status_change_cus_sms2" class="">Enable SMS</label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="v-align-middle semi-bold">
+                                                        <div class="checkbox check-success ">
+                                                            <input type="checkbox" @if($tuningxManager['status_change_cus_whatsapp']) checked @endif id="status_change_cus_whatsapp2" data-id="status_change_cus_whatsapp" data-frontend_id='2'>
+                                                            <label for="status_change_cus_whatsapp2" class="">Enable Whatsapp</label>
                                                         </div>
                                                     </td>
                                                     </tr>

@@ -66,7 +66,7 @@ Route::get('/info', function () {
 });
 
 Route::get('/tasks', function () {
-
+    abort(404);
     // $new = new ReminderManager();
     // $new->type = 'eng_assign_admin_whatsapp';
     // $new->active = 0; 
