@@ -10,6 +10,7 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentAccountsController;
 use App\Http\Controllers\ReminderManagerController;
 use App\Http\Controllers\SubdealerGroupsController;
+use App\Http\Controllers\WhatsappController;
 use App\Models\Comment;
 use App\Models\Credit;
 use App\Models\File;
@@ -68,9 +69,22 @@ Route::get('/test_whatsapp_sms', function () {
 
     $accessToken = config('whatsApp.access_token');
     $fromPhoneNumberId = config('whatsApp.from_phone_number_id');
-    
-    $whatappObj = new WhatsApp();
-    $response = $whatappObj->sendTemplateMessage('+923218612198','portal_messages', 'en_US', $accessToken, $fromPhoneNumberId, $components = [], $messages = 'hello I am here.');
+
+    $components  = 
+    [
+        [
+            "type" => "body",
+            "parameters" => array(
+                array("type"=> "text","text"=> "dear Kostas"),
+                array("type"=> "text","text"=> "Mr. Rameez"),
+                array("type"=> "text","text"=> "Honda"),
+                array("type"=> "text","text"=> "DPF OFF"),
+            )
+        ]
+    ];
+
+    $whatappObj = new WhatsappController();
+    $response = $whatappObj->sendTemplateMessage('+923218612198','portal_messages', 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'hello I am here.');
     dd($response);
 
 });
