@@ -55,6 +55,7 @@
                                     <th style="width:200px; color: black;" class="sorting_asc" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending text-black">Title</th>
                                     <th style="width: 200px; color:black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Admin</th>
                                     <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Admin</th>
+                                    <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Admin</th>
                                     <th style="width: 200px; color:  black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Engineer</th>
                                     <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Engineer</th>
                                     <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Customer</th>
@@ -73,6 +74,12 @@
                                     <div class="checkbox check-success ">
                                         <input type="checkbox" @if($ecuTechManager['eng_assign_admin_sms']) checked @endif id="eng_assign_admin_sms" data-id="eng_assign_admin_sms" data-frontend_id='1'>
                                         <label for="eng_assign_admin_sms" class="">Enable SMS</label>
+                                    </div>
+                                </td>
+                                <td class="v-align-middle semi-bold">
+                                    <div class="checkbox check-success ">
+                                        <input type="checkbox" @if($ecuTechManager['eng_assign_admin_whatsapp']) checked @endif id="eng_assign_admin_sms" data-id="eng_assign_admin_sms" data-frontend_id='1'>
+                                        <label for="eng_assign_admin_sms" class="">Enable WhatsApp</label>
                                     </div>
                                 </td>
                                 <td class="v-align-middle">

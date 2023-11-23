@@ -65,34 +65,214 @@ Route::get('/info', function () {
     dd(phpinfo());
 });
 
-Route::get('/test_whatsapp_sms', function () {
-
-    $accessToken = config('whatsApp.access_token');
-    $fromPhoneNumberId = config('whatsApp.from_phone_number_id');
-
-    $components  = 
-    [
-        [
-            "type" => "body",
-            "parameters" => array(
-                array("type"=> "text","text"=> "dear Kostas"),
-                array("type"=> "text","text"=> "Mr. Rameez"),
-                array("type"=> "text","text"=> "Honda"),
-                array("type"=> "text","text"=> "DPF OFF"),
-            )
-        ]
-    ];
-
-    $whatappObj = new WhatsappController();
-    $response = $whatappObj->sendTemplateMessage('+923218612198','portal_messages', 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'hello I am here.');
-    dd($response);
-
-});
-
 Route::get('/tasks', function () {
-    abort(404);
-    exit;
+
+    $new = new ReminderManager();
+    $new->type = 'eng_assign_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'eng_assign_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'eng_assign_eng_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'eng_assign_eng_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'eng_assign_cus_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'eng_assign_cus_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'file_upload_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'file_upload_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'file_upload_eng_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'file_upload_eng_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'eng_file_upload_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'eng_file_upload_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'eng_file_upload_cus_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'eng_file_upload_cus_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'file_new_req_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'file_new_req_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'file_new_req_eng_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'file_new_req_eng_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'msg_cus_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'msg_cus_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'msg_cus_eng_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'msg_cus_eng_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'msg_eng_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'msg_eng_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'msg_eng_cus_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'msg_eng_cus_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'status_change_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'status_change_admin_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'status_change_eng_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'status_change_eng_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
+    $new = new ReminderManager();
+    $new->type = 'status_change_cus_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 1; 
+    $new->save();
+    $new = new ReminderManager();
+    $new->type = 'status_change_cus_whatsapp';
+    $new->active = 0; 
+    $new->front_end_id = 2; 
+    $new->save();
+
 });
+
+// Route::get('/test_whatsapp_sms', function () {
+
+//     $accessToken = config('whatsApp.access_token');
+//     $fromPhoneNumberId = config('whatsApp.from_phone_number_id');
+
+//     $components  = 
+//     [
+//         [
+//             "type" => "body",
+//             "parameters" => array(
+//                 array("type"=> "text","text"=> "dear Kostas"),
+//                 array("type"=> "text","text"=> "Mr. Rameez"),
+//                 array("type"=> "text","text"=> "Honda"),
+//                 array("type"=> "text","text"=> "DPF OFF"),
+//             )
+//         ]
+//     ];
+
+//     $whatappObj = new WhatsappController();
+//     $response = $whatappObj->sendTemplateMessage('+923218612198','portal_messages', 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'hello I am here.');
+//     dd($response);
+
+// });
+
+// Route::get('/tasks', function () {
+//     abort(404);
+//     exit;
+// });
 
 Route::match(['get', 'post'], '/makelua', [App\Http\Controllers\makelua::class, 'Makelua']);
 
