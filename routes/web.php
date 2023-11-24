@@ -245,29 +245,29 @@ Route::get('/tasks', function () {
 
 });
 
-// Route::get('/test_whatsapp_sms', function () {
+Route::get('/test_whatsapp_sms', function () {
 
-//     $accessToken = config('whatsApp.access_token');
-//     $fromPhoneNumberId = config('whatsApp.from_phone_number_id');
+    $accessToken = config('whatsApp.access_token');
+    $fromPhoneNumberId = config('whatsApp.from_phone_number_id');
 
-//     $components  = 
-//     [
-//         [
-//             "type" => "body",
-//             "parameters" => array(
-//                 array("type"=> "text","text"=> "dear Kostas"),
-//                 array("type"=> "text","text"=> "Mr. Rameez"),
-//                 array("type"=> "text","text"=> "Honda"),
-//                 array("type"=> "text","text"=> "DPF OFF"),
-//             )
-//         ]
-//     ];
+    $components  = 
+    [
+        [
+            "type" => "body",
+            "parameters" => array(
+                array("type"=> "text","text"=> "dear Kostas"),
+                array("type"=> "text","text"=> "Mr. Rameez"),
+                array("type"=> "text","text"=> "Honda"),
+                array("type"=> "text","text"=> "DPF OFF"),
+            )
+        ]
+    ];
 
-//     $whatappObj = new WhatsappController();
-//     $response = $whatappObj->sendTemplateMessage('+923218612198','portal_messages', 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'hello I am here.');
-//     dd($response);
+    $whatappObj = new WhatsappController();
+    $response = $whatappObj->sendTemplateMessage('+923218612198','portal_messages', 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'hello I am here.');
+    dd($response);
 
-// });
+});
 
 // Route::get('/tasks', function () {
 //     abort(404);

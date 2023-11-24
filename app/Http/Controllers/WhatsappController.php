@@ -26,7 +26,7 @@ class WhatsappController extends Controller
      * 
      * @return array|mixed
      */
-    public function sendTemplateMessage(string $to, string $templateName, string $languageCode, string $accessToken = '', string $fromPhoneNumberId = '', array $components = [], string $messages = '')
+    public function sendTemplateMessage(string $to, string $templateName, string $languageCode, string $accessToken = '', string $fromPhoneNumberId = '', array $components = [], string $messages)
     {
         if (empty($fromPhoneNumberId)) $fromPhoneNumberId = config('whatsApp.from_phone_number_id');
         if (empty($accessToken)) $accessToken = config('whatsApp.access_token');

@@ -459,7 +459,7 @@
                                             </td>
                                             <td class="v-align-middle semi-bold">
                                                 <div class="checkbox check-success ">
-                                                    <input type="checkbox" @if($tuningxManager['eng_assign_admin_whatsapp']) checked @endif id="{{'eng_assign_admin_whatsap2'}}" data-id="{{'eng_assign_admin_whatsapp'}}" data-frontend_id='2'>
+                                                    <input type="checkbox" @if($tuningxManager['eng_assign_admin_whatsapp']) checked @endif id="{{'eng_assign_admin_whatsapp2'}}" data-id="{{'eng_assign_admin_whatsapp'}}" data-frontend_id='2'>
                                                     <label for="eng_assign_admin_whatsapp2" class="">Enable Whatsapp</label>
                                                 </div>
                                             </td>

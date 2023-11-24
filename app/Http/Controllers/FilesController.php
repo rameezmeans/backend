@@ -30,6 +30,7 @@ use App\Models\ProcessedFile;
 use App\Models\RoleUser;
 use App\Models\Service;
 use App\Models\Tool;
+use Exception;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
@@ -49,6 +50,7 @@ use Yajra\DataTables\DataTables;
 use PDO;
 use stdClass;
 use Symfony\Component\Mailer\Exception\TransportException;
+use Twilio\Serialize;
 
 class FilesController extends Controller
 {
@@ -901,25 +903,16 @@ class FilesController extends Controller
 
     public function sendMessage($receiver, $message, $frontendID)
     {
-
-        // if(!Auth::user()->is_admin()){
-        //     return abort(404);
-        // }
-
         try {
             
-            // $accountSid = env("TWILIO_SID");
-            // $authToken = env("TWILIO_AUTH_TOKEN");
-            // $twilioNumber = env("TWILIO_NUMBER"); 
+            $accountSid = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_sid')->first()->value;
 
-        $accountSid = Key::whereNull('subdealer_group_id')
-        ->where('key', 'twilio_sid')->first()->value;
+            $authToken = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_token')->first()->value;
 
-        $authToken = Key::whereNull('subdealer_group_id')
-        ->where('key', 'twilio_token')->first()->value;
-
-        $twilioNumber = Key::whereNull('subdealer_group_id')
-        ->where('key', 'twilio_number')->first()->value;
+            $twilioNumber = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_number')->first()->value;
 
 
             $client = new Client($accountSid, $authToken);
@@ -1018,9 +1011,77 @@ class FilesController extends Controller
         
             $this->sendMessage($engineer->phone, $message, $file->front_end_id);
         }
+
+        if($this->manager['eng_assign_eng_whatsapp'.$file->front_end_id]){
+        
+            $this->sendWhatsapp($engineer->name,$engineer->phone, 'admin_assign', $file);
+        }
         
         return Redirect::back()->with(['success' => 'Engineer Assigned to File.']);
 
+    }
+
+    public function sendWhatsapp($name, $number, $template, $file, $supportMessage = null){
+
+        $accessToken = config('whatsApp.access_token');
+        $fromPhoneNumberId = config('whatsApp.from_phone_number_id');
+
+        $optionsMessage = $file->stage;
+
+        if($file->options){
+            foreach($file->options()->get() as $option) {
+                $optionName = Service::findOrFail($option->service_id)->name;
+                $optionsMessage .= ", ".$optionName."";
+            }
+        }
+
+        $customer = 'Task Customer';
+
+        if($file->name){
+            $customer = $file->name; 
+        }
+
+        if($supportMessage){
+            $components  = 
+            [
+                [
+                    "type" => "body",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> "dear ".$name),
+                        array("type"=> "text","text"=> "Mr. ".$customer),
+                        array("type"=> "text","text"=> $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard),
+                        array("type"=> "text","text"=> $optionsMessage),
+                        array("type"=> "text","text"=> $supportMessage),
+                    )
+                ]
+            ];
+        }
+        else{
+            $components  = 
+            [
+                [
+                    "type" => "body",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> "dear ".$name),
+                        array("type"=> "text","text"=> "Mr. ".$customer),
+                        array("type"=> "text","text"=> $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard),
+                        array("type"=> "text","text"=> $optionsMessage),
+                    )
+                ]
+            ];
+        }
+
+        $whatappObj = new WhatsappController();
+
+        try {
+            $response = $whatappObj->sendTemplateMessage($number,$template, 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'messages');
+            // dd($response);
+        }
+        catch(Exception $e){
+            \Log::info($e->getMessage());
+        }
+
+        
     }
 
     public function changSupportStatus(Request $request){
@@ -1166,8 +1227,19 @@ class FilesController extends Controller
         if($this->manager['status_change_admin_sms'.$file->front_end_id]){
             $this->sendMessage($admin->phone, $message1, $file->front_end_id);
         }
+
+        if($this->manager['status_change_admin_whatsapp'.$file->front_end_id]){
+        
+            $this->sendWhatsapp($admin->name,$admin->phone, 'status_change', $file);
+        }
+
         if($this->manager['status_change_cus_sms'.$file->front_end_id]){
             $this->sendMessage($customer->phone, $message2, $file->front_end_id);
+        }
+
+        if($this->manager['status_change_cus_whatsapp'.$file->front_end_id]){
+        
+            $this->sendWhatsapp($customer->name,$customer->phone, 'admin_assign', $file);
         }
 
         return Redirect::back()->with(['success' => 'File status changed.']);
