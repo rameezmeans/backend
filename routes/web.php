@@ -245,7 +245,7 @@ Route::get('/tasks', function () {
 
 });
 
-Route::get('/test_whatsapp_sms', function () {
+Route::get('/test_whatsapp', function () {
 
     $accessToken = config('whatsApp.access_token');
     $fromPhoneNumberId = config('whatsApp.from_phone_number_id');

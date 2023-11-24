@@ -1252,6 +1252,8 @@ class FilesController extends Controller
         //     return abort(404);
         // }
 
+        $noteItself = $request->egnineers_internal_notes;
+        
         $file = File::findOrFail($request->file_id);
 
         $reply = new EngineerFileNote();
@@ -1380,8 +1382,19 @@ class FilesController extends Controller
             
             $this->sendMessage($admin->phone, $message1, $file->front_end_id);
         }
+
+        if($this->manager['msg_eng_admin_whatsapp'.$file->front_end_id]){
+            
+            $this->sendWhatsapp($admin->name, $admin->phone, 'message_from_engineer', $file, $noteItself);
+        }
+
         if($this->manager['msg_eng_cus_sms'.$file->front_end_id]){
             $this->sendMessage($customer->phone, $message2, $file->front_end_id);
+        }
+
+        if($this->manager['msg_eng_cus_whatsapp'.$file->front_end_id]){
+            
+            $this->sendWhatsapp($admin->name, $admin->phone, 'message_from_engineer', $file, $noteItself);
         }
 
         $old = File::findOrFail($request->file_id);
@@ -1604,8 +1617,17 @@ class FilesController extends Controller
         if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
             $this->sendMessage($admin->phone, $message1, $file->front_end_id);
         }
+
+        if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
+            $this->sendWhatsapp($admin->name,$admin->phone, 'file_upload', $file);
+        }
+
         if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
             $this->sendMessage($customer->phone, $message2, $file->front_end_id);
+        }
+
+        if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
+            $this->sendWhatsapp($customer->name,$customer->phone, 'file_upload', $file);
         }
         
         return response('file uploaded', 200);
@@ -2334,8 +2356,17 @@ class FilesController extends Controller
             if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
                 $this->sendMessage($admin->phone, $message1, $file->front_end_id);
             }
+
+            if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsapp($admin->name,$admin->phone, 'file_upload', $file);
+            }
+
             if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
                 $this->sendMessage($customer->phone, $message2, $file->front_end_id);
+            }
+
+            if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsapp($customer->name,$customer->phone, 'file_upload', $file);
             }
 
             }
