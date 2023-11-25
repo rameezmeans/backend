@@ -65,8 +65,10 @@
                             </tbody>
                         </table>
                     </div>
-                    {{-- <div>{{$originalFiles->render();}}</div> --}}
-                    <div>{{$originalFiles->onEachSide(5)->links()}}</div>
+                    <div>{{$originalFiles->render();}}</div>
+                    <p>
+                        Displaying {{$originalFiles->count()}} of {{ $originalFiles->total() }} product(s).
+                    </p>
                 </div>
             </div>
           </div>
