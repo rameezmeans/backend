@@ -15,7 +15,7 @@ class OriginalFilesController extends Controller
     }
 
     public function index(){
-        $originalFiles = OriginalFile::orderby('created_at', 'asc')->get();
+        $originalFiles = OriginalFile::orderby('created_at', 'asc')->paginate(10);
         
         return view('original_files.index', ['originalFiles' => $originalFiles]);
     }
