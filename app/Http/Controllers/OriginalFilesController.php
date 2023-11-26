@@ -96,6 +96,32 @@ class OriginalFilesController extends Controller
 
     }
 
+    public function getModels(Request $request){
+
+        $producer = $request->producer;
+        $series = $request->series;
+        
+        $models = OriginalFile::OrderBy('Model', 'asc')
+        ->select('Model')->
+        whereNotNull('Model')
+        ->distinct()
+        ->where('Producer', '=', $producer)
+        ->where('Series', '=', $series)
+        ->get();
+        
+        return response()->json( [ 'models' => $models ] );
+
+    }
+
+    public function getSeries(Request $request)
+    {
+        $producer = $request->producer;
+        
+        $series = OriginalFile::OrderBy('Series', 'asc')->select('Series')->whereNotNull('Series')->distinct()->where('Producer', '=', $producer)->get();
+        
+        return response()->json( [ 'series' => $series ] );
+    }
+
     // public function renaming(){
 
     //     $folder = public_path('/../../original_files_renaming_folder');

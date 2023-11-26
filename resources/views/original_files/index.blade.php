@@ -67,6 +67,7 @@
                         </div>
                         
                         <button type="submit" class="btn btn-success">Search</button>
+                        <button type="button" class="btn btn-warning" id="reset_filter">Reset</button>
 
                      
 
@@ -135,11 +136,86 @@
 @section('pagespecificscripts')
 
 <script type="text/javascript">
+    $(document).ready(function(event) {
 
-    $( document ).ready(function(event) {
-        
-       
+        $('#reset_filter').click(function(e) {
+            $("#Producer").val($("#producer option:first").val());
+            $("#Series").val($("#series option:first").val());
+            $("#Model").val($("#model option:first").val());
+
+            window.location = '/original_files';
+        });
+
+        $(document).on('change', '#Producer', function(e) {
+            let producer = $(this).val();
+            disable_dropdowns();
+
+            $.ajax({
+                url: "/get_series",
+                type: "POST",
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    'producer': producer
+                },
+                success: function(items) {
+                    console.log(items);
+
+                    $('#series').removeAttr('disabled');
+                    $.each(items.series, function(i, item) {
+                        console.log(item.series);
+                        $('#Series').append($('<option>', {
+                            value: item.Series,
+                            text: item.Series
+                        }));
+                    });
+                }
+            });
+        });
+
     });
+
+    $(document).on('change', '#Series', function(e) {
+        let producer = $('#producer').val();
+        let series = $(this).val();
+
+        $.ajax({
+            url: "/get_models_orignal_files",
+            type: "POST",
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                'producer': producer,
+                'series': series
+            },
+            success: function(items) {
+                console.log(items);
+
+                $('#model').removeAttr('disabled');
+                $.each(items.models, function(i, item) {
+                    console.log(item.models);
+                    $('#Model').append($('<option>', {
+                        value: item.Model,
+                        text: item.Model
+                    }));
+                });
+            }
+        });
+    });
+
+    function disable_dropdowns() {
+
+        $('#Series').children().remove();
+        $('#Series').append('<option selected value="">Series</option>');
+        $('#Model').children().remove();
+        $('Model').append('<option selected value="">Models</option>');
+
+        $('#Series').attr('disabled', 'disabled');
+        $('#Model').attr('disabled', 'disabled');
+
+    }
 
 </script>
 
