@@ -20,7 +20,7 @@ class OriginalFilesController extends Controller
         $modelsObjects = null;
         $seriesObjects = null;
         
-        $originalFiles = OriginalFile::limit(0)->paginate(10)->withQueryString();;
+        $originalFiles = OriginalFile::OrderBy('Producer', 'desc')->paginate(10)->withQueryString();
 
         return view('original_files.index', [
 
