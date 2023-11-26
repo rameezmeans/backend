@@ -56,7 +56,7 @@
                         </div>
                         <div class="form-group">
                             <label>Model</label>
-                            <select name="Series" id="Series" class="full-width select2-hidden-accessible" data-placeholder="Select Model" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                            <select name="Model" id="Model" class="full-width select2-hidden-accessible" data-placeholder="Select Model" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
                                 @if($modelsObjects)
                                     @foreach ($modelsObjects as $m)
                                     <option @if(isset($model) && $model && $model==$m->Model) selected @endif value="{{ $m->Model }}">{{$m->Model}}</option>
