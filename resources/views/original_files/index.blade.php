@@ -20,6 +20,48 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
+
+                <form method="POST" action="{{route('filter-original-files')}}">
+                    @csrf
+
+                    
+                        <div class="form-group form-group-default required ">
+                            <label>Producer</label>
+                            <select name="Producer" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                              @foreach($producerObjects as $p)
+                              <option @if(isset($producer) && $producer && $producer==$p->Producer) selected @endif value="{{ $p->Producer }}">{{$p->Producer}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                        <div class="form-group">
+                            <label>Series</label>
+                            <select name="Series" class="full-width select2-hidden-accessible" data-placeholder="Select Series" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                                @if($seriesObjects)
+                                    @foreach ($seriesObjects as $s)
+                                    <option @if(isset($series) && $series && $series==$s->Series) selected @endif value="{{ $s->Series }}">{{$s->Series}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                          
+                        </div>
+                        <div class="form-group">
+                            <label>Model</label>
+                            <select name="Series" class="full-width select2-hidden-accessible" data-placeholder="Select Model" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                                @if($modelsObjects)
+                                    @foreach ($modelsObjects as $m)
+                                    <option @if(isset($model) && $model && $model==$m->Model) selected @endif value="{{ $m->Model }}">{{$m->Model}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                          
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success">Search</button>
+
+                     
+
+                </form>
+
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
                         <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
@@ -65,10 +107,10 @@
                             </tbody>
                         </table>
                     </div>
-                    <div>{{$originalFiles->render();}}</div>
-                    <p>
-                        Displaying {{$originalFiles->count()}} of {{ $originalFiles->total() }} product(s).
-                    </p>
+
+                    {!! $originalFiles->links() !!}
+                    {{-- <div>{{$originalFiles->render()}}</div> --}}
+                    
                 </div>
             </div>
           </div>

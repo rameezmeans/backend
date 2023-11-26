@@ -322,6 +322,7 @@ Route::get('multi_delete', [App\Http\Controllers\FilesController::class, 'multiD
 Route::post('delete_files', [App\Http\Controllers\FilesController::class, 'deleteFiles'])->name('delete-files');
 
 Route::get('original_files', [App\Http\Controllers\OriginalFilesController::class, 'index'])->name('original-files');
+Route::post('filter_original_files', [App\Http\Controllers\OriginalFilesController::class, 'filterOriginalFiles'])->name('filter-original-files');
 Route::get('download_original_file/{id}', [App\Http\Controllers\OriginalFilesController::class, 'download'])->name('download-original-file');
 Route::get('renaming', [App\Http\Controllers\OriginalFilesController::class, 'renaming'])->name('renaming-original-files');
 

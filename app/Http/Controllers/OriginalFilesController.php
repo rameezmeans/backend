@@ -15,9 +15,67 @@ class OriginalFilesController extends Controller
     }
 
     public function index(){
-        $originalFiles = OriginalFile::orderby('created_at', 'asc')->paginate(10);
+
+        $producerObjects = OriginalFile::OrderBy('Producer', 'desc')->select('Producer')->whereNotNull('Producer')->distinct('Producer')->get();
+        $modelsObjects = null;
+        $seriesObjects = null;
         
-        return view('original_files.index', ['originalFiles' => $originalFiles]);
+        $originalFiles = OriginalFile::limit(0)->paginate(10);
+
+        return view('original_files.index', [
+
+            'originalFiles' => $originalFiles, 
+            'producerObjects' => $producerObjects,
+            'modelsObjects' => $modelsObjects,
+            'seriesObjects' => $seriesObjects
+
+        ]);
+    }
+
+    public function filterOriginalFiles(Request $request){
+    
+        $producer = $request->Producer;
+        $series = $request->Series;
+        $model = $request->Model;
+        
+        $originalFilesObject = OriginalFile::orderBy('created_at', 'asc')->where('Producer', $producer)->whereNotNull('Producer');
+            
+        if($series){
+            $originalFilesObject->where('Series', $series);
+        }
+
+        if($model){
+            $originalFilesObject->where('Model', $model);
+        }
+        
+        $originalFiles = $originalFilesObject->paginate(10);
+
+        $producerObjects = OriginalFile::OrderBy('Producer', 'asc')->select('Producer')->whereNotNull('Producer')->distinct('Producer')->get();
+
+        $seriesObjects = null;
+
+        if($producer){
+            $seriesObjects = OriginalFile::OrderBy('Series', 'asc')->select('Series')->whereNotNull('Series')->distinct('Series')->where('Producer', $producer)->get();
+        }
+
+        $modelsObjects = null;
+        
+        if($series && $producer){
+        
+            $modelsObjects = OriginalFile::OrderBy('Model', 'asc')->select('Model')->whereNotNull('Model')->distinct('Model')->where('Producer', $producer)->where('Series', $series)->get();
+
+        }
+        
+        return view('original_files.index', [
+            'originalFiles' => $originalFiles, 
+            'producerObjects' => $producerObjects,
+            'seriesObjects' => $seriesObjects,
+            'modelsObjects' => $modelsObjects,
+            'model' => $model,
+            'series' => $series,
+            'producer' => $producer
+        ]);
+
     }
 
     public function download($id){
