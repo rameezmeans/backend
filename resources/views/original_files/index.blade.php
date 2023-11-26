@@ -37,7 +37,7 @@
                     
                         <div class="form-group form-group-default required ">
                             <label>Producer</label>
-                            <select name="Producer" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                            <select name="Producer" id="Producer" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
                               @foreach($producerObjects as $p)
                               <option @if(isset($producer) && $producer && $producer==$p->Producer) selected @endif value="{{ $p->Producer }}">{{$p->Producer}}</option>
                               @endforeach
@@ -45,7 +45,7 @@
                           </div>
                         <div class="form-group">
                             <label>Series</label>
-                            <select name="Series" class="full-width select2-hidden-accessible" data-placeholder="Select Series" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                            <select name="Series" id="Series" class="full-width select2-hidden-accessible" data-placeholder="Select Series" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
                                 @if($seriesObjects)
                                     @foreach ($seriesObjects as $s)
                                     <option @if(isset($series) && $series && $series==$s->Series) selected @endif value="{{ $s->Series }}">{{$s->Series}}</option>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="form-group">
                             <label>Model</label>
-                            <select name="Series" class="full-width select2-hidden-accessible" data-placeholder="Select Model" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                            <select name="Series" id="Series" class="full-width select2-hidden-accessible" data-placeholder="Select Model" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
                                 @if($modelsObjects)
                                     @foreach ($modelsObjects as $m)
                                     <option @if(isset($model) && $model && $model==$m->Model) selected @endif value="{{ $m->Model }}">{{$m->Model}}</option>
@@ -139,9 +139,9 @@
     $(document).ready(function(event) {
 
         $('#reset_filter').click(function(e) {
-            $("#Producer").val($("#producer option:first").val());
-            $("#Series").val($("#series option:first").val());
-            $("#Model").val($("#model option:first").val());
+            $("#Producer").val($("#Producer option:first").val());
+            $("#Series").val($("#Series option:first").val());
+            $("#Model").val($("#Model option:first").val());
 
             window.location = '/original_files';
         });
@@ -177,7 +177,7 @@
     });
 
     $(document).on('change', '#Series', function(e) {
-        let producer = $('#producer').val();
+        let producer = $('#Producer').val();
         let series = $(this).val();
 
         $.ajax({
