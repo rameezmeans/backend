@@ -109,6 +109,7 @@
                     </div>
 
                     {!! $originalFiles->links() !!}
+                    Page {{$originalFiles->current}} out of {{$originalFiles->total}}
                     {{-- <div>{{$originalFiles->render()}}</div> --}}
                     
                 </div>
