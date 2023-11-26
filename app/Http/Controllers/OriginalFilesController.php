@@ -20,7 +20,7 @@ class OriginalFilesController extends Controller
         $modelsObjects = null;
         $seriesObjects = null;
         
-        $originalFiles = OriginalFile::limit(0)->paginate(10);
+        $originalFiles = OriginalFile::limit(0)->paginate(10)->withQueryString();;
 
         return view('original_files.index', [
 
@@ -48,7 +48,7 @@ class OriginalFilesController extends Controller
             $originalFilesObject->where('Model', $model);
         }
         
-        $originalFiles = $originalFilesObject->paginate(10);
+        $originalFiles = $originalFilesObject->paginate(10)->withQueryString();;
 
         $producerObjects = OriginalFile::OrderBy('Producer', 'asc')->select('Producer')->whereNotNull('Producer')->distinct('Producer')->get();
 
