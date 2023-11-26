@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@section('pagespecificstyles')
+
+<style>
+
+
+
+</style>
+@endsection
+
+
 @section('content')
 <div class="page-content-wrapper ">
     <!-- START PAGE CONTENT -->
@@ -21,7 +31,7 @@
             </div>
             <div class="card-body">
 
-                <form method="POST" action="{{route('filter-original-files')}}">
+                <form method="GET" action="{{route('filter-original-files')}}">
                     @csrf
 
                     
@@ -107,9 +117,10 @@
                             </tbody>
                         </table>
                     </div>
-
-                    {!! $originalFiles->links() !!}
-                    Page {{$originalFiles->current}} out of {{$originalFiles->total}}
+                    <div class="m-t-20">
+                        {!! $originalFiles->links() !!}
+                    </div>
+                    <div class="m-t-20">Page {{$originalFiles->currentPage()}} out of {{$originalFiles->total()}}</div>
                     {{-- <div>{{$originalFiles->render()}}</div> --}}
                     
                 </div>
