@@ -162,7 +162,7 @@
                 success: function(items) {
                     console.log(items);
 
-                    $('#series').removeAttr('disabled');
+                    $('#Series').removeAttr('disabled');
                     $.each(items.series, function(i, item) {
                         console.log(item.series);
                         $('#Series').append($('<option>', {
@@ -193,7 +193,7 @@
             success: function(items) {
                 console.log(items);
 
-                $('#model').removeAttr('disabled');
+                $('#Model').removeAttr('disabled');
                 $.each(items.models, function(i, item) {
                     console.log(item.models);
                     $('#Model').append($('<option>', {
