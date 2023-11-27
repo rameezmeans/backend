@@ -1014,10 +1014,68 @@ class FilesController extends Controller
 
         if($this->manager['eng_assign_eng_whatsapp'.$file->front_end_id]){
         
-            $this->sendWhatsapp($engineer->name,$engineer->phone, 'admin_assign', $file);
+            $this->sendWhatsappforEng($engineer->name,$engineer->phone, 'admin_assign', $file);
         }
         
         return Redirect::back()->with(['success' => 'Engineer Assigned to File.']);
+
+    }
+
+    public function sendWhatsappforEng($name, $number, $template, $file, $supportMessage = null){
+
+        $accessToken = config('whatsApp.access_token');
+        $fromPhoneNumberId = config('whatsApp.from_phone_number_id');
+
+        $optionsMessage = $file->stage;
+
+        if($file->options){
+            foreach($file->options()->get() as $option) {
+                $optionName = Service::findOrFail($option->service_id)->name;
+                $optionsMessage .= ", ".$optionName."";
+            }
+        }
+
+        $customer = User::findOrFail($file->user_id)->name;
+
+        if($supportMessage){
+            $components  = 
+            [
+                [
+                    "type" => "body",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> "dear ".$name),
+                        array("type"=> "text","text"=> "Mr. ".$customer),
+                        array("type"=> "text","text"=> $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard),
+                        array("type"=> "text","text"=> $optionsMessage),
+                        array("type"=> "text","text"=> $supportMessage),
+                    )
+                ]
+            ];
+        }
+        else{
+            $components  = 
+            [
+                [
+                    "type" => "body",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> "dear ".$name),
+                        array("type"=> "text","text"=> "Mr. ".$customer),
+                        array("type"=> "text","text"=> $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard),
+                        array("type"=> "text","text"=> $optionsMessage),
+                    )
+                ]
+            ];
+        }
+
+        $whatappObj = new WhatsappController();
+
+        try {
+            $response = $whatappObj->sendTemplateMessage($number,$template, 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'messages');
+            // dd($response);
+        }
+        catch(Exception $e){
+            \Log::info($e->getMessage());
+        }
 
     }
 
@@ -1230,7 +1288,7 @@ class FilesController extends Controller
 
         if($this->manager['status_change_admin_whatsapp'.$file->front_end_id]){
         
-            $this->sendWhatsapp($admin->name,$admin->phone, 'status_change', $file);
+            $this->sendWhatsappforEng($admin->name,$admin->phone, 'status_change', $file);
         }
 
         if($this->manager['status_change_cus_sms'.$file->front_end_id]){
@@ -1385,7 +1443,7 @@ class FilesController extends Controller
 
         if($this->manager['msg_eng_admin_whatsapp'.$file->front_end_id]){
             
-            $this->sendWhatsapp($admin->name, $admin->phone, 'message_from_engineer', $file, $noteItself);
+            $this->sendWhatsappforEng($admin->name, $admin->phone, 'message_from_engineer', $file, $noteItself);
         }
 
         if($this->manager['msg_eng_cus_sms'.$file->front_end_id]){
@@ -1394,7 +1452,7 @@ class FilesController extends Controller
 
         if($this->manager['msg_eng_cus_whatsapp'.$file->front_end_id]){
             
-            $this->sendWhatsapp($admin->name, $admin->phone, 'message_from_engineer', $file, $noteItself);
+            $this->sendWhatsapp($customer->name, $customer->phone, 'message_from_engineer', $file, $noteItself);
         }
 
         $old = File::findOrFail($request->file_id);
@@ -1619,7 +1677,7 @@ class FilesController extends Controller
         }
 
         if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
-            $this->sendWhatsapp($admin->name,$admin->phone, 'file_upload', $file);
+            $this->sendWhatsappforEng($admin->name,$admin->phone, 'file_upload', $file);
         }
 
         if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
@@ -2358,7 +2416,7 @@ class FilesController extends Controller
             }
 
             if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
-                $this->sendWhatsapp($admin->name,$admin->phone, 'file_upload', $file);
+                $this->sendWhatsappforEng($admin->name,$admin->phone, 'file_upload', $file);
             }
 
             if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
