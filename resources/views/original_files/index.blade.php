@@ -91,6 +91,7 @@
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Producer</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Series</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Model</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">File</th>
                                     {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">File</th> --}}
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Download</th>
                                 </tr>
@@ -119,11 +120,11 @@
                                            
                                             
                                         </td>
-                                        {{-- <td class="v-align-middle semi-bold sorting_1">
+                                        <td class="v-align-middle semi-bold sorting_1">
                                             
                                             <p>{{$file->File}}</p>
                                            
-                                        </td> --}}
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             
                                             <a target="_blank" href="{{route('download-original-file', $file->id)}}" class="btn btn-success">Download</a>
