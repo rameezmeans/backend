@@ -49,7 +49,7 @@
                                 @if($allPaymentLogs)
                                     @foreach ($allPaymentLogs as $l)
 
-                                        @if(\App\Models\Credit::findOrFail($l->payment_id))
+                                        @if(\App\Models\Credit::where('id', $l->payment_id)->first())
                                         <tr role="row" class="">
 
                                             <td class="v-align-middle semi-bold sorting_1">
