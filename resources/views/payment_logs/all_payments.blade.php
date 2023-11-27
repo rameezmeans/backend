@@ -28,6 +28,8 @@
                                 <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                                     <thead>
                                         <tr role="row">
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">DB ID</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Invoice ID</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Date</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Customer</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Group</th>
@@ -44,6 +46,14 @@
                                         @if($allPayments)
                                         @foreach ($allPayments as $p)
                                             <tr role="row" class="">
+
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{$p->id}}</p>
+                                                </td>
+
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{$p->invoice_id}}</p>
+                                                </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>{{date('d/m/Y',strtotime($p->created_at))}}</p>
