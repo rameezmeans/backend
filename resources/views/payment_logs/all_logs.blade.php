@@ -48,6 +48,14 @@
                                         <tr role="row" class="">
 
                                             <td class="v-align-middle semi-bold sorting_1">
+                                                <p class="label bg-warning">{{\App\Models\Credit::findOrFail($l->payment_id)->id}}</p>
+                                            </td>
+
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p class="label bg-warning">{{\App\Models\Credit::findOrFail($l->payment_id)->invoice_id}}</p>
+                                            </td>
+
+                                            <td class="v-align-middle semi-bold sorting_1">
                                                 <p>{{date('d/m/Y',strtotime($l->created_at))}}</p>
                                                 
                                             </td>
