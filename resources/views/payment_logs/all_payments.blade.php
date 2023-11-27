@@ -48,11 +48,11 @@
                                             <tr role="row" class="">
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{$p->id}}</p>
+                                                    <p class="label bg-warning">{{$p->id}}</p>
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{$p->invoice_id}}</p>
+                                                    <p class="label bg-warning">{{$p->invoice_id}}</p>
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
