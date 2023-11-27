@@ -322,11 +322,13 @@ Route::get('multi_delete', [App\Http\Controllers\FilesController::class, 'multiD
 Route::post('delete_files', [App\Http\Controllers\FilesController::class, 'deleteFiles'])->name('delete-files');
 
 Route::get('original_files', [App\Http\Controllers\OriginalFilesController::class, 'index'])->name('original-files');
+// Route::get('original_files_live', [App\Http\Controllers\OriginalFilesController::class, 'live'])->name('original-files-live');
 Route::get('filter_original_files', [App\Http\Controllers\OriginalFilesController::class, 'filterOriginalFiles'])->name('filter-original-files');
 Route::get('download_original_file/{id}', [App\Http\Controllers\OriginalFilesController::class, 'download'])->name('download-original-file');
 Route::get('renaming', [App\Http\Controllers\OriginalFilesController::class, 'renaming'])->name('renaming-original-files');
 Route::post('/get_series', [App\Http\Controllers\OriginalFilesController::class, 'getSeries'])->name('get-series');
 Route::post('/get_models_orignal_files', [App\Http\Controllers\OriginalFilesController::class, 'getModels'])->name('get-models-original-files');
+Route::post('delete_original_files', [App\Http\Controllers\OriginalFilesController::class, 'deleteOriginalFiles'])->name('delete-files');
 
 Route::get('/download/{id}/{file}/{autoDelete}', [App\Http\Controllers\FilesController::class,'download'])->name('download');
 Route::get('/support/{id}', [App\Http\Controllers\FilesController::class,'support'])->name('support');

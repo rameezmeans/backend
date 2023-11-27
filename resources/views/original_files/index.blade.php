@@ -4,7 +4,9 @@
 
 <style>
 
-
+.table tbody tr td .checkbox label::after {
+    left: 4px !important;
+}
 
 </style>
 @endsection
@@ -74,10 +76,18 @@
                 </form>
 
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                    <div class="">
+                        <div class="col-xs-12">
+                            <button class="btn btn-danger hide" id="delete-selected"><i class="pg-plus_circle"></i> <span class="bold">Delete Selected</span>
+                            </button>
+                        </div>
+                      </div>
                     <div>
+                        <div class="m-t-20 " style="margin-bottom: 20px;">Only {{$originalFiles->count()}} out of {{$originalFiles->total()}} records are on display.</div>
                         <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Check</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Producer</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Series</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Model</th>
@@ -88,6 +98,12 @@
                             <tbody>
                                 @foreach ($originalFiles as $file)
                                     <tr role="row" class="">
+                                        <td class="">
+                                            <div class="checkbox check-success">
+                                                <input type="checkbox" value="{{$file->id}}" id="checkbox{{$file->id}}" class="checkbox-c">
+                                                <label for="checkbox{{$file->id}}"></label>
+                                            </div>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$file->Producer}}</p>
                                             
@@ -121,8 +137,7 @@
                     <div class="m-t-20">
                         {!! $originalFiles->links() !!}
                     </div>
-                    <div class="m-t-20">Page {{$originalFiles->currentPage()}} out of {{$originalFiles->total()}}</div>
-                    {{-- <div>{{$originalFiles->render()}}</div> --}}
+                    <div class="m-t-20 " style="margin-bottom: 20px;">Page {{$originalFiles->currentPage()}} out of {{$originalFiles->lastPage()}}</div>
                     
                 </div>
             </div>
@@ -137,6 +152,90 @@
 
 <script type="text/javascript">
     $(document).ready(function(event) {
+
+        function removeItem(array, item){
+        for(var i in array){
+            if(array[i]==item){
+                array.splice(i,1);
+                break;
+            }
+        }
+    }
+
+        var ids = [];
+
+        $(document).on('click', '.checkbox-c' ,function() {
+
+            let value = $(this).val();
+            
+            if (!$(this).is(':checked')) {
+
+                let index = ids.indexOf(value);
+                removeItem(ids, value);
+
+            }
+            else if ($(this).is(':checked')) {
+                
+                ids.push(value);
+                
+            }
+
+            console.log(ids);
+
+            if(ids.length > 0){
+                $('#delete-selected').removeClass('hide');
+            }
+            else if (ids.length == 0){
+                $('#delete-selected').addClass('hide');
+            }
+
+        });
+
+        $('#delete-selected').click(function(e){
+
+            const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+  })
+
+    swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+            $.ajax({
+                url: "/delete_original_files",
+                type: "POST",
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    'ids': ids
+                },
+                success: function(items) {
+                    console.log(items);
+                    location.reload();
+                }
+            });
+
+        } else if ( result.dismiss === Swal.DismissReason.cancel ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Uploaded files are safe :)',
+          'error'
+        )
+      }
+    });
+});
 
         $('#reset_filter').click(function(e) {
             $("#Producer").val($("#Producer option:first").val());

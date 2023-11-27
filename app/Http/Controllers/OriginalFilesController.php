@@ -14,6 +14,12 @@ class OriginalFilesController extends Controller
         $this->middleware('adminOnly');
     }
 
+    public function live(){
+
+        return view('original_files.live');
+
+    }
+
     public function index(){
 
         $producerObjects = OriginalFile::OrderBy('Producer', 'desc')->select('Producer')->whereNotNull('Producer')->distinct('Producer')->get();
@@ -30,6 +36,17 @@ class OriginalFilesController extends Controller
             'seriesObjects' => $seriesObjects
 
         ]);
+    }
+
+    public function deleteOriginalFiles(Request $request){
+
+        $ids = $request->ids;
+        $files = OriginalFile::whereIn('id', $ids)->get();
+
+        foreach($files as $file){
+            $file->delete();
+        }
+
     }
 
     public function filterOriginalFiles(Request $request){
