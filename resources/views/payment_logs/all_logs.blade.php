@@ -48,6 +48,8 @@
                             <tbody>
                                 @if($allPaymentLogs)
                                     @foreach ($allPaymentLogs as $l)
+
+                                        @if(\App\Models\Credit::findOrFail($l->payment_id))
                                         <tr role="row" class="">
 
                                             <td class="v-align-middle semi-bold sorting_1">
@@ -110,6 +112,7 @@
                                                 
                                             </td> --}}
                                         </tr>
+                                        @endif
                                     @endforeach
                                 @endif
                             </tbody>
