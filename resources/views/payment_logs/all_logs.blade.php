@@ -5,13 +5,12 @@
     <!-- START PAGE CONTENT -->
     <div class="content sm-gutter">
       <!-- START CONTAINER FLUID -->
-        <div class=" container-fluid   container-fixed-lg bg-white">
+        <div class=" container-fluid container-fixed-lg bg-white">
 
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
                     <h3>All Logs</h3>
-                    
                 </div>
                 <div class="pull-right">
                     <div class="col-xs-12">

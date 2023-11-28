@@ -83,6 +83,7 @@ class PackageController extends Controller
         $package->discounted_price = $request->discounted_price;
         $package->type = $request->type;
         $package->front_end_id = $request->front_end_id;
+        $package->zohobook_item_id = $request->zohobook_item_id;
         $package->desc = $request->desc;
 
         if(isset($request->from_master_subdealer)){
@@ -176,6 +177,7 @@ class PackageController extends Controller
         $package->actual_price = $request->actual_price;
         $package->discounted_price = $request->discounted_price;
         $package->desc = $request->desc;
+        $package->zohobook_item_id = $request->zohobook_item_id;
         $package->save();
 
         if(isset($request->from_master_subdealer)){

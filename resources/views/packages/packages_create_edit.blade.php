@@ -47,7 +47,7 @@
                   </span>
                 @enderror
                 <div class="form-group form-group-default required ">
-                    <label>Credits</label>
+                    <label>Credits</label> <small class="text-danger">* Please keep that matching with Zoho to keep the data consistent.</small>
                     <input value="@if(isset($package)){{$package->credits}}@else{{old('credits') }}@endif"  name="credits" type="number" class="form-control" required>
                   </div>
                   @error('credits')
@@ -93,6 +93,17 @@
                       @endforeach
                     </select>
                   </div>
+
+                  <div class="form-group form-group-default required ">
+                    <label>Zoho Item ID</label>
+                    <input value="@if(isset($package)){{$package->zohobook_item_id}}@else{{old('zohobook_item_id') }}@endif"  name="zohobook_item_id" type="text" class="form-control" required>
+                  </div>
+                  @error('zohobook_item_id')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  </div>
+                  @enderror
 
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($package)) Update @else Add @endif</span></button>
@@ -143,7 +154,7 @@
                           </span>
                         @enderror
                         <div class="form-group form-group-default required ">
-                            <label>Credits</label>
+                            <label>Credits</label> <small class="text-danger">* Please keep that matching with Zoho to keep the data consistent.</small>
                             <input value="@if(isset($package)){{$package->credits}}@else{{old('credits') }}@endif"  name="credits" type="number" class="form-control" required>
                           </div>
                           @error('credits')
@@ -189,6 +200,17 @@
                               @endforeach
                             </select>
                           </div>
+
+                          <div class="form-group form-group-default required ">
+                            <label>Zoho Item ID</label>
+                            <input value="@if(isset($package)){{$package->zohobook_item_id}}@else{{old('zohobook_item_id') }}@endif"  name="zohobook_item_id" type="text" class="form-control" required>
+                          </div>
+                          @error('zohobook_item_id')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                          </div>
+                          @enderror
         
                         <div class="text-center m-t-40">                    
                           <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($package)) Update @else Add @endif</span></button>
@@ -229,7 +251,7 @@
                           </span>
                         @enderror
                         <div class="form-group form-group-default required ">
-                            <label>Credits</label>
+                            <label>Credits</label> <small class="text-danger">* Please keep that matching with Zoho to keep the data consistent.</small>
                             <input value="@if(isset($package)){{$package->credits}}@else{{old('credits') }}@endif"  name="credits" type="number" class="form-control" required>
                           </div>
                           @error('credits')
@@ -275,6 +297,17 @@
                               @endforeach
                             </select>
                           </div>
+
+                          <div class="form-group form-group-default required ">
+                            <label>Zoho Item ID</label>
+                            <input value="@if(isset($package)){{$package->zohobook_item_id}}@else{{old('zohobook_item_id') }}@endif"  name="zohobook_item_id" type="text" class="form-control" required>
+                          </div>
+                          @error('zohobook_item_id')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                          </div>
+                          @enderror
         
                         <div class="text-center m-t-40">                    
                           <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($package)) Update @else Add @endif</span></button>

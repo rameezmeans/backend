@@ -86,6 +86,15 @@
                     </span>
                   @enderror
 
+                  <div class="form-group form-group-default required ">
+                    <label>Zoho Item ID</label>
+                    <select class="full-width" data-init-plugin="select2" name="front_end_id">
+                      @foreach($frontends as $frontend)
+                        <option @if(isset($package) && $package->front_end_id == $frontend->id) selected @endif value="{{$frontend->id}}">{{$frontend->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($package)) Update @else Add @endif</span></button>
                   @if(isset($package))
@@ -136,7 +145,7 @@
                           </span>
                         @enderror
                         <div class="form-group form-group-default required ">
-                            <label>Credits</label>
+                            <label>Credits</label> <small class="text-danger">* Please keep that matching with Zoho to keep the data consistent.</small>
                             <input value="@if(isset($package)){{$package->credits}}@else{{old('credits') }}@endif"  name="credits" type="number" class="form-control" required>
                           </div>
                           @error('credits')
@@ -173,6 +182,15 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                           @enderror
+
+                          <div class="form-group form-group-default required ">
+                            <label>Zoho Item ID</label>
+                            <select class="full-width" data-init-plugin="select2" name="front_end_id">
+                              @foreach($frontends as $frontend)
+                                <option @if(isset($package) && $package->front_end_id == $frontend->id) selected @endif value="{{$frontend->id}}">{{$frontend->name}}</option>
+                              @endforeach
+                            </select>
+                          </div>
         
                         <div class="text-center m-t-40">                    
                           <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($package)) Update @else Add @endif</span></button>
@@ -214,7 +232,7 @@
                           </span>
                         @enderror
                         <div class="form-group form-group-default required ">
-                            <label>Credits</label>
+                            <label>Credits</label> <small class="text-danger">* Please keep that matching with Zoho to keep the data consistent.</small>
                             <input value="@if(isset($package)){{$package->credits}}@else{{old('credits') }}@endif"  name="credits" type="number" class="form-control" required>
                           </div>
                           @error('credits')
@@ -251,6 +269,15 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                           @enderror
+
+                          <div class="form-group form-group-default required ">
+                            <label>Zoho Item ID</label>
+                            <select class="full-width" data-init-plugin="select2" name="front_end_id">
+                              @foreach($frontends as $frontend)
+                                <option @if(isset($package) && $package->front_end_id == $frontend->id) selected @endif value="{{$frontend->id}}">{{$frontend->name}}</option>
+                              @endforeach
+                            </select>
+                          </div>
         
                         <div class="text-center m-t-40">                    
                           <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($package)) Update @else Add @endif</span></button>
