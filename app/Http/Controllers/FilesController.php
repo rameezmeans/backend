@@ -1677,7 +1677,7 @@ class FilesController extends Controller
         }
 
         if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
-            $this->sendWhatsappforEng($admin->name,$admin->phone, 'file_upload', $file);
+            $this->sendWhatsappforEng($admin->name,$admin->phone, 'eng_file_upload', $file);
         }
 
         if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
@@ -1685,7 +1685,7 @@ class FilesController extends Controller
         }
 
         if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
-            $this->sendWhatsapp($customer->name,$customer->phone, 'file_upload', $file);
+            $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
         }
         
         return response('file uploaded', 200);
@@ -2416,7 +2416,7 @@ class FilesController extends Controller
             }
 
             if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
-                $this->sendWhatsappforEng($admin->name,$admin->phone, 'file_upload', $file);
+                $this->sendWhatsappforEng($admin->name,$admin->phone, 'eng_file_upload', $file);
             }
 
             if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
@@ -2424,7 +2424,7 @@ class FilesController extends Controller
             }
 
             if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
-                $this->sendWhatsapp($customer->name,$customer->phone, 'file_upload', $file);
+                $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
             }
 
             }
