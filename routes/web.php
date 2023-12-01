@@ -253,6 +253,12 @@ Route::get('/test_whatsapp', function () {
     $components  = 
     [
         [
+            "type" => "header",
+            "parameters" => array(
+                array("type"=> "text","text"=> "ECU Tech"),
+            )
+        ],
+        [
             "type" => "body",
             "parameters" => array(
                 array("type"=> "text","text"=> "dear Kostas"),

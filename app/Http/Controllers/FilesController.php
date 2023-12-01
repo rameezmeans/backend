@@ -1037,9 +1037,22 @@ class FilesController extends Controller
 
         $customer = User::findOrFail($file->user_id)->name;
 
+        if($file->front_end_id == 1){
+            $frontEnd = "ECUTech";
+        }
+        else{
+            $frontEnd = "Tuning-X";
+        }
+
         if($supportMessage){
             $components  = 
             [
+                [
+                    "type" => "header",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> $frontEnd),
+                    )
+                ],
                 [
                     "type" => "body",
                     "parameters" => array(
@@ -1055,6 +1068,12 @@ class FilesController extends Controller
         else{
             $components  = 
             [
+                [
+                    "type" => "header",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> $frontEnd),
+                    )
+                ],
                 [
                     "type" => "body",
                     "parameters" => array(
@@ -1099,9 +1118,22 @@ class FilesController extends Controller
             $customer = $file->name; 
         }
 
+        if($file->front_end_id == 1){
+            $frontEnd = "ECUTech";
+        }
+        else{
+            $frontEnd = "Tuning-X";
+        }
+
         if($supportMessage){
             $components  = 
             [
+                [
+                    "type" => "header",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> $frontEnd),
+                    )
+                ],
                 [
                     "type" => "body",
                     "parameters" => array(
@@ -1117,6 +1149,12 @@ class FilesController extends Controller
         else{
             $components  = 
             [
+                [
+                    "type" => "header",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> $frontEnd),
+                    )
+                ],
                 [
                     "type" => "body",
                     "parameters" => array(
