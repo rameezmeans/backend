@@ -1965,6 +1965,9 @@ class FilesController extends Controller
 
     public function getComments($file){
 
+        if($file->automatic){
+            return null;
+        }
         // $commentObj = Comment::where('engine', $file->engine);
         $commentObj = Comment::where('make', $file->brand);
 

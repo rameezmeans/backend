@@ -28,7 +28,7 @@ class FilesAPIController extends Controller
 
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
 
-        $manager = (new ReminderManagerController())->getManager();
+        
 
         $tool = Tool::findOrFail($request->tool_id);
 
@@ -172,6 +172,8 @@ class FilesAPIController extends Controller
             $file->stage = Service::findOrFail($file->stage_services->service_id)->name;
             $file->is_credited = 1; // finally is_credited now ... 
             $file->save();
+
+            $manager = (new ReminderManagerController())->getManager($file->front_end_id);
 
             $count = File::where('checked_by', 'customer')->where('is_credited', 1)->count();
             // send to user using pusher
@@ -746,7 +748,7 @@ class FilesAPIController extends Controller
         
         $subject = "ECU Tech: Engineer uploaded a file in reply.";
 
-        $manager = (new ReminderManagerController())->getManager();
+        $manager = (new ReminderManagerController())->getManager($file->front_end_id);
 
         if($manager['eng_file_upload_cus_email']){
             \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
