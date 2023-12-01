@@ -1443,7 +1443,7 @@ class FilesController extends Controller
 
         if($this->manager['msg_eng_admin_whatsapp'.$file->front_end_id]){
             
-            $this->sendWhatsappforEng($admin->name, $admin->phone, 'message_from_engineer', $file, $noteItself);
+            $this->sendWhatsappforEng($admin->name, $admin->phone, 'support_message_from_engineer', $file, $noteItself);
         }
 
         if($this->manager['msg_eng_cus_sms'.$file->front_end_id]){
@@ -1452,7 +1452,7 @@ class FilesController extends Controller
 
         if($this->manager['msg_eng_cus_whatsapp'.$file->front_end_id]){
             
-            $this->sendWhatsapp($customer->name, $customer->phone, 'message_from_engineer', $file, $noteItself);
+            $this->sendWhatsapp($customer->name, $customer->phone, 'support_message_from_engineer', $file, $noteItself);
         }
 
         $old = File::findOrFail($request->file_id);
