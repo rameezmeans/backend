@@ -612,6 +612,7 @@ class FilesAPIController extends Controller
                         $file->status = 'completed';
                         $file->support_status = "closed";
                         $file->checked_by = 'engineer';
+                        $file->automatic = 1;
                         $file->save();
                     }
 
