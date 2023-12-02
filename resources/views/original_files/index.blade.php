@@ -142,13 +142,13 @@
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             
-                                            <a target="_blank" href="{{route('download-original-file', $file->id)}}" class="btn btn-success">Download</a>
+                                            <a href="{{route('download-original-file', $file->id)}}" class="btn btn-success">Download</a>
                                            
                                         </td>
 
                                         <td class="v-align-middle semi-bold sorting_1">
                                             
-                                            <a target="_blank" href="{{route('edit-original-file', $file->id)}}" class="btn btn-warning">Edit</a>
+                                            <a href="{{route('edit-original-file', $file->id)}}" class="btn btn-warning">Edit</a>
                                            
                                         </td>
                                     </tr>
