@@ -14,8 +14,13 @@ class OriginalFilesController extends Controller
         $this->middleware('adminOnly');
     }
 
+    public function delete(Request $request){
+        $originalFile = OriginalFile::findOrFail($request->id);
+        $originalFile->delete();
+    }
+
     public function update(Request $request){
-        
+
         $originalFile = OriginalFile::findOrFail($request->id);
 
         $originalFile->Producer = $request->Producer;
