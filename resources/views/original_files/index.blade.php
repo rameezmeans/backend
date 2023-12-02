@@ -19,6 +19,20 @@
       <!-- START CONTAINER FLUID -->
         <div class=" container-fluid   container-fixed-lg bg-white">
 
+            @if (Session::get('success'))
+                <div class="pgn-wrapper" data-position="top" style="top: 59px;">
+                    <div class="pgn push-on-sidebar-open pgn-bar">
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                            {{ Session::get('success') }}
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @php
+              Session::forget('success')
+            @endphp
+
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
@@ -94,6 +108,7 @@
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">File</th>
                                     {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">File</th> --}}
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Download</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -128,6 +143,12 @@
                                         <td class="v-align-middle semi-bold sorting_1">
                                             
                                             <a target="_blank" href="{{route('download-original-file', $file->id)}}" class="btn btn-success">Download</a>
+                                           
+                                        </td>
+
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            
+                                            <a target="_blank" href="{{route('edit-original-file', $file->id)}}" class="btn btn-warning">Edit</a>
                                            
                                         </td>
                                     </tr>

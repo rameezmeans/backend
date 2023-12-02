@@ -14,6 +14,35 @@ class OriginalFilesController extends Controller
         $this->middleware('adminOnly');
     }
 
+    public function update(Request $request){
+        
+        $originalFile = OriginalFile::findOrFail($request->id);
+
+        $originalFile->Producer = $request->Producer;
+        $originalFile->Series = $request->Series;
+        $originalFile->Model = $request->Model;
+        $originalFile->Displacement = $request->Displacement;
+        $originalFile->Output = $request->Output;
+        $originalFile->Gear = $request->Gear;
+        $originalFile->ProducerECU = $request->ProducerECU;
+        $originalFile->BuildECU = $request->BuildECU;
+        $originalFile->ECUNrProd = $request->ECUNrProd;
+        $originalFile->ECUNrECU = $request->ECUNrECU;
+        $originalFile->Software = $request->Software;
+        $originalFile->SWVersion = $request->SWVersion;
+        $originalFile->ProjectSize = $request->ProjectSize;
+        $originalFile->File = $request->File;
+        $originalFile->save();
+
+        return redirect()->route('original-files')->with(['success' => 'File edited, successfully.']);
+    }
+
+    public function edit($id){
+
+        $originalFile = OriginalFile::findOrFail($id);
+        return view('original_files.edit', ['originalFile' => $originalFile]);
+    }
+
     public function live(){
 
         return view('original_files.live');

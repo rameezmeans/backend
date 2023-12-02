@@ -335,6 +335,8 @@ Route::get('renaming', [App\Http\Controllers\OriginalFilesController::class, 're
 Route::post('/get_series', [App\Http\Controllers\OriginalFilesController::class, 'getSeries'])->name('get-series');
 Route::post('/get_models_orignal_files', [App\Http\Controllers\OriginalFilesController::class, 'getModels'])->name('get-models-original-files');
 Route::post('delete_original_files', [App\Http\Controllers\OriginalFilesController::class, 'deleteOriginalFiles'])->name('delete-files');
+Route::get('edit_original_file/{id}', [App\Http\Controllers\OriginalFilesController::class, 'edit'])->name('edit-original-file');
+Route::post('update_original_file', [App\Http\Controllers\OriginalFilesController::class, 'update'])->name('update-original-file');
 
 Route::get('/download/{id}/{file}/{autoDelete}', [App\Http\Controllers\FilesController::class,'download'])->name('download');
 Route::get('/support/{id}', [App\Http\Controllers\FilesController::class,'support'])->name('support');
