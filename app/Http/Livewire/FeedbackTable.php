@@ -71,22 +71,23 @@ class FeedbackTable extends LivewireDatatable
             ->label('Stage')->searchable(),
 
             Column::name('ecu')->label('ecu'),
+            NumberColumn::name('revisions')->label('Revisions')->sortable()->filterable(),
             Column::callback(['id'], function($id){
                 $all = "";
                 $file = File::findOrFail($id);
 
-                if($file->stage_services){
-                    $all .= '<img alt="{{$file->stages}}" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
-                    <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
-                }
+                // if($file->stage_services){
+                //     $all .= '<img alt="{{$file->stages}}" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
+                //     <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
+                // }
                 
                 foreach($file->options_services as $option){
                     if(\App\Models\Service::findOrFail($option->service_id) != null){
-                        $all .= '<img class="parent-adjusted" alt="'.\App\Models\Service::findOrFail($option->service_id)->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon .'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon.'">';
+                        $all .= '<img class="parent-adjusted" alt="'.\App\Models\Service::findOrFail($option->service_id)->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon .'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon.'"><span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($option->service_id)->name.'</span>';
                         }
                     }
                 return $all;
-            })->label('Stage and Options'),
+            })->label('Options'),
             Column::callback('file_feedback.type', function($type){
                 if($type == 'ok'){
                     return '<span class="label bg-blue-200">'.$type.'</span>';
