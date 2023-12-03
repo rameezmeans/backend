@@ -87,7 +87,9 @@ class FeedbackTable extends LivewireDatatable
                         }
                     }
                 return $all;
-            })->label('Options'),
+            })
+            // ->filterable(Service::where('type', 'option')->pluck('name')->toArray())
+            ->label('Options'),
             Column::callback('file_feedback.type', function($type){
                 if($type == 'ok'){
                     return '<span class="label bg-blue-200">'.$type.'</span>';
