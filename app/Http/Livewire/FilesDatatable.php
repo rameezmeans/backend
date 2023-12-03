@@ -83,7 +83,6 @@ class FilesDatatable extends LivewireDatatable
             })->label('Front End')
             ->filterable(FrontEnd::get(['id', 'name']))
             ->searchable(),
-
             Column::name('username')->label('Customer')->searchable(),
 
             Column::callback(['id', 'brand'], function ($id) {
@@ -94,6 +93,10 @@ class FilesDatatable extends LivewireDatatable
                 
                 
             })->label('Vehicle'),
+
+            Column::name('model')->label('Model')->searchable(),
+
+            Column::name('ecu')->label('ECU')->searchable(),
 
             NumberColumn::name('revisions')->label('Revisions')->sortable()->filterable(),
 
