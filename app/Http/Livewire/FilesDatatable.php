@@ -98,7 +98,7 @@ class FilesDatatable extends LivewireDatatable
 
             Column::name('ecu')->label('ECU')->searchable(),
 
-            NumberColumn::name('revisions')->label('Revisions')->sortable()->filterable(),
+                
 
             Column::callback('support_status', function($supportStatus){
                 if($supportStatus == 'open'){

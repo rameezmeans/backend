@@ -1533,8 +1533,19 @@ class FilesController extends Controller
        
         $file = File::findOrFail($request->file_id);
 
-        $fileName = $attachment->getClientOriginalName();
+        // $fileName = $attachment->getClientOriginalName();
 
+        $optionsMessage = "";
+        if($file->options){
+            foreach($file->options() as $option) {
+                $optionsMessage .= ",".$option." ";
+            }
+        }
+
+        $fileName = $file->brand.'_'.$file->model.'_'.$file->ecu.'_'.$file->stage.'_'.$optionsMessage.'_v'.$file->files->count()+1;
+
+        $newFileName = str_replace('/', '', $fileName);
+        $newFileName = str_replace('\\', '', $fileName);
         $newFileName = str_replace('#', '', $fileName);
         $newFileName = str_replace(' ', '_', $newFileName);
 
@@ -1623,7 +1634,7 @@ class FilesController extends Controller
             $file->checked_by = 'engineer';
             $file->save();
 
-            $file->revisions = $file->files->count();
+            $file->revisions = $file->files->count()+1;
             $file->save();
 
         $customer = User::findOrFail($file->user_id);
