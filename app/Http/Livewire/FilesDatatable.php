@@ -85,15 +85,10 @@ class FilesDatatable extends LivewireDatatable
             ->searchable(),
             Column::name('username')->label('Customer')->searchable(),
 
-            Column::callback(['id', 'brand'], function ($id) {
+            
 
-                $file = File::findOrFail($id);
-
-                return $file->brand.' '.$file->engine.' '.$file->vehicle()->TORQUE_standard;
-                
-                
-            })->label('Vehicle'),
-
+            Column::name('brand')->label('Brand')->searchable(),
+            
             Column::name('model')->label('Model')->searchable(),
 
             Column::name('ecu')->label('ECU')->searchable(),

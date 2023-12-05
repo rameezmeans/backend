@@ -53,7 +53,7 @@
             </div>
             <div class="card-body">
               <livewire:files-datatable 
-                searchable="id,username,model,ecu"
+                searchable="id,username,brand,model,ecu"
               />
             </div>
           </div>
