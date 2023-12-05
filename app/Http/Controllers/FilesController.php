@@ -1533,16 +1533,15 @@ class FilesController extends Controller
        
         $file = File::findOrFail($request->file_id);
 
-        // $fileName = $attachment->getClientOriginalName();
-
-        $optionsMessage = "";
+        $optionsMessage = '';
         if($file->options){
-            foreach($file->options() as $option) {
-                $optionsMessage .= ",".$option." ";
+            foreach($file->options()->get() as $option) {
+                $optionName = Service::findOrFail($option->service_id)->name;
+                $optionsMessage .= "".$optionName."_";
             }
         }
 
-        $fileName = $file->brand.'_'.$file->model.'_'.$file->ecu.'_'.$file->stage.'_'.$optionsMessage.'_v'.$file->files->count()+1;
+        $fileName = $file->brand.'_'.$file->model.'_'.$file->ecu.''.$file->stage.'_'.$optionsMessage.'_v'.$file->files->count()+1;
 
         $newFileName = str_replace('/', '', $fileName);
         $newFileName = str_replace('\\', '', $fileName);
