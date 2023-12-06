@@ -556,8 +556,7 @@ class FilesAPIController extends Controller
 
         $file = File::findOrFail($request->file_id);
 
-        $file->lua_command = $request->lua_command;
-        $file->save();
+        
         
         $chatID = env('CHAT_USER_ID');
 
@@ -625,6 +624,7 @@ class FilesAPIController extends Controller
                     $engineerFile->file_type = 'engineer_file';
                     $engineerFile->tool_type = 'not_relevant';
                     $engineerFile->master_tools = 'not_relevant';
+                    $engineerFile->lua_command = $request->lua_command;
                     $engineerFile->file_id = $file->id;
                     $engineerFile->engineer = true;
                     $engineerFile->save();
