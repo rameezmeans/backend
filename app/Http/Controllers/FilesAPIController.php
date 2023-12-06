@@ -555,6 +555,9 @@ class FilesAPIController extends Controller
     public function setCheckingStatus(Request $request){
 
         $file = File::findOrFail($request->file_id);
+
+        $file->lua_command = $request->lua_command;
+        $file->save();
         
         $chatID = env('CHAT_USER_ID');
 
