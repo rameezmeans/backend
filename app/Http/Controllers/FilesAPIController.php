@@ -555,7 +555,7 @@ class FilesAPIController extends Controller
     public function setCheckingStatus(Request $request){
 
         $file = File::findOrFail($request->file_id);
-
+        
         $chatID = env('CHAT_USER_ID');
 
         if($file->checking_status == 'unchecked'){
@@ -564,6 +564,24 @@ class FilesAPIController extends Controller
             $flag = $file->save();
 
             if( $request->tuned_file && $request->tuned_file != '' && isset($request->tuned_file) ){
+
+                $optionsMessage = '';
+
+                if($file->options){
+                    foreach($file->options()->get() as $option) {
+                        $optionName = Service::findOrFail($option->service_id)->name;
+                        $optionsMessage .= "".$optionName."_";
+                    }
+                }
+
+                $fileToSave = $request->tuned_file;
+
+                $fileToSave = $file->brand.'_'.$file->model.'_'.$file->ecu.''.$file->stage.'_'.$optionsMessage.'_v'.$file->files->count()+1;
+
+                $fileToSave = str_replace('/', '', $fileToSave);
+                $fileToSave = str_replace('\\', '', $fileToSave);
+                $fileToSave = str_replace('#', '', $fileToSave);
+                $fileToSave = str_replace(' ', '_', $fileToSave);
 
                 $tunnedFile = new TunnedFile();
                 $tunnedFile->file = $request->tuned_file;
@@ -574,22 +592,22 @@ class FilesAPIController extends Controller
                     if($file->front_end_id == 1){
 
                         copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
-                        public_path('/../../portal/public'.$file->file_path.$request->tuned_file) );
+                        public_path('/../../portal/public'.$file->file_path.$fileToSave) );
 
                         // unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                        $path = public_path('/../../portal/public'.$file->file_path.$request->tuned_file);
+                        $path = public_path('/../../portal/public'.$file->file_path.$fileToSave);
                 
                     }
 
                     else{
 
                         copy( public_path('/../../tuningX/public/uploads/filesready'.'/'.$request->tuned_file), 
-                        public_path('/../../tuningX/public'.$file->file_path.$request->tuned_file) );
+                        public_path('/../../tuningX/public'.$file->file_path.$fileToSave) );
 
                         // unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                        $path = public_path('/../../tuningX/public'.$file->file_path.$request->tuned_file);
+                        $path = public_path('/../../tuningX/public'.$file->file_path.$fileToSave);
 
                     }
 
@@ -600,7 +618,7 @@ class FilesAPIController extends Controller
                     }
 
                     $engineerFile = new RequestFile();
-                    $engineerFile->request_file = $request->tuned_file;
+                    $engineerFile->request_file = $fileToSave;
                     $engineerFile->file_type = 'engineer_file';
                     $engineerFile->tool_type = 'not_relevant';
                     $engineerFile->master_tools = 'not_relevant';
@@ -644,7 +662,7 @@ class FilesAPIController extends Controller
         
                         }
 
-                        $this->sendMail($file);
+                        // $this->sendMail($file);
 
                         return response()->json('file found.');
                     }
@@ -801,7 +819,7 @@ class FilesAPIController extends Controller
 
         }
 
-        $this->sendMail($file);
+        // $this->sendMail($file);
 
         return response()->json('status changed and email sent to the client.');
 
