@@ -574,9 +574,9 @@ class FilesAPIController extends Controller
                     }
                 }
 
-                $fileToSave = $request->tuned_file;
+                // $fileToSave = $request->tuned_file;
 
-                $fileToSave = $file->brand.'_'.$file->model.'_'.$file->ecu.''.$file->stage.'_'.$optionsMessage.'_v'.$file->files->count()+1;
+                $fileToSave = $file->brand.'_'.$file->model.'_'.$file->ecu.'_'.$file->stage.'_'.$optionsMessage.'_v'.$file->files->count()+1;
 
                 $fileToSave = str_replace('/', '', $fileToSave);
                 $fileToSave = str_replace('\\', '', $fileToSave);
