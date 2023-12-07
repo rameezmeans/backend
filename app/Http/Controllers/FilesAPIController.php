@@ -432,6 +432,7 @@ class FilesAPIController extends Controller
                 $temp['file_id'] = $file->id;
                 $temp['frontend'] = $file->front_end_id;
                 $temp['stage'] = $stage;
+                $temp['temporary_file_id'] = 0;
                 $temp['options'] = $options;
 
                 if($file->decoded_files->count() > 0){
@@ -454,6 +455,8 @@ class FilesAPIController extends Controller
                     }
 
                 }
+
+                
 
                 $temp['checked'] = $file->checking_status;
             
