@@ -13,6 +13,7 @@ use App\Models\Price;
 use App\Models\ReminderManager;
 use App\Models\RequestFile;
 use App\Models\Service;
+use App\Models\TemporaryFile;
 use App\Models\Tool;
 use App\Models\TunnedFile;
 use App\Models\User;
@@ -538,6 +539,9 @@ class FilesAPIController extends Controller
             
             $arrFiles []= $temp;
         }
+
+        // $temporaryFiles = TemporaryFile::join('users', 'users.id', '=', 'temporary_files.user_id')->get();
+        // dd($temporaryFiles);
     
         return response()->json($arrFiles);
     }
