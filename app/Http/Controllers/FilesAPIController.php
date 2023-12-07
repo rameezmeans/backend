@@ -540,8 +540,21 @@ class FilesAPIController extends Controller
             $arrFiles []= $temp;
         }
 
-        // $temporaryFiles = TemporaryFile::join('users', 'users.id', '=', 'temporary_files.user_id')->get();
-        // dd($temporaryFiles);
+        $temporaryFiles = TemporaryFile::join('users', 'users.id', '=', 'temporary_files.user_id')
+        ->where('users.test_features','=', 1)->select('*', 'temporary_files.id as id')->get();
+
+        foreach($temporaryFiles as $file){
+            $temp = [];
+            $temp['file_id'] = 0;
+            $temp['temporary_file_id'] = $file->id;
+            $temp['location'] = 'https://portal.ecutech.gr/uploads/'.$file->file_attached;
+            $temp['checked'] = 'unchecked';
+            $temp['stage'] = null;
+            $temp['options'] = null;
+            $temp['checked-versions'] = 0;
+
+            $arrFiles []= $temp;
+        }
     
         return response()->json($arrFiles);
     }
