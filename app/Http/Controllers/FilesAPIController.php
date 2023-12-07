@@ -510,6 +510,7 @@ class FilesAPIController extends Controller
                 
                 $temp = [];
                 $temp['file_id'] = $file->id;
+                $temp['temporary_file_id'] = 0;
                 $temp['stage'] = $stage;
                 $temp['options'] = $options;
     
