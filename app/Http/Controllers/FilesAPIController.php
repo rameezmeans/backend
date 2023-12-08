@@ -541,7 +541,9 @@ class FilesAPIController extends Controller
         }
 
         $temporaryFiles = TemporaryFile::join('users', 'users.id', '=', 'temporary_files.user_id')
-        ->where('users.test_features','=', 1)->select('*', 'temporary_files.id as id')->get();
+        ->where('users.test_features','=', 1)
+        ->where('temporary_files.checking_status_versions','=', 0)
+        ->select('*', 'temporary_files.id as id')->get();
 
         foreach($temporaryFiles as $file){
             $temp = [];
