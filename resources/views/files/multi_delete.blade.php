@@ -58,8 +58,9 @@
                                 <tbody>
                                     @foreach ($files as $file)
 
-                                        @if(!$file->vehicle())
+                                        @if($file->vehicle() == null)
                                             {{$file->id}}
+                                            @php exit; @endphp
                                         @endif
 
                                         <tr role="row" class="">
