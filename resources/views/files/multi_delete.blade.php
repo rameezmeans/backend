@@ -57,6 +57,11 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($files as $file)
+
+                                        @if(!$file->vehicle())
+                                            {{$file->id}}
+                                        @endif
+
                                         <tr role="row" class="">
                                             <td class="">
                                                 <div class="checkbox check-success">
