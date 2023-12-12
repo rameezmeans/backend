@@ -57,7 +57,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($files as $file)
-
+                                    
                                         <tr role="row" class="">
                                             <td class="">
                                                 <div class="checkbox check-success">
@@ -69,7 +69,7 @@
                                                 <span class="label @if($file->front_end_id == 1) bg-primary text-white @else label-warning text-black @endif">{{$file->id}}</span>
                                             </td>
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p>{{$file->brand}}</p>
+                                                <p>{{$file->brand.' '.$file->vehicle()->TORQUE_standard}}</p>
                                             </td>
                                             <td class="">
                                                 <p>{{$file->user->name}}</p>
