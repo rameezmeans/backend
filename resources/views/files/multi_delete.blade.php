@@ -58,11 +58,6 @@
                                 <tbody>
                                     @foreach ($files as $file)
 
-                                        @if($file->vehicle() == null)
-                                            {{$file->id}}
-                                            @php exit; @endphp
-                                        @endif
-
                                         <tr role="row" class="">
                                             <td class="">
                                                 <div class="checkbox check-success">
@@ -74,7 +69,7 @@
                                                 <span class="label @if($file->front_end_id == 1) bg-primary text-white @else label-warning text-black @endif">{{$file->id}}</span>
                                             </td>
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p>{{$file->brand.' '.$file->engine.' '.$file->vehicle()->TORQUE_standard}}</p>
+                                                <p>{{$file->brand}}</p>
                                             </td>
                                             <td class="">
                                                 <p>{{$file->user->name}}</p>
