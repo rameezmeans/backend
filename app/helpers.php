@@ -917,14 +917,16 @@ if(!function_exists('get_customers')){
         $customerRole = Role::where('name', 'customer')->first();
         
         if($frontendID == 0){
-            $customers = User::where('role_id', $customerRole->id)
+            $customers = User::orderBy('created_at', 'desc')
+            ->where('role_id', $customerRole->id)
             ->where('name' ,'!=', 'Live Chat')
             ->where('name' ,'!=', 'Live Chat Sub')
             ->whereNotNull('front_end_id')
             ->get();
         }
         else{
-            $customers = User::where('role_id', $customerRole->id)
+            $customers = User::orderBy('created_at', 'desc')
+            ->where('role_id', $customerRole->id)
             ->where('front_end_id', $frontendID)
             ->where('name' ,'!=', 'Live Chat')
             ->where('name' ,'!=', 'Live Chat Sub')
