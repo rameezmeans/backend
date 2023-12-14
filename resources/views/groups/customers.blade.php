@@ -70,7 +70,7 @@
                                   <p>{{code_to_country($customer->country)}}</p>
                                 </td>
                                 <td class="v-align-middle semi-bold sorting_1">
-                                  <p>{{$customer->created_at->diffForHumans()}}</p>
+                                  <p>{{ date('d/m/Y', strtotime($customer->created_at))}}</p>
                               </td>
                             </tr>
                           @endforeach
