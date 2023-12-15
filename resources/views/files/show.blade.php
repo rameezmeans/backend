@@ -4257,7 +4257,11 @@
 
         console.log('formdata');
         console.log(formData);
-        
+
+        for (var pair of formData.entries()) {
+          console.log(pair[0]+ ', ' + pair[1]); 
+        }
+
         fetch("/makelua", {
             method: "POST",
             body: formData
