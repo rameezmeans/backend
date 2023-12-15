@@ -606,14 +606,14 @@
                       </div>
                       @endif
 
-                      <div class="b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                      {{-- <div class="b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left">Show Comments</p>
                         <div class="pull-right">
 
                           <input data-file_id={{$file->id}} class="show_comments" type="checkbox" data-init-plugin="switchery" @if($file->show_comments) checked="checked" @endif onclick="show_comments_flip()"/>
                         </div>
                         <div class="clearfix"></div>
-                      </div>
+                      </div> --}}
                      
                       <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left">Credits Paid</p>
@@ -668,6 +668,12 @@
                                       @endif
                                       <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
                                     @endif
+
+                                    <div class="checkbox check-success checkbox-circle">
+                                      <input class="show_comments" type="checkbox" @if($message['show_comments']) checked="checked"  value="1" @endif data-id="{{$message['id']}}" id="checkbox_{{$message['id']}}">
+                                      <label for="checkbox_{{$message['id']}}">Show Comments</label>
+                                    </div>
+
                                     <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
                                     </a>
                                     <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a>
@@ -1809,6 +1815,12 @@
                                       @endif
                                       <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
                                     @endif
+
+                                    <div class="checkbox check-success checkbox-circle">
+                                      <input class="show_comments" type="checkbox"  @if($message['show_comments']) checked="checked"  value="1" @endif data-id="{{$message['id']}}" id="checkbox_{{$message['id']}}">
+                                      <label for="checkbox_{{$message['id']}}">Show Comments</label>
+                                    </div>
+                                    
                                     <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
                                     </a>
                                     <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a>
@@ -2979,8 +2991,8 @@
     $( document ).ready(function(event) {
       let showCommentsOnFile = true;
               $(document).on('change', '.show_comments', function(e) {
-                  let file_id = $(this).data('file_id');
-                  console.log(file_id);
+                  let engineer_file_id = $(this).data('id');
+                  console.log(engineer_file_id);
                   if ($(this).is(':checked')) {
                     showCommentsOnFile = $(this).is(':checked');
                       console.log(showCommentsOnFile);
@@ -2990,18 +3002,18 @@
                       console.log(showCommentsOnFile);
                   }
 
-                  flip_show_comments(file_id, showCommentsOnFile);
+                  flip_show_comments(engineer_file_id, showCommentsOnFile);
               });
 
     });
 
-    function flip_show_comments(file_id, showCommentsOnFile){
+    function flip_show_comments(engineer_file_id, showCommentsOnFile){
       $.ajax({
                 url: "/flip_show_comments",
                 type: "POST",
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    "file_id": file_id,
+                    "id": engineer_file_id,
                     "showCommentsOnFile": showCommentsOnFile,
                 },
                 headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},

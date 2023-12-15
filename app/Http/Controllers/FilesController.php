@@ -71,12 +71,10 @@ class FilesController extends Controller
     
     public function flipShowComments(Request $request){
 
-        $file = File::findOrFail($request->file_id);
+        $file = RequestFile::findOrFail($request->id);
         $file->show_comments = ($request->showCommentsOnFile == 'false') ? 0 : 1;
         $file->save();
-
         dd($file);
-
 
     }
 
