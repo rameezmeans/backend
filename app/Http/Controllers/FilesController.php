@@ -1551,8 +1551,8 @@ class FilesController extends Controller
                 $optionsMessage .= "".$optionName."_";
             }
         }
-
-        if($file->stage == 'Stage 0'){
+        
+        if($file->stage != 'Stage 0'){
             $fileName = $file->brand.'_'.$file->model.'_'.$file->ecu.'_'.$file->stage.'_'.$optionsMessage.'_v'.$file->files->count()+1;
         }
         else{
