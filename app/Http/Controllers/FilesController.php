@@ -1552,7 +1552,12 @@ class FilesController extends Controller
             }
         }
 
-        $fileName = $file->brand.'_'.$file->model.'_'.$file->ecu.'_'.$file->stage.'_'.$optionsMessage.'_v'.$file->files->count()+1;
+        if($file->stage == 'Stage 0'){
+            $fileName = $file->brand.'_'.$file->model.'_'.$file->ecu.'_'.$file->stage.'_'.$optionsMessage.'_v'.$file->files->count()+1;
+        }
+        else{
+            $fileName = $file->brand.'_'.$file->model.'_'.$file->ecu.'_'.$optionsMessage.'_v'.$file->files->count()+1;
+        }
 
         $newFileName = str_replace('/', '', $fileName);
         $newFileName = str_replace('\\', '', $newFileName);
