@@ -136,12 +136,6 @@ class Makelua extends Controller
 			
 			curl_close($ch);							
 				
-				
-				
-				
-				
-				
-				
 			}
 			
 			

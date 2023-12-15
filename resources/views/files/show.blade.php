@@ -4255,7 +4255,9 @@
         formData.append("nameforluacreation", nameForLuaCreation);
         formData.append("sendversion", selectedSendVersion);
 
-
+        console.log('formdata');
+        console.log(formData);
+        
         fetch("/makelua", {
             method: "POST",
             body: formData
