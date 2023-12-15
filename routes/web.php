@@ -326,6 +326,7 @@ Route::post('add_options_offer', [App\Http\Controllers\FilesController::class, '
 Route::post('force_options_offer', [App\Http\Controllers\FilesController::class, 'forceOptionsOffer'])->name('force-options-offer');
 Route::get('multi_delete', [App\Http\Controllers\FilesController::class, 'multiDelete'])->name('multi-delete');
 Route::post('delete_files', [App\Http\Controllers\FilesController::class, 'deleteFiles'])->name('delete-files');
+Route::post('flip_show_comments', [App\Http\Controllers\FilesController::class, 'flipShowComments'])->name('flip-show-comments');
 
 Route::get('original_files', [App\Http\Controllers\OriginalFilesController::class, 'index'])->name('original-files');
 // Route::get('original_files_live', [App\Http\Controllers\OriginalFilesController::class, 'live'])->name('original-files-live');

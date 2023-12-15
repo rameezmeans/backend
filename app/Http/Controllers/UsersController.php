@@ -66,6 +66,7 @@ class UsersController extends Controller
 
         return view('groups.customers', ['customers' => $customers]);
         }
+        
         else{
             abort(404);
         }

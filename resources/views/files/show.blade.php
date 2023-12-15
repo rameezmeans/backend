@@ -2402,6 +2402,7 @@
                               @endif
                               </div>
                             @endif
+                            
                             @if($comments)
                               @foreach($comments as $comment)
 
@@ -2471,6 +2472,14 @@
                         <div class="clearfix"></div>
                       </div>
                       @endif
+
+                      <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <p class="pull-left">Show Comments</p>
+                        <div class="pull-right">
+
+                          <input data-file_id={{$file->id}} class="show_comments" type="checkbox" data-init-plugin="switchery" @if($file->show_comments) checked="checked" @endif onclick="show_comments_flip()"/>
+                        </div>
+                      </div>
                      
                       <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left">Credits Paid</p>

@@ -69,6 +69,17 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
     
+    public function flipShowComments(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+        $file->show_comments = ($request->showCommentsOnFile == 'false') ? 0 : 1;
+        $file->save();
+
+        dd($file);
+
+
+    }
+
     public function deleteFiles(Request $request){
 
         if(!Auth::user()->is_admin()){

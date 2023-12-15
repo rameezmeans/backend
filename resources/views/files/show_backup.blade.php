@@ -605,6 +605,15 @@
                         <div class="clearfix"></div>
                       </div>
                       @endif
+
+                      <div class="b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <p class="pull-left">Show Comments</p>
+                        <div class="pull-right">
+
+                          <input data-file_id={{$file->id}} class="show_comments" type="checkbox" data-init-plugin="switchery" @if($file->show_comments) checked="checked" @endif onclick="show_comments_flip()"/>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
                      
                       <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left">Credits Paid</p>
@@ -1737,6 +1746,15 @@
                         <div class="clearfix"></div>
                       </div>
                       @endif
+
+                      {{-- <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <p class="pull-left">Show Comments</p>
+                        <div class="pull-right">
+
+                          <input data-file_id={{$file->id}} class="show_comments" type="checkbox" data-init-plugin="switchery" @if($file->show_comments) checked="checked" @endif onclick="show_comments_flip()"/>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div> --}}
                      
                       <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left">Credits Paid</p>
@@ -2957,6 +2975,41 @@
   </script>
 
 <script>
+
+    $( document ).ready(function(event) {
+      let showCommentsOnFile = true;
+              $(document).on('change', '.show_comments', function(e) {
+                  let file_id = $(this).data('file_id');
+                  console.log(file_id);
+                  if ($(this).is(':checked')) {
+                    showCommentsOnFile = $(this).is(':checked');
+                      console.log(showCommentsOnFile);
+                  }
+                  else {
+                    showCommentsOnFile = $(this).is(':checked');
+                      console.log(showCommentsOnFile);
+                  }
+
+                  flip_show_comments(file_id, showCommentsOnFile);
+              });
+
+    });
+
+    function flip_show_comments(file_id, showCommentsOnFile){
+      $.ajax({
+                url: "/flip_show_comments",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "file_id": file_id,
+                    "showCommentsOnFile": showCommentsOnFile,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    
+                }
+            });  
+    }
 
   let engineerFileDrop= new Dropzone(".encoded-dropzone", {
     accept: function(file, done) {
