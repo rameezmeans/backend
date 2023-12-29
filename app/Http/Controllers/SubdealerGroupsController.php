@@ -797,7 +797,12 @@ class SubdealerGroupsController extends Controller
         $headID = Role::where('name', 'head')->first()->id;
         $engineers = User::where('subdealer_group_id', $id)
         ->where('role_id', $engineerID)
-        ->orWhere('role_id', $headID)->where('subdealer_group_id', $id)
+        ->where('subdealer_group_id', $id)
+        ->get();
+
+        $head = User::where('subdealer_group_id', $id)
+        ->where('role_id', $headID)
+        ->where('subdealer_group_id', $id)
         ->get();
 
         $subdealerTypes = [
@@ -811,6 +816,7 @@ class SubdealerGroupsController extends Controller
 
         return view('subdealers.create', 
         [   'subdealer' => $subdealer, 
+            'head' => $head, 
             'customers' => $customers,
             'engineers' => $engineers,
             'subdealers' => $subdealers,
