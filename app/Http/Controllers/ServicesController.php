@@ -185,18 +185,20 @@ class ServicesController extends Controller
 
             foreach($allOptions as $option) {
 
+                $type = $option->vehicle_type;
+
                 if($proposedOptions){
 
                     if(in_array($option->id, $proposedOptions))
                     {
-                        $optionOptions .= '<option selected value="'.$option->id.'">'.$option->name.'</option>';
+                        $optionOptions .= '<option selected value="'.$option->id.'">'.$option->name.'('.$type.')'.'</option>';
                     }
                     else{
-                        $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'</option>';
+                        $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'('.$type.')'.'</option>';
                     }
                 }
                 else{
-                    $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'</option>';
+                    $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'('.$type.')'.'</option>';
                 }
 
             }
