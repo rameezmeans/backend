@@ -24,13 +24,13 @@ class NewsFeedsController extends Controller
 
     public function index() {
         
-        $newsFeeds = NewsFeed::all();
+        $newsFeeds = NewsFeed::whereNull('subdealer_group_id')->get();
 
         if(env('APP_ENV') == 'local'){
             $this->simulateActivation($newsFeeds);
         }
 
-        $newsFeeds = NewsFeed::all();
+        $newsFeeds = NewsFeed::whereNull('subdealer_group_id')->get();
 
         return view('feeds.index', ['newsFeeds' => $newsFeeds]);
     }
