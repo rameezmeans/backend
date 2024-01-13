@@ -430,15 +430,13 @@ class FilesAPIController extends Controller
                     $options = "";
                 }
             }
-                
+            
+            if($stage != NULL){
+
                 $temp = [];
                 $temp['file_id'] = $file->id;
                 $temp['frontend'] = $file->front_end_id;
 
-                if($stage == NULL){
-                    dd($file->id);
-                }
-                
                 $temp['stage'] = $stage;
                 $temp['temporary_file_id'] = 0;
                 $temp['options'] = $options;
@@ -464,9 +462,9 @@ class FilesAPIController extends Controller
 
                 }
 
-                
-
                 $temp['checked'] = $file->checking_status;
+
+            }
             
             $arrFiles []= $temp;
         }
