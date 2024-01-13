@@ -389,6 +389,8 @@ class FilesAPIController extends Controller
 
         foreach($files as $file){
 
+            $stage = NULL;
+
             if($file->custom_stage != NULL){
                 $stage = \App\Models\Service::FindOrFail( $file->custom_stage )->label;
             }
@@ -432,6 +434,11 @@ class FilesAPIController extends Controller
                 $temp = [];
                 $temp['file_id'] = $file->id;
                 $temp['frontend'] = $file->front_end_id;
+
+                if($stage == NULL){
+                    dd($file->id);
+                }
+                
                 $temp['stage'] = $stage;
                 $temp['temporary_file_id'] = 0;
                 $temp['options'] = $options;
