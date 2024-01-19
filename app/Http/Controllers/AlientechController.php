@@ -505,6 +505,8 @@ class AlientechController extends Controller
         }
         else{
             $this->makeLogEntry(0, 'error', 'File Upload error. Line: 408.', $file->id);
+            $file->disable_customers_download = 1;
+            $file->save();
         }
 
         $this->closeOneSlot($slotID);
