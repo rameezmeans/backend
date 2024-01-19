@@ -180,7 +180,14 @@
                       <div class="clearfix"></div>
                   </div>
                   <div class="card-body">
-
+                    @if($file->disable_customers_download)
+                      <div class="row m-t-40">
+                        <div class="col-12 col-xl-12 bg-danger-light text-white m-b-10 m-t-10 m-l-10" style="height: 100%;">
+                          <p class="no-margin p-t-10 p-b-10">Because AlientTech could not encrypt these files so any Auto reply from system or manual reply from engineer will not appear on Customer's side. We do not want them to download raw file without encoding. Now please delete all the files in revision and upload encoded file manually. After doing that please click on the button to enable download. After you will click on that button, the state of revisions will be visible to Customer to download. Please be careful. Thanks.</p>
+                          <form action="{{route('enable-download')}}" method="POST" class="text-center"> @csrf <input type="hidden" value="{{$file->id}}" name="id"> <button class="btn btn-info m-b-10" type="submit" >Enable Download on Customer Side</button></form>
+                        </div>
+                      </div>
+                    @endif
                     <div class="row m-t-40">
                       {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
                         @if($decodedAvailable == true)
@@ -680,6 +687,7 @@
                                 </div>
 
                                 <div class="clearfix"></div>
+                                  @if($file->logs == NULL)
                                   @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
                                   <div>
                                     <p>Please click on "Download Encrypted" Button to download and test the system. This way user will get Encrypted file or you will get the error so that you can process the file, manually.</p>
@@ -688,6 +696,7 @@
                                     <a href="{{ route('download-encrypted',[$message['file_id'], $message['request_file'], false]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download Encrypted</span>
                                     </a>
                                   </div>
+                                  @endif
                                   @endif
                                 <div class="clearfix"></div>
                             </div>
@@ -1355,6 +1364,15 @@
                   </div>
                   <div class="card-body">
 
+                    @if($file->disable_customers_download)
+                      <div class="row m-t-40">
+                        <div class="col-12 col-xl-12 bg-danger-light text-white m-b-10 m-t-10 m-l-10" style="height: 100%;">
+                          <p class="no-margin p-t-10 p-b-10">Because AlientTech could not encrypt these files so any Auto reply from system or manual reply from engineer will not appear on Customer's side. We do not want them to download raw file without encoding. Now please delete all the files in revision and upload encoded file manually. After doing that please click on the button to enable download. After you will click on that button, the state of revisions will be visible to Customer to download. Please be careful. Thanks.</p>
+                          <form action="{{route('enable-download')}}" method="POST" class="text-center"> @csrf <input type="hidden" value="{{$file->id}}" name="id"> <button class="btn btn-info m-b-10" type="submit" >Enable Download on Customer Side</button></form>
+                        </div>
+                      </div>
+                    @endif
+
                     <div class="row m-t-40">
                       {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
                         @if($decodedAvailable == true)
@@ -1827,14 +1845,16 @@
                                 </div>
 
                                 <div class="clearfix"></div>
-                                  @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
-                                  <div>
-                                    <p>Please click on "Download Encrypted" Button to download and test the system. This way user will get Encrypted file or you will get the error so that you can process the file, manually.</p>
-                                  </div>
-                                  <div class="text-center">
-                                    <a href="{{ route('download-encrypted',[$message['file_id'], $message['request_file'], false]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download Encrypted</span>
-                                    </a>
-                                  </div>
+                                  @if($file->logs == NULL)
+                                    @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
+                                    <div>
+                                      <p>Please click on "Download Encrypted" Button to download and test the system. This way user will get Encrypted file or you will get the error so that you can process the file, manually.</p>
+                                    </div>
+                                    <div class="text-center">
+                                      <a href="{{ route('download-encrypted',[$message['file_id'], $message['request_file'], false]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download Encrypted</span>
+                                      </a>
+                                    </div>
+                                    @endif
                                   @endif
                                 <div class="clearfix"></div>
                             </div>

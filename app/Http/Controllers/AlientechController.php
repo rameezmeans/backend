@@ -432,6 +432,8 @@ class AlientechController extends Controller
     public function saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType ){
 
             $this->reopen($slotID);
+
+            $target_url = '';
             
             if($encodingType == 'dec'){
                 $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/OBDModified';
@@ -461,7 +463,7 @@ class AlientechController extends Controller
             $result=curl_exec ($ch);
             curl_close ($ch);
             $response = json_decode($result);
-
+            // dd($response);
             if( isset($response->guid) ){
 
             if($encodingType == 'dec'){
@@ -506,6 +508,7 @@ class AlientechController extends Controller
         else{
             $this->makeLogEntry(0, 'error', 'File Upload error. Line: 408.', $file->id);
             $file->disable_customers_download = 1;
+            $file->status = 'submitted';
             $file->save();
         }
 
