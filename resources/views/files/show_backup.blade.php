@@ -188,6 +188,16 @@
                         </div>
                       </div>
                     @endif
+
+                    @if($file->no_longer_auto)
+                      <div class="row m-t-40">
+                        <div class="col-12 col-xl-12 bg-danger-light text-white m-b-10 m-t-10 m-l-10" style="height: 100%;">
+                          <p class="no-margin p-t-10 p-b-10">During auto encoding or decoding, an error occured. Due to that this task is not long Automated. You need to delete all files which you have uploaded earlier and reupload them encoded manually. From now onward you will only be able to upload enocded files. Thanks.</p>
+                          
+                        </div>
+                      </div>
+                    @endif
+
                     <div class="row m-t-40">
                       {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
                         @if($decodedAvailable == true)
@@ -1369,6 +1379,15 @@
                         <div class="col-12 col-xl-12 bg-danger-light text-white m-b-10 m-t-10 m-l-10" style="height: 100%;">
                           <p class="no-margin p-t-10 p-b-10">Because AlientTech could not encrypt these files so any Auto reply from system or manual reply from engineer will not appear on Customer's side. We do not want them to download raw file without encoding. Now please delete all the files in revision and upload encoded file manually. After doing that please click on the button to enable download. After you will click on that button, the state of revisions will be visible to Customer to download. Please be careful. Thanks.</p>
                           <form action="{{route('enable-download')}}" method="POST" class="text-center"> @csrf <input type="hidden" value="{{$file->id}}" name="id"> <button class="btn btn-info m-b-10" type="submit" >Enable Download on Customer Side</button></form>
+                        </div>
+                      </div>
+                    @endif
+
+                    @if($file->no_longer_auto)
+                      <div class="row m-t-40">
+                        <div class="col-12 col-xl-12 bg-danger-light text-white m-b-10 m-t-10 m-l-10" style="height: 100%;">
+                          <p class="no-margin p-t-10 p-b-10">During auto encoding or decoding, an error occured. Due to that this task is not long Automated. You need to delete all files which you have uploaded earlier and reupload them encoded manually. From now onward you will only be able to upload enocded files. Thanks.</p>
+                          
                         </div>
                       </div>
                     @endif
