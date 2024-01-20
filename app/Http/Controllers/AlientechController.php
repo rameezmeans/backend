@@ -37,6 +37,10 @@ class AlientechController extends Controller
 
         if(!isset($responseBody['result']['name'])){
             $this->makeLogEntry($file->id, 'error', 'line 41; file is not uploaded successfully.');
+            $file->disable_customers_download = 1;
+            $file->no_longer_auto = 1;
+            $file->status = 'submitted';
+            $file->save();
             return $modifiedfileName;
         }
         else{
@@ -142,6 +146,10 @@ class AlientechController extends Controller
 
         if($result == NULL){
             $this->makeLogEntry( 0, 'error', 'File can not be downloaded. Line 47.', $file->id );
+            $file->disable_customers_download = 1;
+            $file->no_longer_auto = 1;
+            $file->status = 'submitted';
+            $file->save();
             return;
         }
 
@@ -508,6 +516,7 @@ class AlientechController extends Controller
         else{
             $this->makeLogEntry(0, 'error', 'File Upload error. Line: 408.', $file->id);
             $file->disable_customers_download = 1;
+            $file->no_longer_auto = 1;
             $file->status = 'submitted';
             $file->save();
         }

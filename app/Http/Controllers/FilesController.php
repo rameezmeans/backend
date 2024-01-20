@@ -1900,7 +1900,7 @@ class FilesController extends Controller
         $reminder->save();
 
         if($file->status == 'submitted'){
-            if($file->logs == NULL){
+            if($file->no_longer_auto == 0){
                 $file->status = 'completed';
             }
             $file->save();
@@ -1922,7 +1922,8 @@ class FilesController extends Controller
             $file->support_status = "closed";
             $old->save();
         }
-        if($file->logs == NULL){
+
+        if($file->no_longer_auto == 0){
             $file->support_status = "closed";
             $file->checked_by = 'engineer';
             $file->save();
@@ -1994,7 +1995,7 @@ class FilesController extends Controller
         $reminderManager = new ReminderManagerController();
         $this->manager = $reminderManager->getAllManager();
 
-        if($file->logs == NULL){
+         if($file->no_longer_auto == 0){
 
         if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
 
