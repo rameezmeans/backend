@@ -69,14 +69,14 @@ Route::get('/info', function () {
 
 Route::get('/tasks', function () {
 
-    $options = FileService::where('service_id', 109)->get();
+    // $options = FileService::where('service_id', 109)->get();
     
-    foreach($options as $o){
-        $o->service_id = 54;
-        $o->save();
-    }
+    // foreach($options as $o){
+    //     $o->service_id = 54;
+    //     $o->save();
+    // }
 
-    dd('done');
+    // dd('done');
 
     // $allRequestFile = RequestFile::all();
 
