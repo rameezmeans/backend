@@ -15,6 +15,7 @@ use App\Models\Comment;
 use App\Models\Credit;
 use App\Models\File;
 use App\Models\FileFeedback;
+use App\Models\FileService;
 use App\Models\Key;
 use App\Models\ReminderManager;
 use App\Models\RequestFile;
@@ -68,11 +69,20 @@ Route::get('/info', function () {
 
 Route::get('/tasks', function () {
 
-    $allRequestFile = RequestFile::all();
-
-    foreach($allRequestFile as $r){
-        dd($r->file_id);
+    $options = FileService::where('service_id', 109)->get();
+    
+    foreach($options as $o){
+        $o->service->id = 54;
+        $o->save();
     }
+
+    dd('done');
+
+    // $allRequestFile = RequestFile::all();
+
+    // foreach($allRequestFile as $r){
+    //     // dd($r->file_id);
+    // }
 
     abort(404);
     // $new = new ReminderManager();
