@@ -72,7 +72,7 @@ Route::get('/tasks', function () {
     $options = FileService::where('service_id', 109)->get();
     
     foreach($options as $o){
-        $o->service->id = 54;
+        $o->service_id = 54;
         $o->save();
     }
 
