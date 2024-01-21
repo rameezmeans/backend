@@ -17,6 +17,7 @@ use App\Models\File;
 use App\Models\FileFeedback;
 use App\Models\Key;
 use App\Models\ReminderManager;
+use App\Models\RequestFile;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\Service;
@@ -66,6 +67,13 @@ Route::get('/info', function () {
 });
 
 Route::get('/tasks', function () {
+
+    $allRequestFile = RequestFile::all();
+
+    foreach($allRequestFile as $r){
+        dd($r->file_id);
+    }
+
     abort(404);
     // $new = new ReminderManager();
     // $new->type = 'eng_assign_admin_whatsapp';
