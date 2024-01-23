@@ -49,11 +49,11 @@
                                             <tr role="row" class="">
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p class="label bg-warning">{{$p->id}}</p>
+                                                    <p class="label @if($p->front_end_id == 2) bg-warning @else bg-info @endif">{{$p->id}}</p>
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p class="label bg-warning">{{$p->invoice_id}}</p>
+                                                    <p class="label @if($p->front_end_id == 2) bg-warning @else bg-info @endif">{{$p->invoice_id}}</p>
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
