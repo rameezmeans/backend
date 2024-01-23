@@ -72,6 +72,7 @@ Route::get('/tasks', function () {
     $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
     ->where('credits','>', 0)
     ->where('gifted', 0)
+    ->whereYear('created_at', 2024)
     ->get();
 
     dd($creditsWithoutZohoID);
