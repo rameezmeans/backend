@@ -69,6 +69,9 @@ Route::get('/info', function () {
 
 Route::get('/tasks', function () {
 
+    $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')->get();
+    dd($creditsWithoutZohoID);
+
     // $options = FileService::where('service_id', 109)->get();
     
     // foreach($options as $o){
