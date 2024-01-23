@@ -52,11 +52,11 @@
                                         <tr role="row" class="">
 
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p class="label @if(\App\Models\Credit::findOrFail($l->payment_id)->front_end_id == 2) bg-warning @else bg-info @endif">{{\App\Models\Credit::findOrFail($l->payment_id)->id}}</p>
+                                                <p class="label @if(\App\Models\Credit::findOrFail($l->payment_id)->front_end_id == 2) bg-warning @else bg-primary @endif">{{\App\Models\Credit::findOrFail($l->payment_id)->id}}</p>
                                             </td>
 
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p class="label @if(\App\Models\Credit::findOrFail($l->payment_id)->front_end_id == 2) bg-warning @else bg-info @endif">{{\App\Models\Credit::findOrFail($l->payment_id)->invoice_id}}</p>
+                                                <p class="label @if(\App\Models\Credit::findOrFail($l->payment_id)->front_end_id == 2) bg-warning @else bg-primary @endif">{{\App\Models\Credit::findOrFail($l->payment_id)->invoice_id}}</p>
                                             </td>
 
                                             <td class="v-align-middle semi-bold sorting_1">
