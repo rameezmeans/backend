@@ -69,13 +69,22 @@ Route::get('/info', function () {
 
 Route::get('/tasks', function () {
 
-    $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
-    ->where('credits','>', 0)
-    ->where('gifted', 0)
-    ->whereYear('created_at', 2024)
-    ->get();
+    $allCredits = Credit::all();
+    
+    foreach($allCredits as $c){
+        $c->front_end_id = User::findOrFail($c->user_id)->front_end_id;
+        $c->save();
+    }
 
-    dd($creditsWithoutZohoID);
+    dd('front end id settled');
+
+    // $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
+    // ->where('credits','>', 0)
+    // ->where('gifted', 0)
+    // ->whereYear('created_at', 2024)
+    // ->get();
+
+    // dd($creditsWithoutZohoID);
 
     // $options = FileService::where('service_id', 109)->get();
     
