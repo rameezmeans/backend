@@ -72,8 +72,15 @@ Route::get('/tasks', function () {
     $allCredits = Credit::all();
     
     foreach($allCredits as $c){
-        $c->front_end_id = User::findOrFail($c->user_id)->front_end_id;
-        $c->save();
+        
+        $frontEndID = User::findOrFail($c->user_id)->front_end_id;
+
+        if($frontEndID){
+            $c->front_end_id = User::findOrFail($c->user_id)->front_end_id;
+            $c->save();
+        }
+
+        
     }
 
     dd('front end id settled');
