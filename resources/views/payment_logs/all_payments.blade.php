@@ -30,6 +30,7 @@
                                         <tr role="row">
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">DB ID</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Invoice ID</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Type</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Date</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Customer</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Email</th>
@@ -54,6 +55,11 @@
 
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p class="label @if($p->front_end_id == 2) bg-warning @else bg-primary text-white @endif">{{$p->invoice_id}}</p>
+                                                </td>
+
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>@if($p->front_end_id == 1) Stripe @else @if($p->type == 'paypal') Paypal @else Stripe @endif</p>
+                                                    
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
