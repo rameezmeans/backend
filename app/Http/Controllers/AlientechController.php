@@ -445,8 +445,8 @@ class AlientechController extends Controller
 
             $this->reopen($slotID);
 
-            $engineerFile->is_kess3_slave = 1;
-            $engineerFile->save();
+            // $engineerFile->is_kess3_slave = 1;
+            // $engineerFile->save();
 
             $target_url = '';
             
@@ -521,6 +521,7 @@ class AlientechController extends Controller
 
             $engineerFile->uploaded_successfully = 1;
             $engineerFile->encoded = 1;
+            $engineerFile->is_kess3_slave = 1;
             $engineerFile->save();
 
         }
@@ -528,11 +529,13 @@ class AlientechController extends Controller
             $this->makeLogEntry(0, 'error', 'File Upload error. Line: 408.', $file->id);
             // $file->disable_customers_download = 1;
             $file->no_longer_auto = 1;
+            
             $file->status = 'submitted';
             $file->save();
 
             $engineerFile->uploaded_successfully = 0;
             $engineerFile->encoded = 0;
+            $engineerFile->is_kess3_slave = 1;
             $engineerFile->save();
         }
         
