@@ -102,7 +102,7 @@ Route::get('/tasks', function () {
             $logInstance->user_id = $c->user_id;
             $logInstance->zohobooks_payment = false;
             $logInstance->zohobooks_id = NULL;
-            $logInstance->email_send = 1;
+            $logInstance->email_sent = 1;
             $logInstance->reason_to_skip_zohobooks_payment_id = "zohobooks invoice did not went through.";
             $logInstance->save();
             send_error_email($c->id, 'Transaction happened without zoho id', $c->front_end_id);
