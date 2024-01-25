@@ -86,43 +86,43 @@ Route::get('/tasks', function () {
 
     // dd('front end id settled');
 
-    $creditsWithoutElorusID = Credit::whereNull('elorus_id')
-    ->where('credits','>', 0)
-    ->where('gifted', 0)
-    ->whereYear('created_at','>=', 2024)
-    ->get();
+    // $creditsWithoutElorusID = Credit::whereNull('elorus_id')
+    // ->where('credits','>', 0)
+    // ->where('gifted', 0)
+    // ->whereYear('created_at','>=', 2024)
+    // ->get();
 
-    // dd($$creditsWithoutElorusID);
+    // // dd($$creditsWithoutElorusID);
 
-    foreach($creditsWithoutElorusID as $c){
-        if($c->elorus_able()){
-            if($c->log){
+    // foreach($creditsWithoutElorusID as $c){
+    //     if($c->elorus_able()){
+    //         if($c->log){
 
-                $logInstance = $c->log;
-                $logInstance->payment_id = $c->id;
-                $logInstance->user_id = $c->user_id;
-                $logInstance->elorus_id = NULL;
-                $logInstance->email_sent = 1;
-                $logInstance->reason_to_skip_elorus_id = "elorus invoice did not went through.";
-                $logInstance->save();
-                send_error_email($c->id, 'Transaction happened without elorus id', $c->front_end_id);
+    //             $logInstance = $c->log;
+    //             $logInstance->payment_id = $c->id;
+    //             $logInstance->user_id = $c->user_id;
+    //             $logInstance->elorus_id = NULL;
+    //             $logInstance->email_sent = 1;
+    //             $logInstance->reason_to_skip_elorus_id = "elorus invoice did not went through.";
+    //             $logInstance->save();
+    //             send_error_email($c->id, 'Transaction happened without elorus id', $c->front_end_id);
 
-            }
-            else{
+    //         }
+    //         else{
 
-                $logInstance = new PaymentLog();
-                $logInstance->payment_id = $c->id;
-                $logInstance->user_id = $c->user_id;
-                $logInstance->elorus_id = NULL;
-                $logInstance->email_sent = 1;
-                $logInstance->reason_to_skip_elorus_id = "elorus invoice did not went through.";
-                $logInstance->save();
-                send_error_email($c->id, 'Transaction happened without elorus id', $c->front_end_id);
-            }
-        }
-    }
+    //             $logInstance = new PaymentLog();
+    //             $logInstance->payment_id = $c->id;
+    //             $logInstance->user_id = $c->user_id;
+    //             $logInstance->elorus_id = NULL;
+    //             $logInstance->email_sent = 1;
+    //             $logInstance->reason_to_skip_elorus_id = "elorus invoice did not went through.";
+    //             $logInstance->save();
+    //             send_error_email($c->id, 'Transaction happened without elorus id', $c->front_end_id);
+    //         }
+    //     }
+    // }
 
-    dd('elorus able settled');
+    // dd('elorus able settled');
 
     // $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
     // ->where('credits','>', 0)
