@@ -72,6 +72,7 @@ class AlientechController extends Controller
 
             // specify the path and filename for the downloaded file
             $filepath = $responseBody['name'];
+            
             $encodedFileNameToBe = $modifiedfileName.'_encoded_api';
             $pathAndNameArrayEncoded = $this->getFileNameEncoded($filepath, $file, $encodedFileNameToBe);
             
@@ -90,13 +91,16 @@ class AlientechController extends Controller
             $processFile->file_id = $file->id;
             $processFile->type = 'encoded';
             $processFile->name = $pathAndNameArrayEncoded['name'];
-            $processFile->extension = $pathAndNameArrayEncoded['extension'];
+            // $processFile->extension = $pathAndNameArrayEncoded['extension'];
+            $processFile->extension = "";
             $processFile->save();
 
-            if($pathAndNameArrayEncoded['extension'] != '')
-                return $pathAndNameArrayEncoded['name'].'.'.$pathAndNameArrayEncoded['extension'];
-            else
+            // if($pathAndNameArrayEncoded['extension'] != '')
+            //     return $pathAndNameArrayEncoded['name'].'.'.$pathAndNameArrayEncoded['extension'];
+            // else
+            
                 return $pathAndNameArrayEncoded['name'];
+
 
             }
         }

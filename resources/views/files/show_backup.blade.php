@@ -697,8 +697,11 @@
                                 </div>
 
                                 <div class="clearfix"></div>
-                                  @if($file->no_longer_auto == 0)
+                                  
                                   @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
+
+                                  @if($message['uploaded_successfully'] && $message['encoded'])
+                                  
                                   <div>
                                     <p>Please click on "Download Encrypted" Button to download and test the system. This way user will get Encrypted file or you will get the error so that you can process the file, manually.</p>
                                   </div>
@@ -707,7 +710,10 @@
                                     </a>
                                   </div>
                                   @endif
+
                                   @endif
+
+                                  {{-- @endif --}}
                                 <div class="clearfix"></div>
                             </div>
         
@@ -1864,7 +1870,7 @@
                                 </div>
 
                                 <div class="clearfix"></div>
-                                  @if($file->no_longer_auto == 0)
+                                  {{-- @if($file->no_longer_auto == 0)
                                     @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
                                     <div>
                                       <p>Please click on "Download Encrypted" Button to download and test the system. This way user will get Encrypted file or you will get the error so that you can process the file, manually.</p>
@@ -1874,7 +1880,7 @@
                                       </a>
                                     </div>
                                     @endif
-                                  @endif
+                                  @endif --}}
                                 <div class="clearfix"></div>
                             </div>
         

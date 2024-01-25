@@ -1110,7 +1110,10 @@ class FilesController extends Controller
                 if($processedFile){
 
                 if($processedFile->extension != ''){
-                    $finalFileName = $processedFile->name.'.'.$processedFile->extension;
+                    $finalFileName = $processedFile->name;
+                    // $finalFileName = $processedFile->name.'.'.$processedFile->extension;
+                    // dd($finalFileName);
+
                 }
                 else{
                     $finalFileName = $processedFile->name;
