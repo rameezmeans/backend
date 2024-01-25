@@ -171,9 +171,10 @@ class ActiveFeedCron extends Command
 
         foreach($creditsWithoutElorusID as $c){
             if($c->elorus_able()){
-                $emailWentElorus = true;
+                
                 if($c->log){
                     if($c->log->reason_to_skip_elorus_id == NULL){
+                        $emailWentElorus = true;
                         $logInstance = $c->log;
                         $logInstance->payment_id = $c->id;
                         $logInstance->user_id = $c->user_id;
@@ -186,7 +187,7 @@ class ActiveFeedCron extends Command
 
                 }
                 else{
-
+                    $emailWentElorus = true;
                     $logInstance = new PaymentLog();
                     $logInstance->payment_id = $c->id;
                     $logInstance->user_id = $c->user_id;
