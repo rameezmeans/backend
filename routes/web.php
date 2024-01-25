@@ -30,6 +30,7 @@ use App\Models\UserTool;
 use App\Models\Vehicle;
 use App\Models\VehiclesNote;
 use Faker\Provider\ar_EG\Address;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
@@ -69,6 +70,24 @@ Route::get('/info', function () {
 });
 
 Route::get('/tasks', function () {
+
+    $kess3 = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
+    
+    $reqFiles = RequestFile::all();
+
+    foreach($reqFiles as $r){
+
+        $file = File::findOrFail($r->file_id);
+
+        if($file->tool_id == $kess3->id){
+            $r->is_kess3_slave = 1;
+            $r->uploaded_successfully = 1;
+            $r->encoded = 1;
+            $r->save();
+        }
+    }
+
+    dd('kess 3 handled');
 
     // $allCredits = Credit::all();
     
