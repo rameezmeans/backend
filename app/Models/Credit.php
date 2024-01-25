@@ -30,10 +30,10 @@ class Credit extends Model
         }
 
         if($this->type == 'paypal'){
-            dd($user->stripe_payment_account());
+            return $user->paypal_payment_account()->elorus;
         }
         else{
-            dd($user->paypal_payment_account());
+            return $user->stripe_payment_account()->elorus;
         }
 
     }

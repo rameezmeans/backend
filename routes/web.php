@@ -96,7 +96,7 @@ Route::get('/tasks', function () {
 
     foreach($creditsWithoutElorusID as $c){
         if($c->elorus_able()){
-            $c->save();
+            dd($c);
         }
     }
 
