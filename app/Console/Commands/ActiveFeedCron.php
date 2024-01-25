@@ -132,9 +132,13 @@ class ActiveFeedCron extends Command
 
         // $flag = chmod( public_path("/../../backend/public/uploads") , 0777 );
         $theBackendFlag = $this->recursiveChmod(public_path("/../../backend/storage/logs"));
+        $theTuningXFlag = $this->recursiveChmod(public_path("/../../tuningX/storage/logs"));
+        $thePortalFlag = $this->recursiveChmod(public_path("/../../portal/storage/logs"));
         // $flag1 = chmod( public_path("/../../backend/resources/lang/gr.json") , 0777 );
 
         \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " theBackendFlag:". $theBackendFlag);
+        \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " theTuningxFlag:". $theTuningXFlag);
+        \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " thePortalFlag:". $thePortalFlag);
         
         // \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
 
