@@ -97,6 +97,8 @@ Route::get('/tasks', function () {
         send_error_email($c->id, 'Transaction happened without zoho id', $c->front_end_id);
     }
 
+    dd('email went');
+
     // $options = FileService::where('service_id', 109)->get();
     
     // foreach($options as $o){
