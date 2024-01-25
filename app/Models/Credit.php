@@ -22,7 +22,19 @@ class Credit extends Model
     }
 
     public function elorus_able(){
+
         $user = User::findOrFail($this->user_id);
-        dd($user);
+
+        if($user->test){
+            return false;
+        }
+
+        if($this->type == 'paypal'){
+            dd($user->stripe_payment_account());
+        }
+        else{
+            dd($user->paypal_payment_account());
+        }
+
     }
 }
