@@ -1905,9 +1905,9 @@ class FilesController extends Controller
         $reminder->save();
 
         if($file->status == 'submitted'){
-            if($file->no_longer_auto == 0){
+            // if($file->no_longer_auto == 0){
                 $file->status = 'completed';
-            }
+            // }
             $file->save();
         }
         
@@ -1928,11 +1928,11 @@ class FilesController extends Controller
             $old->save();
         }
 
-        if($file->no_longer_auto == 0){
+        // if($file->no_longer_auto == 0){
             $file->support_status = "closed";
             $file->checked_by = 'engineer';
             $file->save();
-        }
+        // }
 
             $file->revisions = $file->files->count()+1;
             $file->save();
@@ -2000,7 +2000,7 @@ class FilesController extends Controller
         $reminderManager = new ReminderManagerController();
         $this->manager = $reminderManager->getAllManager();
 
-         if($file->no_longer_auto == 0){
+        //  if($file->no_longer_auto == 0){
 
         if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
 
@@ -2039,7 +2039,7 @@ class FilesController extends Controller
             $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
         }
 
-    }
+    // }
         
         return response('file uploaded', 200);
     }
