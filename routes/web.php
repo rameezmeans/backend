@@ -86,28 +86,41 @@ Route::get('/tasks', function () {
 
     // dd('front end id settled');
 
-    $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
-    ->where('credits','>', 0)
+    $creditsWithoutElorusID = Credit::whereNotNull('elorus_id')
+    // ->where('credits','>', 0)
     ->where('gifted', 0)
-    ->whereYear('created_at','>=', 2024)
+    // ->whereYear('created_at','>=', 2024)
     ->get();
 
-    // dd($creditsWithoutZohoID);
-
-    foreach($creditsWithoutZohoID as $c){
-
-        if(!$c->log){
-            $logInstance = new PaymentLog();
-            $logInstance->payment_id = $c->id;
-            $logInstance->user_id = $c->user_id;
-            $logInstance->zohobooks_payment = false;
-            $logInstance->zohobooks_id = NULL;
-            $logInstance->email_sent = 1;
-            $logInstance->reason_to_skip_zohobooks_payment_id = "zohobooks invoice did not went through.";
-            $logInstance->save();
-            send_error_email($c->id, 'Transaction happened without zoho id', $c->front_end_id);
-        }
+    foreach($creditsWithoutElorusID as $c){
+        $c->elorus_able = 1;
+        $c->save();
     }
+
+    dd('elorus able settled');
+
+    // $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
+    // ->where('credits','>', 0)
+    // ->where('gifted', 0)
+    // ->whereYear('created_at','>=', 2024)
+    // ->get();
+
+    // // dd($creditsWithoutZohoID);
+
+    // foreach($creditsWithoutZohoID as $c){
+
+    //     if(!$c->log){
+    //         $logInstance = new PaymentLog();
+    //         $logInstance->payment_id = $c->id;
+    //         $logInstance->user_id = $c->user_id;
+    //         $logInstance->zohobooks_payment = false;
+    //         $logInstance->zohobooks_id = NULL;
+    //         $logInstance->email_sent = 1;
+    //         $logInstance->reason_to_skip_zohobooks_payment_id = "zohobooks invoice did not went through.";
+    //         $logInstance->save();
+    //         send_error_email($c->id, 'Transaction happened without zoho id', $c->front_end_id);
+    //     }
+    // }
 
     dd('email went');
 
