@@ -437,9 +437,12 @@ class AlientechController extends Controller
         $response = Http::withHeaders($headers)->post($url, []);
     }
 
-    public function saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType ){
+    public function saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType, $engineerFile ){
 
             $this->reopen($slotID);
+
+            $engineerFile->is_kess3_slave = 1;
+            $engineerFile->save();
 
             $target_url = '';
             
@@ -512,15 +515,23 @@ class AlientechController extends Controller
             $alientTechFile->desc = "File is uploaded to be encoded and we have guid and slot ID for the first time to encode file.";
             $alientTechFile->save();
 
+            $engineerFile->uploaded_successfully = 1;
+            $engineerFile->encoded = 1;
+            $engineerFile->save();
+
         }
         else{
             $this->makeLogEntry(0, 'error', 'File Upload error. Line: 408.', $file->id);
-            $file->disable_customers_download = 1;
+            // $file->disable_customers_download = 1;
             $file->no_longer_auto = 1;
             $file->status = 'submitted';
             $file->save();
-        }
 
+            $engineerFile->uploaded_successfully = 0;
+            $engineerFile->encoded = 0;
+            $engineerFile->save();
+        }
+        
         $this->closeOneSlot($slotID);
     }
 

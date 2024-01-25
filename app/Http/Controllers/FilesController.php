@@ -1840,6 +1840,15 @@ class FilesController extends Controller
         $newFileName = str_replace('#', '', $newFileName);
         $newFileName = str_replace(' ', '_', $newFileName);
 
+        $engineerFile = new RequestFile();
+        $engineerFile->request_file = $newFileName;
+        $engineerFile->file_type = 'engineer_file';
+        $engineerFile->tool_type = 'not_relevant';
+        $engineerFile->master_tools = 'not_relevant';
+        $engineerFile->file_id = $request->file_id;
+        $engineerFile->engineer = true;
+        $engineerFile->save();
+
         if($file->subdealer_group_id){
             $attachment->move(public_path('/../../subportal/public'.$file->file_path),$newFileName);
 
@@ -1868,18 +1877,11 @@ class FilesController extends Controller
 
             if($file->alientech_file){ // if slot id is assigned
                 $slotID = $file->alientech_file->slot_id;
-                $this->alientechObj->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType );
+                $this->alientechObj->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType, $engineerFile );
             }
         }
         
-        $engineerFile = new RequestFile();
-        $engineerFile->request_file = $newFileName;
-        $engineerFile->file_type = 'engineer_file';
-        $engineerFile->tool_type = 'not_relevant';
-        $engineerFile->master_tools = 'not_relevant';
-        $engineerFile->file_id = $request->file_id;
-        $engineerFile->engineer = true;
-        $engineerFile->save();
+        
 
         $allEearlierReminders = EmailReminder::where('user_id', $file->user_id)
         ->where('file_id', $file->id)->get();

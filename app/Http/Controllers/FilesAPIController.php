@@ -613,6 +613,16 @@ class FilesAPIController extends Controller
                 $fileToSave = str_replace('#', '', $fileToSave);
                 $fileToSave = str_replace(' ', '_', $fileToSave);
 
+                $engineerFile = new RequestFile();
+                    $engineerFile->request_file = $fileToSave;
+                    $engineerFile->file_type = 'engineer_file';
+                    $engineerFile->tool_type = 'not_relevant';
+                    $engineerFile->master_tools = 'not_relevant';
+                    $engineerFile->lua_command = $request->lua_command;
+                    $engineerFile->file_id = $file->id;
+                    $engineerFile->engineer = true;
+                    $engineerFile->save();
+
                 $tunnedFile = new TunnedFile();
                 $tunnedFile->file = $request->tuned_file;
                 $tunnedFile->file_id = $file->id;
@@ -644,18 +654,8 @@ class FilesAPIController extends Controller
                     if($file->alientech_file){ // if slot id is assigned
                         $slotID = $file->alientech_file->slot_id;
                         $encodingType = $this->getEncodingType($file);
-                        (new AlientechController)->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType );
+                        (new AlientechController)->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType, $engineerFile );
                     }
-
-                    $engineerFile = new RequestFile();
-                    $engineerFile->request_file = $fileToSave;
-                    $engineerFile->file_type = 'engineer_file';
-                    $engineerFile->tool_type = 'not_relevant';
-                    $engineerFile->master_tools = 'not_relevant';
-                    $engineerFile->lua_command = $request->lua_command;
-                    $engineerFile->file_id = $file->id;
-                    $engineerFile->engineer = true;
-                    $engineerFile->save();
 
                     if($file->status == 'submitted'){
                         $file->status = 'completed';
