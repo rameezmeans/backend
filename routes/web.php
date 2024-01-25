@@ -87,9 +87,9 @@ Route::get('/tasks', function () {
     // dd('front end id settled');
 
     $creditsWithoutElorusID = Credit::whereNotNull('elorus_id')
-    // ->where('credits','>', 0)
+    ->where('credits','>', 0)
     ->where('gifted', 0)
-    // ->whereYear('created_at','>=', 2024)
+    ->whereYear('created_at','>=', 2024)
     ->get();
 
     foreach($creditsWithoutElorusID as $c){

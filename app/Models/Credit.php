@@ -20,4 +20,9 @@ class Credit extends Model
     public function log(){
         return $this->hasOne(PaymentLog::class, 'payment_id', 'id');
     }
+
+    public function elorus_able(){
+        $user = User::findOrFail($this->user_id);
+        dd($user);
+    }
 }
