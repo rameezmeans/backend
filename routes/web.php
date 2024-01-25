@@ -71,23 +71,23 @@ Route::get('/info', function () {
 
 Route::get('/tasks', function () {
 
-    $kess3 = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
-    
-    $reqFiles = RequestFile::all();
+    // $kess3 = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
 
-    foreach($reqFiles as $r){
+    // $reqFiles = RequestFile::all();
 
-        $file = File::findOrFail($r->file_id);
+    // foreach($reqFiles as $r){
 
-        if($file->tool_id == $kess3->id){
-            $r->is_kess3_slave = 1;
-            $r->uploaded_successfully = 1;
-            $r->encoded = 1;
-            $r->save();
-        }
-    }
+    //     $file = File::findOrFail($r->file_id);
 
-    dd('kess 3 handled');
+    //     if($file->tool_id == $kess3->id){
+    //         $r->is_kess3_slave = 1;
+    //         $r->uploaded_successfully = 1;
+    //         $r->encoded = 1;
+    //         $r->save();
+    //     }
+    // }
+
+    // dd('kess 3 handled');
 
     // $allCredits = Credit::all();
     
