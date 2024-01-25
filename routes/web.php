@@ -17,6 +17,7 @@ use App\Models\File;
 use App\Models\FileFeedback;
 use App\Models\FileService;
 use App\Models\Key;
+use App\Models\PaymentLog;
 use App\Models\ReminderManager;
 use App\Models\RequestFile;
 use App\Models\Role;
@@ -94,7 +95,18 @@ Route::get('/tasks', function () {
     // dd($creditsWithoutZohoID);
 
     foreach($creditsWithoutZohoID as $c){
-        send_error_email($c->id, 'Transaction happened without zoho id', $c->front_end_id);
+
+        if(!$c->log){
+            $logInstance = new PaymentLog();
+            $logInstance->payment_id = $c->id;
+            $logInstance->user_id = $c->user_id;
+            $logInstance->zohobooks_payment = false;
+            $logInstance->zohobooks_id = NULL;
+            $logInstance->email_send = 1;
+            $logInstance->reason_to_skip_zohobooks_payment_id = "zohobooks invoice did not went through.";
+            $logInstance->save();
+            send_error_email($c->id, 'Transaction happened without zoho id', $c->front_end_id);
+        }
     }
 
     dd('email went');

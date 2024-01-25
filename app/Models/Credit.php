@@ -16,4 +16,8 @@ class Credit extends Model
     public function file(){
         return $this->belongsTo(File::class);
     }
+
+    public function log(){
+        return $this->hasOne(PaymentLog::class, 'payment_id', 'id');
+    }
 }
