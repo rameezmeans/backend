@@ -173,7 +173,7 @@ class ActiveFeedCron extends Command
             if($c->elorus_able()){
                 $emailWentElorus = true;
                 if($c->log){
-                    if(!$logInstance->reason_to_skip_elorus_id){
+                    if(!$c->log->reason_to_skip_elorus_id){
                         $logInstance = $c->log;
                         $logInstance->payment_id = $c->id;
                         $logInstance->user_id = $c->user_id;
