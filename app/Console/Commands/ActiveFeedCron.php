@@ -2,10 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Credit;
 use App\Models\EmailReminder;
 use App\Models\EmailTemplate;
 use App\Models\File;
 use App\Models\NewsFeed;
+use App\Models\PaymentLog;
 use App\Models\Schedualer;
 use App\Models\User;
 use Carbon\Carbon;
@@ -136,6 +138,34 @@ class ActiveFeedCron extends Command
         $thePortalFlag = $this->recursiveChmod(public_path("/../../portal/storage/logs"));
         // $flag1 = chmod( public_path("/../../backend/resources/lang/gr.json") , 0777 );
 
+        $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
+        ->where('credits','>', 0)
+        ->where('gifted', 0)
+        ->whereYear('created_at','>=', 2024)
+        ->get();
+
+        $emailWent = false;
+
+        foreach($creditsWithoutZohoID as $c){
+
+            if(!$c->log){
+                $emailWent = true;
+                $logInstance = new PaymentLog();
+                $logInstance->payment_id = $c->id;
+                $logInstance->user_id = $c->user_id;
+                $logInstance->zohobooks_payment = false;
+                $logInstance->zohobooks_id = NULL;
+                $logInstance->email_sent = 1;
+                $logInstance->reason_to_skip_zohobooks_payment_id = "zohobooks invoice did not went through.";
+                $logInstance->save();
+                send_error_email($c->id, 'Transaction happened without zoho id', $c->front_end_id);
+            }
+        }
+
+        if($emailWent){
+            \Log::info("email went at ".date('d-m-y h:i:s'));
+        }
+       
         \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " theBackendFlag:". $theBackendFlag);
         \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " theTuningxFlag:". $theTuningXFlag);
         \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " thePortalFlag:". $thePortalFlag);
