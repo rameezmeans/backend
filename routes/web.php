@@ -69,29 +69,33 @@ Route::get('/info', function () {
 
 Route::get('/tasks', function () {
 
-    $allCredits = Credit::all();
+    // $allCredits = Credit::all();
     
-    foreach($allCredits as $c){
+    // foreach($allCredits as $c){
 
-        $frontEndID = User::findOrFail($c->user_id)->front_end_id;
+    //     $frontEndID = User::findOrFail($c->user_id)->front_end_id;
 
-        if($frontEndID){
-            $c->front_end_id = User::findOrFail($c->user_id)->front_end_id;
-            $c->save();
-        }
+    //     if($frontEndID){
+    //         $c->front_end_id = User::findOrFail($c->user_id)->front_end_id;
+    //         $c->save();
+    //     }
 
         
-    }
+    // }
 
-    dd('front end id settled');
+    // dd('front end id settled');
 
-    // $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
-    // ->where('credits','>', 0)
-    // ->where('gifted', 0)
-    // ->whereYear('created_at','>=', 2024)
-    // ->get();
+    $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
+    ->where('credits','>', 0)
+    ->where('gifted', 0)
+    ->whereYear('created_at','>=', 2024)
+    ->get();
 
     // dd($creditsWithoutZohoID);
+
+    foreach($creditsWithoutZohoID as $c){
+        send_error_email($c->id, 'Transaction happened without zoho id');
+    }
 
     // $options = FileService::where('service_id', 109)->get();
     

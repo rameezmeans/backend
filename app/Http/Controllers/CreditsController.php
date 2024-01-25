@@ -254,6 +254,7 @@ class CreditsController extends Controller
         $credit = new Credit();
         $credit->credits = $difference;
         $credit->user_id = $customer->id;
+        $credit->front_end_id = $customer->front_end_id;
         $credit->stripe_id = NULL;
         
         if( isset($request->gifted) && $request->gifted == 'on' ){
