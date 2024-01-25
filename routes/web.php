@@ -96,7 +96,29 @@ Route::get('/tasks', function () {
 
     foreach($creditsWithoutElorusID as $c){
         if($c->elorus_able()){
-            dd($c->log);
+            if($c->log){
+
+                $logInstance = $c->log;
+                $logInstance->payment_id = $c->id;
+                $logInstance->user_id = $c->user_id;
+                $logInstance->elorus_id = NULL;
+                $logInstance->email_sent = 1;
+                $logInstance->reason_to_skip_elorus_id = "elorus invoice did not went through.";
+                $logInstance->save();
+                send_error_email($c->id, 'Transaction happened without elorus id', $c->front_end_id);
+
+            }
+            else{
+
+                $logInstance = new PaymentLog();
+                $logInstance->payment_id = $c->id;
+                $logInstance->user_id = $c->user_id;
+                $logInstance->elorus_id = NULL;
+                $logInstance->email_sent = 1;
+                $logInstance->reason_to_skip_elorus_id = "elorus invoice did not went through.";
+                $logInstance->save();
+                send_error_email($c->id, 'Transaction happened without elorus id', $c->front_end_id);
+            }
         }
     }
 
