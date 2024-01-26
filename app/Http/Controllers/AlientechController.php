@@ -535,7 +535,7 @@ class AlientechController extends Controller
 
             $engineerFile->uploaded_successfully = 0;
             $engineerFile->encoded = 0;
-            $engineerFile->is_kess3_slave = 1;
+            $engineerFile->is_kess3_slave = 0;
             $engineerFile->save();
         }
         
