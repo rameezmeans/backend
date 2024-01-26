@@ -4758,23 +4758,9 @@ $('#engineerOptionsModal').modal('show');
                   flip_show_file(engineer_file_id, showFile);
               });
 
-    });
+    
 
-    function flip_show_file(engineer_file_id, showFile){
-      $.ajax({
-                url: "/flip_show_file",
-                type: "POST",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "id": engineer_file_id,
-                    "showFile": showFile,
-                },
-                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-                success: function(response) {
-                    
-                }
-            });  
-    }
+    
 
       let showCommentsOnFile = true;
               $(document).on('change', '.show_comments', function(e) {
@@ -4794,7 +4780,11 @@ $('#engineerOptionsModal').modal('show');
 
    
 
-    function flip_show_comments(engineer_file_id, showCommentsOnFile){
+    
+
+  });
+
+  function flip_show_comments(engineer_file_id, showCommentsOnFile){
       $.ajax({
                 url: "/flip_show_comments",
                 type: "POST",
@@ -4810,7 +4800,21 @@ $('#engineerOptionsModal').modal('show');
             });  
     }
 
-  });
+  function flip_show_file(engineer_file_id, showFile){
+      $.ajax({
+                url: "/flip_show_file",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": engineer_file_id,
+                    "showFile": showFile,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    
+                }
+            });  
+    }
 
 let engineerFileDrop= new Dropzone(".encoded-dropzone", {
   accept: function(file, done) {
