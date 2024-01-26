@@ -869,7 +869,7 @@
 
                                     @if($message['uploaded_successfully'] == 0)
                                     <div class="checkbox check-success checkbox-circle">
-                                      <input class="is_kess3_slave" type="checkbox" @if($message['is_kess3_slave']) value="0" @else checked="checked" value="1" @endif data-id="{{$message['id']}}" id="checkbox_n{{$message['id']}}">
+                                      <input class="show_file" type="checkbox" @if($message['is_kess3_slave']) value="0" @else checked="checked" value="1" @endif data-id="{{$message['id']}}" id="checkbox_n{{$message['id']}}">
                                       <label for="checkbox_n{{$message['id']}}">Show File As it is</label>
                                     </div>
                                     @endif
@@ -4741,7 +4741,41 @@ $('#engineerOptionsModal').modal('show');
 <script>
 
   $( document ).ready(function(event) {
-      
+
+    let showFile = false;
+              $(document).on('change', '.show_file', function(e) {
+                  let engineer_file_id = $(this).data('id');
+                  console.log(engineer_file_id);
+                  if ($(this).is(':checked')) {
+                    showFile = $(this).is(':checked');
+                      console.log(showFile);
+                  }
+                  else {
+                    showFile = $(this).is(':checked');
+                      console.log(showFile);
+                  }
+
+                  flip_show_file(engineer_file_id, showFile);
+              });
+
+    });
+
+    function flip_show_file(engineer_file_id, showFile){
+      $.ajax({
+                url: "/flip_show_file",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": engineer_file_id,
+                    "showFile": showFile,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    
+                }
+            });  
+    }
+
       let showCommentsOnFile = true;
               $(document).on('change', '.show_comments', function(e) {
                   let engineer_file_id = $(this).data('id');
