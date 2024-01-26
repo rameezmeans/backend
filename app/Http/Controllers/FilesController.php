@@ -205,6 +205,15 @@ class FilesController extends Controller
 
     }
 
+    public function flipShowFile(Request $request){
+        
+        $file = RequestFile::findOrFail($request->id);
+        $file->is_kess3_slave = ($request->showFile == 'false') ? 1 : 0;
+        $file->save();
+        dd($file);
+
+    }
+
     public function deleteFiles(Request $request){
 
         if(!Auth::user()->is_admin()){

@@ -867,6 +867,11 @@
                                       <label for="checkbox_{{$message['id']}}">Show Comments</label>
                                     </div>
 
+                                    <div class="checkbox check-success checkbox-circle">
+                                      <input class="is_kess3_slave" type="checkbox" @if($message['is_kess3_slave']) value="0" @else checked="checked" value="1" @endif data-id="{{$message['id']}}" id="checkbox_n{{$message['id']}}">
+                                      <label for="checkbox_n{{$message['id']}}">Show File As it is</label>
+                                    </div>
+
                                     <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
                                     </a>
                                     
