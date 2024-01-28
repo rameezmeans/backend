@@ -89,21 +89,19 @@ Route::get('/tasks', function () {
 
     // dd('kess 3 handled');
 
-    // $allCredits = Credit::all();
+    $allCredits = Credit::all();
     
-    // foreach($allCredits as $c){
+    foreach($allCredits as $c){
 
-    //     $frontEndID = User::findOrFail($c->user_id)->front_end_id;
+        $frontEndID = User::findOrFail($c->user_id)->front_end_id;
 
-    //     if($frontEndID){
-    //         $c->front_end_id = User::findOrFail($c->user_id)->front_end_id;
-    //         $c->save();
-    //     }
+        if($frontEndID){
+            $c->front_end_id = User::findOrFail($c->user_id)->front_end_id;
+            $c->save();
+        }
+    }
 
-        
-    // }
-
-    // dd('front end id settled');
+    dd('front end id settled');
 
     // $creditsWithoutElorusID = Credit::whereNull('elorus_id')
     // ->where('credits','>', 0)
