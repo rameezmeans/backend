@@ -315,6 +315,7 @@ class FilesController extends Controller
             $credit = new Credit();
             $credit->credits = $differece;
             $credit->user_id = $user->id;
+            $credit->front_end_id = $user->front_end_id;
             $credit->file_id = $file->id;
             $credit->stripe_id = NULL;
 
@@ -1510,6 +1511,7 @@ class FilesController extends Controller
             $credit->credits = $file->credits;
             $credit->user_id = $customer->id;
             $credit->file_id = $file->id;
+            $credit->front_end_id = $customer->front_end_id;
             $credit->stripe_id = NULL;
 
             $credit->gifted = 1;
