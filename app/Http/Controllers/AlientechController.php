@@ -110,14 +110,14 @@ class AlientechController extends Controller
         
         $extension = pathinfo($path, PATHINFO_EXTENSION);
 
-        if($extension != ''){
-            $path = $file->file_path.$fileNameToBe.'.'.$extension;
-            $name = $fileNameToBe;
-        }
-        else{
+        // if($extension != ''){
+        //     $path = $file->file_path.$fileNameToBe.'.'.$extension;
+        //     $name = $fileNameToBe;
+        // }
+        // else{
             $path = $file->file_path.$fileNameToBe;
             $name = $fileNameToBe;
-        }
+        // }
 
         return array(
             'path' => $path,
