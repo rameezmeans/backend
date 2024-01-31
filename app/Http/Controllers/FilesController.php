@@ -2659,6 +2659,12 @@ class FilesController extends Controller
             $comments = null;
         }
 
+        dd($comments);
+
+        $showComments = false;
+
+
+
         $selectedOptions = [];
 
         foreach($file->options_services as $selected){
@@ -2678,10 +2684,10 @@ class FilesController extends Controller
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
 
         if(env('APP_ENV') == 'live'){
-            return view('files.show', ['selectedOptions' => $selectedOptions, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show', ['selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
         else{
-            return view('files.show_backup', ['selectedOptions' => $selectedOptions, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show_backup', ['selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
 
     
