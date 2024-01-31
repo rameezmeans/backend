@@ -2659,11 +2659,9 @@ class FilesController extends Controller
             $comments = null;
         }
 
-        dd($comments);
+        // dd($comments);
 
         $showComments = false;
-
-
 
         $selectedOptions = [];
 
