@@ -4735,6 +4735,88 @@ $('#engineerOptionsModal').modal('show');
     });
   </script>
 
+  @foreach($file->files as $f)
+
+@if($f->is_kess3_slave == 1)
+@if($f->uploaded_successfully == 0)
+@if($f->show_file_denied == 0)
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    const Popup = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+  });
+    
+    Popup.fire({
+    title: "Alientech API Failed to Encode the File",
+    text: "File: "+"'{{$f->request_file}}'"+" is not encoded by API. Do you want customer to download it anyway?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, Allow Customer to Downoad it!',
+    cancelButtonText: 'No, Please do not show it to Customer!',
+        // reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+        
+          $.ajax({
+                url: "/flip_show_file",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": {{$f->id}},
+                    "showFile": true,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    
+                }
+            }); 
+            
+            location.reload();
+
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          // swalWithBootstrapButtons.fire(
+          //   'Cancelled',
+          //   'Message is safe :)',
+          //   'error'
+          // );
+
+          $.ajax({
+                url: "/decline_show_file",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": {{$f->id}},
+                    
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    
+                }
+            }); 
+
+          location.reload();
+        }
+      });
+  });
+</script>
+
+@break
+
+@endif
+@endif
+@endif
+
+@endforeach
+
 <script>
 
   $( document ).ready(function(event) {
@@ -4835,5 +4917,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
   });
 
 </script>
+
+
 
 @endsection
