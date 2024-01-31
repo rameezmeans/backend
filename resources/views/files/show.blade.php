@@ -3,6 +3,12 @@
 @section('pagespecificstyles')
   <style>
 
+.swal2-confirm {
+
+margin-bottom: 10px !important;
+
+}
+
 #circle{
   display: inline-block;
   width: 16px;
