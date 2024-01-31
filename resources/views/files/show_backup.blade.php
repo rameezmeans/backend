@@ -2818,7 +2818,7 @@ $(document).ready(function(){
                 }
             }); 
 
-          // location.reload();
+          location.reload();
         }
       });
   });
