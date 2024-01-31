@@ -205,10 +205,19 @@ class FilesController extends Controller
 
     }
 
+    public function declineShowFile(Request $request){
+
+        $reqfile = RequestFile::findOrFail($request->id);
+        $reqfile->show_file_denied = 1;
+        $reqfile->save();
+
+    }
+
     public function flipShowFile(Request $request){
         
         $reqfile = RequestFile::findOrFail($request->id);
         $reqfile->is_kess3_slave = ($request->showFile == 'false') ? 1 : 0;
+        $reqfile->show_file_denied = 0;
         $reqfile->save();
 
         if($reqfile->is_kess3_slave == 0){

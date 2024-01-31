@@ -443,6 +443,7 @@ Route::get('multi_delete', [App\Http\Controllers\FilesController::class, 'multiD
 Route::post('delete_files', [App\Http\Controllers\FilesController::class, 'deleteFiles'])->name('delete-files');
 Route::post('flip_show_comments', [App\Http\Controllers\FilesController::class, 'flipShowComments'])->name('flip-show-comments');
 Route::post('flip_show_file', [App\Http\Controllers\FilesController::class, 'flipShowFile'])->name('flip-show-file');
+Route::post('decline_show_file', [App\Http\Controllers\FilesController::class, 'declineShowFile'])->name('decline-show-file');
 Route::post('enable_download', [App\Http\Controllers\FilesController::class, 'enableDownload'])->name('enable-download');
 
 Route::get('original_files', [App\Http\Controllers\OriginalFilesController::class, 'index'])->name('original-files');
