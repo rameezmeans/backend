@@ -868,10 +868,12 @@ margin-bottom: 10px !important;
                                       <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
                                     @endif
 
+                                    @if($comments)
                                     <div class="checkbox check-success checkbox-circle">
                                       <input class="show_comments" type="checkbox" @if($message['show_comments']) checked="checked"  value="1" @endif data-id="{{$message['id']}}" id="checkbox_{{$message['id']}}">
                                       <label for="checkbox_{{$message['id']}}">Show Comments</label>
                                     </div>
+                                    @endif
 
                                     @if($message['uploaded_successfully'] == 0)
                                     <div class="checkbox check-success checkbox-circle">
@@ -2724,10 +2726,12 @@ margin-bottom: 10px !important;
                                       <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
                                     @endif
 
+                                    @if($comments)
                                     <div class="checkbox check-success checkbox-circle">
                                       <input class="show_comments" type="checkbox" @if($message['show_comments']) checked="checked"  value="1" @endif data-id="{{$message['id']}}" id="checkbox_{{$message['id']}}">
                                       <label for="checkbox_{{$message['id']}}">Show Comments</label>
                                     </div>
+                                    @endif
 
                                     <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
                                     </a>
