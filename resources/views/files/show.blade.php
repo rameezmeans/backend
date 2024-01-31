@@ -4174,9 +4174,6 @@
     });
 </script>
 
-
-
-
 <script>
     // Add a common class to all buttons you want to target
     var buttons = document.querySelectorAll(".makeproject");
@@ -4775,7 +4772,7 @@ $('#engineerOptionsModal').modal('show');
                   flip_show_comments(engineer_file_id, showCommentsOnFile);
               });
 
-  });
+
 
   function flip_show_comments(engineer_file_id, showCommentsOnFile){
       $.ajax({
@@ -4834,6 +4831,8 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
     }).on('error', function(e){
       
     });
+
+  });
 
 </script>
 
