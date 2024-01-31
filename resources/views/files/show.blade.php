@@ -868,11 +868,15 @@ margin-bottom: 10px !important;
                                       <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
                                     @endif
 
+                                    @if($file->front_end_id == 2)
+
                                     @if($showComments)
                                     <div class="checkbox check-success checkbox-circle">
                                       <input class="show_comments" type="checkbox" @if($message['show_comments']) checked="checked"  value="1" @endif data-id="{{$message['id']}}" id="checkbox_{{$message['id']}}">
                                       <label for="checkbox_{{$message['id']}}">Show Comments</label>
                                     </div>
+                                    @endif
+                                    
                                     @endif
 
                                     @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)

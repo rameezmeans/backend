@@ -445,6 +445,7 @@ Route::post('flip_show_comments', [App\Http\Controllers\FilesController::class, 
 Route::post('flip_show_file', [App\Http\Controllers\FilesController::class, 'flipShowFile'])->name('flip-show-file');
 Route::post('decline_show_file', [App\Http\Controllers\FilesController::class, 'declineShowFile'])->name('decline-show-file');
 Route::post('enable_download', [App\Http\Controllers\FilesController::class, 'enableDownload'])->name('enable-download');
+Route::post('decline_comments', [App\Http\Controllers\FilesController::class, 'declineComments'])->name('decline-comments');
 
 Route::get('original_files', [App\Http\Controllers\OriginalFilesController::class, 'index'])->name('original-files');
 // Route::get('original_files_live', [App\Http\Controllers\OriginalFilesController::class, 'live'])->name('original-files-live');

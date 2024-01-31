@@ -2748,6 +2748,91 @@ $(document).ready(function(){
 
 @endforeach
 
+@if($file->front_end_id == 2)
+
+@foreach($file->files as $f)
+
+@if($f->show_comments == 0)
+@if($f->comments_denied == 0)
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    const Popup = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+  });
+    
+    Popup.fire({
+    title: "Showing Comments to Cusotmer on files",
+    text: "File: "+"'{{$f->request_file}}'"+" is not enabled to show comments to customers. Do you want to enable comments on it?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, Allow Customer to see Comments!',
+    cancelButtonText: 'No, Please do not show comments to Customer!',
+        // reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+        
+          $.ajax({
+                url: "/flip_show_comments",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": {{$f->id}},
+                    "showCommentsOnFile": true,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    
+                }
+            }); 
+            
+            location.reload();
+
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          // swalWithBootstrapButtons.fire(
+          //   'Cancelled',
+          //   'Message is safe :)',
+          //   'error'
+          // );
+
+          $.ajax({
+                url: "/decline_comments",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": {{$f->id}},
+                    
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    
+                }
+            }); 
+
+          // location.reload();
+        }
+      });
+  });
+</script>
+
+@break
+
+@endif
+@endif
+
+@endforeach
+
+@endif
+
   <script type="text/javascript">
 
   

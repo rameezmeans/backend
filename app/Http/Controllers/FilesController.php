@@ -213,6 +213,14 @@ class FilesController extends Controller
 
     }
 
+    public function declineComments(Request $request){
+
+        $reqfile = RequestFile::findOrFail($request->id);
+        $reqfile->comments_denied = 1;
+        $reqfile->save();
+
+    }
+
     public function flipShowFile(Request $request){
         
         $reqfile = RequestFile::findOrFail($request->id);
@@ -1979,6 +1987,11 @@ class FilesController extends Controller
         $engineerFile->master_tools = 'not_relevant';
         $engineerFile->file_id = $request->file_id;
         $engineerFile->engineer = true;
+
+        if($file->front_end_id == 2){
+            $engineerFile->show_comments = 0;
+        }
+
         $engineerFile->save();
 
         if($file->subdealer_group_id){
