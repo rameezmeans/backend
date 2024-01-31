@@ -207,10 +207,119 @@ class FilesController extends Controller
 
     public function flipShowFile(Request $request){
         
-        $file = RequestFile::findOrFail($request->id);
-        $file->is_kess3_slave = ($request->showFile == 'false') ? 1 : 0;
-        $file->save();
-        dd($file);
+        $reqfile = RequestFile::findOrFail($request->id);
+        $reqfile->is_kess3_slave = ($request->showFile == 'false') ? 1 : 0;
+        $reqfile->save();
+
+        if($reqfile->is_kess3_slave == 0){
+
+            $file = File::findOrFail($reqfile->file_id);
+
+            $customer = User::findOrFail($file->user_id);
+            $admin = get_admin();
+        
+            // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
+            $template = EmailTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
+
+            $html1 = $template->html;
+
+            $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+            $html1 = str_replace("#customer_name", $customer->name ,$html1);
+            $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
+            
+            $tunningType = $this->emailStagesAndOption($file);
+            
+            $html1 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html1);
+            $html1 = str_replace("#tuning_type", $tunningType,$html1);
+            $html1 = str_replace("#status", $file->status,$html1);
+            $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+            $html2 = $template->html;
+
+            $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+            $html2 = str_replace("#customer_name", $file->name ,$html2);
+            $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
+            
+            $tunningType = $this->emailStagesAndOption($file);
+
+            $html2 = str_replace("#tuning_type", $tunningType,$html2);
+            $html2 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html2);
+            $html2 = str_replace("#status", $file->status,$html2);
+
+            if($file->front_end_id == 1){
+                $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+            }
+            else{
+                $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+            }
+
+            $optionsMessage = "";
+            if($file->options){
+                foreach($file->options() as $option) {
+                    $optionsMessage .= ",".$option." ";
+                }
+            }
+
+            // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
+            $messageTemplate = MessageTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
+
+            $message = $messageTemplate->text;
+
+            $message1 = str_replace("#customer", $customer->name ,$message);
+            $message2 = str_replace("#customer", $file->name ,$message);
+            
+            if($file->front_end_id == 1){
+                $subject = "ECU Tech: Engineer uploaded a file in reply.";
+            }
+            else{
+                $subject = "TuningX: Engineer uploaded a file in reply.";
+            }
+
+            $reminderManager = new ReminderManagerController();
+            $this->manager = $reminderManager->getAllManager();
+
+        
+
+            if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
+
+                try{
+                    \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                }
+
+            }
+            if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
+
+                try{
+                    \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                }
+            }
+            
+            if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
+                $this->sendMessage($admin->phone, $message1, $file->front_end_id);
+            }
+
+            if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsappforEng($admin->name,$admin->phone, 'eng_file_upload', $file);
+            }
+
+            if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
+                $this->sendMessage($customer->phone, $message2, $file->front_end_id);
+            }
+
+            if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
+            }
+
+        }
+        
+        dd($reqfile);
 
     }
 
@@ -1895,8 +2004,6 @@ class FilesController extends Controller
             }
         }
         
-        
-
         $allEearlierReminders = EmailReminder::where('user_id', $file->user_id)
         ->where('file_id', $file->id)->get();
 
@@ -1915,10 +2022,20 @@ class FilesController extends Controller
 
         $reminder->save();
 
+        $haltEmailAndStatus = false;
+
+        if( $engineerFile->is_kess3_slave == 1 and $engineerFile->uploaded_successfully == 1 ){
+            $haltEmailAndStatus = true;
+        }
+
         if($file->status == 'submitted'){
-            // if($file->no_longer_auto == 0){
+
+            if($haltEmailAndStatus == 0){
+
                 $file->status = 'completed';
-            // }
+
+            }
+
             $file->save();
         }
         
@@ -2011,46 +2128,46 @@ class FilesController extends Controller
         $reminderManager = new ReminderManagerController();
         $this->manager = $reminderManager->getAllManager();
 
-        //  if($file->no_longer_auto == 0){
+        if( $haltEmailAndStatus == 0 ){
 
-        if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
+            if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
 
-            try{
-                \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
-            }
-            catch(TransportException $e){
-                \Log::info($e->getMessage());
-            }
-
-        }
-        if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
-
-            try{
-                \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                try{
+                    \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                }
 
             }
-            catch(TransportException $e){
-                \Log::info($e->getMessage());
+            if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
+
+                try{
+                    \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                }
             }
-        }
-        
-        if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
-            $this->sendMessage($admin->phone, $message1, $file->front_end_id);
-        }
+            
+            if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
+                $this->sendMessage($admin->phone, $message1, $file->front_end_id);
+            }
 
-        if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
-            $this->sendWhatsappforEng($admin->name,$admin->phone, 'eng_file_upload', $file);
-        }
+            if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsappforEng($admin->name,$admin->phone, 'eng_file_upload', $file);
+            }
 
-        if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
-            $this->sendMessage($customer->phone, $message2, $file->front_end_id);
-        }
+            if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
+                $this->sendMessage($customer->phone, $message2, $file->front_end_id);
+            }
 
-        if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
-            $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
-        }
+            if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
+            }
 
-    // }
+        }
         
         return response('file uploaded', 200);
     }

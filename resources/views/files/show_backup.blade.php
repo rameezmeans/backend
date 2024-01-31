@@ -192,7 +192,7 @@
                     @if($file->no_longer_auto)
                       <div class="row m-t-40">
                         <div class="col-12 col-xl-12 bg-danger-light text-white m-b-10 m-t-10 m-l-10" style="height: 100%;">
-                          <p class="no-margin p-t-10 p-b-10">During auto encoding or decoding, an error occured. Due to that this task is not long Automated. You need to delete all files which you have uploaded earlier and reupload them encoded manually. From now onward you will only be able to upload enocded files. Thanks.</p>
+                          <p class="no-margin p-t-10 p-b-10">During auto encoding, an error occured. Please check which file is not encoded and make a decision accordingly to share it with customer or not.</p>
                           
                         </div>
                       </div>
@@ -693,7 +693,7 @@
 
                                     @if($message['uploaded_successfully'] == 0)
                                     <div class="checkbox check-success checkbox-circle">
-                                      <input class="is_kess3_slave" type="checkbox" @if($message['is_kess3_slave']) value="0" @else checked="checked" value="1" @endif data-id="{{$message['id']}}" id="checkbox_n{{$message['id']}}">
+                                      <input class="show_file" type="checkbox" @if($message['is_kess3_slave']) value="0" @else checked="checked" value="1" @endif data-id="{{$message['id']}}" id="checkbox_n{{$message['id']}}">
                                       <label for="checkbox_n{{$message['id']}}">Show File As it is</label>
                                     </div>
                                     @endif
@@ -1399,7 +1399,7 @@
                     @if($file->no_longer_auto)
                       <div class="row m-t-40">
                         <div class="col-12 col-xl-12 bg-danger-light text-white m-b-10 m-t-10 m-l-10" style="height: 100%;">
-                          <p class="no-margin p-t-10 p-b-10">During auto encoding or decoding, an error occured. Due to that this task is not long Automated. You need to delete all files which you have uploaded earlier and reupload them encoded manually. From now onward you will only be able to upload enocded files. Thanks.</p>
+                          <p class="no-margin p-t-10 p-b-10">During auto encoding, an error occured. Please check which file is not encoded and make a decision accordingly to share it with customer or not.</p>
                           
                         </div>
                       </div>
@@ -2746,7 +2746,7 @@
 
       }
 
-      $(document).on('change', '#force_proposed_options', function(e){
+    $(document).on('change', '#force_proposed_options', function(e){
       let file_id = $('#force_proposed_file_id').val();
       force_re_calculate_proposed_credits(file_id);
 
@@ -3041,6 +3041,7 @@
 <script>
 
     $( document ).ready(function(event) {
+      
       let showCommentsOnFile = true;
               $(document).on('change', '.show_comments', function(e) {
                   let engineer_file_id = $(this).data('id');
@@ -3057,23 +3058,24 @@
                   flip_show_comments(engineer_file_id, showCommentsOnFile);
               });
 
-    });
 
-    function flip_show_comments(engineer_file_id, showCommentsOnFile){
-      $.ajax({
-                url: "/flip_show_comments",
-                type: "POST",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "id": engineer_file_id,
-                    "showCommentsOnFile": showCommentsOnFile,
-                },
-                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-                success: function(response) {
-                    
-                }
-            });  
-    }
+              function flip_show_comments(engineer_file_id, showCommentsOnFile){
+                $.ajax({
+                          url: "/flip_show_comments",
+                          type: "POST",
+                          data: {
+                              "_token": "{{ csrf_token() }}",
+                              "id": engineer_file_id,
+                              "showCommentsOnFile": showCommentsOnFile,
+                          },
+                          headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                          success: function(response) {
+                              
+                          }
+                      });  
+              }
+
+    });
 
     $( document ).ready(function(event) {
       let showFile = false;
@@ -3092,7 +3094,7 @@
                   flip_show_file(engineer_file_id, showFile);
               });
 
-    });
+    
 
     function flip_show_file(engineer_file_id, showFile){
       $.ajax({
@@ -3109,6 +3111,8 @@
                 }
             });  
     }
+
+  });
 
   let engineerFileDrop= new Dropzone(".encoded-dropzone", {
     accept: function(file, done) {

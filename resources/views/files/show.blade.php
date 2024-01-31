@@ -211,7 +211,7 @@
                     @if($file->no_longer_auto)
                       <div class="row m-t-40">
                         <div class="col-12 col-xl-12 bg-danger-light text-white m-b-10 m-t-10 m-l-10" style="height: 100%;">
-                          <p class="no-margin p-t-10 p-b-10">During auto encoding or decoding, an error occured. Due to that this task is not long Automated. You need to delete all files which you have uploaded earlier and reupload them encoded manually. From now onward you will only be able to upload enocded files. Thanks.</p>
+                          <p class="no-margin p-t-10 p-b-10">During auto encoding, an error occured. Please check which file is not encoded and make a decision accordingly to share it with customer or not.</p>
                           
                         </div>
                       </div>
@@ -2081,7 +2081,7 @@
                     @if($file->no_longer_auto)
                       <div class="row m-t-40">
                         <div class="col-12 col-xl-12 bg-danger-light text-white m-b-10 m-t-10 m-l-10" style="height: 100%;">
-                          <p class="no-margin p-t-10 p-b-10">During auto encoding or decoding, an error occured. Due to that this task is not long Automated. You need to delete all files which you have uploaded earlier and reupload them encoded manually. From now onward you will only be able to upload enocded files. Thanks.</p>
+                          <p class="no-margin p-t-10 p-b-10">During auto encoding, an error occured. Please check which file is not encoded and make a decision accordingly to share it with customer or not.</p>
                           
                         </div>
                       </div>
@@ -4743,6 +4743,7 @@ $('#engineerOptionsModal').modal('show');
   $( document ).ready(function(event) {
 
     let showFile = false;
+    
               $(document).on('change', '.show_file', function(e) {
                   let engineer_file_id = $(this).data('id');
                   console.log(engineer_file_id);
@@ -4757,11 +4758,7 @@ $('#engineerOptionsModal').modal('show');
 
                   flip_show_file(engineer_file_id, showFile);
               });
-
-    
-
-    
-
+      
       let showCommentsOnFile = true;
               $(document).on('change', '.show_comments', function(e) {
                   let engineer_file_id = $(this).data('id');
@@ -4777,10 +4774,6 @@ $('#engineerOptionsModal').modal('show');
 
                   flip_show_comments(engineer_file_id, showCommentsOnFile);
               });
-
-   
-
-    
 
   });
 
