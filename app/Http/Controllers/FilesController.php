@@ -2659,14 +2659,20 @@ class FilesController extends Controller
             $comments = null;
         }
 
-        // dd($comments);
-
         $showComments = false;
 
         $selectedOptions = [];
 
         foreach($file->options_services as $selected){
             $selectedOptions []= $selected->service_id;
+        }
+
+        if($comments){
+            foreach($comments as $comment){
+                if( in_array( $comment->service_id, $selectedOptions) ){
+                    $showComments = true;
+                }
+            }
         }
 
         $options = Service::where('type', 'option')
