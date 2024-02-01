@@ -2748,7 +2748,7 @@ $(document).ready(function(){
 
 @endforeach
 
-@if($file->front_end_id == 2)
+
 
 @foreach($file->files as $f)
 
@@ -2831,7 +2831,7 @@ $(document).ready(function(){
 
 @endforeach
 
-@endif
+
 
   <script type="text/javascript">
 
