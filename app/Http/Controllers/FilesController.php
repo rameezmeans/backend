@@ -225,6 +225,8 @@ class FilesController extends Controller
         
         $reqfile = RequestFile::findOrFail($request->id);
         $reqfile->is_kess3_slave = ($request->showFile == 'false') ? 1 : 0;
+
+        dd($reqfile);
         $reqfile->show_file_denied = 0;
         $reqfile->save();
 
@@ -2046,7 +2048,7 @@ class FilesController extends Controller
 
         $haltEmailAndStatus = false;
 
-        if( $engineerFile->is_kess3_slave == 1 and $engineerFile->uploaded_successfully == 1 ){
+        if( $engineerFile->is_kess3_slave == 1 and $engineerFile->uploaded_successfully == 0 ){
             $haltEmailAndStatus = true;
         }
 
