@@ -95,7 +95,7 @@ margin-bottom: 10px !important;
             <a href="#"  @if(!Session::has('tab')) class="active" @endif data-toggle="tab" data-target="#slide1"><span>Task</span></a>
           </li>
 
-          @if( ($file->front_end_id == 1 && $file->subdealer_group_id == NULL) )
+          @if( $file->subdealer_group_id == NULL)
          
             <li class="nav-item">
               <a href="#" data-toggle="tab" @if(Session::get('tab') == 'chat') class="active" @endif data-target="#slide2"><span>Chat and Support</span></a>
@@ -1975,7 +1975,7 @@ margin-bottom: 10px !important;
             <a href="#"  @if(!Session::has('tab')) class="active" @endif data-toggle="tab" data-target="#slide1{{$file->id}}"><span>Task</span></a>
           </li>
 
-          @if( ($file->front_end_id == 1 && $file->subdealer_group_id == NULL) )
+          @if( $file->subdealer_group_id == NULL) 
          
             <li class="nav-item">
               <a href="#" data-toggle="tab" @if(Session::get('tab') == 'chat') class="active" @endif data-target="#slide2{{$file->id}}"><span>Chat and Support</span></a>
@@ -4754,6 +4754,7 @@ $('#engineerOptionsModal').modal('show');
   </script>
 
  
+@if($showComments)
 
 @foreach($file->files as $f)
 
@@ -4836,7 +4837,7 @@ $('#engineerOptionsModal').modal('show');
 
 @endforeach
 
-
+@endif
 
   @foreach($file->files as $f)
 

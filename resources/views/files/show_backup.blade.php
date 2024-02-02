@@ -95,7 +95,7 @@
             <a href="#"  @if(!Session::has('tab')) class="active" @endif data-toggle="tab" data-target="#slide1"><span>Task</span></a>
           </li>
 
-          @if( ($file->front_end_id == 1 && $file->subdealer_group_id != NULL && \App\Models\SubdealersData::where( 'subdealer_id' ,$file->subdealer_group_id)->first()->type == 'lazy') )
+          @if( $file->subdealer_group_id == NULL ) 
          
             <li class="nav-item">
               <a href="#" data-toggle="tab" @if(Session::get('tab') == 'chat') class="active" @endif data-target="#slide2"><span>Chat and Support</span></a>
@@ -1299,7 +1299,7 @@
             <a href="#"  @if(!Session::has('tab')) class="active" @endif data-toggle="tab" data-target="#slide1{{$file->id}}"><span>Task</span></a>
           </li>
 
-          @if( ($file->front_end_id == 1 && $file->subdealer_group_id == NULL) )
+          @if( $file->subdealer_group_id == NULL) 
          
             <li class="nav-item">
               <a href="#" data-toggle="tab" @if(Session::get('tab') == 'chat') class="active" @endif data-target="#slide2{{$file->id}}"><span>Chat and Support</span></a>
@@ -2749,6 +2749,7 @@ $(document).ready(function(){
 @endforeach
 
 
+@if($showComments)
 
 @foreach($file->files as $f)
 
@@ -2831,7 +2832,7 @@ $(document).ready(function(){
 
 @endforeach
 
-
+@endif
 
   <script type="text/javascript">
 
