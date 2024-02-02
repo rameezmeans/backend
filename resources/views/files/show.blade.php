@@ -1174,7 +1174,7 @@ margin-bottom: 10px !important;
               </div>
             </div>
           </div>
-          @if(($file->front_end_id == 1 && $file->subdealer_group_id == NULL))
+          @if(($file->subdealer_group_id == NULL))
           <div class="tab-pane slide-left @if(Session::get('tab') == 'chat') active @endif" id="slide2">
             <div class="row">
               <div class="col-lg-12">
@@ -3022,7 +3022,7 @@ margin-bottom: 10px !important;
               </div>
             </div>
           </div>
-          @if(($file->front_end_id == 1 && $file->subdealer_group_id == NULL))
+          @if(( $file->subdealer_group_id == NULL))
           <div class="tab-pane slide-left @if(Session::get('tab') == 'chat') active @endif" id="slide2{{$file->id}}">
             <div class="row">
               <div class="col-lg-12">
