@@ -4846,8 +4846,7 @@ $('#engineerOptionsModal').modal('show');
   @foreach($file->files as $f)
 
 @if($f->is_kess3_slave == 1)
-@if($f->uploaded_successfully == 0)
-@if($f->show_file_denied == 0)
+@if($f->uploaded_successfully == 0 && $f->show_file_denied == 0)
 
 <script type="text/javascript">
   $(document).ready(function(){
@@ -4919,7 +4918,6 @@ $('#engineerOptionsModal').modal('show');
 
 @break
 
-@endif
 @endif
 @endif
 
