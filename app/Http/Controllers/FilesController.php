@@ -2052,42 +2052,40 @@ class FilesController extends Controller
             $haltEmailAndStatus = true;
         }
 
-        if($file->status == 'submitted'){
+        if($haltEmailAndStatus == 0){
 
-            if($haltEmailAndStatus == 0){
+            if($file->status == 'submitted'){
 
                 $file->status = 'completed';
+                $file->save();
+            }
+            
+            if(!$file->response_time){
+
+                $file->reupload_time = Carbon::now();
+                $file->save();
+
+                $file->response_time = $this->getResponseTime($file);
+                $file->save();
 
             }
 
-            $file->save();
+            if($file->original_file_id){
+                $old = File::findOrFail($file->original_file_id);
+                $old->checked_by = 'engineer';
+                $file->support_status = "closed";
+                $old->save();
+            }
+
+            // if($file->no_longer_auto == 0){
+                $file->support_status = "closed";
+                $file->checked_by = 'engineer';
+                $file->save();
+            // }
+
+                $file->revisions = $file->files->count()+1;
+                $file->save();
         }
-        
-        if(!$file->response_time){
-
-            $file->reupload_time = Carbon::now();
-            $file->save();
-
-            $file->response_time = $this->getResponseTime($file);
-            $file->save();
-
-        }
-
-        if($file->original_file_id){
-            $old = File::findOrFail($file->original_file_id);
-            $old->checked_by = 'engineer';
-            $file->support_status = "closed";
-            $old->save();
-        }
-
-        // if($file->no_longer_auto == 0){
-            $file->support_status = "closed";
-            $file->checked_by = 'engineer';
-            $file->save();
-        // }
-
-            $file->revisions = $file->files->count()+1;
-            $file->save();
 
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
