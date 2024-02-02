@@ -234,6 +234,12 @@ class FilesController extends Controller
 
             $file = File::findOrFail($reqfile->file_id);
 
+            if($file->status == 'submitted'){
+                
+                $file->status = 'completed';
+                $file->save();
+            }
+
             $customer = User::findOrFail($file->user_id);
             $admin = get_admin();
         
