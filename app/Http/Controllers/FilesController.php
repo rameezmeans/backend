@@ -225,12 +225,10 @@ class FilesController extends Controller
         
         $reqfile = RequestFile::findOrFail($request->id);
         $reqfile->is_kess3_slave = ($request->showFile == 'false') ? 1 : 0;
-
-        
         $reqfile->show_file_denied = 0;
         $reqfile->save();
 
-        dd($reqfile);
+        // dd($reqfile);
 
         if($reqfile->is_kess3_slave == 0){
 
