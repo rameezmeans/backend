@@ -235,7 +235,7 @@ class FilesController extends Controller
             $file = File::findOrFail($reqfile->file_id);
 
             if($file->status == 'submitted'){
-                
+
                 $file->status = 'completed';
                 $file->save();
             }
@@ -1996,9 +1996,9 @@ class FilesController extends Controller
         $engineerFile->file_id = $request->file_id;
         $engineerFile->engineer = true;
 
-        if($file->front_end_id == 2){
+        // if($file->front_end_id == 2){
             $engineerFile->show_comments = 0;
-        }
+        // }
 
         $engineerFile->save();
 
