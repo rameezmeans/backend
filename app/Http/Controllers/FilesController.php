@@ -201,7 +201,7 @@ class FilesController extends Controller
         $file = RequestFile::findOrFail($request->id);
         $file->show_comments = ($request->showCommentsOnFile == 'false') ? 0 : 1;
         $file->save();
-        dd($file);
+        return response('comments flipped', 200);
 
     }
 
@@ -210,7 +210,7 @@ class FilesController extends Controller
         $reqfile = RequestFile::findOrFail($request->id);
         $reqfile->show_file_denied = 1;
         $reqfile->save();
-
+        return response('file declined', 200);
     }
 
     public function declineComments(Request $request){
@@ -218,6 +218,7 @@ class FilesController extends Controller
         $reqfile = RequestFile::findOrFail($request->id);
         $reqfile->comments_denied = 1;
         $reqfile->save();
+        return response('comments declined', 200);
 
     }
 
@@ -344,7 +345,7 @@ class FilesController extends Controller
 
         }
         
-        dd($reqfile);
+        return response('file flipped', 200);
 
     }
 
