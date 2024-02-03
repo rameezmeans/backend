@@ -4798,11 +4798,11 @@ $('#engineerOptionsModal').modal('show');
                 },
                 headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
                 success: function(response) {
-                    
+                  location.reload();
                 }
             }); 
             
-            location.reload();
+            
 
         } else if (
           /* Read more about handling dismissals below */
@@ -4824,11 +4824,11 @@ $('#engineerOptionsModal').modal('show');
                 },
                 headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
                 success: function(response) {
-                    
+                  location.reload();
                 }
             }); 
 
-          location.reload();
+          
         }
       });
   });
@@ -4880,11 +4880,11 @@ $('#engineerOptionsModal').modal('show');
                 },
                 headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
                 success: function(response) {
-                    
+                  location.reload();
                 }
             }); 
             
-            location.reload();
+            
 
         } else if (
           /* Read more about handling dismissals below */
@@ -4906,11 +4906,11 @@ $('#engineerOptionsModal').modal('show');
                 },
                 headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
                 success: function(response) {
-                    
+                  location.reload();
                 }
             }); 
 
-          location.reload();
+          
         }
       });
   });
