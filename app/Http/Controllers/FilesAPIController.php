@@ -584,8 +584,6 @@ class FilesAPIController extends Controller
 
         $file = File::findOrFail($request->file_id);
 
-        
-        
         $chatID = env('CHAT_USER_ID');
 
         if($file->checking_status == 'unchecked'){
@@ -824,6 +822,10 @@ class FilesAPIController extends Controller
             }
             else if($ex == 'mpc'){
                 $e = 'micro';
+            }
+            
+            else if($ex == 'fls'){
+                $e = 'fls';
             }
 
         }
