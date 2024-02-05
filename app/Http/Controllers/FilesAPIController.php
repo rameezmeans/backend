@@ -656,19 +656,22 @@ class FilesAPIController extends Controller
                     }
 
                     if($file->status == 'submitted'){
-                        $file->status = 'completed';
-                        $file->support_status = "closed";
-                        $file->checked_by = 'engineer';
-                        $file->save();
+                        if($file->no_longer_auto == 0){
+                            $file->status = 'completed';
+                            $file->support_status = "closed";
+                            $file->checked_by = 'engineer';
+                            $file->save();
+                        }
                     }
 
                     if(!$file->response_time){
-
-                        $file->reupload_time = Carbon::now();
-                        $file->save();
-            
-                        $file->response_time = (new FilesController)->getResponseTimeAuto($file);
-                        $file->save();
+                        if($file->no_longer_auto == 0){
+                            $file->reupload_time = Carbon::now();
+                            $file->save();
+                
+                            $file->response_time = (new FilesController)->getResponseTimeAuto($file);
+                            $file->save();
+                        }
             
                     }
                     
