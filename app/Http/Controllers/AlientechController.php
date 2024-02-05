@@ -537,7 +537,8 @@ class AlientechController extends Controller
             // $file->disable_customers_download = 1;
             $file->no_longer_auto = 1;
             
-            // $file->status = 'submitted';
+            $file->status = 'submitted';
+            $file->checked_by == 'customer';
             $file->save();
 
             $engineerFile->uploaded_successfully = 0;
