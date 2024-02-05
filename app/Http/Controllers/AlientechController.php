@@ -491,9 +491,9 @@ class AlientechController extends Controller
                 $url = "https://encodingapi.alientech.to/api/kess3/encode-boot-bench-file";
             }
 
-            else {
-                $url = "https://encodingapi.alientech.to/api/kess3/encode-obd-file";
-            }
+            // else {
+            //     $url = "https://encodingapi.alientech.to/api/kess3/encode-obd-file";
+            // }
 
             $headers = [
             'X-Alientech-ReCodAPI-LLC' => $this->token,
@@ -538,7 +538,7 @@ class AlientechController extends Controller
             $file->no_longer_auto = 1;
             
             // $file->status = 'submitted';
-            // $file->save();
+            $file->save();
 
             $engineerFile->uploaded_successfully = 0;
             $engineerFile->encoded = 0;
