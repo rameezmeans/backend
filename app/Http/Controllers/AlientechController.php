@@ -491,6 +491,10 @@ class AlientechController extends Controller
                 $url = "https://encodingapi.alientech.to/api/kess3/encode-boot-bench-file";
             }
 
+            else {
+                $url = "https://encodingapi.alientech.to/api/kess3/encode-obd-file";
+            }
+
             $headers = [
             'X-Alientech-ReCodAPI-LLC' => $this->token,
             ];
