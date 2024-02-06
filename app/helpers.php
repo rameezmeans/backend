@@ -913,8 +913,8 @@ if(!function_exists('get_subdealer_user')){
 if(!function_exists('send_error_email')){
 
     function send_error_email($paymentID, $message, $frontendID){
-        \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['front_end_id' => $frontendID, 'html' => $message." payment id:".$paymentID, 'subject' => "Invoie Failed for Payemnt ID:".$paymentID])); 
-        \Mail::to('tsichlakidis@ecutech.gr')->send(new \App\Mail\AllMails([ 'front_end_id' => $frontendID, 'html' => $message.". payment id:".$paymentID, 'subject' => "Invoie Failed for Payemnt ID:".$paymentID])); 
+        \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['front_end_id' => $frontendID, 'html' => $message." payment id:".$paymentID, 'subject' => "Invoice Failed for Payemnt ID:".$paymentID])); 
+        \Mail::to('tsichlakidis@ecutech.gr')->send(new \App\Mail\AllMails([ 'front_end_id' => $frontendID, 'html' => $message.". payment id:".$paymentID, 'subject' => "Invoice Failed for Payemnt ID:".$paymentID])); 
         return 1;
     }
 }
