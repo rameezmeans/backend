@@ -30,9 +30,10 @@ class NewsFeedsController extends Controller
             $this->simulateActivation($newsFeeds);
         }
 
-        $newsFeeds = NewsFeed::whereNull('subdealer_group_id')->get();
+        $newsFeedsECUTech = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 1)->get();
+        $newsFeedsTuningX = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 2)->get();
 
-        return view('feeds.index', ['newsFeeds' => $newsFeeds]);
+        return view( 'feeds.index', [ 'newsFeedsECUTech' => $newsFeedsECUTech, 'newsFeedsTuningX' => $newsFeedsTuningX ] );
     }
 
     public function simulateActivation($feeds){

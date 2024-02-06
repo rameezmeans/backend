@@ -21,6 +21,8 @@
               Session::forget('success')
             @endphp
 
+
+
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
@@ -35,6 +37,20 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
+
+
+                <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
+                    <li class="nav-item">
+                      <a href="#" class="active" data-toggle="tab" data-target="#slide1"><span>ECU Tech</span></a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" data-toggle="tab" data-target="#slide2"><span>TuningX</span></a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane slide-left active" id="slide1">
+
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
                         <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
@@ -46,7 +62,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($newsFeeds as $feed)
+                                @foreach ($newsFeedsECUTech as $feed)
                                     <tr role="row" class="redirect-click" data-redirect="{{ route('edit-feed', $feed->id) }}">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$feed->title}}</p>
@@ -63,6 +79,44 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                    </div>
+
+                    <div class="tab-pane slide-left" id="slide2">
+
+                        <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                            <div>
+                                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Title</th>
+                                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Date Created</th>
+                                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Active</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($newsFeedsTuningX as $feed)
+                                            <tr role="row" class="redirect-click" data-redirect="{{ route('edit-feed', $feed->id) }}">
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{$feed->title}}</p>
+                                                </td>
+                                                
+                                                <td class="v-align-middle">
+                                                    <p>{{$feed->created_at->diffForHumans()}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p><input data-feed_id={{$feed->id}} class="active" type="checkbox" data-init-plugin="switchery" @if($feed->active == 1) checked="checked" @endif onclick="status_change()"/></p>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
           </div>
