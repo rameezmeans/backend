@@ -932,8 +932,13 @@
                 $('#total_autotunned_files').html(response.graph.total_autotuned_files); 
                 $('#total_manual_files').html(response.graph.total_manual_files); 
                 $('#total_files_upper').html(response.graph.total_files); 
-                
-                let chartf = new Chart("autotunned-files-charts", {
+
+                if (window.autotunnedChart != undefined)
+                {
+                    window.autotunnedChart.destroy();
+                }
+
+                window.autotunnedChart = new Chart("autotunned-files-charts", {
                   type: "line",
                   data: {  
                           labels: response.graph.x_axis,
