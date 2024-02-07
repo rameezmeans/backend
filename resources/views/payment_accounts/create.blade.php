@@ -439,7 +439,7 @@
                   </div>
 
                   <div class="form-group form-group-default ">
-                    <label>Zohoboos Account ID</label>
+                    <label>Bank Account ID for Zohobooks</label>
                     <input value="@if(isset($account)){{ $account->zohobooks_account_id }}@else{{old('zohobooks_account_id') }}@endif"  name="zohobooks_account_id" type="text" class="form-control">
                   </div>
 
