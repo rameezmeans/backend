@@ -233,16 +233,12 @@ class FilesController extends Controller
 
             $file = File::findOrFail($reqfile->file_id);
 
+            $file->status = 'completed';
+            $file->reupload_time = Carbon::now();
+            $file->response_time = $this->getResponseTime($file);
+
+            $file->save();
             
-
-                $file->status = 'completed';
-                $file->reupload_time = Carbon::now();
-                $file->response_time = $this->getResponseTime($file);
-
-                $file->save();
-
-            
-
             $customer = User::findOrFail($file->user_id);
             $admin = get_admin();
         

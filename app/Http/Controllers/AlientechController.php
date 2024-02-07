@@ -457,7 +457,7 @@ class AlientechController extends Controller
                 $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/BootBenchModifiedMicro';
             }
             else {
-                $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/OBDModified';
+                $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/BootBenchModifiedMicro';
             }
             
             if (function_exists('curl_file_create')) { 
@@ -492,7 +492,7 @@ class AlientechController extends Controller
             }
 
             else {
-                $url = "https://encodingapi.alientech.to/api/kess3/encode-obd-file";
+                $url = "https://encodingapi.alientech.to/api/kess3/encode-boot-bench-file";
             }
 
             $headers = [
@@ -518,7 +518,7 @@ class AlientechController extends Controller
                 $postInput = [
                     'userCustomerCode' => 'user1',
                     'kess3FileSlotGUID' => $slotID,
-                    'modifiedFileGUID' => $response->guid,
+                    'microFileGUID' => $response->guid,
                 ];
             }
 
