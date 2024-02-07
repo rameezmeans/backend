@@ -795,7 +795,12 @@
 
               $('#user_average').html(response.graph.user_average);
 
-              let chartr = new Chart("response-charts", {
+              if (window.responseChart != undefined)
+              {
+                  window.responseChart.destroy();
+              }
+
+              window.responseChart = new Chart("response-charts", {
                 type: "line",
                 data: {  
                         labels: response.graph.x_axis,
@@ -839,7 +844,12 @@
                 retrieve: true,
               });
 
-              chartc = new Chart("support-charts", {
+              if (window.supportChart != undefined)
+              {
+                  window.supportChart.destroy();
+              }
+
+              window.supportChart = new Chart("support-charts", {
                 type: "line",
                 data: {  
                         labels: response.graph.x_axis,
@@ -889,7 +899,12 @@
                 retrieve: true,
               });
 
-              chartc = new Chart("credit-charts", {
+              if (window.creditsChart != undefined)
+              {
+                  window.creditsChart.destroy();
+              }
+
+              window.creditsChart = new Chart("credit-charts", {
                 type: "line",
                 data: {  
                         labels: response.graph.x_axis,
@@ -980,7 +995,12 @@
                 $('#total_files').html(response.graph.total_files); 
                 $('#avg_files').html(response.graph.avg_files); 
 
-                let chartf = new Chart("files-charts", {
+                if (window.filesChart != undefined)
+                {
+                    window.filesChart.destroy();
+                }
+
+                window.filesChart = new Chart("files-charts", {
                   type: "line",
                   data: {  
                           labels: response.graph.x_axis,
