@@ -228,12 +228,12 @@ class FilesController extends Controller
         $reqfile->is_kess3_slave = ($request->showFile == 'false') ? 1 : 0;
         $reqfile->show_file_denied = 0;
         $reqfile->save();
-        
+
         if($reqfile->is_kess3_slave == 0){
 
             $file = File::findOrFail($reqfile->file_id);
 
-            if($file->status == 'submitted'){
+            
 
                 $file->status = 'completed';
                 $file->reupload_time = Carbon::now();
@@ -241,7 +241,7 @@ class FilesController extends Controller
 
                 $file->save();
 
-            }
+            
 
             $customer = User::findOrFail($file->user_id);
             $admin = get_admin();
