@@ -228,9 +228,7 @@ class FilesController extends Controller
         $reqfile->is_kess3_slave = ($request->showFile == 'false') ? 1 : 0;
         $reqfile->show_file_denied = 0;
         $reqfile->save();
-
-        // dd($reqfile);
-
+        
         if($reqfile->is_kess3_slave == 0){
 
             $file = File::findOrFail($reqfile->file_id);
@@ -238,7 +236,11 @@ class FilesController extends Controller
             if($file->status == 'submitted'){
 
                 $file->status = 'completed';
+                $file->reupload_time = Carbon::now();
+                $file->response_time = $this->getResponseTime($file);
+
                 $file->save();
+
             }
 
             $customer = User::findOrFail($file->user_id);
@@ -2714,7 +2716,6 @@ class FilesController extends Controller
             return view('files.show_backup', ['selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
 
-    
         }
         else{
             abort(404);
