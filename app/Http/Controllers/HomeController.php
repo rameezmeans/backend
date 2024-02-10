@@ -606,7 +606,7 @@ class HomeController extends Controller
         }
 
         $grandTotal = File::count();
-        $avgFiles = $grandTotal / $totalEngineers;
+        $avgFiles = $totalFiles / $totalEngineers;
         $avgFilesPerDay = $totalFiles / $days;
 
         $graph = [];
