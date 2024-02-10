@@ -43,17 +43,19 @@ class HomeController extends Controller
     public function index()
     {   
         $engineers = get_engineers();
-        $customers = get_customers(1);
+        $customersForECUTech = get_customers(1);
+        $customersForTuningX = get_customers(2);
         $engineersCount = sizeof($engineers);
 
         $frontends = FrontEnd::all();
 
         return view('home', [ 
 
-        'frontends' => $frontends,
-        'engineers' => $engineers,
-        'engineersCount' => $engineersCount, 
-        'customers' => $customers,
+            'frontends' => $frontends,
+            'engineers' => $engineers,
+            'engineersCount' => $engineersCount, 
+            'customersForECUTech' => $customersForECUTech,
+            'customersForTuningX' => $customersForTuningX,
         
         ]);
     }
