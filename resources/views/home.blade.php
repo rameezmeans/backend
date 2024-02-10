@@ -410,6 +410,11 @@
                         <h4 class="bold no-margin" id="avg_files"></h4>
                         <p class="no-margin ">Avg. Per Engineer</p>
                       </div>
+
+                      <div class="col-lg-3 col-md-12 b-a b-grey m-r-2 m-b-10">
+                        <h4 class="bold no-margin" id="avg_files_per_day"></h4>
+                        <p class="no-margin ">Avg. Per Day</p>
+                      </div>
                   </div>
                              
                 <div class="col-lg-12">              
@@ -994,6 +999,7 @@
 
                 $('#total_files').html(response.graph.total_files); 
                 $('#avg_files').html(response.graph.avg_files); 
+                $('#avg_files_per_day').html(response.graph.avg_files_per_day); 
 
                 if (window.filesChart != undefined)
                 {

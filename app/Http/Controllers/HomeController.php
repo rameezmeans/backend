@@ -578,6 +578,8 @@ class HomeController extends Controller
 
         $weekRange = $this->createDateRangeArray($start, $end);
 
+        $days = count($weekRange);
+
         $weekCount = [];
         foreach($weekRange as $r){
             $date = DateTime::createFromFormat('d/m/Y', $r);
@@ -605,12 +607,14 @@ class HomeController extends Controller
 
         $grandTotal = File::count();
         $avgFiles = $grandTotal / $totalEngineers;
+        $avgFilesPerDay = $grandTotal / $days;
 
         $graph = [];
         $graph['x_axis']= $weekRange;
         $graph['y_axis']= $weekCount ;
         $graph['total_files']= $totalFiles;
         $graph['avg_files']= round($avgFiles, 2);
+        $graph['avg_files_per_day']= round($avgFilesPerDay, 2);
         $graph['label']= 'Files';
         
         return response()->json(['graph' => $graph]);
