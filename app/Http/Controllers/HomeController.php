@@ -63,7 +63,7 @@ class HomeController extends Controller
     public function getFrontendData(Request $request){
 
         $customerCount = sizeof(get_customers($request->frontend_id));
-
+        $frontEndID = $request->frontend_id;
         // today
 
         $totalFileCountToday = File::where('front_end_id', $request->frontend_id)
@@ -169,7 +169,7 @@ class HomeController extends Controller
         $customerRole = Role::where('name','customer')->first();
 
         $topCountriesObj = User::where('role_id', $customerRole->id)
-        ->where('front_end_id', 1)
+        ->where('front_end_id', $frontEndID)
         ->whereNotIN('id', [65,80])
         ->groupBy('country')
         ->selectRaw('count(*) as count,country')
