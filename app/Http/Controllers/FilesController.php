@@ -1334,6 +1334,36 @@ class FilesController extends Controller
         return response('File deleted', 200);
     }
 
+    public function sendTestMessage()
+    {
+        try {
+            
+            $accountSid = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_sid')->first()->value;
+
+            $authToken = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_token')->first()->value;
+
+            $twilioNumber = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_number')->first()->value;
+
+
+            $client = new Client($accountSid, $authToken);
+
+            
+            $message = $client->messages
+                ->create('+923218612198', // to
+                        ["body" => 'Test Message', "from" => "TuningX"]
+            );
+            
+
+            \Log::info('message sent to:'.'+923218612198');
+
+        } catch (\Exception $e) {
+            \Log::info($e->getMessage());
+        }
+    }
+
     public function sendMessage($receiver, $message, $frontendID)
     {
         try {
