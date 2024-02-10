@@ -467,7 +467,7 @@
                       <label>Client</label>
                         <select class="full-width" id="customer_credits" data-init-plugin="select2" >
                             <option value="all_customers">All Customers</option>
-                            @foreach($customers as $customer)
+                            @foreach($customersForECUTech as $customer)
                               <option value="{{$customer->id}}">{{$customer->name}}</option>
                             @endforeach
                           
