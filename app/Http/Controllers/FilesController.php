@@ -1360,6 +1360,7 @@ class FilesController extends Controller
             \Log::info('message sent to:'.'+923218612198');
 
         } catch (\Exception $e) {
+            dd($e->getMessage());
             \Log::info($e->getMessage());
         }
     }
