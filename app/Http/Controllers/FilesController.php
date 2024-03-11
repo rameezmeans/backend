@@ -2466,6 +2466,8 @@ class FilesController extends Controller
 
     public function getComments($file){
 
+        dd($file);
+
         if($file->automatic){
             return null;
         }
