@@ -2466,8 +2466,6 @@ class FilesController extends Controller
 
     public function getComments($file){
 
-        dd($file);
-
         if($file->automatic){
             return null;
         }
@@ -2709,9 +2707,7 @@ class FilesController extends Controller
         else{
             $comments = null;
         }
-
-        dd($comments);
-
+        
         $showComments = false;
 
         $selectedOptions = [];
