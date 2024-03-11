@@ -2708,6 +2708,8 @@ class FilesController extends Controller
             $comments = null;
         }
 
+        dd($comments);
+
         $showComments = false;
 
         $selectedOptions = [];
