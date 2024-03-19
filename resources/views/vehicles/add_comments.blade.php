@@ -215,7 +215,8 @@
                                                     data-src-retina="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}" 
                                                     data-src="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}" 
                                                     src="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}">
-                                                    {{ \App\Models\Service::findOrFail( $comment->service_id )->name}} <span style="font-size: 8px;">({{\App\Models\Service::findOrFail( $comment->service_id )->vehicle_type}}) @if($comment->subdealer_group_id) (sub dealer) @endif</span>
+                                                    {{-- {{ \App\Models\Service::findOrFail( $comment->service_id )->name}} <span style="font-size: 8px;">({{\App\Models\Service::findOrFail( $comment->service_id )->vehicle_type}}) @if($comment->subdealer_group_id) (sub dealer) @endif</span> --}}
+                                                    {{ \App\Models\Service::findOrFail( $comment->service_id )->name}} <span style="font-size: 8px;">({{\App\Models\Service::findOrFail( $comment->service_id )->vehicle_type}}) (@if(\App\Models\Service::findOrFail( $comment->service_id )->active == 1) {{'ECU Tech'}} @elseif(\App\Models\Service::findOrFail( $comment->service_id )->tuningx_active == 1) {{'TuningX'}} @endif)  @if($comment->subdealer_group_id) (sub dealer) @endif</span>
                                                    
                                                     @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'add-comments'))
                                                       <span class="m-l-20">
@@ -252,7 +253,7 @@
                                         <select class="full-width" data-init-plugin="select2" name="service_id">
                                           @foreach($options as $option)
                                             @if(!in_array($option->id, $includedOptionsForUpload[$ecu]))
-                                            <option value="{{$option->id}}">{{$option->name}} <span style="font-size: 8px;">({{$option->vehicle_type}})</span></option>
+                                            <option value="{{$option->id}}">{{$option->name}} <span style="font-size: 8px;">({{$option->vehicle_type}}) (@if(\App\Models\Service::findOrFail( $option->id )->active == 1) {{'ECU Tech'}} @elseif(\App\Models\Service::findOrFail( $option->id  )->tuningx_active == 1) {{'TuningX'}} @endif)</span></option>
                                             @endif
                                           @endforeach
                                         </select>
