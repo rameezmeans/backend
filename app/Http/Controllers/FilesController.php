@@ -613,10 +613,18 @@ class FilesController extends Controller
             $attachment = $request->file('decrypted_file');
             $fileName = $attachment->getClientOriginalName();
 
-            if($file->front_end_id == 1)
+            if($file->front_end_id == 1){
                 $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
-            else
-                $attachment->move(public_path('/../../tuningX/public/'.$file->file_path),$fileName);
+            }
+            else{
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
+                }
+                else{
+                    $attachment->move(public_path('/../../tuningX/public/'.$file->file_path),$fileName);
+                }
+            }
             
         }
 
@@ -738,7 +746,7 @@ class FilesController extends Controller
         dd('all_closed');
         exit;
     }
-
+    
     public function deactivateAllExceptThisFeed($ThatFeed) {
         
         $allOtherFeed = NewsFeed::where('id', '!=', $ThatFeed->id)->get();
@@ -1240,6 +1248,12 @@ class FilesController extends Controller
                 }
                 else{
 
+                    if($file->on_dev == 1){
+
+                        $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$fileNameEncoded;
+
+                    }
+
                     $file_path = public_path('/../../tuningX/public/'.$file->file_path).$fileNameEncoded;
                 }
                 
@@ -1255,7 +1269,7 @@ class FilesController extends Controller
                 if($processedFile->extension != ''){
                     $finalFileName = $processedFile->name;
                     // $finalFileName = $processedFile->name.'.'.$processedFile->extension;
-                    // dd($finalFileName);
+                    
 
                 }
                 else{
@@ -1271,7 +1285,15 @@ class FilesController extends Controller
             }
             else{
 
-                $file_path = public_path('/../../tuningX/public/'.$file->file_path).$finalFileName;
+                if($file->on_dev == 1){
+
+                    $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$finalFileName;
+
+                }
+                else{
+
+                    $file_path = public_path('/../../tuningX/public/'.$file->file_path).$finalFileName;
+                }
             }
                 return response()->download($file_path);
 
@@ -1297,7 +1319,14 @@ class FilesController extends Controller
             }
         }
         else{
-            $path = public_path('/../../tuningX/public'.$file->file_path);
+
+            if($file->on_dev == 1){
+                $path = public_path('/../../TuningXV2/public'.$file->file_path);
+            
+            }
+            else{
+                $path = public_path('/../../tuningX/public'.$file->file_path);
+            }
         }
 
         $file_path = $path.$file_name;
@@ -1554,7 +1583,7 @@ class FilesController extends Controller
 
         try {
             $response = $whatappObj->sendTemplateMessage($number,$template, 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'messages');
-            // dd($response);
+            
         }
         catch(Exception $e){
             \Log::info($e->getMessage());
@@ -1635,7 +1664,7 @@ class FilesController extends Controller
 
         try {
             $response = $whatappObj->sendTemplateMessage($number,$template, 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'messages');
-            // dd($response);
+            
         }
         catch(Exception $e){
             \Log::info($e->getMessage());
@@ -1837,7 +1866,14 @@ class FilesController extends Controller
                 }
             }
             else{
-                $attachment->move(public_path('/../../tuningX/public/'.$file->file_path),$fileName);
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
+                }
+                
+                else{
+                    $attachment->move(public_path('/../../tuningX/public/'.$file->file_path),$fileName);
+                }
 
             }
 
@@ -2038,10 +2074,23 @@ class FilesController extends Controller
         }
         
         else{
+
+            
+
             if($file->front_end_id == 1)
                 $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
-            else
-                $attachment->move(public_path('/../../tuningX/public'.$file->file_path),$newFileName);
+            else{
+
+                if($file->on_dev == 1){
+
+                    $flag = $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
+
+                    
+                }
+                else{
+                    $attachment->move(public_path('/../../tuningX/public'.$file->file_path),$newFileName);
+                }
+            }
         }
         
         if($encode){
@@ -2051,10 +2100,19 @@ class FilesController extends Controller
                 $path = public_path('/../../subportal/public'.$file->file_path).$newFileName;
             }
             else{
-                if($file->front_end_id == 1)
+                if($file->front_end_id == 1){
                     $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
-                else
-                    $path = public_path('/../../tuningX/public'.$file->file_path).$newFileName;
+                }
+                else{
+
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../tuningX/public'.$file->file_path).$newFileName;
+                    }
+                }
             }
             $encodingType = $request->encoding_type;
 
