@@ -78,11 +78,25 @@ class AlientechController extends Controller
             
             if($file->front_end_id == 1){
                 // save the decoded string to a file
-                $flag = file_put_contents(public_path('/../../portal/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                // $flag = file_put_contents(public_path('/../../portal/public/'.$pathAndNameArrayEncoded['path']), $contents);
+
+                if($file->on_dev == 1){
+                    $flag = file_put_contents(public_path('/../../EcuTechV2/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                }
+                else{
+                    $flag = file_put_contents(public_path('/../../portal/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                }
             }
             else{
                 // save the decoded string to a file
-                $flag = file_put_contents(public_path('/../../tuningX/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                // $flag = file_put_contents(public_path('/../../tuningX/public/'.$pathAndNameArrayEncoded['path']), $contents);
+
+                if($file->on_dev == 1){
+                    $flag = file_put_contents(public_path('/../../TuningXV2/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                }
+                else{
+                    $flag = file_put_contents(public_path('/../../tuningX/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                }
             }
 
            $this->closeOneSlot($slotGuid);

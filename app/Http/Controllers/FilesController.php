@@ -614,7 +614,16 @@ class FilesController extends Controller
             $fileName = $attachment->getClientOriginalName();
 
             if($file->front_end_id == 1){
-                $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+
+                // $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../EcuTechV2/public/'.$file->file_path),$fileName);
+                }
+                else{
+                    $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+                }
+
             }
             else{
 
@@ -1244,7 +1253,18 @@ class FilesController extends Controller
 
                 if($file->front_end_id == 1){
 
-                    $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+                    // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+
+                    if($file->on_dev == 1){
+
+                        $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$fileNameEncoded;
+
+                    }
+                    else{
+
+                        $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+                    }
+
                 }
                 else{
 
@@ -1253,8 +1273,10 @@ class FilesController extends Controller
                         $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$fileNameEncoded;
 
                     }
+                    else{
 
-                    $file_path = public_path('/../../tuningX/public/'.$file->file_path).$fileNameEncoded;
+                        $file_path = public_path('/../../tuningX/public/'.$file->file_path).$fileNameEncoded;
+                    }
                 }
                 
                 
@@ -1281,7 +1303,18 @@ class FilesController extends Controller
 
             if($file->front_end_id == 1){
 
-                $file_path = public_path('/../../portal/public/'.$file->file_path).$finalFileName;
+                // $file_path = public_path('/../../portal/public/'.$file->file_path).$finalFileName;
+
+                if($file->on_dev == 1){
+
+                    $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$finalFileName;
+
+                }
+                else{
+
+                    $file_path = public_path('/../../portal/public/'.$file->file_path).$finalFileName;
+                }
+
             }
             else{
 
@@ -2075,17 +2108,21 @@ class FilesController extends Controller
         
         else{
 
-            
+            if($file->front_end_id == 1){
+                // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
 
-            if($file->front_end_id == 1)
-                $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+                }
+                else{
+                    $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+                }
+
+            }
             else{
 
                 if($file->on_dev == 1){
-
-                    $flag = $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
-
-                    
+                    $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
                 }
                 else{
                     $attachment->move(public_path('/../../tuningX/public'.$file->file_path),$newFileName);
@@ -2101,7 +2138,17 @@ class FilesController extends Controller
             }
             else{
                 if($file->front_end_id == 1){
-                    $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    }
+
                 }
                 else{
 
