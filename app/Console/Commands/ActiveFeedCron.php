@@ -130,7 +130,7 @@ class ActiveFeedCron extends Command
 
         $flag = chmod( public_path("/../../portal/public/uploads") , 0777 );
         $theFlag = $this->recursiveChmod(public_path("/../../portal/public/uploads"));
-        $flag1 = chmod( public_path("/../../portal/resources/lang/gr.json") , 0777 );
+        // $flag1 = chmod( public_path("/../../portal/resources/lang/gr.json") , 0777 );
 
         $flag = chmod( public_path("/../../tuningX/public/uploads") , 0777 );
         $theFlag = $this->recursiveChmod(public_path("/../../tuningX/public/uploads"));
@@ -138,6 +138,9 @@ class ActiveFeedCron extends Command
 
         $flag = chmod( public_path("/../../TuningXV2/public/uploads") , 0777 );
         $theFlag = $this->recursiveChmod(public_path("/../../TuningXV2/public/uploads"));
+
+        $flag = chmod( public_path("/../../EcuTechV2/public/uploads") , 0777 );
+        $theFlag = $this->recursiveChmod(public_path("/../../EcuTechV2/public/uploads"));
 
         // $flag = chmod( public_path("/../../backend/public/uploads") , 0777 );
         $flag = chmod( public_path("/../../backend/storage/logs") , 0777 );
