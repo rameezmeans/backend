@@ -704,8 +704,8 @@ class FilesAPIController extends Controller
                 else{
             
                     if($file->front_end_id == 1){
-        
-                        Chatify::push("private-chatify-download-portal", 'download-button', [
+
+                        Chatify::push("private-chatify-download-portal-".$chatID, 'download-button', [
                             'status' => 'fail',
                             'file_id' => $file->id
                         ]);
@@ -713,7 +713,7 @@ class FilesAPIController extends Controller
                     }
                     else{
                         
-                        Chatify::push("private-chatify-download-tuningx", 'download-button', [
+                        Chatify::push("private-chatify-download-tuningx-".$chatID, 'download-button', [
                             'status' => 'fail',
                             'file_id' => $file->id
                         ]);

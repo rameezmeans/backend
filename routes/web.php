@@ -43,6 +43,8 @@ use PSpell\Config;
 use Twilio\Rest\Client;
 
 use SevenSpan\WhatsApp\WhatsApp;
+
+use Chatify\Facades\ChatifyMessenger as Chatify;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -368,6 +370,18 @@ Route::get('/tasks', function () {
     // $new->front_end_id = 2; 
     // $new->save();
 
+});
+
+Route::get('/send_on_channel', function () {
+
+    $t = Chatify::push("private-chatify-download-portal-24", 'download-button', [
+        'status' => 'download',
+        'file_id' => 762
+    ]);
+
+
+    dd($t);
+    
 });
 
 Route::get('/test_whatsapp', function () {
