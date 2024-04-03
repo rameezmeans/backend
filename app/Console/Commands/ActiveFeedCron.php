@@ -139,6 +139,7 @@ class ActiveFeedCron extends Command
         $flag = chmod( public_path("/../../TuningXV2/public/uploads") , 0777 );
         $theFlag = $this->recursiveChmod(public_path("/../../TuningXV2/public/uploads"));
 
+        //here we are 
         // $flag = chmod( public_path("/../../EcuTechV2/public/uploads") , 0777 );
         // $theFlag = $this->recursiveChmod(public_path("/../../EcuTechV2/public/uploads"));
 
