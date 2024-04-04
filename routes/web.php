@@ -73,7 +73,7 @@ Route::get('/info', function () {
 
 Route::get('/tasks', function () {
 
-    // abort(404);
+    abort(404);
 
     // $creditsWithoutZohoID = Credit::
     //     where('credits','>', 0)
