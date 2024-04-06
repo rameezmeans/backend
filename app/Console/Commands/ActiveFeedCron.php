@@ -132,6 +132,8 @@ class ActiveFeedCron extends Command
         $theFlag = $this->recursiveChmod(public_path("/../../portal/public/uploads"));
         $flag1 = chmod( public_path("/../../portal/resources/lang/gr.json") , 0777 );
 
+        \Log::info("lang/gr: permission: ".$flag1);
+
         $flag = chmod( public_path("/../../tuningX/public/uploads") , 0777 );
         $theFlag = $this->recursiveChmod(public_path("/../../tuningX/public/uploads"));
         // $flag1 = chmod( public_path("/../../tuningX/resources/lang/gr.json") , 0777 );
