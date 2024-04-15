@@ -386,6 +386,7 @@ class FilesAPIController extends Controller
         ->get();
 
         $arrFiles = [];
+        $temp = [];
 
         foreach($files as $file){
 
@@ -432,8 +433,7 @@ class FilesAPIController extends Controller
             }
             
             if($stage != NULL){
-
-                $temp = [];
+                
                 $temp['file_id'] = $file->id;
                 $temp['frontend'] = $file->front_end_id;
 
