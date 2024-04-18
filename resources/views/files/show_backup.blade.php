@@ -658,27 +658,30 @@
                       </div>
 
                       
-                        <div class="col-lg-6">
-                          <h5 class="m-t-40">Upload ACM file's reply</h5>
-                          
-                          <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                            
-                            <div class="pull-right">
-                              <form action="{{ route('upload-acm-reply') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-
-                                <input type="hidden" name="file_id" id="file_id" value="{{$file->id}}">
-                                <input type="file" name="acm_file" id="acm_file" required>
-                                
-                                <input type="submit" value="Upload" class="btn btn-success">
-                              </form>
-                            </div>
-                            <div class="clearfix"></div>
-                          </div>
-                        </div>
+                       
                       
 
                       @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
+
+                      @if($file->acm_file)
+                      <div class="col-lg-6">
+                        <h5 class="m-t-40">Upload ACM file's reply</h5>
+                        
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          
+                          <div class="pull-right">
+                            <form action="{{ route('upload-acm-reply') }}" method="POST" enctype="multipart/form-data">
+                              @csrf
+
+                              <input type="hidden" name="file_id" id="file_id" value="{{$file->id}}">
+                              <input type="file" name="acm_file" id="acm_file" required>
+                              
+                              <input type="submit" value="Upload" class="btn btn-success">
+                            </form>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                      </div>
 
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Uploaded ACM Files</h5>
@@ -712,6 +715,8 @@
                               </div>
                             @endforeach
                       </div>
+
+                      @endif
 
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Uploaded Files</h5>

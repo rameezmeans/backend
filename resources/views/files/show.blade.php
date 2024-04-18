@@ -720,6 +720,9 @@ margin-bottom: 10px !important;
         
                       </div>
 
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
+
+                      @if($file->acm_file)
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Upload ACM file's reply</h5>
                         
@@ -738,8 +741,6 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
                       </div>
-                      
-                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
 
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Uploaded ACM Files</h5>
@@ -773,6 +774,8 @@ margin-bottom: 10px !important;
                               </div>
                             @endforeach
                       </div>
+
+                      @endif
 
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Uploaded Files</h5>
