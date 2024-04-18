@@ -36,27 +36,27 @@
             @php
               Session::forget('success')
             @endphp
-          <div class="card card-transparent m-t-40">
-            <div class="card-header ">
-                <div class="card-title">
-                  <h3>Files</h3>
-                </div>
-                <div class="pull-right">
-                  <div class="col-xs-12">
-                    @if(Auth::user()->is_admin())
-                      <button data-redirect="{{route('multi-delete')}}" class="btn btn-success redirect-click"><i class="pg-plus_circle"></i> <span class="bold">Multi Delete</span>
-                      </button>
-                    @endif
+            <div class="card card-transparent m-t-40">
+              <div class="card-header ">
+                  <div class="card-title">
+                    <h3>Files</h3>
                   </div>
-                </div>
-                <div class="clearfix"></div>
+                  <div class="pull-right">
+                    <div class="col-xs-12">
+                      @if(Auth::user()->is_admin())
+                        <button data-redirect="{{route('multi-delete')}}" class="btn btn-success redirect-click"><i class="pg-plus_circle"></i> <span class="bold">Multi Delete</span>
+                        </button>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+              </div>
+              <div class="card-body">
+                <livewire:files-datatable 
+                  searchable="id,username,brand,model,ecu"
+                />
+              </div>
             </div>
-            <div class="card-body">
-              <livewire:files-datatable 
-                searchable="id,username,brand,model,ecu"
-              />
-            </div>
-          </div>
         </div>
         </div>
     </div>
