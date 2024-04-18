@@ -511,6 +511,7 @@ Route::post('/get_versions', [App\Http\Controllers\FilesController::class, 'getV
 Route::post('/get_engines', [App\Http\Controllers\FilesController::class, 'getEngines'])->name('get-engines');
 Route::post('/get_ecus', [App\Http\Controllers\FilesController::class, 'getECUs'])->name('get-ecus');
 Route::post('/delete_file', [App\Http\Controllers\FilesController::class, 'delete'])->name('delete-file');
+Route::post('/delete_acm_file', [App\Http\Controllers\FilesController::class, 'deleteACMFile'])->name('delete-acm-file');
 Route::post('/fill_stage_options', [App\Http\Controllers\FilesController::class, 'fillStageOptions'])->name('fill-stage-options');
 Route::post('/upload_acm_reply', [App\Http\Controllers\FilesController::class, 'uploadACMReply'])->name('upload-acm-reply');
 

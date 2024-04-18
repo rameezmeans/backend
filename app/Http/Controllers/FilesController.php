@@ -70,6 +70,11 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
     
+    public function deleteACMFile(Request $request){
+        $file = ACMFile::findOrFail($request->acm_file_id);
+        $file->delete();
+    }
+
     public function uploadACMReply(Request $request){
         
         $attachment = $request->file('acm_file');

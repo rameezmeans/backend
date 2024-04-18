@@ -657,10 +657,6 @@
         
                       </div>
 
-                      
-                       
-                      
-
                       @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
 
                       @if($file->acm_file)
@@ -3357,6 +3353,63 @@ $(document).ready(function(){
     });
 
     $( document ).ready(function(event) {
+
+      $(document).on('click', '.delete-acm-file', function(e){
+      e.preventDefault();
+
+      let acm_file_id = $(this).data('acm_file_id');
+      
+  const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+  })
+
+  swalWithBootstrapButtons.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes, delete it!',
+  cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+      console.log(acm_file_id);
+      $.ajax({
+                url: "/delete_acm_file",
+                type: "POST",
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                data: {
+                    'acm_file_id': acm_file_id
+                },
+                success: function(d) {
+                  swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your File has been deleted.',
+                    'success'
+                  );
+
+                  location.reload();
+                }
+            });
+
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelled',
+          'Uploaded file is safe :)',
+          'error'
+        )
+      }
+    });
+      
+    });
+    
       
       let showFile = false;
               $(document).on('change', '.show_file', function(e) {
