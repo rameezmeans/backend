@@ -17,6 +17,7 @@ use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Controllers\ReminderManagerController;
+use App\Models\ACMFile;
 use App\Models\AlientechFile;
 use App\Models\Credit;
 use App\Models\EngineerOptionsOffer;
@@ -69,6 +70,49 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
     
+    public function uploadACMReply(Request $request){
+        
+        $attachment = $request->file('acm_file');
+        $fileName = $attachment->getClientOriginalName();
+
+        $file = File::findOrFail($request->file_id);
+
+        $newFileName = str_replace('/', '', $fileName);
+        $newFileName = str_replace('\\', '', $newFileName);
+        $newFileName = str_replace('#', '', $newFileName);
+        $newFileName = str_replace(' ', '_', $newFileName);
+
+        $acmFile = new ACMFile();
+        $acmFile->acm_file = $newFileName;
+        $acmFile->file_id = $request->file_id;
+        $acmFile->save();
+        
+        if($file->front_end_id == 1){
+            
+            if($file->on_dev == 1){
+                $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+            }
+            else{
+
+                
+                $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+            }
+
+        }
+        else{
+
+            if($file->on_dev == 1){
+                $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
+            }
+            else{
+                $attachment->move(public_path('/../../tuningX/public'.$file->file_path),$newFileName);
+            }
+        }
+        
+        return redirect()->back()->with(['success' => 'Engineers ACM file is uploaded successfully!']);
+
+    }
+
     public function enableDownload(Request $request){
 
         $file = File::findOrFail($request->id);
