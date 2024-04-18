@@ -632,7 +632,7 @@ class FilesAPIController extends Controller
                         copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
                         public_path('/../../portal/public'.$file->file_path.$fileToSave) );
 
-                        // unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
+                        unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
                         $path = public_path('/../../portal/public'.$file->file_path.$fileToSave);
                 
@@ -643,7 +643,7 @@ class FilesAPIController extends Controller
                         copy( public_path('/../../tuningX/public/uploads/filesready'.'/'.$request->tuned_file), 
                         public_path('/../../tuningX/public'.$file->file_path.$fileToSave) );
 
-                        // unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
+                        unlink( public_path('/../../tuningX/public/uploads/filesready').'/'.$file->tunned_files->file );
 
                         $path = public_path('/../../tuningX/public'.$file->file_path.$fileToSave);
 
