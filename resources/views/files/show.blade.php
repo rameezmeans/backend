@@ -179,6 +179,11 @@ margin-bottom: 10px !important;
                               </a>
                             @endif
 
+                            @if($file->acm_file)
+                            <a href="{{ route('download', [$file->id, $file->acm_file, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's ACM File</span>
+                            </a>
+                            @endif
+
                             {{-- @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id) --}}
                             @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id || $file->tool_id != $kess3Label->id)
                               @if(!$file->decoded_files->isEmpty())
