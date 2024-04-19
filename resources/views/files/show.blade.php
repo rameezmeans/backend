@@ -70,7 +70,7 @@ margin-bottom: 10px !important;
       @endif
 
       @php 
-        dd($file->new_requests);
+        dd(empty($file->new_requests));
       @endphp
 
       @if($file->new_requests)
