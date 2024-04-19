@@ -180,7 +180,7 @@ margin-bottom: 10px !important;
                             @endif
 
                             @if($file->acm_file)
-                            <a href="{{ route('download', [$file->id, $file->acm_file, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's ACM File</span>
+                            <a href="{{ route('download', [$file->id, $file->acm_file, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's ACM MCM/ECM File</span>
                             </a>
                             @endif
 
@@ -724,7 +724,7 @@ margin-bottom: 10px !important;
 
                       @if($file->acm_file)
                       <div class="col-lg-6">
-                        <h5 class="m-t-40">Upload ACM file's reply</h5>
+                        <h5 class="m-t-40">Upload ACM MCM/ECM file's reply</h5>
                         
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           
@@ -743,7 +743,7 @@ margin-bottom: 10px !important;
                       </div>
 
                       <div class="col-lg-6">
-                        <h5 class="m-t-40">Uploaded ACM Files</h5>
+                        <h5 class="m-t-40">Uploaded ACM MCM/ECM Files</h5>
 
                             <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                               <p class="pull-left">Revisions</p>
@@ -2124,7 +2124,7 @@ margin-bottom: 10px !important;
                             @endif
 
                             @if($file->acm_file)
-                              <a href="{{ route('download', [$file->id, $file->acm_file, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's ACM File</span>
+                              <a href="{{ route('download', [$file->id, $file->acm_file, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's ACM MCM/ECM File</span>
                               </a>
                               @endif
 
