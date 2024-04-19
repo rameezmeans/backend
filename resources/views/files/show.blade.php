@@ -1472,7 +1472,7 @@ margin-bottom: 10px !important;
               </div>
             </div>
            
-            @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id)
+            {{-- @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id) --}}
               <div class="tab-pane slide-left" id="slide5">
                 <div class="card card-default">
                   <div class="card-header ">
@@ -1533,7 +1533,7 @@ margin-bottom: 10px !important;
                   </div>
                 </div>
               </div>
-            @endif
+            {{-- @endif --}}
             
             
             
