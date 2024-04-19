@@ -791,6 +791,13 @@ margin-bottom: 10px !important;
                         </div>
 
                             @foreach($file->files_and_messages_sorted() as $message)
+
+                            @php
+                            $messageFile = \App\Models\RequestFile::findOrFail($message['id']);
+
+                            
+                          @endphp
+                          
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
                             <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -921,11 +928,7 @@ margin-bottom: 10px !important;
                                   </a>
                                   @endisset
                                     @if(!($file->front_end_id == 1 && $file->subdealer_group_id == NULL))
-                                      @php
-                                        $messageFile = \App\Models\RequestFile::findOrFail($message['id']);
-
-                                        
-                                      @endphp
+                                     
 
                                       @if(count($messageFile->engineer_file_notes_have_unseen_messages))
                                       <span id="circle"></span>
