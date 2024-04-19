@@ -2029,7 +2029,7 @@ margin-bottom: 10px !important;
     </div>
     @foreach($file->new_requests as $file)
     
-    <div class="tab-pane slide-left" id="tab4FollowUs">
+    <div class="tab-pane slide-left show active" id="tab4FollowUs">
 
 
       <div class="card card-transparent m-t-40">
