@@ -793,13 +793,10 @@ margin-bottom: 10px !important;
                             @foreach($file->files_and_messages_sorted() as $message)
 
                           @php
-                            @if(isset($message['request_file']))
-
+                            if(isset($message['request_file'])){
                               $messageFile = \App\Models\RequestFile::findOrFail($message['id']);
+                            }
 
-                            @endif
-
-                            
                           @endphp
                           
                               @if(isset($message['request_file']))
@@ -1038,7 +1035,7 @@ margin-bottom: 10px !important;
                                 @endforeach
 
                                 <div class="clearfix"></div>
-                                  
+
                                 @endif
                             </div>
         
