@@ -17,6 +17,10 @@ class RequestFile extends Model
         return $this->hasOne(FileFeedback::class, 'request_file_id', 'id');
     }
 
+    public function acm_files(){
+        return $this->hasMany(ACMFile::class, 'request_file_id', 'id');
+    }
+
     public function engineer_file_notes(){
         return $this->hasMany(EngineerFileNote::class, 'request_file_id', 'id');
     }

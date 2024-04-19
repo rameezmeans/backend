@@ -89,7 +89,7 @@ class FilesController extends Controller
 
         $acmFile = new ACMFile();
         $acmFile->acm_file = $newFileName;
-        $acmFile->file_id = $request->file_id;
+        $acmFile->request_file_id = $request->request_file_id;
         $acmFile->save();
         
         if($file->front_end_id == 1){

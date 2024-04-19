@@ -68,11 +68,7 @@ margin-bottom: 10px !important;
           </div>
         </div>
       @endif
-
-      @php 
-        // dd(sizeof($file->new_requests));
-      @endphp
-
+      
       {{-- @if(!empty($file->new_requests)) --}}
       <div class="card card-transparent">
         <ul class="nav nav-tabs nav-tabs-simple nav-tabs-right bg-white" id="tab-4" role="tablist">

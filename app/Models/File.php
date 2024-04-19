@@ -138,11 +138,7 @@ class File extends Model
     public function alientech_file(){
         return $this->hasOne(AlientechFile::class, 'file_id', 'id');
     }
-
-    public function acm_files(){
-        return $this->hasMany(ACMFile::class, 'file_id', 'id');
-    }
-
+    
     public function decoded_files(){
         return $this->hasMany(ProcessedFile::class, 'file_id', 'id')->where('type', 'decoded');
     }
