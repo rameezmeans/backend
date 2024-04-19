@@ -792,8 +792,12 @@ margin-bottom: 10px !important;
 
                             @foreach($file->files_and_messages_sorted() as $message)
 
-                            @php
-                            $messageFile = \App\Models\RequestFile::findOrFail($message['id']);
+                          @php
+                            @if(isset($message['request_file']))
+
+                              $messageFile = \App\Models\RequestFile::findOrFail($message['id']);
+
+                            @endif
 
                             
                           @endphp
@@ -993,6 +997,8 @@ margin-bottom: 10px !important;
                                   @endif
                                   @endif
                                   
+                                  @if(isset($message['request_file']))
+
                                 <div class="clearfix"></div>
 
                                 <h5 class="m-t-40">Upload ACM File reply</h5>
@@ -1032,6 +1038,8 @@ margin-bottom: 10px !important;
                                 @endforeach
 
                                 <div class="clearfix"></div>
+                                  
+                                @endif
                             </div>
         
                         @endif
