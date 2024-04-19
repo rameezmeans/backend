@@ -121,11 +121,11 @@ margin-bottom: 10px !important;
           </li>
 
           {{-- @if($file->decoded_files->isEmpty()) --}}
-            @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id)
+            {{-- @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id) --}}
               <li class="nav-item">
                 <a href="#" data-toggle="tab" data-target="#slide5"><span>Upload Slave Decrypted File</span></a>
               </li>
-            @endif
+            {{-- @endif --}}
           {{-- @endif --}}
 
           <li class="nav-item">
@@ -3325,7 +3325,7 @@ margin-bottom: 10px !important;
               </div>
             </div>
            
-            @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id)
+            {{-- @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id) --}}
               <div class="tab-pane slide-left" id="slide5{{$file->id}}">
                 <div class="card card-default">
                   <div class="card-header ">
@@ -3386,7 +3386,7 @@ margin-bottom: 10px !important;
                   </div>
                 </div>
               </div>
-            @endif
+            {{-- @endif --}}
             
             
             
