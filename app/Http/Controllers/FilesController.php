@@ -2263,7 +2263,7 @@ class FilesController extends Controller
             if($file->original_file_id){
                 $old = File::findOrFail($file->original_file_id);
                 $old->checked_by = 'engineer';
-                $file->support_status = "closed";
+                $old->support_status = "closed";
                 $old->save();
             }
 
