@@ -73,11 +73,11 @@ margin-bottom: 10px !important;
       <div class="card card-transparent">
         <ul class="nav nav-tabs nav-tabs-simple nav-tabs-right bg-white" id="tab-4" role="tablist">
             <li class="nav-item">
-              <a href="#" class="active" data-toggle="tab" role="tab" data-target="#tab4hellowWorld">Task {{$file->id}}</a>
+              <a href="#" @if(!$file->new_requests) class="active" @endif data-toggle="tab" role="tab" data-target="#tab4hellowWorld">Task {{$file->id}}</a>
             </li>
           @foreach($file->new_requests as $row)
             <li class="nav-item">
-              <a href="#" data-toggle="tab" role="tab" data-target="#tab4FollowUs">Task {{$row->id}} (New Request)</a>
+              <a href="#" data-toggle="tab" class="active" role="tab" data-target="#tab4FollowUs">Task {{$row->id}} (New Request)</a>
             </li>
           @endforeach
           
