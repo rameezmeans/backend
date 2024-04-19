@@ -123,7 +123,7 @@ margin-bottom: 10px !important;
           {{-- @if($file->decoded_files->isEmpty()) --}}
             {{-- @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id) --}}
               <li class="nav-item">
-                <a href="#" data-toggle="tab" data-target="#slide5"><span>Upload Slave Decrypted File</span></a>
+                <a href="#" data-toggle="tab" data-target="#slide5"><span>Upload Decrypted File</span></a>
               </li>
             {{-- @endif --}}
           {{-- @endif --}}
@@ -2067,7 +2067,7 @@ margin-bottom: 10px !important;
           {{-- @if($file->decoded_files->isEmpty()) --}}
             {{-- @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id) --}}
               <li class="nav-item">
-                <a href="#" data-toggle="tab" data-target="#slide5{{$file->id}}"><span>Upload Slave Decrypted File</span></a>
+                <a href="#" data-toggle="tab" data-target="#slide5{{$file->id}}"><span>Upload Decrypted File</span></a>
               </li>
             {{-- @endif --}}
           {{-- @endif --}}
