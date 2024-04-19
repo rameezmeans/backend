@@ -77,7 +77,7 @@ margin-bottom: 10px !important;
             </li>
           @foreach($file->new_requests as $row)
             <li class="nav-item">
-              <a href="#" data-toggle="tab" class="active show" role="tab" data-target="#tab4FollowUs">Task {{$row->id}} (New Request)</a>
+              <a href="#" data-toggle="tab" class="active show" role="tab" data-target="#tab4FollowUs" aria-selected="true">Task {{$row->id}} (New Request)</a>
             </li>
           @endforeach
           
