@@ -70,14 +70,14 @@ margin-bottom: 10px !important;
       @endif
 
       @php 
-        dd(sizeof($file->new_requests));
+        // dd(sizeof($file->new_requests));
       @endphp
 
       {{-- @if(!empty($file->new_requests)) --}}
       <div class="card card-transparent">
         <ul class="nav nav-tabs nav-tabs-simple nav-tabs-right bg-white" id="tab-4" role="tablist">
             <li class="nav-item">
-              <a href="#" data-toggle="tab" role="tab" data-target="#tab4hellowWorld" @if(!empty($file->new_requests)) class="active show" aria-selected="true" @endif>Task {{$file->id}}</a>
+              <a href="#" data-toggle="tab" role="tab" data-target="#tab4hellowWorld" @if(sizeof($file->new_requests) == 0) class="active show" aria-selected="true" @endif>Task {{$file->id}}</a>
             </li>
           @foreach($file->new_requests as $row)
             <li class="nav-item">
@@ -88,7 +88,7 @@ margin-bottom: 10px !important;
         </ul>
         
         <div class="tab-content bg-white" style="border-top: 1px solid rgba(0, 0, 0, 0.1); border-left: 1px solid rgba(0, 0, 0, 0.1);">
-          <div class="tab-pane slide-left @if(empty($file->new_requests)) active show @endif" id="tab4hellowWorld">
+          <div class="tab-pane slide-left @if(sizeof($file->new_requests) == 0) active show @endif" id="tab4hellowWorld">
             
       {{-- @endif --}}
 
