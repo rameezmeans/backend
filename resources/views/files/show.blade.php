@@ -991,6 +991,44 @@ margin-bottom: 10px !important;
                                   @endif
                                   
                                 <div class="clearfix"></div>
+
+                                <h5 class="m-t-40">Upload ACM File reply</h5>
+                        
+                                <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                                  
+                                  <div class="pull-right">
+                                    <form action="{{ route('upload-acm-reply') }}" method="POST" enctype="multipart/form-data">
+                                      @csrf
+        
+                                      <input type="hidden" name="file_id" id="file_id" value="{{$file->id}}">
+                                      <input type="hidden" name="request_file_id" id="request_file_id" value="{{$message['id']}}">
+                                      <input type="file" name="acm_file" id="acm_file" required>
+                                      
+                                      <input type="submit" value="Upload" class="btn btn-success">
+                                    </form>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                                @foreach($messageFile->acm_files as $acm_file)
+                                  <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                                      <p class="pull-left">{{$acm_file->acm_file}}</p>
+                                      <div class="pull-right">
+                                        
+
+                                          <a href="{{ route('download',[$file->id, $acm_file->acm_file, 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
+                                          </a>
+                                          <a href="#" class="btn-sm btn-cons btn-danger delete-acm-file" data-acm_file_id="{{$acm_file->id}}"><i class="pg-trash text-white"></i></a>
+                                      </div>
+
+                                      <div class="clearfix"></div>
+                                        
+                                  </div>
+                                @endforeach
+
+                                <div class="clearfix"></div>
                             </div>
         
                         @endif
