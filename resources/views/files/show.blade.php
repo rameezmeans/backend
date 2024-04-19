@@ -2069,7 +2069,7 @@ margin-bottom: 10px !important;
               <li class="nav-item">
                 <a href="#" data-toggle="tab" data-target="#slide5{{$file->id}}"><span>Upload Slave Decrypted File</span></a>
               </li>
-            @endif
+            {{-- @endif --}}
           {{-- @endif --}}
 
           <li class="nav-item">
