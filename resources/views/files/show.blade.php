@@ -70,7 +70,7 @@ margin-bottom: 10px !important;
       @endif
 
       @php 
-        // dd(empty($file->new_requests));
+        dd(sizeof($file->new_requests));
       @endphp
 
       {{-- @if(!empty($file->new_requests)) --}}
@@ -88,7 +88,7 @@ margin-bottom: 10px !important;
         </ul>
         
         <div class="tab-content bg-white" style="border-top: 1px solid rgba(0, 0, 0, 0.1); border-left: 1px solid rgba(0, 0, 0, 0.1);">
-          <div class="tab-pane slide-left @if(empty($file->new_requests)) active @endif" id="tab4hellowWorld">
+          <div class="tab-pane slide-left @if(empty($file->new_requests)) active show @endif" id="tab4hellowWorld">
             
       {{-- @endif --}}
 
