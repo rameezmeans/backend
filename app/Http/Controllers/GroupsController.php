@@ -47,9 +47,11 @@ class GroupsController extends Controller
                 }
                 $stripeAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','stripe')->get();
                 $paypalAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','paypal')->get();
+                $vivaAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','viva')->get();
                 
                 $stripePaymentAccount = null;
                 $paypalPaymentAccount = null;
+                $vivaPaymentAccount = null;
 
                 if($group->stripe_payment_account_id){
                     $stripePaymentAccount = PaymentAccount::findOrFail($group->stripe_payment_account_id);
@@ -59,12 +61,18 @@ class GroupsController extends Controller
                     $paypalPaymentAccount = PaymentAccount::findOrFail($group->paypal_payment_account_id);
                 }
 
+                if($group->viva_payment_account_id){
+                    $vivaPaymentAccount = PaymentAccount::findOrFail($group->viva_payment_account_id);
+                }
+
                 return view('groups.groups_create_edit', [ 
                     'stripePaymentAccount' => $stripePaymentAccount, 
                     'paypalPaymentAccount' => $paypalPaymentAccount,
+                    'vivaPaymentAccount' => $vivaPaymentAccount,
                     'group' => $group, 
                     'stripeAccounts' => $stripeAccounts ,
-                    'paypalAccounts' => $paypalAccounts 
+                    'paypalAccounts' => $paypalAccounts,
+                    'vivaAccounts' => $vivaAccounts 
                 ]);
         }
         else{
@@ -110,11 +118,12 @@ class GroupsController extends Controller
             $group->bonus_credits = $request->bonus_credits;
             $group->stripe_payment_account_id = $request->stripe_payment_account_id;
             $group->paypal_payment_account_id = $request->paypal_payment_account_id;
+            $group->viva_payment_account_id = $request->viva_payment_account_id;
             $group->elorus_template_id = $request->elorus_template_id;
             $group->elorus_tax_id = $request->elorus_tax_id;
             $group->zohobooks_tax_id = $request->zohobooks_tax_id;
             $group->save();
-
+            
             return redirect()->route('groups')->with(['success' => 'Group updated, successfully.']);
         }
         else{

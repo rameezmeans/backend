@@ -98,6 +98,22 @@
                         <strong>{{ $message }}</strong>
                     </span>
                   @enderror
+
+                  <div class="form-group form-group-default required ">
+                    <label>Paypal Payment Account</label>
+                    <select name="viva_payment_account_id" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
+                      @foreach($vivaAccounts as $account)
+                        <option @if(isset($vivaPaymentAccount) && $vivaPaymentAccount->id == $account->id) {{ 'selected' }} @endif value="{{$account->id}}">{{$account->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  @error('viva_payment_account_id')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+
+
                   <div class="form-group form-group-default required ">
                     <label>Elorus Template ID</label>
                     <input value="@if(isset($group)){{$group->elorus_template_id}}@else{{old('elorus_template_id')}}@endif" name="elorus_template_id" min="0" type="text" class="form-control">
