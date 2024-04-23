@@ -129,6 +129,12 @@ class PaymentAccountsController extends Controller
             $account->name = $request->name;
             $account->key = $request->key;
             $account->secret = $request->secret;
+
+            $account->viva_client_id = $request->viva_client_id;
+            $account->viva_merchant_id = $request->viva_merchant_id;
+            $account->source_code = $request->source_code;
+            $account->env = $request->env;
+
             $account->senders_name = $request->senders_name;
             $account->senders_phone_number = $request->senders_phone_number;
             $account->senders_address = $request->senders_address;

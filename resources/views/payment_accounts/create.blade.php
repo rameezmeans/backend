@@ -72,6 +72,46 @@
                   @if(isset($account))
 
                   <div class="form-group form-group-default ">
+                    <label>Viva Merchant ID</label>
+                    <input value="@if(isset($account)){{ $account->viva_merchant_id }}@else{{old('viva_merchant_id') }}@endif"  name="viva_merchant_id" type="text" class="form-control">
+                  </div>
+                  @error('viva_merchant_id')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+
+                  <div class="form-group form-group-default ">
+                    <label>Viva Client ID</label>
+                    <input value="@if(isset($account)){{ $account->viva_client_id }}@else{{old('viva_client_id') }}@endif"  name="viva_client_id" type="text" class="form-control">
+                  </div>
+                  @error('viva_client_id')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+
+                  <div class="form-group form-group-default ">
+                    <label>Viva Source Code</label>
+                    <input value="@if(isset($account)){{ $account->source_code }}@else{{old('source_code') }}@endif"  name="source_code" type="text" class="form-control">
+                  </div>
+                  @error('source_code')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+
+                  <div class="form-group form-group-default ">
+                    <label>ENV</label>
+                    <input value="@if(isset($account)){{ $account->env }}@else{{old('env') }}@endif"  name="env" type="text" class="form-control">
+                  </div>
+                  @error('env')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+
+                  <div class="form-group form-group-default ">
                     <label>Sender's name</label>
                     <input value="@if(isset($account)){{ $account->senders_name }}@else{{old('senders_name') }}@endif"  name="senders_name" type="text" class="form-control">
                   </div>
@@ -430,6 +470,7 @@
                     <select name="type" id="type" class="full-width type" data-init-plugin="select2">
                       <option @if(isset($account) && $account->type == 'stripe') selected @endif value="stripe">Stripe</option>
                       <option @if(isset($account) && $account->type == 'paypal') selected @endif value="paypal">Paypal</option>
+                      <option @if(isset($account) && $account->type == 'viva') selected @endif value="viva">Viva</option>
                     </select>
                   </div>
 
