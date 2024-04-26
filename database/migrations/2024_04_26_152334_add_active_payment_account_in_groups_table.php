@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::table('groups', function (Blueprint $table) {
 
-            $table->boolean('stripe_active')->default('true');
-            $table->boolean('paypal_active')->default('true');
-            $table->boolean('viva_active')->default('false');
+            $table->boolean('stripe_active')->default(true);
+            $table->boolean('paypal_active')->default(true);
+            $table->boolean('viva_active')->default(false);
 
         });
     }
