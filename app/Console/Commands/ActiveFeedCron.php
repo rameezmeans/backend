@@ -149,6 +149,9 @@ class ActiveFeedCron extends Command
         $flag = chmod( public_path("/../../backend/storage/logs") , 0777 );
         $theBackendFlag = $this->recursiveChmod(public_path("/../../backend/storage/logs"));
 
+        $flag = chmod( public_path("/../../devback/storage/logs") , 0777 );
+        $theBackendFlag = $this->recursiveChmod(public_path("/../../devback/storage/logs"));
+
         $flag = chmod( public_path("/../../tuningX/storage/logs") , 0777 );
         $theTuningXFlag = $this->recursiveChmod(public_path("/../../tuningX/storage/logs"));
 
