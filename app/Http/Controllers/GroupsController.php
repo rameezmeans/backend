@@ -122,6 +122,29 @@ class GroupsController extends Controller
             $group->elorus_template_id = $request->elorus_template_id;
             $group->elorus_tax_id = $request->elorus_tax_id;
             $group->zohobooks_tax_id = $request->zohobooks_tax_id;
+
+            if(isset($request->stripe_active) && $request->stripe_active == 'on'){
+                $group->stripe_active = 1;
+            }
+            else{
+                $group->stripe_active = 0;
+            }
+
+            if(isset($request->paypal_active) && $request->paypal_active == 'on'){
+                $group->paypal_active = 1;
+            }
+            else{
+                $group->paypal_active = 0;
+            }
+            
+            if(isset($request->viva_active) && $request->viva_active == 'on'){
+                
+                $group->viva_active = 1;
+            }
+            else{
+                $group->viva_active = 0;
+            }
+
             $group->save();
             
             return redirect()->route('groups')->with(['success' => 'Group updated, successfully.']);

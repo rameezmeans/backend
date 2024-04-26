@@ -73,6 +73,10 @@
                 @enderror
                 @if(isset($group))
                   <div class="form-group form-group-default required ">
+                    <div class="checkbox check-success  ">
+                      <input name="stripe_active" type="checkbox" @if($group->stripe_active) checked="checked" @endif id="checkbox21">
+                      <label for="checkbox21">Activate Stripe</label>
+                    </div>
                     <label>Stripe Payment Account</label>
                     <select name="stripe_payment_account_id" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
                       @foreach($stripeAccounts as $account)
@@ -86,6 +90,10 @@
                     </span>
                   @enderror
                   <div class="form-group form-group-default required ">
+                    <div class="checkbox check-success  ">
+                      <input name="paypal_active" type="checkbox" @if($group->paypal_active) checked="checked" @endif id="checkbox22">
+                      <label for="checkbox22">Activate Paypal</label>
+                    </div>
                     <label>Paypal Payment Account</label>
                     <select name="paypal_payment_account_id" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
                       @foreach($paypalAccounts as $account)
@@ -100,7 +108,11 @@
                   @enderror
 
                   <div class="form-group form-group-default required ">
-                    <label>Paypal Payment Account</label>
+                    <div class="checkbox check-success  ">
+                      <input name="viva_active" type="checkbox" @if($group->viva_active) checked="checked" @endif id="checkbox23">
+                      <label for="checkbox23">Activate Viva</label> 
+                    </div>
+                    <label>Viva Payment Account</label>
                     <select name="viva_payment_account_id" class="full-width select2-hidden-accessible" data-placeholder="Select Type" data-init-plugin="select2" tabindex="-1" aria-hidden="true">
                       @foreach($vivaAccounts as $account)
                         <option @if(isset($vivaPaymentAccount) && $vivaPaymentAccount->id == $account->id) {{ 'selected' }} @endif value="{{$account->id}}">{{$account->name}}</option>
