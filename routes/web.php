@@ -701,7 +701,7 @@ Route::post('chatify/favorites', [MessagesController::class,'getFavorites'])->na
 /**
  * Search in messenger
  */
-Route::get('chatify/search', [MessagesController::class,'search'])->name('search');
+// Route::get('chatify/search', [MessagesController::class,'search'])->name('search');
 
 /**
  * Get shared photos

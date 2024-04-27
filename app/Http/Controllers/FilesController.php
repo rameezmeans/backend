@@ -662,6 +662,9 @@ class FilesController extends Controller
             $attachment = $request->file('decrypted_file');
             $fileName = $attachment->getClientOriginalName();
 
+            $file->file_attached = $fileName;
+            $file->save();
+
             if($file->front_end_id == 1){
 
                 // $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
