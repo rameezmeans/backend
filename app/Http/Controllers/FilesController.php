@@ -663,6 +663,7 @@ class FilesController extends Controller
             $fileName = $attachment->getClientOriginalName();
 
             $file->file_attached = $fileName;
+            
             $file->save();
 
             if($file->front_end_id == 1){
@@ -703,6 +704,7 @@ class FilesController extends Controller
         $processFile->save();
 
         $file->checking_status = 'unchecked';
+        $file->checking_status_versions = 0;
         $file->save();
 
         return view('files.search', ['file' => $file]);
