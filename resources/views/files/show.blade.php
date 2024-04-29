@@ -1853,7 +1853,7 @@ margin-bottom: 10px !important;
                                     
                                   </div>
 
-                                  <div class="col-md-12 m-t-20" >
+                                  <div class="col-md-12 " style="margin-top: 100px;">
                                       @foreach($file->downloadLuaFiles as $df)
 
                                       {{$df->request_file}}
