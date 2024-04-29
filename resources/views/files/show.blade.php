@@ -1855,6 +1855,8 @@ margin-bottom: 10px !important;
 
                                   <div class="col-md-12 m-t-20" >
                                       @foreach($file->downloadLuaFiles as $df)
+
+                                      {{$df->request_file}}
                                       <div class="pull-right">
                                         
 

@@ -814,7 +814,7 @@
                                       <p class="pull-left">{{$acm_file->acm_file}}</p>
                                       <div class="pull-right">
                                         
-
+                                          
                                           <a href="{{ route('download',[$file->id, $acm_file->acm_file, 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
                                           </a>
                                           <a href="#" class="btn-sm btn-cons btn-danger delete-acm-file" data-acm_file_id="{{$acm_file->id}}"><i class="pg-trash text-white"></i></a>
