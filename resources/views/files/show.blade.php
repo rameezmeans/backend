@@ -898,15 +898,17 @@ margin-bottom: 10px !important;
 
                                                   if($file->automatic){
 
-                                                    $item = json_decode($file->lua_version->Respons);
+                                                    @if($file->lua_version){
 
-                                                    dd($item[0]);
+                                                    $item = json_decode($file->lua_version->Respons);
 
                                                     ?>
                                                       <p class="pull-left"><? echo $file->stages . ' => ' . $item[0]['name'];?></p>
 
                                                       <br/>
                                                     <?php
+
+                                                    }
 
                                                   }
 
