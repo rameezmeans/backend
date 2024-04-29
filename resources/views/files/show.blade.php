@@ -1853,7 +1853,8 @@ margin-bottom: 10px !important;
                                     
                                   </div>
 
-                                  <div class="col-md-12 " style="margin-top: 100px;">
+                                  <div class="col-md-12 b-b b-t b-grey" style="margin-top: 100px;">
+                                    <div class="clearfix"></div>
                                       @foreach($file->downloadLuaFiles as $df)
 
                                       {{$df->request_file}}
@@ -1866,6 +1867,7 @@ margin-bottom: 10px !important;
                                         </div>
 
                                       @endforeach
+                                      <div class="clearfix"></div>
                                   </div>
                               
                             </div>
