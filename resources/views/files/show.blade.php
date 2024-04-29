@@ -896,24 +896,25 @@ margin-bottom: 10px !important;
                                                 
                                                 if ($message['lua_command'] === null){
 
-                                                  if($file->automatic){
+                                                //   if($file->automatic){
 
-                                                    if($file->lua_version){
+                                                //     if($file->lua_version){
 
-                                                    $item = json_decode($file->lua_version->Respons);
+                                                //     $item = json_decode($file->lua_version->Respons);
 
-                                                    ?>
-                                                      <p class="pull-left"><? echo $file->stages . ' => ' . $item[0]['name'];?></p>
+                                                //     ?>
+                                                       {{-- <p class="pull-left"><? // echo $file->stages . ' => ' . $item[0]['name'];?></p>
 
-                                                      <br/>
-                                                    <?php
+                                                    <br/> --}}
+                                                //     <?php
 
-                                                    }
+                                                //     }
 
-                                                  }
+                                                //   }
 
                                                   
-                                                }else{
+                                                }
+                                                else{
                                                     foreach ($data as $item) {
                                                       ?>
                                                         <p class="pull-left"><? echo $item['mod'] . ' => ' . $item['name'];?></p>
