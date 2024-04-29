@@ -68,14 +68,9 @@ class Makelua extends Controller
 
 				curl_close($ch);				
 				
-				
-				
-				
 			
 			}else if($request->input("decode") == "autotunercode"){
-				
-				
-				
+			
 			$oripath = '../../portal.dvx-ols.com/public'.$_GET['tunedmasterpath'];
 			$savepath = '../../portal.dvx-ols.com/public'.$_GET['tunedslavesavepath'];
 			$host = 'https://api.autotuner-tool.com/v2/api/v1/master/encrypt';
@@ -280,7 +275,7 @@ class Makelua extends Controller
 					'status' => $status,
 				]);
 
-				return response("New record added successfully.");
+				return response("New record added successfully. 1");
 			} catch (\Exception $e) {
 				return response("Error: " . $e->getMessage(), 500);
 			}
@@ -316,7 +311,7 @@ class Makelua extends Controller
 					'status' => $status,
 				]);
 		
-				return response("New record added successfully.");
+				return response("New record added successfully. 2");
 			} catch (\Exception $e) {
 				return response("Error: " . $e->getMessage(), 500);
 			}
@@ -333,7 +328,7 @@ class Makelua extends Controller
 				'status' => 'pending',
 			]);
 		
-			return response("New record added successfully.");
+			return response("New record added successfully.3");
 			} catch (\Exception $e) {
 				return response("Error: " . $e->getMessage(), 500);
 			}
@@ -350,7 +345,7 @@ class Makelua extends Controller
 				'status' => 'pending',
 			]);
 		
-			return response("New record added successfully.");
+			return response("New record added successfully.4");
 			} catch (\Exception $e) {
 				return response("Error: " . $e->getMessage(), 500);
 			}
