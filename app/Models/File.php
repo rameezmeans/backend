@@ -136,7 +136,7 @@ class File extends Model
     }
 
     public function lua_version(){
-        return $this->hasOne(LuaVersion::class, 'File_id', 'id');
+        return $this->hasOne(LuaVersion::class, 'File_Id', 'id');
     }
 
     public function alientech_file(){
