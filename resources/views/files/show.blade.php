@@ -900,10 +900,10 @@ margin-bottom: 10px !important;
 
                                                     $item = json_decode($file->lua_version->Respons);
 
-                                                    dd($item);
+                                                    // dd($item);
 
                                                     ?>
-                                                      <p class="pull-left"><? echo $item['mod'] . ' => ' . $item['name'];?></p>
+                                                      <p class="pull-left"><? echo $item[0]['mod'] . ' => ' . $item[0]['name'];?></p>
 
                                                       <br/>
                                                     <?php
