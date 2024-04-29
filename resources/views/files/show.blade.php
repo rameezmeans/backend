@@ -898,7 +898,13 @@ margin-bottom: 10px !important;
 
                                                   if($file->automatic){
 
-                                                    dd($file->lua_version);
+                                                    $item = json_decode($file->lua_version->Respons);
+
+                                                    ?>
+                                                      <p class="pull-left"><? echo $item['mod'] . ' => ' . $item['name'];?></p>
+
+                                                      <br/>
+                                                    <?php
 
                                                   }
 
