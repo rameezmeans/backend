@@ -898,7 +898,7 @@ margin-bottom: 10px !important;
 
                                                   if($file->automatic){
 
-                                                    dd($file->luaVersion);
+                                                    dd($file->lua_version);
 
                                                   }
 
