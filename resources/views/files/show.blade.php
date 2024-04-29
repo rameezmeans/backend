@@ -1850,7 +1850,20 @@ margin-bottom: 10px !important;
                                     <h5>Name for version</h5>
                                     <input type="text" name="nameforluacreation" id="nameforluacreation" value=""/><br/>
                                     <button id="submitButton">Submit</button>
-                                    <button id="downloadButton">Download</button>
+                                    
+                                  </div>
+
+                                  <div class="col-md-12 m-t-20" >
+                                      @foreach($file->downloadLuaFiles as $df)
+                                      <div class="pull-right">
+                                        
+
+                                          <a href="{{ route('download',[$file->id, $df->request_file, 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
+                                          </a>
+                                        
+                                        </div>
+
+                                      @endforeach
                                   </div>
                               
                             </div>
@@ -3705,7 +3718,7 @@ margin-bottom: 10px !important;
                                     <h5>Name for version</h5>
                                     <input type="text" name="nameforluacreation" id="nameforluacreation" value=""/><br/>
                                     <button id="submitButton">Submit</button>
-                                    <button id="downloadButton">Download</button>
+                                    
                                   </div>
                               
                             </div>
