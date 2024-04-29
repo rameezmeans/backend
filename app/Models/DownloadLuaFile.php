@@ -9,5 +9,5 @@ class DownloadLuaFile extends Model
 {
     use HasFactory;
 
-    private $table = "download_lua_files";
+    public $table = "download_lua_files";
 }
