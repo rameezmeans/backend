@@ -123,7 +123,7 @@ margin-bottom: 10px !important;
           {{-- @if($file->decoded_files->isEmpty()) --}}
             {{-- @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id) --}}
               <li class="nav-item">
-                <a href="#" data-toggle="tab" data-target="#slide5"><span>Upload Decrypted File</span></a>
+                <a href="#" data-toggle="tab" data-target="#slide5"><span>Upload New File</span></a>
               </li>
             {{-- @endif --}}
           {{-- @endif --}}
@@ -1850,6 +1850,7 @@ margin-bottom: 10px !important;
                                     <h5>Name for version</h5>
                                     <input type="text" name="nameforluacreation" id="nameforluacreation" value=""/><br/>
                                     <button id="submitButton">Submit</button>
+                                    <button id="downloadButton">Download</button>
                                   </div>
                               
                             </div>
@@ -2114,7 +2115,7 @@ margin-bottom: 10px !important;
           {{-- @if($file->decoded_files->isEmpty()) --}}
             {{-- @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id) --}}
               <li class="nav-item">
-                <a href="#" data-toggle="tab" data-target="#slide5{{$file->id}}"><span>Upload Decrypted File</span></a>
+                <a href="#" data-toggle="tab" data-target="#slide5{{$file->id}}"><span>Upload New File</span></a>
               </li>
             {{-- @endif --}}
           {{-- @endif --}}
