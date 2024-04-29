@@ -898,7 +898,7 @@ margin-bottom: 10px !important;
 
                                                   if($file->automatic){
 
-                                                    @if($file->lua_version){
+                                                    if($file->lua_version){
 
                                                     $item = json_decode($file->lua_version->Respons);
 
