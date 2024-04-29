@@ -903,7 +903,7 @@ margin-bottom: 10px !important;
                                                     dd($item[0]);
 
                                                     ?>
-                                                      <p class="pull-left"><? echo $item[0]['mod'] . ' => ' . $item[0]['name'];?></p>
+                                                      <p class="pull-left"><? echo $file->stages . ' => ' . $item[0]['name'];?></p>
 
                                                       <br/>
                                                     <?php
