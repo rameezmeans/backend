@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class LuaVersion extends Model
 {
     use HasFactory;
-    public $table = "lua_versions";
+    public $table = 'lua_versions';
 }
