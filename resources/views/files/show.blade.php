@@ -895,6 +895,13 @@ margin-bottom: 10px !important;
                                                 $data = json_decode($message['lua_command'], true);
                                                 
                                                 if ($message['lua_command'] === null){
+
+                                                  if($file->automatic){
+
+                                                    dd($file->luaVersion);
+
+                                                  }
+
                                                   
                                                 }else{
                                                     foreach ($data as $item) {
