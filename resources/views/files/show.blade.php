@@ -896,21 +896,23 @@ margin-bottom: 10px !important;
                                                 
                                                 if ($message['lua_command'] === null){
 
-                                                //   if($file->automatic){
+                                                  if($file->automatic){
 
-                                                //     if($file->lua_version){
+                                                    if($file->lua_version){
 
-                                                //     $item = json_decode($file->lua_version->Respons);
+                                                    $item = json_decode($file->lua_version->Respons);
 
-                                                //     ?>
-                                                       {{-- <p class="pull-left"><? // echo $file->stages . ' => ' . $item[0]['name'];?></p>
+                                                    dd($file);
 
-                                                    <br/> --}}
-                                                //     <?php
+                                                    ?>
+                                                       <p class="pull-left"><? echo $file->stages . ' => ' . $item[0]['name'];?></p>
 
-                                                //     }
+                                                    <br/>
+                                                    <?php
 
-                                                //   }
+                                                    }
+
+                                                  }
 
                                                   
                                                 }
