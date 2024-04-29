@@ -905,7 +905,7 @@ margin-bottom: 10px !important;
                                                     // dd($file);
 
                                                     ?>
-                                                       <p class="pull-left"><? echo $file->stage . ' => ' . $item[0]['name'];?></p>
+                                                       <p class="pull-left"><? echo $file->stage . ' => ' . $item[0]->name;?></p>
 
                                                     <br/>
                                                     <?php
