@@ -4436,58 +4436,6 @@ margin-bottom: 10px !important;
 </script>
 
 <script>
-
-document.getElementById("downloadButton").addEventListener("click", function () {
-        var selectElements = document.querySelectorAll('select[name="makelua[]"]');
-        var selectedSendVersion = document.querySelector('input[name="sendversion"]:checked').value;
-        var selectedOptions = [];
-        
-        selectElements.forEach(function (selectElement) {
-            selectedOptions.push(selectElement.options[selectElement.selectedIndex].value);
-        });
-
-        var formData = new FormData();
-        selectedOptions.forEach(function(option) {
-            formData.append("selectedOptions[]", option);
-        });
-
-        var file_id = "<? echo  $file->id;?>";
-        formData.append("file_id", file_id);
-        
-        <?php
-        if($file->final_decoded_file() !== null){
-          ?>
-        var file_loc ="<? echo $file->final_decoded_file();?>"; //this need to be the decrypted file
-          <?php
-        }else{
-          ?>
-        var file_loc ="<? echo $file->file_attached;?>"; //this need to be the decrypted file
-        <?php
-      }
-      ?>
-        
-        
-        formData.append("file_loc", file_loc);
-        
-        var nameForLuaCreation = document.getElementById("nameforluacreation").value;
-        formData.append("nameforluacreation", nameForLuaCreation);
-        formData.append("sendversion", selectedSendVersion);
-
-        console.log('formdata');
-        console.log(formData);
-
-        for (var pair of formData.entries()) {
-          console.log(pair[0]+ ', ' + pair[1]); 
-        }
-
-        fetch("/downloadlua", {
-            method: "POST",
-            body: formData
-        }).then(response => response.text())
-          .then(data => console.log(data))
-          .catch(error => console.error(error));
-    });
-
     document.getElementById("submitButton").addEventListener("click", function () {
         var selectElements = document.querySelectorAll('select[name="makelua[]"]');
         var selectedSendVersion = document.querySelector('input[name="sendversion"]:checked').value;
