@@ -662,7 +662,7 @@ class FilesController extends Controller
             $attachment = $request->file('decrypted_file');
             $fileName = $attachment->getClientOriginalName();
 
-            $file->file_attached = $fileName;
+            // $file->file_attached = $fileName;
             
             $file->save();
 
