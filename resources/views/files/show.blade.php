@@ -902,7 +902,7 @@ margin-bottom: 10px !important;
 
                                                     $item = json_decode($file->lua_version->Respons);
 
-                                                    // dd($file);
+                                                    dd($item);
 
                                                     ?>
                                                        <p class="pull-left"><? echo $file->stage . ' => ' . $item[0]->name;?></p>
