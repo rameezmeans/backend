@@ -672,10 +672,14 @@ class FilesAPIController extends Controller
 
                     if($file->status == 'submitted'){
                         if($file->no_longer_auto == 0){
-                            $file->status = 'completed';
-                            $file->support_status = "closed";
-                            $file->checked_by = 'engineer';
-                            $file->save();
+                            if($file->inner_search == 0){
+                                $file->status = 'completed';
+                                $file->support_status = "closed";
+                                $file->checked_by = 'engineer';
+                                $file->save();
+                            }
+
+                            
                         }
                     }
 

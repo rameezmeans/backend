@@ -1874,21 +1874,23 @@ margin-bottom: 10px !important;
                                     
                                   </div>
 
-                                  <div class="col-md-12 b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10" style="margin-top: 100px;">
+                                  <div class="col-md-12" style="margin-top: 100px;">
                                     <div class="clearfix"></div>
                                       @foreach($file->downloadLuaFiles as $df)
+                                      <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                                      <span class="pull-left">{{$df->request_file}}</span>
+                                        <div class="pull-right">
+                                          
 
-                                      {{$df->request_file}}
-                                      <div class="pull-right">
-                                        
-
-                                          <a href="{{ route('download',[$file->id, $df->request_file, 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
-                                          </a>
-                                        
-                                        </div>
+                                            <a href="{{ route('download',[$file->id, $df->request_file, 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
+                                            </a>
+                                          
+                                          </div>
+                                          <div class="clearfix"></div>
+                                      </div>
 
                                       @endforeach
-                                      <div class="clearfix"></div>
+                                      
                                   </div>
                               
                             </div>
