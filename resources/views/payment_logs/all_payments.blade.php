@@ -58,8 +58,11 @@
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    
-                                                        <p>{{ ucfirst($p->type)}}</p>
+                                                        @if($p->type != '')
+                                                        <p>{{ ucfirst($p->type) }}</p>
+                                                        @else
+                                                        <p>Admin</p>
+                                                        @endif
                                                     
                                                     
                                                 </td>
