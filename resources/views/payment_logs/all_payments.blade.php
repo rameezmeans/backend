@@ -58,12 +58,9 @@
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    @php 
-                                                        dd($p);
-                                                    @endphp
-                                                    @if($payment)
-                                                        <p>{{$payment->type}}</p>
-                                                    @endif
+                                                    
+                                                        <p>{{ ucfirst($p->type)}}</p>
+                                                    
                                                     
                                                 </td>
 
