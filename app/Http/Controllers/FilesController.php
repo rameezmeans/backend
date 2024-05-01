@@ -705,6 +705,7 @@ class FilesController extends Controller
 
         $file->checking_status = 'unchecked';
         $file->checking_status_versions = 0;
+        $file->inner_search = 1;
         $file->save();
 
         return view('files.search', ['file' => $file]);

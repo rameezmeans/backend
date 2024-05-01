@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AlientechFile;
 use App\Models\Credit;
+use App\Models\DownloadLuaFile;
 use App\Models\EmailTemplate;
 use App\Models\File;
 use App\Models\FileService;
@@ -435,6 +436,7 @@ class FilesAPIController extends Controller
             if($stage != NULL){
                 
                 $temp['file_id'] = $file->id;
+                $temp['inner_search'] = $file->inner_search;
                 $temp['frontend'] = $file->front_end_id;
 
                 $temp['stage'] = $stage;
@@ -611,7 +613,8 @@ class FilesAPIController extends Controller
                 $fileToSave = str_replace('#', '', $fileToSave);
                 $fileToSave = str_replace(' ', '_', $fileToSave);
 
-                $engineerFile = new RequestFile();
+                if($file->inner_search == 1){
+                    $engineerFile = new DownloadLuaFile();
                     $engineerFile->request_file = $fileToSave;
                     $engineerFile->file_type = 'engineer_file';
                     $engineerFile->tool_type = 'not_relevant';
@@ -620,11 +623,23 @@ class FilesAPIController extends Controller
                     $engineerFile->file_id = $file->id;
                     $engineerFile->engineer = true;
                     $engineerFile->save();
+                }
+                else{
+                    $engineerFile = new RequestFile();
+                    $engineerFile->request_file = $fileToSave;
+                    $engineerFile->file_type = 'engineer_file';
+                    $engineerFile->tool_type = 'not_relevant';
+                    $engineerFile->master_tools = 'not_relevant';
+                    $engineerFile->lua_command = $request->lua_command;
+                    $engineerFile->file_id = $file->id;
+                    $engineerFile->engineer = true;
+                    $engineerFile->save();
+                }
 
-                $tunnedFile = new TunnedFile();
-                $tunnedFile->file = $request->tuned_file;
-                $tunnedFile->file_id = $file->id;
-                $tunnedFile->save();
+                    $tunnedFile = new TunnedFile();
+                    $tunnedFile->file = $request->tuned_file;
+                    $tunnedFile->file_id = $file->id;
+                    $tunnedFile->save();
 
 
                     if($file->front_end_id == 1){
