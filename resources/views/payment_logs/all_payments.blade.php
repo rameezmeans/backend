@@ -58,7 +58,7 @@
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>@if($p->front_end_id == 1) Stripe @else @if($p->type == 'paypal') Paypal @else Stripe @endif @endif</p>
+                                                    <p>{{ \App\Models\Credit::findOrFail($p->payment_id)->type }}</p>
                                                     
                                                 </td>
 

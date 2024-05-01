@@ -1550,7 +1550,7 @@ margin-bottom: 10px !important;
                   </div>
                   <div class="card-body">
                     <h5>
-                      Upload Decrypted File
+                      Upload New File
                     </h5>
                     <form method="POST" action="{{route('search')}}" enctype="multipart/form-data" class="" role="form">
                       @csrf
@@ -3422,7 +3422,7 @@ margin-bottom: 10px !important;
                   </div>
                   <div class="card-body">
                     <h5>
-                      Upload Decrypted File
+                      Upload New File
                     </h5>
                     <form method="POST" action="{{route('search')}}" enctype="multipart/form-data" class="" role="form">
                       @csrf
