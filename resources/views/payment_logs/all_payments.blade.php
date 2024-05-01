@@ -59,7 +59,7 @@
 
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     @php 
-                                                        $payment = \App\Models\Credit::where('id',$p->payment_id)->first();
+                                                        dd($p);
                                                     @endphp
                                                     @if($payment)
                                                         <p>{{$payment->type}}</p>
