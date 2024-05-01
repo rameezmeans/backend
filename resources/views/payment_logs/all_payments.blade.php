@@ -58,7 +58,12 @@
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>{{ \App\Models\Credit::findOrFail($p->payment_id)->type }}</p>
+                                                    @php 
+                                                        $payment = \App\Models\Credit::findOrFail($p->payment_id)->first();
+                                                    @endphp
+                                                    @if($payment)
+                                                        <p>{{$payment->type}}</p>
+                                                    @endif
                                                     
                                                 </td>
 
