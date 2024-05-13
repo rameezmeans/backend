@@ -1336,7 +1336,7 @@ margin-bottom: 10px !important;
                             @if($message['engineer'])
                             <div class="message clearfix">
                               <div class="chat-bubble bg-primary from-me text-white">
-                                {{ $message['egnineers_internal_notes'] }} 
+                                {!! $message['egnineers_internal_notes'] !!} 
                                 
                                 <i data-note_id="{{$message['id']}}" data-message="{{$message['egnineers_internal_notes']}}" class="fa fa-edit m-l-20"></i> 
                                 <i class="pg-trash delete-message" data-note_id="{{$message['id']}}"></i> 
@@ -1402,7 +1402,7 @@ margin-bottom: 10px !important;
                           <input type="hidden" value="{{$file->id}}" name="file_id">
                         <div class="row">
                             <div class="col-6 no-padding">
-                              <input type="text" name="egnineers_internal_notes" class="form-control chat-input" data-chat-input="" data-chat-conversation="#my-conversation" placeholder="Reply to cusotmer." required>
+                              <textarea name="egnineers_internal_notes" class="form-control chat-input" data-chat-input="" data-chat-conversation="#my-conversation" placeholder="Reply to cusotmer." required></textarea>
                               @error('egnineers_internal_notes')
                                       <p class="text-danger" role="alert">
                                           <strong>{{ $message }}</strong>
@@ -3210,7 +3210,7 @@ margin-bottom: 10px !important;
                             @if($message['engineer'])
                             <div class="message clearfix">
                               <div class="chat-bubble bg-primary from-me text-white">
-                                {{ $message['egnineers_internal_notes'] }} 
+                                {!! $message['egnineers_internal_notes'] !!} 
                                 
                                 <i data-note_id="{{$message['id']}}" data-message="{{$message['egnineers_internal_notes']}}" class="fa fa-edit m-l-20"></i> 
                                 <i class="pg-trash delete-message" data-note_id="{{$message['id']}}"></i> 
@@ -3276,7 +3276,7 @@ margin-bottom: 10px !important;
                           <input type="hidden" value="{{$file->id}}" name="file_id">
                         <div class="row">
                             <div class="col-6 no-padding">
-                              <input type="text" name="egnineers_internal_notes" class="form-control chat-input" data-chat-input="" data-chat-conversation="#my-conversation" placeholder="Reply to cusotmer." required>
+                              <textarea name="egnineers_internal_notes" class="form-control chat-input" data-chat-input="" data-chat-conversation="#my-conversation" placeholder="Reply to cusotmer." required></textarea>
                               @error('egnineers_internal_notes')
                                       <p class="text-danger" role="alert">
                                           <strong>{{ $message }}</strong>

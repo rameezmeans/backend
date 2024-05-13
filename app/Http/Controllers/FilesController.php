@@ -1942,7 +1942,10 @@ class FilesController extends Controller
         $file = File::findOrFail($request->file_id);
 
         $reply = new EngineerFileNote();
-        $reply->egnineers_internal_notes = $request->egnineers_internal_notes;
+
+        $message = str_replace(PHP_EOL,"<br>",$request->egnineers_internal_notes);
+
+        $reply->egnineers_internal_notes = $message;
 
         if($request->file('engineers_attachement')){
 
