@@ -1402,7 +1402,7 @@ margin-bottom: 10px !important;
                           <input type="hidden" value="{{$file->id}}" name="file_id">
                         <div class="row">
                             <div class="col-6 no-padding">
-                              <textarea name="egnineers_internal_notes" class="form-control chat-input" data-chat-input="" data-chat-conversation="#my-conversation" placeholder="Reply to cusotmer." required></textarea>
+                              <textarea name="egnineers_internal_notes" class="form-control" placeholder="Reply to cusotmer." required></textarea>
                               @error('egnineers_internal_notes')
                                       <p class="text-danger" role="alert">
                                           <strong>{{ $message }}</strong>
@@ -3276,7 +3276,7 @@ margin-bottom: 10px !important;
                           <input type="hidden" value="{{$file->id}}" name="file_id">
                         <div class="row">
                             <div class="col-6 no-padding">
-                              <textarea name="egnineers_internal_notes" class="form-control chat-input" data-chat-input="" data-chat-conversation="#my-conversation" placeholder="Reply to cusotmer." required></textarea>
+                              <textarea name="egnineers_internal_notes" class="form-control" placeholder="Reply to cusotmer." required></textarea>
                               @error('egnineers_internal_notes')
                                       <p class="text-danger" role="alert">
                                           <strong>{{ $message }}</strong>
