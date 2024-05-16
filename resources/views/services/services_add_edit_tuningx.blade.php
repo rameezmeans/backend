@@ -24,6 +24,9 @@
         <div class="row">
             <div class="col-lg-9">
               <!-- START card -->
+
+              
+
               <div class="card card-default">
                 <div class="card-header ">
                   <div class="pull-right">
@@ -36,9 +39,16 @@
                   </div>
                   <div class="card-title">
                     @if(isset($service))
-                      <h5>
-                        Edit Services
-                      </h5>
+
+                    <ul class="nav nav-tabs nav-tabs-simple nav-tabs-right bg-white" id="tab-3">
+                      <li class="nav-item">
+                        <a href="#" class="active show" data-toggle="tab" data-target="#editServiceTab">Edit Service</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#clientCommentsTable" class="">Client's Comments</a>
+                      </li>
+                    </ul>
+
                     @else
                       <h5>
                         Add Services
@@ -46,6 +56,11 @@
                     @endif
                   </div>
                 </div>
+
+                <div class="tab-content bg-white">
+                
+                  <div class="tab-pane active show" id="editServiceTab">
+
                 <div class="card-body">
 
                     @if($service->type == 'option')
@@ -260,6 +275,12 @@
                 </div>
               </div>
               <!-- END card -->
+
+              <div class="tab-pane active show" id="clientCommentsTable"></div>
+
+              </div>
+            </div>
+
             </div>
             <div class="col-lg-3">
                 @if(isset($service))

@@ -902,6 +902,8 @@ margin-bottom: 10px !important;
 
                                                     $item = json_decode($file->lua_version->Respons);
 
+                                                    if($item != null){
+
                                                     if(sizeof($item) > 0){
 
                                                     ?>
@@ -910,6 +912,7 @@ margin-bottom: 10px !important;
                                                     <br/>
                                                     <?php
                                                     }
+                                                  }
 
                                                     }
 
