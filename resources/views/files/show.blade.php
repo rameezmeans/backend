@@ -2119,11 +2119,19 @@ margin-bottom: 10px !important;
 
     @if($file->new_requests)
     </div>
+
+    @php 
+      $newreqs = count($file->new_requests);
+      $count = 1;
+    @endphp
+
     @foreach($file->new_requests as $file)
     
-    <div class="tab-pane slide-left show active" id="tab4FollowUs">
+    <div class="tab-pane slide-left @if($count == $newreqs) show active @endif" id="tab4FollowUs">
 
-
+      @php 
+        $count++;
+      @endphp
       <div class="card card-transparent m-t-40">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
