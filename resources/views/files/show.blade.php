@@ -75,10 +75,21 @@ margin-bottom: 10px !important;
             <li class="nav-item">
               <a href="#" data-toggle="tab" role="tab" data-target="#tab4hellowWorld" @if(sizeof($file->new_requests) == 0) class="active show" aria-selected="true" @endif>Task {{$file->id}}</a>
             </li>
+
+            @php 
+              $newreqs = count($file->new_requests);
+              $countn = 1;
+            @endphp
+
           @foreach($file->new_requests as $row)
             <li class="nav-item">
-              <a href="#" data-toggle="tab" class="active show" role="tab" data-target="#tab4FollowUs" aria-selected="true">Task {{$row->id}} (New Request)</a>
+              <a href="#" data-toggle="tab" class="@if($countn == $newreqs) active show @endif" role="tab" data-target="#tab4FollowUs" aria-selected="true">Task {{$row->id}} (New Request)</a>
             </li>
+
+            @php 
+              
+              $countn++;
+            @endphp
           @endforeach
           
         </ul>
