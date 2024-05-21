@@ -80,10 +80,9 @@ Route::get('/tasks', function () {
 
         if($f->dtc_off_comments){
 
-        if($f->frontend == 1)
-        {
+        if($f->frontend == 1){
             $comment = new CommentFileService();
-            $commnet->comment = $f->dtc_off_comments;
+            $comment->comment = $f->dtc_off_comments;
             $commnet->service_id = 15;
             $commnet->file_id = $f->id;
             $comment->save();
@@ -96,6 +95,7 @@ Route::get('/tasks', function () {
             $commnet->file_id = $f->id;
             $comment->save();
 
+        }
         }
     }
 
