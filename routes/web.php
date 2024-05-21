@@ -80,7 +80,7 @@ Route::get('/tasks', function () {
 
         if($f->dtc_off_comments){
 
-        if($f->frontend == 1){
+        if($f->front_end_id == 1){
             $comment = new CommentFileService();
             $comment->comment = $f->dtc_off_comments;
             $commnet->service_id = 15;
