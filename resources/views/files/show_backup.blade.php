@@ -574,25 +574,42 @@
                           <p class="pull-left">Options</p>
                           <div class="clearfix"></div>
                         </div>
+
+                        @php
+                          // dd($file->options_services()->get());
+                        @endphp
                         
                         @foreach($file->options_services()->get() as $option) 
                             @if(\App\Models\Service::where('id', $option->service_id)->first())
                               <div class="p-l-20 b-b b-grey b-t p-b-10 p-t-10 p-r-20"> 
                                 <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
                                 {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  ({{\App\Models\Service::where('id', $option->service_id)->first()->vehicle_type}})
-                                @php $option = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
+                                @php $optionInner = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
                                 @if($file->front_end_id == 2)
                                   @if($file->tool_type == 'master')
-                                    <span class="text-white label-danger label pull-right"> {{$option->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
+                                    <span class="text-white label-danger label pull-right"> {{$optionInner->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
                                   @else
-                                    <span class="text-white label-danger label pull-right"> {{$option->optios_stage($file->stage_services->service_id)->first()->slave_credits}} </span>
+                                    <span class="text-white label-danger label pull-right"> {{$optionInner->optios_stage($file->stage_services->service_id)->first()->slave_credits}} </span>
                                   @endif
                               @else
-                                <span class="text-white label-danger label pull-right"> {{$option->credits}} </span>
+                                <span class="text-white label-danger label pull-right"> {{$optionInner->credits}} </span>
                               @endif
 
                               </div>
                             @endif
+
+                            @foreach($file->comments as $c)
+                              @if($c->service_id == $option->service_id)
+                                <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                                  <p class="pull-left text-danger">{{$optionInner->name}} Customers Comments</p>
+                                  <br>
+                                  <div class="m-l-20 text-danger">
+                                    {{$c->comment}}
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              @endif
+                            @endforeach
                               
                             @if($comments)
                               @foreach($comments as $comment)
@@ -611,18 +628,11 @@
                       
                       </div>
                       
-                      @if($file->dtc_off_comments)
-                      <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                        <p class="pull-left text-danger">DTC OFF Comments</p>
-                        <br>
-                        <div class="m-l-20">
-                          {{$file->dtc_off_comments}}
-                        </div>
-                        <div class="clearfix"></div>
-                      </div>
-                      @endif
+                      
 
-                      @if($file->vmax_off_comments)
+                      
+
+                      {{-- @if($file->vmax_off_comments)
                       <div class="p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left text-danger">VMAX OFF Comments</p>
                         <br>
@@ -630,8 +640,8 @@
                           {{$file->vmax_off_comments}}
                         </div>
                         <div class="clearfix"></div>
-                      </div>
-                      @endif
+                      </div> --}}
+                      {{-- @endif --}}
 
                       {{-- <div class="b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left">Show Comments</p>

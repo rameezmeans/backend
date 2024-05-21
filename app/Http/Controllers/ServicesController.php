@@ -376,6 +376,33 @@ class ServicesController extends Controller
         return view('services.services_add_edit_subdealer');
     }
 
+    public function setCustomersComments(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            abort(404);
+        }
+        
+        $service = Service::findOrFail($request->service_id);
+
+        if(isset($request->customers_comments_active)){
+            if($request->customers_comments_active == 'on'){
+                $service->customers_comments_active = 1;
+
+            }
+        }
+        else{
+            $service->customers_comments_active = 0;
+        }
+
+        $service->customers_comments_placeholder_text = $request->customers_comments_placeholder_text;
+        $service->customers_comments_vehicle_type = $request->customers_comments_vehicle_type;
+        $service->save();
+
+        return redirect()->back()
+        ->with('success', 'Comments work updated!');
+
+    }
+
     public function setCreditPrice(Request $request){
 
         if(!Auth::user()->is_admin()){
@@ -435,6 +462,7 @@ class ServicesController extends Controller
         $service = Service::findOrFail($id);
         $modelInstance = Translation::where('model_id', $service->id)->where('model', 'Service')->first();
         $vehicleTypes = explode(',', $service->vehicle_type);
+        $commentsVehicleTypes = explode(',', $service->customers_comments_vehicle_type);
         
         $stages = Service::where('type', 'tunning')
         ->whereNull('subdealer_group_id')
@@ -448,7 +476,7 @@ class ServicesController extends Controller
             return view('services.services_add_edit_subdealer', [ 'modelInstance' => $modelInstance, 'service' => $service, 'vehicleTypes' => $vehicleTypes ]);
         }
 
-        return view('services.services_add_edit_tuningx', ['modelInstance' => $modelInstance, 'stages' => $stages, 'service' => $service, 'vehicleTypes' => $vehicleTypes ]);
+        return view('services.services_add_edit_tuningx', ['modelInstance' => $modelInstance, 'stages' => $stages, 'service' => $service, 'vehicleTypes' => $vehicleTypes, 'commentsVehicleTypes' => $commentsVehicleTypes ]);
     }
         else{
             abort(404);

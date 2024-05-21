@@ -135,6 +135,10 @@ class File extends Model
         return $this->hasOne(FileService::class, 'file_id', 'id')->where('type', 'stage');
     }
 
+    public function comments(){
+        return $this->hasMany(CommentFileService::class, 'file_id', 'id');
+    }
+
     public function lua_version(){
         return $this->hasOne(LuaVersion::class, 'File_Id', 'id');
     }

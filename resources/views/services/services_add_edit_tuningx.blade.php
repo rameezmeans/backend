@@ -24,9 +24,6 @@
         <div class="row">
             <div class="col-lg-9">
               <!-- START card -->
-
-              
-
               <div class="card card-default">
                 <div class="card-header ">
                   <div class="pull-right">
@@ -39,7 +36,7 @@
                   </div>
                   <div class="card-title">
                     @if(isset($service))
-
+                    @if($service->type == 'option')
                     <ul class="nav nav-tabs nav-tabs-simple nav-tabs-right bg-white" id="tab-3">
                       <li class="nav-item">
                         <a href="#" class="active show" data-toggle="tab" data-target="#editServiceTab">Edit Service</a>
@@ -51,8 +48,11 @@
 
                     @else
                       <h5>
-                        Add Services
+                        Edit Service
                       </h5>
+                    @endif
+                    @else
+                      <h5>Add Services</h5>
                     @endif
                   </div>
                 </div>
@@ -276,7 +276,46 @@
               </div>
               <!-- END card -->
 
-              <div class="tab-pane active show" id="clientCommentsTable"></div>
+              <div class="tab-pane active show" id="clientCommentsTable">
+
+              <div class="card-body">
+                <form class="" role="form" method="POST" action="{{route('set-customers-comments')}}" enctype="multipart/form-data">
+                  @csrf
+                  @if(isset($service))
+                  <input type="hidden" name="service_id" value="{{$service->id}}">
+                    <div class="form-group form-group-default">
+                      <div class="checkbox check-success checkbox-circle">
+                        <input name="customers_comments_active" @if(isset($service) && $service->customers_comments_active == 1) checked @endif type="checkbox" id="checkbox9">
+                        <label for="checkbox9">Active for Customer's Comments</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group form-group-default required ">
+                      <label>Placeholder Text</label>
+                      <textarea name="customers_comments_placeholder_text" class="form-control" required>@if(isset($service)){{$service->customers_comments_placeholder_text}}@else{{old('customers_comments_placeholder_text') }}@endif</textarea>
+                    </div>
+                    @error('customers_comments_placeholder_text')
+                      <span class="text-danger" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+
+                    <div class="form-group form-group-default">
+                      <label>Vehicle Type</label>
+                      <select multiple class="full-width" data-init-plugin="select2" name="customers_comments_vehicle_type[]">
+                        <option @if(isset($service) && in_array('car', $commentsVehicleTypes)) selected @endif value="car">Car</option>
+                        <option @if(isset($service) && in_array('truck', $commentsVehicleTypes)) selected @endif value="truck">Truck</option>
+                        <option @if(isset($service) && in_array('machine', $commentsVehicleTypes)) selected @endif value="machine">Machine</option>
+                        <option @if(isset($service) && in_array('agri', $commentsVehicleTypes)) selected @endif value="agri">Agricultural</option>
+                      </select>
+                    </div>
+
+                    <button class="btn btn-success btn-cons m-b-10 m-t-30" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Set For Customers Comments</span></button>
+                  @endif
+                </form>
+              </div>
+              
+            </div>
 
               </div>
             </div>
