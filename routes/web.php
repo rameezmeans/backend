@@ -83,16 +83,16 @@ Route::get('/tasks', function () {
         if($f->front_end_id == 1){
             $comment = new CommentFileService();
             $comment->comment = $f->dtc_off_comments;
-            $commnet->service_id = 15;
-            $commnet->file_id = $f->id;
+            $comment->service_id = 15;
+            $comment->file_id = $f->id;
             $comment->save();
         }
         else{
 
             $comment = new CommentFileService();
-            $commnet->comment = $f->dtc_off_comments;
-            $commnet->service_id = 70;
-            $commnet->file_id = $f->id;
+            $comment->comment = $f->dtc_off_comments;
+            $comment->service_id = 70;
+            $comment->file_id = $f->id;
             $comment->save();
 
         }
