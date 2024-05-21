@@ -74,32 +74,32 @@ Route::get('/info', function () {
 
 Route::get('/tasks', function () {
 
-    $files = File::all();
+    // $files = File::all();
 
-    foreach($files as $f){
+    // foreach($files as $f){
 
-        if($f->dtc_off_comments){
+    //     if($f->dtc_off_comments){
 
-        if($f->front_end_id == 1){
-            $comment = new CommentFileService();
-            $comment->comment = $f->dtc_off_comments;
-            $comment->service_id = 15;
-            $comment->file_id = $f->id;
-            $comment->save();
-        }
-        else{
+    //     if($f->front_end_id == 1){
+    //         $comment = new CommentFileService();
+    //         $comment->comment = $f->dtc_off_comments;
+    //         $comment->service_id = 15;
+    //         $comment->file_id = $f->id;
+    //         $comment->save();
+    //     }
+    //     else{
 
-            $comment = new CommentFileService();
-            $comment->comment = $f->dtc_off_comments;
-            $comment->service_id = 70;
-            $comment->file_id = $f->id;
-            $comment->save();
+    //         $comment = new CommentFileService();
+    //         $comment->comment = $f->dtc_off_comments;
+    //         $comment->service_id = 70;
+    //         $comment->file_id = $f->id;
+    //         $comment->save();
 
-        }
-        }
-    }
+    //     }
+    //     }
+    // }
 
-    dd('file comments');
+    // dd('file comments');
 
     abort(404);
 
