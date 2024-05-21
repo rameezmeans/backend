@@ -667,6 +667,20 @@ margin-bottom: 10px !important;
                                 src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
                                 {{\App\Models\Service::FindOrFail($option->service_id)->name}}  
                               </div>
+
+                              @foreach($file->comments as $c)
+                              @if($c->service_id == $option->service_id)
+                                <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                                  <p class="pull-left text-danger">{{$optionInner->name}} Customers Comments</p>
+                                  <br>
+                                  <div class="m-l-20 text-danger">
+                                    {{$c->comment}}
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              @endif
+                            @endforeach
+
                             @endif
                             @if($comments)
                               @foreach($comments as $comment)
@@ -685,7 +699,7 @@ margin-bottom: 10px !important;
                       
                       </div>
                       
-                      @if($file->dtc_off_comments)
+                      {{-- @if($file->dtc_off_comments)
                       <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left text-danger">DTC OFF Comments</p>
                         <br>
@@ -705,7 +719,7 @@ margin-bottom: 10px !important;
                         </div>
                         <div class="clearfix"></div>
                       </div>
-                      @endif
+                      @endif --}}
 
                       {{-- <div class="b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left">Show Comments</p>
@@ -2664,6 +2678,20 @@ margin-bottom: 10px !important;
                                 <span class="text-white label-danger label pull-right"> {{$option->credits}} </span>
                               @endif
                               </div>
+
+                              @foreach($file->comments as $c)
+                              @if($c->service_id == $option->service_id)
+                                <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                                  <p class="pull-left text-danger">{{$optionInner->name}} Customers Comments</p>
+                                  <br>
+                                  <div class="m-l-20 text-danger">
+                                    {{$c->comment}}
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              @endif
+                            @endforeach
+
                             @endif
                             
                             @if($comments)

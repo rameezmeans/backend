@@ -444,68 +444,66 @@
 
                       <div class="p-b-20">
 
-                      @if(!$file->options_services()->get()->isEmpty())
-                        <div class="b  b-grey p-l-20 p-r-20 p-t-10 p-b-10">
-                          <p class="pull-left">Options</p>
-                          <div class="clearfix"></div>
-                        </div>
-                        
-                        @foreach($file->options_services()->get() as $option) 
-                            @if(\App\Models\Service::where('id', $option->service_id)->first())
-                              <div class="p-l-20 b-b b-grey b-t p-b-10 p-t-10"> 
-                                <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
-                                {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  
-                              </div>
-                            @endif
-                            @if($comments)
-                              @foreach($comments as $comment)
-
-                                  @if($option->service_id == $comment->service_id)
-                                    <div class="p-l-20 p-b-10 p-t-10"> 
-                                      {{$comment->comments}}
-                                    
-                                    </div>
-                                    <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
-                                  @endif
-                              @endforeach
-                            @endif
-                        @endforeach
-                      @else
-                              
-                        <div class="b  b-grey p-l-20 p-r-20 p-t-10">
-                          <p class="pull-left">Options</p>
-                          <div class="clearfix"></div>
-                        </div>
-                      
-                        @foreach($file->options_services as $option)
+                          @if(!$file->options_services()->get()->isEmpty())
+                            <div class="b  b-grey p-l-20 p-r-20 p-t-10 p-b-10">
+                              <p class="pull-left">Options</p>
+                              <div class="clearfix"></div>
+                            </div>
+    
+                            @php
+                              // dd($file->options_services()->get());
+                            @endphp
                             
-                            @if(\App\Models\Service::FindOrFail($option->service_id))
-                              <div class="p-l-20 b-b b-grey"> 
-                                <img alt="{{\App\Models\Service::FindOrFail($option->service_id)->name}}" width="40" height="40" 
-                                data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
-                                data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
-                                src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
-                                {{\App\Models\Service::FindOrFail($option->service_id)->name}}  
-                              </div>
-                            @endif
-                            @if($comments)
-                              @foreach($comments as $comment)
-                                  @if(\App\Models\Service::FindOrFail($option->service_id)->name == $comment->option)
-                                    <div class="p-l-20 p-b-10"> 
-                                      {{$comment->comments}}
-                                    
-                                    </div>
-                                    <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
+                            @foreach($file->options_services()->get() as $option) 
+                                @if(\App\Models\Service::where('id', $option->service_id)->first())
+                                  <div class="p-l-20 b-b b-grey b-t p-b-10 p-t-10 p-r-20"> 
+                                    <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
+                                    {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  ({{\App\Models\Service::where('id', $option->service_id)->first()->vehicle_type}})
+                                    @php $optionInner = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
+                                    @if($file->front_end_id == 2)
+                                      @if($file->tool_type == 'master')
+                                        <span class="text-white label-danger label pull-right"> {{$optionInner->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
+                                      @else
+                                        <span class="text-white label-danger label pull-right"> {{$optionInner->optios_stage($file->stage_services->service_id)->first()->slave_credits}} </span>
+                                      @endif
+                                  @else
+                                    <span class="text-white label-danger label pull-right"> {{$optionInner->credits}} </span>
                                   @endif
-                              @endforeach
-                            @endif
-                        @endforeach
-
-                      @endif
+    
+                                  </div>
+                                @endif
+    
+                                @foreach($file->comments as $c)
+                                  @if($c->service_id == $option->service_id)
+                                    <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                                      <p class="pull-left text-danger">{{$optionInner->name}} Customers Comments</p>
+                                      <br>
+                                      <div class="m-l-20 text-danger">
+                                        {{$c->comment}}
+                                      </div>
+                                      <div class="clearfix"></div>
+                                    </div>
+                                  @endif
+                                @endforeach
+                                  
+                                @if($comments)
+                                  @foreach($comments as $comment)
+                                      
+                                      @if($option->id == $comment->service_id)
+                                        <div class="p-l-20 p-b-10 p-t-10"> 
+                                          {{$comment->comments}}
+                                        
+                                        </div>
+                                        <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
+                                      @endif
+                                  @endforeach
+                                @endif
+                            @endforeach
+                          @endif
+                          
+                          </div>
                       
-                      </div>
-                      
-                      @if($file->dtc_off_comments)
+                      <!-- @if($file->dtc_off_comments)
                       <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left text-danger">DTC OFF Comments</p>
                         <br>
@@ -525,7 +523,7 @@
                         </div>
                         <div class="clearfix"></div>
                       </div>
-                      @endif
+                      @endif -->
                      
                       <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                         <p class="pull-left">Credits Paid</p>
