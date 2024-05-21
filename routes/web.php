@@ -12,6 +12,7 @@ use App\Http\Controllers\ReminderManagerController;
 use App\Http\Controllers\SubdealerGroupsController;
 use App\Http\Controllers\WhatsappController;
 use App\Models\Comment;
+use App\Models\CommentFileService;
 use App\Models\Credit;
 use App\Models\File;
 use App\Models\FileFeedback;
@@ -73,7 +74,34 @@ Route::get('/info', function () {
 
 Route::get('/tasks', function () {
 
-    // abort(404);
+    $files = File::all();
+
+    foreach($files as $f){
+
+        if($f->dtc_off_comments){
+
+        if($f->frontend == 1)
+        {
+            $comment = new CommentFileService();
+            $commnet->comment = $f->dtc_off_comments;
+            $commnet->service_id = 15;
+            $commnet->file_id = $f->id;
+            $comment->save();
+        }
+        else{
+
+            $comment = new CommentFileService();
+            $commnet->comment = $f->dtc_off_comments;
+            $commnet->service_id = 70;
+            $commnet->file_id = $f->id;
+            $comment->save();
+
+        }
+    }
+
+    dd('file comments');
+
+    abort(404);
 
     // $creditsWithoutZohoID = Credit::
     //     where('credits','>', 0)
