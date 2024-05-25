@@ -649,6 +649,11 @@ margin-bottom: 10px !important;
                               @endif
                             @endforeach
                             @endif
+
+                                @php
+                                  dd($comments);
+                                @endphp
+
                             @if($comments)
                               @foreach($comments as $comment)
 
