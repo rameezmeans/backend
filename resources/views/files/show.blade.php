@@ -637,7 +637,7 @@ margin-bottom: 10px !important;
                               @endif
                               </div>
                               @foreach($file->comments as $c)
-                              @if($c->service_id == $option->service_id)
+                              @if($c->service_id == $optionInner->service_id)
                                 <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                                   <p class="pull-left text-danger">{{$optionInner->name}} Customers Comments</p>
                                   <br>
@@ -649,22 +649,19 @@ margin-bottom: 10px !important;
                               @endif
                             @endforeach
                             @endif
-                            
+                            @if($comments)
+                              @foreach($comments as $comment)
+
+                                  @if($optionInner->id == $comment->service_id)
+                                    <div class="p-l-20 p-b-10 p-t-10"> 
+                                      {{$comment->comments}}
+                                    
+                                    </div>
+                                    <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
+                                  @endif
+                              @endforeach
+                            @endif
                         @endforeach
-
-                        @if($comments)
-                            @foreach($comments as $comment)
-
-                                @if($option->id == $comment->service_id)
-                                  <div class="p-l-20 p-b-10 p-t-10"> 
-                                    {{$comment->comments}}
-                                  
-                                  </div>
-                                  <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
-                                @endif
-                            @endforeach
-                          @endif
-
                       @else
                               
                         <div class="b  b-grey p-l-20 p-r-20 p-t-10">
@@ -1721,22 +1718,19 @@ margin-bottom: 10px !important;
                                             ?>
                                           </div>
                                         @endif
-                                        
+                                        @if($comments)
+                                          @foreach($comments as $comment)
+                                  
+                                              @if($option->service_id == $comment->service_id)
+                                                <div class="p-l-20 p-b-10 p-t-10"> 
+                                                  {{$comment->comments}}
+                                                
+                                                </div>
+                                                <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
+                                              @endif
+                                          @endforeach
+                                        @endif
                                     @endforeach
-
-                                    @if($comments)
-                                        @foreach($comments as $comment)
-                                
-                                            @if($option->service_id == $comment->service_id)
-                                              <div class="p-l-20 p-b-10 p-t-10"> 
-                                                {{$comment->comments}}
-                                              
-                                              </div>
-                                              <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
-                                            @endif
-                                        @endforeach
-                                      @endif
-                                      
                                   @else
                                           
                                     <div class="b  b-grey p-l-20 p-r-20 p-t-10">
@@ -2715,7 +2709,7 @@ margin-bottom: 10px !important;
                             @if($comments)
                               @foreach($comments as $comment)
 
-                                  @if($option->id == $comment->service_id)
+                                  @if($optionInner->id == $comment->service_id)
                                     <div class="p-l-20 p-b-10 p-t-10"> 
                                       {{$comment->comments}}
                                     
