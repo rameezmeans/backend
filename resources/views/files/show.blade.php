@@ -652,6 +652,10 @@ margin-bottom: 10px !important;
                             @if($comments)
                               @foreach($comments as $comment)
 
+                                @php
+                                  dd($optionInner);
+                                @endphp
+
                                   @if($optionInner->id == $comment->service_id)
                                     <div class="p-l-20 p-b-10 p-t-10"> 
                                       {{$comment->comments}}
