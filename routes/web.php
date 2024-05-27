@@ -472,6 +472,14 @@ Route::get('/payments/{id}', [App\Http\Controllers\PaymentLogController::class, 
 Route::get('/all_payment_logs', [App\Http\Controllers\PaymentLogController::class, 'allPaymentLogs'])->name('all-payment-logs');
 Route::get('/all_payments', [App\Http\Controllers\PaymentLogController::class, 'allPayments'])->name('all-payments');
 
+Route::get('/processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'index'])->name('processing-softwares');
+Route::get('/add_edit_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'add'])->name('add-processing-softwares');
+Route::get('/edit_processing_softwares/{id}', [App\Http\Controllers\ProcessingSoftwaresController::class, 'edit'])->name('edit-processing-softwares');
+Route::post('/delete_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'delete'])->name('delete-processing-softwares');
+Route::post('/create_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'create'])->name('create-processing-softwares');
+Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
+Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
+
 Route::get('/services', [App\Http\Controllers\ServicesController::class, 'index'])->name('services');
 Route::get('/create_service', [App\Http\Controllers\ServicesController::class, 'create'])->name('create-service');
 Route::get('/edit_service/{id}', [App\Http\Controllers\ServicesController::class, 'edit'])->name('edit-service');

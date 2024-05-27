@@ -240,6 +240,10 @@
                 <a href="{{ route('combinations') }}">Combinations</a>
                 <span class="icon-thumbnail">Co</span>
             </li>
+            <li class="m-t-30 ">
+              <a href="{{ route('processing-softwares') }}">Processing Softwares</a>
+              <span class="icon-thumbnail">Ps</span>
+          </li>
             @endif
           </ul>
         </li>
