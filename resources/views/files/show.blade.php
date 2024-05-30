@@ -821,7 +821,7 @@ margin-bottom: 10px !important;
                       @endif
 
                       <div class="col-lg-12">
-                        <h5 class="m-t-40">Uploaded Files</h5>
+                        <h5 class="m-t-40">Versions</h5>
 
                         <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
 
@@ -2775,7 +2775,7 @@ margin-bottom: 10px !important;
                       @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
 
                       <div class="col-lg-12">
-                        <h5 class="m-t-40">Uploaded Files</h5>
+                        <h5 class="m-t-40">Versions</h5>
 
                         <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
 
@@ -4324,6 +4324,137 @@ margin-bottom: 10px !important;
     </div>
     <!-- /.modal-content -->
   </div>
+
+
+  <div class="modal fade slide-up disable-scroll " id="softwareOptionsModal-{{$o_file->id}}" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg" class="width:90% !important;">
+      <div class="modal-content-wrapper">
+        <div class="modal-content">
+          <div class="modal-header clearfix text-left">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+            </button>
+            <h5>Software Processing <span class="semi-bold">Information</span></h5>
+            <p class="p-b-10">You need to tell the system about Softwares you used to process the file before uploading the file itself.</p>
+          </div>
+          <div class="modal-body">
+            <form role="form" id="softwareForm-{{$o_file->id}}">
+              <input type="hidden" name="file_id" value="{{$o_file->id}}">
+              <div class="form-group-attached">
+                <div class="row">
+                  @php $stage = \App\Models\Service::FindOrFail($o_file->stage_services->service_id) @endphp
+  
+                  <div class="col-md-12">
+                    <div class="form-group form-group-default">
+                      <label><b>Stage:</b> {{$stage->name}}</label>
+                      <input type="hidden" name="service_id" value="{{$stage->id}}">
+                      <label class="m-t-10">Processing Software</label>
+                      <select class="full-width" data-placeholder="Select Country" data-init-plugin="select2" name="processing-software-{{$stage->id}}">
+                        @foreach($prossingSoftwares as $ps)  
+                          <option value="{{$ps->id}}">{{$ps->name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                  @if(!$o_file->options_services()->get()->isEmpty())
+  
+                    @foreach($o_file->options_services()->get() as $option)
+                      
+                    @php $optionInner = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
+                    <div class="col-md-12 m-t-10">
+                      <div class="form-group form-group-default">
+                        <label><b>Option:</b> {{$optionInner->name}}</label>
+                        <label class="m-t-10">Processing Software</label>
+                        <input type="hidden" name="service_id" value="{{$optionInner->id}}">
+                        <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="processing-software-{{$optionInner->id}}">
+                          @foreach($prossingSoftwares as $ps)  
+                            <option value="{{$ps->id}}">{{$ps->name}}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    @endforeach
+                  @endif
+  
+                    <div class="col-md-8">
+                      
+                    </div>
+                    <div class="col-md-4 m-t-10 sm-m-t-10">
+                      <button type="button" class="btn btn-success btn-block m-t-5 show-file-upload-section" data-file_id="{{$o_file->id}}">Submit</button>
+                    </div>
+   
+                </div>
+              </div>
+            </form>
+            <div class="row hide" id="fileUploadForm-{{$o_file->id}}">
+              
+                @if($o_file->status == 'submitted' || $o_file->status == 'completed')
+                @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
+                <div class="col-xl-12 m-t-10">
+                  <div class="card card-transparent flex-row full-width">
+        
+                      
+                        <div class="row column-seperation full-width">
+                          
+                          <div class="col-xl-12">
+                            
+                            <!-- START card -->
+                            <div class="card card-default">
+                              <div class="card-header ">
+                                <div class="card-title">
+                                  Drag n' drop uploader
+                                </div>
+                                <div class="tools">
+                                  <a class="collapse" href="javascript:;"></a>
+                                  <a class="config" data-toggle="modal" href="#grid-config"></a>
+                                  <a class="reload" href="javascript:;"></a>
+                                  <a class="remove" href="javascript:;"></a>
+                                </div>
+                              </div>
+                              <div class="card-body no-scroll no-padding">
+                                <form action="{{route('encoded-file-upload')}}" class="encoded-dropzone dropzone no-margin">
+                                  @csrf
+                                  <input type="hidden" value="{{$o_file->id}}" name="file_id">
+                                  @if($o_file->tool_type == 'slave' && $o_file->tool_id == $kess3Label->id)
+                                    <input type="hidden" value="1" name="encode">
+                                      @if($o_file->decoded_file)
+                                        @if($o_file->decoded_file->extension == 'dec')
+                                          <input type="hidden" value="dec" name="encoding_type">
+                                        @else
+                                          <input type="hidden" value="micro" name="encoding_type">
+                                        @endif
+                                      @endif
+                                    @else
+                                      <input type="hidden" value="0" name="encode">
+                                    @endif
+                                 
+                                  <div class="fallback">
+                                    <input name="file" type="file" />
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                            <!-- END card -->
+                          </div> 
+                              
+                        </div>
+                      
+                  </div>
+                </div>
+                @endif
+                @endif
+              
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+  </div>
+  <!-- /.modal-dialog -->
+  <!-- MODAL SLIDE UP SMALL  -->
+  <!-- Modal -->
+
   @endif
 @endsection
 
