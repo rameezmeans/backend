@@ -23,11 +23,13 @@ use App\Models\Credit;
 use App\Models\EngineerOptionsOffer;
 use App\Models\FileFeedback;
 use App\Models\FileInternalEvent;
+use App\Models\FileReplySoftwareService;
 use App\Models\FileService;
 use App\Models\FileUrl;
 use App\Models\Key;
 use App\Models\Log;
 use App\Models\ProcessedFile;
+use App\Models\ProcessingSoftware;
 use App\Models\RoleUser;
 use App\Models\Service;
 use App\Models\Tool;
@@ -115,6 +117,55 @@ class FilesController extends Controller
         }
         
         return redirect()->back()->with(['success' => 'Engineers ACM file is uploaded successfully!']);
+
+    }
+
+    public function removeNullSoftwares(Request $request){
+        $allNulls = FileReplySoftwareService::where('file_id', $request->file_id)
+        ->whereNull('reply_id')->delete();
+
+        return  response()->json( ['msg' => 'records deleted.', 'file_id' => $request->file_id] );
+    }
+
+    public function addSoftwares(Request $request){
+
+        $data = json_decode($request->form_data);
+        $fileID = NULL;
+        $finalArray = [];
+
+        foreach($data as $d) {
+            
+            if($d->name == 'file_id'){
+                $fileID = $d->value;
+            }
+
+            if($d->name == 'service_id'){
+                
+                $nowService = $d->value;
+
+                foreach($data as $in){
+
+                    if($in->name == 'processing-software-'.$nowService){
+
+                        $finalArray[$nowService] = $in->value;
+                    }
+    
+                }
+            }
+
+        }
+
+        foreach($finalArray as $key => $value){
+
+            $newRecord = new FileReplySoftwareService();
+            $newRecord->file_id = $fileID;
+            $newRecord->service_id = $key;
+            $newRecord->software_id = $value;
+            $newRecord->save();
+
+        }
+
+        return  response()->json( ['msg' => 'records added.', 'file_id' => $fileID] );
 
     }
 
@@ -2160,6 +2211,16 @@ class FilesController extends Controller
         $engineerFile->file_id = $request->file_id;
         $engineerFile->engineer = true;
 
+        $engineerFile->save();
+
+        $allSoftwareRecrods = FileReplySoftwareService::where('file_id', $engineerFile->file_id)
+        ->whereNull('reply_id')->get();
+
+        foreach($allSoftwareRecrods as $record){
+            $record->reply_id = $engineerFile->id;
+            $record->save();
+        }
+
         // if($file->front_end_id == 2){
             $engineerFile->show_comments = 0;
         // }
@@ -2906,11 +2967,13 @@ class FilesController extends Controller
         
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
 
+        $prossingSoftwares = ProcessingSoftware::all();
+
         if(env('APP_ENV') == 'live'){
-            return view('files.show', ['selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show', ['prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
         else{
-            return view('files.show_backup', ['selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show_backup', ['prossingSoftwares' => $prossingSoftwares, 'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
 
         }

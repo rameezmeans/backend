@@ -720,11 +720,13 @@
 
                       @endif
 
-                      <div class="col-lg-6">
-                        <h5 class="m-t-40">Uploaded Files</h5>
+                      <div class="col-lg-12">
+                        <h5 class="m-t-40">Versions</h5>
+
+                        <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
 
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Revisions</p>
+                          <p class="pull-left">Versions</p>
                           <div class="pull-right">
                            
                               <label class="label bg-info text-white">{{$file->files->count()}}</label>
@@ -935,148 +937,7 @@
                       @endif
                       @endif
 
-                      {{-- <div class="col-xl-12">
-                        <h5 class="m-t-40">Upload File</h5>
-                        <!-- START card -->
-                        <div class="card card-default">
-                          <div class="card-header ">
-                            <div class="card-title">
-                              Drag n' drop uploader
-                            </div>
-                            <div class="tools">
-                              <a class="collapse" href="javascript:;"></a>
-                              <a class="config" data-toggle="modal" href="#grid-config"></a>
-                              <a class="reload" href="javascript:;"></a>
-                              <a class="remove" href="javascript:;"></a>
-                            </div>
-                          </div>
-                          <div class="card-body no-scroll no-padding">
-                            <form action="{{route('request-file-upload')}}" class="simple-dropzone dropzone no-margin">
-                              @csrf
-                              <input type="hidden" value="{{$file->id}}" name="file_id">
-                              <div class="fallback">
-                                <input name="file" type="file" />
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                        <!-- END card -->
-                      </div> --}}
                       
-                      @if($file->status == 'submitted' || $file->status == 'completed')
-                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
-                      <div class="col-xl-12 m-t-20">
-                        <div class="card card-transparent flex-row">
-                          <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
-
-                            {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
-                              @if($file->decoded_files)
-                              <li class="nav-item">
-                                <a href="#" class="active show" data-toggle="tab" data-target="#tab3hellowWorld">Encode</a>
-                              </li>
-                              @endif
-                            @endif --}}
-
-                            <li class="nav-item">
-                              <a href="#" data-toggle="tab" data-target="#tab3FollowUs" class="">Upload</a>
-                            </li>
-                            {{-- <li class="nav-item">
-                              <a href="#" data-toggle="tab" data-target="#tab3Inspire">Three</a>
-                            </li> --}}
-                          </ul>
-                          <div class="tab-content bg-white full-width">
-
-                            {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3') --}}
-                            
-                           
-
-                            <div class="tab-pane active show" id="tab3hellowWorld">
-                              <div class="row column-seperation">
-                                
-                                <div class="col-xl-12 full-width">
-                                  <h5 class="">Upload Decoded File to Encode</h5>
-                                  <!-- START card -->
-                                  <div class="card card-default">
-                                    <div class="card-header ">
-                                      <div class="card-title">
-                                        Drag n' drop uploader
-                                      </div>
-                                      <div class="tools">
-                                        <a class="collapse" href="javascript:;"></a>
-                                        <a class="config" data-toggle="modal" href="#grid-config"></a>
-                                        <a class="reload" href="javascript:;"></a>
-                                        <a class="remove" href="javascript:;"></a>
-                                      </div>
-                                    </div>
-                                    <div class="card-body no-scroll no-padding">
-                                      <form action="{{route('encoded-file-upload')}}" class="encoded-dropzone dropzone no-margin">
-                                        @csrf
-                                        <input type="hidden" value="{{$file->id}}" name="file_id">
-                                        @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
-                                          <input type="hidden" value="1" name="encode">
-                                            @if($file->decoded_file)
-                                              @if($file->decoded_file->extension == 'dec')
-                                                <input type="hidden" value="dec" name="encoding_type">
-                                              @else
-                                                <input type="hidden" value="micro" name="encoding_type">
-                                              @endif
-                                            @endif
-                                          @else
-                                            <input type="hidden" value="0" name="encode">
-                                          @endif
-                                       
-                                        <div class="fallback">
-                                          <input name="file" type="file" />
-                                        </div>
-                                      </form>
-                                    </div>
-                                  </div>
-                                  <!-- END card -->
-                                </div> 
-                                    
-                              </div>
-                            </div>
-
-                           
-                            {{-- @endif
-                            @endif --}}
-
-                            {{-- <div class="tab-pane  @if(!$file->decoded_files) active show @endif" id="tab3FollowUs">
-                              <div class="col-xl-12 full-width">
-                                <h5 class="">Upload File</h5>
-                                <!-- START card -->
-                                <div class="card card-default">
-                                  <div class="card-header ">
-                                    <div class="card-title">
-                                      Drag n' drop uploader
-                                    </div>
-                                    <div class="tools">
-                                      <a class="collapse" href="javascript:;"></a>
-                                      <a class="config" data-toggle="modal" href="#grid-config"></a>
-                                      <a class="reload" href="javascript:;"></a>
-                                      <a class="remove" href="javascript:;"></a>
-                                    </div>
-                                  </div>
-                                  <div class="card-body no-scroll no-padding">
-                                    <form action="{{route('request-file-upload')}}" class="simple-dropzone dropzone no-margin">
-                                      @csrf
-                                      <input type="hidden" value="{{$file->id}}" name="file_id">
-                                      <input type="hidden" value="0" name="encode">
-                                      <div class="fallback">
-                                        <input name="file" type="file" />
-                                      </div>
-                                    </form>
-                                  </div>
-                                </div>
-                                <!-- END card -->
-                              </div> 
-                            </div> --}}
-
-                          </div>
-                        </div>
-                      </div>
-                      @endif
-                      @endif
 
                     </div>
                   </div>
@@ -1389,7 +1250,10 @@
             @endif
         </div>
       </div>
-      @if($file->new_requests)
+
+
+
+@if($file->new_requests)
     </div>
     @foreach($file->new_requests as $file)
     
@@ -1961,21 +1825,17 @@
                         <div class="clearfix"></div>
                       </div>
 
-                      
-        
                       </div>
-
-                      
-
-                      
 
                       @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
 
-                      <div class="col-lg-6">
-                        <h5 class="m-t-40">Uploaded Files</h5>
+                      <div class="col-lg-12">
+                        <h5 class="m-t-40">Versions</h5>
+
+                        <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
 
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Revisions</p>
+                          <p class="pull-left">Versions</p>
                           <div class="pull-right">
                            
                               <label class="label bg-info text-white">{{$file->files->count()}}</label>
@@ -2131,148 +1991,7 @@
                       @endif
                       @endif
 
-                      {{-- <div class="col-xl-12">
-                        <h5 class="m-t-40">Upload File</h5>
-                        <!-- START card -->
-                        <div class="card card-default">
-                          <div class="card-header ">
-                            <div class="card-title">
-                              Drag n' drop uploader
-                            </div>
-                            <div class="tools">
-                              <a class="collapse" href="javascript:;"></a>
-                              <a class="config" data-toggle="modal" href="#grid-config"></a>
-                              <a class="reload" href="javascript:;"></a>
-                              <a class="remove" href="javascript:;"></a>
-                            </div>
-                          </div>
-                          <div class="card-body no-scroll no-padding">
-                            <form action="{{route('request-file-upload')}}" class="simple-dropzone dropzone no-margin">
-                              @csrf
-                              <input type="hidden" value="{{$file->id}}" name="file_id">
-                              <div class="fallback">
-                                <input name="file" type="file" />
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                        <!-- END card -->
-                      </div> --}}
                       
-                      @if($file->status == 'submitted' || $file->status == 'completed')
-                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
-                      <div class="col-xl-12 m-t-20">
-                        <div class="card card-transparent flex-row">
-                          <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
-
-                            {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
-                              @if($file->decoded_files)
-                              <li class="nav-item">
-                                <a href="#" class="active show" data-toggle="tab" data-target="#tab3hellowWorld">Encode</a>
-                              </li>
-                              @endif
-                            @endif --}}
-
-                            <li class="nav-item">
-                              <a href="#" data-toggle="tab" data-target="#tab3FollowUs" class="">Upload</a>
-                            </li>
-                            {{-- <li class="nav-item">
-                              <a href="#" data-toggle="tab" data-target="#tab3Inspire">Three</a>
-                            </li> --}}
-                          </ul>
-                          <div class="tab-content bg-white full-width">
-
-                            {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3') --}}
-                            
-                           
-
-                            <div class="tab-pane active show" id="tab3hellowWorld">
-                              <div class="row column-seperation">
-                                
-                                <div class="col-xl-12 full-width">
-                                  <h5 class="">Upload Decoded File to Encode</h5>
-                                  <!-- START card -->
-                                  <div class="card card-default">
-                                    <div class="card-header ">
-                                      <div class="card-title">
-                                        Drag n' drop uploader
-                                      </div>
-                                      <div class="tools">
-                                        <a class="collapse" href="javascript:;"></a>
-                                        <a class="config" data-toggle="modal" href="#grid-config"></a>
-                                        <a class="reload" href="javascript:;"></a>
-                                        <a class="remove" href="javascript:;"></a>
-                                      </div>
-                                    </div>
-                                    <div class="card-body no-scroll no-padding">
-                                      <form action="{{route('encoded-file-upload')}}" id="encoded-dropzone-new-req{{$file->id}}" class="dropzone no-margin">
-                                        @csrf
-                                        <input type="hidden" value="{{$file->id}}" name="file_id">
-                                        @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
-                                          <input type="hidden" value="1" name="encode">
-                                            @if($file->decoded_file)
-                                              @if($file->decoded_file->extension == 'dec')
-                                                <input type="hidden" value="dec" name="encoding_type">
-                                              @else
-                                                <input type="hidden" value="micro" name="encoding_type">
-                                              @endif
-                                            @endif
-                                          @else
-                                            <input type="hidden" value="0" name="encode">
-                                          @endif
-                                       
-                                        <div class="fallback">
-                                          <input name="file" type="file" />
-                                        </div>
-                                      </form>
-                                    </div>
-                                  </div>
-                                  <!-- END card -->
-                                </div> 
-                                    
-                              </div>
-                            </div>
-
-                           
-                            {{-- @endif
-                            @endif --}}
-
-                            {{-- <div class="tab-pane  @if(!$file->decoded_files) active show @endif" id="tab3FollowUs">
-                              <div class="col-xl-12 full-width">
-                                <h5 class="">Upload File</h5>
-                                <!-- START card -->
-                                <div class="card card-default">
-                                  <div class="card-header ">
-                                    <div class="card-title">
-                                      Drag n' drop uploader
-                                    </div>
-                                    <div class="tools">
-                                      <a class="collapse" href="javascript:;"></a>
-                                      <a class="config" data-toggle="modal" href="#grid-config"></a>
-                                      <a class="reload" href="javascript:;"></a>
-                                      <a class="remove" href="javascript:;"></a>
-                                    </div>
-                                  </div>
-                                  <div class="card-body no-scroll no-padding">
-                                    <form action="{{route('request-file-upload')}}" class="simple-dropzone dropzone no-margin">
-                                      @csrf
-                                      <input type="hidden" value="{{$file->id}}" name="file_id">
-                                      <input type="hidden" value="0" name="encode">
-                                      <div class="fallback">
-                                        <input name="file" type="file" />
-                                      </div>
-                                    </form>
-                                  </div>
-                                </div>
-                                <!-- END card -->
-                              </div> 
-                            </div> --}}
-
-                          </div>
-                        </div>
-                      </div>
-                      @endif
-                      @endif
 
                     </div>
                   </div>
@@ -2669,6 +2388,138 @@
     <!-- /.modal-content -->
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade slide-up disable-scroll " id="softwareOptionsModal-{{$file->id}}" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog modal-lg" class="width:90% !important;">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+          </button>
+          <h5>Software Processing <span class="semi-bold">Information and Uploading File in next step.</span></h5>
+          <p class="p-b-10">You need to tell the system about Softwares you used to process the file before uploading the file itself.</p>
+        </div>
+        <div class="modal-body">
+          <form role="form" id="softwareForm-{{$file->id}}">
+            <input type="hidden" name="file_id" value="{{$file->id}}">
+            <div class="form-group-attached">
+              <div class="row">
+                @php $stage = \App\Models\Service::FindOrFail($file->stage_services->service_id) @endphp
+
+                <div class="col-md-12">
+                  <div class="form-group form-group-default">
+                    <label><b>Stage:</b> {{$stage->name}}</label>
+                    <input type="hidden" name="service_id" value="{{$stage->id}}">
+                    <label class="m-t-10">Processing Software</label>
+                    <select class="full-width" data-placeholder="Select Country" data-init-plugin="select2" name="processing-software-{{$stage->id}}">
+                      @foreach($prossingSoftwares as $ps)  
+                        <option value="{{$ps->id}}">{{$ps->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+                @if(!$file->options_services()->get()->isEmpty())
+
+                  @foreach($file->options_services()->get() as $option)
+                    
+                  @php $optionInner = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
+                  <div class="col-md-12 m-t-10">
+                    <div class="form-group form-group-default">
+                      <label><b>Option:</b> {{$optionInner->name}}</label>
+                      <label class="m-t-10">Processing Software</label>
+                      <input type="hidden" name="service_id" value="{{$optionInner->id}}">
+                      <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="processing-software-{{$optionInner->id}}">
+                        @foreach($prossingSoftwares as $ps)  
+                          <option value="{{$ps->id}}">{{$ps->name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                  @endforeach
+                @endif
+
+                <div class="col-md-8">
+                
+                </div>
+                <div class="col-md-4 m-t-10 sm-m-t-10">
+                  <button type="button" class="btn btn-success btn-block m-t-5 show-file-upload-section" data-file_id="{{$file->id}}">Submit</button>
+                </div>
+
+              </div>
+            </div>
+          </form>
+
+          <div class="row hide" id="fileUploadForm-{{$file->id}}">
+            
+            @if($file->status == 'submitted' || $file->status == 'completed')
+            @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
+            <div class="col-xl-12 m-t-10">
+              <div class="card card-transparent flex-row full-width">
+    
+                  
+                    <div class="row column-seperation full-width">
+                      
+                      <div class="col-xl-12">
+                        
+                        <!-- START card -->
+                        <div class="card card-default">
+                          <div class="card-header ">
+                            <div class="card-title">
+                              Drag n' drop uploader
+                            </div>
+                            <div class="tools">
+                              <a class="collapse" href="javascript:;"></a>
+                              <a class="config" data-toggle="modal" href="#grid-config"></a>
+                              <a class="reload" href="javascript:;"></a>
+                              <a class="remove" href="javascript:;"></a>
+                            </div>
+                          </div>
+                          <div class="card-body no-scroll no-padding">
+                            <form action="{{route('encoded-file-upload')}}" id="encoded-dropzone-new-req{{$file->id}}" class="dropzone no-margin">
+                              @csrf
+                              <input type="hidden" value="{{$file->id}}" name="file_id">
+                              @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
+                                <input type="hidden" value="1" name="encode">
+                                  @if($file->decoded_file)
+                                    @if($file->decoded_file->extension == 'dec')
+                                      <input type="hidden" value="dec" name="encoding_type">
+                                    @else
+                                      <input type="hidden" value="micro" name="encoding_type">
+                                    @endif
+                                  @endif
+                                @else
+                                  <input type="hidden" value="0" name="encode">
+                                @endif
+                             
+                              <div class="fallback">
+                                <input name="file" type="file" />
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                        <!-- END card -->
+                      </div> 
+                          
+                    </div>
+                  
+              </div>
+            </div>
+            @endif
+            @endif
+          
+        </div>
+
+          
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
+<!-- /.modal-dialog -->
+<!-- MODAL SLIDE UP SMALL  -->
+<!-- Modal -->
 @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
 <div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="engineerOptionsModal" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog">
@@ -2770,6 +2621,136 @@
     <!-- /.modal-content -->
   </div>
   @endif
+
+  <!-- Modal -->
+<div class="modal fade slide-up disable-scroll " id="softwareOptionsModal-{{$o_file->id}}" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog modal-lg" class="width:90% !important;">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+          </button>
+          <h5>Software Processing <span class="semi-bold">Information</span></h5>
+          <p class="p-b-10">You need to tell the system about Softwares you used to process the file before uploading the file itself.</p>
+        </div>
+        <div class="modal-body">
+          <form role="form" id="softwareForm-{{$o_file->id}}">
+            <input type="hidden" name="file_id" value="{{$o_file->id}}">
+            <div class="form-group-attached">
+              <div class="row">
+                @php $stage = \App\Models\Service::FindOrFail($o_file->stage_services->service_id) @endphp
+
+                <div class="col-md-12">
+                  <div class="form-group form-group-default">
+                    <label><b>Stage:</b> {{$stage->name}}</label>
+                    <input type="hidden" name="service_id" value="{{$stage->id}}">
+                    <label class="m-t-10">Processing Software</label>
+                    <select class="full-width" data-placeholder="Select Country" data-init-plugin="select2" name="processing-software-{{$stage->id}}">
+                      @foreach($prossingSoftwares as $ps)  
+                        <option value="{{$ps->id}}">{{$ps->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+                @if(!$o_file->options_services()->get()->isEmpty())
+
+                  @foreach($o_file->options_services()->get() as $option)
+                    
+                  @php $optionInner = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
+                  <div class="col-md-12 m-t-10">
+                    <div class="form-group form-group-default">
+                      <label><b>Option:</b> {{$optionInner->name}}</label>
+                      <label class="m-t-10">Processing Software</label>
+                      <input type="hidden" name="service_id" value="{{$optionInner->id}}">
+                      <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="processing-software-{{$optionInner->id}}">
+                        @foreach($prossingSoftwares as $ps)  
+                          <option value="{{$ps->id}}">{{$ps->name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div>
+                  @endforeach
+                @endif
+
+                  <div class="col-md-8">
+                    
+                  </div>
+                  <div class="col-md-4 m-t-10 sm-m-t-10">
+                    <button type="button" class="btn btn-success btn-block m-t-5 show-file-upload-section" data-file_id="{{$o_file->id}}">Submit</button>
+                  </div>
+ 
+              </div>
+            </div>
+          </form>
+          <div class="row hide" id="fileUploadForm-{{$o_file->id}}">
+            
+              @if($o_file->status == 'submitted' || $o_file->status == 'completed')
+              @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
+              <div class="col-xl-12 m-t-10">
+                <div class="card card-transparent flex-row full-width">
+      
+                    
+                      <div class="row column-seperation full-width">
+                        
+                        <div class="col-xl-12">
+                          
+                          <!-- START card -->
+                          <div class="card card-default">
+                            <div class="card-header ">
+                              <div class="card-title">
+                                Drag n' drop uploader
+                              </div>
+                              <div class="tools">
+                                <a class="collapse" href="javascript:;"></a>
+                                <a class="config" data-toggle="modal" href="#grid-config"></a>
+                                <a class="reload" href="javascript:;"></a>
+                                <a class="remove" href="javascript:;"></a>
+                              </div>
+                            </div>
+                            <div class="card-body no-scroll no-padding">
+                              <form action="{{route('encoded-file-upload')}}" class="encoded-dropzone dropzone no-margin">
+                                @csrf
+                                <input type="hidden" value="{{$o_file->id}}" name="file_id">
+                                @if($o_file->tool_type == 'slave' && $o_file->tool_id == $kess3Label->id)
+                                  <input type="hidden" value="1" name="encode">
+                                    @if($o_file->decoded_file)
+                                      @if($o_file->decoded_file->extension == 'dec')
+                                        <input type="hidden" value="dec" name="encoding_type">
+                                      @else
+                                        <input type="hidden" value="micro" name="encoding_type">
+                                      @endif
+                                    @endif
+                                  @else
+                                    <input type="hidden" value="0" name="encode">
+                                  @endif
+                               
+                                <div class="fallback">
+                                  <input name="file" type="file" />
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                          <!-- END card -->
+                        </div> 
+                            
+                      </div>
+                    
+                </div>
+              </div>
+              @endif
+              @endif
+            
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
+<!-- /.modal-dialog -->
+<!-- MODAL SLIDE UP SMALL  -->
+<!-- Modal -->
 
 @endsection
 
@@ -3125,6 +3106,63 @@ $(document).ready(function(){
       $('#engineerOptionsModal').modal('show');
       
     });
+
+    $(document).on('click', '.btn-show-software-form', function(e){
+
+      let file_id = $(this).data('file_id');
+
+      console.log(file_id);
+
+      removeNullSoftwareRecords(file_id);
+
+      $('#softwareOptionsModal-'+file_id).modal('show');
+
+    });
+
+    function removeNullSoftwareRecords(file_id){
+
+      $.ajax({
+            url: "/remove_null_software_records",
+            type: "POST",
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                'file_id': file_id
+            },
+            success: function(d) {
+              console.log(d);
+              
+            }
+        });
+    }
+
+    $(document).on('click', '.show-file-upload-section', function(e){
+
+      let file_id = $(this).data('file_id');
+
+      console.log(file_id);
+
+      let formElements = $("#softwareForm-"+file_id).serializeArray();
+
+      // console.log(formElements);
+
+      let formJson = JSON.stringify(formElements);
+
+      $.ajax({
+            url: "/add_softwares_services",
+            type: "POST",
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            data: {
+                'form_data': formJson
+            },
+            success: function(d) {
+              console.log(d);
+              $("#softwareForm-"+d.file_id).addClass('hide');
+              $("#fileUploadForm-"+d.file_id).removeClass('hide');
+            }
+        });
+
+
+      });
 
     $(document).on('click', '.btn-options-change-force', function(e){
 
