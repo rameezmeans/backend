@@ -1231,13 +1231,13 @@ margin-bottom: 10px !important;
                         <!-- END card -->
                       </div> --}}
                       
-                      @if($file->status == 'submitted' || $file->status == 'completed')
+                      {{-- @if($file->status == 'submitted' || $file->status == 'completed')
 
                       @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
                       
                       <div class="col-xl-12 m-t-20">
                         <div class="card card-transparent flex-row">
-                          <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
+                          <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3"> --}}
 
                             {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
                               @if($file->decoded_files)
@@ -1247,19 +1247,19 @@ margin-bottom: 10px !important;
                               @endif
                             @endif --}}
 
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                               <a href="#" data-toggle="tab" data-target="#tab3FollowUs" class="">Upload</a>
-                            </li>
+                            </li> --}}
                             {{-- <li class="nav-item">
                               <a href="#" data-toggle="tab" data-target="#tab3Inspire">Three</a>
                             </li> --}}
-                          </ul>
-                          <div class="tab-content bg-white full-width">
+                          {{-- </ul>
+                          <div class="tab-content bg-white full-width"> --}}
 
                             {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
                             @if($file->decoded_files) --}}
 
-                            <div class="tab-pane active show" id="tab3hellowWorld">
+                            {{-- <div class="tab-pane active show" id="tab3hellowWorld">
                               <div class="row column-seperation">
                                 
                                 <div class="col-xl-12 full-width">
@@ -1308,9 +1308,11 @@ margin-bottom: 10px !important;
 
                           </div>
                         </div>
-                      </div>
-                      @endif
-                      @endif
+                      </div> --}}
+                      {{-- @endif
+                      @endif --}}
+
+                      
                     </div>
                   </div>
                 </div>
@@ -3095,13 +3097,13 @@ margin-bottom: 10px !important;
                         <!-- END card -->
                       </div> --}}
                       
-                      @if($file->status == 'submitted' || $file->status == 'completed')
+                      {{-- @if($file->status == 'submitted' || $file->status == 'completed')
 
-                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
+                      @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file')) --}}
                       
-                      <div class="col-xl-12 m-t-20">
+                      {{-- <div class="col-xl-12 m-t-20">
                         <div class="card card-transparent flex-row">
-                          <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
+                          <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3"> --}}
 
                             {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
                               @if($file->decoded_files)
@@ -3111,19 +3113,19 @@ margin-bottom: 10px !important;
                               @endif
                             @endif --}}
 
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                               <a href="#" data-toggle="tab" data-target="#tab3FollowUs" class="">Upload</a>
-                            </li>
+                            </li> --}}
                             {{-- <li class="nav-item">
                               <a href="#" data-toggle="tab" data-target="#tab3Inspire">Three</a>
                             </li> --}}
-                          </ul>
-                          <div class="tab-content bg-white full-width">
+                          {{-- </ul>
+                          <div class="tab-content bg-white full-width"> --}}
 
                             {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
                             @if($file->decoded_files) --}}
 
-                            <div class="tab-pane active show" id="tab3hellowWorld">
+                            {{-- <div class="tab-pane active show" id="tab3hellowWorld">
                               <div class="row column-seperation">
                                 
                                 <div class="col-xl-12 full-width">
@@ -3168,7 +3170,7 @@ margin-bottom: 10px !important;
                                 </div> 
                                     
                               </div>
-                            </div>
+                            </div> --}}
 
                             {{-- @endif
                             @endif --}}
@@ -3204,11 +3206,11 @@ margin-bottom: 10px !important;
                               </div> 
                             </div> --}}
 
-                          </div>
+                          {{-- </div>
                         </div>
                       </div>
                       @endif
-                      @endif
+                      @endif --}}
                     </div>
                   </div>
                 </div>
