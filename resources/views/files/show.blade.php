@@ -4045,19 +4045,7 @@ margin-bottom: 10px !important;
             
             </script>
 
-    @endforeach
-
-  </div>
-</div>
-
-@endif
-
-      
-    </div>
-  </div>
-</div>
-
-<!-- Modal -->
+            <!-- Modal -->
 <div class="modal fade slide-up disable-scroll " id="softwareOptionsModal-{{$file->id}}" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog modal-lg" class="width:90% !important;">
     <div class="modal-content-wrapper">
@@ -4188,6 +4176,20 @@ margin-bottom: 10px !important;
 <!-- /.modal-dialog -->
 <!-- MODAL SLIDE UP SMALL  -->
 <!-- Modal -->
+
+    @endforeach
+
+  </div>
+</div>
+
+@endif
+
+      
+    </div>
+  </div>
+</div>
+
+
 
 <div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="editModal" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog">
