@@ -823,7 +823,11 @@ margin-bottom: 10px !important;
                       <div class="col-lg-12">
                         <h5 class="m-t-40">Versions</h5>
 
-                        <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
+                        @if($file->status == 'submitted' || $file->status == 'completed')
+                          <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
+                        @else
+                          <h5 class="text-danger">File Status must be sumbitted or completed.</h5>
+                        @endif
 
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Revisions</p>
@@ -2779,7 +2783,11 @@ margin-bottom: 10px !important;
                       <div class="col-lg-12">
                         <h5 class="m-t-40">Versions</h5>
 
-                        <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
+                        @if($file->status == 'submitted' || $file->status == 'completed')
+                          <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
+                        @else
+                          <h5 class="text-danger">File Status must be sumbitted or completed.</h5>
+                        @endif
 
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Revisions</p>
