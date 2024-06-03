@@ -1161,6 +1161,7 @@ margin-bottom: 10px !important;
                          overflow-y:scroll;
                           height:200px;
                           display:block;
+                          width:100%;
                          ">
                            @foreach($file->softwares as $software)
                              <tr>
