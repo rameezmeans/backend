@@ -1165,16 +1165,20 @@ margin-bottom: 10px !important;
                          </thead>
                          <tbody>
                            @foreach($file->softwares as $software)
-                             <tr>
-                               
-                               <td class="v-align-middle ">
-                                 <p>{{ \App\Models\Service::findOrFail( $software->service_id )->name}}</p>
-                               </td>
-                               <td class="v-align-middle">
-                                 <p>{{\App\Models\ProcessingSoftware::findOrFail( $software->software_id )->name}}</p>
-                               </td>
-                               
-                             </tr>
+                           @if($software->reply_id == $message['id'])
+
+                           <tr>
+                             
+                             <td class="v-align-middle ">
+                               <p>{{ \App\Models\Service::findOrFail( $software->service_id )->name}}</p>
+                             </td>
+                             <td class="v-align-middle">
+                               <p>{{\App\Models\ProcessingSoftware::findOrFail( $software->software_id )->name}}</p>
+                             </td>
+                           
+                           </tr>
+
+                           @endif
                            @endforeach
                          </tbody>
                        </table>
@@ -3168,7 +3172,7 @@ margin-bottom: 10px !important;
     height: 200px;
 
                           "
-                          
+
                         >
 
                        <table class="table table-hover" id="basicTable">
@@ -3183,6 +3187,9 @@ margin-bottom: 10px !important;
                         </thead>
                         <tbody>
                           @foreach($file->softwares as $software)
+
+                          @if($software->reply_id == $message['id'])
+
                             <tr>
                               
                               <td class="v-align-middle ">
@@ -3191,8 +3198,10 @@ margin-bottom: 10px !important;
                               <td class="v-align-middle">
                                 <p>{{\App\Models\ProcessingSoftware::findOrFail( $software->software_id )->name}}</p>
                               </td>
-                              
+                            
                             </tr>
+
+                            @endif
                           @endforeach
                         </tbody>
                       </table>
