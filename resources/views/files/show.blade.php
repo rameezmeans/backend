@@ -3159,7 +3159,17 @@ margin-bottom: 10px !important;
                        @if($file->softwares)
 
                        <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="table-responsive"
+                        
+                        style="
+                          
+                          overflow:hidden;
+    overflow-y: scroll;
+    height: 200px;
+
+                          "
+                          
+                        >
 
                        <table class="table table-hover" id="basicTable">
                         <thead>
