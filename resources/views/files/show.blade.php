@@ -3361,6 +3361,7 @@ margin-bottom: 10px !important;
                         <!-- END From Me Message  !-->
                         <!-- BEGIN From Them Message  !-->
                         @foreach($file->files_and_messages_sorted() as $message)
+                        
                          
                           @if(isset($message['egnineers_internal_notes']))
                             @if($message['engineer'])
