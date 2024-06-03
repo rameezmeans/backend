@@ -636,7 +636,7 @@ class FilesAPIController extends Controller
                     $engineerFile->engineer = true;
                     $engineerFile->save();
                 }
-                
+
                 if($file->stage_services->service_id != 1){
                     $newRecord = new FileReplySoftwareService();
                     $newRecord->file_id = $file->id;
@@ -646,7 +646,7 @@ class FilesAPIController extends Controller
                     $newRecord->save();
                 }
                 
-                if(!$file->options_services()->get()->isEmpty())
+                if(!$file->options_services()->get()->isEmpty()){
 
                     foreach($file->options_services()->get() as $option){
 
