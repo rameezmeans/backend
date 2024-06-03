@@ -1502,7 +1502,7 @@ margin-bottom: 10px !important;
                       
   
                   @endif
-                  @endif
+                 
 
                 </div>
 
