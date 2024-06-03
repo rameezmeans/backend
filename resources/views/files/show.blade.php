@@ -1479,6 +1479,7 @@ margin-bottom: 10px !important;
 
                           <div class="clearfix"></div>
 
+                          @if($messageFile->acm_files)
                           @foreach($messageFile->acm_files as $acm_file)
                             <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                                 <p class="pull-left">{{$acm_file->acm_file}}</p>
@@ -1508,7 +1509,7 @@ margin-bottom: 10px !important;
                         </div>
 
                         </div>
-                        
+
                         @endforeach
                         <!-- END From Them Message  !-->
                         <!-- BEGIN From Me Message  !-->
