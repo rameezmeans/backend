@@ -755,7 +755,7 @@
                             <!-- Tab panes -->
     
                             <div class="tab-content">
-                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}">
+                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 200px;">
 
                             @php
                               $messageFile = \App\Models\RequestFile::where('id',$message['id'])->first();
@@ -809,7 +809,7 @@
                         @endif
 
                       </div>
-                      <div class="tab-pane slide-left" id="acm_data_{{$message['id']}}">
+                      <div class="tab-pane slide-left" id="acm_data_{{$message['id']}}" style="height: 200px;">
                           
 
                         <div class="clearfix"></div>
