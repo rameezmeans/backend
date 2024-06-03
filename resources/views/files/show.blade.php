@@ -840,6 +840,25 @@ margin-bottom: 10px !important;
 
                             @foreach($file->files_and_messages_sorted() as $message)
 
+                            <div class="card">
+
+                              <!-- Nav tabs -->
+                            <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
+                              <li class="nav-item">
+                                <a href="#" class="active" data-toggle="tab" data-target="#reply_data_{{$message['id']}}"><span>Version Information</span></a>
+                              </li>
+                              <li class="nav-item">
+                                <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
+                              </li>
+                              {{-- <li class="nav-item">
+                                <a href="#" data-toggle="tab" data-target="#slide3"><span>Messages</span></a>
+                              </li> --}}
+                            </ul>
+                            <!-- Tab panes -->
+    
+                            <div class="tab-content">
+                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}">
+
                           @php
                             if(isset($message['request_file'])){
                               $messageFile = \App\Models\RequestFile::findOrFail($message['id']);
@@ -1065,6 +1084,11 @@ margin-bottom: 10px !important;
 
                                   @endif
                                   @endif
+
+                            </div>
+                              </div>
+
+                            <div class="tab-pane slide-left" id="acm_data_{{$message['id']}}">
                                   
                                   @if(isset($message['request_file']))
 
@@ -1106,13 +1130,19 @@ margin-bottom: 10px !important;
                                   </div>
                                 @endforeach
 
-                                <div class="clearfix"></div>
+                                {{-- <div class="clearfix"></div> --}}
 
                                 @endif
-                            </div>
+                            
         
                         @endif
                         @endif
+
+                      </div>
+
+                    
+                    </div>
+                            </div>
                       @endforeach
                       </div>
 
