@@ -850,9 +850,9 @@ margin-bottom: 10px !important;
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                               </li>
-                              {{-- <li class="nav-item">
-                                <a href="#" data-toggle="tab" data-target="#slide3"><span>Messages</span></a>
-                              </li> --}}
+                              <li class="nav-item">
+                                <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Messages</span></a>
+                              </li>
                             </ul>
                             <!-- Tab panes -->
     
@@ -1140,6 +1140,10 @@ margin-bottom: 10px !important;
 
                       </div>
 
+                      <div class="tab-pane slide-left active" id="software_data_{{$message['id']}}" style="height: 200px;">
+                      Software Data
+                      </div>
+
                     
                     </div>
                             </div>
@@ -1391,9 +1395,9 @@ margin-bottom: 10px !important;
                           <li class="nav-item">
                             <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                           </li>
-                          {{-- <li class="nav-item">
-                            <a href="#" data-toggle="tab" data-target="#slide3"><span>Messages</span></a>
-                          </li> --}}
+                          <li class="nav-item">
+                            <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Messages</span></a>
+                          </li>
                         </ul>
                         <!-- Tab panes -->
 
@@ -1504,7 +1508,12 @@ margin-bottom: 10px !important;
                   @endif
                  
 
-                </div>
+                        </div>
+
+                        <div class="tab-pane slide-left active" id="software_data_{{$message['id']}}" style="height: 200px;">
+                          Software Data
+                          </div>
+
 
                         </div>
 
@@ -2920,9 +2929,9 @@ margin-bottom: 10px !important;
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                               </li>
-                              {{-- <li class="nav-item">
-                                <a href="#" data-toggle="tab" data-target="#slide3"><span>Messages</span></a>
-                              </li> --}}
+                              <li class="nav-item">
+                                <a href="#" data-toggle="tab" data-target="#software_data{{$message['id']}}"><span>Messages</span></a>
+                              </li>
                             </ul>
                             <!-- Tab panes -->
     
