@@ -7,6 +7,7 @@ use App\Models\Credit;
 use App\Models\DownloadLuaFile;
 use App\Models\EmailTemplate;
 use App\Models\File;
+use App\Models\FileReplySoftwareService;
 use App\Models\FileService;
 use App\Models\Key;
 use App\Models\MessageTemplate;
@@ -634,6 +635,30 @@ class FilesAPIController extends Controller
                     $engineerFile->file_id = $file->id;
                     $engineerFile->engineer = true;
                     $engineerFile->save();
+                }
+                
+                if($file->stage_services->service_id != 1){
+                    $newRecord = new FileReplySoftwareService();
+                    $newRecord->file_id = $file->id;
+                    $newRecord->service_id = $file->stage_services->service_id;
+                    $newRecord->software_id = 9;
+                    $newRecord->reply_id = $engineerFile->id;
+                    $newRecord->save();
+                }
+                
+                if(!$file->options_services()->get()->isEmpty())
+
+                    foreach($file->options_services()->get() as $option){
+
+                        $newRecord = new FileReplySoftwareService();
+                        $newRecord->file_id = $file->id;
+                        $newRecord->service_id = $option->id;
+                        $newRecord->software_id = 9;
+                        $newRecord->reply_id = $engineerFile->id;
+                        $newRecord->save();
+            
+                    }
+
                 }
 
                     $tunnedFile = new TunnedFile();

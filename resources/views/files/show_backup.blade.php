@@ -891,16 +891,20 @@
                         </thead>
                         <tbody>
                           @foreach($file->softwares as $software)
-                            <tr>
-                              
-                              <td class="v-align-middle ">
-                                <p>{{ \App\Models\Service::findOrFail( $software->service_id )->name}}</p>
-                              </td>
-                              <td class="v-align-middle">
-                                <p>{{\App\Models\ProcessingSoftware::findOrFail( $software->software_id )->name}}</p>
-                              </td>
-                              
-                            </tr>
+                          @if($software->reply_id == $message['id'])
+
+                          <tr>
+                            
+                            <td class="v-align-middle ">
+                              <p>{{ \App\Models\Service::findOrFail( $software->service_id )->name}}</p>
+                            </td>
+                            <td class="v-align-middle">
+                              <p>{{\App\Models\ProcessingSoftware::findOrFail( $software->software_id )->name}}</p>
+                            </td>
+                          
+                          </tr>
+
+                          @endif
                           @endforeach
                         </tbody>
                       </table>
