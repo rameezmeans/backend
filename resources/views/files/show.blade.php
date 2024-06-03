@@ -1143,6 +1143,9 @@ margin-bottom: 10px !important;
                       <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 200px;">
                       
                         @if($file->softwares)
+
+                        <div class="card-body">
+                          <div class="table-responsive">
  
                         <table class="table table-hover" id="basicTable">
                          <thead>
@@ -1169,6 +1172,9 @@ margin-bottom: 10px !important;
                            @endforeach
                          </tbody>
                        </table>
+
+                          </div>
+                        </div>
 
                         @endif
  
@@ -3146,6 +3152,9 @@ margin-bottom: 10px !important;
                       
                        @if($file->softwares)
 
+                       <div class="card-body">
+                        <div class="table-responsive">
+
                        <table class="table table-hover" id="basicTable">
                         <thead>
                           <tr>
@@ -3173,7 +3182,8 @@ margin-bottom: 10px !important;
                       </table>
 
                         
-
+                        </div>
+                       </div>
                         
 
                        @endif

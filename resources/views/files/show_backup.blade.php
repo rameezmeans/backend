@@ -876,6 +876,9 @@
                       
                        @if($file->softwares)
 
+                       <div class="card-body">
+                        <div class="table-responsive">
+
                        <table class="table table-hover" id="basicTable">
                         <thead>
                           <tr>
@@ -903,7 +906,8 @@
                       </table>
 
                         
-
+                        </div>
+                       </div>
                         
 
                        @endif
