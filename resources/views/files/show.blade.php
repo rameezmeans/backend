@@ -4385,7 +4385,7 @@ margin-bottom: 10px !important;
               <div class="form-group-attached">
                 <div class="row">
                   @php $stage = \App\Models\Service::FindOrFail($o_file->stage_services->service_id) @endphp
-  
+                  @if($stage->name != 'Stage 0')
                   <div class="col-md-12">
                     <div class="form-group form-group-default">
                       <label><b>Stage:</b> {{$stage->name}}</label>
@@ -4398,6 +4398,7 @@ margin-bottom: 10px !important;
                       </select>
                     </div>
                   </div>
+                  @endif
                   @if(!$o_file->options_services()->get()->isEmpty())
   
                     @foreach($o_file->options_services()->get() as $option)
