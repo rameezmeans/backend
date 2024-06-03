@@ -544,6 +544,7 @@
                         
                       
                         @if(\App\Models\Service::FindOrFail($file->stage_services->service_id))
+                        
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Stage</p>
                           <div class="pull-right">
@@ -564,6 +565,7 @@
                           </div>
                           <div class="clearfix"></div>
                         </div>
+
                         @endif
                       
 
@@ -726,7 +728,7 @@
                         <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
 
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Versions</p>
+                          <p class="pull-left">Number of Versions</p>
                           <div class="pull-right">
                            
                               <label class="label bg-info text-white">{{$file->files->count()}}</label>
@@ -734,7 +736,25 @@
                           <div class="clearfix"></div>
                         </div>
 
+                        
+
                             @foreach($file->files_and_messages_sorted() as $message)
+
+                            <div class="card">
+
+                              <!-- Nav tabs -->
+                            <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
+                              <li class="nav-item">
+                                <a href="#" class="active" data-toggle="tab" data-target="#reply_data_{{$message['id']}}"><span>Version Information</span></a>
+                              </li>
+                              <li class="nav-item">
+                                <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
+                              </li>
+                            </ul>
+                            <!-- Tab panes -->
+    
+                            <div class="tab-content">
+                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height:200px;">
 
                             @php
                               $messageFile = \App\Models\RequestFile::where('id',$message['id'])->first();
@@ -742,7 +762,7 @@
 
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
-                            <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <div class="p-l-20 p-r-20 p-b-10 p-t-10">
                                 <p class="pull-left">{{$message['request_file']}}</p>
                                 <div class="pull-right">
                                   @isset($message['type'])
@@ -781,7 +801,17 @@
                                     <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a>
                                 </div>
 
-                                <div class="clearfix"></div>
+                                
+                            </div>
+        
+                        @endif
+                        @endif
+
+                      </div>
+                      <div class="tab-pane slide-left" id="acm_data_{{$message['id']}}" style="height:200px;">
+                          
+
+                        <div class="clearfix"></div>
                                   
                                   @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
 
@@ -805,7 +835,7 @@
                         
                                 <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                                   
-                                  <div class="pull-right">
+                                  <div class="">
                                     <form action="{{ route('upload-acm-reply') }}" method="POST" enctype="multipart/form-data">
                                       @csrf
         
@@ -837,12 +867,16 @@
                                   </div>
                                 @endforeach
 
-                                <div class="clearfix"></div>
-                            </div>
-        
-                        @endif
-                        @endif
+                                {{-- <div class="clearfix"></div> --}}
+
+                      </div>
+
+                    </div>
+                    </div>
                       @endforeach
+
+                          
+
                       </div>
 
                       @endif
@@ -1835,7 +1869,7 @@
                         <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
 
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Versions</p>
+                          <p class="pull-left">Number of Versions</p>
                           <div class="pull-right">
                            
                               <label class="label bg-info text-white">{{$file->files->count()}}</label>

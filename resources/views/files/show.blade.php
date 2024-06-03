@@ -830,7 +830,7 @@ margin-bottom: 10px !important;
                         @endif
 
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Revisions</p>
+                          <p class="pull-left">Number of Versions</p>
                           <div class="pull-right">
                            
                               <label class="label bg-info text-white">{{$file->files->count()}}</label>
@@ -839,6 +839,22 @@ margin-bottom: 10px !important;
                         </div>
 
                             @foreach($file->files_and_messages_sorted() as $message)
+
+                            <div class="card">
+
+                              <!-- Nav tabs -->
+                            <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
+                              <li class="nav-item">
+                                <a href="#" class="active" data-toggle="tab" data-target="#reply_data_{{$message['id']}}"><span>Version Information</span></a>
+                              </li>
+                              <li class="nav-item">
+                                <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
+                              </li>
+                            </ul>
+                            <!-- Tab panes -->
+    
+                            <div class="tab-content">
+                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height:200px;">
 
                           @php
                             if(isset($message['request_file'])){
@@ -1065,6 +1081,10 @@ margin-bottom: 10px !important;
 
                                   @endif
                                   @endif
+
+                                </div>
+
+                                <div class="tab-pane slide-left" id="acm_data_{{$message['id']}}" style="height:200px;">
                                   
                                   @if(isset($message['request_file']))
 
@@ -1104,7 +1124,15 @@ margin-bottom: 10px !important;
                                       <div class="clearfix"></div>
                                         
                                   </div>
+
+                                </div>
+
+                              </div>
+                              </div>
+
                                 @endforeach
+
+                            </div>
 
                                 <div class="clearfix"></div>
 
@@ -2790,7 +2818,7 @@ margin-bottom: 10px !important;
                         @endif
 
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Revisions</p>
+                          <p class="pull-left">Number of Versions</p>
                           <div class="pull-right">
                            
                               <label class="label bg-info text-white">{{$file->files->count()}}</label>
