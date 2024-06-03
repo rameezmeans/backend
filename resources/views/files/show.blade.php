@@ -868,7 +868,7 @@ margin-bottom: 10px !important;
                           
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
-                            <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                            <div class="p-l-20 p-r-20 p-b-10 p-t-10">
                                 <p class="pull-left">{{$message['request_file']}}</p>
                                          
                               <?
@@ -1098,7 +1098,7 @@ margin-bottom: 10px !important;
                         
                                 <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                                   
-                                  <div class="pull-right">
+                                  <div class="">
                                     <form action="{{ route('upload-acm-reply') }}" method="POST" enctype="multipart/form-data">
                                       @csrf
         
