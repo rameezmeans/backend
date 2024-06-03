@@ -1157,7 +1157,11 @@ margin-bottom: 10px !important;
                              
                            </tr>
                          </thead>
-                         <tbody>
+                         <tbody  style="
+                         overflow-y:scroll;
+                          height:200px;
+                          display:block;
+                         ">
                            @foreach($file->softwares as $software)
                              <tr>
                                
