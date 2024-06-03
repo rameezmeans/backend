@@ -1140,7 +1140,7 @@ margin-bottom: 10px !important;
 
                       </div>
 
-                      <div class="tab-pane slide-left active" id="software_data_{{$message['id']}}" style="height: 200px;">
+                      <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 200px;">
                       Software Data
                       </div>
 
@@ -1510,7 +1510,7 @@ margin-bottom: 10px !important;
 
                         </div>
 
-                        <div class="tab-pane slide-left active" id="software_data_{{$message['id']}}" style="height: 200px;">
+                        <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 200px;">
                           Software Data
                           </div>
 
