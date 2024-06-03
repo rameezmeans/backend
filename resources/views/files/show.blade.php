@@ -3143,7 +3143,7 @@ margin-bottom: 10px !important;
                               </div>
 
                               <div class="clearfix"></div>
-                              
+
                               @if(isset($message['request_file']))
                               @foreach($messageFile->acm_files as $acm_file)
                                 <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -3164,7 +3164,7 @@ margin-bottom: 10px !important;
 
                               {{-- <div class="clearfix"></div> --}}
 
-                              @endif
+                             
                           
       
                       @endif
