@@ -139,6 +139,10 @@ class File extends Model
         return $this->hasMany(CommentFileService::class, 'file_id', 'id');
     }
 
+    public function softwares(){
+        return $this->hasMany(FileReplySoftwareService::class, 'file_id', 'id');
+    }
+
     public function lua_version(){
         return $this->hasOne(LuaVersion::class, 'File_Id', 'id');
     }

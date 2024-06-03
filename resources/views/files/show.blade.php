@@ -1141,8 +1141,38 @@ margin-bottom: 10px !important;
                       </div>
 
                       <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 200px;">
-                      Software Data
-                      </div>
+                      
+                        @if($file->softwares)
+ 
+                        <table class="table table-hover" id="basicTable">
+                         <thead>
+                           <tr>
+                             
+                             
+                             <th style="width:20%">Stage or Option</th>
+                             <th style="width:20%">Software</th>
+                             
+                           </tr>
+                         </thead>
+                         <tbody>
+                           @foreach($file->softwares as $software)
+                             <tr>
+                               
+                               <td class="v-align-middle ">
+                                 <p>{{ \App\Models\Service::findOrFail( $software->service_id )->name}}</p>
+                               </td>
+                               <td class="v-align-middle">
+                                 <p>{{\App\Models\ProcessingSoftware::findOrFail( $software->software_id )->name}}</p>
+                               </td>
+                               
+                             </tr>
+                           @endforeach
+                         </tbody>
+                       </table>
+
+                        @endif
+ 
+                       </div>
 
                     
                     </div>
@@ -3112,9 +3142,43 @@ margin-bottom: 10px !important;
 
                     </div>
 
-                    <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 200px;">
-                      Software Data
-                    </div>
+                     <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 200px;">
+                      
+                       @if($file->softwares)
+
+                       <table class="table table-hover" id="basicTable">
+                        <thead>
+                          <tr>
+                            
+                            
+                            <th style="width:20%">Stage or Option</th>
+                            <th style="width:20%">Software</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($file->softwares as $software)
+                            <tr>
+                              
+                              <td class="v-align-middle ">
+                                <p>{{ \App\Models\Service::findOrFail( $software->service_id )->name}}</p>
+                              </td>
+                              <td class="v-align-middle">
+                                <p>{{\App\Models\ProcessingSoftware::findOrFail( $software->software_id )->name}}</p>
+                              </td>
+                              
+                            </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+
+                        
+
+                        
+
+                       @endif
+
+                      </div>
 
                   
                   </div>
