@@ -3112,6 +3112,10 @@ margin-bottom: 10px !important;
 
                     </div>
 
+                    <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 200px;">
+                      Software Data
+                    </div>
+
                   
                   </div>
                           </div>
