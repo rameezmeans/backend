@@ -2861,7 +2861,7 @@ margin-bottom: 10px !important;
                                 <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                               </li>
                               <li class="nav-item">
-                                <a href="#" data-toggle="tab" data-target="#software_data{{$message['id']}}"><span>Messages</span></a>
+                                <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Messages</span></a>
                               </li>
                             </ul>
                             <!-- Tab panes -->
