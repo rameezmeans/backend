@@ -748,9 +748,9 @@
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                               </li>
-                              {{-- <li class="nav-item">
-                                <a href="#" data-toggle="tab" data-target="#slide3"><span>Messages</span></a>
-                              </li> --}}
+                              <li class="nav-item">
+                                <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Software Information</span></a>
+                              </li>
                             </ul>
                             <!-- Tab panes -->
     
@@ -869,6 +869,12 @@
                                 @endforeach
 
                                 {{-- <div class="clearfix"></div> --}}
+
+                      </div>
+
+                      <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 200px;">
+                      
+                        software information
 
                       </div>
 
@@ -1879,6 +1885,27 @@
                         </div>
 
                             @foreach($file->files_and_messages_sorted() as $message)
+
+                            <div class="card">
+
+                              <!-- Nav tabs -->
+                            <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
+                              <li class="nav-item">
+                                <a href="#" class="active" data-toggle="tab" data-target="#reply_data_{{$message['id']}}"><span>Version Information</span></a>
+                              </li>
+                              <li class="nav-item">
+                                <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
+                              </li>
+                              {{-- <li class="nav-item">
+                                <a href="#" data-toggle="tab" data-target="#slide3"><span>Messages</span></a>
+                              </li> --}}
+                            </ul>
+                            <!-- Tab panes -->
+    
+                            <div class="tab-content">
+                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 200px;">
+
+
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
                             <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
