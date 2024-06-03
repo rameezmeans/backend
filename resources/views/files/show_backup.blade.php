@@ -750,6 +750,7 @@
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                               </li>
+
                             </ul>
                             <!-- Tab panes -->
     
@@ -869,13 +870,13 @@
 
                                 {{-- <div class="clearfix"></div> --}}
 
-                      </div>
-
-                    </div>
-                    </div>
+                      
                       @endforeach
 
-                          
+                    </div>
+
+                  </div>
+                  </div>
 
                       </div>
 

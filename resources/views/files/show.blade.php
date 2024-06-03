@@ -1125,14 +1125,8 @@ margin-bottom: 10px !important;
                                         
                                   </div>
 
-                                </div>
-
-                              </div>
-                              </div>
-
+                                  
                                 @endforeach
-
-                            </div>
 
                                 <div class="clearfix"></div>
 
