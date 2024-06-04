@@ -56,9 +56,22 @@
           </div>
 
           <div class="card-body">
-            <div class="table-responsive">
+            <div class="table-responsive"
+            
+            style="
+                          
+                          overflow:hidden;
+    overflow-y: scroll;
+    height: 600px;
 
-           <table class="table table-hover" id="basicTable">
+                          "
+            
+            >
+
+           <table class="table table-hover" id="basicTable"
+           
+
+           >
             <thead>
               <tr>
                 
