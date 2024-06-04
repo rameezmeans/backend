@@ -2205,7 +2205,7 @@ class FilesController extends Controller
         // if($file->front_end_id == 2){
             $engineerFile->show_comments = 0;
         // }
-        
+
         $middleName = $file->id;
         $middleName .= date("dmy");
         
@@ -2214,7 +2214,7 @@ class FilesController extends Controller
                 $middleName .= $s->service_id.$s->software_id;
             }
         }
-
+        
         $fileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count()+1;
         
         $newFileName = str_replace('/', '', $fileName);
