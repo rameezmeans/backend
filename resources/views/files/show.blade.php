@@ -612,6 +612,8 @@ margin-bottom: 10px !important;
                           </div>
                         @endif
                       @else
+
+                          @if($file->stage_services)
                         @if(\App\Models\Service::FindOrFail($file->stage_services->service_id))
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Stage</p>
@@ -632,6 +634,7 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
                         
+                        @endif
                         @endif
                       @endif
 
@@ -2780,6 +2783,8 @@ margin-bottom: 10px !important;
                           </div>
                         @endif
                       @else
+
+                      @if($file->stage_services)
                         @if(\App\Models\Service::FindOrFail($file->stage_services->service_id))
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Stage</p>
@@ -2809,6 +2814,7 @@ margin-bottom: 10px !important;
                           </div>
                           @endforeach
                         </div>
+                        @endif
                         @endif
                       @endif
 
