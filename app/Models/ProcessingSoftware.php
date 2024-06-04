@@ -13,6 +13,6 @@ class ProcessingSoftware extends Model
     protected $table = "processing_softwares";
 
     public function files(){
-        return FileReplySoftwareService::where('software_id', $this->id)->distinct()->get();
+        return FileReplySoftwareService::where('software_id', $this->id)->distinct('file_id')->get();
     }
 }
