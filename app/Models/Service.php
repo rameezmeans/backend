@@ -20,11 +20,11 @@ class Service extends Model
     }
 
     public function softwares(){
-        return FileReplySoftwareService::where('service_id', $this->id)->groupby('software_id')->distinct()->get('software_id');
+        return FileReplySoftwareService::where('service_id', $this->id)->distinct()->get('software_id');
     }
 
     public function revisions($softwareID){
-        return FileReplySoftwareService::where('service_id', $this->id)->where('software_id', $softwareID)->groupby('reply_id')->distinct()->count('reply_id');
+        return FileReplySoftwareService::where('service_id', $this->id)->where('software_id', $softwareID)->distinct()->count('reply_id');
     }
 
     public function stages_option($optionID){
