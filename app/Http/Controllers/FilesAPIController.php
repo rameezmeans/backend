@@ -665,8 +665,10 @@ class FilesAPIController extends Controller
                     $middleName .= date("dmy");
                     
                     foreach($file->softwares as $s){
-                        if($s->service_id == 1){
-                            $middleName .= $s->service_id.$s->software_id;
+                        if($s->service_id != 1){
+                            if($s->reply_id != $engineerFile->id){
+                                $middleName .= $s->service_id.$s->software_id;
+                            }
                         }
                     }
 
