@@ -2339,7 +2339,7 @@ margin-bottom: 10px !important;
                     <div class="text-center">
                       <div class="card-title">
                           <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="" style="width: 30%;">
-                          <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                          <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                           
                           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'download-client-file'))
                           
