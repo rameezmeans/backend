@@ -13,6 +13,6 @@ class ProcessingSoftware extends Model
     protected $table = "processing_softwares";
 
     public function files(){
-        return $this->hasMany(FileReplySoftwareService::class, 'software_id', 'id');
+        return $this->hasMany(FileReplySoftwareService::class, 'software_id', 'id')->unique();
     }
 }
