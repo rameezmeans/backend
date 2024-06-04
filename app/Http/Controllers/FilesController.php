@@ -2182,25 +2182,9 @@ class FilesController extends Controller
         $oldName = $attachment->getClientOriginalName();
         $encode = (boolean) $request->encode;
         $file = File::findOrFail($request->file_id);
-
-        $middleName = $file->id;
-        $middleName .= date("dmy");
         
-        foreach($file->softwares as $s){
-            if($s->service_id == 1){
-                $middleName .= $s->service_id.$s->software_id;
-            }
-        }
-        
-        $fileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count()+1;
-        
-        $newFileName = str_replace('/', '', $fileName);
-        $newFileName = str_replace('\\', '', $newFileName);
-        $newFileName = str_replace('#', '', $newFileName);
-        $newFileName = str_replace(' ', '_', $newFileName);
-
         $engineerFile = new RequestFile();
-        $engineerFile->request_file = $newFileName;
+        $engineerFile->request_file = $oldName;
         $engineerFile->old_name = $oldName;
         $engineerFile->file_type = 'engineer_file';
         $engineerFile->tool_type = 'not_relevant';
@@ -2221,7 +2205,24 @@ class FilesController extends Controller
         // if($file->front_end_id == 2){
             $engineerFile->show_comments = 0;
         // }
+        
+        $middleName = $file->id;
+        $middleName .= date("dmy");
+        
+        foreach($file->softwares as $s){
+            if($s->service_id == 1){
+                $middleName .= $s->service_id.$s->software_id;
+            }
+        }
 
+        $fileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count()+1;
+        
+        $newFileName = str_replace('/', '', $fileName);
+        $newFileName = str_replace('\\', '', $newFileName);
+        $newFileName = str_replace('#', '', $newFileName);
+        $newFileName = str_replace(' ', '_', $newFileName);
+
+        $engineerFile->request_file = $newFileName;
         $engineerFile->save();
 
         if($file->subdealer_group_id){
