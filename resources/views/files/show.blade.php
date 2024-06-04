@@ -891,6 +891,7 @@ margin-bottom: 10px !important;
                                 @if($message['engineer'] == 1)
                             <div class="p-l-20 p-r-20 p-b-10 p-t-10">
                                 <p class="pull-left">{{$message['request_file'].'('.$message['old_name'].')'}}</p>
+                                <p class="pull-right">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </p>
                                          
                               <?
                                 $madeproject = DB::table('lua_make_project')
@@ -2973,6 +2974,7 @@ margin-bottom: 10px !important;
                                 @if($message['engineer'] == 1)
                             <div class="p-l-20 p-r-20 p-b-10 p-t-10">
                                 <p class="pull-left">{{$message['request_file'].'('.$message['old_name'].')'}}</p>
+                                <p class="pull-right">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </p>
                                          
                               <?
                                 $madeproject = DB::table('lua_make_project')
