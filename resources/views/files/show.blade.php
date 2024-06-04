@@ -2459,6 +2459,14 @@ margin-bottom: 10px !important;
                         </div>
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Customer Email</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{$file->user->email}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Frontend</p>
                           <div class="pull-right">
                             <span class="label @if($file->frontend->id == 1) text-white bg-primary @else text-black bg-warning @endif">{{$file->frontend->name}}<span>
