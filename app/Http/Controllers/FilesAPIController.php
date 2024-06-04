@@ -672,7 +672,7 @@ class FilesAPIController extends Controller
                         }
                     }
 
-                    $fileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count();
+                    $fileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count()+1;
 
                     $engineerFile->request_file = $fileName;
                     $engineerFile->save();
@@ -686,22 +686,22 @@ class FilesAPIController extends Controller
                     if($file->front_end_id == 1){
 
                         copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
-                        public_path('/../../portal/public'.$file->file_path.$fileToSave) );
+                        public_path('/../../portal/public'.$file->file_path.$fileName) );
 
                         unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                        $path = public_path('/../../portal/public'.$file->file_path.$fileToSave);
+                        $path = public_path('/../../portal/public'.$file->file_path.$fileName);
                 
                     }
 
                     else{
 
                         copy( public_path('/../../tuningX/public/uploads/filesready'.'/'.$request->tuned_file), 
-                        public_path('/../../tuningX/public'.$file->file_path.$fileToSave) );
+                        public_path('/../../tuningX/public'.$file->file_path.$fileName) );
 
                         unlink( public_path('/../../tuningX/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                        $path = public_path('/../../tuningX/public'.$file->file_path.$fileToSave);
+                        $path = public_path('/../../tuningX/public'.$file->file_path.$fileName);
 
                     }
 
