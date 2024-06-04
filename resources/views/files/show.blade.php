@@ -869,7 +869,7 @@ margin-bottom: 10px !important;
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
                             <div class="p-l-20 p-r-20 p-b-10 p-t-10">
-                                <p class="pull-left">{{$message['request_file'] ($message['old_name'])}}</p>
+                                <p class="pull-left">{{$message['request_file'].'('.$message['old_name'].')'}}</p>
                                          
                               <?
                                 $madeproject = DB::table('lua_make_project')
@@ -2919,7 +2919,7 @@ margin-bottom: 10px !important;
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
                             <div class="p-l-20 p-r-20 p-b-10 p-t-10">
-                                <p class="pull-left">{{$message['request_file'] ($message['old_name'])}}</p>
+                                <p class="pull-left">{{$message['request_file'].'('.$message['old_name'].')'}}</p>
                                          
                               <?
                                 $madeproject = DB::table('lua_make_project')
