@@ -670,7 +670,7 @@ class FilesAPIController extends Controller
                         }
                     }
 
-                    $fileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count()+1;
+                    $fileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count();
 
                     $engineerFile->request_file = $fileName;
                     $engineerFile->save();
