@@ -467,6 +467,7 @@ class FilesController extends Controller
             EngineerFileNote::where('file_id', $file->id)->delete();
             FileUrl::where('file_id', $file->id)->delete();
             Log::where('file_id', $file->id)->delete();
+            FileReplySoftwareService::where('file_id', $file->id)->delete();
             
             $file->delete();
         }
