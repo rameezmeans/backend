@@ -82,7 +82,7 @@
                   <p><a href="{{route('file', $file->file_id)}}">{{  $file->file_id }}</a></p>
                 </td>
                 <td class="v-align-middle">
-                  <p>{{count($record->new_requests)}}</p>
+                  <p>{{count($record->files->count())}}</p>
                 </td>
               
               </tr>
