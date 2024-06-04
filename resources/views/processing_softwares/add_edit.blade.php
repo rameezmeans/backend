@@ -54,6 +54,44 @@
                 
             </div>
           </div>
+
+          <div class="card-body">
+            <div class="table-responsive">
+
+           <table class="table table-hover" id="basicTable">
+            <thead>
+              <tr>
+                
+                
+                <th style="width:20%">Files</th>
+                <th style="width:20%">Revisions</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($processingSoftware->files as $file)
+             
+
+              <tr>
+                
+                <td class="v-align-middle ">
+                  <p>{{  $file->file_id }}</p>
+                </td>
+                <td class="v-align-middle">
+                  <p>{{  }}</p>
+                </td>
+              
+              </tr>
+
+              
+              @endforeach
+            </tbody>
+          </table>
+
+            
+            </div>
+           </div>
+
         </div>
     </div>
 </div>
