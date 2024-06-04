@@ -16,6 +16,7 @@ use App\Models\CommentFileService;
 use App\Models\Credit;
 use App\Models\File;
 use App\Models\FileFeedback;
+use App\Models\FileReplySoftwareService;
 use App\Models\FileService;
 use App\Models\Key;
 use App\Models\PaymentLog;
@@ -73,6 +74,20 @@ Route::get('/info', function () {
 });
 
 Route::get('/tasks', function () {
+
+    $allRecs = FileReplySoftwareService::all();
+
+    foreach($allRecs as $r){
+        if($r->reply_id == NULL){
+            $r->delete();
+        }
+
+        if(File::where($r->file_id)->first() == NULL){
+            $r->delete();
+        }
+    }
+
+    dd('clear recs');
 
     // $files = File::all();
 
