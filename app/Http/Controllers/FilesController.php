@@ -2211,11 +2211,13 @@ class FilesController extends Controller
         
         foreach($file->softwares as $s){
             if($s->service_id != 1){
-                if($s->reply_id != $engineerFile->id){
+                if($s->reply_id == $engineerFile->id){
                     $middleName .= $s->service_id.$s->software_id;
                 }
             }
         }
+
+        dd($middleName);
 
         $fileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count();
         
