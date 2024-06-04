@@ -1106,7 +1106,7 @@ margin-bottom: 10px !important;
 
                                   @endif
                                   @endif
-                                  <p class="btn-sm btn-cons btn-success m-l-10">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </p>
+                                  <p class="btn-sm btn-cons btn-success m-t-50">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </p>
                             </div>
                               </div>
 
@@ -3151,7 +3151,7 @@ margin-bottom: 10px !important;
                                   @endif
                                   @endif --}}
                                 <div class="clearfix"></div>
-                                <p class="btn-sm btn-cons btn-success m-l-10">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </p>
+                                <p class="btn-sm btn-cons btn-success m-t-50">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </p>
                             </div>
         
                         @endif
