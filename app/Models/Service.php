@@ -19,6 +19,14 @@ class Service extends Model
         return $this->hasMany( StagesOptionsCredit::class, 'option_id', 'id' );
     }
 
+    public function softwares(){
+        return FileReplySoftwareService::where('service_id', $this->id)->groupby('service_id')->distinct()->get('service_id');
+    }
+
+    public function revisions(){
+        return FileReplySoftwareService::where('service_id', $this->id)->groupby('reply_id')->distinct()->count('reply_id');
+    }
+
     public function stages_option($optionID){
         
         return $this->hasOne( StagesOptionsCredit::class, 'stage_id', 'id' )->where('option_id', $optionID);

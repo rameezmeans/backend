@@ -652,7 +652,7 @@ class FilesAPIController extends Controller
 
                         $newRecord = new FileReplySoftwareService();
                         $newRecord->file_id = $file->id;
-                        $newRecord->service_id = $option->id;
+                        $newRecord->service_id = $option->service_id;
                         $newRecord->software_id = 9;
                         $newRecord->reply_id = $engineerFile->id;
                         $newRecord->save();

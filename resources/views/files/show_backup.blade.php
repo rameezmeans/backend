@@ -544,7 +544,7 @@
                         
                       
                         @if(\App\Models\Service::FindOrFail($file->stage_services->service_id))
-                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <div class="b-b b-t b-grey p-l-10 p-r-10 p-b-10 p-t-10">
                           <p class="pull-left">Stage</p>
                           <div class="pull-right">
                               <img alt="{{\App\Models\Service::FindOrFail($file->stage_services->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}">
@@ -559,10 +559,17 @@
                               @else
                                 <span class="text-white label-danger label"> {{$stage->credits}} </span>
                               @endif
-                              
-
                           </div>
                           <div class="clearfix"></div>
+                          
+                          <div class="b-t b-grey p-b-10 p-t-10">
+                            @foreach($stage->softwares() as $s)
+                            <div >{{$s->service_id}}</div>
+                            <div >
+                            </div>
+                            @endforeach
+                          </div>
+                          
                         </div>
                         @endif
                       
