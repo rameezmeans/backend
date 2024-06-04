@@ -82,7 +82,7 @@ Route::get('/tasks', function () {
             $r->delete();
         }
 
-        if(File::where($r->file_id)->first() == NULL){
+        if(File::where('file_id', $r->file_id)->first() == NULL){
             $r->delete();
         }
     }
