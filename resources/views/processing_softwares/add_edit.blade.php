@@ -71,14 +71,18 @@
             <tbody>
               @foreach($processingSoftware->files as $file)
              
+              @php
+                  
+                $record = \App\Models\File::findOrFail($file->file_id);
+              @endphp
 
               <tr>
                 
                 <td class="v-align-middle ">
-                  <p>{{  $file->file_id }}</p>
+                  <p><a href="{{route('file', $file->file_id)}}">{{  $file->file_id }}</a></p>
                 </td>
                 <td class="v-align-middle">
-                  <p></p>
+                  <p>{{count($record->new_requests)}}</p>
                 </td>
               
               </tr>
