@@ -3673,7 +3673,7 @@ $(document).ready(function(){
   
       engineerFileDrop.removeFile(file);
         
-        // location.reload();
+        location.reload();
       })
       .on("complete", function(file) {
         // location.reload();
