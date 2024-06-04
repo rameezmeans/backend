@@ -564,8 +564,11 @@
                           
                           <div class="b-t b-grey p-b-10 p-t-10">
                             @foreach($stage->softwares() as $s)
-                            <div >{{$s->service_id}}</div>
-                            <div >
+                            <div style="display: flow-root;" class="b-b b-grey">
+                            <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
+                            <div class="pull-right">
+                              {{$stage->revisions($s->software_id)}}
+                            </div>
                             </div>
                             @endforeach
                           </div>
@@ -603,6 +606,18 @@
                               @endif
 
                               </div>
+
+                              <div class="b-t b-grey p-b-10 p-t-10">
+                                @foreach($optionInner->softwares() as $s)
+                                <div style="display: flow-root;" class="b-b b-grey">
+                                <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
+                                <div class="pull-right">
+                                  {{$optionInner->revisions($s->software_id)}}
+                                </div>
+                                </div>
+                                @endforeach
+                              </div>
+
                             @endif
 
                             @foreach($file->comments as $c)
@@ -1805,6 +1820,18 @@
                           </div>
                           <div class="clearfix"></div>
                         </div>
+
+                        <div class="b-t b-grey p-b-10 p-t-10">
+                          @foreach($stage->softwares() as $s)
+                          <div style="display: flow-root;" class="b-b b-grey">
+                          <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
+                          <div class="pull-right">
+                            {{$stage->revisions($s->software_id)}}
+                          </div>
+                          </div>
+                          @endforeach
+                        </div>
+
                         @endif
                       
 
@@ -1837,6 +1864,18 @@
                                   @endif
     
                                   </div>
+
+                                  <div class="b-t b-grey p-b-10 p-t-10">
+                                    @foreach($optionInner->softwares() as $s)
+                                    <div style="display: flow-root;" class="b-b b-grey">
+                                    <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
+                                    <div class="pull-right">
+                                      {{$optionInner->revisions($s->software_id)}}
+                                    </div>
+                                    </div>
+                                    @endforeach
+                                  </div>
+                                  
                                 @endif
     
                                 @foreach($file->comments as $c)

@@ -719,8 +719,6 @@ class FilesAPIController extends Controller
                                 $file->checked_by = 'engineer';
                                 $file->save();
                             }
-
-                            
                         }
                     }
 
