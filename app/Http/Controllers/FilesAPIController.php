@@ -661,6 +661,20 @@ class FilesAPIController extends Controller
 
                 }
 
+                    $middleName = $file->id;
+                    $middleName .= date("dmy");
+                    
+                    foreach($file->softwares as $s){
+                        if($s->service_id == 1){
+                            $middleName .= $s->service_id.$s->software_id;
+                        }
+                    }
+
+                    $fileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count()+1;
+
+                    $engineerFile->request_file = $fileName;
+                    $engineerFile->save();
+
                     $tunnedFile = new TunnedFile();
                     $tunnedFile->file = $request->tuned_file;
                     $tunnedFile->file_id = $file->id;

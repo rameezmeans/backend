@@ -2176,28 +2176,24 @@ class FilesController extends Controller
         \Log::info( $request->all() );
     }
     
-    public function uploadFileFromEngineer(Request $request)
-    {
+    public function uploadFileFromEngineer(Request $request) {
+
         $attachment = $request->file('file');
+        $oldName = $attachment->getClientOriginalName();
         $encode = (boolean) $request->encode;
-       
         $file = File::findOrFail($request->file_id);
 
-        $optionsMessage = '';
-        if($file->options){
-            foreach($file->options()->get() as $option) {
-                $optionName = Service::findOrFail($option->service_id)->name;
-                $optionsMessage .= "".$optionName."_";
+        $middleName = $file->id;
+        $middleName .= date("dmy");
+        
+        foreach($file->softwares as $s){
+            if($s->service_id == 1){
+                $middleName .= $s->service_id.$s->software_id;
             }
         }
-        
-        if($file->stage != 'Stage 0'){
-            $fileName = $file->brand.'_'.$file->model.'_'.$file->ecu.'_'.$file->stage.'_'.$optionsMessage.'_v'.$file->files->count()+1;
-        }
-        else{
-            $fileName = $file->brand.'_'.$file->model.'_'.$file->ecu.'_'.$optionsMessage.'_v'.$file->files->count()+1;
-        }
 
+        $fileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count()+1;
+        
         $newFileName = str_replace('/', '', $fileName);
         $newFileName = str_replace('\\', '', $newFileName);
         $newFileName = str_replace('#', '', $newFileName);
@@ -2205,6 +2201,7 @@ class FilesController extends Controller
 
         $engineerFile = new RequestFile();
         $engineerFile->request_file = $newFileName;
+        $engineerFile->old_name = $oldName;
         $engineerFile->file_type = 'engineer_file';
         $engineerFile->tool_type = 'not_relevant';
         $engineerFile->master_tools = 'not_relevant';
