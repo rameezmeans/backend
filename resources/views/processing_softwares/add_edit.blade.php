@@ -78,7 +78,7 @@
                   <p>{{  $file->file_id }}</p>
                 </td>
                 <td class="v-align-middle">
-                  <p>{{  }}</p>
+                  <p></p>
                 </td>
               
               </tr>
