@@ -69,7 +69,7 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($processingSoftware->files()->distinct() as $file)
+              @foreach($processingSoftware->files() as $file)
              
               @php
                   
