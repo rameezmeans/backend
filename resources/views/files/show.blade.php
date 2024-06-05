@@ -201,6 +201,7 @@ margin-bottom: 10px !important;
 
                             {{-- @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id) --}}
                             @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id || $file->tool_id != $kess3Label->id)
+                            <p>here we are</p>
                               @if(!$file->decoded_files->isEmpty())
                                 @foreach($file->decoded_files as $decodedFile)
                                   {{-- @php dd($decodedFile->name); @endphp --}}
@@ -214,6 +215,7 @@ margin-bottom: 10px !important;
                                 @endforeach
                               @endif
                             @endif
+
                           @endif
 
                           @endif 
@@ -2401,6 +2403,7 @@ margin-bottom: 10px !important;
                                 @endforeach
                               @endif
                             @endif
+
                           @endif
 
                           @endif
