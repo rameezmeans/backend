@@ -68,10 +68,12 @@ class HomeController extends Controller
 
         $totalFileCountToday = File::where('front_end_id', $request->frontend_id)
         ->whereRaw('date(created_at) = curdate()')
+        ->where('test', 0)
         ->count();
 
         $autotunedFileCountToday = File::where('checking_status', 'completed')
         ->where('front_end_id', $request->frontend_id)
+        ->where('test', 0)
         ->whereRaw('date(created_at) = curdate()')
         ->count();
 
@@ -79,6 +81,7 @@ class HomeController extends Controller
 
         $totalTime = File::where('checking_status', 'completed')
         ->where('front_end_id', $request->frontend_id)
+        ->where('test', 0)
         ->whereRaw('date(created_at) = curdate()')
         ->sum('response_time');
 
@@ -92,10 +95,12 @@ class HomeController extends Controller
 
         $totalsevenDaysCount = File::where('front_end_id', $request->frontend_id)
         ->where('created_at', '>=', $date)
+        ->where('test', 0)
         ->count();
         
         $autotunedFileCountSevendays = File::where('checking_status', 'completed')
         ->where('front_end_id', $request->frontend_id)
+        ->where('test', 0)
         ->where('created_at', '>=', $date)
         ->count();
 
@@ -103,6 +108,7 @@ class HomeController extends Controller
 
         $totalTimeSevendays = File::where('checking_status', 'completed')
         ->where('front_end_id', $request->frontend_id)
+        ->where('test', 0)
         ->whereRaw('date(created_at) = curdate()')
         ->sum('response_time');
 
@@ -115,10 +121,12 @@ class HomeController extends Controller
         $date = Carbon::now()->subDays(30);
 
         $total30DaysCount = File::where('front_end_id', $request->frontend_id)
+        ->where('test', 0)
         ->where('created_at', '>=', $date)
         ->count();
 
         $autotunedFileCount30days = File::where('checking_status', 'completed')
+        ->where('test', 0)
         ->where('front_end_id', $request->frontend_id)
         ->where('created_at', '>=', $date)
         ->count();
@@ -126,6 +134,7 @@ class HomeController extends Controller
         $AvgRT30days = 0;
 
         $totalTime30days = File::where('checking_status', 'completed')
+        ->where('test', 0)
         ->where('front_end_id', $request->frontend_id)
         ->whereRaw('date(created_at) = curdate()')
         ->sum('response_time');
@@ -139,10 +148,12 @@ class HomeController extends Controller
         $date = Carbon::now()->subDays(365);
 
         $total365DaysCount = File::where('front_end_id', $request->frontend_id)
+        ->where('test', 0)
         ->where('created_at', '>=', $date)
         ->count();
 
         $autotunedFileCount365days = File::where('checking_status', 'completed')
+        ->where('test', 0)
         ->where('front_end_id', $request->frontend_id)
         ->where('created_at', '>=', $date)
         ->count();
@@ -150,6 +161,7 @@ class HomeController extends Controller
         $AvgRT365days = 0;
 
         $totalTime365days = File::where('checking_status', 'completed')
+        ->where('test', 0)
         ->where('front_end_id', $request->frontend_id)
         ->whereRaw('date(created_at) = curdate()')
         ->sum('response_time');
@@ -172,6 +184,7 @@ class HomeController extends Controller
         ->where('front_end_id', $frontEndID)
         ->whereNotIN('id', [65,80])
         ->groupBy('country')
+        ->where('test', 0)
         ->selectRaw('count(*) as count,country')
         ->get();
 
@@ -199,6 +212,7 @@ class HomeController extends Controller
 
         $topBrandsObj = File::groupBy('brand')
         ->where('front_end_id', $request->frontend_id)
+        ->where('test', 0)
         ->selectRaw('count(*) as count,brand')
         ->get();
 
@@ -282,10 +296,12 @@ class HomeController extends Controller
             foreach($engineers as $engineer){
 
                 $totalResponseTime = File::where('assigned_to', $engineer->id)
+                ->where('test', 0)
                 ->where('front_end_id', $request->frontend_id)
                 ->sum('response_time');
                 
                 $count = File::where('assigned_to', $engineer->id)
+                ->where('test', 0)
                 ->where('front_end_id', $request->frontend_id)
                 ->count();
 
@@ -304,9 +320,11 @@ class HomeController extends Controller
             $showAverage = true;
             $engineer = User::FindOrFail($request->reponse_engineer);
             $totalResponseTime = File::where('assigned_to', $engineer->id)
+            ->where('test', 0)
             ->where('front_end_id', $request->frontend_id)
             ->sum('response_time');
             $count = File::where('assigned_to', $engineer->id)
+            ->where('test', 0)
             ->where('front_end_id', $request->frontend_id)
             ->count();
 
@@ -432,6 +450,7 @@ class HomeController extends Controller
             $min = DB::table('credits')
             
             ->where('credits', '>', 0)
+            ->where('test', 0)
             ->select('created_at')
             ->orderBy('created_at', 'asc')->first();
             
@@ -448,6 +467,7 @@ class HomeController extends Controller
 
             $max = DB::table('credits')
             ->where('credits', '>', 0)
+            ->where('test', 0)
             ->select('created_at')
             ->orderBy('created_at', 'desc')->first();
             
@@ -486,6 +506,7 @@ class HomeController extends Controller
                 ->where('users.front_end_id', $request->frontend_id)
                 ->where('credits', '>', 0)
                 ->whereDay('credits.created_at',$day)
+                ->where('credits.test', 0)
                 ->whereDate('credits.created_at', '>' ,'2023-01-17')
                 ->sum('credits');
 
@@ -496,11 +517,13 @@ class HomeController extends Controller
                 ->whereMonth('created_at',$month)
                 ->whereDay('created_at',$day)
                 ->where('credits', '>', 0)
+                ->where('test', 0)
                 ->sum('credits');
             }
         }
 
         $grandTotal = Credit::where('credits', '>', 0)
+        ->where('test', 0)
         ->sum('credits');
 
         $customers = sizeof(get_customers());
@@ -508,6 +531,7 @@ class HomeController extends Controller
         $avgTotal = $grandTotal / $customers;
 
         $topCustomers = Credit::where('credits', '>', 0)
+        ->where('test', 0)
         ->join('users', 'users.id', 'credits.user_id')
         ->where('users.front_end_id', $request->frontend_id)
         ->groupBy('user_id')
@@ -559,7 +583,9 @@ class HomeController extends Controller
         $graph = [];
 
         if(!$request->start){
-            $min = DB::table('files')->select('created_at')->where('front_end_id', $request->frontend_id)->orderBy('created_at', 'asc')->first();
+            $min = DB::table('files')->select('created_at')
+            ->where('test', 0)
+            ->where('front_end_id', $request->frontend_id)->orderBy('created_at', 'asc')->first();
             $start = $min->created_at;
         }
         else{
@@ -569,7 +595,9 @@ class HomeController extends Controller
         }
 
         if(!$request->end){
-            $max = DB::table('files')->select('created_at')->where('front_end_id', $request->frontend_id)->orderBy('created_at', 'desc')->first();
+            $max = DB::table('files')
+            ->where('test', 0)
+            ->select('created_at')->where('front_end_id', $request->frontend_id)->orderBy('created_at', 'desc')->first();
             $end = $max->created_at;
         }
         else{
@@ -589,22 +617,22 @@ class HomeController extends Controller
             $month = $date->format('m');
             
             if($request->engineer_files == "all_engineers"){
-                $weekCount []= File::whereMonth('created_at',$month)->where('front_end_id', $request->frontend_id)->whereDay('created_at',$day)->count();
+                $weekCount []= File::whereMonth('created_at',$month)->where('test', 0)->where('front_end_id', $request->frontend_id)->whereDay('created_at',$day)->count();
             }
             else{
-                $weekCount []= File::where('assigned_to', $request->engineer_files)->where('front_end_id', $request->frontend_id)->whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
+                $weekCount []= File::where('assigned_to', $request->engineer_files)->where('test', 0)->where('front_end_id', $request->frontend_id)->whereMonth('created_at',$month)->whereDay('created_at',$day)->count();
             }
         }
 
         $totalEngineers = sizeof(get_engineers());
 
         if($request->engineer_files == "all_engineers"){
-            $files = File::whereBetween('created_at', array($start, $end))->where('front_end_id', $request->frontend_id)->where('is_credited', 1)->get();
-            $totalFiles = File::whereBetween('created_at', array($start, $end))->where('front_end_id', $request->frontend_id)->where('is_credited', 1)->count();
+            $files = File::whereBetween('created_at', array($start, $end))->where('test', 0)->where('front_end_id', $request->frontend_id)->where('is_credited', 1)->get();
+            $totalFiles = File::whereBetween('created_at', array($start, $end))->where('test', 0)->where('front_end_id', $request->frontend_id)->where('is_credited', 1)->count();
         }
         else{
-            $files = File::where('assigned_to', $request->engineer_files)->where('front_end_id', $request->frontend_id)->whereBetween('created_at', array($start, $end))->where('is_credited', 1)->get();
-            $totalFiles = File::where('assigned_to', $request->engineer_files)->where('front_end_id', $request->frontend_id)->whereBetween('created_at', array($start, $end))->where('is_credited', 1)->count();
+            $files = File::where('assigned_to', $request->engineer_files)->where('test', 0)->where('front_end_id', $request->frontend_id)->whereBetween('created_at', array($start, $end))->where('is_credited', 1)->get();
+            $totalFiles = File::where('assigned_to', $request->engineer_files)->where('test', 0)->where('front_end_id', $request->frontend_id)->whereBetween('created_at', array($start, $end))->where('is_credited', 1)->count();
         }
 
         $grandTotal = File::count();
@@ -639,7 +667,7 @@ class HomeController extends Controller
         }
 
         if(!$request->end){
-            $max = DB::table('files')->select('created_at')->orderBy('created_at', 'desc')->first();
+            $max = DB::table('files')->select('created_at')->where('test', 0)->orderBy('created_at', 'desc')->first();
             $end = $max->created_at;
         }
         else{
@@ -656,6 +684,7 @@ class HomeController extends Controller
             $day = $date->format('d');
             $month = $date->format('m');
             $weekCount []= File::whereMonth('created_at',$month)
+            ->where('test', 0)
             ->where('front_end_id', $request->frontend_id)
             ->where('checking_status', 'completed')
             ->whereDay('created_at',$day)->count();
@@ -663,15 +692,18 @@ class HomeController extends Controller
         }
         
         $totalAutoTunedFiles = File::whereBetween('created_at', array($start, $end))
+        ->where('test', 0)
         ->where('front_end_id', $request->frontend_id)
         ->where('checking_status', 'completed')
         ->where('is_credited', 1)->count();
 
         $totalFiles = File::whereBetween('created_at', array($start, $end))
+        ->where('test', 0)
         ->where('front_end_id', $request->frontend_id)
         ->where('is_credited', 1)->count();
 
         $totalFilesManual = File::whereBetween('created_at', array($start, $end))
+        ->where('test', 0)
         ->where('front_end_id', $request->frontend_id)
         ->whereNot('checking_status', 'completed')
         ->where('is_credited', 1)->count();
