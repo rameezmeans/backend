@@ -77,6 +77,8 @@ Route::get('/tasks', function () {
 
     $file = File::findOrFail(3317);
 
+    $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
+
     dd($file->tool_id.'-'.$kess3Label->id);
 
     // $allRecs = FileReplySoftwareService::all();
