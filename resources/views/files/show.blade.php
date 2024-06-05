@@ -2377,13 +2377,13 @@ margin-bottom: 10px !important;
                             $oriFile = \App\Models\File::findOrFail($file->original_file_id);
                           @endphp
                               
-                                <a href="{{ route('download', [$$oriFile->id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                                <a href="{{ route('download', [$oriFile->id, $oriFile->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                                 </a>
                               
                             
                                 
                             @if($oriFile->decoded_mode == 0)
-                              <a href="{{ route('download', [$$oriFile->id, $$oriFile->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                              <a href="{{ route('download', [$oriFile->id, $oriFile->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                               </a>
                             @endif
 
