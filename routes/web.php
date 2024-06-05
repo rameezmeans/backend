@@ -75,9 +75,9 @@ Route::get('/info', function () {
 
 Route::get('/tasks', function () {
 
-    $file = File::findOrFail(3292);
+    $file = File::findOrFail(3298);
 
-    dd($file->stage_services);
+    dd($file->decoded_files);
 
     // $allRecs = FileReplySoftwareService::all();
 
