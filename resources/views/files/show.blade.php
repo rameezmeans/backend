@@ -876,7 +876,7 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
 
-                            @foreach($file->files_and_messages_sorted() as $message)
+                            @foreach($file->files->toArray() as $message)
 
                             <div class="card">
 
@@ -2992,7 +2992,7 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
 
-                            @foreach($file->files_and_messages_sorted() as $message)
+                            @foreach($file->files->toArray() as $message)
 
 
                             <div class="card">
