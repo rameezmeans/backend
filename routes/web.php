@@ -75,11 +75,34 @@ Route::get('/info', function () {
 
 Route::get('/tasks', function () {
 
-    $file = File::findOrFail(3317);
+    $files = File::all();
+    $credits = Credit::all();
 
-    $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
+    foreach($files as $f){
+        $user = User::findOrFail($f->user_id);
 
-    dd(!$file->decoded_files->isEmpty());
+        if($user->test){
+            $f->test = 1;
+            $f->save();
+        }
+    }
+
+    foreach($credits as $c){
+        $user = User::findOrFail($c->user_id);
+
+        if($user->test){
+            $c->test = 1;
+            $c->save();
+        }
+    }
+
+    dd("test updated");
+
+    // $file = File::findOrFail(3317);
+
+    // $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
+
+    // dd(!$file->decoded_files->isEmpty());
 
     // $allRecs = FileReplySoftwareService::all();
 
