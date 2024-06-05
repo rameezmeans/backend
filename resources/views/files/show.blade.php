@@ -4363,14 +4363,14 @@ margin-bottom: 10px !important;
             
             engineerFileDrop1.on("success", function(file) {
       
-                  console.log('mog');
+                  console.log($file);
             
                   engineerFileDrop1.removeFile(file);
                   
-                  location.reload();
+                  // location.reload();
                 })
                 .on("complete", function(file) {
-                  location.reload();
+                  // location.reload();
                 }).on('error', function(e){
                   
                 });

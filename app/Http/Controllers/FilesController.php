@@ -2293,6 +2293,7 @@ class FilesController extends Controller
 
             if($file->alientech_file){ // if slot id is assigned
                 $slotID = $file->alientech_file->slot_id;
+                dd($path);
                 $this->alientechObj->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType, $engineerFile );
             }
         }
