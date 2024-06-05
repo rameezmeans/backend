@@ -2372,33 +2372,39 @@ margin-bottom: 10px !important;
                           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'download-client-file'))
                           
                           @if($file->original_file_id)
+
+                          @php
+                            $oriFile = File::findOrFail($file->original_file_id);
+                          @endphp
                               
-                                <a href="{{ route('download', [$file->original_file_id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                                <a href="{{ route('download', [$$oriFile->id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                                 </a>
                               
-                            @else
+                            
                                 
-                            @if($file->decoded_mode == 0)
-                              <a href="{{ route('download', [$file->id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                            @if($oriFile->decoded_mode == 0)
+                              <a href="{{ route('download', [$$oriFile->id, $$oriFile->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                               </a>
                             @endif
 
-                            @if($file->acm_file)
-                              <a href="{{ route('download', [$file->id, $file->acm_file, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's ACM MCM/ECM File</span>
+                            @if($oriFile->acm_file)
+                              <a href="{{ route('download', [$oriFile->id, $oriFile->acm_file, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's ACM MCM/ECM File</span>
                               </a>
                               @endif
 
-                            @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
-                            {{-- @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id || $file->tool_id != $kess3Label->id) --}}
-                            here we are.
-                              @if(!$file->decoded_files->isEmpty())
-                                @foreach($file->decoded_files as $decodedFile)
+                              
+
+                            {{-- @if($oriFile->tool_type == 'slave' && $oriFile->tool_id == $kess3Label->id) --}}
+                            @if($oriFile->tool_type == 'slave' && $oriFile->tool_id == $kess3Label->id || $oriFile->tool_id != $kess3Label->id)
+                            {{-- here we are. --}}
+                              @if(!$oriFile->decoded_files->isEmpty())
+                                @foreach($oriFile->decoded_files as $decodedFile)
                                   {{-- @php dd($decodedFile->name); @endphp --}}
                                   @if( $decodedFile->extension && $decodedFile->extension != "")
-                                    <a href="{{ route('download', [$file->id, $decodedFile->name.'.'.$decodedFile->extension, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$decodedFile->extension}})</span>
+                                    <a href="{{ route('download', [$oriFile->id, $decodedFile->name.'.'.$decodedFile->extension, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$decodedFile->extension}})</span>
                                     </a>
                                   @else
-                                    <a href="{{ route('download', [$file->id, $decodedFile->name, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File</span>
+                                    <a href="{{ route('download', [$oriFile->id, $decodedFile->name, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File</span>
                                     </a>
                                   @endif
                                 @endforeach
