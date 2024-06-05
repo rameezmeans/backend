@@ -2374,7 +2374,7 @@ margin-bottom: 10px !important;
                           @if($file->original_file_id)
 
                           @php
-                            $oriFile = File::findOrFail($file->original_file_id);
+                            $oriFile = \App\Models\File::findOrFail($file->original_file_id);
                           @endphp
                               
                                 <a href="{{ route('download', [$$oriFile->id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
