@@ -2382,10 +2382,10 @@ margin-bottom: 10px !important;
                               
                             
                                 
-                            @if($oriFile->decoded_mode == 0)
+                            {{-- @if($oriFile->decoded_mode == 0)
                               <a href="{{ route('download', [$oriFile->id, $oriFile->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                               </a>
-                            @endif
+                            @endif --}}
 
                             @if($oriFile->acm_file)
                               <a href="{{ route('download', [$oriFile->id, $oriFile->acm_file, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's ACM MCM/ECM File</span>
