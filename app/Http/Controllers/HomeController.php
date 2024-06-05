@@ -531,7 +531,7 @@ class HomeController extends Controller
         $avgTotal = $grandTotal / $customers;
 
         $topCustomers = Credit::where('credits', '>', 0)
-        ->where('test', 0)
+        ->where('credits.test', 0)
         ->join('users', 'users.id', 'credits.user_id')
         ->where('users.front_end_id', $request->frontend_id)
         ->groupBy('user_id')
