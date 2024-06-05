@@ -77,7 +77,7 @@ Route::get('/tasks', function () {
 
     $file = File::findOrFail(3317);
 
-    dd($file->tool_type);
+    dd($file->tool_id.'-'.$kess3Label->id);
 
     // $allRecs = FileReplySoftwareService::all();
 
