@@ -3184,7 +3184,7 @@ margin-bottom: 10px !important;
                                 </div>
 
                                 <div class="clearfix"></div>
-                                {{-- @if($file->no_longer_auto == 0)
+                                @if($file->no_longer_auto == 0)
                                   @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
                                   <div>
                                     <p>Please click on "Download Encrypted" Button to download and test the system. This way user will get Encrypted file or you will get the error so that you can process the file, manually.</p>
@@ -3194,7 +3194,7 @@ margin-bottom: 10px !important;
                                     </a>
                                   </div>
                                   @endif
-                                  @endif --}}
+                                  @endif
                                 <div class="clearfix"></div>
                                 <span class="btn-sm btn-cons btn-success m-t-50">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>
                             </div>
@@ -4367,10 +4367,10 @@ margin-bottom: 10px !important;
             
                   engineerFileDrop1.removeFile(file);
                   
-                  // location.reload();
+                  location.reload();
                 })
                 .on("complete", function(file) {
-                  // location.reload();
+                  location.reload();
                 }).on('error', function(e){
                   
                 });

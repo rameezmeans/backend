@@ -538,8 +538,6 @@ class AlientechController extends Controller
 
             $syncResponse = Http::withHeaders($headers)->post($url, $postInput);                
             $syncResponseBody = json_decode($syncResponse->getBody(), true);
-
-            dd($file);
             
             $alientTechFile = new AlientechFile();
             $alientTechFile->guid = $syncResponseBody['guid'];
