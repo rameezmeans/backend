@@ -928,6 +928,7 @@ if(!function_exists('get_customers')){
         if($frontendID == 0){
             $customers = User::orderBy('created_at', 'desc')
             ->where('role_id', $customerRole->id)
+            ->where('test', 0)
             ->where('name' ,'!=', 'Live Chat')
             ->where('name' ,'!=', 'Live Chat Sub')
             ->whereNotNull('front_end_id')
@@ -937,6 +938,7 @@ if(!function_exists('get_customers')){
             $customers = User::orderBy('created_at', 'desc')
             ->where('role_id', $customerRole->id)
             ->where('front_end_id', $frontendID)
+            ->where('test', 0)
             ->where('name' ,'!=', 'Live Chat')
             ->where('name' ,'!=', 'Live Chat Sub')
             ->get();
