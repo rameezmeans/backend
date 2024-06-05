@@ -75,19 +75,23 @@ Route::get('/info', function () {
 
 Route::get('/tasks', function () {
 
-    $allRecs = FileReplySoftwareService::all();
+    $file = File::findOrFail(3287);
 
-    foreach($allRecs as $r){
-        if($r->reply_id == NULL){
-            $r->delete();
-        }
+    dd($file->stage_services);
 
-        if(File::where('id', $r->file_id)->first() == NULL){
-            $r->delete();
-        }
-    }
+    // $allRecs = FileReplySoftwareService::all();
 
-    dd('clear recs');
+    // foreach($allRecs as $r){
+    //     if($r->reply_id == NULL){
+    //         $r->delete();
+    //     }
+
+    //     if(File::where('id', $r->file_id)->first() == NULL){
+    //         $r->delete();
+    //     }
+    // }
+
+    // dd('clear recs');
 
     // $files = File::all();
 

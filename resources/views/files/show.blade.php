@@ -3816,8 +3816,10 @@ margin-bottom: 10px !important;
                         <h5 class="m-t-20">Stages Options</h5>
                         @foreach($stages as $stage)
                           <div class="radio radio-success">
+                            @if($file->stage_services)
                             <input class="stages" type="radio" @if($file->stage_services->service_id == $stage->id) checked="checked" @endif value="{{$stage->id}}" name="custom_stage" id="{{$stage->id}}">
                             <label for="{{$stage->id}}">{{$stage->name}}</label>
+                            @endif
                           </div>
                         @endforeach
                       </div>
