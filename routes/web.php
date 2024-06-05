@@ -77,7 +77,7 @@ Route::get('/tasks', function () {
 
     $file = File::findOrFail(3317);
 
-    dd($file->decoded_files);
+    dd($file->tool_type);
 
     // $allRecs = FileReplySoftwareService::all();
 
