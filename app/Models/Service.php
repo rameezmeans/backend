@@ -45,7 +45,7 @@ class Service extends Model
         ->where('file_reply_software_service.service_id', $this->id)
         ->where('file_reply_software_service.software_id', $softwareID)
         ->select('*', 'files.id AS file_id')
-        ->get();
+        ->distinct()->count('file_reply_software_service.reply_id');
 
         // $fileProcessedWithSoftware = File::join('file_reply_software_service', 'files.id', '=', 'file_reply_software_service.file_id')
         // ->where('file_reply_software_service.service_id', $this->id)
@@ -55,20 +55,16 @@ class Service extends Model
         // ->where('files.ecu', $ecu)->where('files.brand', $brand)
         // ->distinct()->count('file_reply_software_service.reply_id');
 
-        dd($fileProcessedWithSoftware);
-
-        return 0;
+        // dd($fileProcessedWithSoftware);
 
         if($fileProcessedWithSoftware == 0){
             return 0;
         }
         else{
 
-            return ($fileProcessedWithSoftware / $totalRevisions) * 100;
+            return round(($fileProcessedWithSoftware / $totalRevisions) * 100);
 
         }
-
-        return 0;
 
     }
 
