@@ -30,15 +30,18 @@ class Service extends Model
         ->where('file_services.service_id', $this->id)
         ->get();
 
-        // dd($files);
-
         $totalRevisions = 0;
 
         foreach($files as $file){
             $totalRevisions += $file->files->count();
         }
 
-        dd($totalRevisions);
+        $fileProcessedWithSoftware = FileReplySoftwareService::where('file_reply_software_service.service_id', $this->id)
+        ->join('files', 'files_id', '=', 'file_reply_software_service.file_id')
+        ->where('file_reply_software_service.software_id', $softwareID)
+        ->distinct()->count('file_reply_software_service.reply_id');
+
+        dd($fileProcessedWithSoftware);
 
         // return FileReplySoftwareService::where('service_id', $this->id)->where('software_id', $softwareID)->distinct()->count('reply_id');
     }
