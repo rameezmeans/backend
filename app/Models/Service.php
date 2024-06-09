@@ -39,11 +39,10 @@ class Service extends Model
             $totalRevisions += $file->files->count();
         }
 
-        $fileProcessedWithSoftware = File::where('files.ecu', $ecu)->where('files.brand', $brand)
-        ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        $fileProcessedWithSoftware = File::join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
         // ->where('file_reply_software_service.service_id', $this->id)
         ->where('file_reply_software_service.service_id', $this->id)
-        ->where('file_reply_software_service.software_id', $softwareID)
+        // ->where('file_reply_software_service.software_id', $softwareID)
         ->select('*', 'files.id AS file_id')
         ->get();
 
