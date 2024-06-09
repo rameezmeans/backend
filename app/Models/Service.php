@@ -27,6 +27,8 @@ class Service extends Model
 
         $files = File::where('ecu', $ecu)->where('brand', $brand)->get();
 
+        dd($files);
+
         $totalRevisions = 0;
 
         foreach($files as $file){
