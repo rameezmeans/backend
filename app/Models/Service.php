@@ -56,6 +56,8 @@ class Service extends Model
 
         // dd($fileProcessedWithSoftware);
 
+        return 0;
+
         if($fileProcessedWithSoftware == 0){
             return 0;
         }
