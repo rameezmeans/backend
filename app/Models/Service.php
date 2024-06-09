@@ -23,8 +23,19 @@ class Service extends Model
         return FileReplySoftwareService::where('service_id', $this->id)->distinct()->get('software_id');
     }
 
-    public function revisions($softwareID){
-        return FileReplySoftwareService::where('service_id', $this->id)->where('software_id', $softwareID)->distinct()->count('reply_id');
+    public function revisions($softwareID, $ecu, $brand){
+
+        $files = File::where('ecu', $ecu)->where('brand', $brand)->get();
+
+        $totalRevisions = 0;
+
+        foreach($files as $file){
+            $totalRevisions += $file->files->count();
+        }
+
+        dd($totalRevisions);
+
+        // return FileReplySoftwareService::where('service_id', $this->id)->where('software_id', $softwareID)->distinct()->count('reply_id');
     }
 
     public function stages_option($optionID){
