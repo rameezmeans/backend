@@ -28,6 +28,7 @@ class Service extends Model
         $files = File::where('files.ecu', $ecu)->where('files.brand', $brand)
         ->join('file_services', 'file_services.file_id', '=', 'files.id')
         ->where('file_services.service_id', $this->id)
+        ->select('*, file.id AS file_id')
         ->get();
 
         dd($files);
