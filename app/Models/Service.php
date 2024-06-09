@@ -57,7 +57,7 @@ class Service extends Model
 
         // dd($fileProcessedWithSoftware);
 
-        if($fileProcessedWithSoftware == 0){
+        if($totalRevisions == 0){
             return 0;
         }
         else{
