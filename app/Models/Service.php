@@ -39,6 +39,7 @@ class Service extends Model
         $fileProcessedWithSoftware = FileReplySoftwareService::where('file_reply_software_service.service_id', $this->id)
         ->join('files', 'files.id', '=', 'file_reply_software_service.file_id')
         ->where('file_reply_software_service.software_id', $softwareID)
+        ->where('files.ecu', $ecu)->where('files.brand', $brand)
         ->distinct()->count('file_reply_software_service.reply_id');
 
         dd($fileProcessedWithSoftware);
