@@ -54,7 +54,7 @@ class Service extends Model
         // ->where('files.ecu', $ecu)->where('files.brand', $brand)
         // ->distinct()->count('file_reply_software_service.reply_id');
 
-        dd($fileProcessedWithSoftware);
+        // dd($fileProcessedWithSoftware);
 
         if($fileProcessedWithSoftware == 0){
             return 0;
