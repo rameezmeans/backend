@@ -30,7 +30,7 @@ class Service extends Model
         ->where('file_services.service_id', $this->id)
         ->get();
 
-        dd($files);
+        // dd($files);
 
         $totalRevisions = 0;
 
