@@ -65,6 +65,8 @@ class Service extends Model
 
         }
 
+        return 0;
+
     }
 
     public function stages_option($optionID){
