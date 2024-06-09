@@ -25,7 +25,10 @@ class Service extends Model
 
     public function revisions($softwareID, $ecu, $brand){
 
-        $files = File::where('ecu', $ecu)->where('brand', $brand)->get();
+        $files = File::where('files.ecu', $ecu)->where('files.brand', $brand)
+        ->join('file_services', 'file_services.file_id', '=', 'files.id')
+        ->where('file_services.service_id', $this->id)
+        ->get();
 
         dd($files);
 
