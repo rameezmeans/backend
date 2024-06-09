@@ -31,7 +31,7 @@ class Service extends Model
         ->select('*', 'files.id AS file_id')
         ->get();
 
-        dd($files);
+        // dd($files);
 
         $totalRevisions = 0;
 
@@ -41,6 +41,7 @@ class Service extends Model
 
         $fileProcessedWithSoftware = File::where('file_reply_software_service.service_id', $this->id)
         ->join('file_reply_software_service', 'files.id', '=', 'file_reply_software_service.file_id')
+        ->where('files.ecu', $ecu)->where('files.brand', $brand)
         ->where('file_reply_software_service.software_id', $softwareID)
         ->get();
         // ->where('files.ecu', $ecu)->where('files.brand', $brand)
