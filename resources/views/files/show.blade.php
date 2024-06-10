@@ -603,6 +603,11 @@ margin-bottom: 10px !important;
                             <div class="clearfix"></div>
                           </div>
                           <div class="b-t b-grey p-b-10 p-t-10">
+
+                            @php
+                              dd($stage->softwares());
+                            @endphp
+
                             @foreach($stage->softwares() as $s)
                             <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
