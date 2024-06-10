@@ -919,6 +919,33 @@ if(!function_exists('send_error_email')){
     }
 }
 
+if(!function_exists('all_files_with_this_ecu_brand_and_service')){
+
+    function all_files_with_this_ecu_brand_and_service($ecu, $brand, $serviceID){
+        $files = File::where('files.ecu', $ecu)->where('files.brand', $brand)
+        ->join('file_services', 'file_services.file_id', '=', 'files.id')
+        ->where('file_services.service_id', $serviceID)
+        ->select('*', 'files.id AS file_id')
+        ->get();
+
+        return $files;
+    }
+}
+
+if(!function_exists('all_files_with_this_ecu_brand_and_service_and_software')){
+
+    function all_files_with_this_ecu_brand_and_service_and_software($ecu, $brand, $serviceID, $softwareID){
+        $fileProcessedWithSoftware = File::where('files.ecu', $ecu)->where('files.brand', $brand)
+        ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        ->where('file_reply_software_service.service_id', $serviceID)
+        ->where('file_reply_software_service.software_id', $softwareID)
+        ->select('*', 'files.id AS file_id')
+        ->distinct()->count('file_reply_software_service.reply_id');
+
+        return $fileProcessedWithSoftware;
+    }
+}
+
 if(!function_exists('get_customers')){
 
     function get_customers($frontendID = 0){

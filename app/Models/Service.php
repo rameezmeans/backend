@@ -25,37 +25,14 @@ class Service extends Model
 
     public function revisions($softwareID, $ecu, $brand){
 
-        $files = File::where('files.ecu', $ecu)->where('files.brand', $brand)
-        ->join('file_services', 'file_services.file_id', '=', 'files.id')
-        ->where('file_services.service_id', $this->id)
-        ->select('*', 'files.id AS file_id')
-        ->get();
-
-        // dd($files);
+        $files = all_files_with_this_ecu_brand_and_service($ecu, $brand, $this->id);
 
         $totalRevisions = 0;
-
         foreach($files as $file){
             $totalRevisions += $file->files->count();
         }
 
-        $fileProcessedWithSoftware = File::where('files.ecu', $ecu)->where('files.brand', $brand)
-        ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
-        // ->where('file_reply_software_service.service_id', $this->id)
-        ->where('file_reply_software_service.service_id', $this->id)
-        ->where('file_reply_software_service.software_id', $softwareID)
-        ->select('*', 'files.id AS file_id')
-        ->distinct()->count('file_reply_software_service.reply_id');
-
-        // $fileProcessedWithSoftware = File::join('file_reply_software_service', 'files.id', '=', 'file_reply_software_service.file_id')
-        // ->where('file_reply_software_service.service_id', $this->id)
-        // // ->where('files.ecu', $ecu)->where('files.brand', $brand)
-        // ->where('file_reply_software_service.software_id', $softwareID)
-        // ->get();
-        // ->where('files.ecu', $ecu)->where('files.brand', $brand)
-        // ->distinct()->count('file_reply_software_service.reply_id');
-
-        // dd($fileProcessedWithSoftware);
+        $fileProcessedWithSoftware = all_files_with_this_ecu_brand_and_service_and_software($ecu, $brand, $this->id, $softwareID);
 
         if($totalRevisions == 0){
             return 0;

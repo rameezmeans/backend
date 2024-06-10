@@ -73,6 +73,19 @@ Route::get('/info', function () {
     dd(phpinfo());
 });
 
+Route::get('/all_files/{id}/{service_id}', function ($id, $serviceID) {
+    $file = File::findOrFail($id);
+    dd(all_files_with_this_ecu_brand_and_service($file->ecu, $file->brand, $serviceID));
+
+});
+
+
+Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function ($id, $serviceID, $softwareID) {
+    $file = File::findOrFail($id);
+    dd(all_files_with_this_ecu_brand_and_service_and_software($file->ecu, $file->brand, $serviceID, $softwareID));
+
+});
+
 Route::get('/tasks', function () {
 
     $files = File::all();
