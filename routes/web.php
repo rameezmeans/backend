@@ -88,6 +88,16 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 Route::get('/tasks', function () {
 
+    $recs = FileReplySoftwareService::all();
+
+    foreach($recs as $r){
+        $c = RequestFile::where('id',$r->reply_id)->first();
+
+        if($c == NULL){
+            $r->delete();
+        }
+    }
+
     $files = File::all();
     $credits = Credit::all();
 
