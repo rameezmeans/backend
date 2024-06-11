@@ -20,13 +20,12 @@ class Service extends Model
     }
 
     public function softwares($ecu, $brand){
+
         // return FileReplySoftwareService::where('service_id', $this->id)->distinct()->get('software_id');
 
         $fileProcessed = File::where('files.ecu', $ecu)->where('files.brand', $brand)
         ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
         ->where('file_reply_software_service.service_id', $this->id)
-        
-        ->select('*', 'files.id AS file_id')
         ->distinct()->get('file_reply_software_service.software_id');
 
         return $fileProcessed;
