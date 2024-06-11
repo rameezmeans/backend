@@ -90,7 +90,7 @@ Route::get('/tasks', function () {
 
     $file = File::findOrFail(3267);
 
-    dd($file->files);
+    dd($file->files->count());
 
     $recs = FileReplySoftwareService::all();
 
