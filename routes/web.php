@@ -88,6 +88,10 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 Route::get('/tasks', function () {
 
+    $file = File::findOrFail(3267);
+
+    dd($file->files);
+
     $recs = FileReplySoftwareService::all();
 
     foreach($recs as $r){
