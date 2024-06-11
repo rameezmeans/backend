@@ -88,11 +88,21 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 Route::get('/tasks', function () {
 
-    $file = File::findOrFail(3267);
+    // $file = File::findOrFail(3267);
 
-    dd($file->files->count());
+    // dd($file->files->count());
 
     $recs = FileReplySoftwareService::all();
+
+    foreach($recs as $r){
+        
+
+        if($r->service_id == 1){
+            $r->delete();
+        }
+    }
+
+    dd('stage 0 deleted');
 
     foreach($recs as $r){
         $c = RequestFile::where('id',$r->reply_id)->first();
