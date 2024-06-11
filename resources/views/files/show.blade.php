@@ -604,7 +604,7 @@ margin-bottom: 10px !important;
                           </div>
                           <div class="b-t b-grey p-b-10 p-t-10">
 
-                            @foreach($stage->softwares() as $s)
+                            @foreach($stage->softwares($file->ecu, $file->brand) as $s)
                             <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                             <div class="pull-right">
@@ -639,7 +639,7 @@ margin-bottom: 10px !important;
 
                         <div class="b-t b-grey p-b-10 p-t-10">
                             
-                          @foreach($stage->softwares() as $s)
+                          @foreach($stage->softwares($file->ecu, $file->brand) as $s)
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                           <div class="pull-right">
@@ -678,7 +678,7 @@ margin-bottom: 10px !important;
                               @endif
                               </div>
                               <div class="b-t b-grey p-b-10 p-t-10">
-                                @foreach($optionInner->softwares() as $s)
+                                @foreach($optionInner->softwares($file->ecu, $file->brand) as $s)
                                 <div style="display: flow-root;" class="b-b b-grey">
                                 <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                                 <div class="pull-right">
@@ -2795,7 +2795,7 @@ margin-bottom: 10px !important;
                             <div class="clearfix"></div>
                           </div>
                           <div class="b-t b-grey p-b-10 p-t-10">
-                            @foreach($stage->softwares() as $s)
+                            @foreach($stage->softwares($file->ecu, $file->brand) as $s)
                             <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                             <div class="pull-right">
@@ -2828,7 +2828,7 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
                         <div class="b-t b-grey p-b-10 p-t-10">
-                          @foreach($stage->softwares() as $s)
+                          @foreach($stage->softwares($file->ecu, $file->brand) as $s)
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                           <div class="pull-right">
@@ -2867,7 +2867,7 @@ margin-bottom: 10px !important;
                               </div>
 
                               <div class="b-t b-grey p-b-10 p-t-10">
-                                @foreach($optionInner->softwares() as $s)
+                                @foreach($optionInner->softwares($file->ecu, $file->brand) as $s)
                                 <div style="display: flow-root;" class="b-b b-grey">
                                 <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                                 <div class="pull-right">

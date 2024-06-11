@@ -931,13 +931,13 @@ if(!function_exists('all_files_uploaded')){
 
 
 
-        $totalRevisions = 0;
-        foreach($files as $row){
-            $file = File::findOrFail($row->file_id);
-            $totalRevisions += $file->files->count();
-        }
+        // $totalRevisions = 0;
+        // foreach($files as $row){
+        //     $file = File::findOrFail($row->file_id);
+        //     $totalRevisions += $file->files->count();
+        // }
 
-        return $totalRevisions;
+        // return $totalRevisions;
     }
 }
 if(!function_exists('all_files_with_this_ecu_brand_and_service')){
