@@ -28,6 +28,8 @@ class Service extends Model
         
         ->select('*', 'files.id AS file_id')
         ->distinct()->get('file_reply_software_service.software_id');
+
+        return $fileProcessed;
     }
 
     public function revisions($softwareID, $ecu, $brand){
