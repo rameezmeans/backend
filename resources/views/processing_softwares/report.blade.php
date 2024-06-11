@@ -31,6 +31,8 @@
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">ECU</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Service</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Softare</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Total Uploaded</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Processed using Software</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,6 +49,12 @@
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{\App\Models\ProcessingSoftware::findOrFail($row->software_id)->name}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{all_files_with_this_ecu_brand_and_service($row->ecu, $row->brand, $row->service_id)}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{all_files_with_this_ecu_brand_and_service_and_software($row->ecu, $row->brand, $row->service_id, $row->software_id)}}</p>
                                         </td>
                                     </tr>
                                 @endforeach
