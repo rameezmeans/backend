@@ -37,13 +37,9 @@
                             </thead>
                             <tbody>
                                 @foreach ($softwaresAndBrandsRecords as $row)
-                                    @if($row->file_id == 3350)
-
-                                    @php
-                                        
-                                        dd($row);
                                     
-                                    @endphp
+
+                                    
 
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
@@ -59,13 +55,13 @@
                                             <p>{{\App\Models\ProcessingSoftware::findOrFail($row->software_id)->name}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{all_files_with_this_ecu_brand_and_service($row->ecu, $row->brand, $row->service_id)}}</p>
+                                            <p>{{all_files_with_this_ecu_brand_and_service($\App\Models\File::findOrFail($row->file_id)->ecu, \App\Models\File::findOrFail($row->file_id)->brand, $row->service_id)}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{all_files_with_this_ecu_brand_and_service_and_software($row->ecu, $row->brand, $row->service_id, $row->software_id)}}</p>
+                                            <p>{{all_files_with_this_ecu_brand_and_service_and_software(\App\Models\File::findOrFail($row->file_id)->ecu, \App\Models\File::findOrFail($row->file_id)->brand, $row->service_id, $row->software_id)}}</p>
                                         </td>
                                     </tr>
-                                    @endif
+                                    
                                 @endforeach
                             </tbody>
                         </table>
