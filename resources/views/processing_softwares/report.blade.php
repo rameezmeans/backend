@@ -37,6 +37,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($softwaresAndBrandsRecords as $row)
+                                    @if($row->file_id = 3350)
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{\App\Models\File::findOrFail($row->file_id)->brand}}</p>
@@ -57,6 +58,7 @@
                                             <p>{{all_files_with_this_ecu_brand_and_service_and_software($row->ecu, $row->brand, $row->service_id, $row->software_id)}}</p>
                                         </td>
                                     </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
