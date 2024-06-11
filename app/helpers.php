@@ -929,28 +929,35 @@ if(!function_exists('all_files_uploaded')){
         ->select('*', 'files.id AS file_id')
         ->get();
 
+        $totalRevisions = 0;
+        foreach($files as $row){
+            $file = File::findOrFail($row->file_id);
+            $totalRevisions += $file->files->count();
+        }
 
-
-        // $totalRevisions = 0;
-        // foreach($files as $row){
-        //     $file = File::findOrFail($row->file_id);
-        //     $totalRevisions += $file->files->count();
-        // }
-
-        // return $totalRevisions;
+        return $totalRevisions;
     }
 }
 if(!function_exists('all_files_with_this_ecu_brand_and_service')){
 
-    function all_files_with_this_ecu_brand_and_service($ecu, $brand, $serviceID){
-
-        $filesCount = File::where('files.ecu', $ecu)->where('files.brand', $brand)
-        ->join('file_services', 'file_services.file_id', '=', 'files.id')
-        ->where('file_services.service_id', $serviceID)
+    function all_files_with_this_ecu_brand_and_service($ecu, $brand, $serviceID, $softwareID){
+        
+        $fileProcessedWithSoftware = File::where('files.ecu', $ecu)->where('files.brand', $brand)
+        ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        ->where('file_reply_software_service.service_id', $serviceID)
+        ->where('file_reply_software_service.software_id', $softwareID)
         ->select('*', 'files.id AS file_id')
-        ->count();
+        ->distinct()->count('file_reply_software_service.reply_id');
 
-        return $filesCount;
+        return $fileProcessedWithSoftware;
+
+        // $filesCount = File::where('files.ecu', $ecu)->where('files.brand', $brand)
+        // ->join('file_services', 'file_services.file_id', '=', 'files.id')
+        // ->where('file_services.service_id', $serviceID)
+        // ->select('*', 'files.id AS file_id')
+        // ->count();
+
+        // return $filesCount;
     
         // $fileProcessed = File::where('files.ecu', $ecu)->where('files.brand', $brand)
         // ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')

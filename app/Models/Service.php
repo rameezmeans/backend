@@ -33,7 +33,7 @@ class Service extends Model
 
     public function revisions($softwareID, $ecu, $brand){
 
-        $totalRevisions = all_files_with_this_ecu_brand_and_service($ecu, $brand, $this->id);
+        $totalRevisions = all_files_with_this_ecu_brand_and_service($ecu, $brand, $this->id, $softwareID);
         $fileProcessedWithSoftware = all_files_with_this_ecu_brand_and_service_and_software($ecu, $brand, $this->id, $softwareID);
 
         if($totalRevisions == 0){
