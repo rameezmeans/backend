@@ -55,7 +55,7 @@
                                             <p>{{\App\Models\ProcessingSoftware::findOrFail($row->software_id)->name}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{all_files_with_this_ecu_brand_and_service($\App\Models\File::findOrFail($row->file_id)->ecu, \App\Models\File::findOrFail($row->file_id)->brand, $row->service_id)}}</p>
+                                            <p>{{all_files_with_this_ecu_brand_and_service( \App\Models\File::findOrFail($row->file_id)->ecu, \App\Models\File::findOrFail($row->file_id)->brand, $row->service_id)}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{all_files_with_this_ecu_brand_and_service_and_software(\App\Models\File::findOrFail($row->file_id)->ecu, \App\Models\File::findOrFail($row->file_id)->brand, $row->service_id, $row->software_id)}}</p>
