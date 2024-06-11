@@ -626,6 +626,7 @@ class FilesAPIController extends Controller
                     $engineerFile->save();
                 }
                 else{
+                    
                     $engineerFile = new RequestFile();
                     $engineerFile->request_file = $fileToSave;
                     $engineerFile->file_type = 'engineer_file';
@@ -635,30 +636,31 @@ class FilesAPIController extends Controller
                     $engineerFile->file_id = $file->id;
                     $engineerFile->engineer = true;
                     $engineerFile->save();
-                }
-
-                if($file->stage_services->service_id != 1){
-                    $newRecord = new FileReplySoftwareService();
-                    $newRecord->file_id = $file->id;
-                    $newRecord->service_id = $file->stage_services->service_id;
-                    $newRecord->software_id = 9;
-                    $newRecord->reply_id = $engineerFile->id;
-                    $newRecord->save();
-                }
                 
-                if(!$file->options_services()->get()->isEmpty()){
 
-                    foreach($file->options_services()->get() as $option){
-
+                    if($file->stage_services->service_id != 1){
                         $newRecord = new FileReplySoftwareService();
                         $newRecord->file_id = $file->id;
-                        $newRecord->service_id = $option->service_id;
+                        $newRecord->service_id = $file->stage_services->service_id;
                         $newRecord->software_id = 9;
                         $newRecord->reply_id = $engineerFile->id;
                         $newRecord->save();
-            
                     }
+                    
+                    if(!$file->options_services()->get()->isEmpty()){
 
+                        foreach($file->options_services()->get() as $option){
+
+                            $newRecord = new FileReplySoftwareService();
+                            $newRecord->file_id = $file->id;
+                            $newRecord->service_id = $option->service_id;
+                            $newRecord->software_id = 9;
+                            $newRecord->reply_id = $engineerFile->id;
+                            $newRecord->save();
+                
+                        }
+
+                    }
                 }
 
                     $middleName = $file->id;
