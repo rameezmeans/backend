@@ -31,8 +31,9 @@
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">ECU</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Service</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Softare</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Total Uploaded</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Processed using Software</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Processed using This Software</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Total Processed by All Softwares</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">All Files Uploaded</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,11 +55,16 @@
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{\App\Models\ProcessingSoftware::findOrFail($row->software_id)->name}}</p>
                                         </td>
+                                        
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{all_files_with_this_ecu_brand_and_service_and_software(\App\Models\File::findOrFail($row->file_id)->ecu, \App\Models\File::findOrFail($row->file_id)->brand, $row->service_id, $row->software_id)}}</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{all_files_with_this_ecu_brand_and_service( \App\Models\File::findOrFail($row->file_id)->ecu, \App\Models\File::findOrFail($row->file_id)->brand, $row->service_id)}}</p>
                                         </td>
+
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{all_files_with_this_ecu_brand_and_service_and_software(\App\Models\File::findOrFail($row->file_id)->ecu, \App\Models\File::findOrFail($row->file_id)->brand, $row->service_id, $row->software_id)}}</p>
+                                            <p>{{all_files_uploaded( \App\Models\File::findOrFail($row->file_id)->ecu, \App\Models\File::findOrFail($row->file_id)->brand, $row->service_id)}}</p>
                                         </td>
                                     </tr>
                                     
