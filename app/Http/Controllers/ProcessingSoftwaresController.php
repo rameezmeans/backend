@@ -72,7 +72,7 @@ class ProcessingSoftwaresController extends Controller
     }
 
     public function softwareReport(){
-        $softwaresAndBrandsRecords = FileReplySoftwareService::rightjoin('file_services', 'file_services.file_id', '=', 'file_reply_software_service.file_id')->get();
+        $softwaresAndBrandsRecords = FileReplySoftwareService::innerjoin('file_services', 'file_services.file_id', '=', 'file_reply_software_service.file_id')->get();
         return view('processing_softwares.report', ['softwaresAndBrandsRecords' => $softwaresAndBrandsRecords]);
     }   
 
