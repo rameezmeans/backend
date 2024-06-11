@@ -922,19 +922,31 @@ if(!function_exists('send_error_email')){
 if(!function_exists('all_files_with_this_ecu_brand_and_service')){
 
     function all_files_with_this_ecu_brand_and_service($ecu, $brand, $serviceID){
-        $files = File::where('files.ecu', $ecu)->where('files.brand', $brand)
-        ->join('file_services', 'file_services.file_id', '=', 'files.id')
-        ->where('file_services.service_id', $serviceID)
+        // $files = File::where('files.ecu', $ecu)->where('files.brand', $brand)
+        // ->join('file_services', 'file_services.file_id', '=', 'files.id')
+        // ->where('file_services.service_id', $serviceID)
+        // ->select('*', 'files.id AS file_id')
+        // ->get();
+
+
+
+        // $totalRevisions = 0;
+        // foreach($files as $row){
+        //     $file = File::findOrFail($row->file_id);
+        //     $totalRevisions += $file->files->count();
+        // }
+
+        // return $totalRevisions;
+
+
+        $fileProcessed = File::where('files.ecu', $ecu)->where('files.brand', $brand)
+        ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        ->where('file_reply_software_service.service_id', $serviceID)
+        
         ->select('*', 'files.id AS file_id')
-        ->get();
+        ->distinct()->count('file_reply_software_service.reply_id');
 
-        $totalRevisions = 0;
-        foreach($files as $row){
-            $file = File::findOrFail($row->file_id);
-            $totalRevisions += $file->files->count();
-        }
-
-        return $totalRevisions;
+        return $fileProcessed;
     }
 }
 
