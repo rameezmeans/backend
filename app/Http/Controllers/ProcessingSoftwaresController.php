@@ -73,7 +73,7 @@ class ProcessingSoftwaresController extends Controller
 
     public function softwareReport(){
         $softwaresAndBrandsRecords = FileReplySoftwareService::leftjoin('file_services', 'file_services.file_id', '=', 'file_reply_software_service.file_id')->limit(10)->get();
-        dd($softwaresAndBrandsRecords);
+        // dd($softwaresAndBrandsRecords);
         return view('processing_softwares.report', ['softwaresAndBrandsRecords' => $softwaresAndBrandsRecords]);
     }   
 
