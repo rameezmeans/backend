@@ -927,6 +927,8 @@ if(!function_exists('all_files_with_this_ecu_brand_and_service')){
         ->where('file_services.service_id', $serviceID)
         ->select('*', 'files.id AS file_id')
         ->get();
+
+        dd($files);
         
         $totalRevisions = 0;
         foreach($files as $file){
