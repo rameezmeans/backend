@@ -78,6 +78,10 @@
               <a href="{{ route('credits-reports') }}">Credits Report</a>
               <span class="icon-thumbnail">FR</span>
             </li>
+            <li class="">
+              <a href="{{ route('softwares-report') }}">Softwares Report</a>
+              <span class="icon-thumbnail">FR</span>
+            </li>
           </ul>
         </li>
 

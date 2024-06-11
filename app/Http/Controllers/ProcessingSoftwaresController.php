@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FileReplySoftwareService;
 use App\Models\ProcessingSoftware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,8 +44,8 @@ class ProcessingSoftwaresController extends Controller
      */
     public function edit($id)
     {   
-        $processingSoftware = ProcessingSoftware::findOrFail($id);
-        return view('processing_softwares.add_edit', ['processingSoftware' => $processingSoftware]);
+        
+        return view('processing_softwares.add_edit');
     }
 
     /**
@@ -69,6 +70,11 @@ class ProcessingSoftwaresController extends Controller
         return redirect()->back()->with(["success" => "Software Added."]);
         
     }
+
+    public function softwareReport(){
+        $softwaresAndBrandsRecords = FileReplySoftwareService::join('file_services', 'file_services.file_id', '=', 'file_reply_software_service.file_id')->get();
+        return view('processing_softwares.report', ['softwaresAndBrandsRecords' => $softwaresAndBrandsRecords]);
+    }   
 
     public function update(Request $request)
     {   

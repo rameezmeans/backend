@@ -536,6 +536,7 @@ Route::post('/delete_processing_softwares', [App\Http\Controllers\ProcessingSoft
 Route::post('/create_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'create'])->name('create-processing-softwares');
 Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
 Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
+Route::get('/softwares_report', [App\Http\Controllers\ProcessingSoftwaresController::class, 'softwareReport'])->name('softwares-report');
 
 Route::get('/services', [App\Http\Controllers\ServicesController::class, 'index'])->name('services');
 Route::get('/create_service', [App\Http\Controllers\ServicesController::class, 'create'])->name('create-service');

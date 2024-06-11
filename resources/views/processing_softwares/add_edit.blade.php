@@ -54,61 +54,6 @@
                 
             </div>
           </div>
-
-          <div class="card-body">
-            <div class="table-responsive"
-            
-            style="
-                          
-                          overflow:hidden;
-    overflow-y: scroll;
-    height: 600px;
-
-                          "
-            
-            >
-
-           <table class="table table-hover" id="basicTable"
-           
-
-           >
-            <thead>
-              <tr>
-                
-                
-                <th style="width:20%">Files</th>
-                <th style="width:20%">Revisions</th>
-                
-              </tr>
-            </thead>
-            <tbody>
-              @foreach($processingSoftware->files() as $file)
-             
-              @php
-                  
-                $record = \App\Models\File::findOrFail($file->file_id);
-              @endphp
-
-              <tr>
-                
-                <td class="v-align-middle ">
-                  <p><a href="{{route('file', $file->file_id)}}">{{  $file->file_id }}</a></p>
-                </td>
-                <td class="v-align-middle">
-                  <p>{{$record->files->count()}}</p>
-                </td>
-              
-              </tr>
-
-              
-              @endforeach
-            </tbody>
-          </table>
-
-            
-            </div>
-           </div>
-
         </div>
     </div>
 </div>
