@@ -33,15 +33,15 @@ class Service extends Model
 
     public function revisions($softwareID, $ecu, $brand){
 
-        $totalRevisions = all_files_with_this_ecu_brand_and_service($ecu, $brand, $this->id, $softwareID);
+        $totalFiles = all_files_with_this_ecu_brand_and_service($ecu, $brand, $this->id, $softwareID);
         $fileProcessedWithSoftware = all_files_with_this_ecu_brand_and_service_and_software($ecu, $brand, $this->id, $softwareID);
 
-        if($totalRevisions == 0){
+        if($totalFiles == 0){
             return 0;
         }
         else{
 
-            return round(($fileProcessedWithSoftware / $totalRevisions), 2);
+            return number_format(($fileProcessedWithSoftware / $totalFiles), 2);
 
         }
 
