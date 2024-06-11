@@ -943,15 +943,23 @@ if(!function_exists('all_files_uploaded')){
 if(!function_exists('all_files_with_this_ecu_brand_and_service')){
 
     function all_files_with_this_ecu_brand_and_service($ecu, $brand, $serviceID){
-    
-        $fileProcessed = File::where('files.ecu', $ecu)->where('files.brand', $brand)
-        ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
-        ->where('file_reply_software_service.service_id', $serviceID)
-        
-        ->select('*', 'files.id AS file_id')
-        ->distinct()->count('file_reply_software_service.reply_id');
 
-        return $fileProcessed;
+        $filesCount = File::where('files.ecu', $ecu)->where('files.brand', $brand)
+        ->join('file_services', 'file_services.file_id', '=', 'files.id')
+        ->where('file_services.service_id', $serviceID)
+        ->select('*', 'files.id AS file_id')
+        ->count();
+
+        return $filesCount;
+    
+        // $fileProcessed = File::where('files.ecu', $ecu)->where('files.brand', $brand)
+        // ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        // ->where('file_reply_software_service.service_id', $serviceID)
+        
+        // ->select('*', 'files.id AS file_id')
+        // ->distinct()->count('file_reply_software_service.reply_id');
+
+        // return $fileProcessed;
     }
 }
 

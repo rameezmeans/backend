@@ -41,7 +41,7 @@ class Service extends Model
         }
         else{
 
-            return round(($fileProcessedWithSoftware / $totalRevisions) * 100);
+            return round(($fileProcessedWithSoftware / $totalRevisions), 2);
 
         }
 

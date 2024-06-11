@@ -608,7 +608,7 @@ margin-bottom: 10px !important;
                             <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                             <div class="pull-right">
-                              {{$stage->revisions($s->software_id, $file->ecu, $file->brand).'%'}}
+                              {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
                             </div>
                             </div>
                             @endforeach
@@ -643,7 +643,7 @@ margin-bottom: 10px !important;
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                           <div class="pull-right">
-                            {{$stage->revisions($s->software_id, $file->ecu, $file->brand).'%'}}
+                            {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
                           </div>
                           </div>
                           @endforeach
@@ -682,7 +682,7 @@ margin-bottom: 10px !important;
                                 <div style="display: flow-root;" class="b-b b-grey">
                                 <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                                 <div class="pull-right">
-                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand).'%'}}
+                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)}}
                                 </div>
                                 </div>
                                 @endforeach
@@ -2799,7 +2799,7 @@ margin-bottom: 10px !important;
                             <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                             <div class="pull-right">
-                              {{$stage->revisions($s->software_id, $file->ecu, $file->brand).'%'}}
+                              {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
                             </div>
                             </div>
                             @endforeach
@@ -2832,7 +2832,7 @@ margin-bottom: 10px !important;
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                           <div class="pull-right">
-                            {{$stage->revisions($s->software_id, $file->ecu, $file->brand).'%'}}
+                            {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
                           </div>
                           </div>
                           @endforeach
@@ -2871,7 +2871,7 @@ margin-bottom: 10px !important;
                                 <div style="display: flow-root;" class="b-b b-grey">
                                 <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                                 <div class="pull-right">
-                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand.'%')}}
+                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)}}
                                 </div>
                                 </div>
                                 @endforeach
