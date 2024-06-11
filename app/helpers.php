@@ -941,13 +941,13 @@ if(!function_exists('all_files_uploaded')){
 if(!function_exists('all_files_with_this_ecu_brand_and_service')){
 
     function all_files_with_this_ecu_brand_and_service($ecu, $brand, $serviceID, $softwareID){
-        
+
         $fileProcessedWithSoftware = File::where('files.ecu', $ecu)->where('files.brand', $brand)
         ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
         ->where('file_reply_software_service.service_id', $serviceID)
         ->where('file_reply_software_service.software_id', $softwareID)
         ->select('*', 'files.id AS file_id')
-        ->distinct()->count('file_reply_software_service.reply_id');
+        ->distinct()->count('files.id');
 
         return $fileProcessedWithSoftware;
 
