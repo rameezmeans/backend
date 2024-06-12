@@ -1927,7 +1927,7 @@ margin-bottom: 10px !important;
                                 // Declare and initialize the $arrayversionslua variable as an empty array
                                 $arrayversionslua = [];
 
-                                dd($latestVersion);
+                                // dd($latestVersion);
                             
                                 // Display the result
                                 if ($latestVersion) {
