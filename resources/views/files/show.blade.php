@@ -901,9 +901,11 @@ margin-bottom: 10px !important;
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                               </li>
+                              @if($file->softwares)
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Software Information</span></a>
                               </li>
+                              @endif
                             </ul>
                             <!-- Tab panes -->
     
@@ -1192,6 +1194,8 @@ margin-bottom: 10px !important;
 
                       </div>
 
+                      @if($file->softwares)
+
                       <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 250px;">
                       
                         @if($file->softwares)
@@ -1242,6 +1246,7 @@ margin-bottom: 10px !important;
  
                        </div>
 
+                       @endif
                     
                     </div>
                             </div>
@@ -3018,9 +3023,11 @@ margin-bottom: 10px !important;
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                               </li>
+                              @if($file->softwares)
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Software Information</span></a>
                               </li>
+                              @endif
                             </ul>
                             <!-- Tab panes -->
     
@@ -3272,6 +3279,8 @@ margin-bottom: 10px !important;
 
                     </div>
 
+                    @if($file->softwares)
+
                      <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 250px;">
                       
                        @if($file->softwares)
@@ -3328,6 +3337,8 @@ margin-bottom: 10px !important;
                        @endif
 
                       </div>
+
+                      @endif
 
                   
                   </div>
