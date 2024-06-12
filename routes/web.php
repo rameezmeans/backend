@@ -90,7 +90,7 @@ Route::get('/tasks', function () {
 
     $file = File::findOrFail(2051);
 
-    dd($file->softwares->isEmpty());
+    dd($file->softwares->isNotEmpty());
 
     // dd($file->files->count());
 
