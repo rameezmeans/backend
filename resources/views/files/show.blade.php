@@ -83,7 +83,7 @@ margin-bottom: 10px !important;
 
           @foreach($file->new_requests as $row)
             <li class="nav-item">
-              <a href="#" data-toggle="tab" class="@if($countn == $newreqs) active show @endif" role="tab" data-target="#tab4FollowUs" aria-selected="true">Task {{$row->id}} (New Request)</a>
+              <a href="#" data-toggle="tab" class="@if($countn == $newreqs) active show @endif" role="tab" data-target="#tab4FollowUs{{$row->id}}" aria-selected="true">Task {{$row->id}} (New Request)</a>
             </li>
 
             @php 
@@ -2301,7 +2301,7 @@ margin-bottom: 10px !important;
 
     @foreach($file->new_requests as $file)
     
-    <div class="tab-pane slide-left @if($count == $newreqs) show active @endif" id="tab4FollowUs">
+    <div class="tab-pane slide-left @if($count == $newreqs) show active @endif" id="tab4FollowUs{{$file->id}}">
 
       @php 
         $count++;
