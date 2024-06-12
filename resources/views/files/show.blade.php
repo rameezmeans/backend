@@ -901,7 +901,7 @@ margin-bottom: 10px !important;
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                               </li>
-                              @if(!empty($file->softwares))
+                              @if($file->softwares->isNotEmpty())
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Software Information</span></a>
                               </li>
@@ -1194,11 +1194,11 @@ margin-bottom: 10px !important;
 
                       </div>
 
-                      @if(!empty($file->softwares))
+                      @if($file->softwares->isNotEmpty())
 
                       <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 250px;">
                       
-                        @if(!empty($file->softwares))
+                        @if($file->softwares->isNotEmpty())
 
                         <div class="card-body">
                           <div class="table-responsive" style="
@@ -3023,7 +3023,7 @@ margin-bottom: 10px !important;
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                               </li>
-                              @if(!empty($file->softwares))
+                              @if($file->softwares->isNotEmpty())
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Software Information</span></a>
                               </li>
@@ -3279,11 +3279,11 @@ margin-bottom: 10px !important;
 
                     </div>
 
-                    @if(!empty($file->softwares))
+                    @if($file->softwares->isNotEmpty())
 
                      <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 250px;">
                       
-                       @if(!empty($file->softwares))
+                      @if($file->softwares->isNotEmpty())
 
                        <div class="card-body">
                         <div class="table-responsive"
