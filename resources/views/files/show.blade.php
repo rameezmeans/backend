@@ -901,7 +901,7 @@ margin-bottom: 10px !important;
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                               </li>
-                              @if($file->softwares == NULL)
+                              @if(!empty($file->softwares))
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Software Information</span></a>
                               </li>
@@ -1194,11 +1194,11 @@ margin-bottom: 10px !important;
 
                       </div>
 
-                      @if($file->softwares != NULL)
+                      @if(!empty($file->softwares))
 
                       <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 250px;">
                       
-                        @if($file->softwares)
+                        @if(!empty($file->softwares))
 
                         <div class="card-body">
                           <div class="table-responsive" style="
@@ -3023,7 +3023,7 @@ margin-bottom: 10px !important;
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                               </li>
-                              @if($file->softwares)
+                              @if(!empty($file->softwares))
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Software Information</span></a>
                               </li>
@@ -3283,7 +3283,7 @@ margin-bottom: 10px !important;
 
                      <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 250px;">
                       
-                       @if($file->softwares)
+                       @if(!empty($file->softwares))
 
                        <div class="card-body">
                         <div class="table-responsive"
