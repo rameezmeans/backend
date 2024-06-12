@@ -88,7 +88,9 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 Route::get('/tasks', function () {
 
-    // $file = File::findOrFail(3267);
+    $file = File::findOrFail(3077);
+
+    dd(empty($file->softwares));
 
     // dd($file->files->count());
 
