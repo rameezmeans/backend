@@ -2407,24 +2407,24 @@ margin-bottom: 10px !important;
                               </a>
                             @endif --}}
 
-                            @if($oriFile->acm_file)
-                              <a href="{{ route('download', [$oriFile->id, $oriFile->acm_file, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's ACM MCM/ECM File</span>
+                            @if($file->acm_file)
+                              <a href="{{ route('download', [$file->id, $file->acm_file, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's ACM MCM/ECM File</span>
                               </a>
                               @endif
 
                               
 
                             {{-- @if($oriFile->tool_type == 'slave' && $oriFile->tool_id == $kess3Label->id) --}}
-                            @if($oriFile->tool_type == 'slave' && $oriFile->tool_id == $kess3Label->id || $oriFile->tool_id != $kess3Label->id)
+                            @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id || $file->tool_id != $kess3Label->id)
                             {{-- here we are. --}}
-                              @if(!$oriFile->decoded_files->isEmpty())
-                                @foreach($oriFile->decoded_files as $decodedFile)
+                              @if(!$file->decoded_files->isEmpty())
+                                @foreach($file->decoded_files as $decodedFile)
                                   {{-- @php dd($decodedFile->name); @endphp --}}
                                   @if( $decodedFile->extension && $decodedFile->extension != "")
-                                    <a href="{{ route('download', [$oriFile->id, $decodedFile->name.'.'.$decodedFile->extension, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$decodedFile->extension}})</span>
+                                    <a href="{{ route('download', [$file->id, $decodedFile->name.'.'.$decodedFile->extension, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File ({{$decodedFile->extension}})</span>
                                     </a>
                                   @else
-                                    <a href="{{ route('download', [$oriFile->id, $decodedFile->name, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File</span>
+                                    <a href="{{ route('download', [$file->id, $decodedFile->name, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Decoded File</span>
                                     </a>
                                   @endif
                                 @endforeach
