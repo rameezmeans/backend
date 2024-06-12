@@ -182,12 +182,12 @@ margin-bottom: 10px !important;
                           
                           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'download-client-file'))
                           
-                          {{-- @if($file->original_file_id)
+                          @if($file->original_file_id)
                               
                                 <a href="{{ route('download', [$file->original_file_id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                                 </a>
                               
-                            @else --}}
+                            @else
                                 
                             @if($file->decoded_mode == 0)
                               <a href="{{ route('download', [$file->id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
@@ -218,7 +218,7 @@ margin-bottom: 10px !important;
 
                           @endif
 
-                          {{-- @endif  --}}
+                          @endif 
 
                         </div>
                       </div>
@@ -2393,11 +2393,11 @@ margin-bottom: 10px !important;
                           
                           @if($file->original_file_id)
 
-                          @php
+                          {{-- @php
                             $oriFile = \App\Models\File::findOrFail($file->original_file_id);
-                          @endphp
+                          @endphp --}}
                               
-                                <a href="{{ route('download', [$oriFile->id, $oriFile->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
+                                <a href="{{ route('download', [$file->id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
                                 </a>
                               
                             
