@@ -451,6 +451,7 @@ class HomeController extends Controller
             
             ->where('credits', '>', 0)
             ->where('test', 0)
+            ->where('front_end_id', $request->frontend_id)
             ->select('created_at')
             ->orderBy('created_at', 'asc')->first();
             
