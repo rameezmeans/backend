@@ -525,9 +525,10 @@ class HomeController extends Controller
 
         $grandTotal = Credit::where('credits', '>', 0)
         ->where('test', 0)
+        ->where('front_end_id', $request->frontend_id)
         ->sum('credits');
 
-        $customers = sizeof(get_customers());
+        $customers = sizeof(get_customers($request->frontend_id));
 
         $avgTotal = $grandTotal / $customers;
 
