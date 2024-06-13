@@ -651,13 +651,16 @@ class HomeController extends Controller
     }
 
     public function getAutotunnedFilesChart(Request $request){
-        
+
+        $frontEndID = $request->frontend_id;
         $graph = [];
 
         if(!$request->start){
             $min = DB::table('files')->
             select('created_at')
-            ->orderBy('created_at', 'asc')->first();
+            ->orderBy('created_at', 'asc')
+            ->where('front_end_id', $frontEndID)
+            ->first();
             $start = $min->created_at;
         }
         else{
@@ -667,7 +670,10 @@ class HomeController extends Controller
         }
 
         if(!$request->end){
-            $max = DB::table('files')->select('created_at')->where('test', 0)->orderBy('created_at', 'desc')->first();
+            $max = DB::table('files')->select('created_at')
+            ->where('front_end_id', $frontEndID)
+            ->where('test', 0)->orderBy('created_at', 'desc')
+            ->first();
             $end = $max->created_at;
         }
         else{
