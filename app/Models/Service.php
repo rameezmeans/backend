@@ -39,11 +39,15 @@ class Service extends Model
         if($totalFiles == 0){
             return 0;
         }
-        else{
 
-            return number_format(($totalFiles / $fileProcessedWithSoftware), 2);
-
+        if($fileProcessedWithSoftware == 0){
+            return 0;
         }
+        
+
+        return number_format(($totalFiles / $fileProcessedWithSoftware), 2);
+
+        
 
     }
 
