@@ -463,6 +463,8 @@ class ServicesController extends Controller
         $modelInstance = Translation::where('model_id', $service->id)->where('model', 'Service')->first();
         $vehicleTypes = explode(',', $service->vehicle_type);
         $commentsVehicleTypes = explode(',', $service->customers_comments_vehicle_type);
+
+        dd($commentsVehicleTypes);
         
         $stages = Service::where('type', 'tunning')
         ->whereNull('subdealer_group_id')
