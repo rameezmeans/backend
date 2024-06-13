@@ -335,6 +335,11 @@ class UsersController extends Controller
         $credit->stripe_id = NULL;
         $credit->price_payed = 0;
         $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
+
+        if($customer->test == 1){
+            $credit->test = 1;
+        }
+        
         $credit->save();
     }
 

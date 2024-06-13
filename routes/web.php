@@ -88,31 +88,31 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 Route::get('/tasks', function () {
 
-    $file = File::findOrFail(2051);
+    // $file = File::findOrFail(2051);
 
-    dd($file->softwares->isNotEmpty());
+    // dd($file->softwares->isNotEmpty());
 
-    // dd($file->files->count());
+    // // dd($file->files->count());
 
-    $recs = FileReplySoftwareService::all();
+    // $recs = FileReplySoftwareService::all();
 
-    foreach($recs as $r){
+    // foreach($recs as $r){
         
 
-        if($r->service_id == 1){
-            $r->delete();
-        }
-    }
+    //     if($r->service_id == 1){
+    //         $r->delete();
+    //     }
+    // }
 
-    dd('stage 0 deleted');
+    // dd('stage 0 deleted');
 
-    foreach($recs as $r){
-        $c = RequestFile::where('id',$r->reply_id)->first();
+    // foreach($recs as $r){
+    //     $c = RequestFile::where('id',$r->reply_id)->first();
 
-        if($c == NULL){
-            $r->delete();
-        }
-    }
+    //     if($c == NULL){
+    //         $r->delete();
+    //     }
+    // }
 
     $files = File::all();
     $credits = Credit::all();

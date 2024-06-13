@@ -90,6 +90,10 @@ class FilesAPIController extends Controller
             $credit->user_id = $customer->id;
             $credit->save();
 
+            if($customer->test == 1){
+                $credit->test = 1;
+            }
+
             $file->credit_id = $credit->id;
             $file->checked_by = "customer";
             $file->user_id = $customer->id;

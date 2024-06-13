@@ -256,6 +256,10 @@ class CreditsController extends Controller
         $credit->user_id = $customer->id;
         $credit->front_end_id = $customer->front_end_id;
         $credit->stripe_id = NULL;
+
+        if($customer->test == 1){
+            $credit->test = 1;
+        }
         
         if( isset($request->gifted) && $request->gifted == 'on' ){
             $credit->gifted = 1;

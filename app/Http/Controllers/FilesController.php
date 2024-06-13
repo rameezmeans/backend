@@ -553,6 +553,10 @@ class FilesController extends Controller
             $credit->file_id = $file->id;
             $credit->stripe_id = NULL;
 
+            if($user->test == 1){
+                $credit->test = 1;
+            }
+
             $credit->gifted = 1;
             $credit->price_payed = 0;
             
@@ -1854,6 +1858,10 @@ class FilesController extends Controller
             $credit->file_id = $file->id;
             $credit->front_end_id = $customer->front_end_id;
             $credit->stripe_id = NULL;
+
+            if($customer->test == 1){
+                $credit->test = 1;
+            }
 
             $credit->gifted = 1;
             $credit->price_payed = 0;
