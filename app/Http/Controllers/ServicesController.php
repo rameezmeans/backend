@@ -463,6 +463,8 @@ class ServicesController extends Controller
         $modelInstance = Translation::where('model_id', $service->id)->where('model', 'Service')->first();
         $vehicleTypes = explode(',', $service->vehicle_type);
         $commentsVehicleTypes = explode(',', $service->customers_comments_vehicle_type);
+
+        dd($commentsVehicleTypes);
         
         $stages = Service::where('type', 'tunning')
         ->whereNull('subdealer_group_id')
@@ -475,6 +477,8 @@ class ServicesController extends Controller
         if($service->subdealer_group_id && $service->hasSubdealer){
             return view('services.services_add_edit_subdealer', [ 'modelInstance' => $modelInstance, 'service' => $service, 'vehicleTypes' => $vehicleTypes ]);
         }
+
+        // $serviceCommentVehicleType = 
 
         return view('services.services_add_edit_tuningx', ['modelInstance' => $modelInstance, 'stages' => $stages, 'service' => $service, 'vehicleTypes' => $vehicleTypes, 'commentsVehicleTypes' => $commentsVehicleTypes ]);
     }
