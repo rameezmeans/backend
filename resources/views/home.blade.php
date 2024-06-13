@@ -721,6 +721,7 @@
               set_and_get_credits();
               set_and_get_support();
               set_and_get_response_time();
+              set_and_get_autotunned_files();
 
             }
         });
