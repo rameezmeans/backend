@@ -466,7 +466,7 @@ class ServicesController extends Controller
 
         // dd(in_array('car', $commentsVehicleTypes));
 
-        dd($commentsVehicleTypes);
+        // dd($commentsVehicleTypes);
         
         $stages = Service::where('type', 'tunning')
         ->whereNull('subdealer_group_id')
