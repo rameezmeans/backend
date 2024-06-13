@@ -303,10 +303,10 @@
                     <div class="form-group form-group-default">
                       <label>Vehicle Type</label>
                       <select multiple class="full-width" data-init-plugin="select2" name="customers_comments_vehicle_type[]">
-                        <option @if(isset($service) && in_array('car', $service->customers_comments_vehicle_type)) selected @endif value="car">Car</option>
-                        <option @if(isset($service) && in_array('truck', $service->customers_comments_vehicle_type)) selected @endif value="truck">Truck</option>
-                        <option @if(isset($service) && in_array('machine', $service->customers_comments_vehicle_type)) selected @endif value="machine">Machine</option>
-                        <option @if(isset($service) && in_array('agri', $service->customers_comments_vehicle_type)) selected @endif value="agri">Agricultural</option>
+                        <option @if(isset($service) && $service->customers_comments_vehicle_type && in_array('car', $service->customers_comments_vehicle_type)) selected @endif value="car">Car</option>
+                        <option @if(isset($service) && $service->customers_comments_vehicle_type && in_array('truck', $service->customers_comments_vehicle_type)) selected @endif value="truck">Truck</option>
+                        <option @if(isset($service) && $service->customers_comments_vehicle_type && in_array('machine', $service->customers_comments_vehicle_type)) selected @endif value="machine">Machine</option>
+                        <option @if(isset($service) && $service->customers_comments_vehicle_type && in_array('agri', $service->customers_comments_vehicle_type)) selected @endif value="agri">Agricultural</option>
                       </select>
                     </div>
 
