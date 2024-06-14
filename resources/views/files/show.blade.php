@@ -1469,7 +1469,7 @@ margin-bottom: 10px !important;
                     <div class="text-center">
                       <div class="card-title">
                           <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                          <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                          <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                         </div>
                       </div>
                       
@@ -1608,7 +1608,7 @@ margin-bottom: 10px !important;
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                      <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                       <h4 class="m-t-20">Adminstrative Tasks</h4>
                     </div>
                   </div>
@@ -1697,7 +1697,7 @@ margin-bottom: 10px !important;
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                      <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                       <h4 class="m-t-20">Logs</h4>
                     </div>
                   </div>
@@ -1790,7 +1790,7 @@ margin-bottom: 10px !important;
                             <div class="text-center">
                               <div class="card-title">
                                   <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                                  <h3>{{$file->brand}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                                   <h4 class="m-t-20">Lua</h4>
                                 </div>
                               </div>
@@ -2079,7 +2079,7 @@ margin-bottom: 10px !important;
                             <div class="text-center">
                               <div class="card-title">
                                   <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                                  <h3>{{$file->brand}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                                   <h4 class="m-t-20">Lua</h4>
                                 </div>
                               </div>
@@ -2123,7 +2123,7 @@ margin-bottom: 10px !important;
                             <div class="text-center">
                               <div class="card-title">
                                   <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                                  <h3>{{$file->brand}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                                   <h4 class="m-t-20">Lua</h4>
                                 </div>
                               </div>
@@ -3598,7 +3598,7 @@ margin-bottom: 10px !important;
                     <div class="text-center">
                       <div class="card-title">
                           <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                          <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                          <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                         </div>
                       </div>
                       
@@ -3714,7 +3714,7 @@ margin-bottom: 10px !important;
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                      <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                       <h4 class="m-t-20">Adminstrative Tasks</h4>
                     </div>
                   </div>
@@ -3803,7 +3803,7 @@ margin-bottom: 10px !important;
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                      <h3>{{$file->brand}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                       <h4 class="m-t-20">Logs</h4>
                     </div>
                   </div>
@@ -3891,7 +3891,7 @@ margin-bottom: 10px !important;
                             <div class="text-center">
                               <div class="card-title">
                                   <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                                  <h3>{{$file->brand}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                                   <h4 class="m-t-20">Lua</h4>
                                 </div>
                               </div>
@@ -4159,7 +4159,7 @@ margin-bottom: 10px !important;
                             <div class="text-center">
                               <div class="card-title">
                                   <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                                  <h3>{{$file->brand}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                                   <h4 class="m-t-20">Lua</h4>
                                 </div>
                               </div>
@@ -4200,7 +4200,7 @@ margin-bottom: 10px !important;
                             <div class="text-center">
                               <div class="card-title">
                                   <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                                  <h3>{{$file->brand}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
                                   <h4 class="m-t-20">Lua</h4>
                                 </div>
                               </div>
