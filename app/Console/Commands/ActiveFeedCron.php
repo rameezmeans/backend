@@ -72,7 +72,13 @@ class ActiveFeedCron extends Command
         $file = File::findOrFail($fileID); 
         $user = User::findOrFail($userID);
         
-        $feebdackTemplate = EmailTemplate::findOrFail(9); // email template must always be 9
+        if($user->front_end_id == 1){
+            $feebdackTemplate = EmailTemplate::findOrFail(9); // email template must always be 9
+        }
+        if($user->front_end_id == 2){
+            $feebdackTemplate = EmailTemplate::findOrFail(49);
+        }
+
         $html = $feebdackTemplate->html;
         $fileName = $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard;
 
