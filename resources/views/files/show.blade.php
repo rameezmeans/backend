@@ -2047,7 +2047,7 @@ margin-bottom: 10px !important;
                                   <div class="col-md-12">
                                     <h5>Name for version</h5>
                                     <input type="text" name="nameforluacreation" id="nameforluacreation" value=""/><br/>
-                                    <button id="submitButton btn btn-success m-t-20">Submit</button>
+                                    <button id="submitButton" class="btn btn-success m-t-20">Submit</button>
                                     
                                   </div>
 
@@ -4146,7 +4146,7 @@ margin-bottom: 10px !important;
                                   <div class="col-md-12">
                                     <h5>Name for version</h5>
                                     <input type="text" name="nameforluacreation" id="nameforluacreation" value=""/><br/>
-                                    <button id="submitButton btn btn-success m-t-20">Submit</button>
+                                    <button id="submitButton" class="btn btn-success m-t-20">Submit</button>
                                     
                                   </div>
                               
