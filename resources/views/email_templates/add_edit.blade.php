@@ -46,7 +46,7 @@
                 @enderror
                 <div class="form-group form-group-default required ">
                   <label>HTML</label>
-                  <textarea id="tinymce-editor" value="@if(isset($template)) {{ $template->html }} @else{{old('html') }}@endif"  name="html" type="text" class="form-control" required></textarea>
+                  <textarea value="@if(isset($template)) {{ $template->html }} @else{{old('html') }}@endif"  name="html" type="text" class="form-control" required></textarea>
                 </div>
                 @error('html')
                   <span class="text-danger" role="alert">
