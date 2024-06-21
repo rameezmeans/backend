@@ -74,9 +74,9 @@ class ProcessingSoftwaresController extends Controller
     public function softwareReport(){
 
         $softwaresAndBrandsRecords = FileReplySoftwareService::join('files', 'file_reply_software_service.file_id', '=', 'files.id')
-        ->distinct('files.ecu')->select('files.ecu')->get();
+        ->whereNotNull('files.ecu')->distinct('files.ecu')->select('files.ecu')->get();
         
-        dd($softwaresAndBrandsRecords);
+        // dd($softwaresAndBrandsRecords);
 
         return view('processing_softwares.report', ['softwaresAndBrandsRecords' => $softwaresAndBrandsRecords]);
     }   
