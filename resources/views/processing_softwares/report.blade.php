@@ -39,39 +39,29 @@
                             <tbody>
                                 @foreach ($softwaresAndBrandsRecords as $row)
                                     
-                                    @php
+                                    <tr role="row">
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$row->brand}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$row->ecu}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{\App\Models\Service::findOrFail($row->service_id)->name}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{\App\Models\ProcessingSoftware::findOrFail($row->software_id)->name}}</p>
+                                        </td>
                                         
-                                        $file = \App\Models\File::where('id',$row->file_id)->first();
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{all_files_with_this_ecu_brand_and_service_and_software($row->ecu, $row->brand, $row->service_id, $row->software_id)}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{all_files_with_this_ecu_brand_and_service( $row->ecu, $row->brand, $row->service_id, $row->software_id)}}</p>
+                                        </td>
 
+                                    </tr>
 
-                                    @endphp
-                                    
-                                    @if($file)
-                                        <tr role="row">
-                                            <td class="v-align-middle semi-bold sorting_1">
-                                                <p>{{$file->brand}}</p>
-                                            </td>
-                                            <td class="v-align-middle semi-bold sorting_1">
-                                                <p>{{$file->ecu}}</p>
-                                            </td>
-                                            <td class="v-align-middle semi-bold sorting_1">
-                                                <p>{{\App\Models\Service::findOrFail($row->service_id)->name}}</p>
-                                            </td>
-                                            <td class="v-align-middle semi-bold sorting_1">
-                                                <p>{{\App\Models\ProcessingSoftware::findOrFail($row->software_id)->name}}</p>
-                                            </td>
-                                            
-                                            <td class="v-align-middle semi-bold sorting_1">
-                                                <p>{{all_files_with_this_ecu_brand_and_service_and_software($file->ecu, $file->brand, $row->service_id, $row->software_id)}}</p>
-                                            </td>
-                                            <td class="v-align-middle semi-bold sorting_1">
-                                                <p>{{all_files_with_this_ecu_brand_and_service( $file->ecu, $file->brand, $row->service_id, $row->software_id)}}</p>
-                                            </td>
-
-                                        </tr>
-
-                                    @endif
-                                    
                                 @endforeach
                             </tbody>
                         </table>
