@@ -1512,6 +1512,9 @@ class FilesController extends Controller
 
         $file = RequestFile::findOrFail($request->request_file_id);
         $file->delete();
+
+        $softwareRecords = FileReplySoftwareService::where('reply_id', $request->request_file_id)->delete();
+
         return response('File deleted', 200);
     }
 

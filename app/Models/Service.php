@@ -45,7 +45,7 @@ class Service extends Model
         }
         
 
-        return number_format(($totalFiles / $fileProcessedWithSoftware), 2);
+        return number_format(( $fileProcessedWithSoftware/ $totalFiles ), 2);
 
         
 
