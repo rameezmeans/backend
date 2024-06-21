@@ -9,7 +9,7 @@ use App\Models\Tool;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\EngineersPermission;
-
+use App\Models\FileReplySoftwareService;
 use Danielebarbaro\LaravelVatEuValidator\Facades\VatValidatorFacade as VatValidator;
 
 function fullescape($in)
@@ -973,9 +973,17 @@ if(!function_exists('all_files_with_this_ecu_brand_and_service')){
 if(!function_exists('all_files_with_this_ecu_brand_and_service_and_software')){
 
     function all_files_with_this_ecu_brand_and_service_and_software($ecu, $brand, $serviceID, $softwareID){
-        $fileProcessedWithSoftware = File::where('files.ecu', $ecu)->where('files.brand', $brand)
-        ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        
+        // $fileProcessedWithSoftware = File::where('files.ecu', $ecu)->where('files.brand', $brand)
+        // ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        // ->where('file_reply_software_service.service_id', $serviceID)
+        // ->where('file_reply_software_service.software_id', $softwareID)
+        // ->select('file_reply_software_service.reply_id')
+        // ->distinct()->count('file_reply_software_service.reply_id');
+
+        $fileProcessedWithSoftware = FileReplySoftwareService::join('files', 'files.id', '=', 'file_reply_software_service.file_id')
         ->where('file_reply_software_service.service_id', $serviceID)
+        ->where('files.ecu', $ecu)->where('files.brand', $brand)
         ->where('file_reply_software_service.software_id', $softwareID)
         ->select('file_reply_software_service.reply_id')
         ->distinct()->count('file_reply_software_service.reply_id');
