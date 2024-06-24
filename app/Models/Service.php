@@ -50,7 +50,7 @@ class Service extends Model
         ->where('file_reply_software_service.service_id', $this->id)
         ->where('file_reply_software_service.software_id', $softwareID)
         ->select('file_reply_software_service.reply_id', 'file_reply_software_service.id as reply_id')
-        ->orderBy('created_at', 'desc')
+        ->orderBy('file_reply_software_service.created_at', 'desc')
         ->limit(1)
         ->first();
 
