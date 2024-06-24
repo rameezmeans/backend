@@ -103,11 +103,17 @@ class ProcessingSoftwaresController extends Controller
         ->distinct('file_id', 'software_id', 'service_id')
         ->orderBy('file_id', 'desc')
         ->get();
-        
+
         $rows = "";
 
         foreach($softwaresAndBrandsRecords as $record){
-            $rows .= "<tr>"."<td>".$record->file_id."</td>"."</tr>";
+            $rows .= "<tr>"."<td><a href=".route('file', $record->file_id).">".$record->file_id."</a></td>".
+            "<td>".$record->brand."</td>".
+            "<td>".$record->ecu."</td>".
+            "<td>".\App\Models\Service::findOrFail($record->service_id)->name."</td>".
+            "<td>".\App\Models\Service::findOrFail($record->software_id)->name."</td>".
+            "<td>".all_files_with_this_ecu_brand_and_service_and_software($record->file_id, $record->service_id, $record->software_id)."</td>"
+            ."</tr>";
         }
 
         return response()->json(['html' =>$rows ], 200);
