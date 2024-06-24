@@ -22,24 +22,30 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
-                <div class="col-lg-4">
-                    <div class="form-group form-group-default">
-                        <label>Select Serivce</label>
-                        <select class="full-width" id="service_id" data-init-plugin="select2" name="service_id">  
-                        @foreach($services as $service)
-                            <option value="{{$service->service_id}}">{{\App\Models\Service::findOrFail($service->service_id)->name.', '}}({{\App\Models\Service::findOrFail($service->service_id)->vehicle_type}}) @if(\App\Models\Service::findOrFail($service->service_id)->active == 1) ECUTech @elseif(\App\Models\Service::findOrFail($service->service_id)->tuningx_active == 1) Tuning-X @endif</option>
-                        @endforeach
-                        </select>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group form-group-default">
+                            <label>Select Serivce</label>
+                            <select class="full-width" id="service_id" data-init-plugin="select2" name="service_id">  
+                            @foreach($services as $service)
+                                <option value="{{$service->service_id}}">{{\App\Models\Service::findOrFail($service->service_id)->name.', '}}({{\App\Models\Service::findOrFail($service->service_id)->vehicle_type}}) @if(\App\Models\Service::findOrFail($service->service_id)->active == 1) ECUTech @elseif(\App\Models\Service::findOrFail($service->service_id)->tuningx_active == 1) Tuning-X @endif</option>
+                            @endforeach
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group form-group-default">
-                        <label>Select Software</label>
-                        <select class="full-width" id="software_id" data-init-plugin="select2" name="software_id">
-                        @foreach($softwares as $software)
-                            <option value="{{$software->software_id}}">{{\App\Models\ProcessingSoftware::findOrFail($software->software_id)->name}}</option>
-                        @endforeach
-                        </select>
+                    <div class="col-lg-4">
+                        <div class="form-group form-group-default">
+                            <label>Select Software</label>
+                            <select class="full-width" id="software_id" data-init-plugin="select2" name="software_id">
+                            @foreach($softwares as $software)
+                                <option value="{{$software->software_id}}">{{\App\Models\ProcessingSoftware::findOrFail($software->software_id)->name}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <p>Tasks: <span id="tasks">0</span></p>
+                        <p>Replies: <span id="replies">0</span></p>
                     </div>
                 </div>
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
@@ -159,6 +165,8 @@
 
                     $('#progress').hide();
                     $('#recordsRows').html(res.html);
+                    $('#tasks').html(res.tasks);
+                    $('#replies').html(res.replies);
                 
 
                 }
