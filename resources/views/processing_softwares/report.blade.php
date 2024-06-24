@@ -42,7 +42,7 @@
                                     
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$row->file_id}}</p>
+                                            <p><a href="{{route('file', $row->file_id)}}">{{$row->file_id}}</a></p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$row->brand}}</p>
