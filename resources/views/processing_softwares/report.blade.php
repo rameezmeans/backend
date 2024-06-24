@@ -22,6 +22,27 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
+                <div class="col-lg-4">
+                    <div class="form-group form-group-default">
+                        <label>Select Serivce</label>
+                        <select class="full-width" id="service_id" data-init-plugin="select2" name="service_id">  
+                        @foreach($services as $service)
+                            <option value="{{$service->service_id}}">{{$service->service_id}}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group form-group-default">
+                        <label>Select Software</label>
+                        <select class="full-width" id="software_id" data-init-plugin="select2" name="software_id">
+                            
+                        @foreach($softwares as $software)
+                            <option value="{{$software->software_id}}">{{$software->software_id}}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                </div>
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
                         <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
@@ -38,7 +59,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($softwaresAndBrandsRecords as $row)
+                                {{-- @foreach ($softwaresAndBrandsRecords as $row)
                                     
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
@@ -60,13 +81,11 @@
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{all_files_with_this_ecu_brand_and_service_and_software($row->file_id, $row->service_id, $row->software_id)}}</p>
                                         </td>
-                                        {{-- <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{all_files_with_this_ecu_brand_and_service($row->file_id, $row->service_id, $row->software_id)}}</p>
-                                        </td> --}}
+                                        
 
                                     </tr>
 
-                                @endforeach
+                                @endforeach --}}
                             </tbody>
                         </table>
                     </div>
