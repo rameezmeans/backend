@@ -54,7 +54,7 @@
                 @endif
                 <div class="form-group form-group-default">
                     <label>Name</label>
-                    <input value="@if(isset($vehicle)) {{$vehicle->Name}} @else{{old('Name') }}@endif"  name="Name" type="text" class="form-control">
+                    <input value="@if(isset($vehicle)){{$vehicle->Name}}@else{{old('Name') }}@endif"  name="Name" type="text" class="form-control">
                   </div>
                   @error('Name')
                     <span class="text-danger" role="alert">
@@ -64,7 +64,7 @@
 
                   <div class="form-group form-group-default">
                     <label>Make</label>
-                    <input value="@if(isset($vehicle)) {{$vehicle->Make}} @else{{old('Make') }}@endif"  name="Make" type="text" class="form-control">
+                    <input value="@if(isset($vehicle)){{$vehicle->Make}}@else{{old('Make') }}@endif"  name="Make" type="text" class="form-control">
                   </div>
                   @error('Make')
                     <span class="text-danger" role="alert">
@@ -74,7 +74,7 @@
 
                   <div class="form-group form-group-default">
                     <label>Model</label>
-                    <input value="@if(isset($vehicle)) {{$vehicle->Model}} @else{{old('Model') }}@endif"  name="Model" type="text" class="form-control">
+                    <input value="@if(isset($vehicle)){{$vehicle->Model}}@else{{old('Model') }}@endif"  name="Model" type="text" class="form-control">
                   </div>
                   @error('Model')
                     <span class="text-danger" role="alert">
@@ -84,7 +84,7 @@
 
                   <div class="form-group form-group-default">
                     <label>Generation</label>
-                    <input value="@if(isset($vehicle)) {{$vehicle->Generation}} @else{{old('Generation') }}@endif"  name="Generation" type="text" class="form-control">
+                    <input value="@if(isset($vehicle)){{$vehicle->Generation}}@else{{old('Generation') }}@endif"  name="Generation" type="text" class="form-control">
                   </div>
                   @error('Generation')
                     <span class="text-danger" role="alert">
@@ -94,7 +94,7 @@
 
                   <div class="form-group form-group-default">
                     <label>Engine</label>
-                    <input value="@if(isset($vehicle)) {{$vehicle->Engine}} @else{{old('Engine') }}@endif"  name="Engine" type="text" class="form-control">
+                    <input value="@if(isset($vehicle)){{$vehicle->Engine}}@else{{old('Engine') }}@endif"  name="Engine" type="text" class="form-control">
                   </div>
                   @error('Engine')
                     <span class="text-danger" role="alert">
@@ -104,7 +104,7 @@
 
                   <div class="form-group form-group-default">
                     <label>Engine ECU</label>
-                    <input value="@if(isset($vehicle)) {{$vehicle->Engine_ECU}} @else{{old('Engine_ECU') }}@endif"  name="Engine_ECU" type="text" class="form-control">
+                    <input value="@if(isset($vehicle)){{$vehicle->Engine_ECU}}@else{{old('Engine_ECU') }}@endif"  name="Engine_ECU" type="text" class="form-control">
                     <p>Please add multiple ECUs with " / " seprator. Otherwise It will not work. For example, Bosch EDC16C39 / Bosch EDC16C39. (It is space slash and then space).</p>
                   </div>
                   @error('Engine_ECU')
@@ -115,7 +115,7 @@
 
                   <div class="form-group form-group-default">
                     <label>Brand Image URL</label>
-                    <input value="@if(isset($vehicle)) {{$vehicle->Brand_image_URL}} @else{{old('Brand_image_URL') }}@endif"  name="Brand_image_URL" type="text" class="form-control">
+                    <input value="@if(isset($vehicle)){{$vehicle->Brand_image_URL}}@else{{old('Brand_image_URL') }}@endif"  name="Brand_image_URL" type="text" class="form-control">
                   </div>
                   @error('Brand_image_URL')
                     <span class="text-danger" role="alert">
@@ -124,7 +124,7 @@
                   @enderror
                   <div class="form-group form-group-default">
                     <label>Read options</label>
-                    <input value="@if(isset($vehicle)) {{$vehicle->Read_options}} @else{{old('Read_options') }}@endif"  name="Read_options" type="text" class="form-control">
+                    <input value="@if(isset($vehicle)){{$vehicle->Read_options}}@else{{old('Read_options') }}@endif"  name="Read_options" type="text" class="form-control">
                   </div>
                   @error('Read_options')
                     <span class="text-danger" role="alert">
@@ -134,7 +134,7 @@
 
                 <div class="form-group form-group-default">
                   <label>Additional_options</label>
-                  <input value="@if(isset($vehicle)) {{$vehicle->Additional_options}} @else{{old('Additional_options') }}@endif"  name="Additional_options" type="text" class="form-control">
+                  <input value="@if(isset($vehicle)){{$vehicle->Additional_options}}@else{{old('Additional_options') }}@endif"  name="Additional_options" type="text" class="form-control">
                 </div>
                 @error('Additional options')
                   <span class="text-danger" role="alert">
@@ -144,7 +144,7 @@
 
                 <div class="form-group form-group-default">
                   <label>Gearbox ECU</label>
-                  <input @if(isset($vehicle)) disabled @endif value="@if(isset($vehicle)) {{$vehicle->Gearbox_ECU}} @else{{old('Gearbox_ECU') }}@endif"  name="Gearbox_ECU" type="text" class="form-control">
+                  <input @if(isset($vehicle)) disabled @endif value="@if(isset($vehicle)){{$vehicle->Gearbox_ECU}}@else{{old('Gearbox_ECU') }}@endif"  name="Gearbox_ECU" type="text" class="form-control">
                 </div>
                 @error('Gearbox_ECU')
                   <span class="text-danger" role="alert">
