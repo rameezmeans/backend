@@ -108,6 +108,32 @@
 
     $(document).ready(function(event){
 
+
+        $(document).on('change', '#service_id', function(e){
+        
+            $('#progress').show();
+
+            let service_id = $('#service_id').val();
+            let software_id = $('#software_id').val();
+
+
+            getReport(service_id, software_id);
+
+        });
+
+        $(document).on('change', '#software_id', function(e){
+        
+        $('#progress').show();
+
+        let service_id = $('#service_id').val();
+        let software_id = $('#software_id').val();
+
+
+        getReport(service_id, software_id);
+
+    });
+
+
         $('#progress').show();
 
         let service_id = $('#service_id').val();
@@ -137,7 +163,9 @@
 
                 }
             });
-            }
+        }
+
+
         
     });
 
