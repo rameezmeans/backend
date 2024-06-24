@@ -425,6 +425,9 @@ class VehiclesController extends Controller
         if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-vehicles')){
 
             $vehicle = Vehicle::findOrFail($request->id);
+
+            $oldMake = $vehicle->Make;
+
             $vehicle->Name = $request->Name;
             $vehicle->Make = $request->Make;
             $vehicle->type = $request->type;
@@ -455,10 +458,8 @@ class VehiclesController extends Controller
             $vehicle->save();
 
 
-            $filesWithBrands = File::where('brand', $request->Make)->get();
-
-            dd($filesWithBrands);
-
+            $filesWithBrands = File::where('brand', $oldMake)->get();
+            
             foreach($filesWithBrands as $file){
                 $file->brand =  $request->Make;
                 $file->save();
