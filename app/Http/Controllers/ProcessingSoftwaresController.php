@@ -112,7 +112,7 @@ class ProcessingSoftwaresController extends Controller
 
         $rows = "</tr>";
 
-        return $rows;
+        return response()->json(['html' =>$rows ], 200);
     }
 
     public function update(Request $request)
