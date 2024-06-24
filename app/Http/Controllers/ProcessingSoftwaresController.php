@@ -87,8 +87,6 @@ class ProcessingSoftwaresController extends Controller
         // ->get();
 
         $services = FileReplySoftwareService::select('service_id')->distinct()->get();
-
-        dd($services);
         
         $softwares = FileReplySoftwareService::select('software_id')->distinct()->get();
         
