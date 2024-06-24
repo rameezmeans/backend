@@ -699,11 +699,11 @@ margin-bottom: 10px !important;
                                 <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                                 @if($tempCount == $totalRows)
                                 <div class="pull-right">
-                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)}}
+                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)+1}}
                                 </div>
                                 @else
                                 <div class="pull-right">
-                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)+1}}
+                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)}}
                                 </div>
                                 @endif
                                 </div>
@@ -2913,11 +2913,11 @@ margin-bottom: 10px !important;
                                 <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                                 @if($tempCount == $totalRows)
                                 <div class="pull-right">
-                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)}}
+                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)+1}}
                                 </div>
                                 @else
                                 <div class="pull-right">
-                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)+1}}
+                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)}}
                                 </div>
                                 @endif
                                 </div>
