@@ -678,12 +678,34 @@ margin-bottom: 10px !important;
                               @endif
                               </div>
                               <div class="b-t b-grey p-b-10 p-t-10">
+
+                                @php
+
+                                $totalRows = count($optionInner->softwares($file->ecu, $file->brand));
+                                $tempCount = 1;
+
+                                @endphp
+
                                 @foreach($optionInner->softwares($file->ecu, $file->brand) as $s)
+
+                                @php
+
+                                
+                                $tempCount++;
+
+                                @endphp
+
                                 <div style="display: flow-root;" class="b-b b-grey">
                                 <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
+                                @if($tempCount == $totalRows)
                                 <div class="pull-right">
                                   {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)}}
                                 </div>
+                                @else
+                                <div class="pull-right">
+                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)+1}}
+                                </div>
+                                @endif
                                 </div>
                                 @endforeach
                               </div>
@@ -2874,13 +2896,32 @@ margin-bottom: 10px !important;
                               </div>
 
                               <div class="b-t b-grey p-b-10 p-t-10">
+                                @php
+
+                                $totalRows = count($optionInner->softwares($file->ecu, $file->brand));
+                                $tempCount = 1;
+
+                                @endphp
+
                                 @foreach($optionInner->softwares($file->ecu, $file->brand) as $s)
+
+                                @php
+                                  $tempCount++;
+                                @endphp
+
                                 <div style="display: flow-root;" class="b-b b-grey">
                                 <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
+                                @if($tempCount == $totalRows)
                                 <div class="pull-right">
                                   {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)}}
                                 </div>
+                                @else
+                                <div class="pull-right">
+                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)+1}}
                                 </div>
+                                @endif
+                                </div>
+                                
                                 @endforeach
                               </div>
 
