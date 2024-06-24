@@ -36,7 +36,6 @@
                     <div class="form-group form-group-default">
                         <label>Select Software</label>
                         <select class="full-width" id="software_id" data-init-plugin="select2" name="software_id">
-                            
                         @foreach($softwares as $software)
                             <option value="{{$software->software_id}}">{{\App\Models\ProcessingSoftware::findOrFail($software->software_id)->name}}</option>
                         @endforeach
@@ -45,6 +44,11 @@
                 </div>
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
+                        <div id="progress" class="text-center">
+                            <div class="progress-circle-indeterminate m-t-45" style="">
+                            </div>
+                            <br>
+                        </div>
                         <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
@@ -58,7 +62,7 @@
                                     {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">All Files Uploaded</th> --}}
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="recordsRows">
                                 {{-- @foreach ($softwaresAndBrandsRecords as $row)
                                     
                                     <tr role="row">
@@ -102,9 +106,39 @@
 
 <script type="text/javascript">
 
-    $( document ).ready(function(event) {
+    $(document).ready(function(event){
+
+        $('#progress').show();
+
+        let service_id = $('#service_id').val();
+        let software_id = $('#software_id').val();
         
-       
+        
+        getReport(service_id, software_id);
+
+        function getReport(service_id, software_id){
+
+        let credit_url = '{{route('get-software-report')}}';
+    
+        $.ajax({
+                url:credit_url,
+                type: "POST",
+                data: {
+                    service_id: service_id,
+                    software_id: software_id,
+                    
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(res) {
+
+                    $('#progress').hide();
+                    $('#recordsRows').html(res.html);
+                
+
+                }
+            });
+            }
+        
     });
 
 </script>

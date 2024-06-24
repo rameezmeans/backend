@@ -91,7 +91,12 @@ class ProcessingSoftwaresController extends Controller
         $softwares = FileReplySoftwareService::select('software_id')->distinct()->orderBy('software_id', 'asc')->get();
         
         return view('processing_softwares.report', ['services' => $services, 'softwares' => $softwares]);
-    }   
+    }  
+    
+    public function ajaxSoftwareReport(Request $request){
+        
+        dd($request->all());
+    }
 
     public function update(Request $request)
     {   
