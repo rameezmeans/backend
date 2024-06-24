@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\VehiclesImport;
 use App\Models\Comment;
+use App\Models\File;
 use App\Models\Service;
 use App\Models\Vehicle;
 use App\Models\VehiclesNote;
@@ -452,6 +453,22 @@ class VehiclesController extends Controller
             $vehicle->Read_options = $request->Read_options;
             $vehicle->Additional_options = $request->Additional_options;
             $vehicle->save();
+
+
+            $filesWithBrands = File::where('brand', $request->Make)->get();
+
+            foreach($filesWithBrands as $file){
+                $file->brand =  $request->Make;
+                $file->save();
+            }
+
+            // $filesWithModels = File::where('model', $request->Model)->get();
+
+            // foreach($filesWithModels as $m){
+            //     $m->model =  $request->Model;
+            //     $m->save();
+            // }
+
             return redirect()->route('vehicles')->with('success',  'Vehicle updated, successfully.');
         }
 
