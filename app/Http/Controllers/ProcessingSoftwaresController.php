@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use App\Models\FileReplySoftwareService;
 use App\Models\ProcessingSoftware;
 use Illuminate\Http\Request;
@@ -73,10 +74,15 @@ class ProcessingSoftwaresController extends Controller
 
     public function softwareReport(){
 
-        $softwaresAndBrandsRecords = FileReplySoftwareService::join('files', 'file_reply_software_service.file_id', '=', 'files.id')
+        // $softwaresAndBrandsRecords = FileReplySoftwareService::join('files', 'file_reply_software_service.file_id', '=', 'files.id')
+        // ->whereNotNull('files.ecu')
+        // ->select('files.brand','files.ecu', 'file_reply_software_service.software_id', 'file_reply_software_service.service_id')
+        // ->distinct()->get();
+
+        $softwaresAndBrandsRecords = File::join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
         ->whereNotNull('files.ecu')
-        ->select('files.brand','files.ecu', 'file_reply_software_service.software_id', 'file_reply_software_service.service_id')
-        ->distinct()->get();
+        ->select('*', 'files.id as file_id')
+        ->get();
         
         return view('processing_softwares.report', ['softwaresAndBrandsRecords' => $softwaresAndBrandsRecords]);
     }   

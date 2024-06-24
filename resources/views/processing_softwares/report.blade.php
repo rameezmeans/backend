@@ -27,12 +27,13 @@
                         <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Task ID</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Brand</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">ECU</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Service</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Softare</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Number of Engineer Uploads</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Total Tasks</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Tasks</th>
                                     {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">All Files Uploaded</th> --}}
                                 </tr>
                             </thead>
@@ -40,6 +41,9 @@
                                 @foreach ($softwaresAndBrandsRecords as $row)
                                     
                                     <tr role="row">
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$row->file_id}}</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$row->brand}}</p>
                                         </td>
