@@ -94,17 +94,18 @@ Route::get('/tasks', function () {
 
     // // dd($file->files->count());
 
-    // $recs = FileReplySoftwareService::all();
+    $recs = FileReplySoftwareService::all();
 
-    // foreach($recs as $r){
+    foreach($recs as $r){
         
+        $record = RequestFile::where('id', $r->reply_id)->first();
 
-    //     if($r->service_id == 1){
-    //         $r->delete();
-    //     }
-    // }
+        if($record == NULL){
+            $r->delete();
+        }
+    }
 
-    // dd('stage 0 deleted');
+    dd('extra records from software replies table deleted');
 
     // foreach($recs as $r){
     //     $c = RequestFile::where('id',$r->reply_id)->first();
