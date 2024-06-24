@@ -604,12 +604,33 @@ margin-bottom: 10px !important;
                           </div>
                           <div class="b-t b-grey p-b-10 p-t-10">
 
+                            @php
+
+                            $totalRows = count($stage->softwares($file->ecu, $file->brand));
+                            $tempCount = 1;
+
+                            @endphp
+
                             @foreach($stage->softwares($file->ecu, $file->brand) as $s)
+
+                            @php
+
+                            
+                            $tempCount++;
+
+                            @endphp
+
                             <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
-                            <div class="pull-right">
-                              {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
-                            </div>
+                            @if($tempCount == $totalRows)
+                              <div class="pull-right">
+                                {{$stage->revisions($s->software_id, $file->ecu, $file->brand)+1}}
+                              </div>
+                            @else
+                              <div class="pull-right">
+                                {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
+                              </div>
+                            @endif
                             </div>
                             @endforeach
                           </div>
@@ -638,13 +659,34 @@ margin-bottom: 10px !important;
                         </div>
 
                         <div class="b-t b-grey p-b-10 p-t-10">
+
+                          @php
+
+                            $totalRows = count($stage->softwares($file->ecu, $file->brand));
+                            $tempCount = 1;
+
+                          @endphp
                             
                           @foreach($stage->softwares($file->ecu, $file->brand) as $s)
+
+                          @php
+
+                          
+                          $tempCount++;
+
+                          @endphp
+
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
-                          <div class="pull-right">
-                            {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
-                          </div>
+                          @if($tempCount == $totalRows)
+                            <div class="pull-right">
+                              {{$stage->revisions($s->software_id, $file->ecu, $file->brand)+1}}
+                            </div>
+                          @else
+                            <div class="pull-right">
+                              {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
+                            </div>
+                          @endif
                           </div>
                           @endforeach
                         </div>
@@ -2824,12 +2866,34 @@ margin-bottom: 10px !important;
                             <div class="clearfix"></div>
                           </div>
                           <div class="b-t b-grey p-b-10 p-t-10">
+
+                            @php
+
+                            $totalRows = count($stage->softwares($file->ecu, $file->brand));
+                            $tempCount = 1;
+
+                            @endphp
+
                             @foreach($stage->softwares($file->ecu, $file->brand) as $s)
+
+                            @php
+
+                          
+                            $tempCount++;
+  
+                            @endphp
+                            
                             <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
-                            <div class="pull-right">
-                              {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
-                            </div>
+                            @if($tempCount == $totalRows)
+                              <div class="pull-right">
+                                {{$stage->revisions($s->software_id, $file->ecu, $file->brand)+1}}
+                              </div>
+                            @else
+                              <div class="pull-right">
+                                {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
+                              </div>
+                            @endif
                             </div>
                             @endforeach
                           </div>
@@ -2857,12 +2921,34 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
                         <div class="b-t b-grey p-b-10 p-t-10">
+                          @php
+
+                            $totalRows = count($stage->softwares($file->ecu, $file->brand));
+                            $tempCount = 1;
+
+                          @endphp
+
+
                           @foreach($stage->softwares($file->ecu, $file->brand) as $s)
+
+                          @php
+
+                          
+                          $tempCount++;
+
+                          @endphp
+
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
+                          @if($tempCount == $totalRows)
+                          <div class="pull-right">
+                            {{$stage->revisions($s->software_id, $file->ecu, $file->brand)+1}}
+                          </div>
+                        @else
                           <div class="pull-right">
                             {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
                           </div>
+                        @endif
                           </div>
                           @endforeach
                         </div>
