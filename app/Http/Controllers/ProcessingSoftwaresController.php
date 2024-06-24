@@ -82,7 +82,9 @@ class ProcessingSoftwaresController extends Controller
         $softwaresAndBrandsRecords = File::join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
         ->whereNotNull('files.ecu')
         ->select('files.brand','files.ecu', 'files.id as file_id', 'file_reply_software_service.software_id as software_id', 'file_reply_software_service.service_id as service_id')
-        ->distinct('file_id', 'software_id', 'service_id')->get();
+        ->distinct('file_id', 'software_id', 'service_id')
+        ->orderBy('file_id', 'desc')
+        ->get();
         
         return view('processing_softwares.report', ['softwaresAndBrandsRecords' => $softwaresAndBrandsRecords]);
     }   
