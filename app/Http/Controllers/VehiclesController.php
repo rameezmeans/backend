@@ -457,6 +457,8 @@ class VehiclesController extends Controller
 
             $filesWithBrands = File::where('brand', $request->Make)->get();
 
+            dd($filesWithBrands);
+
             foreach($filesWithBrands as $file){
                 $file->brand =  $request->Make;
                 $file->save();
