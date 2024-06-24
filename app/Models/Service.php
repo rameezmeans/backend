@@ -33,19 +33,19 @@ class Service extends Model
 
     public function revisions($softwareID, $ecu, $brand){
 
-        $totalFiles = all_files_with_this_ecu_brand_and_service($ecu, $brand, $this->id, $softwareID);
-        $fileProcessedWithSoftware = all_files_with_this_ecu_brand_and_service_and_software($ecu, $brand, $this->id, $softwareID);
+        // $totalFiles = all_files_with_this_ecu_brand_and_service($ecu, $brand, $this->id, $softwareID);
+        $fileProcessedWithSoftware = all_replies_with_this_ecu_brand_and_service_inner($ecu, $brand, $this->id, $softwareID);
 
-        if($totalFiles == 0){
-            return 0;
-        }
+        // if($totalFiles == 0){
+        //     return 0;
+        // }
 
-        if($fileProcessedWithSoftware == 0){
-            return 0;
-        }
+        // if($fileProcessedWithSoftware == 0){
+        //     return 0;
+        // }
         
 
-        return number_format(( $fileProcessedWithSoftware/ $totalFiles ), 2);
+        return (int) $fileProcessedWithSoftware;
 
         
 

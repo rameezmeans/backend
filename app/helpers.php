@@ -938,6 +938,26 @@ if(!function_exists('all_files_uploaded')){
         return $totalRevisions;
     }
 }
+
+
+if(!function_exists('all_files_with_this_ecu_brand_and_service_inner')){
+
+    function all_replies_with_this_ecu_brand_and_service_inner($ecu, $brand , $serviceID, $softwareID){
+        
+        $fileProcessedWithSoftware = File::where('files.ecu', $ecu)->where('files.brand', $brand)
+        ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        ->where('file_reply_software_service.service_id', $serviceID)
+        ->where('file_reply_software_service.software_id', $softwareID)
+        ->select('file_reply_software_service.reply_id')
+        ->distinct()->count('file_reply_software_service.reply_id');
+
+        return $fileProcessedWithSoftware;
+
+
+    }
+
+}
+
 if(!function_exists('all_files_with_this_ecu_brand_and_service')){
 
     function all_files_with_this_ecu_brand_and_service($fileID, $serviceID, $softwareID){
