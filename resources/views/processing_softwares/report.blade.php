@@ -27,7 +27,7 @@
                         <label>Select Serivce</label>
                         <select class="full-width" id="service_id" data-init-plugin="select2" name="service_id">  
                         @foreach($services as $service)
-                            <option value="{{$service->service_id}}">{{\App\Models\Service::findOrFail($service->service_id)->name}}</option>
+                            <option value="{{$service->service_id}}">{{\App\Models\Service::findOrFail($service->service_id)->name.','}}@if(\App\Models\Service::findOrFail($service->service_id)->active) 'ECUTech' @else 'Tuning-X' @endif</option>
                         @endforeach
                         </select>
                     </div>
