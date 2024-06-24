@@ -44,27 +44,27 @@ class Service extends Model
         //     return 0;
         // }
 
-        $lastRecord = File::where('files.ecu', $ecu)
-        ->where('files.brand', $brand)
-        ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
-        ->where('file_reply_software_service.service_id', $this->id)
-        ->where('file_reply_software_service.software_id', $softwareID)
-        ->select('file_reply_software_service.reply_id', 'file_reply_software_service.id as reply_id')
-        ->orderBy('file_reply_software_service.created_at', 'desc')
-        ->limit(1)
-        ->first();
+        // $lastRecord = File::where('files.ecu', $ecu)
+        // ->where('files.brand', $brand)
+        // ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        // ->where('file_reply_software_service.service_id', $this->id)
+        // ->where('file_reply_software_service.software_id', $softwareID)
+        // ->select('file_reply_software_service.reply_id', 'file_reply_software_service.id as reply_id')
+        // ->orderBy('file_reply_software_service.created_at', 'desc')
+        // ->limit(1)
+        // ->first();
 
-        $thisRecord = File::where('files.ecu', $ecu)
-        ->where('files.brand', $brand)
-        ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
-        ->where('file_reply_software_service.service_id', $this->id)
-        ->where('file_reply_software_service.software_id', $softwareID)
-        ->select('file_reply_software_service.reply_id', 'file_reply_software_service.id as reply_id')
-        ->first();
+        // $thisRecord = File::where('files.ecu', $ecu)
+        // ->where('files.brand', $brand)
+        // ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        // ->where('file_reply_software_service.service_id', $this->id)
+        // ->where('file_reply_software_service.software_id', $softwareID)
+        // ->select('file_reply_software_service.reply_id', 'file_reply_software_service.id as reply_id')
+        // ->first();
 
-        if($lastRecord->reply_id != $thisRecord->reply_id){
-            $fileProcessedWithSoftware++;
-        }
+        // if($lastRecord->reply_id != $thisRecord->reply_id){
+        //     $fileProcessedWithSoftware++;
+        // }
         
 
         return (int) $fileProcessedWithSoftware;
