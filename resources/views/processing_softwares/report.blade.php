@@ -27,7 +27,7 @@
                         <label>Select Serivce</label>
                         <select class="full-width" id="service_id" data-init-plugin="select2" name="service_id">  
                         @foreach($services as $service)
-                            <option value="{{$service->service_id}}">{{$service->service_id}}</option>
+                            <option value="{{$service->service_id}}">{{\App\Models\Service::findOrFail($service->service_id)->name}}</option>
                         @endforeach
                         </select>
                     </div>
@@ -38,7 +38,7 @@
                         <select class="full-width" id="software_id" data-init-plugin="select2" name="software_id">
                             
                         @foreach($softwares as $software)
-                            <option value="{{$software->software_id}}">{{$software->software_id}}</option>
+                            <option value="{{$software->software_id}}">{{\App\Models\ProcessingSoftware::findOrFail($software->software_id)->name}}</option>
                         @endforeach
                         </select>
                     </div>
