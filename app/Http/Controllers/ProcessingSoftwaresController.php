@@ -86,9 +86,9 @@ class ProcessingSoftwaresController extends Controller
         // ->orderBy('file_id', 'desc')
         // ->get();
 
-        $services = FileReplySoftwareService::select('service_id')->distinct()->get();
+        $services = FileReplySoftwareService::select('service_id')->distinct()->orderBy('service_id', 'asc')->get();
         
-        $softwares = FileReplySoftwareService::select('software_id')->distinct()->get();
+        $softwares = FileReplySoftwareService::select('software_id')->distinct()->orderBy('software_id', 'asc')->get();
         
         return view('processing_softwares.report', ['services' => $services, 'softwares' => $softwares]);
     }   
