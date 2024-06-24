@@ -27,7 +27,7 @@
                         <label>Select Serivce</label>
                         <select class="full-width" id="service_id" data-init-plugin="select2" name="service_id">  
                         @foreach($services as $service)
-                            <option value="{{$service->service_id}}">{{\App\Models\Service::findOrFail($service->service_id)->name.', '}}({{\App\Models\Service::findOrFail($service->service_id)->vehicle_type.','}})@if(\App\Models\Service::findOrFail($service->service_id)->active == 1) ECUTech @elseif(\App\Models\Service::findOrFail($service->service_id)->tuningx_active == 1) Tuning-X @endif</option>
+                            <option value="{{$service->service_id}}">{{\App\Models\Service::findOrFail($service->service_id)->name.', '}}({{\App\Models\Service::findOrFail($service->service_id)->vehicle_type}}) @if(\App\Models\Service::findOrFail($service->service_id)->active == 1) ECUTech @elseif(\App\Models\Service::findOrFail($service->service_id)->tuningx_active == 1) Tuning-X @endif</option>
                         @endforeach
                         </select>
                     </div>
