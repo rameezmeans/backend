@@ -104,13 +104,11 @@ class ProcessingSoftwaresController extends Controller
         ->orderBy('file_id', 'desc')
         ->get();
         
-        $rows = "<tr>";
+        $rows = "";
 
         foreach($softwaresAndBrandsRecords as $record){
-            $rows .= "<td>".$record->file_id."</td>";
+            $rows .= "<tr>"."<td>".$record->file_id."</td>"."</tr>";
         }
-
-        $rows .= "</tr>";
 
         return response()->json(['html' =>$rows ], 200);
     }
