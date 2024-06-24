@@ -94,8 +94,25 @@ class ProcessingSoftwaresController extends Controller
     }  
     
     public function ajaxSoftwareReport(Request $request){
-        
-        dd($request->all());
+
+        $softwaresAndBrandsRecords = File::join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        ->whereNotNull('files.ecu')
+        ->where('service_id', $request->service_id)
+        ->where('software_id', $request->software_id)
+        ->select('files.brand','files.ecu', 'files.id as file_id', 'file_reply_software_service.software_id as software_id', 'file_reply_software_service.service_id as service_id')
+        ->distinct('file_id', 'software_id', 'service_id')
+        ->orderBy('file_id', 'desc')
+        ->get();
+
+        $rows = "<tr>";
+
+        foreach($softwaresAndBrandsRecords as $record){
+            $rows .= "<td>".$record->file_id."</td>";
+        }
+
+        $rows = "</tr>";
+
+        return $rows;
     }
 
     public function update(Request $request)
