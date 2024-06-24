@@ -58,10 +58,10 @@
                                         </td>
                                         
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{all_files_with_this_ecu_brand_and_service_and_software($row->ecu, $row->brand, $row->service_id, $row->software_id)}}</p>
+                                            <p>{{all_files_with_this_ecu_brand_and_service_and_software($row->file_id, $row->service_id, $row->software_id)}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{all_files_with_this_ecu_brand_and_service( $row->ecu, $row->brand, $row->service_id, $row->software_id)}}</p>
+                                            <p>{{all_files_with_this_ecu_brand_and_service($row->file_id, $row->service_id, $row->software_id)}}</p>
                                         </td>
 
                                     </tr>
