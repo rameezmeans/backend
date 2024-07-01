@@ -13,6 +13,10 @@ margin-bottom: 10px !important;
   background-color: #f77975 !important;
 }
 
+.bg-info-light {
+    background-color: #626c75 !important;
+}
+
 #circle{
   display: inline-block;
   width: 16px;
