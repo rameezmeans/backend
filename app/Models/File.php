@@ -177,6 +177,9 @@ class File extends Model
                 if($this->front_end_id == 1){
                     $path = public_path('/../../portal/public'.$this->file_path.$name);
                 }
+                else if($this->front_end_id == 3){
+                    $path = public_path('/../../e-tuningfiles/public'.$this->file_path.$name);
+                }
                 else{
                     $path = public_path('/../../tuningX/public'.$this->file_path.$name);
                 }
