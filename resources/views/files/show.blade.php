@@ -163,7 +163,7 @@ margin-bottom: 10px !important;
               <div class="col-lg-12">
                 
                 <div class="widget-16 card no-border widget-loader-circle">
-                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-danger-light @else bg-warning-light @endif">
 
                     @if($file->tool_type == 'slave')
                       @if(!$file->decoded_files->isEmpty())
