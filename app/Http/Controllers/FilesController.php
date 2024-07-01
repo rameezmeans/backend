@@ -2042,6 +2042,16 @@ class FilesController extends Controller
                     $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
                 }
             }
+            else if($file->front_end_id == 3){
+                
+                if($file->subdealer_group_id){
+                    $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName);
+                }
+                else{
+
+                    $attachment->move(public_path('/../../e-tuningfiles/public/'.$file->file_path),$fileName);
+                }
+            }
             else{
 
                 if($file->on_dev == 1){
@@ -2273,6 +2283,17 @@ class FilesController extends Controller
                 }
 
             }
+            if($file->front_end_id == 3){
+                // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+                }
+                else{
+                    $attachment->move(public_path('/../../e-tuningfiles/public'.$file->file_path),$newFileName);
+                }
+
+            }
             else{
 
                 if($file->on_dev == 1){
@@ -2301,6 +2322,19 @@ class FilesController extends Controller
                     }
                     else{
                         $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    }
+
+                }
+                else if($file->front_end_id == 3){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../e-tuningfiles/public'.$file->file_path).$newFileName;
                     }
 
                 }
