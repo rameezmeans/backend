@@ -598,7 +598,7 @@ margin-bottom: 10px !important;
                                 <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
                                 <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span>
                                 @php $stage = \App\Models\Service::FindOrFail($file->stage_services->service_id) @endphp
-                                @if($file->front_end_id == 2)
+                                @if($file->front_end_id == 2 || $file->front_end_id == 3)
                                     @if($file->tool_type == 'master')
                                       <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
                                     @else
@@ -653,7 +653,7 @@ margin-bottom: 10px !important;
                               <img alt="{{\App\Models\Service::FindOrFail($file->stage_services->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}">
                               <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_services->service_id)->name }}</span>
                               @php $stage = \App\Models\Service::FindOrFail($file->stage_services->service_id) @endphp
-                              @if($file->front_end_id == 2)
+                              @if($file->front_end_id == 2 || $file->front_end_id == 3)
                                   @if($file->tool_type == 'master')
                                     <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
                                   @else
@@ -717,7 +717,7 @@ margin-bottom: 10px !important;
                                 <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
                                 {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  ({{\App\Models\Service::where('id', $option->service_id)->first()->vehicle_type}}) (@if(\App\Models\Service::findOrFail( $option->service_id )->active == 1) {{'ECU Tech'}} @elseif(\App\Models\Service::findOrFail( $option->service_id )->tuningx_active == 1) {{'TuningX'}} @endif)
                                 @php $optionInner = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
-                                @if($file->front_end_id == 2)
+                                @if($file->front_end_id == 2 || $file->front_end_id == 3)
                                   @if($file->tool_type == 'master')
                                     <span class="text-white label-danger label pull-right"> {{$optionInner->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
                                   @else
@@ -1342,7 +1342,7 @@ margin-bottom: 10px !important;
                                 <img alt="{{\App\Models\Service::FindOrFail($file->stage_offer->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon }}">
                                 <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_offer->service_id)->name }}</span>
                                 @php $stage = \App\Models\Service::FindOrFail($file->stage_offer->service_id) @endphp
-                                @if($file->front_end_id == 2)
+                                @if($file->front_end_id == 2 || $file->front_end_id == 3)
                                     @if($file->tool_type == 'master')
                                       <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
                                       @php $proposedCredits += $stage->tuningx_credits; @endphp
@@ -1374,7 +1374,7 @@ margin-bottom: 10px !important;
                                   src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
                                   {{\App\Models\Service::FindOrFail($option->service_id)->name}}  
                                   @php $option1 = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
-                                  @if($file->front_end_id == 2)
+                                  @if($file->front_end_id == 2 || $file->front_end_id == 3)
                                     @if($file->tool_type == 'master')
                                       <span class="text-white label-danger label pull-right"> {{$option1->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
                                       @php $proposedCredits += $option1->optios_stage($file->stage_services->service_id)->first()->master_credits @endphp
@@ -2861,7 +2861,7 @@ margin-bottom: 10px !important;
                                 <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
                                 <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span>
                                 @php $stage = \App\Models\Service::FindOrFail($file->stage_services->service_id) @endphp
-                                @if($file->front_end_id == 2)
+                                @if($file->front_end_id == 2 || $file->front_end_id == 3)
                                     @if($file->tool_type == 'master')
                                       <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
                                     @else
@@ -2916,7 +2916,7 @@ margin-bottom: 10px !important;
                               <img alt="{{\App\Models\Service::FindOrFail($file->stage_services->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}">
                               <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_services->service_id)->name }}</span>
                               @php $stage = \App\Models\Service::FindOrFail($file->stage_services->service_id) @endphp
-                              @if($file->front_end_id == 2)
+                              @if($file->front_end_id == 2 || $file->front_end_id == 3)
                                   @if($file->tool_type == 'master')
                                     <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
                                   @else
@@ -2978,7 +2978,7 @@ margin-bottom: 10px !important;
                                 <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
                                 {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  ({{\App\Models\Service::where('id', $option->service_id)->first()->vehicle_type}}) (@if(\App\Models\Service::findOrFail( $option->service_id )->active == 1) {{'ECU Tech'}} @elseif(\App\Models\Service::findOrFail( $option->service_id )->tuningx_active == 1) {{'TuningX'}} @endif)
                                 @php $optionInner = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
-                                @if($file->front_end_id == 2)
+                                @if($file->front_end_id == 2 || $file->front_end_id == 3)
                                   @if($file->tool_type == 'master')
                                     <span class="text-white label-danger label pull-right"> {{$optionInner->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
                                   @else
@@ -3502,7 +3502,7 @@ margin-bottom: 10px !important;
                                 <img alt="{{\App\Models\Service::FindOrFail($file->stage_offer->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon }}">
                                 <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_offer->service_id)->name }}</span>
                                 @php $stage = \App\Models\Service::FindOrFail($file->stage_offer->service_id) @endphp
-                                @if($file->front_end_id == 2)
+                                @if($file->front_end_id == 2 || $file->front_end_id == 3)
                                     @if($file->tool_type == 'master')
                                       <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
                                       @php $proposedCredits += $stage->tuningx_credits; @endphp
@@ -3534,7 +3534,7 @@ margin-bottom: 10px !important;
                                   src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
                                   {{\App\Models\Service::FindOrFail($option->service_id)->name}}  
                                   @php $option1 = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
-                                  @if($file->front_end_id == 2)
+                                  @if($file->front_end_id == 2 || $file->front_end_id == 3)
                                     @if($file->tool_type == 'master')
                                       <span class="text-white label-danger label pull-right"> {{$option1->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
                                       @php $proposedCredits += $option1->optios_stage($file->stage_services->service_id)->first()->master_credits @endphp
