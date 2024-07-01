@@ -77,6 +77,9 @@ class FilesDatatable extends LivewireDatatable
                 if($frontEndID == 1){
                     return '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
                 }
+                if($frontEndID == 3){
+                    return '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
                 else{
                     return '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
                 }
