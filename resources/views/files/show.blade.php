@@ -167,7 +167,7 @@ margin-bottom: 10px !important;
               <div class="col-lg-12">
                 
                 <div class="widget-16 card no-border widget-loader-circle">
-                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-danger-light @else bg-warning-light @endif">
+                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @else bg-warning-light @endif">
 
                     @if($file->tool_type == 'slave')
                       @if(!$file->decoded_files->isEmpty())
@@ -299,7 +299,7 @@ margin-bottom: 10px !important;
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Frontend</p>
                           <div class="pull-right">
-                            <span class="label @if($file->frontend->id == 1) text-white bg-primary @elseif($file->frontend->id == 3) text-black bg-info @else text-black bg-warning @endif">{{$file->frontend->name}}<span>
+                            <span class="label @if($file->frontend->id == 1) text-white bg-primary @elseif($file->frontend->id == 3) text-white bg-info @else text-black bg-warning @endif">{{$file->frontend->name}}<span>
                           </div>
                           <div class="clearfix"></div>
                         </div>
@@ -1775,7 +1775,7 @@ margin-bottom: 10px !important;
               <div class="row" style="">
 
                 @foreach($file->logs as $log)
-                  <div class="col-12 col-xl-12 @if($log->type == 'error') bg-info-light @else bg-success-light @endif text-white m-b-10 m-t-10 m-l-10" style="height: 50px;">
+                  <div class="col-12 col-xl-12 @if($log->type == 'error') bg-danger-light @else bg-success-light @endif text-white m-b-10 m-t-10 m-l-10" style="height: 50px;">
                     <p class="no-margin p-t-10 p-b-10">{{$log->message}}</p>
                   </div>
                 @endforeach
