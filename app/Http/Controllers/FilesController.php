@@ -1470,6 +1470,21 @@ class FilesController extends Controller
                 }
             }
         }
+        else if($file->front_end_id == 3){
+            if($file->subdealer_group_id){
+                $path = public_path('/../../subportal/public'.$file->file_path);
+            }
+            else{
+
+                if($file->on_dev == 1){
+                    $path = public_path('/../../EcuTechV2/public'.$file->file_path);
+                
+                }
+                else{
+                    $path = public_path('/../../e-tuningfiles/public'.$file->file_path);
+                }
+            }
+        }
         else{
 
             if($file->on_dev == 1){
