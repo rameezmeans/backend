@@ -46,6 +46,9 @@
                     <li class="nav-item">
                       <a href="#" data-toggle="tab" data-target="#slide2"><span>TuningX</span></a>
                     </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#slide3"><span>E-Files</span></a>
+                      </li>
                 </ul>
 
                 <div class="tab-content">
@@ -97,6 +100,40 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($newsFeedsTuningX as $feed)
+                                            <tr role="row" class="redirect-click" data-redirect="{{ route('edit-feed', $feed->id) }}">
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{$feed->title}}</p>
+                                                </td>
+                                                
+                                                <td class="v-align-middle">
+                                                    <p>{{$feed->created_at->diffForHumans()}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p><input data-feed_id={{$feed->id}} class="active" type="checkbox" data-init-plugin="switchery" @if($feed->active == 1) checked="checked" @endif onclick="status_change()"/></p>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane slide-left" id="slide3">
+
+                        <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                            <div>
+                                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Title</th>
+                                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Date Created</th>
+                                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Active</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($newsFeedsEfiles as $feed)
                                             <tr role="row" class="redirect-click" data-redirect="{{ route('edit-feed', $feed->id) }}">
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>{{$feed->title}}</p>
