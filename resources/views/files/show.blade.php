@@ -9,6 +9,10 @@ margin-bottom: 10px !important;
 
 }
 
+.bg-danger-light{
+  background-color: #f77975 !important;
+}
+
 #circle{
   display: inline-block;
   width: 16px;
