@@ -685,6 +685,28 @@ class ServicesController extends Controller
         }
     }
 
+    /**
+     * update the services to DB.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function changeEfilesStatus(Request $request)
+    {
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-services')){
+
+            $service = Service::findOrFail($request->service_id);
+            if($request->status == 'true'){
+                $service->efiles_active = true;
+            }
+            else{
+                $service->efiles_active = false;
+            }
+            $service->save();
+            return response()->json(['success' => 'status changed']);
+        }
+    }
+
      /**
      * delete the services to DB.
      *

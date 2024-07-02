@@ -535,6 +535,7 @@ Route::match(['get', 'post'], '/makelua', [App\Http\Controllers\makelua::class, 
 
 Route::post('/change_status', [App\Http\Controllers\ServicesController::class, 'changeStatus'])->name('change-status');
 Route::post('/change_tuningx_status', [App\Http\Controllers\ServicesController::class, 'changeTuningxStatus'])->name('change-tuningx-status');
+Route::post('/change_efiles_status', [App\Http\Controllers\ServicesController::class, 'changeEfilesStatus'])->name('change-efiles-status');
 Route::post('/get_total_proposed_credits', [App\Http\Controllers\ServicesController::class, 'getTotalProposedCredits'])->name('get-total-proposed-credits');
 Route::post('/only_total_proposed_credits', [App\Http\Controllers\ServicesController::class, 'onlyTotalProposedCredits'])->name('only-total-proposed-credits');
 Route::post('/force_only_total_proposed_credits', [App\Http\Controllers\ServicesController::class, 'forceOnlyTotalProposedCredits'])->name('force-only-total-proposed-credits');

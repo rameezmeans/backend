@@ -365,11 +365,43 @@
 
             change_tuningx_status(service_id, switchTuningxStatus);
         });
+
+        let switchEfilesStatus = true;
+        $(document).on('change', '.efiles_active', function(e) {
+            let service_id = $(this).data('service_id');
+            console.log(service_id);
+            if ($(this).is(':checked')) {
+                switchEfilesStatus = $(this).is(':checked');
+                console.log(switchEfilesStatus);
+            }
+            else {
+                switchEfilesStatus = $(this).is(':checked');
+                console.log(switchEfilesStatus);
+            }
+
+            change_efiles_status(service_id, switchTuningxStatus);
+        });
     
 
         function change_tuningx_status(service_id, status){
             $.ajax({
                 url: "/change_tuningx_status",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "service_id": service_id,
+                    "status": status,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    
+                }
+            });  
+        }
+
+        function change_efiles_status(service_id, status){
+            $.ajax({
+                url: "/change_efiles_status",
                 type: "POST",
                 data: {
                     "_token": "{{ csrf_token() }}",
