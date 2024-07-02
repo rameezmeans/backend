@@ -24,6 +24,10 @@ class EmailTemplatesController extends Controller
         ->where('front_end_id', 2)
         ->get();
 
+        $efilesTemplates = EmailTemplate::whereNull('subdealer_group_id')
+        ->where('front_end_id', 3)
+        ->get();
+
         $ecutechTemplates = EmailTemplate::whereNull('subdealer_group_id')
         ->where('front_end_id', 1)
         ->get();
@@ -32,6 +36,7 @@ class EmailTemplatesController extends Controller
         [
             'ecutechTemplates' => $ecutechTemplates,
             'tuningxTemplates' => $tuningxTemplates,
+            'efilesTemplates' => $efilesTemplates,
         ]);
     }
 

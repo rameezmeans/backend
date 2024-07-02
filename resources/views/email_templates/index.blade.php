@@ -43,6 +43,9 @@
                     <li class="nav-item">
                       <a href="#" data-toggle="tab" data-target="#slide2"><span>TuningX</span></a>
                     </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#slide3"><span>E-files</span></a>
+                      </li>
                   </ul>
 
                   <div class="tab-content">
@@ -86,6 +89,31 @@
                                             <tr role="row" class="redirect-click" data-redirect="{{ route('edit-template', $template2->id) }}">
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>{{$template2->name}}</p>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane slide-left" id="slide3">
+
+                        <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                            <div>
+                                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($efilesTemplates as $template3)
+                                            <tr role="row" class="redirect-click" data-redirect="{{ route('edit-template', $template3->id) }}">
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{$template3->name}}</p>
                                                 </td>
                                             </tr>
                                         @endforeach

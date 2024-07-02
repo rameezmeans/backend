@@ -29,12 +29,18 @@ class MessageTemplatesController extends Controller
 
         $ecutechTemplates = MessageTemplate::
         whereNull('subdealer_group_id')
+        ->where('front_end_id', 3)
+        ->get();
+
+        $efilesTemplates = MessageTemplate::
+        whereNull('subdealer_group_id')
         ->where('front_end_id', 1)
         ->get();
 
         return view('message_templates.index', [
             'ecutechTemplates' => $ecutechTemplates,
             'tuningxTemplates' => $tuningxTemplates,
+            'efilesTemplates' => $efilesTemplates,
         ]);
 
     }
