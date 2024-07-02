@@ -454,7 +454,7 @@ class FilesAPIController extends Controller
                     }
                     if($file->front_end_id == 3){
                     
-                        $temp['location'] = 'https://e-tuningfiles.com'.$file->file_path.$file->final_decoded_file();
+                        $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->final_decoded_file();
                     }
                     else{
                         // $temp['location'] = 'https://tuningx.test'.$file->file_path.$this->getFileToShowToLUA($file);
@@ -469,7 +469,7 @@ class FilesAPIController extends Controller
                     }
                     if($file->front_end_id == 3){
                     
-                        $temp['location'] = 'https://e-tuningfiles.com'.$file->file_path.$file->file_attached;
+                        $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->file_attached;
                     }
                     else{
                         $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->file_attached;
@@ -536,21 +536,28 @@ class FilesAPIController extends Controller
                 $temp['options'] = $options;
     
                 if($file->decoded_files->count() > 0){
-                    if($file->front_end_id =='1'){
+                    if($file->front_end_id == 1){
+                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_decoded_file();
+                    }
+
+                    else if($file->front_end_id == 2){
                         $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_decoded_file();
                     }
                     
-                    if($file->front_end_id !='1'){
-                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->final_decoded_file();
+                    else if($file->front_end_id == 3){
+                        $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->final_decoded_file();
                     }                    
                     
                 }
                 else{
-                    if($file->front_end_id =='1'){
+                    if($file->front_end_id == 1 ){
                         $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached;
                     }
-                    if($file->front_end_id !='1'){
+                    else if($file->front_end_id == 2){
                         $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->file_attached;
+                    }
+                    else if($file->front_end_id == 3){
+                        $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->file_attached;
                     }
                 }
     
