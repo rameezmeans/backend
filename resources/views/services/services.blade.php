@@ -85,7 +85,7 @@
                                             </td>
                                            
                                             <td class="v-align-middle">
-                                                <span class="">@if($service->tuningx_active) <span class="label bg-warning">TuningX</span> @if($service->efiles_active) <span class="label bg-info text-white">Efiles</span>  @if($service->active) <span class="label bg-primary text-white">EcuTech</span> @endif</span>
+                                                <span class="">@if($service->tuningx_active) <span class="label bg-warning">TuningX</span> @endif @if($service->efiles_active) <span class="label bg-info text-white">Efiles</span> @endif  @if($service->active) <span class="label bg-primary text-white">EcuTech</span> @endif</span>
                                             </td>
                                             
 
