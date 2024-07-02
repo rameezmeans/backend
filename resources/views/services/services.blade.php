@@ -142,17 +142,18 @@
                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
                             <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 42px;">Type</th>
                             
-                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">EcuTech Credits</th>
-                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Tuning-X Master Credits</th>
-                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Tuning-X Slave Credits</th>
-                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Efiles Master Credits</th>
-                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Efiles Slave Credits</th>
+                            
                             <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Vehicle Type</th>
                             @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-services'))
                                 <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">ECU Tech Active</th>
                                 <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">TuningX Active</th>
                                 <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Efiles Active</th>
                             @endif
+                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">EcuTech Credits</th>
+                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Tuning-X Master Credits</th>
+                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Tuning-X Slave Credits</th>
+                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Efiles Master Credits</th>
+                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Efiles Slave Credits</th>
                             <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Date Created</th>
                             <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 342px;">Description</th>
                         </tr>
@@ -168,6 +169,23 @@
                                     <span class="label label-info">@if($service->type == 'tunning') Stage @else Option @endif</span>
                                 </td>
                                
+                                
+
+                                <td class="v-align-middle">
+                                    <span class="label label-info">{{$service->vehicle_type}}</span>
+                                </td>
+                                @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-services'))
+                                    <td class="v-align-middle">
+                                        <p><input data-service_id={{$service->id}} class="stage_active" type="checkbox" data-init-plugin="switchery" @if($service->active) checked="checked" @endif onclick="status_change()"/></p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        <p><input data-service_id={{$service->id}} class="tuningx_active" type="checkbox" data-init-plugin="switchery" @if($service->tuningx_active) checked="checked" @endif onclick="status_tuningx_change()"/></p>
+                                    </td>
+                                    <td class="v-align-middle">
+                                        <p><input data-service_id={{$service->id}} class="efiles_active" type="checkbox" data-init-plugin="switchery" @if($service->efiles_active) checked="checked" @endif onclick="status_efiles_change()"/></p>
+                                    </td>
+                                @endif
+
                                 <td class="v-align-middle">
                                     <span class="label bg-primary text-white">{{$service->credits}}</span>
                                 </td>
@@ -185,21 +203,6 @@
                                 <td class="v-align-middle">
                                     <span class="label bg-warning ">{{$service->efiles_slave_credits}}</span>
                                 </td>
-
-                                <td class="v-align-middle">
-                                    <span class="label label-info">{{$service->vehicle_type}}</span>
-                                </td>
-                                @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-services'))
-                                    <td class="v-align-middle">
-                                        <p><input data-service_id={{$service->id}} class="stage_active" type="checkbox" data-init-plugin="switchery" @if($service->active) checked="checked" @endif onclick="status_change()"/></p>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p><input data-service_id={{$service->id}} class="tuningx_active" type="checkbox" data-init-plugin="switchery" @if($service->tuningx_active) checked="checked" @endif onclick="status_tuningx_change()"/></p>
-                                    </td>
-                                    <td class="v-align-middle">
-                                        <p><input data-service_id={{$service->id}} class="efiles_active" type="checkbox" data-init-plugin="switchery" @if($service->efiles_active) checked="checked" @endif onclick="status_efiles_change()"/></p>
-                                    </td>
-                                @endif
                                
                                 <td class="v-align-middle">
                                     <p>{{$service->created_at->diffForHumans()}}</p>
