@@ -715,6 +715,17 @@ class FilesAPIController extends Controller
                 
                     }
 
+                    if($file->front_end_id == 3){
+
+                        copy( public_path('/../../e-tuningfiles/public/uploads/filesready'.'/'.$request->tuned_file), 
+                        public_path('/../../e-tuningfiles/public'.$file->file_path.$fileName) );
+
+                        unlink( public_path('/../../e-tuningfiles/public/uploads/filesready').'/'.$file->tunned_files->file );
+
+                        $path = public_path('/../../e-tuningfiles/public'.$file->file_path.$fileName);
+                
+                    }
+
                     else{
 
                         copy( public_path('/../../tuningX/public/uploads/filesready'.'/'.$request->tuned_file), 
@@ -765,6 +776,16 @@ class FilesAPIController extends Controller
                             ]);
                 
                         }
+
+                        if($file->front_end_id == 3){
+
+                            Chatify::push("private-chatify-download-efiles-".$chatID, 'download-button', [
+                                'status' => 'download',
+                                'file_id' => $file->id
+                            ]);
+                
+                        }
+
                         else{
                             
                             Chatify::push("private-chatify-download-tuningx-".$chatID, 'download-button', [
