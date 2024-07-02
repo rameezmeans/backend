@@ -137,6 +137,26 @@
                             <strong>{{ $message }}</strong>
                         </span>
                       @enderror
+
+                      <div class="form-group form-group-default required ">
+                        <label>Efiles Master Credits</label>
+                        <input value="@if(isset($service)){{$service->efiles_credits}}@else{{old('efiles_credits') }}@endif" name="efiles_credits" min="0" type="number" class="form-control" required>
+                      </div>
+                      @error('efiles_credits')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                      <div class="form-group form-group-default required ">
+                        <label>Efiles Slave Credits</label>
+                        <input value="@if(isset($service)){{$service->efiles_slave_credits}}@else{{old('efiles_slave_credits') }}@endif" name="efiles_slave_credits" min="0" type="number" class="form-control" required>
+                      </div>
+                      @error('efiles_slave_credits')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+
                     @endif
                     <div class="form-group form-group-default form-group-default-select2 required">
                       <label class="">Type</label>
@@ -194,7 +214,7 @@
                       </span>
                     @enderror
 
-                    <div class="form-group form-group-default">
+                    {{-- <div class="form-group form-group-default">
                       <label>Front End</label>
                       <div class="radio radio-success">
                         <input type="radio" @if($service->active) checked="checked" @endif value="ecutech" name="frontend" id="ecutech">
@@ -202,7 +222,7 @@
                         <input type="radio" @if($service->tuningx_active) checked="checked" @endif value="tuningx" name="frontend" id="tuningx">
                         <label for="tuningx">TuningX</label>
                       </div>
-                    </div>
+                    </div> --}}
                     @error('greek_description')
                       <span class="text-danger" role="alert">
                           <strong>{{ $message }}</strong>
