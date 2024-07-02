@@ -50,11 +50,11 @@
                                             <tr role="row" class="">
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p class="label @if($p->front_end_id == 2) bg-warning @else bg-primary text-white @endif">{{$p->id}}</p>
+                                                    <p class="label @if($p->front_end_id == 2) bg-warning @elseif($p->front_end_id == 3) bg-info @else bg-primary text-white @endif">{{$p->id}}</p>
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p class="label @if($p->front_end_id == 2) bg-warning @else bg-primary text-white @endif">{{$p->invoice_id}}</p>
+                                                    <p class="label @if($p->front_end_id == 2) bg-warning @elseif($p->front_end_id == 3) bg-info @else bg-primary text-white @endif">{{$p->invoice_id}}</p>
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
