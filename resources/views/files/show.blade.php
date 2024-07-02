@@ -1001,6 +1001,7 @@ margin-bottom: 10px !important;
                                   {{\App\Models\Service::FindOrFail($option->service_id)->name}}  
                                   @php $option1 = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
                                   @if($file->front_end_id == 2)
+
                                     @if($file->tool_type == 'master')
                                       <span class="text-white label-danger label pull-right"> {{$option1->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
                                       @php $proposedCredits += $option1->optios_stage($file->stage_services->service_id)->first()->master_credits @endphp
@@ -1009,7 +1010,8 @@ margin-bottom: 10px !important;
                                       @php $proposedCredits += $option1->optios_stage($file->stage_services->service_id)->first()->slave_credits @endphp
                                     @endif
 
-                                  @if($file->front_end_id == 3)
+                                  @elseif($file->front_end_id == 3)
+
                                     @if($file->tool_type == 'master')
                                       <span class="text-white label-danger label pull-right"> {{$option1->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
                                       @php $proposedCredits += $option1->optios_stage($file->stage_services->service_id)->first()->master_credits @endphp
