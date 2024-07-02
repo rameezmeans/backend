@@ -574,24 +574,27 @@ class ServicesController extends Controller
         else{
             $service->tuningx_credits = $request->tuningx_credits;
             $service->tuningx_slave_credits = $request->tuningx_slave_credits;
+
+            $service->efiles_credits = $request->efiles_credits;
+            $service->efiles_slave_credits = $request->efiles_slave_credits;
         }
         
         $service->vehicle_type = implode( ',', $request->vehicle_type );
     
         $service->description = $request->description;
 
-        if($request->frontend == 'ecutech'){
+        // if($request->frontend == 'ecutech'){
 
-            $service->active = 1;
-            $service->tuningx_active = 0;
+        //     $service->active = 1;
+        //     $service->tuningx_active = 0;
 
-        }
-        else if($request->frontend == 'tuningx'){
+        // }
+        // else if($request->frontend == 'tuningx'){
 
-            $service->active = 0;
-            $service->tuningx_active = 1;
+        //     $service->active = 0;
+        //     $service->tuningx_active = 1;
 
-        }
+        // }
         
         $service->description = $request->description;
         $texts['english'] = $request->description;;
