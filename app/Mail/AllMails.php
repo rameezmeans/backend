@@ -38,10 +38,16 @@ class AllMails extends Mailable
                 from: new Address('info@ecutech.gr', 'ECU Tech')
             );
         }
-        else{
+        else if($this->details['front_end_id'] == 2){
             return new Envelope(
                 subject:  $this->details['subject'],
                 from: new Address('info@tuning-x.com', 'Tuning-X | Performance Excellence')
+            );
+        }
+        else if($this->details['front_end_id'] == 3){
+            return new Envelope(
+                subject:  $this->details['subject'],
+                from: new Address('info@e-tuningfiles.com', 'E-files')
             );
         }
     }
