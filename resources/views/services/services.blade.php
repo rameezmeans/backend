@@ -180,10 +180,10 @@
                                 </td>
 
                                 <td class="v-align-middle">
-                                    <span class="label bg-warning ">{{$service->tuningx_credits}}</span>
+                                    <span class="label bg-warning ">{{$service->efiles_credits}}</span>
                                 </td>
                                 <td class="v-align-middle">
-                                    <span class="label bg-warning ">{{$service->tuningx_slave_credits}}</span>
+                                    <span class="label bg-warning ">{{$service->efiles_slave_credits}}</span>
                                 </td>
 
                                 <td class="v-align-middle">
