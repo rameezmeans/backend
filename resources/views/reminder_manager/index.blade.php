@@ -42,6 +42,10 @@
                               <a href="#" data-toggle="tab"  data-target="#slide2"><span>TuningX</span></a>
                             </li>
 
+                            <li class="nav-item">
+                                <a href="#" data-toggle="tab"  data-target="#slide3"><span>E-files</span></a>
+                              </li>
+
                             
                             
                         </ul>
@@ -798,6 +802,384 @@
                                   </div>
 
                             </div>
+
+
+                            <div class="tab-pane slide-left" id="slide3">
+
+                                <div class="table-responsive">
+                                    <div id="condensedTable_wrapper" class="dataTables_wrapper no-footer">
+                                        <table class="main-table table table-hover table-condensed no-footer" id="condensedTable" role="grid">
+                                        <thead>
+                                            <tr role="row">
+                                                <th style="width:200px; color: black;" class="sorting_asc" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending text-black">Title</th>
+                                                <th style="width: 200px; color:black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Admin</th>
+                                                <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Admin</th>
+                                                <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Admin</th>
+                                                <th style="width: 200px; color:  black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Engineer</th>
+                                                <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Engineer</th>
+                                                <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Engineer</th>
+                                                <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Customer</th>
+                                                <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Customer</th>
+                                                <th style="width: 200px; color: black;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column descending text-black">Customer</th>
+                                        </thead>
+                                        <tbody>
+                                        <tr role="row" class="odd">
+                                            <td class="v-align-middle semi-bold sorting_1">Engineer Assignment</td>
+                                            <td class="v-align-middle">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['eng_assign_admin_email']) checked @endif id="{{'eng_assign_admin_email2'}}" data-id="{{'eng_assign_admin_email'}}" data-frontend_id='3'>
+                                                    <label for="eng_assign_admin_email2" class="">Enable Email</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['eng_assign_admin_sms']) checked @endif id="{{'eng_assign_admin_sms2'}}" data-id="{{'eng_assign_admin_sms'}}" data-frontend_id='3'>
+                                                    <label for="eng_assign_admin_sms2" class="">Enable SMS</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['eng_assign_admin_whatsapp']) checked @endif id="{{'eng_assign_admin_whatsapp2'}}" data-id="{{'eng_assign_admin_whatsapp'}}" data-frontend_id='3'>
+                                                    <label for="eng_assign_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['eng_assign_eng_email']) checked @endif id="{{'eng_assign_eng_email2'}}" data-id="{{'eng_assign_eng_email'}}" data-frontend_id='3'>
+                                                    <label for="eng_assign_eng_email2" class="">Enable Email</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success">
+                                                    <input type="checkbox" @if($efilsManager['eng_assign_eng_sms']) checked @endif id="{{'eng_assign_eng_sms2'}}" data-id="{{'eng_assign_eng_sms'}}" data-frontend_id='3'>
+                                                    <label for="eng_assign_eng_sms2" class="">Enable SMS</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success">
+                                                    <input type="checkbox" @if($efilsManager['eng_assign_eng_whatsapp']) checked @endif id="{{'eng_assign_eng_whatsapp2'}}" data-id="{{'eng_assign_eng_whatsapp'}}" data-frontend_id='3'>
+                                                    <label for="eng_assign_eng_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                {{-- <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($manager['eng_assign_cus_email']) checked @endif id="eng_assign_cus_email">
+                                                    <label for="eng_assign_cus_email" class="">Enable Email</label>
+                                                </div> --}}
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                {{-- <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($manager['eng_assign_cus_sms']) checked @endif id="eng_assign_cus_sms">
+                                                    <label for="eng_assign_cus_sms" class="">Enable SMS</label>
+                                                </div> --}}
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                {{-- <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($manager['eng_assign_cus_sms']) checked @endif id="eng_assign_cus_sms">
+                                                    <label for="eng_assign_cus_sms" class="">Enable SMS</label>
+                                                </div> --}}
+                                            </td>
+                                            </tr>
+                                            <tr role="row" class="even">
+                                            <td class="v-align-middle semi-bold sorting_1">Customer File Upload</td>
+                                            <td class="v-align-middle">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['file_upload_admin_email']) checked @endif id="file_upload_admin_email2" data-id="file_upload_admin_email" data-frontend_id='3'>
+                                                    <label for="file_upload_admin_email2" class="">Enable Email</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['file_upload_admin_sms']) checked @endif id="file_upload_admin_sms2"  data-id="file_upload_admin_sms" data-frontend_id='3'>
+                                                    <label for="file_upload_admin_sms2" class="">Enable SMS</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['file_upload_admin_whatsapp']) checked @endif id="file_upload_admin_whatsapp2"  data-id="file_upload_admin_whatsapp" data-frontend_id='3'>
+                                                    <label for="file_upload_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['file_upload_eng_email']) checked @endif id="file_upload_eng_email2" data-id="file_upload_eng_email" data-frontend_id='3'>
+                                                    <label for="file_upload_eng_email2" class="">Enable Email</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['file_upload_eng_sms']) checked @endif id="file_upload_eng_sms2" data-id="file_upload_eng_sms" data-frontend_id='3'>
+                                                    <label for="file_upload_eng_sms2" class="">Enable SMS</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['file_upload_eng_whatsapp']) checked @endif id="file_upload_eng_whatsapp2" data-id="file_upload_eng_whatsapp" data-frontend_id='3'>
+                                                    <label for="file_upload_eng_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                
+                                            </td>
+                                            </tr>
+                                            <tr role="row" class="odd">
+                                            <td class="v-align-middle semi-bold sorting_1">Engineer File Upload</td>
+                                            <td class="v-align-middle">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['eng_file_upload_admin_email']) checked @endif id="eng_file_upload_admin_email2" data-id="eng_file_upload_admin_email" data-frontend_id='3'>
+                                                    <label for="eng_file_upload_admin_email2" class="">Enable Email</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['eng_file_upload_admin_sms']) checked @endif id="eng_file_upload_admin_sms2" data-id="eng_file_upload_admin_sms" data-frontend_id='3'>
+                                                    <label for="eng_file_upload_admin_sms2" class="">Enable SMS</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['eng_file_upload_admin_whatsapp']) checked @endif id="eng_file_upload_admin_whatsapp2" data-id="eng_file_upload_admin_whatsapp" data-frontend_id='3'>
+                                                    <label for="eng_file_upload_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                               
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                               
+                                            </td>
+                                            <td class="v-align-middle">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['eng_file_upload_cus_email']) checked @endif id="eng_file_upload_cus_email2" data-id="eng_file_upload_cus_email" data-frontend_id='3'>
+                                                    <label for="eng_file_upload_cus_email2" class="">Enable Email</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['eng_file_upload_cus_sms']) checked @endif id="eng_file_upload_cus_sms2" data-id="eng_file_upload_cus_sms" data-frontend_id='3'>
+                                                    <label for="eng_file_upload_cus_sms2" class="">Enable SMS</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['eng_file_upload_cus_whatsapp']) checked @endif id="eng_file_upload_cus_whatsapp2" data-id="eng_file_upload_cus_whatsapp" data-frontend_id='3'>
+                                                    <label for="eng_file_upload_cus_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
+                                            </tr>
+                                            <tr role="row" class="even">
+                                            <td class="v-align-middle semi-bold sorting_1">File New Request</td>
+                                            <td class="v-align-middle">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['file_new_req_admin_email']) checked @endif id="file_new_req_admin_email2" data-id="file_new_req_admin_email" data-frontend_id='3'>
+                                                    <label for="file_new_req_admin_email2" class="">Enable Email</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['file_new_req_admin_sms']) checked @endif id="file_new_req_admin_sms2" data-id="file_new_req_admin_sms" data-frontend_id='3'>
+                                                    <label for="file_new_req_admin_sms2" class="">Enable SMS</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['file_new_req_admin_whatsapp']) checked @endif id="file_new_req_admin_whatsapp2" data-id="file_new_req_admin_whatsapp" data-frontend_id='3'>
+                                                    <label for="file_new_req_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['file_new_req_eng_email']) checked @endif id="file_new_req_eng_email2" data-id="file_new_req_eng_email" data-frontend_id='3'>
+                                                    <label for="file_new_req_eng_email2" class="">Enable Email</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['file_new_req_eng_sms']) checked @endif id="file_new_req_eng_sms2" data-id="file_new_req_eng_sms" data-frontend_id='3'>
+                                                    <label for="file_new_req_eng_sms2" class="">Enable SMS</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['file_new_req_eng_whatsapp']) checked @endif id="file_new_req_eng_whatsapp2" data-id="file_new_req_eng_whatsapp" data-frontend_id='3'>
+                                                    <label for="file_new_req_eng_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                
+                                            </td>
+                                            </tr>
+                                            <tr role="row" class="odd">
+                                            <td class="v-align-middle semi-bold sorting_1">Message from Customer</td>
+                                            <td class="v-align-middle">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['msg_cus_admin_email']) checked @endif id="msg_cus_admin_email2" data-id="msg_cus_admin_email" data-frontend_id='3'>
+                                                    <label for="msg_cus_admin_email2" class="">Enable Email</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['msg_cus_admin_sms']) checked @endif id="msg_cus_admin_sms2" data-id="msg_cus_admin_sms" data-frontend_id='3'>
+                                                    <label for="msg_cus_admin_sms2" class="">Enable SMS</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['msg_cus_admin_whatsapp']) checked @endif id="msg_cus_admin_whatsapp2" data-id="msg_cus_admin_whatsapp" data-frontend_id='3'>
+                                                    <label for="msg_cus_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['msg_cus_eng_email']) checked @endif id="msg_cus_eng_email2" data-id="msg_cus_eng_email" data-frontend_id='3'>
+                                                    <label for="msg_cus_eng_email2" class="">Enable Email</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['msg_cus_eng_sms']) checked @endif id="msg_cus_eng_sms2" data-id="msg_cus_eng_sms" data-frontend_id='3'>
+                                                    <label for="msg_cus_eng_sms2" class="">Enable SMS</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                <div class="checkbox check-success ">
+                                                    <input type="checkbox" @if($efilsManager['msg_cus_eng_whatsapp']) checked @endif id="msg_cus_eng_whatsapp2" data-id="msg_cus_eng_whatsapp" data-frontend_id='3'>
+                                                    <label for="msg_cus_eng_whatsapp2" class="">Enable Whatsapp</label>
+                                                </div>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                
+                                            </td>
+                                            <td class="v-align-middle semi-bold">
+                                                
+                                            </td>
+                                            </tr>
+                                            <tr role="row" class="odd">
+                                                <td class="v-align-middle semi-bold sorting_1">Message from Engineer</td>
+                                                <td class="v-align-middle">
+                                                    <div class="checkbox check-success ">
+                                                        <input type="checkbox" @if($efilsManager['msg_eng_admin_email']) checked @endif id="msg_eng_admin_email2" data-id="msg_eng_admin_email" data-frontend_id='3'>
+                                                        <label for="msg_eng_admin_email2" class="">Enable Email</label>
+                                                    </div>
+                                                </td>
+                                                <td class="v-align-middle semi-bold">
+                                                    <div class="checkbox check-success ">
+                                                        <input type="checkbox" @if($efilsManager['msg_eng_admin_sms']) checked @endif id="msg_eng_admin_sms2" data-id="msg_eng_admin_sms" data-frontend_id='3'>
+                                                        <label for="msg_eng_admin_sms2" class="">Enable SMS</label>
+                                                    </div>
+                                                </td>
+                                                <td class="v-align-middle semi-bold">
+                                                    <div class="checkbox check-success ">
+                                                        <input type="checkbox" @if($efilsManager['msg_eng_admin_whatsapp']) checked @endif id="msg_eng_admin_whatsapp2" data-id="msg_eng_admin_whatsapp" data-frontend_id='3'>
+                                                        <label for="msg_eng_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                    </div>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    
+                                                </td>
+                                                <td class="v-align-middle semi-bold">
+                                                    
+                                                </td>
+                                                <td class="v-align-middle semi-bold">
+                                                    
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <div class="checkbox check-success ">
+                                                        <input type="checkbox" @if($efilsManager['msg_eng_cus_email']) checked @endif id="msg_eng_cus_email2" data-id="msg_eng_cus_email" data-frontend_id='3'>
+                                                        <label for="msg_eng_cus_email2" class="">Enable Email</label>
+                                                    </div>
+                                                </td>
+                                                <td class="v-align-middle semi-bold">
+                                                    <div class="checkbox check-success ">
+                                                        <input type="checkbox" @if($efilsManager['msg_eng_cus_sms']) checked @endif id="msg_eng_cus_sms2" data-id="msg_eng_cus_sms" data-frontend_id='3'>
+                                                        <label for="msg_eng_cus_sms2" class="">Enable SMS</label>
+                                                    </div>
+                                                </td>
+                                                <td class="v-align-middle semi-bold">
+                                                    <div class="checkbox check-success ">
+                                                        <input type="checkbox" @if($efilsManager['msg_eng_cus_whatsapp']) checked @endif id="msg_eng_cus_whatsapp2" data-id="msg_eng_cus_whatsapp" data-frontend_id='3'>
+                                                        <label for="msg_eng_cus_whatsapp2" class="">Enable Whatsapp</label>
+                                                    </div>
+                                                </td>
+                                                </tr>
+                                                <tr role="row" class="odd">
+                                                    <td class="v-align-middle semi-bold sorting_1">Status Change</td>
+                                                    <td class="v-align-middle">
+                                                        <div class="checkbox check-success ">
+                                                            <input type="checkbox" @if($efilsManager['status_change_admin_email']) checked @endif id="status_change_admin_email2" data-id="status_change_admin_email" data-frontend_id='3'>
+                                                            <label for="status_change_admin_email2" class="">Enable Email</label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="v-align-middle semi-bold">
+                                                        <div class="checkbox check-success ">
+                                                            <input type="checkbox" @if($efilsManager['status_change_admin_sms']) checked @endif id="status_change_admin_sms2" data-id="status_change_admin_sms" data-frontend_id='3'>
+                                                            <label for="status_change_admin_sms2" class="">Enable SMS</label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="v-align-middle semi-bold">
+                                                        <div class="checkbox check-success ">
+                                                            <input type="checkbox" @if($efilsManager['status_change_admin_whatsapp']) checked @endif id="status_change_admin_whatsapp2" data-id="status_change_admin_whatsapp" data-frontend_id='3'>
+                                                            <label for="status_change_admin_whatsapp2" class="">Enable Whatsapp</label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="v-align-middle">
+                                                        {{-- <div class="checkbox check-success ">
+                                                            <input type="checkbox" @if($manager['status_change_eng_email']) checked @endif id="status_change_eng_email">
+                                                            <label for="status_change_eng_email" class="">Enable Email</label>
+                                                        </div> --}}
+                                                    </td>
+                                                    <td class="v-align-middle semi-bold">
+                                                        {{-- <div class="checkbox check-success ">
+                                                            <input type="checkbox" @if($manager['status_change_eng_sms']) checked @endif id="status_change_eng_sms">
+                                                            <label for="status_change_eng_sms" class="">Enable SMS</label>
+                                                        </div> --}}
+                                                    </td>
+                                                    <td></td>
+                                                    <td class="v-align-middle">
+                                                        <div class="checkbox check-success ">
+                                                            <input type="checkbox" @if($efilsManager['status_change_cus_email']) checked @endif id="status_change_cus_email2" data-id="status_change_cus_email" data-frontend_id='3'>
+                                                            <label for="status_change_cus_email2" class="">Enable Email</label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="v-align-middle semi-bold">
+                                                        <div class="checkbox check-success ">
+                                                            <input type="checkbox" @if($efilsManager['status_change_cus_sms']) checked @endif id="status_change_cus_sms2" data-id="status_change_cus_sms" data-frontend_id='3'>
+                                                            <label for="status_change_cus_sms2" class="">Enable SMS</label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="v-align-middle semi-bold">
+                                                        <div class="checkbox check-success ">
+                                                            <input type="checkbox" @if($efilsManager['status_change_cus_whatsapp']) checked @endif id="status_change_cus_whatsapp2" data-id="status_change_cus_whatsapp" data-frontend_id='3'>
+                                                            <label for="status_change_cus_whatsapp2" class="">Enable Whatsapp</label>
+                                                        </div>
+                                                    </td>
+                                                    </tr>
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                  </div>
+
+                            </div>
+
+
                     </div>
                   </div>
             </div>
