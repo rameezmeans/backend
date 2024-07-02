@@ -777,7 +777,7 @@ class FilesAPIController extends Controller
                 
                         }
 
-                        if($file->front_end_id == 3){
+                        else if($file->front_end_id == 3){
 
                             Chatify::push("private-chatify-download-efiles-".$chatID, 'download-button', [
                                 'status' => 'download',
@@ -811,6 +811,16 @@ class FilesAPIController extends Controller
                         ]);
         
                     }
+
+                    else if($file->front_end_id == 3){
+
+                        Chatify::push("private-chatify-download-efiles-".$chatID, 'download-button', [
+                            'status' => 'fail',
+                            'file_id' => $file->id
+                        ]);
+            
+                    }
+
                     else{
                         
                         Chatify::push("private-chatify-download-tuningx-".$chatID, 'download-button', [
@@ -828,15 +838,25 @@ class FilesAPIController extends Controller
         
             if($file->front_end_id == 1){
 
-                Chatify::push("private-chatify-download-portal", 'download-button', [
+                Chatify::push("private-chatify-download-portal-".$chatID, 'download-button', [
                     'status' => 'fail',
                     'file_id' => $file->id
                 ]);
 
             }
+
+            else if($file->front_end_id == 3){
+
+                Chatify::push("private-chatify-download-efiles-".$chatID, 'download-button', [
+                    'status' => 'fail',
+                    'file_id' => $file->id
+                ]);
+    
+            }
+
             else{
                 
-                Chatify::push("private-chatify-download-tuningx", 'download-button', [
+                Chatify::push("private-chatify-download-tuningx-".$chatID, 'download-button', [
                     'status' => 'fail',
                     'file_id' => $file->id
                 ]);
