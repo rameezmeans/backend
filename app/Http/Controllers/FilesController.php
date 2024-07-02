@@ -106,6 +106,20 @@ class FilesController extends Controller
             }
 
         }
+
+        else if($file->front_end_id == 3){
+            
+            if($file->on_dev == 1){
+                $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+            }
+            else{
+
+                
+                $attachment->move(public_path('/../../e-tuningfiles/public'.$file->file_path),$newFileName);
+            }
+
+        }
+
         else{
 
             if($file->on_dev == 1){
@@ -223,6 +237,9 @@ class FilesController extends Controller
         if($file->front_end_id == 1){
             $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
         }
+        else if($file->front_end_id == 3){
+            $html2 = str_replace("#file_url",  "http://portal.e-tuningfiles.com/"."file/".$file->id,$html2);
+        }
         else{
             $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
         }
@@ -244,6 +261,9 @@ class FilesController extends Controller
         
         if($file->front_end_id == 1){
             $subject = "ECU Tech: Engineer uploaded a file in reply.";
+        }
+        else if($file->front_end_id == 3){
+            $subject = "E-files: Engineer uploaded a file in reply.";
         }
         else{
             $subject = "TuningX: Engineer uploaded a file in reply.";
@@ -373,6 +393,9 @@ class FilesController extends Controller
             if($file->front_end_id == 1){
                 $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
             }
+            else if($file->front_end_id == 3){
+                $html2 = str_replace("#file_url",  "http://portal.e-tuningfiles.com/"."file/".$file->id,$html2);
+            }
             else{
                 $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
             }
@@ -394,6 +417,9 @@ class FilesController extends Controller
             
             if($file->front_end_id == 1){
                 $subject = "ECU Tech: Engineer uploaded a file in reply.";
+            }
+            else if($file->front_end_id == 3){
+                $subject = "E-files: Engineer uploaded a file in reply.";
             }
             else{
                 $subject = "TuningX: Engineer uploaded a file in reply.";
@@ -731,6 +757,18 @@ class FilesController extends Controller
                 }
                 else{
                     $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+                }
+
+            }
+            else if($file->front_end_id == 3){
+
+                // $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../EcuTechV2/public/'.$file->file_path),$fileName);
+                }
+                else{
+                    $attachment->move(public_path('/../../e-tuningfiles/public/'.$file->file_path),$fileName);
                 }
 
             }
@@ -1378,6 +1416,21 @@ class FilesController extends Controller
                     }
 
                 }
+                else if($file->front_end_id == 3){
+
+                    // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+
+                    if($file->on_dev == 1){
+
+                        $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$fileNameEncoded;
+
+                    }
+                    else{
+
+                        $file_path = public_path('/../../e-tuningfiles/public/'.$file->file_path).$fileNameEncoded;
+                    }
+
+                }
                 else{
 
                     if($file->on_dev == 1){
@@ -1425,6 +1478,21 @@ class FilesController extends Controller
                 else{
 
                     $file_path = public_path('/../../portal/public/'.$file->file_path).$finalFileName;
+                }
+
+            }
+            else if($file->front_end_id == 3){
+
+                // $file_path = public_path('/../../portal/public/'.$file->file_path).$finalFileName;
+
+                if($file->on_dev == 1){
+
+                    $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$finalFileName;
+
+                }
+                else{
+
+                    $file_path = public_path('/../../e-tuningfiles/public/'.$file->file_path).$finalFileName;
                 }
 
             }
@@ -1651,6 +1719,9 @@ class FilesController extends Controller
         if($file->front_end_id == 1){
             $subject = "ECU Tech: Task Assigned!";
         }
+        else if($file->front_end_id == 3){
+            $subject = "E-files: Task Assigned!";
+        }
         else{
             $subject = "TuningX: Task Assigned!";
         }
@@ -1702,6 +1773,9 @@ class FilesController extends Controller
 
         if($file->front_end_id == 1){
             $frontEnd = "ECUTech";
+        }
+        else if($file->front_end_id == 3){
+            $frontEnd = "E-files";
         }
         else{
             $frontEnd = "Tuning-X";
@@ -1783,6 +1857,9 @@ class FilesController extends Controller
 
         if($file->front_end_id == 1){
             $frontEnd = "ECUTech";
+        }
+        else if($file->front_end_id == 3){
+            $frontEnd = "E-files";
         }
         else{
             $frontEnd = "Tuning-X";
@@ -1933,6 +2010,9 @@ class FilesController extends Controller
         if($file->front_end_id == 1){
             $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
         }
+        else if($file->front_end_id == 3){
+            $html2 = str_replace("#file_url",  'http://portal.e-tuningfiles.com/'."file/".$file->id,$html2);
+        }
         else{
             $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
         }
@@ -1957,6 +2037,9 @@ class FilesController extends Controller
         
         if($file->front_end_id == 1){
             $subject = "ECU Tech: File Status Changed!";
+        }
+        else if($file->front_end_id == 3){
+            $subject = "E-files: File Status Changed!";
         }
         else{
             $subject = "TuningX: File Status Changed!";
@@ -2109,6 +2192,9 @@ class FilesController extends Controller
         if($file->front_end_id == 1){
             $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
         }
+        else if($file->front_end_id == 3){
+            $html2 = str_replace("#file_url",  'http://portal.e-tuningfiles.com/'."file/".$file->id,$html2);
+        }
         else{
             $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
         }
@@ -2136,6 +2222,9 @@ class FilesController extends Controller
 
         if($file->front_end_id == 1){
             $subject = "ECU Tech: Engineer replied to your support message!";
+        }
+        else if($file->front_end_id == 3){
+            $subject = "E-files: Engineer replied to your support message!";
         }
         else{
             $subject = "Tuningx: Engineer replied to your support message!";
@@ -2450,6 +2539,9 @@ class FilesController extends Controller
         if($file->front_end_id == 1){
             $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
         }
+        else if($file->front_end_id == 3){
+            $html2 = str_replace("#file_url",  'http://portal.e-tuningfiles.com/'."file/".$file->id,$html2);
+        }
         else{
             $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
         }
@@ -2471,6 +2563,9 @@ class FilesController extends Controller
         
         if($file->front_end_id == 1){
             $subject = "ECU Tech: Engineer uploaded a file in reply.";
+        }
+        else if($file->front_end_id == 3){
+            $subject = "E-files: Engineer uploaded a file in reply.";
         }
         else{
             $subject = "TuningX: Engineer uploaded a file in reply.";
@@ -3210,6 +3305,9 @@ class FilesController extends Controller
             if($file->front_end_id == 1){
                 $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
             }
+            else if($file->front_end_id == 3){
+                $html2 = str_replace("#file_url",  'http://portal.e-tuningfiles.com/'."file/".$file->id,$html2);
+            }
             else{
                 $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
             }
@@ -3232,6 +3330,9 @@ class FilesController extends Controller
             
             if($file->front_end_id == 1){
                 $subject = "ECU Tech: Engineer uploaded a file in reply.";
+            }
+            else if($file->front_end_id == 3){
+                $subject = "E-files: Engineer uploaded a file in reply.";
             }
             else{
                 $subject = "TuningX: Engineer uploaded a file in reply.";
