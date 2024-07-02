@@ -209,7 +209,7 @@ class ServicesController extends Controller
 
             foreach($proposedOptions as $o) {
                     $option = Service::findOrFail($o);
-                    $forceOptions .= '<option selected value="'.$option->id.'">'.$option->name.'</option>';
+                    $forceOptions .= '<option selected value="'.$option->id.'">'.$option->name.'('.$option->vehicle_type.')'.'</option>';
                 }
                 
             }
@@ -251,14 +251,14 @@ class ServicesController extends Controller
 
                     if(in_array($option->id, $proposedOptions))
                     {
-                        $optionOptions .= '<option selected value="'.$option->id.'">'.$option->name.'</option>';
+                        $optionOptions .= '<option selected value="'.$option->id.'">'.$option->name.'('.$option->vehicle_type.')'.'</option>';
                     }
                     else{
-                        $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'</option>';
+                        $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'('.$option->vehicle_type.')'.'</option>';
                     }
                 }
                 else{
-                    $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'</option>';
+                    $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'('.$option->vehicle_type.')'.'</option>';
                 }
 
             }
@@ -269,7 +269,7 @@ class ServicesController extends Controller
 
             foreach($proposedOptions as $o) {
                     $option = Service::findOrFail($o);
-                    $forceOptions .= '<option selected value="'.$option->id.'">'.$option->name.'</option>';
+                    $forceOptions .= '<option selected value="'.$option->id.'">'.$option->name.'('.$option->vehicle_type.')'.'</option>';
                     
                     
                 }
