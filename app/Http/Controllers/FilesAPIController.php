@@ -715,23 +715,33 @@ class FilesAPIController extends Controller
                 
                     }
 
-                    if($file->front_end_id == 3){
+                    else if($file->front_end_id == 3){
 
-                        copy( public_path('/../../e-tuningfiles/public/uploads/filesready'.'/'.$request->tuned_file), 
+                        // copy( public_path('/../../e-tuningfiles/public/uploads/filesready'.'/'.$request->tuned_file), 
+                        // public_path('/../../e-tuningfiles/public'.$file->file_path.$fileName) );
+
+                        // unlink( public_path('/../../e-tuningfiles/public/uploads/filesready').'/'.$file->tunned_files->file );
+
+                        copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
                         public_path('/../../e-tuningfiles/public'.$file->file_path.$fileName) );
 
-                        unlink( public_path('/../../e-tuningfiles/public/uploads/filesready').'/'.$file->tunned_files->file );
+                        unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
                         $path = public_path('/../../e-tuningfiles/public'.$file->file_path.$fileName);
                 
                     }
 
-                    else{
+                    else if($file->front_end_id == 2){
 
-                        copy( public_path('/../../tuningX/public/uploads/filesready'.'/'.$request->tuned_file), 
+                        // copy( public_path('/../../tuningX/public/uploads/filesready'.'/'.$request->tuned_file), 
+                        // public_path('/../../tuningX/public'.$file->file_path.$fileName) );
+
+                        // unlink( public_path('/../../tuningX/public/uploads/filesready').'/'.$file->tunned_files->file );
+
+                        copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
                         public_path('/../../tuningX/public'.$file->file_path.$fileName) );
 
-                        unlink( public_path('/../../tuningX/public/uploads/filesready').'/'.$file->tunned_files->file );
+                        unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
                         $path = public_path('/../../tuningX/public'.$file->file_path.$fileName);
 
