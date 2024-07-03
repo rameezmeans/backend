@@ -224,6 +224,82 @@ class ServicesController extends Controller
             }
 
         }
+        else if($frontendID == 3){
+
+            $allStages = Service::where('type', 'tunning')->where('efiles_active', 1)->whereNull('subdealer_group_id')->get();
+
+            $stageOptions = '';
+
+            foreach($allStages as $stage) {
+
+                if($stage->id == $fileStage->service_id){
+                    $stageOptions .= '<option selected value="'.$stage->id.'">'.$stage->name.'</option>';
+                }
+                else{
+                    $stageOptions .= '<option value="'.$stage->id.'">'.$stage->name.'</option>';
+                }
+
+            }
+            
+            $allOptions = Service::where('type', 'option')->where('tuningx_active', 1)->whereNull('subdealer_group_id')->get();
+
+            $optionOptions = '';
+
+            foreach($allOptions as $option) {
+
+                if($proposedOptions){
+
+                    if(in_array($option->id, $proposedOptions))
+                    {
+                        $optionOptions .= '<option selected value="'.$option->id.'">'.$option->name.'('.$option->vehicle_type.')'.'</option>';
+                    }
+                    else{
+                        $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'('.$option->vehicle_type.')'.'</option>';
+                    }
+                }
+                else{
+                    $optionOptions .= '<option value="'.$option->id.'">'.$option->name.'('.$option->vehicle_type.')'.'</option>';
+                }
+
+            }
+
+            $forceOptions = '';
+
+            if($proposedOptions){
+
+            foreach($proposedOptions as $o) {
+                    $option = Service::findOrFail($o);
+                    $forceOptions .= '<option selected value="'.$option->id.'">'.$option->name.'('.$option->vehicle_type.')'.'</option>';
+                    
+                    
+                }
+                
+            }
+
+            if($toolType == 'master'){
+
+                $totalProposedCredits += Service::findOrFail($fileStage->service_id)->efiles_credits;
+
+                if($proposedOptions){
+                    foreach($proposedOptions as $o){
+                        $option = Service::findOrFail($o);
+                        $totalProposedCredits += $option->optios_stage($fileStage->service_id)->first()->master_credits;
+                    }
+                }
+            }
+            else{
+
+                $totalProposedCredits += Service::findOrFail($fileStage->service_id)->efiles_slave_credits;
+
+                if($proposedOptions){
+                    foreach($proposedOptions as $o){
+                        $option = Service::findOrFail($o);
+                        $totalProposedCredits += $option->optios_stage($fileStage->service_id)->first()->slave_credits;
+                    }
+                }
+            }
+        }
+        
         else{
 
             $allStages = Service::where('type', 'tunning')->where('tuningx_active', 1)->whereNull('subdealer_group_id')->get();
