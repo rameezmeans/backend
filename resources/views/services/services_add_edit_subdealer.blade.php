@@ -116,7 +116,22 @@
                         <option @if(isset($service) && in_array('agri', $vehicleTypes)) selected @endif value="agri">Agricultural</option>
                       </select>
                     </div>
-                    @error('type')
+                    @error('vehicle_type')
+                      <span class="text-danger" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+
+                    <div class="form-group form-group-default required ">
+                      <label>Frontend</label>
+                      <select class="full-width" data-init-plugin="select2" name="front_end_id">
+                        @foreach($frontends as $frontend)
+                          <option value="{{$frontend->id}}">{{$frontend->name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  
+                    @error('front_end_id')
                       <span class="text-danger" role="alert">
                           <strong>{{ $message }}</strong>
                       </span>
