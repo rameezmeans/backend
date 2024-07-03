@@ -95,6 +95,8 @@ Route::get('/tasks', function () {
 
         $newGroup = clone $group;
 
+        dd($newGroup);
+
         $newGroup->elorus_template_id = '3044674633593783892';
         $newGroup->save();
 
