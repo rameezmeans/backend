@@ -241,7 +241,7 @@ class ServicesController extends Controller
 
             }
             
-            $allOptions = Service::where('type', 'option')->where('tuningx_active', 1)->whereNull('subdealer_group_id')->get();
+            $allOptions = Service::where('type', 'option')->where('efiles_active', 1)->whereNull('subdealer_group_id')->get();
 
             $optionOptions = '';
 
@@ -299,7 +299,7 @@ class ServicesController extends Controller
                 }
             }
         }
-        
+
         else{
 
             $allStages = Service::where('type', 'tunning')->where('tuningx_active', 1)->whereNull('subdealer_group_id')->get();
