@@ -90,8 +90,17 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 Route::get('/tasks', function () {
 
     $groupsOSS = Group::where('name', 'like', '%' . 'OSS' . '%')->get();
-    dd($groupsOSS);
+    
+    foreach($groupsOSS as $group){
 
+        $newGroup = clone $group;
+
+        $newGroup->elorus_template_id = '3044674633593783892';
+        $newGroup->save();
+
+    }
+
+    dd("groups duplicated");
     // $file = File::findOrFail(2051);
 
     // dd($file->softwares->isNotEmpty());
