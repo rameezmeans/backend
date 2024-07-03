@@ -3526,7 +3526,7 @@ margin-bottom: 10px !important;
                                 <img alt="{{\App\Models\Service::FindOrFail($file->stage_offer->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_offer->service_id)->icon }}">
                                 <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_offer->service_id)->name }}</span>
                                 @php $stage = \App\Models\Service::FindOrFail($file->stage_offer->service_id) @endphp
-                                @if($file->front_end_id == 2 || $file->front_end_id == 3)
+                                @if($file->front_end_id == 2)
                                     @if($file->tool_type == 'master')
                                       <span class="text-white label-danger label"> {{$stage->tuningx_credits}} </span>
                                       @php $proposedCredits += $stage->tuningx_credits; @endphp
@@ -3534,6 +3534,14 @@ margin-bottom: 10px !important;
                                       <span class="text-white label-danger label"> {{$stage->tuningx_slave_credits}} </span>
                                       @php $proposedCredits += $stage->tuningx_slave_credits; @endphp
                                     @endif
+                                @elseif($file->front_end_id == 3)
+                                  @if($file->tool_type == 'master')
+                                  <span class="text-white label-danger label"> {{$stage->efiles_credits}} </span>
+                                  @php $proposedCredits += $stage->efiles_credits; @endphp
+                                  @else
+                                    <span class="text-white label-danger label"> {{$stage->efiles_slave_credits}} </span>
+                                    @php $proposedCredits += $stage->efiles_slave_credits; @endphp
+                                  @endif
                                 @else
                                   <span class="text-white label-danger label"> {{$stage->credits}} </span>
                                   @php $proposedCredits += $stage->credits; @endphp
@@ -3558,7 +3566,7 @@ margin-bottom: 10px !important;
                                   src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
                                   {{\App\Models\Service::FindOrFail($option->service_id)->name}}  
                                   @php $option1 = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
-                                  @if($file->front_end_id == 2 || $file->front_end_id == 3)
+                                  @if($file->front_end_id == 2)
                                     @if($file->tool_type == 'master')
                                       <span class="text-white label-danger label pull-right"> {{$option1->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
                                       @php $proposedCredits += $option1->optios_stage($file->stage_services->service_id)->first()->master_credits @endphp
@@ -3566,6 +3574,7 @@ margin-bottom: 10px !important;
                                       <span class="text-white label-danger label pull-right"> {{$option1->optios_stage($file->stage_services->service_id)->first()->slave_credits}} </span>
                                       @php $proposedCredits += $option1->optios_stage($file->stage_services->service_id)->first()->slave_credits @endphp
                                     @endif
+                                    
                                   @else
                                     <span class="text-white label-danger label pull-right"> {{$option1->credits}} </span>
                                     @php $proposedCredits += $option1->credits; @endphp
