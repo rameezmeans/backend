@@ -69,7 +69,7 @@
                         <li class="nav-item">
                         <a href="#" class="active" data-toggle="tab" data-target="#slide1"><span>Service Information</span></a>
                         </li>
-                        @if($service->tuningx_active)
+                        @if($service->tuningx_active || $service->efiles_active)
                         <li class="nav-item">
                         <a href="#" data-toggle="tab" data-target="#slide2"><span>Credits Charged</span></a>
                         </li>

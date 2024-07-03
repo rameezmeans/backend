@@ -517,6 +517,8 @@ class ServicesController extends Controller
         $created->credits = $validated['credits'];
         $created->tuningx_credits = $validated['tuningx_credits'];
         $created->efiles_active = 0;
+        $created->efiles_credits = 0;
+        $created->efiles_slave_credits = 0;
         $created->description = $validated['description'];
 
         $file = $request->file('icon');
