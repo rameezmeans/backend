@@ -2375,15 +2375,15 @@ class FilesController extends Controller
             if($file->front_end_id == 3){
                 // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
 
-                if($file->on_dev == 1){
-                    $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
-                }
-                else{
+                // if($file->on_dev == 1){
+                //     $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+                // }
+                // else{
                     $attachment->move(public_path('/../../e-tuningfiles/public'.$file->file_path),$newFileName);
-                }
+                // }
 
             }
-            else{
+            else if($file->front_end_id == 2){
 
                 if($file->on_dev == 1){
                     $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
