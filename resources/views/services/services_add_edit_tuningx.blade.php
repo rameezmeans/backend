@@ -330,6 +330,21 @@
                       </select>
                     </div>
 
+                    <div class="form-group form-group-default required ">
+                      <label>Frontend</label>
+                      <select class="full-width" data-init-plugin="select2" name="front_end_id">
+                        @foreach($frontends as $frontend)
+                          <option value="{{$frontend->id}}">{{$frontend->name}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  
+                    @error('front_end_id')
+                      <span class="text-danger" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+
                     <button class="btn btn-success btn-cons m-b-10 m-t-30" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Set For Customers Comments</span></button>
                   @endif
                 </form>

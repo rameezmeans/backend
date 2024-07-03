@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\TranslationController;
 use App\Models\File;
+use App\Models\FrontEnd;
 use App\Models\StagesOptionsCredit;
 use App\Models\Translation;
 use Illuminate\Support\Facades\Auth;
@@ -476,7 +477,9 @@ class ServicesController extends Controller
             abort(404);
         }
 
-        return view('services.services_add_edit_subdealer');
+        $frontends = FrontEnd::all();
+
+        return view('services.services_add_edit_subdealer', ['frontends' => $frontends]);
     }
 
     public function setCustomersComments(Request $request){
@@ -610,7 +613,10 @@ class ServicesController extends Controller
             'description' => 'required',
             'greek_description' => '',
             'vehicle_type' => 'required',
+            'front_end_id' => 'required',
         ]);
+
+        dd($validated);
 
         $created = new Service();
         $created->name = $validated['name'];
