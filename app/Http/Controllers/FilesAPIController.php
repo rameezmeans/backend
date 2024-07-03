@@ -388,7 +388,7 @@ class FilesAPIController extends Controller
         $files = File::where('checking_status', 'unchecked')
         // ->where('type', 'master') // because slave files are supposed to decoded
         ->whereNull('subdealer_group_id')
-        ->where('front_end_id', $frontendID)
+        // ->where('front_end_id', $frontendID)
         ->get();
 
         $arrFiles = [];
@@ -467,11 +467,11 @@ class FilesAPIController extends Controller
                     
                         $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached;
                     }
-                    if($file->front_end_id == 3){
+                    else if($file->front_end_id == 3){
                     
                         $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->file_attached;
                     }
-                    else{
+                    else if($file->front_end_id == 2){
                         $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->file_attached;
                     }
 
