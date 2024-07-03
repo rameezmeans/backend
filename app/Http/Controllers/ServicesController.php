@@ -626,12 +626,18 @@ class ServicesController extends Controller
 
         if($validated['front_end_id'] == 3){
             $created->efiles_active = 1;
+            $created->active = 0;
+            $created->tuningx_active = 0;
         }
         else if ($validated['front_end_id'] == 2){
             $created->active = 1;
+            $created->efiles_active = 0;
+            $created->tuningx_active = 0;
         }
         else{
             $created->tuningx_active = 1;
+            $created->active = 0;
+            $created->efiles_active = 0;
         }
 
         $created->credits = 0;
