@@ -616,8 +616,6 @@ class ServicesController extends Controller
             'front_end_id' => 'required',
         ]);
 
-        dd($validated);
-
         $created = new Service();
         $created->name = $validated['name'];
         $created->label = $validated['label'];
@@ -626,13 +624,26 @@ class ServicesController extends Controller
         $created->credits = $validated['credits'];
         $created->tuningx_credits = $validated['tuningx_credits'];
 
-        $created->efiles_active = 1;
+        if($validated['front_end_id'] == 3){
+            $created->efiles_active = 1;
+        }
+        else if ($validated['front_end_id'] == 2){
+            $created->active = 1;
+        }
+        else{
+            $created->tuningx_active = 1;
+        }
+
+        $created->credits = 0;
+        $created->tuningx_credits = 0;
+        $created->tuningx_slave_credits = 0;
         $created->efiles_credits = 0;
         $created->efiles_slave_credits = 0;
         
-        $created->active = 0;
-        $created->tuningx_active = 0;
+        // $created->active = 0;
+        // $created->tuningx_active = 0;
         // $created->efiles_slave_credits = 0;
+
         $created->description = $validated['description'];
 
         $file = $request->file('icon');
