@@ -52,6 +52,33 @@ class ServicesController extends Controller
             }
 
         }
+
+        else if($frontendID == 3){
+
+            if($toolType == 'master'){
+
+                $totalProposedCredits += Service::findOrFail($fileStageID)->efiles_credits;
+
+                if($fileOptions){
+                    foreach($fileOptions as $o){
+                        $option = Service::findOrFail($o);
+                        $totalProposedCredits += $option->optios_stage($fileStageID)->first()->master_credits;
+                    }
+                }
+            }
+            else{
+
+                $totalProposedCredits += Service::findOrFail($fileStageID)->efiles_slave_credits;
+
+                if($fileOptions){
+                    foreach($fileOptions as $o){
+                        $option = Service::findOrFail($o);
+                        $totalProposedCredits += $option->optios_stage($fileStageID)->first()->slave_credits;
+                    }
+                }
+            }
+        }
+
         else{
 
             if($toolType == 'master'){
