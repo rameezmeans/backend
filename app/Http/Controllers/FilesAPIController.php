@@ -796,7 +796,7 @@ class FilesAPIController extends Controller
                 
                         }
 
-                        else{
+                        else if($file->front_end_id == 2){
                             
                             Chatify::push("private-chatify-download-tuningx-".$chatID, 'download-button', [
                                 'status' => 'download',
