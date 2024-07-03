@@ -621,8 +621,8 @@ class ServicesController extends Controller
         $created->label = $validated['label'];
         $created->type = 'option'; // only options are created because stages will do a big problem in stages_options_credtis table
         $created->vehicle_type = implode( ',', $validated['vehicle_type'] );
-        $created->credits = $validated['credits'];
-        $created->tuningx_credits = $validated['tuningx_credits'];
+        // $created->credits = $validated['credits'];
+        // $created->tuningx_credits = $validated['tuningx_credits'];
 
         if($validated['front_end_id'] == 3){
             $created->efiles_active = 1;
