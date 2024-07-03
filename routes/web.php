@@ -18,6 +18,7 @@ use App\Models\File;
 use App\Models\FileFeedback;
 use App\Models\FileReplySoftwareService;
 use App\Models\FileService;
+use App\Models\Group;
 use App\Models\Key;
 use App\Models\PaymentLog;
 use App\Models\ReminderManager;
@@ -87,6 +88,9 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 });
 
 Route::get('/tasks', function () {
+
+    $groupsOSS = Group::where('name', 'like', '%' . 'OSS' . '%')->get();
+    dd($groupsOSS);
 
     // $file = File::findOrFail(2051);
 
