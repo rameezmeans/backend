@@ -516,9 +516,14 @@ class ServicesController extends Controller
         $created->vehicle_type = implode( ',', $validated['vehicle_type'] );
         $created->credits = $validated['credits'];
         $created->tuningx_credits = $validated['tuningx_credits'];
-        $created->efiles_active = 0;
+
+        $created->efiles_active = 1;
         $created->efiles_credits = 0;
         $created->efiles_slave_credits = 0;
+        
+        $created->active = 0;
+        $created->tuningx_active = 0;
+        // $created->efiles_slave_credits = 0;
         $created->description = $validated['description'];
 
         $file = $request->file('icon');
