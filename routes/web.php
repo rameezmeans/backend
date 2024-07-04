@@ -99,7 +99,7 @@ Route::get('/tasks', function () {
         $newGroup->tax = $group->tax;
         $newGroup->discount = $group->discount;
         $newGroup->bonus_credits = $group->bonus_credits;
-        $newGroup->bonus_credits = $group->bonus_credits;
+        $newGroup->raise = $group->raise;
         $newGroup->subdealer_group_id = NULL;
         $newGroup->stripe_payment_account_id = $group->stripe_payment_account_id;
         $newGroup->slug = $group->slug;
