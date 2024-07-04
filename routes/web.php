@@ -89,36 +89,36 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 Route::get('/tasks', function () {
 
-    $groupsOSS = Group::where('name', 'like', '%' . 'OSS' . '%')->get();
+    // $groupsOSS = Group::where('name', 'like', '%' . 'OSS' . '%')->get();
     
-    foreach($groupsOSS as $group){
+    // foreach($groupsOSS as $group){
 
-        $newGroup = New Group();
+    //     $newGroup = New Group();
 
-        $newGroup->name = substr($group->name, 0, -3).'EFT';
-        $newGroup->tax = $group->tax;
-        $newGroup->discount = $group->discount;
-        $newGroup->bonus_credits = $group->bonus_credits;
-        $newGroup->raise = $group->raise;
-        $newGroup->subdealer_group_id = NULL;
-        $newGroup->stripe_payment_account_id = $group->stripe_payment_account_id;
-        $newGroup->slug = $group->slug;
-        $newGroup->paypal_payment_account_id = $group->paypal_payment_account_id;
+    //     $newGroup->name = substr($group->name, 0, -3).'EFT';
+    //     $newGroup->tax = $group->tax;
+    //     $newGroup->discount = $group->discount;
+    //     $newGroup->bonus_credits = $group->bonus_credits;
+    //     $newGroup->raise = $group->raise;
+    //     $newGroup->subdealer_group_id = NULL;
+    //     $newGroup->stripe_payment_account_id = $group->stripe_payment_account_id;
+    //     $newGroup->slug = $group->slug;
+    //     $newGroup->paypal_payment_account_id = $group->paypal_payment_account_id;
 
-        $newGroup->elorus_template_id = '3044674633593783892';
+    //     $newGroup->elorus_template_id = '3044674633593783892';
 
-        $newGroup->elorus_tax_id = $group->elorus_tax_id;
-        $newGroup->zohobooks_tax_id = NULL;
-        $newGroup->viva_payment_account_id = $group->viva_payment_account_id;
-        $newGroup->stripe_active = $group->stripe_active;
-        $newGroup->paypal_active = $group->paypal_active;
-        $newGroup->viva_active = $group->viva_active;
+    //     $newGroup->elorus_tax_id = $group->elorus_tax_id;
+    //     $newGroup->zohobooks_tax_id = NULL;
+    //     $newGroup->viva_payment_account_id = $group->viva_payment_account_id;
+    //     $newGroup->stripe_active = $group->stripe_active;
+    //     $newGroup->paypal_active = $group->paypal_active;
+    //     $newGroup->viva_active = $group->viva_active;
 
-        $newGroup->save();
+    //     $newGroup->save();
 
-    }
+    // }
 
-    dd("groups duplicated");
+    // dd("groups duplicated");
     // $file = File::findOrFail(2051);
 
     // dd($file->softwares->isNotEmpty());
