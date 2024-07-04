@@ -379,7 +379,7 @@
                 console.log(switchEfilesStatus);
             }
 
-            change_efiles_status(service_id, switchTuningxStatus);
+            change_efiles_status(service_id, switchEfilesStatus);
         });
     
 
