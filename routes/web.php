@@ -93,11 +93,27 @@ Route::get('/tasks', function () {
     
     foreach($groupsOSS as $group){
 
-        $newGroup = clone $group;
+        $newGroup = New Group();
 
-        dd($newGroup);
+        $newGroup->name = substr($group->name, 0, -3).'EFT';
+        $newGroup->tax = $group->tax;
+        $newGroup->discount = $group->discount;
+        $newGroup->bonus_credits = $group->bonus_credits;
+        $newGroup->bonus_credits = $group->bonus_credits;
+        $newGroup->subdealer_group_id = NULL;
+        $newGroup->stripe_payment_account_id = $group->stripe_payment_account_id;
+        $newGroup->slug = $group->slug;
+        $newGroup->paypal_payment_account_id = $group->paypal_payment_account_id;
 
         $newGroup->elorus_template_id = '3044674633593783892';
+
+        $newGroup->elorus_tax_id = $group->elorus_tax_id;
+        $newGroup->zohobooks_tax_id = NULL;
+        $newGroup->viva_payment_account_id = $group->viva_payment_account_id;
+        $newGroup->stripe_active = $group->stripe_active;
+        $newGroup->paypal_active = $group->paypal_active;
+        $newGroup->viva_active = $group->viva_active;
+
         $newGroup->save();
 
     }
