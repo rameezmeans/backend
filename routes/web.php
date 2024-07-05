@@ -754,7 +754,10 @@ Route::get('/credits', [App\Http\Controllers\CreditsController::class, 'Credits'
 Route::get('/edit_credit/{id}', [App\Http\Controllers\CreditsController::class, 'EditCredit'])->name('edit-credit');
 Route::get('/update_credit/{id}', [App\Http\Controllers\CreditsController::class, 'UpdateIndividualCredit'])->name('update-credit');
 Route::post('/set_credit_information', [App\Http\Controllers\CreditsController::class, 'setCreditInformation'])->name('set-credit-information');
-Route::post('/update_price', [App\Http\Controllers\CreditsController::class, 'updatePrice'])->name('update-price');
+// Route::post('/update_price', [App\Http\Controllers\CreditsController::class, 'updatePrice'])->name('update-price');
+Route::post('/update_price_ecutech', [App\Http\Controllers\CreditsController::class, 'updatePriceECUTech'])->name('update-price-ecutech');
+Route::post('/update_price_tuningx', [App\Http\Controllers\CreditsController::class, 'updatePriceTuningX'])->name('update-price-tuningx');
+Route::post('/update_price_efiles', [App\Http\Controllers\CreditsController::class, 'updatePriceEFiles'])->name('update-price-efiles');
 Route::post('/update_credits', [App\Http\Controllers\CreditsController::class, 'updateCredits'])->name('update-credits');
 Route::get('/pdfview', [App\Http\Controllers\CreditsController::class, 'makePDF'])->name('pdfview');
 

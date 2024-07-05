@@ -34,12 +34,13 @@
 
             <div class="tab-content">
               <div class="tab-pane slide-left active" id="slide1">
+
                 <div class="card card-transparent m-t-20">
                   <div class="card-header ">
                       <div class="card-title">
                        
                         <h5>
-                          Unit Credit Price
+                          Unit Credit Price For ECUTech
                         </h5>
                       
                       </div>
@@ -47,12 +48,12 @@
                       <div class="clearfix"></div>
                   </div>
                   <div class="card-body">
-                    <form class="" role="form" method="POST" action="{{route('update-price')}}" enctype="multipart/form-data">
+                    <form class="" role="form" method="POST" action="{{route('update-price-ecutech')}}" enctype="multipart/form-data">
                       @csrf
                      
                       <div class="form-group form-group-default required ">
                         <label>Price in Euros</label>
-                        <input value="@if(isset($creditPrice)){{ $creditPrice->value }}@endif"  name="credit_price" type="text" class="form-control" required>
+                        <input value="@if(isset($creditPriceECUTech)){{ $creditPriceECUTech->value }}@endif"  name="credit_price" type="text" class="form-control" required>
                       </div>
                       @error('credit_price')
                         <span class="text-danger" role="alert">
@@ -61,10 +62,72 @@
                       @enderror
                       <div class="text-center m-t-20">                    
                         <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
-                        
                       </div>
                     </form>
+                  </div>
+                </div>
+
+                <div class="card card-transparent m-t-20">
+                  <div class="card-header ">
+                      <div class="card-title">
+                       
+                        <h5>
+                          Unit Credit Price For TuningX
+                        </h5>
                       
+                      </div>
+                      
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="card-body">
+                    <form class="" role="form" method="POST" action="{{route('update-price-tuningx')}}" enctype="multipart/form-data">
+                      @csrf
+                     
+                      <div class="form-group form-group-default required ">
+                        <label>Price in Euros</label>
+                        <input value="@if(isset($creditPriceTuningX)){{ $creditPriceTuningX->value }}@endif"  name="credit_price" type="text" class="form-control" required>
+                      </div>
+                      @error('credit_price')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                      <div class="text-center m-t-20">                    
+                        <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
+                <div class="card card-transparent m-t-20">
+                  <div class="card-header ">
+                      <div class="card-title">
+                       
+                        <h5>
+                          Unit Credit Price For EFT
+                        </h5>
+                      
+                      </div>
+                      
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="card-body">
+                    <form class="" role="form" method="POST" action="{{route('update-price-efiles')}}" enctype="multipart/form-data">
+                      @csrf
+                     
+                      <div class="form-group form-group-default required ">
+                        <label>Price in Euros</label>
+                        <input value="@if(isset($creditPriceEfiles)){{ $creditPriceEfiles->value }}@endif"  name="credit_price" type="text" class="form-control" required>
+                      </div>
+                      @error('credit_price')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                      <div class="text-center m-t-20">                    
+                        <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
+                      </div>
+                    </form>
                   </div>
                 </div>
 
@@ -84,7 +147,7 @@
                       <div class="clearfix"></div>
                   </div>
                   <div class="card-body">
-                    <form class="" role="form" method="POST" action="{{route('update-price')}}" enctype="multipart/form-data">
+                    <form class="" role="form" method="POST" action="{{route('update-price-ecutech')}}" enctype="multipart/form-data">
                       @csrf
                      
                       <div class="form-group form-group-default required ">

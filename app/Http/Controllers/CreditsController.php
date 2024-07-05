@@ -331,18 +331,111 @@ class CreditsController extends Controller
             return abort(404);
         }
 
-        $creditPrice = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->first();
+        $creditPriceECUTech = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 1)->first();
+        $creditPriceTuningX = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 2)->first();
+        $creditPriceEfiles = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 3)->first();
         $evcCreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
-        return view('credits.unit_price', ['creditPrice' => $creditPrice, 'evcCreditPrice' => $evcCreditPrice]);
+        
+        return view('credits.unit_price', [
+        
+            'creditPriceECUTech' => $creditPriceECUTech, 
+            'creditPriceTuningX' => $creditPriceTuningX, 
+            'creditPriceEfiles' => $creditPriceEfiles, 
+            'evcCreditPrice' => $evcCreditPrice
+
+        ]);
     }
 
-    public function updatePrice(Request $request){
+    public function updatePriceECUTech(Request $request){
 
         if(!Auth::user()->is_admin()){
             return abort(404);
         }
 
-        $creditPrice = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->first();
+        $creditPrice = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 1)->first();
+        $evcCfreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
+
+        if($request->credit_price){
+            if($creditPrice){
+                $creditPrice->label = "credit_price";
+                $creditPrice->value = $request->credit_price;
+                $creditPrice->save();
+            }
+            else {
+                $newPrice = new Price();
+                $newPrice->label = "credit_price";
+                $newPrice->value = $request->credit_price;
+                $newPrice->save();
+            }
+        }
+        else{
+            if($evcCfreditPrice){
+                $evcCfreditPrice->label = "evc_credit_price";
+                $evcCfreditPrice->value = $request->evc_credit_price;
+                $evcCfreditPrice->save();
+            }
+            else {
+                $evcCfreditPrice = new Price();
+                $evcCfreditPrice->label = "evc_credit_price";
+                $evcCfreditPrice->value = $request->evc_credit_price;
+                $evcCfreditPrice->save();
+            }
+        }
+
+        return redirect()->route('unit-price')->with(['success' => 'Price updated, successfully.']);
+
+    }
+
+    public function updatePriceTuningX(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
+        $creditPrice = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 2)->first();
+        $evcCfreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
+
+        if($request->credit_price){
+            if($creditPrice){
+                $creditPrice->label = "credit_price";
+                $creditPrice->value = $request->credit_price;
+                $creditPrice->save();
+            }
+            else {
+                $newPrice = new Price();
+                $newPrice->label = "credit_price";
+                $newPrice->value = $request->credit_price;
+                $newPrice->save();
+            }
+        }
+        else{
+            if($evcCfreditPrice){
+                $evcCfreditPrice->label = "evc_credit_price";
+                $evcCfreditPrice->value = $request->evc_credit_price;
+                $evcCfreditPrice->save();
+            }
+            else {
+                $evcCfreditPrice = new Price();
+                $evcCfreditPrice->label = "evc_credit_price";
+                $evcCfreditPrice->value = $request->evc_credit_price;
+                $evcCfreditPrice->save();
+            }
+        }
+
+        return redirect()->route('unit-price')->with(['success' => 'Price updated, successfully.']);
+
+    }
+
+    public function updatePriceEFiles(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
+        $creditPrice = Price::where('label', 'credit_price')
+        ->whereNull('subdealer_group_id')
+        ->where('front_end_id', 3)->first();
+
         $evcCfreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
 
         if($request->credit_price){
