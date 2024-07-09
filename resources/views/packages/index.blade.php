@@ -53,7 +53,7 @@
                                                     <p>{{$package->name}}</p>
                                                 </td>
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    @if($package->front_end_id == 1) <span class="label bg-primary text-white"> ECUTech </span> @else <span class="label bg-warning"> TuningX </span> @endif 
+                                                    @if($package->front_end_id == 1) <span class="label bg-primary text-white"> ECUTech </span> @elseif($package->front_end_id == 2) <span class="label bg-warning"> TuningX </span> @else <span class="label bg-info text-white"> Efiles </span> @endif 
                                                 </td>
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>{{$package->created_at->diffForHumans()}}</p>
