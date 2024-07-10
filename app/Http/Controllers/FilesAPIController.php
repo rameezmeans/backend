@@ -950,6 +950,8 @@ class FilesAPIController extends Controller
     
     public function getEncodingType($file){
 
+        $e = '';
+
         $extensionArr = [];
         foreach($file->decoded_files as $d){
             $extensionArr []= $d->extension; 
