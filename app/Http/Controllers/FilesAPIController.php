@@ -23,6 +23,8 @@ use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Chatify\Facades\ChatifyMessenger as Chatify;
+use Exception;
+use Twilio\Rest\Client;
 
 class FilesAPIController extends Controller
 {
@@ -912,7 +914,16 @@ class FilesAPIController extends Controller
 
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html2);
-        $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+        
+        if($file->front_end_id == 1){
+            $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+        }
+        else if($file->front_end_id == 3){
+            $html2 = str_replace("#file_url",  'http://portal.e-tuningfiles.com/'."file/".$file->id,$html2);
+        }
+        else{
+            $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+        }
 
         $optionsMessage = "";
         if($file->options){
@@ -937,14 +948,153 @@ class FilesAPIController extends Controller
             \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
         if($manager['eng_file_upload_admin_email']){
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
         
-        if($manager['eng_file_upload_admin_sms']){
-            $this->sendMessage($admin->phone, $message1);
+        if($manager['eng_file_upload_admin_sms'.$file->front_end_id]){
+            $this->sendMessage($admin->phone, $message2, $file->front_end_id);
         }
-        if($manager['eng_file_upload_cus_sms']){
-            $this->sendMessage($customer->phone, $message2);
+
+        if($manager['eng_file_upload_admin_sms'.$file->front_end_id]){
+        
+            $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
+        }
+
+        // if($manager['eng_file_upload_cus_sms']){
+        //     $this->sendMessage($customer->phone, $message2);
+        // }
+
+        if($manager['eng_file_upload_cus_sms'.$file->front_end_id]){
+            $this->sendMessage($customer->phone, $message2, $file->front_end_id);
+        }
+
+        if($manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
+            $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
+        }
+
+    }
+
+    public function sendWhatsapp($name, $number, $template, $file, $supportMessage = null){
+
+        $accessToken = config('whatsApp.access_token');
+        $fromPhoneNumberId = config('whatsApp.from_phone_number_id');
+
+        $optionsMessage = $file->stage;
+
+        if($file->options){
+            foreach($file->options()->get() as $option) {
+                $optionName = Service::findOrFail($option->service_id)->name;
+                $optionsMessage .= ", ".$optionName."";
+            }
+        }
+
+        $customer = 'Task Customer';
+
+        if($file->name){
+            $customer = $file->name; 
+        }
+
+        if($file->front_end_id == 1){
+            $frontEnd = "ECUTech";
+        }
+        else if($file->front_end_id == 3){
+            $frontEnd = "E-files";
+        }
+        else{
+            $frontEnd = "Tuning-X";
+        }
+
+        if($supportMessage){
+            $components  = 
+            [
+                [
+                    "type" => "header",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> $frontEnd),
+                    )
+                ],
+                [
+                    "type" => "body",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> "dear ".$name),
+                        array("type"=> "text","text"=> "Mr. ".$customer),
+                        array("type"=> "text","text"=> $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard),
+                        array("type"=> "text","text"=> $optionsMessage),
+                        array("type"=> "text","text"=> $supportMessage),
+                    )
+                ]
+            ];
+        }
+        else{
+            $components  = 
+            [
+                [
+                    "type" => "header",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> $frontEnd),
+                    )
+                ],
+                [
+                    "type" => "body",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> "dear ".$name),
+                        array("type"=> "text","text"=> "Mr. ".$customer),
+                        array("type"=> "text","text"=> $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard),
+                        array("type"=> "text","text"=> $optionsMessage),
+                    )
+                ]
+            ];
+        }
+
+        $whatappObj = new WhatsappController();
+
+        try {
+            $response = $whatappObj->sendTemplateMessage($number,$template, 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'messages');
+            
+        }
+        catch(Exception $e){
+            \Log::info($e->getMessage());
+        }
+
+        
+    }
+
+    public function sendMessage($receiver, $message, $frontendID)
+    {
+        try {
+            
+            $accountSid = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_sid')->first()->value;
+
+            $authToken = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_token')->first()->value;
+
+            $twilioNumber = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_number')->first()->value;
+
+
+            $client = new Client($accountSid, $authToken);
+
+            if($frontendID == 2)
+            {
+                $message = $client->messages
+                    ->create($receiver, // to
+                            ["body" => $message, "from" => "TuningX"]
+                );
+            }
+            else{
+
+                $message = $client->messages
+                    ->create($receiver, // to
+                            ["body" => $message, "from" => "ECUTech"]
+                );
+
+            }
+
+            \Log::info('message sent to:'.$receiver);
+
+        } catch (\Exception $e) {
+            \Log::info($e->getMessage());
         }
     }
     
