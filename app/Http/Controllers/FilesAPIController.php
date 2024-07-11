@@ -1082,6 +1082,13 @@ class FilesAPIController extends Controller
                             ["body" => $message, "from" => "TuningX"]
                 );
             }
+            else if($frontendID == 3)
+            {
+                $message = $client->messages
+                    ->create($receiver, // to
+                            ["body" => $message, "from" => "E-TuningFiles"]
+                );
+            }
             else{
 
                 $message = $client->messages
