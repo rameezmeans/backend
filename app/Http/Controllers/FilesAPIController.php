@@ -810,7 +810,7 @@ class FilesAPIController extends Controller
         
                         }
 
-                        // $this->sendMail($file);
+                        $this->sendMail($file);
 
                         return response()->json('file found.');
                     }
