@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('prices', function (Blueprint $table) {
+        Schema::table('credits', function (Blueprint $table) {
             $table->float('unit_price')->default(10.0);
         });
     }
