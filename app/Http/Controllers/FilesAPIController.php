@@ -942,12 +942,12 @@ class FilesAPIController extends Controller
         
         $subject = "ECU Tech: Engineer uploaded a file in reply.";
 
-        $manager = (new ReminderManagerController())->getManager($file->front_end_id);
+        $manager = (new ReminderManagerController())->getAllManager();
 
-        if($manager['eng_file_upload_cus_email']){
+        if($manager['eng_file_upload_cus_email'.$file->front_end_id]){
             \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
-        if($manager['eng_file_upload_admin_email']){
+        if($manager['eng_file_upload_admin_email'.$file->front_end_id]){
             \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
         
