@@ -931,7 +931,7 @@ class FilesAPIController extends Controller
         
         $subject = "ECU Tech: Engineer uploaded a file in reply.";
 
-        $manager = (new ReminderManagerController())->getManager();
+        $manager = (new ReminderManagerController())->getManager($file->front_end_id);
 
         if($manager['eng_file_upload_cus_email']){
             \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
