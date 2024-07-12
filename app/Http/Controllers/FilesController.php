@@ -1603,6 +1603,8 @@ class FilesController extends Controller
 
     public function sendTestMessage()
     {
+
+        dd('message');
         try {
             
             $accountSid = Key::whereNull('subdealer_group_id')
