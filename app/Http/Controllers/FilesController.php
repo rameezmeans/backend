@@ -1606,6 +1606,8 @@ class FilesController extends Controller
 
         // dd('message');
         try {
+
+            dd('message');
             
             $accountSid = Key::whereNull('subdealer_group_id')
             ->where('key', 'twilio_sid')->first()->value;
