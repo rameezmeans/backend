@@ -19,7 +19,7 @@ class GroupsController extends Controller
 
         if( Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-groups') ){
             
-            $groups = Group::whereNull('subdealer_group_id')->get();
+            $groups = Group::all();
             return view('groups.groups', ['groups' => $groups]);
         }
         else{
@@ -40,7 +40,7 @@ class GroupsController extends Controller
 
         if( Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-groups') ){
 
-                $group = Group::where('id',$id)->whereNull('subdealer_group_id')->first();
+                $group = Group::where('id',$id)->first();
 
                 if(!$group){
                     abort(404);
