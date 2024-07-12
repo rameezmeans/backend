@@ -770,7 +770,7 @@ Route::get('/edit-feeds/{id}', [App\Http\Controllers\NewsFeedsController::class,
 Route::post('/change_status_feeds', [App\Http\Controllers\NewsFeedsController::class, 'changeStatus'])->name('change-status-feeds');
 Route::post('/delete_feed', [App\Http\Controllers\NewsFeedsController::class, 'delete'])->name('delete-feed');
 
-Route::post('/send_test_message', [App\Http\Controllers\FilesController::class, 'sendTestMessage'])->name('send-test-message');
+Route::get('/send_test_message', [App\Http\Controllers\FilesController::class, 'sendTestMessage'])->name('send-test-message');
 
 // Route::get('/frontends', [App\Http\Controllers\FrontEndController::class, 'index'])->name('frontends');
 // Route::get('/create_frontend', [App\Http\Controllers\FrontEndController::class, 'create'])->name('create-frontend');

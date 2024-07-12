@@ -1631,7 +1631,7 @@ class FilesController extends Controller
             \Log::info($e->getMessage());
         }
     }
-    
+
     public function sendMessage($receiver, $message, $frontendID)
     {
         try {
