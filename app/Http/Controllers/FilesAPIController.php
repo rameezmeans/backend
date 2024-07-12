@@ -939,8 +939,18 @@ class FilesAPIController extends Controller
 
         $message1 = str_replace("#customer", $customer->name ,$message);
         $message2 = str_replace("#customer", $file->name ,$message);
-        
-        $subject = "ECU Tech: Engineer uploaded a file in reply.";
+
+        if($file->front_end_id == 1){
+            $subject = "ECU Tech: Engineer uploaded a file in reply.";
+        }
+
+        else if($file->front_end_id == 2){
+            $subject = "TuningX: Engineer uploaded a file in reply.";
+        }
+
+        else if($file->front_end_id == 3){
+            $subject = "E-TuningFiles: Engineer uploaded a file in reply.";
+        }
 
         $manager = (new ReminderManagerController())->getAllManager();
 
