@@ -1620,7 +1620,7 @@ class FilesController extends Controller
             
             $message = $client->messages
                 ->create('+923218612198', // to
-                        ["body" => 'Test Message', "from" => "TuningX"]
+                        ["body" => 'Test Message', "from" => "E-TuningFiles"]
             );
             
 
@@ -1631,7 +1631,7 @@ class FilesController extends Controller
             \Log::info($e->getMessage());
         }
     }
-
+    
     public function sendMessage($receiver, $message, $frontendID)
     {
         try {
