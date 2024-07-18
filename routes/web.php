@@ -772,6 +772,8 @@ Route::post('/delete_feed', [App\Http\Controllers\NewsFeedsController::class, 'd
 
 Route::get('/send_test_message', [App\Http\Controllers\FilesController::class, 'sendTestMessage'])->name('send-test-message');
 
+Route::get('/logs', [App\Http\Controllers\LogsController::class, 'index'])->name('logs');
+
 // Route::get('/frontends', [App\Http\Controllers\FrontEndController::class, 'index'])->name('frontends');
 // Route::get('/create_frontend', [App\Http\Controllers\FrontEndController::class, 'create'])->name('create-frontend');
 // Route::post('/post_frontend', [App\Http\Controllers\FrontEndController::class, 'store'])->name('post-frontend');

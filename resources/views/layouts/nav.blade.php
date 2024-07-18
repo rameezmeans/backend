@@ -376,10 +376,10 @@
               <span class="icon-thumbnail">Pa</span>
             </li>
 
-            {{-- <li class="m-t-30 ">
-              <a href="{{ route('edit-master-tokens') }}">Services tokens</a>
-              <span class="icon-thumbnail">Mt</span>
-            </li> --}}
+            <li class="m-t-30 ">
+              <a href="{{ route('logs') }}">Logs</a>
+              <span class="icon-thumbnail">Lg</span>
+            </li>
             
             <li class="">
               <a href="{{ route('engineers') }}">Engineers</a>
