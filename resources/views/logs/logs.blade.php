@@ -34,7 +34,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($logs as $log)
-                                    <tr role="row" class="redirect-click" data-redirect="{{ route('edit-tool', $tool->id) }}">
+                                    <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$log->type}}</p>
                                         </td>
