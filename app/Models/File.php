@@ -159,6 +159,10 @@ class File extends Model
         return $this->hasMany(ProcessedFile::class, 'file_id', 'id')->where('type', 'decoded');
     }
 
+    public function magic_decrypted_files(){
+        return $this->hasMany(ProcessedFile::class, 'file_id', 'id')->where('type', 'magic_decrypted');
+    }
+
     public function final_decoded_file(){
 
         if($this->decoded_files->count() > 0){
