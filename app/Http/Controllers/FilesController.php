@@ -3136,14 +3136,15 @@ class FilesController extends Controller
         ->orWhere('tuningx_active', 1)->whereNull('subdealer_group_id')->where('type', 'tunning')->get();
         
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
+        $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
 
         $prossingSoftwares = ProcessingSoftware::all();
 
         if(env('APP_ENV') == 'live'){
-            return view('files.show', ['prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show', ['prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
         else{
-            return view('files.show_backup', ['prossingSoftwares' => $prossingSoftwares, 'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show_backup', ['prossingSoftwares' => $prossingSoftwares, 'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
 
         }

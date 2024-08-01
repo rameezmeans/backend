@@ -213,7 +213,11 @@ class File extends Model
     }
 
     public function decoded_file(){
-        return $this->hasOne(ProcessedFile::class, 'file_id', 'id')->where('type', 'decoded')->orWhere('type', 'magic_decrypted');
+        return $this->hasOne(ProcessedFile::class, 'file_id', 'id')->where('type', 'decoded');
+    }
+
+    public function magic_decrypted_file(){
+        return $this->hasOne(ProcessedFile::class, 'file_id', 'id')->where('type', 'magic_decrypted');
     }
 
     public function options(){
