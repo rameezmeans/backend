@@ -159,11 +159,13 @@ class ActiveFeedCron extends Command
         // $theFlag = $this->recursiveChmod(public_path("/../../EcuTechV2/public/uploads"));
 
         // $flag = chmod( public_path("/../../backend/public/uploads") , 0777 );
-        $flag = chmod( public_path("/../../backend/storage/logs") , 0777 );
+        $flagBackned = chmod( public_path("/../../backend/storage/logs") , 0777 );
         $theBackendFlag = $this->recursiveChmod(public_path("/../../backend/storage/logs"));
 
+
+
         $flag = chmod( public_path("/../../devback/storage/logs") , 0777 );
-        $theBackendFlag = $this->recursiveChmod(public_path("/../../devback/storage/logs"));
+        $theBackendFlagLog = $this->recursiveChmod(public_path("/../../devback/storage/logs"));
 
         $flag = chmod( public_path("/../../tuningX/storage/logs") , 0777 );
         $theTuningXFlag = $this->recursiveChmod(public_path("/../../tuningX/storage/logs"));
@@ -245,6 +247,8 @@ class ActiveFeedCron extends Command
             \Log::info("email went for elorus at ".date('d-m-y h:i:s'));
         }
        
+        \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " flagBackned:". $flagBackned);
+        \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " theBackendFlagLog:". $theBackendFlagLog);
         \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " theBackendFlag:". $theBackendFlag);
         \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " theTuningxFlag:". $theTuningXFlag);
         \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " thePortalFlag:". $thePortalFlag);

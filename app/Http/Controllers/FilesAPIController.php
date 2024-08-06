@@ -463,6 +463,21 @@ class FilesAPIController extends Controller
                         $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->final_decoded_file();
                     }
                 }
+                else if ($file->magic_decrypted_files->count() > 0){
+
+                    if($file->front_end_id == 1){
+                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_magic_decoded_file();
+                    }
+                    else if($file->front_end_id == 3){
+                    
+                        $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->final_magic_decoded_file();
+                    }
+                    else if($file->front_end_id == 2){
+                        // $temp['location'] = 'https://tuningx.test'.$file->file_path.$this->getFileToShowToLUA($file);
+                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->final_magic_decoded_file();
+                    }
+
+                }
                 else{
 
                     if($file->front_end_id == 1){

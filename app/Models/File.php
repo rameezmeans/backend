@@ -211,6 +211,51 @@ class File extends Model
         
     }
 
+    public function final_magic_decoded_file(){
+
+        if($this->magic_decrypted_files->count() > 0){
+
+            $sizeArray = [];
+
+            foreach($this->magic_decrypted_files as $d){
+
+                
+                $name = $d->name;
+                
+
+                if($this->front_end_id == 1){
+                    $path = public_path('/../../portal/public'.$this->file_path.$name);
+                }
+                else if($this->front_end_id == 3){
+                    $path = public_path('/../../e-tuningfiles/public'.$this->file_path.$name);
+                }
+                else{
+                    $path = public_path('/../../tuningX/public'.$this->file_path.$name);
+                }
+                
+                $temp ['size']= filesize($path);
+                $temp ['file_name']= $name;
+                $sizeArray []= $temp;
+
+            }
+
+            if(sizeOf($sizeArray) == 1){
+
+                return $sizeArray[0]['file_name'];
+            }
+            else{
+    
+                usort($sizeArray, array($this,'sortById'));
+                return $sizeArray[0]['file_name'];
+    
+            }
+
+        }
+
+        return null;
+        
+    }
+
     public function sortById($x, $y) {
 
         return $y['size'] - $x['size'];
