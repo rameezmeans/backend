@@ -145,7 +145,7 @@ class FilesDatatable extends LivewireDatatable
                 
                 foreach($file->options_services as $option){
                     if(\App\Models\Service::findOrFail($option->service_id) != null){
-                        $service = \App\Models\Service::where('id',$option->service_id)->first;
+                        $service = \App\Models\Service::where('id',$option->service_id)->first();
 
                             if($service){
                                 $options .= '<img class="parent-adjusted" alt="'.$service->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.$service->icon .'" data-src="'.url('icons').'/'.$service->icon .'" src="'.url('icons').'/'.$service->icon.'">';
