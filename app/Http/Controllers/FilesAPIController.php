@@ -32,15 +32,13 @@ class FilesAPIController extends Controller
     public function submitFile( Request $request ) {
 
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
-
-        $manager = (new ReminderManagerController())->getManager();
-
+        
         $tool = Tool::findOrFail($request->tool_id);
 
         $file = $request->file('file');
         $fileName = $file->getClientOriginalName();
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
-        
+
         $fileName = str_replace('#', '_', $fileName);
         $fileName = str_replace('.', '_', $fileName);
         $fileName = str_replace(' ', '_', $fileName);
@@ -77,6 +75,8 @@ class FilesAPIController extends Controller
         $servieCredits = 0;
 
         $customer = get_subdealer_user($request->subdealer_group_id);
+
+        $manager = (new ReminderManagerController())->getManager($file->front_end_id);
 
         $head =  get_head();
 
@@ -215,7 +215,7 @@ class FilesAPIController extends Controller
                 \Mail::to($head->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
             }
             if($manager['eng_assign_eng_sms']){
-                $this->sendMessage($head->phone, $message);
+                $this->sendMessage($head->phone, $message, $file->front_end_id);
             }
             
             $template = EmailTemplate::findOrFail(2);
@@ -247,7 +247,7 @@ class FilesAPIController extends Controller
             }
 
             if($manager['file_upload_admin_sms']){
-                $this->sendMessage($admin->phone, $message);
+                $this->sendMessage($admin->phone, $message, $file->front_end_id);
             }
 
             return response()->json('file submitted.');
@@ -565,6 +565,21 @@ class FilesAPIController extends Controller
                         $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->final_decoded_file();
                     }                    
                     
+                }
+                else if ($file->magic_decrypted_files->count() > 0){
+
+                    if($file->front_end_id == 1){
+                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_magic_decoded_file();
+                    }
+                    else if($file->front_end_id == 3){
+                    
+                        $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->final_magic_decoded_file();
+                    }
+                    else if($file->front_end_id == 2){
+                        // $temp['location'] = 'https://tuningx.test'.$file->file_path.$this->getFileToShowToLUA($file);
+                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->final_magic_decoded_file();
+                    }
+
                 }
                 else{
                     if($file->front_end_id == 1 ){
