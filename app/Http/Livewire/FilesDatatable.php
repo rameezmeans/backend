@@ -151,7 +151,7 @@ class FilesDatatable extends LivewireDatatable
                                 $options .= '<img class="parent-adjusted" alt="'.$service->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.$service->icon .'" data-src="'.url('icons').'/'.$service->icon .'" src="'.url('icons').'/'.$service->icon.'">';
                             }
                             else{
-                                $options.= "<span>Service Deleted.</span>"
+                                $options.= "<span>Service Deleted.</span>";
                             }
                         }
                     }
