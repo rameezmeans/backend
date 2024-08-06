@@ -17,6 +17,7 @@ use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\NumberColumn;
+use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 
 class FilesDatatable extends LivewireDatatable
 {
@@ -141,9 +142,17 @@ class FilesDatatable extends LivewireDatatable
             Column::callback(['id', 'tool_id'], function($id){
                 $options = '';
                 $file = File::findOrFail($id);
+                
                 foreach($file->options_services as $option){
                     if(\App\Models\Service::findOrFail($option->service_id) != null){
-                        $options .= '<img class="parent-adjusted" alt="'.\App\Models\Service::findOrFail($option->service_id)->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon .'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon.'">';
+                        $service = \App\Models\Service::where('id',$option->service_id)->first;
+
+                            if($service){
+                                $options .= '<img class="parent-adjusted" alt="'.$service->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.$service->icon .'" data-src="'.url('icons').'/'.$service->icon .'" src="'.url('icons').'/'.$service->icon.'">';
+                            }
+                            else{
+                                $options.= "<span>Service Deleted.</span>"
+                            }
                         }
                     }
                 
