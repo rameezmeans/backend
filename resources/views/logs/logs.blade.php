@@ -48,7 +48,7 @@
                                             @endif
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$log->created_at->diffForHumans()}}</p>
+                                            <p>{{$log->created_at}}</p>
                                         </td>
                                     </tr>
                                 @endforeach
