@@ -437,6 +437,16 @@
                   </span>
                 @enderror
 
+                <div class="form-group form-group-default">
+                  <label>Magic Serial Number</label>
+                  <input value="@if(isset($customer)){{ $customer->sn }}@else{{old('sn')}}@endif"  name="sn" type="text" class="form-control">
+                </div>
+                @error('sn')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+
                 <div class="form-group form-group-default required ">
                   <label>Customer Group</label>
                   <select class="full-width" data-init-plugin="select2" name="group_id">
