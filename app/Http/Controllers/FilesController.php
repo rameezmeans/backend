@@ -2385,6 +2385,9 @@ class FilesController extends Controller
         $oldName = $attachment->getClientOriginalName();
         $encode = (boolean) $request->encode;
         $magic = (boolean) $request->magic;
+
+        dd($request->all());
+        
         $file = File::findOrFail($request->file_id);
         
         $engineerFile = new RequestFile();
@@ -2529,6 +2532,8 @@ class FilesController extends Controller
 
         if($magic == 1){
 
+            $magicEncryptionType = $request->magic_encryption_type;
+
             if($file->subdealer_group_id){
 
                 $path = public_path('/../../subportal/public'.$file->file_path).$newFileName;
@@ -2575,7 +2580,7 @@ class FilesController extends Controller
             $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
 
             if($file->tool_type == 'slave' && $file->tool_id == $flexLabel->id){
-                $this->magicObj->magicEncrypt( $path, $file, $newFileName, $engineerFile );
+                $this->magicObj->magicEncrypt( $path, $file, $newFileName, $engineerFile, $magicEncryptionType );
             }
 
         }

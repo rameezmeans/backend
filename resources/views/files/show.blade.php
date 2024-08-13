@@ -5035,7 +5035,7 @@ margin-bottom: 10px !important;
                                       <div class="col-md-8">
                                         <div class="form-group form-group-default">
                                           <label class="m-t-10">Flex Processing Option Encryption Type:</label>
-                                          <select class="full-width" data-placeholder="Select Flex Option Processing Encryption Type" data-init-plugin="select2" id="magic_encryption_type_{{$o_file->id}}">
+                                          <select class="full-width" data-placeholder="Select Flex Option Processing Encryption Type" data-init-plugin="select2" name="magic_encryption_type">
                                             
                                               <option value="int_flash" selected>int_flash</option>
                                               <option value="ext_flash">ext_flash</option>
