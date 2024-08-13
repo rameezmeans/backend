@@ -59,6 +59,7 @@ class FilesController extends Controller
 {
     private $manager;
     private $alientechObj;
+    private $magicObj;
     /**
      * Create a new controller instance.
      *
@@ -67,6 +68,7 @@ class FilesController extends Controller
     public function __construct()
     {
         $this->alientechObj = new AlientechController();
+        $this->magicObj = new MagicController();
         $reminderManager = new ReminderManagerController();
         $this->manager = $reminderManager->getAllManager();
         $this->middleware('auth',['except' => ['recordFeedback']]);
@@ -2321,6 +2323,7 @@ class FilesController extends Controller
         $attachment = $request->file('file');
         $oldName = $attachment->getClientOriginalName();
         $encode = (boolean) $request->encode;
+        $magic = (boolean) $request->magic;
         $file = File::findOrFail($request->file_id);
         
         $engineerFile = new RequestFile();
@@ -2367,6 +2370,8 @@ class FilesController extends Controller
         $engineerFile->request_file = $newFileName;
         $engineerFile->save();
 
+        if(!$encode){
+
         if($file->subdealer_group_id){
             $attachment->move(public_path('/../../subportal/public'.$file->file_path),$newFileName);
 
@@ -2406,8 +2411,10 @@ class FilesController extends Controller
                 }
             }
         }
+
+        }
         
-        if($encode){
+        else if($encode){
 
             if($file->subdealer_group_id){
 
@@ -2457,6 +2464,59 @@ class FilesController extends Controller
                 $slotID = $file->alientech_file->slot_id;
                 $this->alientechObj->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType, $engineerFile );
             }
+        }
+
+        if($magic == 1){
+
+            if($file->subdealer_group_id){
+
+                $path = public_path('/../../subportal/public'.$file->file_path).$newFileName;
+            }
+            else{
+                if($file->front_end_id == 1){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    }
+
+                }
+                else if($file->front_end_id == 3){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../e-tuningfiles/public'.$file->file_path).$newFileName;
+                    }
+
+                }
+                else{
+
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../tuningX/public'.$file->file_path).$newFileName;
+                    }
+                }
+            }
+
+            $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
+
+            if($file->tool_type == 'slave' && $file->tool_id == $flexLabel->id){
+                $this->magicObj->magicEncrypt( $path, $file );
+            }
+
         }
         
         $allEearlierReminders = EmailReminder::where('user_id', $file->user_id)

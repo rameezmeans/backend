@@ -5009,6 +5009,7 @@ margin-bottom: 10px !important;
                                   @csrf
                                   <input type="hidden" value="{{$o_file->id}}" name="file_id">
                                   @if($o_file->tool_type == 'slave' && $o_file->tool_id == $kess3Label->id)
+                                    
                                     <input type="hidden" value="1" name="encode">
                                       @if($o_file->decoded_file)
                                         @if($o_file->decoded_file->extension == 'dec')
@@ -5017,6 +5018,9 @@ margin-bottom: 10px !important;
                                           <input type="hidden" value="micro" name="encoding_type">
                                         @endif
                                       @endif
+                                    
+                                    @elseif($o_file->tool_type == 'slave' && $o_file->tool_id == $flexLabel->id)
+                                      <input type="hidden" value="1" name="magic">
                                     @else
                                       <input type="hidden" value="0" name="encode">
                                     @endif
