@@ -51,6 +51,8 @@ class MagicController extends Controller
             $contents   = base64_decode($base64_string);
             $flag = file_put_contents( public_path('uploads/this_thing'.'.zip') , $contents );
 
+            dd($flag);
+
             
         }
         
