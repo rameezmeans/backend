@@ -1400,12 +1400,12 @@ class FilesController extends Controller
 
             if($file->on_dev == 1){
 
-                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile;
+                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile->name;
 
             }
             else{
 
-                $file_path = public_path('/../../portal/public/'.$file->file_path).$magicEncryptedFile;
+                $file_path = public_path('/../../portal/public/'.$file->file_path).$magicEncryptedFile->name;
             }
 
         }
@@ -1415,12 +1415,12 @@ class FilesController extends Controller
 
             if($file->on_dev == 1){
 
-                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile;
+                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile->name;
 
             }
             else{
 
-                $file_path = public_path('/../../e-tuningfiles/public/'.$file->file_path).$magicEncryptedFile;
+                $file_path = public_path('/../../e-tuningfiles/public/'.$file->file_path).$$magicEncryptedFile->name;
             }
 
         }
@@ -1428,12 +1428,12 @@ class FilesController extends Controller
 
             if($file->on_dev == 1){
 
-                $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$magicEncryptedFile;
+                $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$magicEncryptedFile->name;
 
             }
             else{
 
-                $file_path = public_path('/../../tuningX/public/'.$file->file_path).$magicEncryptedFile;
+                $file_path = public_path('/../../tuningX/public/'.$file->file_path).$magicEncryptedFile->name;
             }
         }
         
