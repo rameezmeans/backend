@@ -49,10 +49,9 @@ class MagicController extends Controller
 
             $base64_string = $response->output_file_base64;
             $contents   = base64_decode($base64_string);
-            $flag = file_put_contents( public_path('uploads/this_thing'.'.zip') , $contents );
+            $flag = file_put_contents($path.'magic_encrypted.mmf' , $contents );
 
             dd($flag);
-
             
         }
         
