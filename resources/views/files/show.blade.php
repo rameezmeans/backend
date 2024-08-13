@@ -4697,6 +4697,7 @@ margin-bottom: 10px !important;
                 <div class="col-md-8">
                 
                 </div>
+
                 <div class="col-md-4 m-t-10 sm-m-t-10">
                   <button type="button" class="btn btn-success btn-block m-t-5 show-file-upload-section" data-file_id="{{$file->id}}">Submit</button>
                 </div>
@@ -4978,10 +4979,9 @@ margin-bottom: 10px !important;
                     </div>
                     @endforeach
                   @endif
-  
-                    <div class="col-md-8">
-                      
-                    </div>
+                    
+                  
+
                     <div class="col-md-4 m-t-10 sm-m-t-10">
                       <button type="button" class="btn btn-success btn-block m-t-5 show-file-upload-section" data-file_id="{{$o_file->id}}">Submit</button>
                     </div>
@@ -5031,6 +5031,23 @@ margin-bottom: 10px !important;
                                     
                                     @elseif($o_file->tool_type == 'slave' && $o_file->tool_id == $flexLabel->id)
                                       <input type="hidden" value="1" name="magic">
+
+                                      <div class="col-md-8">
+                                        <div class="form-group form-group-default">
+                                          <label class="m-t-10">Flex Processing Option Encryption Type:</label>
+                                          <select class="full-width" data-placeholder="Select Flex Option Processing Encryption Type" data-init-plugin="select2" id="magic_encryption_type_{{$o_file->id}}">
+                                            
+                                              <option value="int_flash" selected>int_flash</option>
+                                              <option value="ext_flash">ext_flash</option>
+                                              <option value="int_eeprom">int_eeprom</option>
+                                              <option value="ext_eeprom">ext_eeprom</option>
+                                              <option value="maps">maps</option>
+                                              <option value="full_dump">full_dump</option>
+                                            
+                                          </select>
+                                        </div>
+                                      </div>
+
                                     @else
                                       <input type="hidden" value="0" name="encode">
                                     @endif
