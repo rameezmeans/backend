@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MagicEncryptedFile;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class MagicController extends Controller
 {
-    public function magicEncrypt( $path, $file ) {
+    public function magicEncrypt( $path, $file, $fileName, $encryptionType = 'int_flash' ) {
 
         $target_url = 'https://api.magicmotorsport.com/master/api/v1/slave_manager/encrypt';
     
@@ -22,7 +23,7 @@ class MagicController extends Controller
         $post = array(
             'sn' => $user->sn,
             'input_file'=> $cFile,
-            'memory_type' => 'int_flash'
+            'memory_type' => $encryptionType
         );
 
         $ch = curl_init();
@@ -39,22 +40,34 @@ class MagicController extends Controller
         curl_close ($ch);
         $response = json_decode($result);
 
+        $magicFile = new MagicEncryptedFile();
+        $magicFile->name = $fileName.'_magic_encrypted.mmf';
+        $magicFile->downloadable = 0;
+        $magicFile->file_id = $file->id;
+        $magicFile->save();
+
         if($response == NULL){
             $this->makeLogEntry($file->id, 'error', 'Magic API Failed.');
+            $magicFile->desc = "Magic API Failed.";
         }
         else if($response->status == 'ERROR'){
             $this->makeLogEntry($file->id, 'error', 'Magic API Failed. Bad request');
+            $magicFile->desc = "Magic API Failed. Bad request";
         }
         else{
 
             $base64_string = $response->output_file_base64;
             $contents   = base64_decode($base64_string);
-            $flag = file_put_contents($path.'magic_encrypted.mmf' , $contents );
-
-            dd($flag);
+            $flag = file_put_contents($path.'_magic_encrypted.mmf' , $contents );
+            
+            if($flag){
+                $magicFile->desc = "file processed and downloadable";
+                $magicFile->downloadable = 1;
+            }
             
         }
         
+        $magicFile->save();
 
     }
 }

@@ -2514,7 +2514,7 @@ class FilesController extends Controller
             $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
 
             if($file->tool_type == 'slave' && $file->tool_id == $flexLabel->id){
-                $this->magicObj->magicEncrypt( $path, $file );
+                $this->magicObj->magicEncrypt( $path, $file, $newFileName );
             }
 
         }
