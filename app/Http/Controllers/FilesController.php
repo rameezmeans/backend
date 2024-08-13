@@ -28,6 +28,7 @@ use App\Models\FileService;
 use App\Models\FileUrl;
 use App\Models\Key;
 use App\Models\Log;
+use App\Models\MagicEncryptedFile;
 use App\Models\ProcessedFile;
 use App\Models\ProcessingSoftware;
 use App\Models\RoleUser;
@@ -1379,13 +1380,64 @@ class FilesController extends Controller
         ->with('tab','chat');
     }
     
-    public function downloadMagic( $id,$fileName ) {
+    public function downloadMagic( $id,$requestFileID ) {
 
         if(!Auth::user()->is_admin()){
             return abort(404);
         }
 
+        $file = File::findOrFail($id); 
 
+        $magicEncryptedFile = MagicEncryptedFile::where('file_id', $id)
+        ->where('request_file_id', $requestFileID)
+        ->where('downloadable', 1)
+        ->first();
+
+
+        if($file->front_end_id == 1){
+
+            // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+
+            if($file->on_dev == 1){
+
+                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile;
+
+            }
+            else{
+
+                $file_path = public_path('/../../portal/public/'.$file->file_path).$magicEncryptedFile;
+            }
+
+        }
+        else if($file->front_end_id == 3){
+
+            // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+
+            if($file->on_dev == 1){
+
+                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile;
+
+            }
+            else{
+
+                $file_path = public_path('/../../e-tuningfiles/public/'.$file->file_path).$magicEncryptedFile;
+            }
+
+        }
+        else{
+
+            if($file->on_dev == 1){
+
+                $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$magicEncryptedFile;
+
+            }
+            else{
+
+                $file_path = public_path('/../../tuningX/public/'.$file->file_path).$magicEncryptedFile;
+            }
+        }
+        
+        return response()->download($file_path);
     }
 
     public function downloadEncrypted( $id,$fileName ) {
