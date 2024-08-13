@@ -44,7 +44,7 @@ class MagicController extends Controller
         $magicFile->name = $fileName.'_magic_encrypted.mmf';
         $magicFile->downloadable = 0;
         $magicFile->file_id = $file->id;
-        $magicFile->request_file_id = $engineerFile->id;
+        $magicFile->request_file_id = $engineerFile['id'];
         $magicFile->save();
 
         if($response == NULL){
