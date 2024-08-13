@@ -1354,6 +1354,16 @@ margin-bottom: 10px !important;
 
                                   @endif
                                   @endif
+
+                                  @if($file->tool_type == 'slave' && $file->tool_id == $flexLabel->id)
+                                    <div>
+                                      <p>Please click on "Download Encrypted Magic File" Button to download and test the system. This way user will get Encrypted file or you will get the error so that you can process the file, manually.</p>
+                                    </div>
+                                    <div class="text-center">
+                                      <a href="{{ route('download-magic',[$message['file_id'], $message['request_file']]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download Encrypted Magic File</span>
+                                      </a>
+                                    </div>
+                                  @endif
                                   <span class="btn-sm btn-cons btn-success m-t-50">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </spam>
                             </div>
                               </div>

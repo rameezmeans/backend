@@ -1379,6 +1379,15 @@ class FilesController extends Controller
         ->with('tab','chat');
     }
     
+    public function downloadMagic( $id,$fileName ) {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
+
+    }
+
     public function downloadEncrypted( $id,$fileName ) {
 
         if(!Auth::user()->is_admin()){
@@ -2514,7 +2523,7 @@ class FilesController extends Controller
             $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
 
             if($file->tool_type == 'slave' && $file->tool_id == $flexLabel->id){
-                $this->magicObj->magicEncrypt( $path, $file, $newFileName );
+                $this->magicObj->magicEncrypt( $path, $file, $newFileName, $$engineerFile );
             }
 
         }

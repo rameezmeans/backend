@@ -641,6 +641,7 @@ Route::post('delete_original_file', [App\Http\Controllers\OriginalFilesControlle
 Route::get('/download/{id}/{file}/{autoDelete}', [App\Http\Controllers\FilesController::class,'download'])->name('download');
 Route::get('/support/{id}', [App\Http\Controllers\FilesController::class,'support'])->name('support');
 Route::get('/download-encrypted/{id}/{file}', [App\Http\Controllers\FilesController::class,'downloadEncrypted'])->name('download-encrypted');
+Route::get('/download-magic/{id}/{file}', [App\Http\Controllers\FilesController::class,'downloadMagic'])->name('download-magic');
 Route::get('/download_decoded/{id}/{file}', [App\Http\Controllers\FilesController::class,'downloadDecoded'])->name('download-decoded');
 Route::get('/get_access_token', [App\Http\Controllers\FilesController::class,'getAccessToken'])->name('get-access-token');
 Route::get('/decode_file', [App\Http\Controllers\FilesController::class,'decodeFile'])->name('decode-file');
