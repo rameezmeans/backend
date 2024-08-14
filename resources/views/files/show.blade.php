@@ -1126,7 +1126,7 @@ margin-bottom: 10px !important;
                             <!-- Tab panes -->
     
                             <div class="tab-content">
-                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 250px;">
+                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 300px;">
 
                           @php
                             if(isset($message['request_file'])){
@@ -1379,7 +1379,7 @@ margin-bottom: 10px !important;
                             </div>
                               </div>
 
-                            <div class="tab-pane slide-left" id="acm_data_{{$message['id']}}" style="height: 250px;">
+                            <div class="tab-pane slide-left" id="acm_data_{{$message['id']}}" style="height: 300px;">
                                   
                                   @if(isset($message['request_file']))
 
@@ -1433,7 +1433,7 @@ margin-bottom: 10px !important;
 
                       @if($file->softwares->isNotEmpty())
 
-                      <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 250px;">
+                      <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 300px;">
                       
                         @if($file->softwares->isNotEmpty())
 
@@ -3274,7 +3274,7 @@ margin-bottom: 10px !important;
                             <!-- Tab panes -->
     
                             <div class="tab-content">
-                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 250px;">
+                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 300px;">
 
 
                               @if(isset($message['request_file']))
@@ -3467,7 +3467,7 @@ margin-bottom: 10px !important;
                               </div>
 
 
-                              <div class="tab-pane slide-left" id="acm_data_{{$message['id']}}" style="height: 250px;">
+                              <div class="tab-pane slide-left" id="acm_data_{{$message['id']}}" style="height: 300px;">
                                   
                                 @if(isset($message['request_file']))
 
@@ -3523,7 +3523,7 @@ margin-bottom: 10px !important;
 
                     @if($file->softwares->isNotEmpty())
 
-                     <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 250px;">
+                     <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 300px;">
                       
                       @if($file->softwares->isNotEmpty())
 
