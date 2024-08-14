@@ -727,12 +727,12 @@ class FilesAPIController extends Controller
                         }
                     }
 
-                //     $fileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count()+1;
+                    $fileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count()+1;
 
-                //     $fileToSave = str_replace('/', '', $fileToSave);
-                // $fileToSave = str_replace('\\', '', $fileToSave);
-                // $fileToSave = str_replace('#', '', $fileToSave);
-                // $fileToSave = str_replace(' ', '_', $fileToSave);
+                    $fileToSave = str_replace('/', '', $fileName);
+                    $fileToSave = str_replace('\\', '', $fileToSave);
+                    $fileToSave = str_replace('#', '', $fileToSave);
+                    $fileToSave = str_replace(' ', '_', $fileToSave);
 
                     $engineerFile->request_file = $fileToSave;
                     $engineerFile->save();
