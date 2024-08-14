@@ -69,5 +69,8 @@ class MagicController extends Controller
         
         $magicFile->save();
 
+        $engineerFile->is_flex_file = 1;
+        $engineerFile->save();
+
     }
 }

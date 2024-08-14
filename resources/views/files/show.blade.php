@@ -6041,7 +6041,7 @@ $('#engineerOptionsModal').modal('show');
 
   @foreach($file->files as $f)
 
-@if($f->is_kess3_slave == 1)
+@if($f->is_kess3_slave == 1 || $f->is_flex_file == 1)
 @if($f->uploaded_successfully == 0 && $f->show_file_denied == 0)
 
 <script type="text/javascript">
