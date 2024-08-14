@@ -2,11 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\MagicEncryptedFile;
 use App\Models\User;
 
 class MagicController extends Controller
 {
+
+    public function makeLogEntry( $temporaryFileID, $type, $message, $fileID = 0 ){
+
+        $log = new Log();
+        $log->temporary_file_id = $temporaryFileID;
+        $log->file_id = $fileID;
+        $log->type = $type;
+        $log->message = $message;
+        $log->save();
+
+    }
+
     public function magicEncrypt( $path, $file, $fileName, $engineerFile, $encryptionType = 'int_flash' ) {
 
         $target_url = 'https://api.magicmotorsport.com/master/api/v1/slave_manager/encrypt';
