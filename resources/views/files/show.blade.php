@@ -1320,6 +1320,17 @@ margin-bottom: 10px !important;
 
                                     @endif
 
+                                    @if($file->tool_type == 'slave' && $file->tool_id == $flexLabel->id)
+
+                                    @if($message['uploaded_successfully'] == 0)
+                                    <div class="checkbox check-success checkbox-circle">
+                                      <input class="show_file" type="checkbox" @if($message['is_flex_file']) value="0" @else checked="checked" value="1" @endif data-id="{{$message['id']}}" id="checkbox_n{{$message['id']}}">
+                                      <label for="checkbox_n{{$message['id']}}">Show File As it is</label>
+                                    </div>
+                                    @endif
+
+                                    @endif
+
                                     <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
                                     </a>
                                     

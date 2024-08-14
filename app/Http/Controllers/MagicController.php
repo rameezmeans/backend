@@ -49,10 +49,12 @@ class MagicController extends Controller
         if($response == NULL){
             $this->makeLogEntry($file->id, 'error', 'Magic API Failed.');
             $magicFile->desc = "Magic API Failed.";
+            $engineerFile->uploaded_successfully = 0;
         }
         else if($response->status == 'ERROR'){
             $this->makeLogEntry($file->id, 'error', 'Magic API Failed. Bad request');
             $magicFile->desc = "Magic API Failed. Bad request";
+            $engineerFile->uploaded_successfully = 0;
         }
         else{
 
@@ -63,6 +65,8 @@ class MagicController extends Controller
             if($flag){
                 $magicFile->desc = "file processed and downloadable";
                 $magicFile->downloadable = 1;
+
+                $engineerFile->uploaded_successfully = 1;
             }
             
         }
