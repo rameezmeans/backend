@@ -2452,7 +2452,7 @@ class FilesController extends Controller
                 }
 
             }
-            if($file->front_end_id == 3){
+            else if($file->front_end_id == 3){
                 // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
 
                 // if($file->on_dev == 1){
