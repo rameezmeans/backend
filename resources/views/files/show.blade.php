@@ -1245,9 +1245,9 @@ margin-bottom: 10px !important;
 
                                                       foreach ($item as $key => $value) {
 
-                                                        dd($value);
+                                                        // dd($value);
                                                         
-                                                        if($value->{'1'} == $file->stage){
+                                                        if( end($value) == $file->stage ){
 
                                                     ?>
                                                        <p class="pull-left"><? echo $file->stage . ' => ' . $value->name;?></p>
