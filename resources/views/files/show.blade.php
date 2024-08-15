@@ -1245,12 +1245,12 @@ margin-bottom: 10px !important;
 
                                                       foreach ($item as $key => $value) {
 
-                                                        dd($item);
                                                         
-                                                        if($item->{'1'} == $file->stage){
+                                                        
+                                                        if($value->{'1'} == $file->stage){
 
                                                     ?>
-                                                       <p class="pull-left"><? echo $file->stage . ' => ' . $item->name;?></p>
+                                                       <p class="pull-left"><? echo $file->stage . ' => ' . $value->name;?></p>
 
                                                     <br/>
                                                     <?php
@@ -1269,11 +1269,13 @@ margin-bottom: 10px !important;
                                                 }
                                                 else{
                                                     foreach ($data as $item) {
+                                                      // if($item->{'1'} == $file->stage){
                                                       ?>
                                                         <p class="pull-left"><? echo $item['mod'] . ' => ' . $item['name'];?></p>
 
                                     <br/>
                                                         <?
+                                                      // }
                                                     }
                                                   }
                                                 ?>
