@@ -2509,7 +2509,7 @@ class FilesController extends Controller
                     }
 
                 }
-                else{
+                else if($file->front_end_id == 2){
 
                     if($file->on_dev == 1){
                         
