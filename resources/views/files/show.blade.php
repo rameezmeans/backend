@@ -1243,6 +1243,8 @@ margin-bottom: 10px !important;
 
                                                     if(sizeof($item) > 0){
 
+                                                      dd($item);
+
                                                     ?>
                                                        <p class="pull-left"><? echo $file->stage . ' => ' . $item[0]->name;?></p>
 
