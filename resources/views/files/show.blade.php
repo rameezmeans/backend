@@ -1248,7 +1248,7 @@ margin-bottom: 10px !important;
                                                         if($item->{'1'} == $file->stage){
 
                                                     ?>
-                                                       <p class="pull-left"><? echo $file->stage . ' => ' . $item[0]->name;?></p>
+                                                       <p class="pull-left"><? echo $file->stage . ' => ' . $item->name;?></p>
 
                                                     <br/>
                                                     <?php
