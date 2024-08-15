@@ -1245,7 +1245,7 @@ margin-bottom: 10px !important;
 
                                                       foreach ($item as $key => $value) {
 
-                                                        
+                                                        dd($value);
                                                         
                                                         if($value->{'1'} == $file->stage){
 
