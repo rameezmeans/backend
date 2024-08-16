@@ -181,6 +181,7 @@ class ActiveFeedCron extends Command
         ->where('credits','>', 0)
         ->where('gifted', 0)
         ->whereDate('created_at', Carbon::today())
+        ->whereBetween('created_at', [now()->subMinutes(5), now()])
         ->get();
 
         $emailWent = false;
@@ -206,6 +207,7 @@ class ActiveFeedCron extends Command
         ->where('credits','>', 0)
         ->where('gifted', 0)
         ->whereDate('created_at', Carbon::today())
+        ->whereBetween('created_at', [now()->subMinutes(5), now()])
         ->get();
 
         foreach($creditsWithoutElorusID as $c){
