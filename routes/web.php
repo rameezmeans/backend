@@ -32,6 +32,7 @@ use App\Models\User;
 use App\Models\UserTool;
 use App\Models\Vehicle;
 use App\Models\VehiclesNote;
+use Carbon\Carbon;
 use Faker\Provider\ar_EG\Address;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Hash;
@@ -88,6 +89,15 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 });
 
 Route::get('/tasks', function () {
+
+    $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
+        ->where('credits','>', 0)
+        ->where('gifted', 0)
+        ->whereDate('created_at', Carbon::today())
+        // ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
+        ->get();
+
+        dd($creditsWithoutZohoID);
 
     // $groupsOSS = Group::where('name', 'like', '%' . 'OSS' . '%')->get();
     
