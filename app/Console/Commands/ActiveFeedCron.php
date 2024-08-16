@@ -181,7 +181,7 @@ class ActiveFeedCron extends Command
         ->where('credits','>', 0)
         ->where('gifted', 0)
         ->whereDate('created_at', Carbon::today())
-        ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
+        // ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
         ->get();
 
         $emailWent = false;
@@ -207,7 +207,7 @@ class ActiveFeedCron extends Command
         ->where('credits','>', 0)
         ->where('gifted', 0)
         ->whereDate('created_at', Carbon::today())
-        ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
+        // ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
         ->get();
 
         
