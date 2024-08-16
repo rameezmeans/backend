@@ -51,6 +51,12 @@
                                         @foreach ($allPayments as $p)
                                             <tr role="row" class="">
 
+                                                @php
+                                                    $customer = \App\Models\User::findOrFail($p->user_id);
+
+                                                    // dd($customer->frontend);
+                                                @endphp
+
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p class="label @if($p->front_end_id == 2) bg-warning @elseif($p->front_end_id == 3) text-white bg-info @else bg-primary text-white @endif">{{$p->id}}</p>
                                                 </td>
@@ -60,7 +66,11 @@
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p><label class="label @if($customer->frontend->id == 1) text-white bg-primary @elseif($customer->frontend->id == 3) text-white bg-info @else text-black bg-warning @endif">{{$customer->country}}</label></p>
+                                                    <p><label class="label @if($customer->front_end_id == 1) text-white bg-primary @elseif($customer->front_end_id == 3) text-white bg-info @else text-black bg-warning @endif">{{$customer->frontend->name}}</label></p>
+                                                </td>
+
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p><label class="label @if($customer->front_end_id == 1) text-white bg-primary @elseif($customer->front_end_id == 3) text-white bg-info @else text-black bg-warning @endif">{{$customer->country}}</label></p>
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
