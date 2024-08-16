@@ -180,8 +180,8 @@ class ActiveFeedCron extends Command
         $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
         ->where('credits','>', 0)
         ->where('gifted', 0)
-        ->whereDate('created_at', Carbon::today())
-        ->whereBetween('created_at', [now()->subMinutes(5), now()])
+        // ->whereDate('created_at', Carbon::today())
+        ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
         ->get();
 
         $emailWent = false;
@@ -206,9 +206,12 @@ class ActiveFeedCron extends Command
         $creditsWithoutElorusID = Credit::whereNull('elorus_id')
         ->where('credits','>', 0)
         ->where('gifted', 0)
-        ->whereDate('created_at', Carbon::today())
-        ->whereBetween('created_at', [now()->subMinutes(5), now()])
+        // ->whereDate('created_at', Carbon::today())
+        ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
         ->get();
+
+        
+
 
         foreach($creditsWithoutElorusID as $c){
             if($c->elorus_able()){
