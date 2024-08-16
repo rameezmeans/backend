@@ -2386,7 +2386,7 @@ class FilesController extends Controller
         $encode = (boolean) $request->encode;
         $magic = (boolean) $request->magic;
 
-        dd($request->all());
+        // dd($request->all());
          
         $file = File::findOrFail($request->file_id);
         
@@ -2494,6 +2494,8 @@ class FilesController extends Controller
                         $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
                     }
                     else{
+
+                        dd($newFileName);
                         $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
                     }
 
