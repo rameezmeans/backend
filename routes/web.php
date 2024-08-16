@@ -90,14 +90,16 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 Route::get('/tasks', function () {
 
-    $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
-        ->where('credits','>', 0)
-        ->where('gifted', 0)
-        ->whereDate('created_at', Carbon::today())
-        ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
-        ->get();
+    // $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
+    //     ->where('credits','>', 0)
+    //     ->where('gifted', 0)
+    //     ->whereDate('created_at', Carbon::today())
+    //     ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
+    //     ->get();
 
-        dd($creditsWithoutZohoID);
+    //     dd($creditsWithoutZohoID);
+
+    dd('test');
 
     // $groupsOSS = Group::where('name', 'like', '%' . 'OSS' . '%')->get();
     
