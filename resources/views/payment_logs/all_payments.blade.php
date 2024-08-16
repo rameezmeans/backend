@@ -68,7 +68,7 @@
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p><label class="label @if($customer->front_end_id == 1) text-white bg-primary @elseif($customer->front_end_id == 3) text-white bg-info @else text-black bg-warning @endif">{{$customer->country}}</label></p>
+                                                    <p><label class="label @if($customer->front_end_id == 1) text-white bg-primary @elseif($customer->front_end_id == 3) text-white bg-info @else text-black bg-warning @endif">{{code_to_country($customer->country)}}</label></p>
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
