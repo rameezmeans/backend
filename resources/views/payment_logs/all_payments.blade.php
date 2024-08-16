@@ -30,6 +30,8 @@
                                         <tr role="row">
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">DB ID</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Invoice ID</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Frontend</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Country</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Type</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Date</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Customer</th>
@@ -55,6 +57,10 @@
 
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p class="label @if($p->front_end_id == 2) bg-warning @elseif($p->front_end_id == 3) text-white bg-info @else bg-primary text-white @endif">{{$p->invoice_id}}</p>
+                                                </td>
+
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p><label class="label @if($customer->frontend->id == 1) text-white bg-primary @elseif($customer->frontend->id == 3) text-white bg-info @else text-black bg-warning @endif">{{$customer->country}}</label></p>
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
