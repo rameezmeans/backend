@@ -53,8 +53,6 @@
 
                                                 @php
                                                     $customer = \App\Models\User::findOrFail($p->user_id);
-
-                                                    // dd($customer->frontend);
                                                 @endphp
 
                                                 <td class="v-align-middle semi-bold sorting_1">
@@ -66,7 +64,7 @@
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p><label class="label @if($customer->front_end_id == 1) text-white bg-primary @elseif($customer->front_end_id == 3) text-white bg-info @else text-black bg-warning @endif">{{$customer->frontend->name}}</label></p>
+                                                    <p><label class="label @if($customer->front_end_id == 1) text-white bg-primary @elseif($customer->front_end_id == 3) text-white bg-info @else text-black bg-warning @endif">@if($customer->frontend){{$customer->frontend->name}}@else No Front End @endif</label></p>
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
