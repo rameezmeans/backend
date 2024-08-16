@@ -2385,6 +2385,8 @@ class FilesController extends Controller
         $oldName = $attachment->getClientOriginalName();
         $encode = (boolean) $request->encode;
         $magic = (boolean) $request->magic;
+
+        dd($request->all());
          
         $file = File::findOrFail($request->file_id);
         
