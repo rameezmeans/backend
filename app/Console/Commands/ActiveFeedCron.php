@@ -181,7 +181,7 @@ class ActiveFeedCron extends Command
         ->where('credits','>', 0)
         ->where('gifted', 0)
         ->whereDate('created_at', Carbon::today())
-        // ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
+        ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
         ->get();
 
         $emailWent = false;
@@ -199,7 +199,7 @@ class ActiveFeedCron extends Command
                 $logInstance->email_sent = 1;
                 $logInstance->reason_to_skip_zohobooks_payment_id = "zohobooks invoice did not went through.";
                 $logInstance->save();
-                // send_error_email($c->id, 'Transaction happened without zoho id', $c->front_end_id);
+                send_error_email($c->id, 'Transaction happened without zoho id', $c->front_end_id);
             }
         }
 
@@ -207,7 +207,7 @@ class ActiveFeedCron extends Command
         ->where('credits','>', 0)
         ->where('gifted', 0)
         ->whereDate('created_at', Carbon::today())
-        // ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
+        ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
         ->get();
 
         
@@ -226,7 +226,7 @@ class ActiveFeedCron extends Command
                         $logInstance->email_sent = 1;
                         $logInstance->reason_to_skip_elorus_id = "elorus invoice did not went through.";
                         $logInstance->save();
-                        // send_error_email($c->id, 'Transaction happened without elorus id', $c->front_end_id);
+                        send_error_email($c->id, 'Transaction happened without elorus id', $c->front_end_id);
                     }
 
                 }
@@ -239,7 +239,7 @@ class ActiveFeedCron extends Command
                     $logInstance->email_sent = 1;
                     $logInstance->reason_to_skip_elorus_id = "elorus invoice did not went through.";
                     $logInstance->save();
-                    // send_error_email($c->id, 'Transaction happened without elorus id', $c->front_end_id);
+                    send_error_email($c->id, 'Transaction happened without elorus id', $c->front_end_id);
                 }
             }
         }
