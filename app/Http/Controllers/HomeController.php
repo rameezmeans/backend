@@ -639,7 +639,13 @@ class HomeController extends Controller
 
         $grandTotal = File::count();
         $avgFiles = $totalFiles / $totalEngineers;
-        $avgFilesPerDay = $totalFiles / $days;
+
+        if($days == 0){
+            $avgFilesPerDay = 0;
+        }
+        else{
+            $avgFilesPerDay = $totalFiles / $days;
+        }
 
         $graph = [];
         $graph['x_axis']= $weekRange;
