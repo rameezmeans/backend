@@ -47,7 +47,7 @@ class AllMails extends Mailable
         else if($this->details['front_end_id'] == 3){
             return new Envelope(
                 subject:  $this->details['subject'],
-                from: new Address('info@e-tuningfiles.com', 'E-files')
+                from: new Address('info@e-tuningfiles.com', 'E-tuningFiles')
             );
         }
     }

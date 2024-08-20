@@ -74,28 +74,34 @@ class ActiveFeedCron extends Command
         
         if($user->front_end_id == 1){
             $feebdackTemplate = EmailTemplate::findOrFail(9); // email template must always be 9
+            $url = 'https://portal.ecutech.gr/';
+            $subject = "ECU Tech: Feedback Request";
         }
         else if($user->front_end_id == 2){
             $feebdackTemplate = EmailTemplate::findOrFail(49);
+            $url = 'https://portal.tuning-x.com/';
+            $subject = "TuningX: Feedback Request";
         }
 
         else if($user->front_end_id == 3){
             $feebdackTemplate = EmailTemplate::findOrFail(57);
+            $url = 'https://portal.e-tuningfiles.com/';
+            $subject = "E-TuningFiles: Feedback Request";
         }
 
         $html = $feebdackTemplate->html;
         $fileName = $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard;
 
         $html = str_replace('#file_name', $fileName, $html);
-        $html = str_replace('#angry_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/angry', $html);
-        $html = str_replace('#sad_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/sad', $html);
-        $html = str_replace('#ok_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/ok', $html);
-        $html = str_replace('#good_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/good', $html);
-        $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
-        $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
-        $html = str_replace('#file_url', env('PORTAL_URL').'file/'.$fileID, $html);
+        $html = str_replace('#angry_link', $url.'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/angry', $html);
+        $html = str_replace('#sad_link', $url.'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/sad', $html);
+        $html = str_replace('#ok_link', $url.'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/ok', $html);
+        $html = str_replace('#good_link', $url.'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/good', $html);
+        $html = str_replace('#happy_link', $url.'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
+        $html = str_replace('#happy_link', $url.'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
+        $html = str_replace('#file_url', $url.'file/'.$fileID, $html);
 
-        $subject = "ECU Tech: Feedback Request";
+        
         \Mail::to($user->email)->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject, 'front_end_id' => $user->front_end_id]));
 
     }
