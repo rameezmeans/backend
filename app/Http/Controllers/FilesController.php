@@ -2434,7 +2434,7 @@ class FilesController extends Controller
         $engineerFile->request_file = $newFileName;
         $engineerFile->save();
 
-        if(!$encode){
+        if($encode == 0){
 
         if($file->subdealer_group_id){
             $attachment->move(public_path('/../../subportal/public'.$file->file_path),$newFileName);
@@ -2478,7 +2478,7 @@ class FilesController extends Controller
 
         }
         
-        else if($encode){
+        else if($encode == 1){
 
             if($file->subdealer_group_id){
                 $attachment->move(public_path('/../../subportal/public'.$file->file_path),$newFileName);
@@ -2573,45 +2573,45 @@ class FilesController extends Controller
 
         if($magic == 1){
 
-            if($file->subdealer_group_id){
-                $attachment->move(public_path('/../../subportal/public'.$file->file_path),$newFileName);
+            // if($file->subdealer_group_id){
+            //     $attachment->move(public_path('/../../subportal/public'.$file->file_path),$newFileName);
     
-            }
+            // }
             
-            else{
+            // else{
     
-                if($file->front_end_id == 1){
-                    // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+            //     if($file->front_end_id == 1){
+            //         // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
     
-                    if($file->on_dev == 1){
-                        $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
-                    }
-                    else{
-                        $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
-                    }
+            //         if($file->on_dev == 1){
+            //             $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+            //         }
+            //         else{
+            //             $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+            //         }
     
-                }
-                else if($file->front_end_id == 3){
-                    // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+            //     }
+            //     else if($file->front_end_id == 3){
+            //         // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
     
-                    // if($file->on_dev == 1){
-                    //     $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
-                    // }
-                    // else{
-                        $attachment->move(public_path('/../../e-tuningfiles/public'.$file->file_path),$newFileName);
-                    // }
+            //         // if($file->on_dev == 1){
+            //         //     $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+            //         // }
+            //         // else{
+            //             $attachment->move(public_path('/../../e-tuningfiles/public'.$file->file_path),$newFileName);
+            //         // }
     
-                }
-                else if($file->front_end_id == 2){
+            //     }
+            //     else if($file->front_end_id == 2){
     
-                    if($file->on_dev == 1){
-                        $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
-                    }
-                    else{
-                        $attachment->move(public_path('/../../tuningX/public'.$file->file_path),$newFileName);
-                    }
-                }
-            }
+            //         if($file->on_dev == 1){
+            //             $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
+            //         }
+            //         else{
+            //             $attachment->move(public_path('/../../tuningX/public'.$file->file_path),$newFileName);
+            //         }
+            //     }
+            // }
 
             $magicEncryptionType = $request->magic_encryption_type;
 
