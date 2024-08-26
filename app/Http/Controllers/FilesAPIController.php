@@ -787,6 +787,8 @@ class FilesAPIController extends Controller
                     }
 
                     if($file->tool_type == 'slave' && $file->tool_id == $flexLabel->id){
+
+                        dd($file->final_magic_decoded_file());
                         $magicEncryptionType = 'int_flash';
                         (new MagicController)->magicEncrypt( $path, $file, $fileToSave, $engineerFile, $magicEncryptionType );
                     }
