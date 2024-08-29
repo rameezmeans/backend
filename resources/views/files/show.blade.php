@@ -1475,7 +1475,11 @@ margin-bottom: 10px !important;
                            <tr>
                              
                              <td class="v-align-middle ">
-                               <p>{{ \App\Models\Service::findOrFail( $software->service_id )->name}}</p>
+                               @if(\App\Models\Service::where('id', $software->service_id)->first() != NULL)
+                                <p>{{ \App\Models\Service::findOrFail( $software->service_id )->name}}</p>
+                                @else
+                                  <p>Service is not available anymore.</p>
+                                @endif
                              </td>
                              <td class="v-align-middle">
                                <p>{{\App\Models\ProcessingSoftware::findOrFail( $software->software_id )->name}}</p>
@@ -3570,7 +3574,11 @@ margin-bottom: 10px !important;
                             <tr>
                               
                               <td class="v-align-middle ">
-                                <p>{{ \App\Models\Service::findOrFail( $software->service_id )->name}}</p>
+                                @if(\App\Models\Service::where('id', $software->service_id)->first() != NULL)
+                                 <p>{{ \App\Models\Service::findOrFail( $software->service_id )->name}}</p>
+                                 @else
+                                   <p>Service is not available anymore.</p>
+                                 @endif
                               </td>
                               <td class="v-align-middle">
                                 <p>{{\App\Models\ProcessingSoftware::findOrFail( $software->software_id )->name}}</p>
