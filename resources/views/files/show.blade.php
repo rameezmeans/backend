@@ -5000,12 +5000,14 @@ margin-bottom: 10px !important;
                       <div class="form-group form-group-default">
                         <label><b>Option:</b> @if($optionInner != NULL){{$optionInner->name}}@else Option is not available. @endif</label>
                         <label class="m-t-10">Processing Software</label>
+                        @if($optionInner != NULL)
                         <input type="hidden" name="service_id" value="{{$optionInner->id}}">
                         <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="processing-software-{{$optionInner->id}}">
                           @foreach($prossingSoftwares as $ps)  
                             <option value="{{$ps->id}}">{{$ps->name}}</option>
                           @endforeach
                         </select>
+                        @endif
                       </div>
                     </div>
                     @endforeach
