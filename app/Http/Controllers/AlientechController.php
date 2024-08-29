@@ -549,20 +549,26 @@ class AlientechController extends Controller
 
             $syncResponse = Http::withHeaders($headers)->post($url, $postInput);                
             $syncResponseBody = json_decode($syncResponse->getBody(), true);
-            
-            $alientTechFile = new AlientechFile();
-            $alientTechFile->guid = $syncResponseBody['guid'];
-            $alientTechFile->slot_id = $slotID;
-            $alientTechFile->type = "download";
-            $alientTechFile->purpose = "decoded";
-            $alientTechFile->file_id = $file->id;
-            $alientTechFile->desc = "File is uploaded to be encoded and we have guid and slot ID for the first time to encode file.";
-            $alientTechFile->save();
 
-            $engineerFile->uploaded_successfully = 1;
-            $engineerFile->encoded = 0;
-            $engineerFile->is_kess3_slave = 1;
-            $engineerFile->save();
+            if($syncResponseBody == NULL){
+                $this->makeLogEntry($file->id, 'error', 'File Upload error.');
+            }
+            else{
+            
+                $alientTechFile = new AlientechFile();
+                $alientTechFile->guid = $syncResponseBody['guid'];
+                $alientTechFile->slot_id = $slotID;
+                $alientTechFile->type = "download";
+                $alientTechFile->purpose = "decoded";
+                $alientTechFile->file_id = $file->id;
+                $alientTechFile->desc = "File is uploaded to be encoded and we have guid and slot ID for the first time to encode file.";
+                $alientTechFile->save();
+
+                $engineerFile->uploaded_successfully = 1;
+                $engineerFile->encoded = 0;
+                $engineerFile->is_kess3_slave = 1;
+                $engineerFile->save();
+            }
 
         }
         else{
