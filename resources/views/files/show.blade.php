@@ -4998,7 +4998,7 @@ margin-bottom: 10px !important;
                     @php $optionInner = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
                     <div class="col-md-12 m-t-10">
                       <div class="form-group form-group-default">
-                        <label><b>Option:</b> {{$optionInner->name}}</label>
+                        <label><b>Option:</b> @if($optionInner != NULL){{$optionInner->name}}@else Option is not available. @endif</label>
                         <label class="m-t-10">Processing Software</label>
                         <input type="hidden" name="service_id" value="{{$optionInner->id}}">
                         <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="processing-software-{{$optionInner->id}}">
