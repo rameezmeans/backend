@@ -43,6 +43,8 @@
             <div class="card card-transparent m-t-40">
                 <div class="card-header ">
                     <div class="card-title"><h3>Servies</h3>
+
+                        <p class="text text-danger">Please only keep one frontend for any option. Options are only for one frontend.</p>
                     </div>
                     <div class="pull-right">
                     <div class="col-xs-12">
