@@ -73,7 +73,11 @@
                                             </td>
 
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p>{{\App\Models\User::findOrFail($l->user_id)->group->name}}</p>
+                                                @if(\App\Models\User::findOrFail($l->user_id)->group != NULL)
+                                                    <p>{{\App\Models\User::findOrFail($l->user_id)->group->name}}</p>
+                                                @else
+                                                    <p>No Group</p>
+                                                @endif
                                             </td>
 
                                             <td class="v-align-middle semi-bold sorting_1">
