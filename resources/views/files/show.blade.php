@@ -359,7 +359,7 @@ margin-bottom: 10px !important;
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Assigment Time</p>
                           <div class="pull-right">
-                            <span class="label label-success">{{ \Carbon\Carbon::parse($file->assignment_time)->diffForHumans() }}<span>
+                            <span class="label label-success">{{ date_format($file->assignment_time,"Y/m/d H:i:s") }}<span>
                           </div>
                           <div class="clearfix"></div>
                         </div>
@@ -368,7 +368,7 @@ margin-bottom: 10px !important;
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Engineer Upload Time</p>
                           <div class="pull-right">
-                            <span class="label label-success">{{ \Carbon\Carbon::parse($file->reupload_time)->diffForHumans() }}<span>
+                            <span class="label label-success">{{ date_format($file->reupload_time,"Y/m/d H:i:s") }}<span>
                           </div>
                           <div class="clearfix"></div>
                         </div>
