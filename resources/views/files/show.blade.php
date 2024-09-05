@@ -3387,14 +3387,14 @@ margin-bottom: 10px !important;
                                 ?>
                                 <br/>
                                                 <?
-                                                // $data = json_decode($message['lua_command'], true);
+                                                $data = json_decode($message['olsname'], true);
                                                 
                                                 // if ($message['lua_command'] === null){
                                                   
                                                 // }else{
                                                 //     foreach ($data as $item) {
                                                       ?>
-                                                        {{-- <p class="pull-left"><? // echo $item['mod'] . ' => ' . $item['name'];?></p> --}}
+                                                        <p class="pull-left"><? echo $data;?></p>
 
                                     <br/>
                                                         <?
