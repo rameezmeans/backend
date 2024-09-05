@@ -1233,7 +1233,7 @@ margin-bottom: 10px !important;
 
                                                 $data = json_decode($message['olsname'], true);
 
-                                                dd($message);
+                                                // dd($message);
 
                                                 // $data = json_decode($message['lua_command'], true);
                                                 
@@ -1256,7 +1256,7 @@ margin-bottom: 10px !important;
                                                         // if( end($value) == $file->stage ){
 
                                                     ?>
-                                                       {{-- <p class="pull-left"><? // echo end($value) . ' => ' . $value->name;?></p> --}}
+                                                       <p class="pull-left"><? echo $message['olsname'];?></p>
 
                                                     <br/>
                                                     <?php
@@ -3395,7 +3395,7 @@ margin-bottom: 10px !important;
                                                 <?
                                                 $data = json_decode($message['olsname'], true);
 
-                                                dd($message);
+                                                // dd($message);
                                                 
                                                 // if ($message['lua_command'] === null){
                                                   
