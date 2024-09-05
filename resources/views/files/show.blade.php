@@ -1229,69 +1229,69 @@ margin-bottom: 10px !important;
                                 ?>
                                 <br/>
                                                 <?
-                                                $data = json_decode($message['lua_command'], true);
+                                                // $data = json_decode($message['lua_command'], true);
                                                 
-                                                if ($message['lua_command'] === null){
+                                                // if ($message['lua_command'] === null){
 
-                                                  if($file->automatic){
+                                                //   if($file->automatic){
 
-                                                    if($file->lua_version){
+                                                //     if($file->lua_version){
 
-                                                    $item = json_decode($file->lua_version->Respons);
+                                                //     $item = json_decode($file->lua_version->Respons);
 
-                                                    if($item != null){
+                                                //     if($item != null){
 
-                                                    if(sizeof($item) > 0){
+                                                //     if(sizeof($item) > 0){
 
-                                                      foreach ($item as $key => $value) {
+                                                //       foreach ($item as $key => $value) {
 
                                                         // dd($value);
                                                         
-                                                        if( end($value) == $file->stage ){
+                                                        // if( end($value) == $file->stage ){
 
                                                     ?>
-                                                       <p class="pull-left"><? echo end($value) . ' => ' . $value->name;?></p>
+                                                       {{-- <p class="pull-left"><? // echo end($value) . ' => ' . $value->name;?></p> --}}
 
                                                     <br/>
                                                     <?php
-                                                          break;
-                                                        }
+                                                //           break;
+                                                //         }
 
-                                                      }
-                                                    }
-                                                  }
+                                                //       }
+                                                //     }
+                                                //   }
 
-                                                    }
+                                                //     }
 
-                                                  }
+                                                //   }
 
                                                   
-                                                }
-                                                else{
-                                                    foreach ($data as $item) {
+                                                // }
+                                                // else{
+                                                //     foreach ($data as $item) {
                                                       // if($item->{'1'} == $file->stage){
                                                       ?>
-                                                        <p class="pull-left"><? echo $item['mod'] . ' => ' . $item['name'];?></p>
+                                                        {{-- <p class="pull-left"><? // echo $item['mod'] . ' => ' . $item['name'];?></p> --}}
 
                                     <br/>
                                                         <?
                                                       // }
-                                                    }
-                                                  }
+                                                    // }
+                                                  // }
                                                 ?>
                                                 
                                                 <?
-                                                            $data = json_decode($message['lua_command_fdb'], true);
+                                                            // $data = json_decode($message['lua_command_fdb'], true);
                                                             
-                                                            if ($message['lua_command_fdb'] === null){
+                                                            // if ($message['lua_command_fdb'] === null){
                                                               
-                                                            }else{
-                                                                foreach ($data as $item) {
+                                                            // }else{
+                                                            //     foreach ($data as $item) {
                                                                   ?>
-                                                                    <p class="pull-left"><? echo $item['mod'] . ' => ' . $item['name'];?><b> FDB FILE</b></p>
+                                                                    {{-- <p class="pull-left"><? //echo $item['mod'] . ' => ' . $item['name'];?><b> FDB FILE</b></p> --}}
                                                                     <?
-                                                                }
-                                                              }
+                                                                // }
+                                                              // }
                                                             ?>                                                  
                                 
                                 <div class="pull-right">
@@ -3387,33 +3387,33 @@ margin-bottom: 10px !important;
                                 ?>
                                 <br/>
                                                 <?
-                                                $data = json_decode($message['lua_command'], true);
+                                                // $data = json_decode($message['lua_command'], true);
                                                 
-                                                if ($message['lua_command'] === null){
+                                                // if ($message['lua_command'] === null){
                                                   
-                                                }else{
-                                                    foreach ($data as $item) {
+                                                // }else{
+                                                //     foreach ($data as $item) {
                                                       ?>
-                                                        <p class="pull-left"><? echo $item['mod'] . ' => ' . $item['name'];?></p>
+                                                        {{-- <p class="pull-left"><? // echo $item['mod'] . ' => ' . $item['name'];?></p> --}}
 
                                     <br/>
                                                         <?
-                                                    }
-                                                  }
+                                                  //   }
+                                                  // }
                                                 ?>
                                                 
                                                 <?
-                                                            $data = json_decode($message['lua_command_fdb'], true);
+                                                            // $data = json_decode($message['lua_command_fdb'], true);
                                                             
-                                                            if ($message['lua_command_fdb'] === null){
+                                                            // if ($message['lua_command_fdb'] === null){
                                                               
-                                                            }else{
-                                                                foreach ($data as $item) {
+                                                            // }else{
+                                                            //     foreach ($data as $item) {
                                                                   ?>
-                                                                    <p class="pull-left"><? echo $item['mod'] . ' => ' . $item['name'];?><b> FDB FILE</b></p>
+                                                                    {{-- <p class="pull-left"><? // echo $item['mod'] . ' => ' . $item['name'];?><b> FDB FILE</b></p> --}}
                                                                     <?
-                                                                }
-                                                              }
+                                                              //   }
+                                                              // }
                                                             ?>                                                  
                                 
                                 <div class="pull-right">
