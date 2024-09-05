@@ -687,6 +687,7 @@ class FilesAPIController extends Controller
                     $engineerFile->master_tools = 'not_relevant';
                     $engineerFile->lua_command = $request->lua_command;
                     $engineerFile->file_id = $file->id;
+                    $engineerFile->olsname = $request->olsname;
                     $engineerFile->engineer = true;
                     $engineerFile->save();
                 
