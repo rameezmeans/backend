@@ -1229,6 +1229,12 @@ margin-bottom: 10px !important;
                                 ?>
                                 <br/>
                                                 <?
+
+
+                                                $data = json_decode($message['olsname'], true);
+
+                                                dd($message);
+
                                                 // $data = json_decode($message['lua_command'], true);
                                                 
                                                 // if ($message['lua_command'] === null){
