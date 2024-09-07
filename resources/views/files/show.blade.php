@@ -1400,6 +1400,7 @@ margin-bottom: 10px !important;
                                     <form action="{{route('set-new-request-comment')}}" method="POST">
                                       @csrf
                                       <input type="hidden" name="new_request_id" value="{{$message['id']}}">
+                                      <label>Comment</label>
                                       <textarea class="m-t-10" name="new_request_comment"></textarea>
                                       <br>
                                       <input type="submit" class="btn-sm btn-cons btn-success m-t-10" value="Update">
@@ -3501,6 +3502,7 @@ margin-bottom: 10px !important;
                                   <form action="{{route('set-new-request-comment')}}" method="POST">
                                     @csrf
                                     <input type="hidden" name="new_request_id" value="{{$message['id']}}">
+                                    <label>Comment</label>
                                     <textarea class="m-t-10" name="new_request_comment"></textarea>
                                     <br>
                                     <input type="submit" class="btn-sm btn-cons btn-success m-t-10" value="Update">
