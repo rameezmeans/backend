@@ -1403,8 +1403,8 @@ margin-bottom: 10px !important;
                                       <label class="m-t-10">Comment</label>
                                       <br>
                                       <textarea name="comment">
-                                        @if(\App\Models\NewRequestComment::where('id', $message['id'])->first() != NULL)
-                                        {{\App\Models\NewRequestComment::where('id', $message['id'])->first()->comment}}
+                                        @if(\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first() != NULL)
+                                        {{\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first()->comment}}
                                         @endif
                                       </textarea>
                                       <br>
