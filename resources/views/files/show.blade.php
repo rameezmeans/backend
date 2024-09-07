@@ -1402,11 +1402,7 @@ margin-bottom: 10px !important;
                                       <input type="hidden" name="new_request_id" value="{{$message['id']}}">
                                       <label class="m-t-10">Comment</label>
                                       <br>
-                                      <textarea name="comment" cols="10">
-                                        @if(\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first() != NULL)
-                                        {{\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first()->comment}}
-                                        @endif
-                                      </textarea>
+                                      <textarea name="comment" style="width: 500px;">@if(\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first() != NULL){{\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first()->comment}}@endif</textarea>
                                       <br>
                                       <input type="submit" class="btn-sm btn-cons btn-success m-t-10" value="Update">
                                     </form>
@@ -3510,11 +3506,7 @@ margin-bottom: 10px !important;
                                     <input type="hidden" name="new_request_id" value="{{$message['id']}}">
                                     <label class="m-t-10">Comment</label>
                                     <br>
-                                    <textarea name="comment" cols="10">
-                                      @if(\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first() != NULL)
-                                      {{\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first()->comment}}
-                                      @endif
-                                    </textarea>
+                                    <textarea name="comment" style="width: 500px;">@if(\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first() != NULL){{\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first()->comment}}@endif</textarea>
                                     <br>
                                     <input type="submit" class="btn-sm btn-cons btn-success m-t-10" value="Update">
                                   </form>
