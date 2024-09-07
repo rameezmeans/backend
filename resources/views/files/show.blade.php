@@ -1394,6 +1394,11 @@ margin-bottom: 10px !important;
                                     </div>
                                   @endif
                                   <span class="btn-sm btn-cons btn-success m-t-50">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </spam>
+
+                                    <div class="full-width">
+                                      <textarea name="new_request_comment"></textarea>
+                                    </div>
+                                    
                             </div>
                               </div>
 
@@ -3483,6 +3488,11 @@ margin-bottom: 10px !important;
                                   @endif
                                 <div class="clearfix"></div>
                                 <span class="btn-sm btn-cons btn-success m-t-50">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>
+                                
+                                <div class="full-width">
+                                  <textarea name="new_request_comment"></textarea>
+                                </div>
+
                             </div>
         
                         @endif
