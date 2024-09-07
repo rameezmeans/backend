@@ -94,6 +94,8 @@ class FilesController extends Controller
             }
         }
 
+        return Redirect::back()->withErrors(['success' => 'Comments added']);
+
     }
 
     public function deleteACMFile(Request $request){
