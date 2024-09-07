@@ -78,7 +78,7 @@ class FilesController extends Controller
     
     public function setNewRequestComment(Request $request){
 
-        if($request->new_request_comment != NULL){
+        if($request->comment != NULL){
             $existingRecord = NewRequestComment::where('id', $request->new_request_id)->first();
 
             if($existingRecord == NULL){
