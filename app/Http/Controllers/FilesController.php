@@ -83,12 +83,12 @@ class FilesController extends Controller
 
             if($existingRecord == NULL){
                 $newRecord = new NewRequestComment();
-                $newRecord->new_request_comment = $request->new_request_comment;
+                $newRecord->comment = $request->comment;
                 $newRecord->new_request_id = $request->new_request_id;
                 $newRecord->save();
             }
             else{
-                $existingRecord->new_request_comment = $request->new_request_comment;
+                $existingRecord->comment = $request->comment;
                 $existingRecord->new_request_id = $request->new_request_id;
                 $existingRecord->save();
             }
