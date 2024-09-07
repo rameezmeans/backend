@@ -1395,14 +1395,15 @@ margin-bottom: 10px !important;
                                   @endif
                                   <span class="btn-sm btn-cons btn-success m-t-50">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>
 
-                                    <div class="full-width">
+                                  <div class="full-width">
 
-                                      <form action="{{route('set-new-request-comment')}}" method="POST">
-                                        @csrf
-                                        <textarea name="new_request_comment"></textarea>
-                                        <input type="submit" class="btn-sm btn-cons btn-success m-t-50">
-                                      </form>
-                                    </div>
+                                    <form action="{{route('set-new-request-comment')}}" method="POST">
+                                      @csrf
+                                      <input type="hidden" name="new_request_id" value="{{$message['request_file']}}">
+                                      <textarea name="new_request_comment"></textarea>
+                                      <input type="submit" class="btn-sm btn-cons btn-success m-t-40">
+                                    </form>
+                                  </div>
 
                             </div>
                               </div>
@@ -3498,8 +3499,9 @@ margin-bottom: 10px !important;
 
                                   <form action="{{route('set-new-request-comment')}}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="new_request_id" value="{{$message['request_file']}}">
                                     <textarea name="new_request_comment"></textarea>
-                                    <input type="submit" class="btn-sm btn-cons btn-success m-t-50">
+                                    <input type="submit" class="btn-sm btn-cons btn-success m-t-40">
                                   </form>
                                 </div>
 
