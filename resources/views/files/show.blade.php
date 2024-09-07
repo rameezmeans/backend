@@ -1396,9 +1396,14 @@ margin-bottom: 10px !important;
                                   <span class="btn-sm btn-cons btn-success m-t-50">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </spam>
 
                                     <div class="full-width">
-                                      <textarea name="new_request_comment"></textarea>
+
+                                      <form action="{{route('set-new-request-comment')}}" method="POST">
+                                        @csrf
+                                        <textarea name="new_request_comment"></textarea>
+                                        <input type="submit" class="btn-sm btn-cons btn-success m-t-50">
+                                      </form>
                                     </div>
-                                    
+
                             </div>
                               </div>
 
@@ -3490,7 +3495,12 @@ margin-bottom: 10px !important;
                                 <span class="btn-sm btn-cons btn-success m-t-50">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>
                                 
                                 <div class="full-width">
-                                  <textarea name="new_request_comment"></textarea>
+
+                                  <form action="{{route('set-new-request-comment')}}" method="POST">
+                                    @csrf
+                                    <textarea name="new_request_comment"></textarea>
+                                    <input type="submit" class="btn-sm btn-cons btn-success m-t-50">
+                                  </form>
                                 </div>
 
                             </div>

@@ -638,6 +638,8 @@ Route::post('decline_show_file', [App\Http\Controllers\FilesController::class, '
 Route::post('enable_download', [App\Http\Controllers\FilesController::class, 'enableDownload'])->name('enable-download');
 Route::post('decline_comments', [App\Http\Controllers\FilesController::class, 'declineComments'])->name('decline-comments');
 
+Route::post('set_new_request_comment', [App\Http\Controllers\FilesController::class, 'setNewRequestComment'])->name('set-new-request-comment');
+
 Route::get('original_files', [App\Http\Controllers\OriginalFilesController::class, 'index'])->name('original-files');
 // Route::get('original_files_live', [App\Http\Controllers\OriginalFilesController::class, 'live'])->name('original-files-live');
 Route::get('filter_original_files', [App\Http\Controllers\OriginalFilesController::class, 'filterOriginalFiles'])->name('filter-original-files');
