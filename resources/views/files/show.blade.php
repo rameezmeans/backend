@@ -1402,7 +1402,7 @@ margin-bottom: 10px !important;
                                       <input type="hidden" name="new_request_id" value="{{$message['id']}}">
                                       <label class="m-t-10">Comment</label>
                                       <br>
-                                      <textarea name="comment" rows="10">
+                                      <textarea name="comment" cols="10">
                                         @if(\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first() != NULL)
                                         {{\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first()->comment}}
                                         @endif
@@ -3510,7 +3510,7 @@ margin-bottom: 10px !important;
                                     <input type="hidden" name="new_request_id" value="{{$message['id']}}">
                                     <label class="m-t-10">Comment</label>
                                     <br>
-                                    <textarea name="comment" rows="10">
+                                    <textarea name="comment" cols="10">
                                       @if(\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first() != NULL)
                                       {{\App\Models\NewRequestComment::where('new_request_id', $message['id'])->first()->comment}}
                                       @endif
