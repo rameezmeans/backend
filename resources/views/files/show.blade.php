@@ -1402,10 +1402,15 @@ margin-bottom: 10px !important;
                                       <input type="hidden" name="new_request_id" value="{{$message['id']}}">
                                       <label class="m-t-10">Comment</label>
                                       <br>
-                                      <textarea name="new_request_comment"></textarea>
+                                      <textarea name="new_request_comment">
+                                        @if(\App\Models\NewRequestComment::where('id', $message['id'])->first() != NULL)
+                                        {{\App\Models\NewRequestComment::where('id', $message['id'])->first()->comment}}
+                                        @endif
+                                      </textarea>
                                       <br>
                                       <input type="submit" class="btn-sm btn-cons btn-success m-t-10" value="Update">
                                     </form>
+                                    
                                   </div>
 
                             </div>
@@ -3505,7 +3510,11 @@ margin-bottom: 10px !important;
                                     <input type="hidden" name="new_request_id" value="{{$message['id']}}">
                                     <label class="m-t-10">Comment</label>
                                     <br>
-                                    <textarea name="new_request_comment"></textarea>
+                                    <textarea name="new_request_comment">
+                                      @if(\App\Models\NewRequestComment::where('id', $message['id'])->first() != NULL)
+                                      {{\App\Models\NewRequestComment::where('id', $message['id'])->first()->comment}}
+                                      @endif
+                                    </textarea>
                                     <br>
                                     <input type="submit" class="btn-sm btn-cons btn-success m-t-10" value="Update">
                                   </form>

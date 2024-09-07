@@ -29,6 +29,7 @@ use App\Models\FileUrl;
 use App\Models\Key;
 use App\Models\Log;
 use App\Models\MagicEncryptedFile;
+use App\Models\NewRequestComment;
 use App\Models\ProcessedFile;
 use App\Models\ProcessingSoftware;
 use App\Models\RoleUser;
@@ -76,8 +77,22 @@ class FilesController extends Controller
     }
     
     public function setNewRequestComment(Request $request){
-        
-        dd($request->all());
+
+        if($request->new_request_comment != NULL){
+            $existingRecord = NewRequestComment::where('id', $request->new_request_id)->first();
+
+            if($existingRecord == NULL){
+                $newRecord = new NewRequestComment();
+                $newRecord->new_request_comment = $request->new_request_comment;
+                $newRecord->new_request_id = $request->new_request_id;
+                $newRecord->save();
+            }
+            else{
+                $existingRecord->new_request_comment = $request->new_request_comment;
+                $existingRecord->new_request_id = $request->new_request_id;
+                $existingRecord->save();
+            }
+        }
 
     }
 
