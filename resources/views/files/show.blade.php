@@ -1393,7 +1393,7 @@ margin-bottom: 10px !important;
                                       </a>
                                     </div>
                                   @endif
-                                  <span class="btn-sm btn-cons btn-success m-t-50">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </spam>
+                                  <span class="btn-sm btn-cons btn-success m-t-50">{{ date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>
 
                                     <div class="full-width">
 
