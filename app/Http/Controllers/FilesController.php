@@ -78,8 +78,10 @@ class FilesController extends Controller
     
     public function setNewRequestComment(Request $request){
 
+        $existingRecord = NewRequestComment::where('new_request_id', $request->new_request_id)->first();
+
         if($request->comment != NULL){
-            $existingRecord = NewRequestComment::where('new_request_id', $request->new_request_id)->first();
+            
 
             if($existingRecord == NULL){
                 $newRecord = new NewRequestComment();
@@ -92,6 +94,11 @@ class FilesController extends Controller
                 $existingRecord->new_request_id = $request->new_request_id;
                 $existingRecord->save();
             }
+        }
+        else{
+            $existingRecord->comment = $request->comment;
+            $existingRecord->new_request_id = $request->new_request_id;
+            $existingRecord->save();
         }
 
         return Redirect::back()->withErrors(['success' => 'Comments added']);
