@@ -329,6 +329,14 @@
                         <option @if(isset($service) && in_array('agri', $commentsVehicleTypes)) selected @endif value="agri">Agricultural</option>
                       </select>
                     </div>
+
+                    <div class="form-group form-group-default">
+                      
+                    <div class="checkbox check-success checkbox-circle">
+                      <input name="mandatory" @if(isset($service) && $service->mandatory == 1) checked @endif type="checkbox" id="checkbox1">
+                      <label for="checkbox1">Comment is Mandatory</label>
+                    </div>
+                    </div>
                     
                     <button class="btn btn-success btn-cons m-b-10 m-t-30" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Set For Customers Comments</span></button>
                   @endif
