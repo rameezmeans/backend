@@ -500,6 +500,16 @@ class ServicesController extends Controller
             $service->customers_comments_active = 0;
         }
 
+        if(isset($request->mandatory)){
+            if($request->mandatory == 'on'){
+                $service->mandatory = 1;
+
+            }
+        }
+        else{
+            $service->mandatory = 0;
+        }
+
         $service->customers_comments_placeholder_text = $request->customers_comments_placeholder_text;
         $service->customers_comments_vehicle_type = implode(',',$request->customers_comments_vehicle_type);
         $service->save();
