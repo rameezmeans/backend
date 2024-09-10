@@ -4874,8 +4874,8 @@ margin-bottom: 10px !important;
         <div class="modal-header clearfix text-left">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
           </button>
-          <h5>Software Processing <span class="semi-bold">Information and Uploading File in next step.</span></h5>
-          <p class="p-b-10">You need to tell the system about Softwares you used to process the file before uploading the file itself.</p>
+          <h5>Software Processing <span class="semi-bold">Edit Information about Processing Software.</span></h5>
+          <p class="p-b-10">If You have entered the wrong information about Processing Software. Please edit it..</p>
         </div>
         <div class="modal-body">
           <form role="form" id="softwareForm-{{$file->id}}">
