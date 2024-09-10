@@ -380,13 +380,10 @@ class FilesController extends Controller
         $fileSoftwares = FileReplySoftwareService::where('file_id', $request->file_id)->get();
 
         $count = 1;
-
-        // dd($psArray);
-
         $strServices = '';
 
-        foreach($fileSoftwares as $fs){
-            $strServices .= '<option id='.key($psArray).'>'.$psArray.'</option>';
+        foreach($psArray as $k=>$ps){
+            $strServices .= '<option id='.$k.'>'.$ps.'</option>';
         }
 
         dd($strServices);
