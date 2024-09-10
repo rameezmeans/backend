@@ -385,7 +385,9 @@ class FilesController extends Controller
         foreach($fileSoftwares as $fs){
 
             foreach($psArray as $k=>$ps){
-                
+
+                dd($fs);
+
                 if($fs->id == $k){
                     $strServices .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
                 }
