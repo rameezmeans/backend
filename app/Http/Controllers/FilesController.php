@@ -383,7 +383,7 @@ class FilesController extends Controller
         $strServices = '';
 
         foreach($psArray as $k=>$ps){
-            $strServices .= '<option id='.$k.'>'.$ps.'</option>';
+            $strServices .= '<option value="'.$k.'">'.$ps.'</option>';
         }
 
         dd($strServices);
