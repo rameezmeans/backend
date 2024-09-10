@@ -3661,6 +3661,10 @@ margin-bottom: 10px !important;
 
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Proposed Stage and Options</h5>
+
+                        @if($file->status == 'completed')
+                          <button class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}">Edit Processiong Softwares</button>
+                        @endif
                         
                           <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                             <p class="pull-left">Stage</p>
