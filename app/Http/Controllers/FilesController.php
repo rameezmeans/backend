@@ -381,11 +381,15 @@ class FilesController extends Controller
 
         $count = 1;
 
-        dd($psArray);
+        // dd($psArray);
+
+        $strServices = '';
 
         foreach($fileSoftwares as $fs){
-            $fs;
+            $strServices .= '<option id='.key($psArray).'>'.$psArray.'</option>';
         }
+
+        dd($strServices);
 
         return response('file declined', 200);
         
