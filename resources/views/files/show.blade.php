@@ -4907,7 +4907,7 @@ margin-bottom: 10px !important;
                     <div class="form-group form-group-default">
                       <label><b>Option:</b> {{$optionInner->name}}</label>
                       <label class="m-t-10">Processing Software</label>
-                      <input type="hidden" name="service_id" value="{{$optionInner->id}}">
+                      <input type="hidden" name="option_id[]" value="{{$optionInner->id}}">
                       <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="processing-software-edit-option-{{$optionInner->id}}">
                         
                       </select>
