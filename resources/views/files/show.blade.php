@@ -5903,11 +5903,24 @@ $('#softwareOptionsModal-'+file_id).modal('show');
 
 $(document).on('click', '.btn-show-software-edit-form', function(e){
 
-let file_id = $(this).data('file_id');
+  let file_id = $(this).data('file_id');
 
-console.log(file_id);
+  console.log(file_id);
 
-$('#softwareOptionsEditModal').modal('show');
+  $.ajax({
+      url: "/fill_null_software_records",
+      type: "POST",
+      headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+      data: {
+          'file_id': file_id
+      },
+      success: function(d) {
+        console.log(d);
+        $('#softwareOptionsEditModal').modal('show');
+      }
+  });
+
+  
 
 });
 

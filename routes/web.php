@@ -638,6 +638,7 @@ Route::post('decline_show_file', [App\Http\Controllers\FilesController::class, '
 Route::post('enable_download', [App\Http\Controllers\FilesController::class, 'enableDownload'])->name('enable-download');
 Route::post('decline_comments', [App\Http\Controllers\FilesController::class, 'declineComments'])->name('decline-comments');
 Route::post('update_processing_software', [App\Http\Controllers\FilesController::class, 'updateProcessingSoftware'])->name('update-processing-software');
+Route::post('fill_null_software_records', [App\Http\Controllers\FilesController::class, 'fillProcessingSoftware'])->name('fill-null-software-records');
 
 Route::post('set_new_request_comment', [App\Http\Controllers\FilesController::class, 'setNewRequestComment'])->name('set-new-request-comment');
 
