@@ -367,6 +367,10 @@ class FilesController extends Controller
 
     public function fillProcessingSoftware(Request $request){
 
+        $processingSoftwares = ProcessingSoftware::all();
+
+        dd($processingSoftwares);
+        
         return response('file declined', 200);
         
     }
