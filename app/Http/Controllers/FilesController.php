@@ -368,13 +368,15 @@ class FilesController extends Controller
     public function fillProcessingSoftware(Request $request){
 
         $processingSoftwares = ProcessingSoftware::all();
-        
+
         $psArray = [];
         foreach($processingSoftwares as $ps){
             $psArray []= $ps->name;
         }
 
-        dd($psArray);
+        $fileSoftwares = FileReplySoftwareService::where('file_id', $request->file_id)->get();
+
+        dd($fileSoftwares);
 
         return response('file declined', 200);
         
