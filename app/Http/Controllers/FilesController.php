@@ -371,12 +371,21 @@ class FilesController extends Controller
 
         $psArray = [];
         foreach($processingSoftwares as $ps){
-            $psArray []= $ps->name;
+            $psArray [$ps->id]= $ps->name;
         }
+
+        $allNulls = FileReplySoftwareService::where('file_id', $request->file_id)
+        ->whereNull('reply_id')->delete();
 
         $fileSoftwares = FileReplySoftwareService::where('file_id', $request->file_id)->get();
 
-        dd($fileSoftwares);
+        $count = 1;
+
+        dd($psArray);
+
+        foreach($fileSoftwares as $fs){
+            $fs;
+        }
 
         return response('file declined', 200);
         
