@@ -4875,10 +4875,10 @@ margin-bottom: 10px !important;
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
           </button>
           <h5>Software Processing <span class="semi-bold">Edit Information about Processing Software.</span></h5>
-          <p class="p-b-10">If You have entered the wrong information about Processing Software. Please edit it..</p>
+          <p class="p-b-10">If You have entered the wrong information about Processing Software. Please edit it.</p>
         </div>
         <div class="modal-body">
-          <form role="form" id="softwareForm-{{$file->id}}">
+          <form role="form" id="" method="POST" action="{{route('update-processing-software')}}">
             <input type="hidden" name="file_id" value="{{$file->id}}">
             <div class="form-group-attached">
               <div class="row">
@@ -4889,7 +4889,7 @@ margin-bottom: 10px !important;
                       <label><b>Stage:</b> {{$stage->name}}</label>
                       <input type="hidden" name="service_id" value="{{$stage->id}}">
                       <label class="m-t-10">Processing Software</label>
-                      <select class="full-width" data-placeholder="Select Country" data-init-plugin="select2" name="processing-software-{{$stage->id}}">
+                      <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="processing-software-stage-edit">
                         
                       </select>
                     </div>
@@ -4905,7 +4905,7 @@ margin-bottom: 10px !important;
                       <label><b>Option:</b> {{$optionInner->name}}</label>
                       <label class="m-t-10">Processing Software</label>
                       <input type="hidden" name="service_id" value="{{$optionInner->id}}">
-                      <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="processing-software-{{$optionInner->id}}">
+                      <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="processing-software-edit-option-{{$optionInner->id}}">
                         
                       </select>
                     </div>
@@ -4918,7 +4918,7 @@ margin-bottom: 10px !important;
                 </div>
 
                 <div class="col-md-4 m-t-10 sm-m-t-10">
-                  <button type="button" class="btn btn-success btn-block m-t-5 show-file-upload-section" data-file_id="{{$file->id}}">Submit</button>
+                  <button type="submit" class="btn btn-success btn-block m-t-5 show-file-upload-section" data-file_id="{{$file->id}}">Submit</button>
                 </div>
 
               </div>
