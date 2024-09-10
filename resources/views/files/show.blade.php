@@ -1126,7 +1126,7 @@ margin-bottom: 10px !important;
                             <!-- Tab panes -->
     
                             <div class="tab-content">
-                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 300px;">
+                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 500px;">
 
                           @php
                             if(isset($message['request_file'])){
@@ -3311,7 +3311,7 @@ margin-bottom: 10px !important;
                             <!-- Tab panes -->
     
                             <div class="tab-content">
-                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 300px;">
+                              <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 500px;">
 
 
                               @if(isset($message['request_file']))
