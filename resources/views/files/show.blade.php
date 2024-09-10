@@ -4891,9 +4891,7 @@ margin-bottom: 10px !important;
                       <input type="hidden" name="service_id" value="{{$stage->id}}">
                       <label class="m-t-10">Processing Software</label>
                       <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="processing-software-stage-edit">
-                        @foreach($prossingSoftwares as $ps)  
-                          <option value="{{$ps->id}}">{{$ps->name}}</option>
-                        @endforeach
+                        
                       </select>
                     </div>
                   </div>
