@@ -4879,6 +4879,7 @@ margin-bottom: 10px !important;
         </div>
         <div class="modal-body">
           <form role="form" id="" method="POST" action="{{route('update-processing-software')}}">
+            @csrf
             <input type="hidden" name="file_id" value="{{$file->id}}">
             <div class="form-group-attached">
               <div class="row">
