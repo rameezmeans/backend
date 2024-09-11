@@ -456,12 +456,15 @@ class FilesController extends Controller
         $delete = FileReplySoftwareService::where('file_id', $request->file_id)
         ->where('reply_id', $request->reply_id)->delete();
 
-        $new = new FileReplySoftwareService();
-        $new->file_id = $request->file_id;
-        $new->reply_id = $request->reply_id;
-        $new->service_id = $request->service_id;
-        $new->software_id = $request->stage_software;
-        $new->save();
+        if($request->service_id != NULL){
+
+            $new = new FileReplySoftwareService();
+            $new->file_id = $request->file_id;
+            $new->reply_id = $request->reply_id;
+            $new->service_id = $request->service_id;
+            $new->software_id = $request->stage_software;
+            $new->save();
+        }
 
         for( $i=0; $i < count($request->option_id); $i++ ){
 
