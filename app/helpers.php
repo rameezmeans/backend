@@ -338,9 +338,9 @@ if(!function_exists('count_of_files_per_country')){
         ->where('files.front_end_id', $frontendID)
         ->select('files.id')
         ->groupBy('files.id')
-        ->get();
+        ->count();
 
-        dd($count);
+        // dd($count);
 
         return $count;
 
