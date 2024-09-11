@@ -591,9 +591,7 @@ margin-bottom: 10px !important;
         
                       <h5 class="m-t-40">Options And Credits</h5>
 
-                      @if($file->status == 'completed')
-                          <button class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}">Edit Processiong Softwares</button>
-                      @endif
+                      
 
                       @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
 
@@ -1133,6 +1131,10 @@ margin-bottom: 10px !important;
     
                             <div class="tab-content">
                               <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 100%;">
+
+                                @if($file->status == 'completed')
+                                    <button class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
+                                @endif
 
                           @php
                             if(isset($message['request_file'])){
@@ -2961,10 +2963,6 @@ margin-bottom: 10px !important;
         
                       <h5 class="m-t-40">Options And Credits</h5>
 
-                      @if($file->status == 'completed')
-                          <button class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}">Edit Processiong Softwares</button>
-                        @endif
-
                       @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
 
 
@@ -3323,7 +3321,10 @@ margin-bottom: 10px !important;
                             <div class="tab-content">
                               <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 100%;">
 
-
+                                @if($file->status == 'completed')
+                                    <button class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
+                                @endif
+                                
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
                             <div class="p-l-20 p-r-20 p-b-10 p-t-10">
