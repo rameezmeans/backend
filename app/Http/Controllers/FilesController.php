@@ -428,7 +428,28 @@ class FilesController extends Controller
 
     public function updateProcessingSoftware(Request $request){
 
-        dd($request->all());
+        $delete = FileReplySoftwareService::where('file_id', $request->file_id)
+        ->where('reply_id', $request->reply_id)->delete();
+
+        $new = new FileReplySoftwareService();
+        $new->file_id = $request->file_id;
+        $new->reply_id = $request->reply_id;
+        $new->service_id = $request->service_id;
+        $new->software_id = $request->stage_software;
+        $new->save();
+
+        for( $i=0; $i < count($request->option_id); $i++ ){
+
+            $new = new FileReplySoftwareService();
+            $new->file_id = $request->file_id;
+            $new->reply_id = $request->reply_id;
+            $new->service_id = $request->option_id[$i];
+            $new->software_id = $request->option_softwares[$i];
+            $new->save();
+
+        }
+
+        return redirect()->back()->with(['success' => 'Options and Servies are updated!']);
 
     }
 
