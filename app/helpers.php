@@ -340,7 +340,7 @@ if(!function_exists('count_of_files_per_country')){
         ->groupBy('files.id')
         ->get();
 
-        dd($count);
+        dd(count($count));
 
         return $count;
 
