@@ -4762,7 +4762,7 @@ margin-bottom: 10px !important;
                   </div>
                   <div class="col-md-2">
                     <div class="checkbox check-success">
-                      <input type="checkbox" name="exclude_stage" value="{{$stage->id}}" id="exclude_stage">
+                      <input type="checkbox" name="exclude_service[]" value="{{$stage->id}}" id="exclude_stage">
                       <label for="exclude_stage">Exclude</label>
                     </div>
                   </div>
@@ -4772,7 +4772,7 @@ margin-bottom: 10px !important;
                   @foreach($file->options_services()->get() as $option)
                     
                   @php $optionInner = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
-                  <div class="col-md-12 m-t-10">
+                  <div class="col-md-10 m-t-10">
                     <div class="form-group form-group-default">
                       <label><b>Option:</b> {{$optionInner->name}}</label>
                       <label class="m-t-10">Processing Software</label>
@@ -4782,6 +4782,12 @@ margin-bottom: 10px !important;
                           <option value="{{$ps->id}}">{{$ps->name}}</option>
                         @endforeach
                       </select>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="checkbox check-success">
+                      <input type="checkbox" name="exclude_service[]" value="{{$optionInner->id}}" id="exclude_option_{{$optionInner->id}}">
+                      <label for="exclude_option_{{$optionInner->id}}">Exclude</label>
                     </div>
                   </div>
                   @endforeach
@@ -5052,7 +5058,7 @@ margin-bottom: 10px !important;
                   </div>
                   <div class="col-md-2">
                     <div class="checkbox check-success">
-                      <input type="checkbox" name="exclude_stage" value="{{$stage->id}}" id="exclude_stage">
+                      <input type="checkbox" name="exclude_service[]" value="{{$stage->id}}" id="exclude_stage">
                       <label for="exclude_stage">Exclude</label>
                     </div>
                   </div>
@@ -5062,7 +5068,7 @@ margin-bottom: 10px !important;
                     @foreach($o_file->options_services()->get() as $option)
                       
                     @php $optionInner = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
-                    <div class="col-md-12 m-t-10">
+                    <div class="col-md-10 m-t-10">
                       <div class="form-group form-group-default">
                         <label><b>Option:</b> @if($optionInner != NULL){{$optionInner->name}}@else Option is not available. @endif</label>
                         <label class="m-t-10">Processing Software</label>
@@ -5074,6 +5080,12 @@ margin-bottom: 10px !important;
                           @endforeach
                         </select>
                         @endif
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="checkbox check-success">
+                        <input type="checkbox" name="exclude_service[]" value="{{$optionInner->id}}" id="exclude_option_{{$optionInner->id}}">
+                        <label for="exclude_option_{{$optionInner->id}}">Exclude</label>
                       </div>
                     </div>
                     @endforeach
