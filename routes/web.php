@@ -92,13 +92,15 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 Route::get('/tasks', function () {
 
-    $files = File::all();
+    abort(404);
 
-    foreach($files as $file){
-        $user = User::findOrFail($file->user_id);
-        $file->username = $user->name;
-        $file->save();
-    }
+    // $files = File::all();
+
+    // foreach($files as $file){
+    //     $user = User::findOrFail($file->user_id);
+    //     $file->username = $user->name;
+    //     $file->save();
+    // }
 
     // $excel = Excel::load(public_path('codes.xlsx'), function($reader) {})->get();
     // dd($excel);
