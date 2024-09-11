@@ -403,6 +403,25 @@ class FilesController extends Controller
                         }
                     }
                 }
+                else{
+
+                    $temp = '';
+
+                foreach($psArray as $k=>$ps){
+
+                    if($fs->software_id == $k){
+                        $temp .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
+                        
+                    }
+                    else{
+                        $temp .= '<option value="'.$k.'">'.$ps.'</option>';
+                    }
+
+                    $opArr [$fs->service_id]= $temp;
+                }
+
+
+                }
 
             }
             else{
