@@ -4909,7 +4909,7 @@ margin-bottom: 10px !important;
                         <label class="m-t-10">Processing Software</label>
                         <input type="hidden" name="option_id[]" value="{{$optionInner->id}}">
 
-                      <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="option_softwares[]" name="processing-software-edit-option-{{$optionInner->id}}">
+                      <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="option_softwares[]" id="processing-software-edit-option-{{$optionInner->id}}">
                         
                       </select>
 
