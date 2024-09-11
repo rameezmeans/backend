@@ -375,9 +375,12 @@ class FilesController extends Controller
         }
 
         $allNulls = FileReplySoftwareService::where('file_id', $request->file_id)
+        ->where('new_request_id', $request->new_request_id)
         ->whereNull('reply_id')->delete();
 
-        $fileSoftwares = FileReplySoftwareService::where('file_id', $request->file_id)->get();
+        $fileSoftwares = FileReplySoftwareService::where('file_id', $request->file_id)
+        ->where('new_request_id', $request->new_request_id)
+        ->get();
 
         $count = 1;
         $strStage = '';
@@ -419,7 +422,7 @@ class FilesController extends Controller
             $count++;
 
         }
-        
+
         return response(['strStage' => $strStage, 'opArr' => $opArr], 200);
         
     }

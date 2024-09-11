@@ -3324,7 +3324,7 @@ margin-bottom: 10px !important;
                                 @if($file->status == 'completed')
                                     <button class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
                                 @endif
-                                
+
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
                             <div class="p-l-20 p-r-20 p-b-10 p-t-10">
@@ -5911,6 +5911,7 @@ $('#softwareOptionsModal-'+file_id).modal('show');
 $(document).on('click', '.btn-show-software-edit-form', function(e){
 
   let file_id = $(this).data('file_id');
+  let new_request_id = $(this).data('new_request_id');
 
   console.log(file_id);
 
@@ -5919,7 +5920,8 @@ $(document).on('click', '.btn-show-software-edit-form', function(e){
       type: "POST",
       headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
       data: {
-          'file_id': file_id
+          'file_id': file_id,
+          'new_request_id': new_request_id
       },
       success: function(d) {
 
