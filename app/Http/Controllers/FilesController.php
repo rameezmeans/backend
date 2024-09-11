@@ -380,23 +380,42 @@ class FilesController extends Controller
         $fileSoftwares = FileReplySoftwareService::where('file_id', $request->file_id)->get();
 
         $count = 1;
-        $strServices = '';
+        $strStage = '';
+        $strOptions = '';
 
         foreach($fileSoftwares as $fs){
 
-            foreach($psArray as $k=>$ps){
-                
-                if($fs->software_id == $k){
-                    $strServices .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
-                }
-                else{
-                    $strServices .= '<option value="'.$k.'">'.$ps.'</option>';
+            if($count == 1){
+
+                foreach($psArray as $k=>$ps){
+
+                    if($fs->software_id == $k){
+                        $strStage .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
+                    }
+                    else{
+                        $strStage .= '<option value="'.$k.'">'.$ps.'</option>';
+                    }
                 }
             }
+            else{
+
+                foreach($psArray as $k=>$ps){
+
+                    if($fs->software_id == $k){
+                        $strOptions .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
+                    }
+                    else{
+                        $strOptions .= '<option value="'.$k.'">'.$ps.'</option>';
+                    }
+                }
+
+            }
+
+            $count++;
 
         }
 
-        dd($strServices);
+        dd($strStage);
 
         return response('file declined', 200);
         
