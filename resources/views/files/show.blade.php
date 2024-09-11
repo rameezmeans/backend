@@ -4881,7 +4881,8 @@ margin-bottom: 10px !important;
         <div class="modal-body">
           <form role="form" id="" method="POST" action="{{route('update-processing-software')}}">
             @csrf
-            <input type="hidden" name="file_id" value="{{$file->id}}">
+            <input type="hidden" name="file_id" value="" id="edit_software_file_id">
+            <input type="hidden" name="reply_id" value="" id="edit_software_new_request_id">
             <div class="form-group-attached">
               <div class="row">
                 @php $stage = \App\Models\Service::FindOrFail($file->stage_services->service_id) @endphp
@@ -5925,12 +5926,12 @@ $(document).on('click', '.btn-show-software-edit-form', function(e){
       },
       success: function(d) {
 
-        console.log(d);
-
+        $('#edit_software_file_id').html(file_id);
+        $('#edit_software_new_request_id').html(new_request_id);
         $('#processing-software-stage-edit').html(d.strStage);
 
         $.each(d.opArr, function(index, value) { 
-          console.log(index);
+          
           $('#processing-software-edit-option-'+index).html(value);
         });
 
