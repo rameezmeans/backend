@@ -5921,12 +5921,13 @@ $(document).on('click', '.btn-show-software-edit-form', function(e){
           'file_id': file_id
       },
       success: function(d) {
-        
+
         console.log(d);
 
         $('#processing-software-stage-edit').html(d.strStage);
 
         $.each(d.opArr, function(index, value) { 
+          
           $('#processing-software-edit-option-'+index).html(value);
         });
 
