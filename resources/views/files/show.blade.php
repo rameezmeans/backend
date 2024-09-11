@@ -4905,12 +4905,18 @@ margin-bottom: 10px !important;
                     <div class="form-group form-group-default">
                       @if($optionInner != NULL)
                         <label><b>Option:</b> {{$optionInner->name}}</label>
-                      @endif
-                      <label class="m-t-10">Processing Software</label>
-                      <input type="hidden" name="option_id[]" value="{{$optionInner->id}}">
+                      
+                        <label class="m-t-10">Processing Software</label>
+                        <input type="hidden" name="option_id[]" value="{{$optionInner->id}}">
+
+                      
+
                       <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="processing-software-edit-option-{{$optionInner->id}}">
                         
                       </select>
+
+                      @endif
+                      
                     </div>
                   </div>
                   @endforeach
