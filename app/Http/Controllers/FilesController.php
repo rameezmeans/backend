@@ -176,7 +176,7 @@ class FilesController extends Controller
     public function addSoftwares(Request $request){
 
         $data = json_decode($request->form_data);
-        
+
         $fileID = NULL;
         $finalArray = [];
         $exclude = [];
@@ -207,15 +207,15 @@ class FilesController extends Controller
 
         }
 
-        dd($exclude);
-
         foreach($finalArray as $key => $value){
 
-            $newRecord = new FileReplySoftwareService();
-            $newRecord->file_id = $fileID;
-            $newRecord->service_id = $key;
-            $newRecord->software_id = $value;
-            $newRecord->save();
+            if (!in_array($key, $exclude)){
+                $newRecord = new FileReplySoftwareService();
+                $newRecord->file_id = $fileID;
+                $newRecord->service_id = $key;
+                $newRecord->software_id = $value;
+                $newRecord->save();
+            }
 
         }
 
