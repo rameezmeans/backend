@@ -5927,7 +5927,7 @@ $(document).on('click', '.btn-show-software-edit-form', function(e){
         $('#processing-software-stage-edit').html(d.strStage);
 
         $.each(d.opArr, function(index, value) { 
-          
+          console.log(index);
           $('#processing-software-edit-option-'+index).html(value);
         });
 
