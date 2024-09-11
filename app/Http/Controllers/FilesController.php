@@ -176,13 +176,16 @@ class FilesController extends Controller
     public function addSoftwares(Request $request){
 
         $data = json_decode($request->form_data);
-
-        dd($data);
         
         $fileID = NULL;
         $finalArray = [];
+        $exclude = [];
 
         foreach($data as $d) {
+
+            if($d->name == 'exclude_service[]'){
+                $exclude []= $d->value;
+            }
             
             if($d->name == 'file_id'){
                 $fileID = $d->value;
@@ -203,6 +206,8 @@ class FilesController extends Controller
             }
 
         }
+
+        dd($exclude);
 
         foreach($finalArray as $key => $value){
 
