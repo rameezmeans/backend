@@ -389,15 +389,21 @@ class FilesController extends Controller
 
             if($count == 1){
 
-                foreach($psArray as $k=>$ps){
+                $service = Service::findOrFail($fs->service_id);
 
-                    if($fs->software_id == $k){
-                        $strStage .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
-                    }
-                    else{
-                        $strStage .= '<option value="'.$k.'">'.$ps.'</option>';
+                if($service->name != 'Stage 0'){
+
+                    foreach($psArray as $k=>$ps){
+
+                        if($fs->software_id == $k){
+                            $strStage .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
+                        }
+                        else{
+                            $strStage .= '<option value="'.$k.'">'.$ps.'</option>';
+                        }
                     }
                 }
+                
             }
             else{
 
