@@ -419,10 +419,8 @@ class FilesController extends Controller
             $count++;
 
         }
-
-        dd($opArr);
-
-        return response('file declined', 200);
+        
+        return response(['strStage' => $strStage, 'opArr' => $opArr], 200);
         
     }
 
