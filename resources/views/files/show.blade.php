@@ -4908,7 +4908,7 @@ margin-bottom: 10px !important;
                       
                         <label class="m-t-10">Processing Software</label>
                         <input type="hidden" name="option_id[]" value="{{$optionInner->id}}">
-                        
+
                       <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="option_softwares[]" name="processing-software-edit-option-{{$optionInner->id}}">
                         
                       </select>
@@ -5921,8 +5921,15 @@ $(document).on('click', '.btn-show-software-edit-form', function(e){
           'file_id': file_id
       },
       success: function(d) {
+        
         console.log(d);
+
         $('#processing-software-stage-edit').html(d.strStage);
+
+        $.each(d.opArr, function(index, value) { 
+          $('#processing-software-edit-option-'+index).html(value);
+        });
+
         $('#softwareOptionsEditModal').modal('show');
       }
   });
