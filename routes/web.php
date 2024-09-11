@@ -92,6 +92,14 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 Route::get('/tasks', function () {
 
+    $files = File::all();
+
+    foreach($files as $file){
+        $user = User::findOrFail($file->user_id);
+        $file->username = $user->name;
+        $file->save();
+    }
+
     // $excel = Excel::load(public_path('codes.xlsx'), function($reader) {})->get();
     // dd($excel);
 
@@ -104,7 +112,7 @@ Route::get('/tasks', function () {
 
     //     dd($creditsWithoutZohoID);
 
-    dd('test');
+    dd('usernames updated in files');
 
     // $groupsOSS = Group::where('name', 'like', '%' . 'OSS' . '%')->get();
     
