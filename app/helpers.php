@@ -11,6 +11,7 @@ use App\Models\Vehicle;
 use App\Models\EngineersPermission;
 use App\Models\FileReplySoftwareService;
 use Danielebarbaro\LaravelVatEuValidator\Facades\VatValidatorFacade as VatValidator;
+use Illuminate\Support\Facades\Auth;
 
 function fullescape($in)
 
@@ -330,9 +331,13 @@ if(!function_exists('code_to_country')){
 
 if(!function_exists('count_of_files_per_country')){
 
-    function count_of_files_per_country($country){
+    function count_of_files_per_country($country, $frontendID){
 
-        $count =  File::join('users','users.id', '=', 'files.user_id')->where('users.country', $country)->count();
+        $count =  File::join('users','users.id', '=', 'files.user_id')
+        ->where('users.country', $country)
+        ->where('users.front_end_id', $frontendID)
+        ->count();
+        
         return $count;
 
     }

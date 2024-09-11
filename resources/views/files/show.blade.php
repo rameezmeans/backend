@@ -308,7 +308,7 @@ margin-bottom: 10px !important;
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">
-                            <span class="label label-success">{{count_of_files_per_country($file->user->country)}}</span>
+                            <span class="label label-success">{{count_of_files_per_country($file->user->country, $file->user->front_end_id)}}</span>
                           </p>
                           <div class="pull-right">
                             <span class="">{{getFlags($file->user->country).' '.code_to_country($file->user->country)}}<span>
