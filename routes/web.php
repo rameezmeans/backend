@@ -49,7 +49,7 @@ use Twilio\Rest\Client;
 use SevenSpan\WhatsApp\WhatsApp;
 
 use Chatify\Facades\ChatifyMessenger as Chatify;
-use Maatwebsite\Excel\Facades\Excel;
+use Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,9 +92,9 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 Route::get('/tasks', function () {
 
-    $excel = Excel::load(public_path('codes.xlsx'), function($reader) {})->get();
-    dd($excel);
-    
+    // $excel = Excel::load(public_path('codes.xlsx'), function($reader) {})->get();
+    // dd($excel);
+
     // $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
     //     ->where('credits','>', 0)
     //     ->where('gifted', 0)

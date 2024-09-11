@@ -4748,7 +4748,7 @@ margin-bottom: 10px !important;
               <div class="row">
                 @php $stage = \App\Models\Service::FindOrFail($file->stage_services->service_id) @endphp
                 @if($stage->name != 'Stage 0')
-                  <div class="col-md-12">
+                  <div class="col-md-10">
                     <div class="form-group form-group-default">
                       <label><b>Stage:</b> {{$stage->name}}</label>
                       <input type="hidden" name="service_id" value="{{$stage->id}}">
@@ -4758,6 +4758,12 @@ margin-bottom: 10px !important;
                           <option value="{{$ps->id}}">{{$ps->name}}</option>
                         @endforeach
                       </select>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="checkbox check-success">
+                      <input type="checkbox" name="exclude_stage" value="{{$stage->id}}" id="exclude_stage">
+                      <label for="exclude_stage">Exclude</label>
                     </div>
                   </div>
                 @endif
