@@ -331,17 +331,10 @@ if(!function_exists('code_to_country')){
 
 if(!function_exists('count_of_files_per_country')){
 
-    function count_of_files_per_country($country, $frontendID){
+    function count_of_files_per_country($userID){
 
-        $count =  File::join('users','users.id', '=', 'files.user_id')
-        ->where('users.country', $country)
-        ->where('files.front_end_id', $frontendID)
-        ->select('files.id')
-        ->groupBy('files.id')
-        ->get();
-
-        return count($count);
-
+        $count =  File::where('user_id', $userID)
+        ->count();
         return $count;
 
     }
