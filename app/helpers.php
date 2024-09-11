@@ -332,7 +332,7 @@ if(!function_exists('count_of_files_per_country')){
 
     function count_of_files_per_country($country){
 
-        $count =  File::join('users','user.id', '=', 'files.user_id')->where('users.country', $country)->count();
+        $count =  File::join('users','users.id', '=', 'files.user_id')->where('users.country', $country)->count();
         return $count;
 
     }
