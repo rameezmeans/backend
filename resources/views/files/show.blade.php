@@ -4890,7 +4890,7 @@ margin-bottom: 10px !important;
                       <label><b>Stage:</b> {{$stage->name}}</label>
                       <input type="hidden" name="service_id" value="{{$stage->id}}">
                       <label class="m-t-10">Processing Software</label>
-                      <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="processing-software-stage-edit" id="processing-software-stage-edit">
+                      <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="stage_software" id="processing-software-stage-edit">
                         
                       </select>
                     </div>
@@ -4908,10 +4908,8 @@ margin-bottom: 10px !important;
                       
                         <label class="m-t-10">Processing Software</label>
                         <input type="hidden" name="option_id[]" value="{{$optionInner->id}}">
-
-                      
-
-                      <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="processing-software-edit-option-{{$optionInner->id}}">
+                        
+                      <select class="full-width" data-placeholder="Select Software" data-init-plugin="select2" name="option_softwares[]" name="processing-software-edit-option-{{$optionInner->id}}">
                         
                       </select>
 
