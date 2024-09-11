@@ -5926,8 +5926,8 @@ $(document).on('click', '.btn-show-software-edit-form', function(e){
       },
       success: function(d) {
 
-        $('#edit_software_file_id').html(file_id);
-        $('#edit_software_new_request_id').html(new_request_id);
+        $('#edit_software_file_id').val(file_id);
+        $('#edit_software_new_request_id').val(new_request_id);
         $('#processing-software-stage-edit').html(d.strStage);
 
         $.each(d.opArr, function(index, value) { 
