@@ -176,6 +176,9 @@ class FilesController extends Controller
     public function addSoftwares(Request $request){
 
         $data = json_decode($request->form_data);
+
+        dd($data);
+        
         $fileID = NULL;
         $finalArray = [];
 
