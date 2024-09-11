@@ -381,7 +381,7 @@ class FilesController extends Controller
 
         $count = 1;
         $strStage = '';
-        $strOptions = '';
+        $opArr = [];
 
         foreach($fileSoftwares as $fs){
 
@@ -399,14 +399,19 @@ class FilesController extends Controller
             }
             else{
 
+                $temp = '';
+
                 foreach($psArray as $k=>$ps){
 
                     if($fs->software_id == $k){
-                        $strOptions .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
+                        $temp .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
+                        
                     }
                     else{
-                        $strOptions .= '<option value="'.$k.'">'.$ps.'</option>';
+                        $temp .= '<option value="'.$k.'">'.$ps.'</option>';
                     }
+
+                    $opArr [$fs->service_id]= $temp;
                 }
 
             }
@@ -415,7 +420,7 @@ class FilesController extends Controller
 
         }
 
-        dd($strStage);
+        dd($opArr);
 
         return response('file declined', 200);
         
