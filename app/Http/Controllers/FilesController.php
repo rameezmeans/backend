@@ -390,8 +390,8 @@ class FilesController extends Controller
             if($count == 1){
 
                 $service = Service::findOrFail($fs->service_id);
-
-                if($service->name != 'Stage 0'){
+                
+                if($service->type == 'tunning'){
 
                     foreach($psArray as $k=>$ps){
 
@@ -403,7 +403,7 @@ class FilesController extends Controller
                         }
                     }
                 }
-                
+
             }
             else{
 
