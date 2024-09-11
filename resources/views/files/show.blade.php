@@ -5924,6 +5924,7 @@ $(document).on('click', '.btn-show-software-edit-form', function(e){
       },
       success: function(d) {
         console.log(d);
+        $('#processing-software-stage-edit').html(d.strStage);
         $('#softwareOptionsEditModal').modal('show');
       }
   });
