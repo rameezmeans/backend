@@ -824,6 +824,8 @@ Route::post('/delete_template', [App\Http\Controllers\EmailTemplatesController::
 Route::get('/reminder_manager', [App\Http\Controllers\ReminderManagerController::class, 'index'])->name('reminder-manager');
 Route::post('/set_status_for_reminder_manager', [App\Http\Controllers\ReminderManagerController::class, 'setStatus'])->name('set-status-for-reminder-manager');
 
+Route::get('/dtc_lookup', [App\Http\Controllers\DTCLookupController::class, 'index'])->name('message-templates');
+
 Route::get('/message_templates', [App\Http\Controllers\MessageTemplatesController::class, 'index'])->name('message-templates');
 Route::get('/add_message_template', [App\Http\Controllers\MessageTemplatesController::class, 'add'])->name('add-message-template');
 Route::get('/edit_message_template/{id}', [App\Http\Controllers\MessageTemplatesController::class, 'edit'])->name('edit-message-template');
