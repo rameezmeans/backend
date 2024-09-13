@@ -10,12 +10,12 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                    <h3>DTC Lookup</h3>
+                    <h3>DTC Lookup Records</h3>
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
-                    <button data-redirect="" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Create DTC Lookup Record</span>
-                    </button>
+                    {{-- <button data-redirect="{{ route('create-dtclookup') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Create DTC recrod</span>
+                    </button> --}}
                     {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                 </div>
                 </div>

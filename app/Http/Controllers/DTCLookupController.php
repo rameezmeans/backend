@@ -13,4 +13,8 @@ class DTCLookupController extends Controller
         return view('dtc_lookup.index', ['dtclookupRecords' => $dtclookupRecords]);
     }
 
+    // public function create(){
+    //     return view('dtc_lookup.create');
+    // }
+
 }
