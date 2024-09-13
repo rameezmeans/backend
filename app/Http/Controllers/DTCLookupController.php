@@ -11,17 +11,12 @@ class DTCLookupController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        // $this->middleware('adminOnly');
     }
-    
+
     public function index(){
 
         $dtclookupRecords = DTCLookup::all();
         return view('dtc_lookup.index', ['dtclookupRecords' => $dtclookupRecords]);
     }
-
-    // public function create(){
-    //     return view('dtc_lookup.create');
-    // }
-
+    
 }
