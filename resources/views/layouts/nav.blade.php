@@ -373,7 +373,7 @@
           <ul class="sub-menu">
 
             <li class="">
-              <a href="{{ route('dtc_lookup') }}">DTC Lookup</a>
+              <a href="{{ route('dtc-lookup') }}">DTC Lookup</a>
               <span class="icon-thumbnail">DL</span>
             </li>
 
