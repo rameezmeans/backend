@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class FrontEndController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // $this->middleware('adminOnly');
+    }
+    
     /**
      * Display a listing of the resource.
      *
