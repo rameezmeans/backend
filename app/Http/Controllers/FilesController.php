@@ -3485,6 +3485,8 @@ class FilesController extends Controller
             }
         }
 
+        dd($showComments);
+
         $options = Service::where('type', 'option')
         ->whereNull('subdealer_group_id')
         ->where('active', 1)
