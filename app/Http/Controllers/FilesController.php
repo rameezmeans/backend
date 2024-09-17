@@ -3472,7 +3472,7 @@ class FilesController extends Controller
         $showComments = false;
 
         $selectedOptions = [];
-        dd($file->options_services);
+        // dd($file->options_services);
         foreach($file->options_services as $selected){
             $selectedOptions []= $selected->service_id;
         }
@@ -3480,7 +3480,7 @@ class FilesController extends Controller
         if($comments != NULL){
             foreach($comments as $comment){
                 // dd($comment->service_id);
-                dd($selectedOptions);
+                // dd($selectedOptions);
                 if( in_array( $comment->service_id, $selectedOptions) ){
                     $showComments = true;
                     break;
@@ -3488,7 +3488,7 @@ class FilesController extends Controller
             }
         }
 
-        dd($showComments);
+        // dd($showComments);
 
         $options = Service::where('type', 'option')
         ->whereNull('subdealer_group_id')
