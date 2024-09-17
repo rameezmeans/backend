@@ -3479,6 +3479,7 @@ class FilesController extends Controller
 
         if($comments != NULL){
             foreach($comments as $comment){
+                dd($comment->service_id);
                 if( in_array( $comment->service_id, $selectedOptions) ){
                     $showComments = true;
                     break;
