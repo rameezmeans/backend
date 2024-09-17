@@ -3468,7 +3468,7 @@ class FilesController extends Controller
         else{
             $comments = null;
         }
-        dd($comments);
+        // dd($comments);
         $showComments = false;
 
         $selectedOptions = [];
@@ -3477,10 +3477,11 @@ class FilesController extends Controller
             $selectedOptions []= $selected->service_id;
         }
 
-        if($comments){
+        if($comments != NULL){
             foreach($comments as $comment){
                 if( in_array( $comment->service_id, $selectedOptions) ){
                     $showComments = true;
+                    break;
                 }
             }
         }
