@@ -10,6 +10,7 @@ use App\Models\Group;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,8 +60,8 @@ class UsersController extends Controller
 
     public function getCountriesReport(Request $request){
 
-        $users = User::where('front_end_id', $request->front_end)->where('created_at', '>=', date('Y-m-d').' 00:00:00')->get();
-        $count = User::where('front_end_id', $request->front_end)->where('created_at', '>=', date('Y-m-d').' 00:00:00')->count();
+        $users = User::where('front_end_id', $request->front_end)->where('created_at', '>=', Carbon::today())->get();
+        $count = User::where('front_end_id', $request->front_end)->where('created_at', '>=', Carbon::today())->count();
 
         $rows = '';
         foreach($users as $record){
