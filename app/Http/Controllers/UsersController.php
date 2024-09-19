@@ -111,7 +111,7 @@ class UsersController extends Controller
         $rows = '';
         foreach($users as $record){
             $rows .= "<tr>".
-            "<td><a href=".route('edit-customer', $record->id).">".$record->name."</a></td>".
+            "<td><a target='_blank' href=".route('edit-customer', $record->id).">".$record->name."</a></td>".
             "<td>".code_to_country($record->country)."</td>".
             "<td>".$record->company_name."</td>".
             "<td>".$record->company_id."</td>"
