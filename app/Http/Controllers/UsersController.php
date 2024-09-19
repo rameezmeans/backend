@@ -59,8 +59,8 @@ class UsersController extends Controller
 
     public function getCountriesReport(Request $request){
 
-        $users = User::where('front_end_id', $request->front_end)->whereRaw('date(created_at) = curdate()')->get();
-        $count = User::where('front_end_id', $request->front_end)->whereRaw('date(created_at) = curdate()')->count();
+        $users = User::where('front_end_id', $request->front_end)->where('created_at', '>=', date('Y-m-d').' 00:00:00')->get();
+        $count = User::where('front_end_id', $request->front_end)->where('created_at', '>=', date('Y-m-d').' 00:00:00')->count();
 
         $rows = '';
         foreach($users as $record){
