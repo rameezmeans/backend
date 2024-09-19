@@ -76,12 +76,12 @@ class UsersController extends Controller
             $yesterday = date("Y-m-d", strtotime( '-1 days' ) );
 
             if($request->country == 'all'){
-                $users = User::where('front_end_id', $request->front_end)->whereRaw("DAY(created_at) = '" . Carbon::yesterday()->format('Y-m-d') . "'")->get();
-                $count = User::where('front_end_id', $request->front_end)->whereRaw("DAY(created_at) = '" . Carbon::yesterday()->format('Y-m-d') . "'")->count();
+                $users = User::where('front_end_id', $request->front_end)->where('created_at', '>=', $yesterday)->get();
+                $count = User::where('front_end_id', $request->front_end)->where('created_at', '>=', $yesterday)->count();
             }
             else{
-                $users = User::where('front_end_id', $request->front_end)->where('country', $request->country)->whereRaw("DAY(created_at) = '" . Carbon::yesterday()->format('Y-m-d') . "'")->get();
-                $count = User::where('front_end_id', $request->front_end)->where('country', $request->country)->whereRaw("DAY(created_at) = '" . Carbon::yesterday()->format('Y-m-d') . "'")->count();
+                $users = User::where('front_end_id', $request->front_end)->where('country', $request->country)->where('created_at', '>=', $yesterday)->get();
+                $count = User::where('front_end_id', $request->front_end)->where('country', $request->country)->where('created_at', '>=', $yesterday)->count();
             }
         }
 
