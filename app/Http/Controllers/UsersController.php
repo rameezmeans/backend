@@ -61,13 +61,51 @@ class UsersController extends Controller
     public function getCountriesReport(Request $request){
 
         if($request->duration == 'today'){
-            $users = User::where('front_end_id', $request->front_end)->where('created_at', '>=', Carbon::today())->get();
-            $count = User::where('front_end_id', $request->front_end)->where('created_at', '>=', Carbon::today())->count();
+            if($request->country == 'all'){
+                $users = User::where('front_end_id', $request->front_end)->where('created_at', '>=', Carbon::today())->get();
+                $count = User::where('front_end_id', $request->front_end)->where('created_at', '>=', Carbon::today())->count();
+            }
+            else{
+                $users = User::where('front_end_id', $request->front_end)->where('country', $request->country)->where('created_at', '>=', Carbon::today())->get();
+                $count = User::where('front_end_id', $request->front_end)->where('country', $request->country)->where('created_at', '>=', Carbon::today())->count();
+            }
         }
 
         if($request->duration == 'yesterday'){
-            $users = User::where('front_end_id', $request->front_end)->where('created_at', '>=', Carbon::yesterday())->get();
-            $count = User::where('front_end_id', $request->front_end)->where('created_at', '>=', Carbon::yesterday())->count();
+
+            if($request->country == 'all'){
+                $users = User::where('front_end_id', $request->front_end)->where('created_at', '>=', Carbon::yesterday())->get();
+                $count = User::where('front_end_id', $request->front_end)->where('created_at', '>=', Carbon::yesterday())->count();
+            }
+            else{
+                $users = User::where('front_end_id', $request->front_end)->where('country', $request->country)->where('created_at', '>=', Carbon::yesterday())->get();
+                $count = User::where('front_end_id', $request->front_end)->where('country', $request->country)->where('created_at', '>=', Carbon::yesterday())->count();
+            }
+        }
+
+        if($request->duration == '15_days'){
+
+            if($request->country == 'all'){
+                $users = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(15), now()])->get();
+                $count = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(15), now()])->count();
+            }
+            else{
+
+                $users = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(15), now()])->where('country', $request->country)->get();
+                $count = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(15), now()])->where('country', $request->country)->count();
+            }
+        }
+
+        if($request->duration == 'month'){
+
+            if($request->country == 'all'){
+                $users = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(30), now()])->get();
+                $count = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(30), now()])->count();
+            }
+            else{
+                $users = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(30), now()])->where('country', $request->country)->get();
+                $count = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(30), now()])->where('country', $request->country)->count();
+            }
         }
 
         $rows = '';
