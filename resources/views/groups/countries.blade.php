@@ -30,7 +30,7 @@
                                 <option value="today">Today</option>
                                 <option value="yesterday">Yesterday</option>
                                 <option value="15_days">Last 15 days</option>
-                                <option value="month">Last Month</option>
+                                <option value="month">Last 30 days</option>
                             </select>
                         </div>
                     </div>
