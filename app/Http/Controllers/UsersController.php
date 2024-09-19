@@ -57,6 +57,31 @@ class UsersController extends Controller
 
     }
 
+    public function getCountriesReport(Request $request){
+
+        $users = User::where('front_end_id', $request->front_end)->whereRaw('date(created_at) = curdate()')->get();
+        $count = User::where('front_end_id', $request->front_end)->whereRaw('date(created_at) = curdate()')->count();
+
+        $rows = '';
+        foreach($users as $record){
+            $rows .= "<tr>".
+            "<td><a href=".route('edit-customer', $record->id).">".$record->name."</a></td>".
+            "<td>".code_to_country($record->country)."</td>".
+            "<td>".$record->company."</td>".
+            "<td>".$record->company_id."</td>"
+            ."</tr>";
+        }
+
+        return response()->json(['html' =>$rows, 'count' => $count ], 200);
+    }
+
+    public function countriesReport(){
+
+        $frontends = FrontEnd::all();
+        $countries = User::select('country')->groupby('country')->get();
+        return view('groups.countries', ['countries' => $countries, 'frontends' => $frontends]);
+    }
+
     public function Customers(){
 
         if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-customers')){

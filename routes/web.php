@@ -623,7 +623,9 @@ Route::post('/create_processing_softwares', [App\Http\Controllers\ProcessingSoft
 Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
 Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
 Route::get('/softwares_report', [App\Http\Controllers\ProcessingSoftwaresController::class, 'softwareReport'])->name('softwares-report');
+Route::get('/countires_report', [App\Http\Controllers\UsersController::class, 'countriesReport'])->name('countries-report');
 Route::post('/fetch_softwares_report', [App\Http\Controllers\ProcessingSoftwaresController::class, 'ajaxSoftwareReport'])->name('get-software-report');
+Route::post('/get_country_report', [App\Http\Controllers\UsersController::class, 'getCountriesReport'])->name('get-country-report');
 
 Route::get('/services', [App\Http\Controllers\ServicesController::class, 'index'])->name('services');
 Route::get('/create_service', [App\Http\Controllers\ServicesController::class, 'create'])->name('create-service');
