@@ -64,13 +64,29 @@ class UsersController extends Controller
 
             $table1 = [];
 
-            $countries = User::select('country', \DB::raw("count(id) as count"))
-            ->groupby('country')
-            ->orderBy('count', 'desc')
-            ->where('test', 0)
-            ->where('country', '!=' ,'Live Chat')
-            ->where('front_end_id', $request->front_end)
-            ->get();
+            if($request->duration == 'today'){
+
+                $countries = User::select('country', \DB::raw("count(id) as count"))
+                ->groupby('country')
+                ->orderBy('count', 'desc')
+                ->where('test', 0)
+                ->whereRaw('date(created_at) = curdate()')
+                ->where('country', '!=' ,'Live Chat')
+                ->where('front_end_id', $request->front_end)
+                ->get();
+
+            }
+            else{
+
+                $countries = User::select('country', \DB::raw("count(id) as count"))
+                ->groupby('country')
+                ->orderBy('count', 'desc')
+                ->where('test', 0)
+                ->whereDay('created_at', Carbon::yesterday())
+                ->where('country', '!=' ,'Live Chat')
+                ->where('front_end_id', $request->front_end)
+                ->get();
+            }
 
             foreach($countries as $country){
 
