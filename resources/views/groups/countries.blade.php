@@ -10,7 +10,7 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                    <h3>Softare Report</h3>
+                    <h3>Software Report</h3>
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
@@ -22,17 +22,64 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
+                <form method="POST" action="{{route('get-country-report')}}">
                 <div class="row">
-                    <div class="col-lg-4">
+                    
+                        @csrf
+                    <div class="col-lg-5">
                         <div class="form-group form-group-default">
                             <label>Select Duration</label>
                             <select class="full-width" id="duration" data-init-plugin="select2" name="duration">  
                                 <option value="today">Today</option>
                                 <option value="yesterday">Yesterday</option>
-                                <option value="15_days">Last 15 days</option>
-                                <option value="month">Last 30 days</option>
+                                
                             </select>
                         </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="form-group form-group-default">
+                            <label>Select Frontend</label>
+                            <select class="full-width" id="frontend" data-init-plugin="select2" name="front_end">
+                            @foreach($frontends as $frontend)
+                                <option value="{{$frontend->id}}">{{\App\Models\Frontend::findOrFail($frontend->id)->name}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    
+                    <div class="col-lg-2">
+                        <input class="btn btn-success" type="submit" value="Filter">
+                    </div>
+                    
+                </div>
+            </form>
+
+            <form method="POST" action="{{route('get-country-report')}}">
+                <div class="row">
+                    
+                        @csrf
+                    <div class="col-lg-3">
+                        <div class="form-group form-group-default input-group">
+                            <div class="form-input-group">
+                                <label>Start</label>
+                                <input type="input" style="margin-bottom: 17px;" class="form-control datepicker" placeholder="Start Date" id="start" name="start">
+                            </div>
+                            <div class="input-group-append ">
+                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group form-group-default input-group">
+                            <div class="form-input-group">
+                                <label>End</label>
+                                <input type="input" style="margin-bottom: 17px;" class="form-control datepicker" placeholder="End Date" id="end" name="end">
+                            </div>
+                            <div class="input-group-append ">
+                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group form-group-default">
@@ -45,31 +92,21 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4">
-                        <div class="form-group form-group-default">
-                            <label>Countries</label>
-                            <select class="full-width" id="country" data-init-plugin="select2" name="country">
-                                <option value="all">All Countries</option>
-                                @foreach($countries as $country)
-                                    <option value="{{$country->country}}">{{code_to_country($country->country)}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <p>Number of Customers: <span id="customers">0</span></p>
-                        {{-- <p>Replies: <span id="replies">0</span></p> --}}
+                    
+                    <div class="col-lg-2">
+                        <input class="btn btn-success" type="submit" value="Filter">
                     </div>
                     
                 </div>
+            </form>
+
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
-                        <div id="progress" class="text-center">
+                        {{-- <div id="progress" class="text-center">
                             <div class="progress-circle-indeterminate m-t-45" style="">
                             </div>
                             <br>
-                        </div>
+                        </div> --}}
                         <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
@@ -129,44 +166,44 @@
     $(document).ready(function(event){
 
 
-        $(document).on('change', '#duration', function(e){
+        // $(document).on('change', '#duration', function(e){
         
-            $('#progress').show();
+        //     $('#progress').show();
 
-            let duration = $('#duration').val();
-            let front_end = $('#frontend').val();
-            let country = $('#country').val();
+        //     let duration = $('#duration').val();
+        //     let front_end = $('#frontend').val();
+        //     let country = $('#country').val();
 
 
-            getReport(duration, front_end, country);
+        //     getReport(duration, front_end, country);
 
-        });
+        // });
 
-        $(document).on('change', '#frontend', function(e){
+        // $(document).on('change', '#frontend', function(e){
         
-            $('#progress').show();
+        //     $('#progress').show();
 
-            let duration = $('#duration').val();
-            let front_end = $('#frontend').val();
-            let country = $('#country').val();
+        //     let duration = $('#duration').val();
+        //     let front_end = $('#frontend').val();
+        //     let country = $('#country').val();
 
 
-            getReport(duration, front_end, country);
+        //     getReport(duration, front_end, country);
 
-        });
+        // });
 
-        $(document).on('change', '#country', function(e){
+        // $(document).on('change', '#country', function(e){
         
-            $('#progress').show();
+        //     $('#progress').show();
 
-            let duration = $('#duration').val();
-            let front_end = $('#frontend').val();
-            let country = $('#country').val();
+        //     let duration = $('#duration').val();
+        //     let front_end = $('#frontend').val();
+        //     let country = $('#country').val();
 
 
-            getReport(duration, front_end, country);
+        //     getReport(duration, front_end, country);
 
-        });
+        // });
 
     
 

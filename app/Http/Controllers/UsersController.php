@@ -60,67 +60,36 @@ class UsersController extends Controller
 
     public function getCountriesReport(Request $request){
 
-        if($request->duration == 'today'){
-            if($request->country == 'all'){
-                $users = User::where('front_end_id', $request->front_end)->where('created_at', '>=', Carbon::today())->get();
-                $count = User::where('front_end_id', $request->front_end)->where('created_at', '>=', Carbon::today())->count();
+        if(isset($request->duration)){
+
+            $table1 = [];
+
+            $countries = User::select('country')->groupby('country')->get();
+
+            foreach($countries as $country){
+
+                $temp = [];
+                if($request->duration == 'today'){
+                    $usersCount = User::where('country', $country->country)
+                    ->whereRaw('date(created_at) = curdate()')
+                    ->where('front_end_id', $request->frontend)->count();
+                }
+                else if($request->duration == 'yesterday'){
+                    $usersCount = User::where('country', $country->country)
+                    ->whereDay('created_at', Carbon::yesterday())
+                    ->where('front_end_id', $request->frontend)->count();
+                }
+
+                $temp[$country->country] = [$usersCount,0,0];
+                $table1 []= $temp;
+
             }
-            else{
-                $users = User::where('front_end_id', $request->front_end)->where('country', $request->country)->where('created_at', '>=', Carbon::today())->get();
-                $count = User::where('front_end_id', $request->front_end)->where('country', $request->country)->where('created_at', '>=', Carbon::today())->count();
-            }
+
+            dd($table1);
+
+            return view('groups.countries',['$table1' => $table1]);
+
         }
-
-        if($request->duration == 'yesterday'){
-
-            $yesterday = date("Y-m-d", strtotime( '-1 days' ) );
-
-            if($request->country == 'all'){
-                $users = User::where('front_end_id', $request->front_end)->where('created_at', '>=', $yesterday)->get();
-                $count = User::where('front_end_id', $request->front_end)->where('created_at', '>=', $yesterday)->count();
-            }
-            else{
-                $users = User::where('front_end_id', $request->front_end)->where('country', $request->country)->where('created_at', '>=', $yesterday)->get();
-                $count = User::where('front_end_id', $request->front_end)->where('country', $request->country)->where('created_at', '>=', $yesterday)->count();
-            }
-        }
-
-        if($request->duration == '15_days'){
-
-            if($request->country == 'all'){
-                $users = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(15), now()])->get();
-                $count = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(15), now()])->count();
-            }
-            else{
-
-                $users = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(15), now()])->where('country', $request->country)->get();
-                $count = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(15), now()])->where('country', $request->country)->count();
-            }
-        }
-
-        if($request->duration == 'month'){
-
-            if($request->country == 'all'){
-                $users = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(30), now()])->get();
-                $count = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(30), now()])->count();
-            }
-            else{
-                $users = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(30), now()])->where('country', $request->country)->get();
-                $count = User::where('front_end_id', $request->front_end)->whereBetween('created_at', [now()->subDays(30), now()])->where('country', $request->country)->count();
-            }
-        }
-
-        $rows = '';
-        foreach($users as $record){
-            $rows .= "<tr>".
-            "<td><a target='_blank' href=".route('edit-customer', $record->id).">".$record->name."</a></td>".
-            "<td>".code_to_country($record->country)."</td>".
-            "<td>".$record->company_name."</td>".
-            "<td>".$record->company_id."</td>"
-            ."</tr>";
-        }
-
-        return response()->json(['html' =>$rows, 'count' => $count ], 200);
     }
 
     public function countriesReport(){
