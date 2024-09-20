@@ -102,7 +102,7 @@ class UsersController extends Controller
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
                     
-                    dd($users);
+                    // dd($users);
                 }
                 else if($request->duration == 'yesterday'){
                     $usersCount = User::where('country', $country->country)
@@ -113,7 +113,7 @@ class UsersController extends Controller
                     $users = User::where('country', $country->country)
                     ->whereRaw('date(created_at) = curdate()')
                     ->where('test', 0)
-                    ->where('front_end_id', $request->front_end)->get('id')->toArray();
+                    ->where('front_end_id', $request->front_end)->get();
                     
                     dd($users);
 
