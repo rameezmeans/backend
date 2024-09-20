@@ -68,6 +68,7 @@ class UsersController extends Controller
             ->groupby('country')
             ->orderBy('count', 'desc')
             ->where('test', 0)
+            ->where('country', '=' ,'Live Chat')
             ->where('front_end_id', $request->front_end)
             ->get();
 
