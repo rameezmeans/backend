@@ -86,8 +86,6 @@ class UsersController extends Controller
                 ->where('country', '!=' ,'Live Chat')
                 ->where('front_end_id', $request->front_end)
                 ->get();
-
-                dd($countries);
             }
 
             foreach($countries as $country){
