@@ -86,6 +86,8 @@ class UsersController extends Controller
                 ->where('country', '!=' ,'Live Chat')
                 ->where('front_end_id', $request->front_end)
                 ->get();
+
+                dd($countries);
             }
 
             foreach($countries as $country){
@@ -116,7 +118,7 @@ class UsersController extends Controller
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
                     dd('here');
                     dd($users);
-                    
+
                 }
 
                 $temp[$country->country] = [$usersCount,0,0];
