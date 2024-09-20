@@ -64,6 +64,8 @@ class UsersController extends Controller
 
             $table1 = [];
 
+            dd($request->all());
+
             $countries = User::select('country', \DB::raw("count(id) as count"))
             ->groupby('country')
             ->orderBy('count', 'desc')
