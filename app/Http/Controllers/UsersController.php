@@ -64,13 +64,11 @@ class UsersController extends Controller
 
             $table1 = [];
 
-            $countries = User::select('country','count(*) as total')
+            $countries = User::select('country', \DB::raw("count(id) as count"))
             ->groupby('country')
-            ->orderby('total')
+            ->orderBy('count', 'desc')
             ->get();
-
-            dd($countries);
-
+            
             foreach($countries as $country){
 
                 $temp = [];
