@@ -64,12 +64,10 @@ class UsersController extends Controller
 
             $table1 = [];
 
-            dd($request->all());
-
             $countries = User::select('country', \DB::raw("count(id) as count"))
             ->groupby('country')
             ->orderBy('count', 'desc')
-            ->where('front_end_id', $request->frontend)
+            ->where('front_end_id', $request->front_end)
             ->get();
 
             foreach($countries as $country){
@@ -77,13 +75,13 @@ class UsersController extends Controller
                 $temp = [];
                 if($request->duration == 'today'){
                     $usersCount = User::where('country', $country->country)
-                    // ->whereRaw('date(created_at) = curdate()')
-                    ->where('front_end_id', $request->frontend)->count();
+                    ->whereRaw('date(created_at) = curdate()')
+                    ->where('front_end_id', $request->front_end)->count();
                 }
                 else if($request->duration == 'yesterday'){
                     $usersCount = User::where('country', $country->country)
-                    // ->whereDay('created_at', Carbon::yesterday())
-                    ->where('front_end_id', $request->frontend)->count();
+                    ->whereDay('created_at', Carbon::yesterday())
+                    ->where('front_end_id', $request->front_end)->count();
                 }
 
                 $temp[$country->country] = [$usersCount,0,0];
