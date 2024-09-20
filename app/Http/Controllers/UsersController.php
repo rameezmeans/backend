@@ -67,6 +67,7 @@ class UsersController extends Controller
             $countries = User::select('country', \DB::raw("count(id) as count"))
             ->groupby('country')
             ->orderBy('count', 'desc')
+            ->where('test', 0)
             ->where('front_end_id', $request->front_end)
             ->get();
 
@@ -76,11 +77,13 @@ class UsersController extends Controller
                 if($request->duration == 'today'){
                     $usersCount = User::where('country', $country->country)
                     ->whereRaw('date(created_at) = curdate()')
+                    ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->count();
                 }
                 else if($request->duration == 'yesterday'){
                     $usersCount = User::where('country', $country->country)
                     ->whereDay('created_at', Carbon::yesterday())
+                    ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->count();
                 }
 
