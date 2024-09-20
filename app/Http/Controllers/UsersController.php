@@ -96,12 +96,27 @@ class UsersController extends Controller
                     ->whereRaw('date(created_at) = curdate()')
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->count();
+
+                    $users = User::where('country', $country->country)
+                    ->whereRaw('date(created_at) = curdate()')
+                    ->where('test', 0)
+                    ->where('front_end_id', $request->front_end)->get('id')->toArray();
+                    dd('here');
+                    dd($users);
                 }
                 else if($request->duration == 'yesterday'){
                     $usersCount = User::where('country', $country->country)
                     ->whereDay('created_at', Carbon::yesterday())
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->count();
+
+                    $users = User::where('country', $country->country)
+                    ->whereRaw('date(created_at) = curdate()')
+                    ->where('test', 0)
+                    ->where('front_end_id', $request->front_end)->get('id')->toArray();
+                    dd('here');
+                    dd($users);
+                    
                 }
 
                 $temp[$country->country] = [$usersCount,0,0];
