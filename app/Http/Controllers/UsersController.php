@@ -68,18 +68,18 @@ class UsersController extends Controller
             ->groupby('country')
             ->orderBy('count', 'desc')
             ->get();
-            
+
             foreach($countries as $country){
 
                 $temp = [];
                 if($request->duration == 'today'){
                     $usersCount = User::where('country', $country->country)
-                    ->whereRaw('date(created_at) = curdate()')
+                    // ->whereRaw('date(created_at) = curdate()')
                     ->where('front_end_id', $request->frontend)->count();
                 }
                 else if($request->duration == 'yesterday'){
                     $usersCount = User::where('country', $country->country)
-                    ->whereDay('created_at', Carbon::yesterday())
+                    // ->whereDay('created_at', Carbon::yesterday())
                     ->where('front_end_id', $request->frontend)->count();
                 }
 
