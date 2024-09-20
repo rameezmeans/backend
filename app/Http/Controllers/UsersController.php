@@ -108,8 +108,8 @@ class UsersController extends Controller
                         $ids []= $u['id'];
                     }
                     
-                    $filesCount = File::whereBetween('user_id', $ids)->count();
-                    
+                    $filesCount = File::whereIn('user_id', $ids)->count();
+
                 }
                 else if($request->duration == 'yesterday'){
                     $usersCount = User::where('country', $country->country)
@@ -127,7 +127,7 @@ class UsersController extends Controller
                         $ids []= $u['id'];
                     }
                     
-                    $filesCount = File::whereBetween('user_id', $ids)->count();
+                    $filesCount = File::whereIn('user_id', $ids)->count();
 
                 }
 
