@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ChMessage;
 use App\Models\Credit;
 use App\Models\EngineersPermission;
+use App\Models\File;
 use App\Models\FrontEnd;
 use App\Models\Group;
 use App\Models\Role;
@@ -102,7 +103,13 @@ class UsersController extends Controller
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
                     
-                    // dd($users);
+                    $ids = [];
+                    foreach($users as $u){
+                        $ids []= $u['id'];
+                    }
+                    
+                    $filesCount = File::whereBetween('user_id', $ids)->count();
+                    
                 }
                 else if($request->duration == 'yesterday'){
                     $usersCount = User::where('country', $country->country)
@@ -114,12 +121,17 @@ class UsersController extends Controller
                     ->whereDay('created_at', Carbon::yesterday())
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
+
+                    $ids = [];
+                    foreach($users as $u){
+                        $ids []= $u['id'];
+                    }
                     
-                    dd($users);
+                    $filesCount = File::whereBetween('user_id', $ids)->count();
 
                 }
 
-                $temp[$country->country] = [$usersCount,0,0];
+                $temp[$country->country] = [$usersCount,$filesCount,0];
                 $table1 []= $temp;
 
             }
