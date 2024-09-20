@@ -64,7 +64,12 @@ class UsersController extends Controller
 
             $table1 = [];
 
-            $countries = User::select('country')->groupby('country')->get();
+            $countries = User::select('country','count(*) as total')
+            ->groupby('country')
+            ->orderby('total')
+            ->get();
+
+            dd($countries);
 
             foreach($countries as $country){
 
