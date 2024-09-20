@@ -109,6 +109,7 @@ class UsersController extends Controller
                     }
                     
                     $filesCount = File::whereIn('user_id', $ids)->count();
+                    $creditsCount = Credit::whereIn('user_id', $ids)->sum('credits');
 
                 }
                 else if($request->duration == 'yesterday'){
@@ -128,10 +129,11 @@ class UsersController extends Controller
                     }
                     
                     $filesCount = File::whereIn('user_id', $ids)->count();
+                    $creditsCount = Credit::whereIn('user_id', $ids)->sum('credits');
 
                 }
 
-                $temp[$country->country] = [$usersCount,$filesCount,0];
+                $temp[$country->country] = [$usersCount,$filesCount,$creditsCount];
                 $table1 []= $temp;
 
             }
