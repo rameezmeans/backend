@@ -115,7 +115,7 @@ class UsersController extends Controller
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->get();
                     
-                    dd($users);
+                    // dd($users);
 
                 }
 
