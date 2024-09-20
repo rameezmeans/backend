@@ -114,7 +114,7 @@ class UsersController extends Controller
                     ->whereRaw('date(created_at) = curdate()')
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
-                    dd('here');
+                    
                     dd($users);
 
                 }
