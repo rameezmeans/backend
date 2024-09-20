@@ -67,6 +67,7 @@ class UsersController extends Controller
             $countries = User::select('country', \DB::raw("count(id) as count"))
             ->groupby('country')
             ->orderBy('count', 'desc')
+            ->where('front_end_id', $request->frontend)
             ->get();
 
             foreach($countries as $country){
