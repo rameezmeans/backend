@@ -113,7 +113,7 @@ class UsersController extends Controller
                     $users = User::where('country', $country->country)
                     ->whereDay('created_at', Carbon::yesterday())
                     ->where('test', 0)
-                    ->where('front_end_id', $request->front_end)->get();
+                    ->where('front_end_id', $request->front_end)->get('id')->toArray();
                     
                     dd($users);
 
