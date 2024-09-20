@@ -111,11 +111,11 @@ class UsersController extends Controller
                     ->where('front_end_id', $request->front_end)->count();
 
                     $users = User::where('country', $country->country)
-                    ->whereRaw('date(created_at) = curdate()')
+                    ->whereDay('created_at', Carbon::yesterday())
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->get();
                     
-                    // dd($users);
+                    dd($users);
 
                 }
 
