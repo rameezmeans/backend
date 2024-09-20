@@ -109,7 +109,8 @@ class UsersController extends Controller
                     }
                     
                     $filesCount = File::whereIn('user_id', $ids)->count();
-                    $creditsCount = Credit::whereIn('user_id', $ids)->sum('credits');
+                    $creditsCount = Credit::whereIn('user_id', $ids)
+                    ->where('credits', '>', 0)->sum('credits');
 
                 }
                 else if($request->duration == 'yesterday'){
@@ -129,7 +130,8 @@ class UsersController extends Controller
                     }
                     
                     $filesCount = File::whereIn('user_id', $ids)->count();
-                    $creditsCount = Credit::whereIn('user_id', $ids)->sum('credits');
+                    $creditsCount = Credit::whereIn('user_id', $ids)
+                    ->where('credits', '>', 0)->sum('credits');
 
                 }
 
