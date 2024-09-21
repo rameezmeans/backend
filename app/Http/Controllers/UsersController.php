@@ -137,9 +137,9 @@ class UsersController extends Controller
 
                 $temp[$country->country] = [$usersCount,$filesCount,$creditsCount];
 
-                dd($temp);
-                
-                $table1 []= $temp;
+                // dd($temp);
+
+                $table1 []= $temp[$country->country];
 
             }
 
