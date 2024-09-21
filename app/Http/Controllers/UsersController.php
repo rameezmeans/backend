@@ -125,7 +125,7 @@ class UsersController extends Controller
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
 
                     dd($users = User::where('country', $country->country)
-                    ->whereDay('created_at', Carbon::yesterday())
+                    ->whereDate('created_at', Carbon::yesterday())
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->get());
 
