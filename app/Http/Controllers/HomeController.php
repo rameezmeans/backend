@@ -184,7 +184,7 @@ class HomeController extends Controller
         ->where('front_end_id', $frontEndID)
         ->whereNotIN('id', [65,80])
         ->groupBy('country')
-        ->where('test', 0)
+        ->where('test','=', 0)
         ->selectRaw('count(*) as count,country')
         ->get();
 

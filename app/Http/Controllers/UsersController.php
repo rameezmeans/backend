@@ -59,6 +59,28 @@ class UsersController extends Controller
 
     }
 
+    public function getDays($strDateFrom, $strDateTo){  
+        // takes two dates formatted as YYYY-MM-DD and creates an
+    // inclusive array of the dates between the from and to dates.
+
+    // could test validity of dates here but I'm already doing
+    // that in the main script
+
+    $aryRange = [];
+
+    $iDateFrom = mktime(1, 0, 0, substr($strDateFrom, 5, 2), substr($strDateFrom, 8, 2), substr($strDateFrom, 0, 4));
+    $iDateTo = mktime(1, 0, 0, substr($strDateTo, 5, 2), substr($strDateTo, 8, 2), substr($strDateTo, 0, 4));
+
+    if ($iDateTo >= $iDateFrom) {
+        array_push($aryRange, date('Y-m-d', $iDateFrom)); // first entry
+        while ($iDateFrom<$iDateTo) {
+            $iDateFrom += 86400; // add 24 hours
+            array_push($aryRange, date('Y-m-d', $iDateFrom));
+        }
+    }
+    return $aryRange;
+     }  
+
     public function getCountriesReport(Request $request) {
 
         if(isset($request->duration)) {
@@ -148,11 +170,13 @@ class UsersController extends Controller
 
         if(isset($request->start)) {
 
-                $date = str_replace('/', '-', $request->start);
-                $startDate = date('Y-m-d', strtotime($date));
+                $startd = str_replace('/', '-', $request->start);
+                $startDate = date('Y-m-d', strtotime($startd));
 
-                $date = str_replace('/', '-', $request->end);
-                $endDate = date('Y-m-d', strtotime($date));
+                $endd = str_replace('/', '-', $request->end);
+                $endDate = date('Y-m-d', strtotime($endd));
+
+                $datesArray = $this->getDays($startDate, $endDate);
 
                 $countries = User::select('country', \DB::raw("count(id) as count"))
                 ->groupby('country')
@@ -163,7 +187,7 @@ class UsersController extends Controller
                 ->where('country', '!=' ,'Live Chat')
                 ->where('front_end_id', $request->front_end)
                 ->get();
-                
+
                 $table2 = [];
 
                 foreach($countries as $country) {
@@ -188,6 +212,21 @@ class UsersController extends Controller
                     $filesCount = File::whereIn('user_id', $ids)->count();
                     $creditsCount = (int) Credit::whereIn('user_id', $ids)
                     ->where('credits', '>', 0)->sum('credits');
+
+                    $countsArray = [];
+                    
+                    foreach($datesArray as $d){
+                        $counts = User::where('country', $country->country)
+                        ->whereDate('created_at', '=' , $d)
+                        ->where('test','=', 0)
+                        ->where('front_end_id', $request->front_end)->count();
+
+                        if($counts > 0){
+                            $countsArray []= $counts;
+                        }
+                    }
+
+                    dd($countsArray);
 
                     $temp[$country->country] = [$usersCount,$filesCount,$creditsCount];
                     $table2[$country->country]= $temp[$country->country];
