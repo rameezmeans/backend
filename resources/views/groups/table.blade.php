@@ -35,6 +35,15 @@
                             <p>Frontend: <span>{{\App\Models\FrontEnd::findOrFail($frontend)->name}}</span></p>
                         </div>
                     @endif
+
+                    @if(isset($duration))
+                        <div class="col-lg-4">
+                            <p>Start Date: <span>{{$start}}</span></p>
+                            <p>End Date: <span>{{$end}}</span></p>
+                            <p>Frontend: <span>{{\App\Models\FrontEnd::findOrFail($frontend)->name}}</span></p>
+                        </div>
+                    @endif
+
                 </div>
                 @if(isset($duration))
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
