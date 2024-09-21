@@ -220,10 +220,9 @@ class UsersController extends Controller
                         ->whereDate('created_at', '=' , $d)
                         ->where('test','=', 0)
                         ->where('front_end_id', $request->front_end)->count();
-
-                        if($counts > 0){
-                            $countsArray []= $counts;
-                        }
+                        
+                        $countsArray []= $counts;
+                        
                     }
 
                     $temp[$country->country] = [ $usersCount, $filesCount, $creditsCount, max($countsArray), min($countsArray) ];
