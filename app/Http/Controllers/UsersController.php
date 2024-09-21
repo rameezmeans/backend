@@ -148,23 +148,37 @@ class UsersController extends Controller
 
         if(isset($request->start)) {
 
-            $date = str_replace('/', '-', $request->start);
-            $startDate = date('Y-m-d', strtotime($date));
+                $date = str_replace('/', '-', $request->start);
+                $startDate = date('Y-m-d', strtotime($date));
 
-            $date = str_replace('/', '-', $request->end);
-            $endDate = date('Y-m-d', strtotime($date));
+                $date = str_replace('/', '-', $request->end);
+                $endDate = date('Y-m-d', strtotime($date));
 
-            $countries = User::select('country', \DB::raw("count(id) as count"))
+                $countries = User::select('country', \DB::raw("count(id) as count"))
                 ->groupby('country')
                 ->orderBy('count', 'desc')
-                ->where('test', 0)
+                ->where('test','=', 0)
                 ->whereDate('created_at', '>=' , $startDate)
                 ->whereDate('created_at', '<=' , $endDate)
                 ->where('country', '!=' ,'Live Chat')
                 ->where('front_end_id', $request->front_end)
                 ->get();
 
-                dd($countries);
+                $table1 = [];
+
+                foreach($countries as $country) {
+
+                    $usersCount = User::where('country', $country->country)
+                    ->whereDate('created_at', '>=' , $startDate)
+                    ->whereDate('created_at', '<=' , $endDate)
+                    ->where('test','=', 0)
+                    ->where('front_end_id', $request->front_end)->count();
+
+                    dd($usersCount);
+                
+                }
+
+            
 
         }
     }
