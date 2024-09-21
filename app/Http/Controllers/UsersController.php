@@ -214,7 +214,7 @@ class UsersController extends Controller
                     ->where('credits', '>', 0)->sum('credits');
 
                     $countsArray = [];
-                    
+
                     foreach($datesArray as $d){
                         $counts = User::where('country', $country->country)
                         ->whereDate('created_at', '=' , $d)
@@ -226,9 +226,7 @@ class UsersController extends Controller
                         }
                     }
 
-                    dd($countsArray);
-
-                    $temp[$country->country] = [$usersCount,$filesCount,$creditsCount];
+                    $temp[$country->country] = [ $usersCount, $filesCount, $creditsCount, max($countsArray), min($countsArray) ];
                     $table2[$country->country]= $temp[$country->country];
                 
                 }
