@@ -76,15 +76,15 @@
             </li>
             <li class="">
               <a href="{{ route('credits-reports') }}">Credits Report</a>
-              <span class="icon-thumbnail">FR</span>
+              <span class="icon-thumbnail">CR</span>
             </li>
             <li class="">
               <a href="{{ route('softwares-report') }}">Softwares Report</a>
-              <span class="icon-thumbnail">FR</span>
+              <span class="icon-thumbnail">SR</span>
             </li>
             <li class="">
-              <a href="{{ route('countries-report') }}">Counties Report</a>
-              <span class="icon-thumbnail">FR</span>
+              <a href="{{ route('countries-report') }}">Countries Report</a>
+              <span class="icon-thumbnail">CR</span>
             </li>
           </ul>
         </li>
