@@ -139,9 +139,7 @@ class UsersController extends Controller
                 $table1 [$country->country]= $temp[$country->country];
 
             }
-
-            dd($table1);
-
+            
             return view('groups.table',['frontend' => $request->front_end, 'table1' => $table1, 'duration' => $request->duration]);
 
         }
