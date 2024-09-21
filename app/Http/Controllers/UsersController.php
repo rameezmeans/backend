@@ -164,6 +164,8 @@ class UsersController extends Controller
                 ->where('front_end_id', $request->front_end)
                 ->get();
 
+                dd($countries);
+
                 $table2 = [];
 
                 foreach($countries as $country) {
