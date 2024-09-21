@@ -131,7 +131,7 @@
                                             <p>{{$row[4]}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$row[6]}}</p>
+                                            <p>{{$row[5]}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$row[1]}}</p>
