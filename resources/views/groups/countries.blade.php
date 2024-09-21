@@ -58,7 +58,7 @@
             <form method="POST" action="{{route('get-country-report')}}">
                 <div class="row">
                     
-                        @csrf
+                    @csrf
                     <div class="col-lg-3">
                         <div class="form-group form-group-default input-group">
                             <div class="form-input-group">
@@ -100,57 +100,8 @@
                 </div>
             </form>
 
-                <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
-                    <div>
-                        {{-- <div id="progress" class="text-center">
-                            <div class="progress-circle-indeterminate m-t-45" style="">
-                            </div>
-                            <br>
-                        </div> --}}
-                        <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
-                            <thead>
-                                <tr role="row">
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Country</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Company</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Tax ID</th>
-                                    
-                                    {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Tasks</th> --}}
-                                    {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">All Files Uploaded</th> --}}
-                                </tr>
-                            </thead>
-                            <tbody id="recordsRows">
-                                {{-- @foreach ($softwaresAndBrandsRecords as $row)
-                                    
-                                    <tr role="row">
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p><a href="{{route('file', $row->file_id)}}">{{$row->file_id}}</a></p>
-                                        </td>
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$row->brand}}</p>
-                                        </td>
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$row->ecu}}</p>
-                                        </td>
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{\App\Models\Service::findOrFail($row->service_id)->name}}</p>
-                                        </td>
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{\App\Models\ProcessingSoftware::findOrFail($row->software_id)->name}}</p>
-                                        </td>
-                                        
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{all_files_with_this_ecu_brand_and_service_and_software($row->file_id, $row->service_id, $row->software_id)}}</p>
-                                        </td>
-                                        
+               
 
-                                    </tr>
-
-                                @endforeach --}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
           </div>
         </div>
