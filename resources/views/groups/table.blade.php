@@ -31,7 +31,7 @@
                     </div>
                     @if(isset($duration))
                         <div class="col-lg-4">
-                            <p>Duration: <span>{{$durtion}}</span></p>
+                            <p>Duration: <span>{{$duration}}</span></p>
                             <p>Frontend: <span>{{$frontend}}</span></p>
                         </div>
                     @endif

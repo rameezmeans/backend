@@ -137,10 +137,10 @@ class UsersController extends Controller
 
                 $temp[$country->country] = [$usersCount,$filesCount,$creditsCount];
                 $table1 []= $temp;
-                
+
             }
 
-            return view('groups.table',['table1' => $table1, 'duration' => $request->duration]);
+            return view('groups.table',['frontend' => $request->front_end, 'table1' => $table1, 'duration' => $request->duration]);
 
         }
     }
