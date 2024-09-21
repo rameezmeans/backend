@@ -93,7 +93,7 @@ class UsersController extends Controller
 
                 $temp = [];
                 if($request->duration == 'today') {
-                    
+
                     $usersCount = User::where('country', $country->country)
                     ->whereRaw('date(created_at) = curdate()')
                     ->where('test','=', 0)
@@ -143,6 +143,12 @@ class UsersController extends Controller
             }
 
             return view('groups.table',['frontend' => $request->front_end, 'table1' => $table1, 'duration' => $request->duration]);
+
+        }
+
+        if(isset($request->start)) {
+
+            dd($request->start);
 
         }
     }
