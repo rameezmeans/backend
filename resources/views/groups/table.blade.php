@@ -31,7 +31,7 @@
                     </div>
                     @if(isset($duration))
                         <div class="col-lg-4">
-                            <p>Duration: <span>{{$duration}}</span></p>
+                            <p>Time: <span>{{$duration}}</span></p>
                             <p>Frontend: <span>{{\App\Models\FrontEnd::findOrFail($frontend)->name}}</span></p>
                         </div>
                     @endif
@@ -60,7 +60,7 @@
                                     
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$key}}</p>
+                                            <p>{{code_to_country($key)}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$row[0]}}</p>
