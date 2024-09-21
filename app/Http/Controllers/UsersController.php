@@ -118,12 +118,12 @@ class UsersController extends Controller
 
                     $usersCount = User::where('country', $country->country)
                     ->whereDate('created_at', Carbon::yesterday())
-                    ->where('test', 0)
+                    ->where('test','=', 0)
                     ->where('front_end_id', $request->front_end)->count();
 
                     $users = User::where('country', $country->country)
                     ->whereDate('created_at', Carbon::yesterday())
-                    ->where('test', 0)
+                    ->where('test','=', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
 
                     $ids = [];
@@ -164,7 +164,7 @@ class UsersController extends Controller
                 ->where('front_end_id', $request->front_end)
                 ->get();
 
-                $table1 = [];
+                $table2 = [];
 
                 foreach($countries as $country) {
 
@@ -174,11 +174,27 @@ class UsersController extends Controller
                     ->where('test','=', 0)
                     ->where('front_end_id', $request->front_end)->count();
 
-                    dd($usersCount);
+                    $users = User::where('country', $country->country)
+                    ->whereDate('created_at', '>=' , $startDate)
+                    ->whereDate('created_at', '<=' , $endDate)
+                    ->where('test','=', 0)
+                    ->where('front_end_id', $request->front_end)->get('id')->toArray();
+
+                    $ids = [];
+                    foreach($users as $u){
+                        $ids []= $u['id'];
+                    }
+                    
+                    $filesCount = File::whereIn('user_id', $ids)->count();
+                    $creditsCount = (int) Credit::whereIn('user_id', $ids)
+                    ->where('credits', '>', 0)->sum('credits');
                 
                 }
 
-            
+                $temp[$country->country] = [$usersCount,$filesCount,$creditsCount];
+                $table2[$country->country]= $temp[$country->country];
+
+                return view('groups.table',['frontend' => $request->front_end, 'table2' => $table2, 'duration' => $request->duration]);
 
         }
     }
