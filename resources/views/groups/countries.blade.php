@@ -10,7 +10,7 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                    <h3>Software Report</h3>
+                    <h3>Countries and Customers Report</h3>
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
@@ -113,95 +113,6 @@
 @section('pagespecificscripts')
 
 <script type="text/javascript">
-
-    $(document).ready(function(event){
-
-        window.onpageshow = function(event) {
-            if (event.persisted) {
-                window.location.reload() 
-            }
-        };
-
-        // $(document).on('change', '#duration', function(e){
-        
-        //     $('#progress').show();
-
-        //     let duration = $('#duration').val();
-        //     let front_end = $('#frontend').val();
-        //     let country = $('#country').val();
-
-
-        //     getReport(duration, front_end, country);
-
-        // });
-
-        // $(document).on('change', '#frontend', function(e){
-        
-        //     $('#progress').show();
-
-        //     let duration = $('#duration').val();
-        //     let front_end = $('#frontend').val();
-        //     let country = $('#country').val();
-
-
-        //     getReport(duration, front_end, country);
-
-        // });
-
-        // $(document).on('change', '#country', function(e){
-        
-        //     $('#progress').show();
-
-        //     let duration = $('#duration').val();
-        //     let front_end = $('#frontend').val();
-        //     let country = $('#country').val();
-
-
-        //     getReport(duration, front_end, country);
-
-        // });
-
-    
-
-
-    $('#progress').show();
-
-    let duration = $('#duration').val();
-    let front_end = $('#frontend').val();
-    let country = $('#country').val();
-
-
-    getReport(duration, front_end, country);
-
-        function getReport(duration, front_end, country){
-
-        let country_url = '{{route('get-country-report')}}';
-    
-        $.ajax({
-                url:country_url,
-                type: "POST",
-                data: {
-                    duration: duration,
-                    front_end: front_end,
-                    country: country,
-                    
-                },
-                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-                success: function(res) {
-
-                    $('#progress').hide();
-                    $('#recordsRows').html(res.html);
-                    $('#customers').html(res.count);
-                    // $('#replies').html(res.replies);
-                
-
-                }
-            });
-        }
-
-
-        
-    });
 
 </script>
 
