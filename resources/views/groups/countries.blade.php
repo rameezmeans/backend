@@ -165,6 +165,7 @@
 
     $(document).ready(function(event){
 
+        location.reload();
 
         // $(document).on('change', '#duration', function(e){
         

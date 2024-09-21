@@ -59,13 +59,13 @@ class UsersController extends Controller
 
     }
 
-    public function getCountriesReport(Request $request){
+    public function getCountriesReport(Request $request) {
 
-        if(isset($request->duration)){
+        if(isset($request->duration)) {
 
             $table1 = [];
 
-            if($request->duration == 'today'){
+            if($request->duration == 'today') {
 
                 $countries = User::select('country', \DB::raw("count(id) as count"))
                 ->groupby('country')
@@ -77,7 +77,7 @@ class UsersController extends Controller
                 ->get();
 
             }
-            else{
+            else {
 
                 $countries = User::select('country', \DB::raw("count(id) as count"))
                 ->groupby('country')
@@ -89,10 +89,11 @@ class UsersController extends Controller
                 ->get();
             }
 
-            foreach($countries as $country){
+            foreach($countries as $country) {
 
                 $temp = [];
-                if($request->duration == 'today'){
+                if($request->duration == 'today') {
+                    
                     $usersCount = User::where('country', $country->country)
                     ->whereRaw('date(created_at) = curdate()')
                     ->where('test','=', 0)
@@ -102,7 +103,7 @@ class UsersController extends Controller
                     ->whereRaw('date(created_at) = curdate()')
                     ->where('test','=', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
-                    
+
                     $ids = [];
                     foreach($users as $u){
                         $ids []= $u['id'];
@@ -113,7 +114,8 @@ class UsersController extends Controller
                     ->where('credits', '>', 0)->sum('credits');
 
                 }
-                else if($request->duration == 'yesterday'){
+                else if($request->duration == 'yesterday') {
+
                     $usersCount = User::where('country', $country->country)
                     ->whereDate('created_at', Carbon::yesterday())
                     ->where('test', 0)
@@ -123,11 +125,6 @@ class UsersController extends Controller
                     ->whereDate('created_at', Carbon::yesterday())
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
-
-                    // dd($users = User::where('country', $country->country)
-                    // ->whereDate('created_at', Carbon::yesterday())
-                    // ->where('test', 0)
-                    // ->where('front_end_id', $request->front_end)->get());
 
                     $ids = [];
                     foreach($users as $u){
