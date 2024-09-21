@@ -140,6 +140,8 @@ class UsersController extends Controller
 
             }
 
+            dd($table1);
+
             return view('groups.table',['frontend' => $request->front_end, 'table1' => $table1, 'duration' => $request->duration]);
 
         }
