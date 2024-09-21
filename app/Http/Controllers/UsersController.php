@@ -163,9 +163,7 @@ class UsersController extends Controller
                 ->where('country', '!=' ,'Live Chat')
                 ->where('front_end_id', $request->front_end)
                 ->get();
-
-                dd($countries);
-
+                
                 $table2 = [];
 
                 foreach($countries as $country) {
@@ -195,7 +193,7 @@ class UsersController extends Controller
                     $table2[$country->country]= $temp[$country->country];
                 
                 }
-                
+
                 return view('groups.table',['frontend' => $request->front_end,
                     'table2' => $table2,
                     'start' => $request->start,
