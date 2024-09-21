@@ -76,8 +76,6 @@ class UsersController extends Controller
                 ->where('front_end_id', $request->front_end)
                 ->get();
 
-                dd($countries);
-
             }
             else{
 
@@ -104,6 +102,11 @@ class UsersController extends Controller
                     ->whereRaw('date(created_at) = curdate()')
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
+
+                    dd(User::where('country', $country->country)
+                    ->whereRaw('date(created_at) = curdate()')
+                    ->where('test','=', 0)
+                    ->where('front_end_id', $request->front_end)->get());
                     
                     $ids = [];
                     foreach($users as $u){
