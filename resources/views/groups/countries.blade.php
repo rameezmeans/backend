@@ -165,7 +165,11 @@
 
     $(document).ready(function(event){
 
-        location.reload();
+        window.onpageshow = function(event) {
+            if (event.persisted) {
+                window.location.reload() 
+            }
+        };
 
         // $(document).on('change', '#duration', function(e){
         
