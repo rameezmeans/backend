@@ -95,18 +95,15 @@ class UsersController extends Controller
                 if($request->duration == 'today'){
                     $usersCount = User::where('country', $country->country)
                     ->whereRaw('date(created_at) = curdate()')
-                    ->where('test', 0)
+                    ->where('test','=', 0)
                     ->where('front_end_id', $request->front_end)->count();
 
                     $users = User::where('country', $country->country)
                     ->whereRaw('date(created_at) = curdate()')
-                    ->where('test', 0)
+                    ->where('test','=', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
 
-                    dd(User::where('country', $country->country)
-                    ->whereRaw('date(created_at) = curdate()')
-                    ->where('test','=', 0)
-                    ->where('front_end_id', $request->front_end)->get());
+                    dd($usersCount);
                     
                     $ids = [];
                     foreach($users as $u){
