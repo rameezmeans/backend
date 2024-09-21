@@ -32,7 +32,7 @@
                     @if(isset($duration))
                         <div class="col-lg-4">
                             <p>Duration: <span>{{$duration}}</span></p>
-                            <p>Frontend: <span>{{\App\Models\Frontend::findOrFail($frontend)->name}}</span></p>
+                            <p>Frontend: <span>{{\App\Models\FrontEnd::findOrFail($frontend)->name}}</span></p>
                         </div>
                     @endif
                 </div>
