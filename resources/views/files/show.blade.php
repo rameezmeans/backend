@@ -772,9 +772,9 @@ margin-bottom: 10px !important;
                                   @elseif($file->front_end_id == 3)
 
                                 @if($file->tool_type == 'master')
-                                <span class="text-white label-danger label"> {{$stage->efiles_credits}} </span>
+                                <span class="text-white label-danger label">Test {{$stage->efiles_credits}} </span>
                                 @else
-                                  <span class="text-white label-danger label"> {{$stage->efiles_slave_credits}} </span>
+                                  <span class="text-white label-danger label">Test {{$stage->efiles_slave_credits}} </span>
                                 @endif
                               @else
                                 <span class="text-white label-danger label pull-right"> {{$optionInner->credits}} </span>
