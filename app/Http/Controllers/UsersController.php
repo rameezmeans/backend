@@ -190,14 +190,12 @@ class UsersController extends Controller
                     $filesCount = File::whereIn('user_id', $ids)->count();
                     $creditsCount = (int) Credit::whereIn('user_id', $ids)
                     ->where('credits', '>', 0)->sum('credits');
+
+                    $temp[$country->country] = [$usersCount,$filesCount,$creditsCount];
+                    $table2[$country->country]= $temp[$country->country];
                 
                 }
-
-                $temp[$country->country] = [$usersCount,$filesCount,$creditsCount];
-                $table2[$country->country]= $temp[$country->country];
-
-                dd($table2);
-
+                
                 return view('groups.table',['frontend' => $request->front_end,
                     'table2' => $table2,
                     'start' => $request->start,
