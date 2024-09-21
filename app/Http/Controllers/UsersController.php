@@ -194,9 +194,12 @@ class UsersController extends Controller
                 $temp[$country->country] = [$usersCount,$filesCount,$creditsCount];
                 $table2[$country->country]= $temp[$country->country];
 
-                dd($table2);
+                // dd($table2);
 
-                return view('groups.table',['frontend' => $request->front_end, 'table2' => $table2, 'duration' => $request->duration]);
+                return view('groups.table',['frontend' => $request->front_end,
+                    'table2' => $table2,
+                    'start' => $request->start,
+                    'end' => $request->end]);
 
         }
     }

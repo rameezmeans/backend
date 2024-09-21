@@ -82,6 +82,55 @@
                     </div>
                 </div>
                 @endif
+
+                @if(isset($start))
+                <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                    <div>
+                        {{-- <div id="progress" class="text-center">
+                            <div class="progress-circle-indeterminate m-t-45" style="">
+                            </div>
+                            <br>
+                        </div> --}}
+                        <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Country</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Customers Registered</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Files</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits</th>
+                                  
+                                    
+                                </tr>
+                            </thead>
+                            <tbody id="recordsRows">
+                                @foreach ($table2 as $key => $row)
+                                    
+                                    <tr role="row">
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{code_to_country($key)}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$row[0]}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$row[1]}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$row[2]}}</p>
+                                        </td>
+                                        
+                                        
+
+                                    </tr>
+
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endif
+
+
             </div>
           </div>
         </div>
