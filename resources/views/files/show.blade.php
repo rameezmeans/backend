@@ -762,20 +762,12 @@ margin-bottom: 10px !important;
                                 <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
                                 {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  ({{\App\Models\Service::where('id', $option->service_id)->first()->vehicle_type}}) (@if(\App\Models\Service::findOrFail( $option->service_id )->active == 1) {{'ECU Tech'}} @elseif(\App\Models\Service::findOrFail( $option->service_id )->tuningx_active == 1) {{'TuningX'}} @else {{'E-files'}} @endif)
                                 @php $optionInner = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
-                                @if($file->front_end_id == 2)
+                                @if($file->front_end_id == 2 || $file->front_end_id == 3)
                                   @if($file->tool_type == 'master')
                                     <span class="text-white label-danger label pull-right"> {{$optionInner->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
                                   @else
                                     <span class="text-white label-danger label pull-right"> {{$optionInner->optios_stage($file->stage_services->service_id)->first()->slave_credits}} </span>
                                   @endif
-
-                                  @elseif($file->front_end_id == 3)
-
-                                @if($file->tool_type == 'master')
-                                <span class="text-white label-danger label">Test {{$stage->efiles_credits}} </span>
-                                @else
-                                  <span class="text-white label-danger label">Test {{$stage->efiles_slave_credits}} </span>
-                                @endif
                               @else
                                 <span class="text-white label-danger label pull-right"> {{$optionInner->credits}} </span>
                               @endif
@@ -3137,20 +3129,12 @@ margin-bottom: 10px !important;
                                 <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
                                 {{\App\Models\Service::where('id', $option->service_id)->first()->name}}  ({{\App\Models\Service::where('id', $option->service_id)->first()->vehicle_type}}) (@if(\App\Models\Service::findOrFail( $option->service_id )->active == 1) {{'ECU Tech'}} @elseif(\App\Models\Service::findOrFail( $option->service_id )->tuningx_active == 1) {{'TuningX'}} @else {{'E-files'}} @endif)
                                 @php $optionInner = \App\Models\Service::where('id', $option->service_id)->first(); @endphp
-                                @if($file->front_end_id == 2)
+                                @if($file->front_end_id == 2 || $file->front_end_id == 3)
                                   @if($file->tool_type == 'master')
                                     <span class="text-white label-danger label pull-right"> {{$optionInner->optios_stage($file->stage_services->service_id)->first()->master_credits}} </span>
                                   @else
                                     <span class="text-white label-danger label pull-right"> {{$optionInner->optios_stage($file->stage_services->service_id)->first()->slave_credits}} </span>
                                   @endif
-
-                                  @elseif($file->front_end_id == 3)
-
-                                @if($file->tool_type == 'master')
-                                <span class="text-white label-danger label"> {{$stage->efiles_credits}} </span>
-                                @else
-                                  <span class="text-white label-danger label"> {{$stage->efiles_slave_credits}} </span>
-                                @endif
 
                               @else
                                 <span class="text-white label-danger label pull-right"> {{$optionInner->credits}} </span>
