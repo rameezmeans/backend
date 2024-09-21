@@ -220,12 +220,14 @@ class UsersController extends Controller
                         ->whereDate('created_at', '=' , $d)
                         ->where('test','=', 0)
                         ->where('front_end_id', $request->front_end)->count();
-                        
+
                         $countsArray []= $counts;
                         
                     }
 
-                    $temp[$country->country] = [ $usersCount, $filesCount, $creditsCount, max($countsArray), min($countsArray) ];
+                    $avg = array_sum($countsArray) / count(array_filter($countsArray));
+
+                    $temp[$country->country] = [ $usersCount, $filesCount, $creditsCount, max($countsArray), min($countsArray), $avg ];
                     $table2[$country->country]= $temp[$country->country];
                 
                 }
