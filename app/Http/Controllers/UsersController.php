@@ -124,6 +124,11 @@ class UsersController extends Controller
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
 
+                    dd($users = User::where('country', $country->country)
+                    ->whereDay('created_at', Carbon::yesterday())
+                    ->where('test', 0)
+                    ->where('front_end_id', $request->front_end)->get());
+
                     $ids = [];
                     foreach($users as $u){
                         $ids []= $u['id'];
@@ -136,10 +141,10 @@ class UsersController extends Controller
                 }
 
                 $temp[$country->country] = [$usersCount,$filesCount,$creditsCount];
-                $table1 [$country->country]= $temp[$country->country];
+                $table1[$country->country]= $temp[$country->country];
 
             }
-            
+
             return view('groups.table',['frontend' => $request->front_end, 'table1' => $table1, 'duration' => $request->duration]);
 
         }
