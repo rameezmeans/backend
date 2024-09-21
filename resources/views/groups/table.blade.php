@@ -36,7 +36,7 @@
                         </div>
                     @endif
 
-                    @if(isset($duration))
+                    @if(isset($start))
                         <div class="col-lg-4">
                             <p>Start Date: <span>{{$start}}</span></p>
                             <p>End Date: <span>{{$end}}</span></p>
