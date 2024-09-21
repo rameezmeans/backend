@@ -139,7 +139,7 @@ class UsersController extends Controller
 
                 // dd($temp);
 
-                $table1 []= $temp[$country->country];
+                $table1 [$country->country]= $temp[$country->country];
 
             }
 
