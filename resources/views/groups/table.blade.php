@@ -32,18 +32,18 @@
                     @if(isset($duration))
                         <div class="col-lg-4">
                             <p>Duration: <span>{{$duration}}</span></p>
-                            <p>Frontend: <span>{{$frontend}}</span></p>
+                            <p>Frontend: <span>{{\App\Models\Frontend::findOrFail($frontend)->name}}</span></p>
                         </div>
                     @endif
                 </div>
                 @if(isset($duration))
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
-                        <div id="progress" class="text-center">
+                        {{-- <div id="progress" class="text-center">
                             <div class="progress-circle-indeterminate m-t-45" style="">
                             </div>
                             <br>
-                        </div>
+                        </div> --}}
                         <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
