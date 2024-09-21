@@ -115,19 +115,19 @@ class UsersController extends Controller
                 }
                 else if($request->duration == 'yesterday'){
                     $usersCount = User::where('country', $country->country)
-                    ->whereDay('created_at', Carbon::yesterday())
+                    ->whereDate('created_at', Carbon::yesterday())
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->count();
 
                     $users = User::where('country', $country->country)
-                    ->whereDay('created_at', Carbon::yesterday())
+                    ->whereDate('created_at', Carbon::yesterday())
                     ->where('test', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
 
-                    dd($users = User::where('country', $country->country)
-                    ->whereDate('created_at', Carbon::yesterday())
-                    ->where('test', 0)
-                    ->where('front_end_id', $request->front_end)->get());
+                    // dd($users = User::where('country', $country->country)
+                    // ->whereDate('created_at', Carbon::yesterday())
+                    // ->where('test', 0)
+                    // ->where('front_end_id', $request->front_end)->get());
 
                     $ids = [];
                     foreach($users as $u){
