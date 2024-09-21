@@ -225,7 +225,7 @@ class UsersController extends Controller
                         
                     }
 
-                    $avg = array_sum($countsArray) / count(array_filter($countsArray));
+                    $avg = round( array_sum($countsArray) / count(array_filter($countsArray)), 2);
 
                     $temp[$country->country] = [ $usersCount, $filesCount, $creditsCount, max($countsArray), min($countsArray), $avg ];
                     $table2[$country->country]= $temp[$country->country];
