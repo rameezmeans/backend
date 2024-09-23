@@ -86,6 +86,12 @@
               <a href="{{ route('countries-report') }}">Countries Report</a>
               <span class="icon-thumbnail">CR</span>
             </li>
+
+            <li class="">
+              <a href="{{ route('services-report') }}">Services Report</a>
+              <span class="icon-thumbnail">CR</span>
+            </li>
+
           </ul>
         </li>
 

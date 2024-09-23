@@ -162,6 +162,17 @@
 
 @section('pagespecificscripts')
 
+<script type="text/javascript">
 
+    $( document ).ready(function(event) {
+
+    let table = $('.dataTable').DataTable({
+        "aaSorting": [],
+
+    });
+
+    });
+
+</script>
 
 @endsection

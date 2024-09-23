@@ -27,6 +27,10 @@ class ServicesController extends Controller
         // $this->middleware('adminOnly', ['except' => ['getStages', 'getOptions']]);
     }
 
+    public function servicesReport(){
+
+        // return view('services.report', ['options' => $options, 'stages' => $stages]);
+    }
     public function onlyTotalProposedCredits(Request $request){
 
         $file = File::findOrFail($request->file_id);
