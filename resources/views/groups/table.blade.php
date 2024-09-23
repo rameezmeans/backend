@@ -169,6 +169,12 @@
     let table = $('.innner-dataTable').DataTable({
         "aaSorting": [],
         "bPaginate": false,
+
+        layout: {
+            topStart: {
+                buttons: ['excel']
+            }
+        }
     });
 
     });
