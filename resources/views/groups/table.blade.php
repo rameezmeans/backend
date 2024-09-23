@@ -169,11 +169,17 @@
     let table = $('.innner-dataTable').DataTable({
         "aaSorting": [],
         "bPaginate": false,
-        "layout": {
-            "topStart": {
-                buttons: ['excel']
+        dom: 'Brftip',
+        buttons: [
+        {
+            extend: 'excel', 
+            exportOptions: {
+            modifier: {
+                page: 'current'
+            }
             }
         }
+        ]
         
     });
 
