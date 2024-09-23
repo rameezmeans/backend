@@ -166,9 +166,7 @@
 
     $( document ).ready(function(event) {
 
-    let table = $('.innner-dataTable').DataTable({
-        "aaSorting": [],
-        "bPaginate": false,
+    let table = new DataTable('#example', {
         dom: 'Brftip',
         buttons: [
         {
