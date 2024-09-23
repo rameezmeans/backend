@@ -168,7 +168,7 @@
 
     let table = $('.innner-dataTable').DataTable({
         "aaSorting": [],
-
+        "bPaginate": false,
     });
 
     });
