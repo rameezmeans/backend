@@ -166,18 +166,10 @@
 
     $( document ).ready(function(event) {
 
-    let table = new DataTable('#example', {
-        dom: 'Brftip',
-        buttons: [
-        {
-            extend: 'excel', 
-            exportOptions: {
-            modifier: {
-                page: 'current'
-            }
-            }
-        }
-        ]
+    let table = $('.innner-dataTable').DataTable({
+        "aaSorting": [],
+        "bPaginate": false,
+        
         
     });
 
