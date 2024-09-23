@@ -166,13 +166,16 @@
 
     $( document ).ready(function(event) {
 
-    let table =  new DataTable('.innner-dataTable', {
-    layout: {
-        topStart: {
-            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+    let table = $('.innner-dataTable').DataTable({
+        "aaSorting": [],
+        "bPaginate": false,
+        "layout": {
+            "topStart": {
+                buttons: ['excel']
+            }
         }
-    }
-});
+        
+    });
 
     });
 
