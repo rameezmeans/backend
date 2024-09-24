@@ -55,7 +55,7 @@
                         </div> --}}
                         <button id="export" class="btn btn-success " type="button"><i class="pg-plus_circle"></i> <span class="bold">Export To Excel</span>
                         </button>
-                        <table id="" class="table table-hover demo-table-search innner-dataTable table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                        <table class="table table-hover demo-table-search innner-dataTable table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Country</th>
@@ -104,7 +104,7 @@
                         </div> --}}
                         <button id="export" class="btn btn-success" type="button"><i class="pg-plus_circle"></i> <span class="bold">Export To Excel</span>
                         </button>
-                        <table id="innner-dataTable" table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                        <table class="table table-hover demo-table-search innner-dataTable table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Country</th>
@@ -177,7 +177,7 @@
 
         $(".export").click(function(){
             console.log('export button clicked');
-            $(".innner-dataTable").table2excel({
+            $("#tableWithSearch").table2excel({
                 // exclude CSS class
                 exclude:".noExl",
                 name:"customer_countries_report",
