@@ -211,7 +211,7 @@ class UsersController extends Controller
                         $ids []= $u['id'];
                     }
 
-                    // dd(implode(', ',$ids));
+                    dd(implode(', ',$ids));
                     
                     // $filesCount = File::whereIn('user_id', $ids)
                     // ->whereDate('created_at', '>=' , $startDate)
