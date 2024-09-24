@@ -67,6 +67,15 @@
                                 </tr>
                             </thead>
                             <tbody id="recordsRows">
+
+                                @php
+                                    $r1 = 0;
+                                    $r2 = 0;
+                                    $r3 = 0;
+                                    $r4 = 0;
+                                    
+                                @endphp
+
                                 @foreach ($table1 as $key => $row)
                                     
                                     <tr role="row">
@@ -87,7 +96,33 @@
 
                                     </tr>
 
+                                    @php
+                                            $r1++;
+                                            $r2 += $row[0];
+                                            $r3 += $row[1];
+                                            $r4 += $row[2];
+                                            
+                                            
+                                        @endphp
+
                                 @endforeach
+
+                                <tr role="row">
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r1}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r2}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r3}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r4}}</p>
+                                    </td>
+                                    
+                                </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -120,6 +155,17 @@
                                 </tr>
                             </thead>
                             <tbody id="recordsRows">
+
+                                @php
+                                    $r1 = 0;
+                                    $r2 = 0;
+                                    $r3 = 0;
+                                    $r4 = 0;
+                                    $r5 = 0;
+                                    $r6 = 0;
+                                    $r7 = 0;
+                                @endphp
+
                                 @foreach ($table2 as $key => $row)
                                     
                                     <tr role="row">
@@ -145,11 +191,45 @@
                                             <p>{{$row[2]}}</p>
                                         </td>
                                         
+                                        @php
+                                            $r1++;
+                                            $r2 += $row[0];
+                                            $r3 += $row[1];
+                                            $r4 += $row[2];
+                                            $r5 += $row[3];
+                                            $r6 += $row[4];
+                                            $r7 += $row[5];
+                                            
+                                        @endphp
                                         
 
                                     </tr>
 
                                 @endforeach
+
+                                <tr role="row">
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r1}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r2}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r5}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r6}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r7}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r3}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r4}}</p>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
