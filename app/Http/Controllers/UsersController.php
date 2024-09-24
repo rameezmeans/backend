@@ -231,7 +231,7 @@ class UsersController extends Controller
                     $creditsCount = (int) Credit::whereIn('user_id', $ids)
                     // ->whereDate('created_at', '>=' , $startDate)
                     // ->whereDate('created_at', '<=' , $endDate)
-                    ->where('credits', '>', 0)->sum('credits');
+                    ->where('credits', '<', 0)->sum('credits');
 
                     $countsArray = [];
 
