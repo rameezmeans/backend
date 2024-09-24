@@ -5074,12 +5074,14 @@ margin-bottom: 10px !important;
                         @endif
                       </div>
                     </div>
+                    @if($optionInner != NULL)
                     <div class="col-md-2">
                       <div class="checkbox check-success">
                         <input type="checkbox" name="exclude_service[]" value="{{$optionInner->id}}" id="exclude_option_{{$optionInner->id}}">
                         <label for="exclude_option_{{$optionInner->id}}">Exclude</label>
                       </div>
                     </div>
+                    @endif
                     @endforeach
                   @endif
                     
