@@ -209,8 +209,14 @@ class UsersController extends Controller
                         $ids []= $u['id'];
                     }
                     
-                    $filesCount = File::whereIn('user_id', $ids)->count();
+                    $filesCount = File::whereIn('user_id', $ids)
+                    ->whereDate('created_at', '>=' , $startDate)
+                    ->whereDate('created_at', '<=' , $endDate)
+                    ->count();
+                    
                     $creditsCount = (int) Credit::whereIn('user_id', $ids)
+                    ->whereDate('created_at', '>=' , $startDate)
+                    ->whereDate('created_at', '<=' , $endDate)
                     ->where('credits', '>', 0)->sum('credits');
 
                     $countsArray = [];
