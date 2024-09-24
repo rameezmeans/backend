@@ -105,23 +105,6 @@
                         <button id="export" class="btn btn-success" type="button"><i class="pg-plus_circle"></i> <span class="bold">Export To Excel</span>
                         </button>
 
-                        <table id="exportTable" style="display: none;">
-                            <tbody>
-                                @foreach ($table2 as $key => $row)
-                                <tr>
-                                    <td>{{code_to_country($key)}}</td>
-                                    <td>{{$row[0]}}</td>
-                                    <td>{{$row[3]}}</td>
-                                    <td>{{$row[4]}}</td>
-                                    <td>{{$row[5]}}</td>
-                                    <td>{{$row[1]}}</td>
-                                    <td>{{$row[2]}}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-
-
                         <table class="table table-hover demo-table-search innner-dataTable table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
