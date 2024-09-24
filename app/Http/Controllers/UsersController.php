@@ -192,27 +192,15 @@ class UsersController extends Controller
 
                 foreach($countries as $country) {
 
-                    // $usersCount = User::where('country', $country->country)
-                    // ->whereDate('created_at', '>=' , $startDate)
-                    // ->whereDate('created_at', '<=' , $endDate)
-                    // ->where('test','=', 0)
-                    // ->where('front_end_id', $request->front_end)->count();
-
                     $usersCount = User::where('country', $country->country)
-                    // ->whereDate('created_at', '>=' , $startDate)
-                    // ->whereDate('created_at', '<=' , $endDate)
+                    ->whereDate('created_at', '>=' , $startDate)
+                    ->whereDate('created_at', '<=' , $endDate)
                     ->where('test','=', 0)
                     ->where('front_end_id', $request->front_end)->count();
 
-                    // $users = User::where('country', $country->country)
-                    // ->whereDate('created_at', '>=' , $startDate)
-                    // ->whereDate('created_at', '<=' , $endDate)
-                    // ->where('test','=', 0)
-                    // ->where('front_end_id', $request->front_end)->get('id')->toArray();
-
                     $users = User::where('country', $country->country)
-                    // ->whereDate('created_at', '>=' , $startDate)
-                    // ->whereDate('created_at', '<=' , $endDate)
+                    ->whereDate('created_at', '>=' , $startDate)
+                    ->whereDate('created_at', '<=' , $endDate)
                     ->where('test','=', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
 
@@ -225,14 +213,24 @@ class UsersController extends Controller
 
                     // dd(implode(', ',$ids));
                     
+                    // $filesCount = File::whereIn('user_id', $ids)
+                    // ->whereDate('created_at', '>=' , $startDate)
+                    // ->whereDate('created_at', '<=' , $endDate)
+                    // ->count();
+
                     $filesCount = File::whereIn('user_id', $ids)
-                    ->whereDate('created_at', '>=' , $startDate)
-                    ->whereDate('created_at', '<=' , $endDate)
+                    // ->whereDate('created_at', '>=' , $startDate)
+                    // ->whereDate('created_at', '<=' , $endDate)
                     ->count();
                     
+                    // $creditsCount = (int) Credit::whereIn('user_id', $ids)
+                    // ->whereDate('created_at', '>=' , $startDate)
+                    // ->whereDate('created_at', '<=' , $endDate)
+                    // ->where('credits', '>', 0)->sum('credits');
+
                     $creditsCount = (int) Credit::whereIn('user_id', $ids)
-                    ->whereDate('created_at', '>=' , $startDate)
-                    ->whereDate('created_at', '<=' , $endDate)
+                    // ->whereDate('created_at', '>=' , $startDate)
+                    // ->whereDate('created_at', '<=' , $endDate)
                     ->where('credits', '>', 0)->sum('credits');
 
                     $countsArray = [];
