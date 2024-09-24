@@ -216,12 +216,14 @@ class UsersController extends Controller
                     ->where('test','=', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
 
-                    dd($users);
+                    // dd($users);
 
                     $ids = [];
                     foreach($users as $u){
                         $ids []= $u['id'];
                     }
+
+                    dd($ids);
                     
                     $filesCount = File::whereIn('user_id', $ids)
                     ->whereDate('created_at', '>=' , $startDate)
