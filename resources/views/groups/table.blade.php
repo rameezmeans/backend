@@ -53,7 +53,7 @@
                             </div>
                             <br>
                         </div> --}}
-                        <button class="btn btn-success" type="button"><i class="pg-plus_circle"></i> <span class="bold">Export To Excel</span>
+                        <button class="export" class="btn btn-success" type="button"><i class="pg-plus_circle"></i> <span class="bold">Export To Excel</span>
                         </button>
                         <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
@@ -170,13 +170,20 @@
 
     $( document ).ready(function(event) {
 
-    let table = $('.innner-dataTable').DataTable({
-        "aaSorting": [],
-        "bPaginate": false,
-        
-        
-    });
+        let table = $('.innner-dataTable').DataTable({
+            "aaSorting": [],
+            "bPaginate": false,
+        });
 
+        $(".export").click(function(){
+            $(".innner-dataTable").table2excel({
+                // exclude CSS class
+                exclude:".noExl",
+                name:"customer_countries_report",
+                filename:"customer_countries_report",//do not include extension
+                fileext:".xls" // file extension
+            });
+        });
     });
 
 </script>

@@ -29,7 +29,7 @@ class ServicesController extends Controller
 
     public function servicesReport(){
 
-        // return view('services.report', ['options' => $options, 'stages' => $stages]);
+        return view('services.report');
     }
     public function onlyTotalProposedCredits(Request $request){
 
