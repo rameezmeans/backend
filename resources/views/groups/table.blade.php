@@ -175,7 +175,7 @@
             "bPaginate": false,
         });
 
-        $(".export").click(function(){
+        $("#export").click(function(){
             console.log('export button clicked');
             $("#tableWithSearch").table2excel({
                 // exclude CSS class
