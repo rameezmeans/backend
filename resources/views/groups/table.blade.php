@@ -176,6 +176,7 @@
         });
 
         $(".export").click(function(){
+            console.log('export button clicked');
             $(".innner-dataTable").table2excel({
                 // exclude CSS class
                 exclude:".noExl",
