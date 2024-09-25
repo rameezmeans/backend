@@ -10,6 +10,7 @@ use App\Models\File;
 use App\Models\FrontEnd;
 use App\Models\StagesOptionsCredit;
 use App\Models\Translation;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class ServicesController extends Controller
@@ -27,9 +28,20 @@ class ServicesController extends Controller
         // $this->middleware('adminOnly', ['except' => ['getStages', 'getOptions']]);
     }
 
+    public function getServicesReport(Request $request){
+        dd($request->all());
+    }
+
     public function servicesReport(){
 
-        return view('services.report');
+        $countries = User::select('country')
+        ->groupby('country')
+        ->where('test','=', 0)
+        ->get();
+
+        $frontends = FrontEnd::all();
+
+        return view('services.report', ['countries' => $countries, 'frontends' => $frontends, ]);
     }
     public function onlyTotalProposedCredits(Request $request){
 
