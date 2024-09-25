@@ -36,7 +36,7 @@
                             <p>Start Date: <span>{{$start}}</span></p>
                             <p>End Date: <span>{{$end}}</span></p>
                             <p>Frontend: <span>{{\App\Models\FrontEnd::findOrFail($frontend)->name}}</span></p>
-                            <p>Frontend: <span>{{$coutries}}</span></p>
+                            <p>Frontend: <span>{{$countries}}</span></p>
                         </div>
                     
 
