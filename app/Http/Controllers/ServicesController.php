@@ -58,6 +58,7 @@ class ServicesController extends Controller
                 ->whereDate('files.created_at', '<=' , $endDate)
                 ->where('file_services.service_id', '=' , $service->id)
                 ->where('users.country', '=' , $country)
+                ->where('files.front_end_id', '=' , $request->front_end)
                 ->groupby('files.id')
                 ->count();
 
