@@ -41,7 +41,7 @@
                     
 
                 </div>
-                @if(0)
+                
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
                         
@@ -50,27 +50,42 @@
                         <table class="table table-hover demo-table-search innner-dataTable table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Country</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Customers Registered</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Files</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits</th>
+
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Services</th>
+                                    @foreach($countries as $key => $value)
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">{{code_to_country($value)}}</th>
+                                    @endforeach
+
+                                    @foreach(reset($megaArr) as $key => $value)
+                                        <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">{{\App\Models\Service::findOrFail($key)->name}}</th>
+                                    @endforeach
                                   
                                     
                                 </tr>
                             </thead>
                             <tbody id="recordsRows">
 
-                                @php
+                                {{-- @php
                                     $r1 = 0;
                                     $r2 = 0;
                                     $r3 = 0;
                                     $r4 = 0;
                                     
-                                @endphp
+                                @endphp --}}
 
-                                @foreach ($table1 as $key => $row)
+                                @foreach(reset($megaArr) as $key => $value)
+                                <tr role="row">
+                                    <td><p>{{\App\Models\Service::findOrFail($key)->name}}</p></td>
+                                </tr>
+                                @endforeach
+
+                                @foreach ($megaArr as $key => $value)
+
+                                <tr role="row">
+                                    <td><p>{{$value}}</p></td>
+                                </tr>
                                     
-                                    <tr role="row">
+                                    {{-- <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{code_to_country($key)}}</p>
                                         </td>
@@ -86,20 +101,20 @@
                                         
                                         
 
-                                    </tr>
+                                    </tr> --}}
 
-                                    @php
+                                        {{-- @php
                                             $r1++;
                                             $r2 += $row[0];
                                             $r3 += $row[1];
                                             $r4 += $row[2];
                                             
                                             
-                                        @endphp
+                                        @endphp --}}
 
                                 @endforeach
 
-                                <tr role="row">
+                                {{-- <tr role="row">
                                     <td class="v-align-middle semi-bold sorting_1">
                                         <p>Total: {{$r1}}</p>
                                     </td>
@@ -113,13 +128,13 @@
                                         <p>Total: {{$r4}}</p>
                                     </td>
                                     
-                                </tr>
+                                </tr> --}}
 
                             </tbody>
                         </table>
                     </div>
                 </div>
-                @endif
+                
             </div>
           </div>
         </div>
@@ -144,7 +159,7 @@
             $("#tableWithSearch").table2excel({
                 // exclude CSS class
                 exclude:".noExl",
-                name:"customer_countries_report",
+                name:"services_countries_report",
                 filename:"customer_countries_report",//do not include extension
                 fileext:".xls" // file extension
             });
