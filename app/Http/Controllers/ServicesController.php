@@ -41,12 +41,13 @@ class ServicesController extends Controller
         else{
             $services = Service::where('efiles_active', 1)->get();
         }
+
         $megaArr = [];
         foreach($countries as $country){
-            $t1 = [];
+            $t1[$country] = [];
             foreach($services as $service){
                 $temp = [];
-                $temp[$country] = $service->id;
+                $temp[$service->id] = 0;
                 $t1 []= $temp;
             }
             $megaArr []= $t1;
