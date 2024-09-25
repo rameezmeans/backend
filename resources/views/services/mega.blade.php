@@ -60,17 +60,23 @@
                             </thead>
                             <tbody id="recordsRows">
 
+                                {{-- @php
+                                    dd($megaArr);
+
+                                @endphp --}}
+
                                 @foreach ($countries as $value)
                                 <tr role="row">
 
-                                        <td><p>{{code_to_country($value)}}</p></td>
-                                        @foreach($megaArr as $key => $value)
+                                    @foreach($megaArr as $key => $v)
 
-                                            @foreach($value as $v)
-                                                <td><p>{{$v}}</p></td>
-                                                
-                                            @endforeach
-                                        @endforeach
+                                    @php
+                                        dd($v);
+
+                                    @endphp
+
+                                        {{-- <td><p>{{$v[$value]}}</p></td> --}}
+                                    @endforeach
                                 </tr>
                                         {{-- <td><p>{{$megaArr[$value][$key]}}</p></td> --}}
                                 @endforeach
