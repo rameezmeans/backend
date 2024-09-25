@@ -36,7 +36,7 @@
                             <p>Start Date: <span>{{$start}}</span></p>
                             <p>End Date: <span>{{$end}}</span></p>
                             <p>Frontend: <span>{{\App\Models\FrontEnd::findOrFail($frontend)->name}}</span></p>
-                            <p>Frontend: <span>{{implode(',',$countries)}}</span></p>
+                            <p>Countries: @foreach($countries as $c)<span>{{code_to_country($c))}}</span>@endforeach</p>
                         </div>
                     
 
