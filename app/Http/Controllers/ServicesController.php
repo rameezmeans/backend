@@ -32,8 +32,11 @@ class ServicesController extends Controller
 
         // dd($request->all());
 
-        $startDate = $request->start;
-        $endDate = $request->end;
+        $startd = str_replace('/', '-', $request->start);
+        $startDate = date('Y-m-d', strtotime($startd));
+
+        $endd = str_replace('/', '-', $request->end);
+        $endDate = date('Y-m-d', strtotime($endd));
 
         $countries = $request->countries;
 
