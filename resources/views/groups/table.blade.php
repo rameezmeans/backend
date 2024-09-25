@@ -148,8 +148,8 @@
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Max Per Day</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Min Per Day</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Avg</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Files</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Files (All Users from Country)</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits (All Users from Country)</th>
                                   
                                     
                                 </tr>
@@ -164,6 +164,8 @@
                                     $r5 = 0;
                                     $r6 = 0;
                                     $r7 = 0;
+                                    $r8 = 0;
+                                    $r9 = 0;
                                 @endphp
 
                                 @foreach ($table2 as $key => $row)
@@ -190,6 +192,12 @@
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$row[2]}}</p>
                                         </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$row[6]}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$row[7]}}</p>
+                                        </td>
                                         
                                         @php
                                             $r1++;
@@ -199,6 +207,8 @@
                                             $r5 += $row[3];
                                             $r6 += $row[4];
                                             $r7 += $row[5];
+                                            $r8 += $row[6];
+                                            $r9 += $row[7];
                                             
                                         @endphp
                                         
@@ -228,6 +238,18 @@
                                     </td>
                                     <td class="v-align-middle semi-bold sorting_1">
                                         <p>Total: {{$r4}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r3}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r4}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r8}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>Total: {{$r9}}</p>
                                     </td>
                                 </tr>
                             </tbody>

@@ -204,6 +204,10 @@ class UsersController extends Controller
                     ->where('test','=', 0)
                     ->where('front_end_id', $request->front_end)->get('id')->toArray();
 
+                    $overallUsers = User::where('country', $country->country)
+                    ->where('test','=', 0)
+                    ->where('front_end_id', $request->front_end)->get('id')->toArray();
+
                     // dd($users);
 
                     $ids = [];
@@ -211,9 +215,19 @@ class UsersController extends Controller
                         $ids []= $u['id'];
                     }
 
+                    $overallIds = [];
+                    foreach($overallUsers as $u){
+                        $overallIds []= $u['id'];
+                    }
+
                     // dd(implode(', ',$ids));
                     
                     $filesCount = File::whereIn('user_id', $ids)
+                    ->whereDate('created_at', '>=' , $startDate)
+                    ->whereDate('created_at', '<=' , $endDate)
+                    ->count();
+
+                    $filesOverallCount = File::where('user_id', $overallIds)
                     ->whereDate('created_at', '>=' , $startDate)
                     ->whereDate('created_at', '<=' , $endDate)
                     ->count();
@@ -224,6 +238,11 @@ class UsersController extends Controller
                     // ->count();
                     
                     $creditsCount = (int) Credit::whereIn('user_id', $ids)
+                    ->whereDate('created_at', '>=' , $startDate)
+                    ->whereDate('created_at', '<=' , $endDate)
+                    ->where('credits', '>', 0)->sum('credits');
+
+                    $creditsOverallCount = (int) Credit::whereIn('user_id', $overallIds)
                     ->whereDate('created_at', '>=' , $startDate)
                     ->whereDate('created_at', '<=' , $endDate)
                     ->where('credits', '>', 0)->sum('credits');
@@ -247,7 +266,7 @@ class UsersController extends Controller
 
                     $avg = round( array_sum($countsArray) / count(array_filter($countsArray)), 2);
 
-                    $temp[$country->country] = [ $usersCount, $filesCount, $creditsCount, max($countsArray), min($countsArray), $avg ];
+                    $temp[$country->country] = [ $usersCount, $filesCount, $creditsCount, max($countsArray), min($countsArray), $avg, $filesOverallCount, $creditsOverallCount ];
                     $table2[$country->country]= $temp[$country->country];
                 
                 }
