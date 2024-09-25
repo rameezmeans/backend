@@ -213,25 +213,25 @@ class UsersController extends Controller
 
                     // dd(implode(', ',$ids));
                     
-                    // $filesCount = File::whereIn('user_id', $ids)
-                    // ->whereDate('created_at', '>=' , $startDate)
-                    // ->whereDate('created_at', '<=' , $endDate)
-                    // ->count();
-
                     $filesCount = File::whereIn('user_id', $ids)
-                    // ->whereDate('created_at', '>=' , $startDate)
-                    // ->whereDate('created_at', '<=' , $endDate)
+                    ->whereDate('created_at', '>=' , $startDate)
+                    ->whereDate('created_at', '<=' , $endDate)
                     ->count();
-                    
-                    // $creditsCount = (int) Credit::whereIn('user_id', $ids)
-                    // ->whereDate('created_at', '>=' , $startDate)
-                    // ->whereDate('created_at', '<=' , $endDate)
-                    // ->where('credits', '>', 0)->sum('credits');
 
+                    // $filesCount = File::whereIn('user_id', $ids)
+                    // // ->whereDate('created_at', '>=' , $startDate)
+                    // // ->whereDate('created_at', '<=' , $endDate)
+                    // ->count();
+                    
                     $creditsCount = (int) Credit::whereIn('user_id', $ids)
-                    // ->whereDate('created_at', '>=' , $startDate)
-                    // ->whereDate('created_at', '<=' , $endDate)
-                    ->where('credits', '<', 0)->sum('credits');
+                    ->whereDate('created_at', '>=' , $startDate)
+                    ->whereDate('created_at', '<=' , $endDate)
+                    ->where('credits', '>', 0)->sum('credits');
+
+                    // $creditsCount = (int) Credit::whereIn('user_id', $ids)
+                    // // ->whereDate('created_at', '>=' , $startDate)
+                    // // ->whereDate('created_at', '<=' , $endDate)
+                    // ->where('credits', '>', 0)->sum('credits');
 
                     $countsArray = [];
 
