@@ -27,7 +27,7 @@
                 <div class="row">
                     
                     @csrf
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <div class="form-group form-group-default input-group">
                             <div class="form-input-group">
                                 <label>Start</label>
@@ -38,7 +38,7 @@
                             </div>
                             </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <div class="form-group form-group-default input-group">
                             <div class="form-input-group">
                                 <label>End</label>
@@ -49,12 +49,22 @@
                             </div>
                             </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
                         <div class="form-group form-group-default">
                             <label>Select Frontend</label>
                             <select class="full-width" id="frontend" data-init-plugin="select2" name="front_end">
                             @foreach($frontends as $frontend)
                                 <option value="{{$frontend->id}}">{{\App\Models\Frontend::findOrFail($frontend->id)->name}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group form-group-default">
+                            <label>Select Countries</label>
+                            <select class="full-width" id="frontend" data-init-plugin="select2" name="countries[]">
+                            @foreach($countries as $country)
+                                <option value="{{$country}}">{{code_to_country($country)}}</option>
                             @endforeach
                             </select>
                         </div>
