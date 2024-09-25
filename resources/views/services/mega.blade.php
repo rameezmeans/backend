@@ -60,40 +60,25 @@
                             </thead>
                             <tbody id="recordsRows">
 
-                                {{-- @php
+                                @php
                                     dd($megaArr);
 
-                                @endphp --}}
+                                @endphp
 
                                 @foreach ($countries as $value)
                                 <tr role="row">
-
+                                    <td><p>{{code_to_country($value)}}</p></td>
                                     @foreach($megaArr as $key => $v)
-
-                                    {{-- @php
-                                        dd($v);
-
-                                    @endphp --}}
                                         @foreach($v as $i)
                                             <td><p>{{$i}}</p></td>
                                         @endforeach
-                                        {{-- <td><p>{{$v[$value]}}</p></td> --}}
+                                       
                                     @endforeach
                                 </tr>
-                                        {{-- <td><p>{{$megaArr[$value][$key]}}</p></td> --}}
+                                        
                                 @endforeach
 
-                                {{-- @foreach(reset($megaArr) as $key => $value)
-                                    <tr role="row">
-                                        <td><p>{{\App\Models\Service::findOrFail($key)->name}}</p></td>
-                                        
-                                        @foreach ($countries as $value)
-                                        <td><p>{{$megaArr[$value][$key]}}</p></td>
-                                        @endforeach
-
-                                    </tr>
-
-                                @endforeach --}}
+                               
                             </tbody>
                         </table>
                     </div>
