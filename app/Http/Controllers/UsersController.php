@@ -232,6 +232,8 @@ class UsersController extends Controller
                     ->whereDate('created_at', '<=' , $endDate)
                     ->count();
 
+                    dd($filesOverallCount);
+
                     // $filesCount = File::whereIn('user_id', $ids)
                     // // ->whereDate('created_at', '>=' , $startDate)
                     // // ->whereDate('created_at', '<=' , $endDate)
