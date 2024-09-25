@@ -53,83 +53,24 @@
 
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Services</th>
                                     @foreach($countries as $key => $value)
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">{{code_to_country($value)}}</th>
+                                        <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">{{code_to_country($value)}}</th>
                                     @endforeach
 
-                                    @foreach(reset($megaArr) as $key => $value)
-                                        <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">{{\App\Models\Service::findOrFail($key)->name}}</th>
-                                    @endforeach
-                                  
-                                    
                                 </tr>
                             </thead>
                             <tbody id="recordsRows">
 
-                                {{-- @php
-                                    $r1 = 0;
-                                    $r2 = 0;
-                                    $r3 = 0;
-                                    $r4 = 0;
-                                    
-                                @endphp --}}
-
                                 @foreach(reset($megaArr) as $key => $value)
-                                <tr role="row">
-                                    <td><p>{{\App\Models\Service::findOrFail($key)->name}}</p></td>
-                                </tr>
-                                @endforeach
-
-                                @foreach ($megaArr as $key => $value)
-
-                                <tr role="row">
-                                    <td><p>{{$value}}</p></td>
-                                </tr>
-                                    
-                                    {{-- <tr role="row">
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{code_to_country($key)}}</p>
-                                        </td>
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$row[0]}}</p>
-                                        </td>
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$row[1]}}</p>
-                                        </td>
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$row[2]}}</p>
-                                        </td>
+                                    <tr role="row">
+                                        <td><p>{{\App\Models\Service::findOrFail($key)->name}}</p></td>
                                         
-                                        
+                                        @foreach ($countries as $value)
+                                        <td><p>{{$megaArr[$value][$key]}}</p></td>
+                                        @endforeach
 
-                                    </tr> --}}
-
-                                        {{-- @php
-                                            $r1++;
-                                            $r2 += $row[0];
-                                            $r3 += $row[1];
-                                            $r4 += $row[2];
-                                            
-                                            
-                                        @endphp --}}
+                                    </tr>
 
                                 @endforeach
-
-                                {{-- <tr role="row">
-                                    <td class="v-align-middle semi-bold sorting_1">
-                                        <p>Total: {{$r1}}</p>
-                                    </td>
-                                    <td class="v-align-middle semi-bold sorting_1">
-                                        <p>Total: {{$r2}}</p>
-                                    </td>
-                                    <td class="v-align-middle semi-bold sorting_1">
-                                        <p>Total: {{$r3}}</p>
-                                    </td>
-                                    <td class="v-align-middle semi-bold sorting_1">
-                                        <p>Total: {{$r4}}</p>
-                                    </td>
-                                    
-                                </tr> --}}
-
                             </tbody>
                         </table>
                     </div>
