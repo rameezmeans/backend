@@ -54,8 +54,8 @@ class ServicesController extends Controller
 
                 $filesCount = File::join('file_services', 'files.id', '=', 'file_services.file_id')
                 ->join('users', 'files.user_id', '=', 'users.id')
-                ->whereDate('created_at', '>=' , $startDate)
-                ->whereDate('created_at', '<=' , $endDate)
+                ->whereDate('files.created_at', '>=' , $startDate)
+                ->whereDate('files.created_at', '<=' , $endDate)
                 ->where('file_services.service_id', '=' , $service->id)
                 ->where('users.country', '=' , $country)
                 ->groupby('files.id')
