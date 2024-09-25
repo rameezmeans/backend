@@ -70,7 +70,7 @@ class ServicesController extends Controller
             $megaArr[$country]= $t1;
         }
 
-        dd($megaArr);
+        return view('services.mega', ['countries' => $countries, 'megaArr' => $megaArr, 'start' => $request->start, 'end' => $request->end]);
     }
 
     public function servicesReport(){
@@ -82,7 +82,7 @@ class ServicesController extends Controller
 
         $frontends = FrontEnd::all();
 
-        return view('services.report', ['countries' => $countries, 'frontends' => $frontends, ]);
+        return view('services.report', ['countries' => $countries, 'frontends' => $frontends]);
     }
     public function onlyTotalProposedCredits(Request $request){
 
