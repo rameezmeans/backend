@@ -70,7 +70,7 @@ class ServicesController extends Controller
             $megaArr[$country]= $t1;
         }
 
-        return view('services.mega', ['countries' => $countries, 'megaArr' => $megaArr, 'start' => $request->start, 'end' => $request->end]);
+        return view('services.mega', ['countries' => $countries,'frontend' => $request->front_end, 'megaArr' => $megaArr, 'start' => $request->start, 'end' => $request->end]);
     }
 
     public function servicesReport(){
