@@ -30,6 +30,11 @@ class ServicesController extends Controller
 
     public function getServicesReport(Request $request){
 
+        // dd($request->all());
+
+        $startDate = $request->start;
+        $endDate = $request->end;
+
         $countries = $request->countries;
 
         if($request->front_end == 1){
@@ -46,9 +51,19 @@ class ServicesController extends Controller
         foreach($countries as $country){
             $t1 = [];
             foreach($services as $service){
-                $t1[$service->id]= 0;
+
+                $filesCount = File::join('file_services', 'files.id', '=', 'file_services.file_id')
+                ->join('users', 'files.user_id', '=', 'users.id')
+                ->whereDate('created_at', '>=' , $startDate)
+                ->whereDate('created_at', '<=' , $endDate)
+                ->where('file_services.service_id', '=' , $service->id)
+                ->where('users.country', '=' , $country)
+                ->groupby('files.id')
+                ->count();
+
+                $t1[$service->id]= $filesCount;
             }
-            $megaArr [$country]= $t1;
+            $megaArr[$country]= $t1;
         }
 
         dd($megaArr);
