@@ -62,7 +62,7 @@ class ServicesController extends Controller
                 ->where('file_services.service_id', '=' , $service->id)
                 ->where('users.country', '=' , $country)
                 ->where('files.front_end_id', '=' , $request->front_end)
-                ->groupby('file_services.file_id')
+                ->distinct('file_services.file_id')
                 ->count();
 
                 $t1[$service->id]= $filesCount;
