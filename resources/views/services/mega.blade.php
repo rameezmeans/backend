@@ -70,11 +70,13 @@
 
                                     @foreach($megaArr as $key => $v)
 
-                                    @php
+                                    {{-- @php
                                         dd($v);
 
-                                    @endphp
-
+                                    @endphp --}}
+                                        @foreach($v as $i)
+                                            <td><p>{{$i}}</p></td>
+                                        @endforeach
                                         {{-- <td><p>{{$v[$value]}}</p></td> --}}
                                     @endforeach
                                 </tr>
