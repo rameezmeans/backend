@@ -227,14 +227,14 @@ class UsersController extends Controller
                     ->whereDate('created_at', '<=' , $endDate)
                     ->count();
 
-                    dd($overallIds);
+                    // dd($overallIds);
 
-                    $filesOverallCount = File::where('user_id', $overallIds)
+                    $filesOverallCount = File::whereIN('user_id', $overallIds)
                     ->whereDate('created_at', '>=' , $startDate)
                     ->whereDate('created_at', '<=' , $endDate)
                     ->count();
 
-                    dd($filesOverallCount);
+                    // dd($filesOverallCount);
 
                     // $filesCount = File::whereIn('user_id', $ids)
                     // // ->whereDate('created_at', '>=' , $startDate)
