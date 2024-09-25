@@ -51,16 +51,31 @@
                             <thead>
                                 <tr role="row">
 
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Services</th>
-                                    @foreach($countries as $key => $value)
-                                        <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">{{code_to_country($value)}}</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Countries</th>
+                                    @foreach(reset($megaArr) as $key => $value)
+                                        <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">{{\App\Models\Service::findOrFail($key)->name}}</th>
                                     @endforeach
 
                                 </tr>
                             </thead>
                             <tbody id="recordsRows">
 
-                                @foreach(reset($megaArr) as $key => $value)
+                                @foreach ($countries as $value)
+                                <tr role="row">
+
+                                        <td><p>{{code_to_country($value)}}</p></td>
+                                        @foreach($megaArr as $key => $value)
+
+                                            @foreach($value as $v)
+                                                <td><p>{{$v}}</p></td>
+                                                
+                                            @endforeach
+                                        @endforeach
+                                </tr>
+                                        {{-- <td><p>{{$megaArr[$value][$key]}}</p></td> --}}
+                                @endforeach
+
+                                {{-- @foreach(reset($megaArr) as $key => $value)
                                     <tr role="row">
                                         <td><p>{{\App\Models\Service::findOrFail($key)->name}}</p></td>
                                         
@@ -70,7 +85,7 @@
 
                                     </tr>
 
-                                @endforeach
+                                @endforeach --}}
                             </tbody>
                         </table>
                     </div>
@@ -101,7 +116,7 @@
                 // exclude CSS class
                 exclude:".noExl",
                 name:"services_countries_report",
-                filename:"customer_countries_report",//do not include extension
+                filename:"services_countries_report",//do not include extension
                 fileext:".xls" // file extension
             });
         });
