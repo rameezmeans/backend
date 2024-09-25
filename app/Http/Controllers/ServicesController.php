@@ -48,9 +48,9 @@ class ServicesController extends Controller
             foreach($services as $service){
                 $temp = [];
                 $temp[$service->id] = 0;
-                $t1 [$country]= $temp;
+                $t1 []= $temp;
             }
-            $megaArr []= $t1;
+            $megaArr [$country]= $t1;
         }
 
         dd($megaArr);
