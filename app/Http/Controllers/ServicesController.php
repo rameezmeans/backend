@@ -30,6 +30,8 @@ class ServicesController extends Controller
 
     public function getServicesReport(Request $request){
 
+        $countries = $request->countries;
+
         if($request->front_end == 1){
             $services = Service::where('active', 1)->get();
         }
@@ -40,8 +42,12 @@ class ServicesController extends Controller
             $services = Service::where('efiles_active', 1)->get();
         }
         $megaArr = [];
-        foreach($services as $service){
-            $megaArr []= $service->name;
+        foreach($countries as $country){
+            foreach($services as $service){
+                $temp = [];
+                $temp[$country] = $service;
+                $megaArr []= $temp;
+            }
         }
 
         dd($megaArr);
