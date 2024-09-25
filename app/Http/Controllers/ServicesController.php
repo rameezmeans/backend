@@ -29,7 +29,22 @@ class ServicesController extends Controller
     }
 
     public function getServicesReport(Request $request){
-        dd($request->all());
+
+        if($request->front_end == 1){
+            $services = Service::where('active', 1)->get();
+        }
+        else if($request->front_end == 2){
+            $services = Service::where('tuningx_active', 1)->get();
+        }
+        else{
+            $services = Service::where('efiles_active', 1)->get();
+        }
+        $megaArr = [];
+        foreach($services as $service){
+            $megaArr []= $service->name;
+        }
+
+        dd($megaArr);
     }
 
     public function servicesReport(){
