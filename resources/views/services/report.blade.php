@@ -64,7 +64,7 @@
                             <label>Select Countries</label>
                             <select class="full-width" id="frontend" data-init-plugin="select2" name="countries[]">
                             @foreach($countries as $country)
-                                <option value="{{$country}}">{{code_to_country($country)}}</option>
+                                <option value="{{$country->country}}">{{code_to_country($country->country)}}</option>
                             @endforeach
                             </select>
                         </div>
