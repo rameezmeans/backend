@@ -242,12 +242,6 @@
                                         <p>Total: {{$r4}}</p>
                                     </td>
                                     <td class="v-align-middle semi-bold sorting_1">
-                                        <p>Total: {{$r3}}</p>
-                                    </td>
-                                    <td class="v-align-middle semi-bold sorting_1">
-                                        <p>Total: {{$r4}}</p>
-                                    </td>
-                                    <td class="v-align-middle semi-bold sorting_1">
                                         <p>Total: {{$r8}}</p>
                                     </td>
                                     <td class="v-align-middle semi-bold sorting_1">
