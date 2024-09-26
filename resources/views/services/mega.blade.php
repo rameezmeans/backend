@@ -94,19 +94,16 @@
                                 <tr role="row">
                                     <td><p>#</p></td>
                                     @for( $i=0; $i < sizeOf($a[0]); $i++ )
+
+                                        @php
+                                            $sum = 0;
+                                        @endphp
+
                                         @for( $j=0; $j < sizeOf($a); $j++ )
                                         
                                         @php
-                                            // dd($a);
-                                            $sum = 0;
-                                            if($i == 0){
-                                                $sum+=$a[$i][$j];
-
-                                                dd($sum);
-                                            }
-                                            
+                                            $sum+=$a[$i][$j];
                                         @endphp
-
                                         
                                         <td><p>{{$sum}}</p></td>
                                         @endfor
