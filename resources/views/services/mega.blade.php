@@ -108,7 +108,7 @@
                                         
                                         @endfor
 
-                                        <td><p>{{$sum}}</p></td>
+                                        <td><p>Total:{{$sum}}</p></td>
                                     @endfor
                                     
                                 </tr>
