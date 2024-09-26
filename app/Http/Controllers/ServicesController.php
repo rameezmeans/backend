@@ -29,9 +29,7 @@ class ServicesController extends Controller
     }
 
     public function getServicesReport(Request $request){
-
-        // dd($request->all());
-
+        
         $startd = str_replace('/', '-', $request->start);
         $startDate = date('Y-m-d', strtotime($startd));
 

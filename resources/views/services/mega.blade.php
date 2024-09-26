@@ -92,13 +92,21 @@
                                     </tr>  
                                 @endforeach
                                 <tr role="row">
-                                    @php
-                                            dd($a);
-
+                                    <td><p>#</p></td>
+                                    @for( $i=0; $i < sizeOf($a[0]); $i++ )
+                                        @for($j=0; $j<sizeOf($a); $j++)
+                                        
+                                        @php
+                                            // dd($a[$j][$i]);
+                                            $sum = 0;
+                                            $sum+=$a[$j][$i];
                                         @endphp
-                                    <td><p>#</p></td>
-                                    <td><p>#</p></td>
-                                    <td><p>#</p></td>
+
+                                        
+                                        <td><p>{{$sum}}</p></td>
+                                        @endfor
+                                    @endfor
+                                    
                                 </tr>
                             </tbody>
                         </table>
