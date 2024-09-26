@@ -29,7 +29,7 @@ class ServicesController extends Controller
     }
 
     public function getServicesReport(Request $request){
-        
+
         $startd = str_replace('/', '-', $request->start);
         $startDate = date('Y-m-d', strtotime($startd));
 
@@ -50,7 +50,9 @@ class ServicesController extends Controller
 
         $megaArr = [];
         foreach($countries as $country){
+
             $t1 = [];
+
             foreach($services as $service){
 
                 $filesCount = File::join('file_services', 'files.id', '=', 'file_services.file_id')
@@ -63,9 +65,10 @@ class ServicesController extends Controller
                 ->distinct('file_services.file_id')
                 ->count();
 
-                $t1[$service->id]= $filesCount;
+                $t1[$service->id] = $filesCount;
             }
-            $megaArr[$country]= $t1;
+            
+            $megaArr[$country] = $t1;
         }
 
         return view('services.mega', ['countries' => $countries,'frontend' => $request->front_end, 'megaArr' => $megaArr, 'start' => $request->start, 'end' => $request->end]);
