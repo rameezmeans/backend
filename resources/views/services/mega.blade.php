@@ -67,11 +67,13 @@
                                     <tr role="row">
                                         <td><p>{{code_to_country($value)}}</p></td>
                                         @foreach($megaArr as $key => $v)
+                                            
                                             @if($key == $value)
-                                            @foreach($v as $i)
                                             @php
                                                 $temp = [];
                                             @endphp
+                                            @foreach($v as $i)
+                                            
                                                 
                                                 <td><p>{{$i}}</p></td>
 
@@ -92,7 +94,7 @@
                                 <tr role="row">
                                     @php
                                             dd($a);
-                                            
+
                                         @endphp
                                     <td><p>#</p></td>
                                     <td><p>#</p></td>
