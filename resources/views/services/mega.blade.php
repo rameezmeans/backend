@@ -90,6 +90,10 @@
                                     </tr>  
                                 @endforeach
                                 <tr role="row">
+                                    @php
+                                            dd($a);
+                                            
+                                        @endphp
                                     <td><p>#</p></td>
                                     <td><p>#</p></td>
                                     <td><p>#</p></td>
