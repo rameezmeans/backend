@@ -65,6 +65,18 @@ class ServicesController extends Controller
                 ->distinct('file_services.file_id')
                 ->count();
 
+                $files = File::join('file_services', 'files.id', '=', 'file_services.file_id')
+                ->join('users', 'files.user_id', '=', 'users.id')
+                ->whereDate('files.created_at', '>=' , $startDate)
+                ->whereDate('files.created_at', '<=' , $endDate)
+                ->where('file_services.service_id', '=' , $service->id)
+                ->where('users.country', '=' , $country)
+                ->where('files.front_end_id', '=' , $request->front_end)
+                ->distinct('file_services.file_id')
+                ->get();
+
+                dd($files);
+
                 $t1[$service->id] = $filesCount;
             }
             
