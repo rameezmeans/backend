@@ -102,9 +102,9 @@
                                         @for( $j=0; $j < sizeOf($a); $j++ )
                                         
                                         @php
-                                            $sum+=$a[$i][$j];
+                                            $sum+=$a[$j][$i];
                                         @endphp
-                                        
+
                                         <td><p>{{$sum}}</p></td>
                                         @endfor
                                     @endfor
