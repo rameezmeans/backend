@@ -99,9 +99,9 @@
                                         @php
                                             // dd($a);
                                             $sum = 0;
-                                            @if($i == 0)
+                                            if($i == 0)
                                                 $sum+=$a[$i][$j];
-                                            @endif
+                                            
                                         @endphp
 
                                         
