@@ -59,26 +59,18 @@
                                 </tr>
                             </thead>
                             <tbody id="recordsRows">
-
-                                @php
-                                    dd($megaArr);
-
-                                @endphp
-
                                 @foreach ($countries as $value)
-                                <tr role="row">
-                                    <td><p>{{code_to_country($value)}}</p></td>
-                                    @foreach($megaArr as $key => $v)
-                                        @foreach($v as $i)
-                                            <td><p>{{$i}}</p></td>
+                                    <tr role="row">
+                                        <td><p>{{code_to_country($value)}}</p></td>
+                                        @foreach($megaArr as $key => $v)
+                                            @if($key == $value)
+                                            @foreach($v as $i)
+                                                <td><p>{{$i}}</p></td>
+                                            @endforeach
+                                            @endif
                                         @endforeach
-                                       
-                                    @endforeach
-                                </tr>
-                                        
+                                    </tr>  
                                 @endforeach
-
-                               
                             </tbody>
                         </table>
                     </div>
