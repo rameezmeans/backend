@@ -105,8 +105,10 @@
                                             $sum+=$a[$j][$i];
                                         @endphp
 
-                                        <td><p>{{$sum}}</p></td>
+                                        
                                         @endfor
+
+                                        <td><p>{{$sum}}</p></td>
                                     @endfor
                                     
                                 </tr>
