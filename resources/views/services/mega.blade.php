@@ -59,18 +59,41 @@
                                 </tr>
                             </thead>
                             <tbody id="recordsRows">
+                                @php
+                                    $a = [];
+                                @endphp
+                                
                                 @foreach ($countries as $value)
                                     <tr role="row">
                                         <td><p>{{code_to_country($value)}}</p></td>
                                         @foreach($megaArr as $key => $v)
                                             @if($key == $value)
                                             @foreach($v as $i)
+                                            @php
+                                                $temp = [];
+                                            @endphp
+                                                
                                                 <td><p>{{$i}}</p></td>
+
+                                            @php
+                                                $temp []= $i;
+                                            @endphp
+
                                             @endforeach
                                             @endif
                                         @endforeach
+
+                                        @php
+                                            $a []= $temp;
+                                        @endphp
+
                                     </tr>  
                                 @endforeach
+                                <tr role="row">
+                                    <td><p>#</p></td>
+                                    <td><p>#</p></td>
+                                    <td><p>#</p></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
