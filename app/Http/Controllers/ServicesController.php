@@ -72,7 +72,8 @@ class ServicesController extends Controller
                 ->where('file_services.service_id', '=' , $service->id)
                 ->where('users.country', '=' , $country)
                 ->where('files.front_end_id', '=' , $request->front_end)
-                ->distinct('file_services.file_id')
+                ->select('files.id as file_id')
+                ->distinct('file_id')
                 ->get();
 
                 dd($files);
