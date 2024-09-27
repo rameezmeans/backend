@@ -3471,6 +3471,12 @@ class FilesController extends Controller
         // dd($comments);
         $showComments = false;
 
+        $selectedStageOptionsLabels = [];
+
+        $stage = $file->stage;
+
+        dd($stage);
+
         $selectedOptions = [];
         dd($file->options_services);
         foreach($file->options_services as $selected){
