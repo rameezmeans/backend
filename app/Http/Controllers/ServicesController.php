@@ -32,7 +32,7 @@ class ServicesController extends Controller
     }
 
     public function optionsComments(){
-        $brands = File::select('brand')->distinct()->get();
+        $brands = File::select('brand')->distinct()->orderBy('brand', 'desc')->get();
         $services = Service::select('label')->distinct()->get();
         $softwares = ProcessingSoftware::all();
         $comments = OptionComment::all();
