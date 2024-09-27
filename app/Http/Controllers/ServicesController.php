@@ -35,7 +35,15 @@ class ServicesController extends Controller
         $brands = File::select('brand')->distinct()->get();
         $services = Service::select('label')->distinct()->get();
         $softwares = ProcessingSoftware::all();
-        return view('services.options_comments', ['brands' => $brands, 'services' => $services, 'softwares' => $softwares]);
+        $comments = OptionComment::all();
+        return view('services.options_comments', ['brands' => $brands, 'services' => $services, 'softwares' => $softwares, 'comments' => $comments]);
+    }
+
+    public function deleteOptionComment(Request $request){
+
+        $o = OptionComment::findOrFail($request->id);
+        $o->delete();
+
     }
 
     public function getECUComments(Request $request){

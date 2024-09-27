@@ -628,6 +628,7 @@ Route::get('/services_report', [App\Http\Controllers\ServicesController::class, 
 Route::get('/options_comments', [App\Http\Controllers\ServicesController::class, 'optionsComments'])->name('options-comments');
 Route::post('/set_options_comments', [App\Http\Controllers\ServicesController::class, 'setOptionsComments'])->name('set-options-comments');
 Route::post('/get_comments_ecus', [App\Http\Controllers\ServicesController::class, 'getECUComments'])->name('get-comments-ecus');
+Route::post('/delete_option_comment', [App\Http\Controllers\ServicesController::class, 'deleteOptionComment'])->name('delete-option-comment');
 Route::post('/get_services_report', [App\Http\Controllers\ServicesController::class, 'getServicesReport'])->name('get-services-report');
 Route::post('/fetch_softwares_report', [App\Http\Controllers\ProcessingSoftwaresController::class, 'ajaxSoftwareReport'])->name('get-software-report');
 Route::post('/get_country_report', [App\Http\Controllers\UsersController::class, 'getCountriesReport'])->name('get-country-report');

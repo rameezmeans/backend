@@ -87,6 +87,43 @@
                 </div>
                 </div>
               </form>
+
+              <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                <div>
+                    <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                        <thead>
+                            <tr role="row">
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Brand</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">ECU</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Service</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Software</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($comments as $c)
+                                <tr role="row">
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>{{$c->brand}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>{{$c->ecu}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>{{$c->service_label}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p>{{$c->software}}</p>
+                                    </td>
+                                    <td class="v-align-middle semi-bold sorting_1">
+                                        <p><button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$c->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button></p>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
                 
             </div>
           </div>
@@ -101,6 +138,42 @@
 <script type="text/javascript">
 
 $(document).ready(function(e){
+
+    $('.btn-delete').click(function() {
+          Swal.fire({
+              
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/delete_option_comment",
+                        type: "POST",
+                        data: {
+                            id: $(this).data('id')
+                        },
+                        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Package has been deleted.",
+                                type: "success",
+                                timer: 3000
+                            });
+
+                            window.location.href = '/options_comments';
+                        }
+                    });            
+                }
+
+            });
+        });
 
     console.log('here we are');
 
