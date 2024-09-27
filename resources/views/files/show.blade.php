@@ -597,48 +597,48 @@ margin-bottom: 10px !important;
                             </div>
                             <div class="card-body">
                               
-                              <div class="b-t b-grey">
+                              <div class="b-t b-grey p-b-10 p-t-10">
                               <p class=" text-white">Brand</p>
                               <div class="">
                                 <span class="label label-success text-white">{{$record->brand}}<span>
                               </div>
                               </div>
                              
-                              <div class="b-t b-grey">
+                              <div class="b-t b-grey p-b-10 p-t-10">
                               <p class="text-white">ECU</p>
                               <div class="">
                                 <span class="label label-success text-white">{{$record->ecu}}<span>
                               </div>
                               </div>
                               
-                              <div class="b-t b-grey">
+                              <div class="b-t b-grey p-b-10 p-t-10">
                               <p class="text-white">Service Label</p>
                               <div class="">
                                 <span class="label label-success text-white">{{$record->service_label}}<span>
                               </div>
                               </div>
                               
-                              <div class="b-t b-grey">
+                              <div class="b-t b-grey p-b-10 p-t-10">
                               <p class="text-white">Software</p>
                               <div class="">
                                 <span class="label label-success text-white">{{$record->software}}<span>
                               </div>
                               </div>
                               
-                              <div class="b-t b-grey">
+                              <div class="b-t b-grey p-b-10 p-t-10">
                               <p class="text-white">Comment</p>
                               <div class="">
                                 <p class="text-white">{{$record->comments}}</p>
                               </div>
                               </div>
                               
-                              <div class="b-t b-grey">
+                              <div class="b-t b-grey p-b-10 p-t-10">
                               <p class="text-white">Result</p>
                               <div class="">
                                 <p class="text-white">{{$record->results}}</p>
                               </div>
                               </div>
-                              
+
                             </div>
                           </div>
                           <div class="clearfix"></div>
