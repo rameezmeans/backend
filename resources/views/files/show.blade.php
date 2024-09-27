@@ -586,7 +586,18 @@ margin-bottom: 10px !important;
         
                             
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          
+                          <div class="card card-default bg-danger" data-pages="card" style="position: relative; opacity: 1; left: 0px; top: 0px;">
+                            <div class="card-header ui-sortable-handle">
+                              <div class="card-title">Comment
+                              </div>
+                              <div class="card-controls">
+                                
+                              </div>
+                            </div>
+                            <div class="card-body">
+                              
+                            </div>
+                          </div>
                           <div class="clearfix"></div>
                         </div>
                         
