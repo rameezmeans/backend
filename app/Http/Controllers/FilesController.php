@@ -30,6 +30,7 @@ use App\Models\Key;
 use App\Models\Log;
 use App\Models\MagicEncryptedFile;
 use App\Models\NewRequestComment;
+use App\Models\OptionComment;
 use App\Models\ProcessedFile;
 use App\Models\ProcessingSoftware;
 use App\Models\RoleUser;
@@ -3484,7 +3485,9 @@ class FilesController extends Controller
             $selectedStageOptionsLabels []= $o->label;
         }
 
-        dd($selectedStageOptionsLabels);
+        $optionsCommentsRecords = OptionComment::whereIn('label', $selectedStageOptionsLabels)->get();
+
+        dd($optionsCommentsRecords);
 
         $selectedOptions = [];
         foreach($file->options_services as $selected){
