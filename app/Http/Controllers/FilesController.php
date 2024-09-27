@@ -3473,12 +3473,20 @@ class FilesController extends Controller
 
         $selectedStageOptionsLabels = [];
 
-        $stage = $file->stage_services;
+        $stageO = $file->stage_services;
 
-        dd($stage);
+        $stage = Service::findOrFail($stageO->service_id);
+
+        $selectedStageOptionsLabels []= $stage->label;
+
+        foreach($file->options_services as $op){
+            $o = Service::findOrFail($op->service_id);
+            $selectedStageOptionsLabels []= $o->label;
+        }
+
+        dd($selectedStageOptionsLabels);
 
         $selectedOptions = [];
-        dd($file->options_services);
         foreach($file->options_services as $selected){
             $selectedOptions []= $selected->service_id;
         }
