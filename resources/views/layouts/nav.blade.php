@@ -257,7 +257,11 @@
             <li class="m-t-30 ">
               <a href="{{ route('processing-softwares') }}">Processing Softwares</a>
               <span class="icon-thumbnail">Ps</span>
-          </li>
+            </li>
+            <li class="m-t-30 ">
+              <a href="{{ route('options-comments') }}">Options Comments</a>
+              <span class="icon-thumbnail">Oc</span>
+            </li>
             @endif
           </ul>
         </li>

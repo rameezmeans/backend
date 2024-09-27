@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('brands_ecu_services', function (Blueprint $table) {
+        Schema::create('options_comments', function (Blueprint $table) {
             $table->id();
             $table->string('brand');
             $table->string('ecu');
             $table->string('service_label');
+            $table->string('software');
             $table->text('comments');
             $table->text('results');
             $table->timestamps();

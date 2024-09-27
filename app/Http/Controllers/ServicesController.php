@@ -8,9 +8,12 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\TranslationController;
 use App\Models\File;
 use App\Models\FrontEnd;
+use App\Models\OptionComment;
+use App\Models\ProcessingSoftware;
 use App\Models\StagesOptionsCredit;
 use App\Models\Translation;
 use App\Models\User;
+use App\Models\Vehicle;
 use Illuminate\Support\Facades\Auth;
 
 class ServicesController extends Controller
@@ -26,6 +29,39 @@ class ServicesController extends Controller
         $this->translationObj = new TranslationController();
         $this->middleware('auth',['except' => ['getStages', 'getOptions']]);
         // $this->middleware('adminOnly', ['except' => ['getStages', 'getOptions']]);
+    }
+
+    public function optionsComments(){
+        $brands = File::select('brand')->distinct()->get();
+        $services = Service::select('label')->distinct()->get();
+        $softwares = ProcessingSoftware::all();
+        return view('services.options_comments', ['brands' => $brands, 'services' => $services, 'softwares' => $softwares]);
+    }
+
+    public function getECUComments(Request $request){
+        
+        $ecus = File::select('ecu')->whereNotNull('ecu')->where('brand', $request->brand)->distinct()->get();
+        
+        $ecuStr = "";
+        foreach($ecus as $ecu){
+            $ecuStr .= '<option value="'.$ecu->ecu.'">'.$ecu->ecu.'</option>';
+        }
+
+        return response()->json(['html' => $ecuStr]);
+    }
+
+    public function setOptionsComments(Request $request){
+
+        $new = new OptionComment();
+        $new->brand = $request->brand;
+        $new->ecu = $request->ecu;
+        $new->service_label = $request->service;
+        $new->software = $request->software;
+        $new->comments = $request->comment;
+        $new->results = $request->result;
+        $new->save();
+
+        return redirect()->route('options-comments');
     }
 
     public function getServicesReport(Request $request){
