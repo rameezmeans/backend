@@ -3487,8 +3487,6 @@ class FilesController extends Controller
 
         $optionsCommentsRecords = OptionComment::whereIn('service_label', $selectedStageOptionsLabels)->get();
 
-        dd($optionsCommentsRecords);
-
         $selectedOptions = [];
         foreach($file->options_services as $selected){
             $selectedOptions []= $selected->service_id;
@@ -3526,7 +3524,7 @@ class FilesController extends Controller
             return view('files.show', ['prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
         else{
-            return view('files.show_backup', ['prossingSoftwares' => $prossingSoftwares, 'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show_backup', ['optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares, 'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
 
         }
