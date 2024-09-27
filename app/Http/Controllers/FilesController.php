@@ -3485,7 +3485,7 @@ class FilesController extends Controller
             $selectedStageOptionsLabels []= $o->label;
         }
 
-        $optionsCommentsRecords = OptionComment::whereIn('label', $selectedStageOptionsLabels)->get();
+        $optionsCommentsRecords = OptionComment::whereIn('service_label', $selectedStageOptionsLabels)->get();
 
         dd($optionsCommentsRecords);
 
