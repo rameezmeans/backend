@@ -584,23 +584,47 @@ margin-bottom: 10px !important;
                           
                           <h5 class="m-t-40">Brand ECU Options Comment</h5>
         
-                            
+                           @foreach($optionsCommentsRecords as $record) 
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <div class="card card-default bg-danger" data-pages="card" style="position: relative; opacity: 1; left: 0px; top: 0px;">
                             <div class="card-header ui-sortable-handle">
-                              <div class="card-title">Comment
+                              <div class="card-title">
+                                <h2 class="text-white">Comment</h2>
                               </div>
                               <div class="card-controls">
                                 
                               </div>
                             </div>
                             <div class="card-body">
-                              
+                              <p class="pull-left text-white">Brand</p>
+                              <div class="pull-right">
+                                <span class="label label-success text-white">{{$record->brand}}<span>
+                              </div>
+                              <p class="pull-left text-white">ECU</p>
+                              <div class="pull-right">
+                                <span class="label label-success text-white">{{$record->ecu}}<span>
+                              </div>
+                              <p class="pull-left text-white">Service Label</p>
+                              <div class="pull-right">
+                                <span class="label label-success text-white">{{$record->service_label}}<span>
+                              </div>
+                              <p class="pull-left text-white">Software</p>
+                              <div class="pull-right">
+                                <span class="label label-success text-white">{{$record->software}}<span>
+                              </div>
+                              <p class="pull-left text-white">Comment</p>
+                              <div class="">
+                                <p>{{$record->comments}}</p>
+                              </div>
+                              <p class="pull-left text-white">Result</p>
+                              <div class="">
+                                <p>{{$record->results}}</p>
+                              </div>
                             </div>
                           </div>
                           <div class="clearfix"></div>
                         </div>
-                        
+                        @endforeach
                       </div>
 
                       
