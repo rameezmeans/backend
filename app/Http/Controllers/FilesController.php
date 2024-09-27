@@ -3472,7 +3472,7 @@ class FilesController extends Controller
         $showComments = false;
 
         $selectedOptions = [];
-        // dd($file->options_services);
+        dd($file->options_services);
         foreach($file->options_services as $selected){
             $selectedOptions []= $selected->service_id;
         }
