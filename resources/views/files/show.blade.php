@@ -584,6 +584,17 @@ margin-bottom: 10px !important;
                         
                         
                       </div>
+
+                      <div class="col-lg-6">
+                        <h5 class="m-t-40">Brand ECU Options Comment</h5>
+        
+                            
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          
+                          <div class="clearfix"></div>
+                        </div>
+
+                      </div>
         
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Reading Tool</h5>
