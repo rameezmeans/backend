@@ -3473,7 +3473,7 @@ class FilesController extends Controller
 
         $selectedStageOptionsLabels = [];
 
-        $stage = $file->stage;
+        $stage = $file->stage_services;
 
         dd($stage);
 
