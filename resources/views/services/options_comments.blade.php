@@ -179,6 +179,8 @@ $(document).ready(function(e){
 
 $(document).on('change', '#brand', function(e){
 
+    $('#ecu').html('');
+
     console.log(e);
 
     let brand = $(this).val();
