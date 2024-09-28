@@ -600,28 +600,28 @@ margin-bottom: 10px !important;
                               <div class="b-t b-grey p-b-10 p-t-10">
                               <p class=" text-white">Brand</p>
                               <div class="">
-                                <span class="label label-success text-white">{{$record->brand}}<span>
+                                <span class="label bg-warning text-white">{{$record->brand}}<span>
                               </div>
                               </div>
                              
                               <div class="b-t b-grey p-b-10 p-t-10">
                               <p class="text-white">ECU</p>
                               <div class="">
-                                <span class="label label-success text-white">{{$record->ecu}}<span>
+                                <span class="label bg-warning text-white">{{$record->ecu}}<span>
                               </div>
                               </div>
                               
                               <div class="b-t b-grey p-b-10 p-t-10">
                               <p class="text-white">Service Label</p>
                               <div class="">
-                                <span class="label label-success text-white">{{$record->service_label}}<span>
+                                <span class="label bg-warning text-white">{{$record->service_label}}<span>
                               </div>
                               </div>
                               
                               <div class="b-t b-grey p-b-10 p-t-10">
                               <p class="text-white">Software</p>
                               <div class="">
-                                <span class="label label-success text-white">{{$record->software}}<span>
+                                <span class="label bg-warning text-white">{{$record->software}}<span>
                               </div>
                               </div>
                               
