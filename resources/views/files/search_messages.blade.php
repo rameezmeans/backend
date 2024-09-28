@@ -53,8 +53,9 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if(isset($results))
                                 @foreach ($results as $result)
-                                    <tr role="row" class="redirect-click" data-redirect="{{ route('edit-package', $package->id) }}">
+                                    <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$result->file_id}}</p>
                                         </td>
@@ -66,6 +67,8 @@
                                 @endforeach
 
                                 {{ $results->links() }}
+
+                                @endif
                             </tbody>
                         </table>
                     </div>
