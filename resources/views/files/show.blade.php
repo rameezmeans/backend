@@ -590,9 +590,10 @@ margin-bottom: 10px !important;
 
                            <div class="alert alert-info" role="alert">
                             <p class="pull-left">Service: {{$record->service_label}}</p>
-                            <p class="pull-left">Software: {{$record->software}}</p>
-                            {{-- <button class="close" data-dismiss="alert"></button> --}}
-                            <div class="clearfix"></div>
+                            {{-- <br> --}}
+                            <p class="pull-right">Software: {{$record->software}}</p>
+                            
+                            {{-- <div class="clearfix"></div> --}}
                             <br>
                             <p>{{$record->comments}}</p>
                             <br>
