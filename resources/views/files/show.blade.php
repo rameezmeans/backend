@@ -588,28 +588,15 @@ margin-bottom: 10px !important;
 
 
 
-                           <div class="widget-5 card no-border  widget-loader-bar">
-                            <div class="card-header  pull-top top-right">
-                              <div class="card-controls">
-                                {{-- <ul>
-                                  <li><a data-toggle="refresh" class="card-refresh text-black" href="#"><i class="card-icon card-icon-refresh"></i></a>
-                                  </li>
-                                </ul> --}}
-                              </div>
-                            </div>
-                            <div class="container-xs-height full-height">
-                              <div class="row row-xs-height">
-                                <div class="col-xs-5 col-xs-height col-middle relative">
-                                  <div class="padding-15 top-left bottom-left">
-                                    <h5 class="hint-text no-margin p-l-10">Service: {{$record->service_lable}}</h5>
-                                    <h5 class="hint-text no-margin p-l-10">Software: {{$record->software}}</h5>
-                                    <p class=" bold font-montserrat p-l-10">{{$record->comments}}</p>
-                                    <p class=" hint-text visible-xlg p-l-10">{{$record->results}}</p>
-                                  </div>
-                                </div>
-                                
-                              </div>
-                            </div>
+                           <div class="alert alert-info" role="alert">
+                            <p class="pull-left">Service: {{$record->service_label}}</p>
+                            <p class="pull-left">Software: {{$record->software}}</p>
+                            <button class="close" data-dismiss="alert"></button>
+                            <div class="clearfix"></div>
+                            <br>
+                            <p>{{$record->comments}}</p>
+                            <br>
+                            <p>{{$record->results}}</p>
                           </div>
 
 
