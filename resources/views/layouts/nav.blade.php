@@ -409,6 +409,11 @@
               <a href="{{ route('tools') }}">Tools</a>
               <span class="icon-thumbnail">To</span>
             </li>
+
+            <li class="">
+              <a href="{{ route('message-search') }}">Message Search</a>
+              <span class="icon-thumbnail">MS</span>
+            </li>
             
             {{-- <li class="">
               <a href="{{ route('frontends') }}">Frontends</a>

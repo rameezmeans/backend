@@ -77,6 +77,18 @@ class FilesController extends Controller
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
     
+    public function getSearchResults(Request $request){
+        $keyword = $request->keyword;
+
+        $results = EngineerFileNote::where('egnineers_internal_notes', $keyword)->paginate(10);
+
+        dd($results);
+    }
+
+    public function messageSearch(){
+        return view('files.search_messages');
+    }
+
     public function setNewRequestComment(Request $request){
 
         $existingRecord = NewRequestComment::where('new_request_id', $request->new_request_id)->first();

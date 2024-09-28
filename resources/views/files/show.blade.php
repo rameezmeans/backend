@@ -580,7 +580,7 @@ margin-bottom: 10px !important;
 
                             @endif
                             
-                          </div>
+                          </div> 
                           
                           <h5 class="m-t-40">Brand ECU Options Comment</h5>
         
@@ -589,7 +589,7 @@ margin-bottom: 10px !important;
                           <div class="card card-default bg-danger" data-pages="card" style="position: relative; opacity: 1; left: 0px; top: 0px;">
                             <div class="card-header ui-sortable-handle">
                               <div class="card-title">
-                                <h2 class="text-white">Comment</h2>
+                                <h4 class="text-white">Comment</h4>
                               </div>
                               <div class="card-controls">
                                 

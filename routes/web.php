@@ -710,6 +710,9 @@ Route::post('/delete_acm_file', [App\Http\Controllers\FilesController::class, 'd
 Route::post('/fill_stage_options', [App\Http\Controllers\FilesController::class, 'fillStageOptions'])->name('fill-stage-options');
 Route::post('/upload_acm_reply', [App\Http\Controllers\FilesController::class, 'uploadACMReply'])->name('upload-acm-reply');
 
+Route::get('/message_search', [App\Http\Controllers\FilesController::class, 'messageSearch'])->name('message-search');
+Route::post('/get_search_results', [App\Http\Controllers\FilesController::class, 'getSearchResults'])->name('get-search-results');
+
 Route::post('/add_softwares_services', [App\Http\Controllers\FilesController::class, 'addSoftwares'])->name('add-softwares-services');
 Route::post('/remove_null_software_records', [App\Http\Controllers\FilesController::class, 'removeNullSoftwares'])->name('remove-null-software-records');
 
@@ -741,7 +744,6 @@ Route::post('/mass_delete', [App\Http\Controllers\VehiclesController::class,'mas
 Route::get('/import_vehicles', [App\Http\Controllers\VehiclesController::class,'importVehiclesView'])->name('import-vehicles');
 Route::post('/import_vehicles_post', [App\Http\Controllers\VehiclesController::class,'importVehicles'])->name('import-vehicles-post');
 Route::post('/add_engineer_comment', [App\Http\Controllers\VehiclesController::class,'addEngineerComment'])->name('add-engineer-comment');
-
 
 Route::get('/work_hours', [App\Http\Controllers\WorkHoursController::class,'index'])->name('work-hours');
 Route::get('/edit_work_hour/{id}', [App\Http\Controllers\WorkHoursController::class,'edit'])->name('edit-work-hour');
