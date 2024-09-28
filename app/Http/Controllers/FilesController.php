@@ -80,7 +80,7 @@ class FilesController extends Controller
     public function getSearchResults(Request $request){
         $keyword = $request->keyword;
 
-        $results = EngineerFileNote::where('egnineers_internal_notes', $keyword)->paginate(10);
+        $results = EngineerFileNote::where('egnineers_internal_notes', 'like', '%'.$keyword.'%')->paginate(10);
 
         dd($results);
     }
