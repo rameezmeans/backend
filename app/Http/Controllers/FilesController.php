@@ -82,7 +82,7 @@ class FilesController extends Controller
 
         $results = EngineerFileNote::where('egnineers_internal_notes', 'like', '%'.$keyword.'%')->paginate(10);
 
-        dd($results);
+        return view('files.search_messages', ['results' => $results]);
     }
 
     public function messageSearch(){
