@@ -593,7 +593,7 @@ margin-bottom: 10px !important;
                             {{-- <br> --}}
                             <p class="pull-right">Software: {{$record->software}}</p>
                             
-                            {{-- <div class="clearfix"></div> --}}
+                            <div class="clearfix"></div>
                             <br>
                             <p>{{$record->comments}}</p>
                             <br>
