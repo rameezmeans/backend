@@ -30,6 +30,8 @@
                                     <input type="input" style="margin-bottom: 17px;" class="form-control" placeholder="Put Your Text here" name="keyword">
                                 </div>
                                 
+
+
                                 </div>
                             </div>
                         <div class="col-lg-2">
@@ -38,6 +40,36 @@
                         
                     </div>
                 </form>
+
+                <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                    <div>
+                        <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Frontend</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 10%;">Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($results as $result)
+                                    <tr role="row" class="redirect-click" data-redirect="{{ route('edit-package', $package->id) }}">
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$result->file_id}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$result->egnineers_internal_notes}}</p>
+                                        </td>
+                                        
+                                    </tr>
+                                @endforeach
+
+                                {{ $results->links() }}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 
             </div>
           </div>
