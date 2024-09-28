@@ -585,7 +585,35 @@ margin-bottom: 10px !important;
                           <h5 class="m-t-40">Brand ECU Options Comment</h5>
         
                            @foreach($optionsCommentsRecords as $record) 
-                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+
+
+
+                           <div class="widget-5 card no-border  widget-loader-bar">
+                            <div class="card-header  pull-top top-right">
+                              <div class="card-controls">
+                                {{-- <ul>
+                                  <li><a data-toggle="refresh" class="card-refresh text-black" href="#"><i class="card-icon card-icon-refresh"></i></a>
+                                  </li>
+                                </ul> --}}
+                              </div>
+                            </div>
+                            <div class="container-xs-height full-height">
+                              <div class="row row-xs-height">
+                                <div class="col-xs-5 col-xs-height col-middle relative">
+                                  <div class="padding-15 top-left bottom-left">
+                                    <h5 class="hint-text no-margin p-l-10">Service: {{$record->service_lable}}</h5>
+                                    <h5 class="hint-text no-margin p-l-10">Software: {{$record->software}}</h5>
+                                    <p class=" bold font-montserrat p-l-10">{{$record->comments}}</p>
+                                    <p class=" hint-text visible-xlg p-l-10">{{$record->results}}</p>
+                                  </div>
+                                </div>
+                                
+                              </div>
+                            </div>
+                          </div>
+
+
+                        {{-- <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <div class="card card-default bg-danger" data-pages="card" style="position: relative; opacity: 1; left: 0px; top: 0px;">
                             <div class="card-header ui-sortable-handle">
                               <div class="card-title">
@@ -642,7 +670,7 @@ margin-bottom: 10px !important;
                             </div>
                           </div>
                           <div class="clearfix"></div>
-                        </div>
+                        </div> --}}
                         @endforeach
                       </div>
 
