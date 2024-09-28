@@ -40,7 +40,7 @@
                         
                     </div>
                 </form>
-
+                @if(isset($results))
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
                         <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
@@ -51,7 +51,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if(isset($results))
+                                
                                 @foreach ($results as $result)
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
@@ -66,12 +66,13 @@
 
                                 {{ $results->links() }}
 
-                                @endif
+                                
                             </tbody>
                         </table>
                     </div>
                 </div>
-                
+                @endif
+
             </div>
           </div>
 
