@@ -583,87 +583,21 @@ margin-bottom: 10px !important;
                           </div> 
                           
                           <h5 class="m-t-40">Brand ECU Options Comment</h5>
-        
                            @foreach($optionsCommentsRecords as $record) 
-
-
-
-                           <div class="alert alert-info" role="alert">
-                            <p class="pull-left">Service: {{$record->service_label}}</p>
-                            {{-- <br> --}}
-                            <p class="pull-right">Software: {{$record->software}}</p>
-                            
-                            <div class="clearfix"></div>
-                            <br>
-                            <p>{{$record->comments}}</p>
-                            <br>
-                            <p>{{$record->results}}</p>
-                          </div>
-
-
-                        {{-- <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <div class="card card-default bg-danger" data-pages="card" style="position: relative; opacity: 1; left: 0px; top: 0px;">
-                            <div class="card-header ui-sortable-handle">
-                              <div class="card-title">
-                                <h4 class="text-white">Comment</h4>
-                              </div>
-                              <div class="card-controls">
-                                
-                              </div>
-                            </div>
-                            <div class="card-body">
+                            <div class="alert alert-info" role="alert">
+                              <p class="pull-left">Service: {{$record->service_label}}</p>
                               
-                              <div class="b-t b-grey p-b-10 p-t-10">
-                              <p class=" text-white">Brand</p>
-                              <div class="">
-                                <span class="label bg-warning">{{$record->brand}}<span>
-                              </div>
-                              </div>
-                             
-                              <div class="b-t b-grey p-b-10 p-t-10">
-                              <p class="text-white">ECU</p>
-                              <div class="">
-                                <span class="label bg-warning">{{$record->ecu}}<span>
-                              </div>
-                              </div>
+                              <p class="pull-right">Software: {{$record->software}}</p>
                               
-                              <div class="b-t b-grey p-b-10 p-t-10">
-                              <p class="text-white">Service Label</p>
-                              <div class="">
-                                <span class="label bg-warning">{{$record->service_label}}<span>
+                              <div class="clearfix"></div>
+                              <br>
+                              <p>{{$record->comments}}</p>
+                              <br>
+                              <p>{{$record->results}}</p>
                               </div>
-                              </div>
-                              
-                              <div class="b-t b-grey p-b-10 p-t-10">
-                              <p class="text-white">Software</p>
-                              <div class="">
-                                <span class="label bg-warning">{{$record->software}}<span>
-                              </div>
-                              </div>
-                              
-                              <div class="b-t b-grey p-b-10 p-t-10">
-                              <p class="text-white">Comment</p>
-                              <div class="">
-                                <p class="text-white">{{$record->comments}}</p>
-                              </div>
-                              </div>
-                              
-                              <div class="b-t b-grey p-b-10 p-t-10">
-                              <p class="text-white">Result</p>
-                              <div class="">
-                                <p class="text-white">{{$record->results}}</p>
-                              </div>
-                              </div>
-
-                            </div>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div> --}}
-                        @endforeach
+                            @endforeach
                       </div>
 
-                      
-        
                       <div class="col-lg-6">
                         <h5 class="m-t-40">Reading Tool</h5>
         
