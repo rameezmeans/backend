@@ -27,7 +27,7 @@
                             <div class="form-group form-group-default input-group">
                                 <div class="form-input-group">
                                     <label>Keyword</label>
-                                    <input type="input" style="margin-bottom: 17px;" class="form-control" placeholder="Put Your Text here" name="keyword" value="@if($request->keyword != NULL){{$request->keyword}}@endif">
+                                    <input type="input" style="margin-bottom: 17px;" class="form-control" placeholder="Put Your Text here" name="keyword" value="@if(isset($request->keyword) && $request->keyword != NULL){{$request->keyword}}@endif">
                                 </div>
                                 
 
