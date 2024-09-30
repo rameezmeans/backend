@@ -81,7 +81,7 @@ class FilesController extends Controller
         $keyword = $request->keyword;
 
         if($keyword != ''){
-            $results = EngineerFileNote::where('egnineers_internal_notes', 'like', '%'.$keyword.'%')->paginate(10);
+            $results = EngineerFileNote::where('egnineers_internal_notes', 'like', '%'.$keyword.'%')->paginate(30);
         }   
         else{
             $results = NULL;

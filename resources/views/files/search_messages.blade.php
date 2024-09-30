@@ -64,7 +64,7 @@
                                     </tr>
                                 @endforeach
 
-                                {{ $results->links() }}
+                                {!! $results->appends(Input::except('page'))->links() !!}
 
                                 
                             </tbody>
