@@ -713,7 +713,7 @@ Route::post('/fill_stage_options', [App\Http\Controllers\FilesController::class,
 Route::post('/upload_acm_reply', [App\Http\Controllers\FilesController::class, 'uploadACMReply'])->name('upload-acm-reply');
 
 Route::get('/message_search', [App\Http\Controllers\FilesController::class, 'messageSearch'])->name('message-search');
-Route::post('/get_search_results', [App\Http\Controllers\FilesController::class, 'getSearchResults'])->name('get-search-results');
+Route::get('/get_search_results', [App\Http\Controllers\FilesController::class, 'getSearchResults'])->name('get-search-results');
 
 Route::post('/add_softwares_services', [App\Http\Controllers\FilesController::class, 'addSoftwares'])->name('add-softwares-services');
 Route::post('/remove_null_software_records', [App\Http\Controllers\FilesController::class, 'removeNullSoftwares'])->name('remove-null-software-records');
