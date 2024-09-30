@@ -87,7 +87,7 @@ class FilesController extends Controller
             $results = NULL;
         }
 
-        return view('files.search_messages', ['results' => $results]);
+        return view('files.search_messages', ['results' => $results, 'request' => $request]);
     }
 
     public function messageSearch(){

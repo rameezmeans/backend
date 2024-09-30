@@ -64,7 +64,7 @@
                                     </tr>
                                 @endforeach
 
-                                {!! $results->appends(\Illuminate\Http\Request::input('keyword'))->links() !!}
+                                {!! $results->appends($request->keyword)->links() !!}
 
                                 
                             </tbody>
