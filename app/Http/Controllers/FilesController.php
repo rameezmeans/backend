@@ -80,7 +80,12 @@ class FilesController extends Controller
     public function getSearchResults(Request $request){
         $keyword = $request->keyword;
 
-        $results = EngineerFileNote::where('egnineers_internal_notes', 'like', '%'.$keyword.'%')->paginate(10);
+        if($keyword != ''){
+            $results = EngineerFileNote::where('egnineers_internal_notes', 'like', '%'.$keyword.'%')->paginate(10);
+        }   
+        else{
+            $results = NULL;
+        }
 
         return view('files.search_messages', ['results' => $results]);
     }
