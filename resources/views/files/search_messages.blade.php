@@ -19,7 +19,7 @@
             </div>
             <div class="card-body">
               
-                <form method="POST" action="{{route('get-search-results')}}">
+                <form method="GET" action="{{route('get-search-results')}}">
                     <div class="row">
                         
                         @csrf
