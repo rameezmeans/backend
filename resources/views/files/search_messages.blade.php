@@ -27,7 +27,7 @@
                             <div class="form-group form-group-default input-group">
                                 <div class="form-input-group">
                                     <label>Keyword</label>
-                                    <input type="input" style="margin-bottom: 17px;" class="form-control" placeholder="Put Your Text here" name="keyword" value="@if(isset($_POST('keywordd'))) {{$_POST('keywordd')}} @endif">
+                                    <input type="input" style="margin-bottom: 17px;" class="form-control" placeholder="Put Your Text here" name="keyword" value="@if($_POST('keywordd') != NULL) {{$_POST('keywordd')}} @endif">
                                 </div>
                                 
 
