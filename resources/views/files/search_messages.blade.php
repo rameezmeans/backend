@@ -64,7 +64,7 @@
                                     </tr>
                                 @endforeach
 
-                                {!! $results->appends($request->keyword)->links() !!}
+                                {!! $results->appends($_POST)->links() !!}
 
                                 
                             </tbody>
