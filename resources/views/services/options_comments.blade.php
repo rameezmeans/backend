@@ -116,7 +116,8 @@
                                         <p>{{$c->software}}</p>
                                     </td>
                                     <td class="v-align-middle semi-bold sorting_1">
-                                        <p><button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$c->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button></p>
+                                        <p><a class="btn btn-success btn-cons m-b-10" href="{{route('edit-options-comments',$c->id)}}"> <span class="bold">Edit</span></a></p>
+                                        <p><button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$c->id}}" type="button"> <span class="bold">Delete</span></button></p>
                                     </td>
                                 </tr>
                             @endforeach

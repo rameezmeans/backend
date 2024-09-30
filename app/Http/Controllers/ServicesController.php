@@ -39,6 +39,31 @@ class ServicesController extends Controller
         return view('services.options_comments', ['brands' => $brands, 'services' => $services, 'softwares' => $softwares, 'comments' => $comments]);
     }
 
+    public function updateOptionComment(Request $request){
+        $record = OptionComment::findOrFail($request->id);
+        $record->brand = $request->brand;
+        $record->ecu = $request->ecu;
+        $record->service_label = $request->service;
+        $record->software = $request->software;
+        $record->comments = $request->comment;
+        $record->results = $request->result;
+        $record->save();
+
+        return redirect()->route('options-comments');
+    }
+
+    public function editOptionsComments($id){
+
+        $allBrands = File::select('brand')->distinct()->orderBy('brand', 'asc')->get();
+        $record = OptionComment::findOrFail($id);
+        $services = Service::select('label')->distinct()->get();
+        $softwares = ProcessingSoftware::all();
+        $allEcus = File::select('ecu')->whereNotNull('ecu')->where('brand', $record->brand)->distinct()->get();
+        
+        return view('services.edit_options_comments', ['allBrands' => $allBrands, 'allEcus' => $allEcus, 'services' => $services, 'softwares' => $softwares, 'record' => $record]);
+        
+    }
+
     public function deleteOptionComment(Request $request){
 
         $o = OptionComment::findOrFail($request->id);
