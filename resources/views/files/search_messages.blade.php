@@ -64,7 +64,7 @@
                                     </tr>
                                 @endforeach
 
-                                {!! $results->appends(\Illuminate\Http\Request::except('page'))->links() !!}
+                                {!! $results->appends(\Illuminate\Http\Request::input('keyword'))->links() !!}
 
                                 
                             </tbody>
