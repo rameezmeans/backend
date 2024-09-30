@@ -64,7 +64,7 @@
                                     </tr>
                                 @endforeach
 
-                                {!! $results->appends(Input::except('page'))->links() !!}
+                                {!! $results->appends(\Illuminate\Support\Facades\Input::except('page'))->links() !!}
 
                                 
                             </tbody>
