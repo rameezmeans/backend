@@ -332,8 +332,14 @@ class CreditsController extends Controller
         }
 
         $creditPriceECUTech = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 1)->first();
+        $zohoItemIDForECUTech = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 1)->first();
+        
         $creditPriceTuningX = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 2)->first();
+        $zohoItemIDForTuningX = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 2)->first();
+
         $creditPriceEfiles = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 3)->first();
+        $zohoItemIDForEfiles = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 3)->first();
+        
         $evcCreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
         
         return view('credits.unit_price', [
@@ -341,6 +347,11 @@ class CreditsController extends Controller
             'creditPriceECUTech' => $creditPriceECUTech, 
             'creditPriceTuningX' => $creditPriceTuningX, 
             'creditPriceEfiles' => $creditPriceEfiles, 
+
+            'zohoItemIDForEfiles' => $zohoItemIDForEfiles,
+            'zohoItemIDForTuningX' => $zohoItemIDForTuningX,
+            'zohoItemIDForECUTech' => $zohoItemIDForECUTech,
+
             'evcCreditPrice' => $evcCreditPrice
 
         ]);
@@ -354,6 +365,22 @@ class CreditsController extends Controller
 
         $creditPrice = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 1)->first();
         $evcCfreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
+
+        $zohoItemID = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 1)->first();
+
+        if($request->zoho_item_id){
+            if($zohoItemID){
+                $creditPrice->label = "zoho_item_id";
+                $creditPrice->value = $request->zoho_item_id;
+                $creditPrice->save();
+            }
+            else {
+                $newPrice = new Price();
+                $newPrice->label = "zoho_item_id";
+                $newPrice->value = $request->zoho_item_id;
+                $newPrice->save();
+            }
+        }
 
         if($request->credit_price){
             if($creditPrice){
@@ -394,6 +421,22 @@ class CreditsController extends Controller
 
         $creditPrice = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 2)->first();
         $evcCfreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
+
+        $zohoItemID = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 2)->first();
+
+        if($request->zoho_item_id){
+            if($zohoItemID){
+                $creditPrice->label = "zoho_item_id";
+                $creditPrice->value = $request->zoho_item_id;
+                $creditPrice->save();
+            }
+            else {
+                $newPrice = new Price();
+                $newPrice->label = "zoho_item_id";
+                $newPrice->value = $request->zoho_item_id;
+                $newPrice->save();
+            }
+        }
 
         if($request->credit_price){
             if($creditPrice){
@@ -437,6 +480,22 @@ class CreditsController extends Controller
         ->where('front_end_id', 3)->first();
 
         $evcCfreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
+
+        $zohoItemID = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 3)->first();
+
+        if($request->zoho_item_id){
+            if($zohoItemID){
+                $creditPrice->label = "zoho_item_id";
+                $creditPrice->value = $request->zoho_item_id;
+                $creditPrice->save();
+            }
+            else {
+                $newPrice = new Price();
+                $newPrice->label = "zoho_item_id";
+                $newPrice->value = $request->zoho_item_id;
+                $newPrice->save();
+            }
+        }
 
         if($request->credit_price){
             if($creditPrice){

@@ -60,6 +60,17 @@
                             <strong>{{ $message }}</strong>
                         </span>
                       @enderror
+
+                      <div class="form-group form-group-default required ">
+                        <label>Zoho Item ID For ECU Tech</label>
+                        <input value="@if(isset($zohoItemIDForECUTech)){{ $zohoItemIDForECUTech->value }}@endif"  name="zoho_item_id" type="text" class="form-control" required>
+                      </div>
+                      @error('zoho_item_id')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+
                       <div class="text-center m-t-20">                    
                         <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
                       </div>
@@ -92,6 +103,17 @@
                             <strong>{{ $message }}</strong>
                         </span>
                       @enderror
+
+                      <div class="form-group form-group-default required ">
+                        <label>Zoho Item ID For TuningX</label>
+                        <input value="@if(isset($zohoItemIDForTuningX)){{ $zohoItemIDForTuningX->value }}@endif"  name="zoho_item_id" type="text" class="form-control" required>
+                      </div>
+                      @error('zoho_item_id')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+
                       <div class="text-center m-t-20">                    
                         <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
                       </div>
@@ -124,6 +146,17 @@
                             <strong>{{ $message }}</strong>
                         </span>
                       @enderror
+
+                      <div class="form-group form-group-default required ">
+                        <label>Zoho Item ID For EFT</label>
+                        <input value="@if(isset($zohoItemIDForEfiles)){{ $zohoItemIDForEfiles->value }}@endif"  name="zoho_item_id" type="text" class="form-control" required>
+                      </div>
+                      @error('zoho_item_id')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+
                       <div class="text-center m-t-20">                    
                         <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
                       </div>
