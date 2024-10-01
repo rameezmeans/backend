@@ -188,7 +188,8 @@ class UsersController extends Controller
                 // ->where('front_end_id', $request->front_end)
                 // ->get();
 
-                $countries = File::select('users.country', \DB::raw("count(users.id) as count"))
+                $countries = File::select('users.country')
+                ->groupby('users.country')
                 ->join('credits', 'credits.file_id', '=', 'files.id')
                 ->join('users', 'users.id', '=', 'credits.user_id')
                 ->whereDate('files.created_at', '>=' , $startDate)
