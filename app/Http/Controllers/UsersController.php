@@ -188,13 +188,14 @@ class UsersController extends Controller
                 // ->where('front_end_id', $request->front_end)
                 // ->get();
 
-                $countries = File::select('users.country')
+                $countries = File::join('users', 'files.user_id', '=', 'users.id')
+                ->join('users', 'files.user_id', '=', 'users.id')
+                ->select('users.country')
                 ->groupby('users.country')
                 // ->join('credits', 'credits.file_id', '=', 'files.id')
-                ->join('users', 'files.user_id', '=', 'users.id')
                 ->whereDate('files.created_at', '>=' , $startDate)
                 ->whereDate('files.created_at', '<=' , $endDate)
-                ->where('users.front_end_id', $request->front_end)
+                ->where('files.front_end_id', $request->front_end)
                 ->get();
 
                 dd($countries);
