@@ -182,24 +182,12 @@ class UsersController extends Controller
                 ->groupby('country')
                 ->orderBy('count', 'desc')
                 ->where('test','=', 0)
-                ->whereDate('created_at', '>=' , $startDate)
-                ->whereDate('created_at', '<=' , $endDate)
+                // ->whereDate('created_at', '>=' , $startDate)
+                // ->whereDate('created_at', '<=' , $endDate)
                 ->where('country', '!=' ,'Live Chat')
                 ->where('front_end_id', $request->front_end)
                 ->get();
-
-                // $countries = User::select('users.country', \DB::raw("count(users.id) as count"))
-                // ->groupby('users.country')
-                // ->orderBy('count', 'desc')
-                // ->where('users.test','=', 0)
-                // ->where('users.country', '!=' ,'Live Chat')
-                // // ->whereDate('files.created_at', '>=' , $startDate)
-                // // ->whereDate('files.created_at', '<=' , $endDate)
-                // ->where('users.front_end_id', $request->front_end)
-                // ->get();
-
-                // dd($countries);
-
+                
                 $table2 = [];
 
                 foreach($countries as $country) {
@@ -280,12 +268,7 @@ class UsersController extends Controller
                         
                     }
 
-                    if(count(array_filter($countsArray)) != 0){
-                        $avg = round( array_sum($countsArray) / count(array_filter($countsArray)), 2);
-                    }
-                    else{
-                        $avg = 0;
-                    }
+                    $avg = round( array_sum($countsArray) / count(array_filter($countsArray)), 2);
 
                     $temp[$country->country] = [ $usersCount, $filesCount, $creditsCount, max($countsArray), min($countsArray), $avg, $filesOverallCount, $creditsOverallCount ];
                     $table2[$country->country]= $temp[$country->country];
