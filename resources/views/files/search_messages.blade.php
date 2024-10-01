@@ -63,6 +63,10 @@
                                         
                                     </tr>
                                 @endforeach
+                                
+                                @php
+                                    dd($_POST);
+                                @endphp
 
                                 {!! $results->appends($_GET)->links() !!}
 
