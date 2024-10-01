@@ -332,13 +332,13 @@ class CreditsController extends Controller
         }
 
         $creditPriceECUTech = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 1)->first();
-        $zohoItemIDForECUTech = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 1)->first();
+        // $zohoItemIDForECUTech = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 1)->first();
         
         $creditPriceTuningX = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 2)->first();
-        $zohoItemIDForTuningX = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 2)->first();
+        // $zohoItemIDForTuningX = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 2)->first();
 
         $creditPriceEfiles = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 3)->first();
-        $zohoItemIDForEfiles = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 3)->first();
+        // $zohoItemIDForEfiles = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 3)->first();
         
         $evcCreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
         

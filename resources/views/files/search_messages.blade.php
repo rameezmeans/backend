@@ -64,7 +64,7 @@
                                     </tr>
                                 @endforeach
 
-                                {!! $results->appends($_POST)->links() !!}
+                                {!! $results->appends($_GET)->links() !!}
 
                                 
                             </tbody>
