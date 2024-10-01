@@ -64,7 +64,7 @@
                                     </tr>
                                 @endforeach
                                 
-                                @if(sizeof($_POST == 0))
+                                @if(sizeof($_POST) == 0)
                                     {!! $results->appends($_GET)->links() !!}
                                 @else
                                     {!! $results->appends($_POST)->links() !!}
