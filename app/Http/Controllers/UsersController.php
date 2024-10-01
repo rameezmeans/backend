@@ -178,13 +178,21 @@ class UsersController extends Controller
 
                 $datesArray = $this->getDays($startDate, $endDate);
 
-                $countries = User::select('country', \DB::raw("count(id) as count"))
-                ->groupby('country')
-                ->orderBy('count', 'desc')
-                ->where('test','=', 0)
-                ->whereDate('created_at', '>=' , $startDate)
-                ->whereDate('created_at', '<=' , $endDate)
-                ->where('country', '!=' ,'Live Chat')
+                // $countries = User::select('country', \DB::raw("count(id) as count"))
+                // ->groupby('country')
+                // ->orderBy('count', 'desc')
+                // ->where('test','=', 0)
+                // ->whereDate('created_at', '>=' , $startDate)
+                // ->whereDate('created_at', '<=' , $endDate)
+                // ->where('country', '!=' ,'Live Chat')
+                // ->where('front_end_id', $request->front_end)
+                // ->get();
+
+                $countries = File::select('users.country', \DB::raw("count(users.id) as count"))
+                ->join('credits', 'credits.file_id', '=', 'files.id')
+                ->join('users', 'users.id', '=', 'credits.user_id')
+                ->whereDate('files.created_at', '>=' , $startDate)
+                ->whereDate('files.created_at', '<=' , $endDate)
                 ->where('front_end_id', $request->front_end)
                 ->get();
 
