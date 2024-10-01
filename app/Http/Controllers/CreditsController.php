@@ -371,13 +371,13 @@ class CreditsController extends Controller
         if($request->zoho_item_id){
             if($zohoItemID){
                 $creditPrice->label = "zoho_item_id";
-                $creditPrice->value = $request->zoho_item_id;
+                $creditPrice->text_value = $request->zoho_item_id;
                 $creditPrice->save();
             }
             else {
                 $newPrice = new Price();
                 $newPrice->label = "zoho_item_id";
-                $newPrice->value = $request->zoho_item_id;
+                $newPrice->text_value = $request->zoho_item_id;
                 $newPrice->save();
             }
         }
@@ -427,13 +427,13 @@ class CreditsController extends Controller
         if($request->zoho_item_id){
             if($zohoItemID){
                 $creditPrice->label = "zoho_item_id";
-                $creditPrice->value = $request->zoho_item_id;
+                $creditPrice->text_value = $request->zoho_item_id;
                 $creditPrice->save();
             }
             else {
                 $newPrice = new Price();
                 $newPrice->label = "zoho_item_id";
-                $newPrice->value = $request->zoho_item_id;
+                $newPrice->text_value = $request->zoho_item_id;
                 $newPrice->save();
             }
         }
@@ -486,13 +486,13 @@ class CreditsController extends Controller
         if($request->zoho_item_id){
             if($zohoItemID){
                 $creditPrice->label = "zoho_item_id";
-                $creditPrice->value = $request->zoho_item_id;
+                $creditPrice->text_value = $request->zoho_item_id;
                 $creditPrice->save();
             }
             else {
                 $newPrice = new Price();
                 $newPrice->label = "zoho_item_id";
-                $newPrice->value = $request->zoho_item_id;
+                $newPrice->text_value = $request->zoho_item_id;
                 $newPrice->save();
             }
         }
