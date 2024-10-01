@@ -64,12 +64,11 @@
                                     </tr>
                                 @endforeach
                                 
-                                @php
-                                    dd($_POST);
-                                @endphp
-
-                                {!! $results->appends($_GET)->links() !!}
-
+                                @if(sizeof($_POST == 0))
+                                    {!! $results->appends($_GET)->links() !!}
+                                @else
+                                    {!! $results->appends($_POST)->links() !!}
+                                @endif
                                 
                             </tbody>
                         </table>
