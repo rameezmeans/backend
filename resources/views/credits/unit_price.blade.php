@@ -63,7 +63,7 @@
 
                       <div class="form-group form-group-default required ">
                         <label>Zoho Item ID For ECU Tech</label>
-                        <input value="@if(isset($zohoItemIDForECUTech)){{ $zohoItemIDForECUTech->text_value }}@endif"  name="zoho_item_id" type="text" class="form-control" required>
+                        <input value="@if(isset($zohoItemIDForECUTech)){{ $zohoItemIDForECUTech->zoho_item_id }}@endif"  name="zoho_item_id" type="text" class="form-control" required>
                       </div>
                       @error('zoho_item_id')
                         <span class="text-danger" role="alert">
@@ -106,7 +106,7 @@
 
                       <div class="form-group form-group-default required ">
                         <label>Zoho Item ID For TuningX</label>
-                        <input value="@if(isset($zohoItemIDForTuningX)){{ $zohoItemIDForTuningX->text_value }}@endif"  name="zoho_item_id" type="text" class="form-control" required>
+                        <input value="@if(isset($zohoItemIDForTuningX)){{ $zohoItemIDForTuningX->zoho_item_id }}@endif"  name="zoho_item_id" type="text" class="form-control" required>
                       </div>
                       @error('zoho_item_id')
                         <span class="text-danger" role="alert">
@@ -149,7 +149,7 @@
 
                       <div class="form-group form-group-default required ">
                         <label>Zoho Item ID For EFT</label>
-                        <input value="@if(isset($zohoItemIDForEfiles)){{ $zohoItemIDForEfiles->text_value }}@endif"  name="zoho_item_id" type="text" class="form-control" required>
+                        <input value="@if(isset($zohoItemIDForEfiles)){{ $zohoItemIDForEfiles->zoho_item_id }}@endif"  name="zoho_item_id" type="text" class="form-control" required>
                       </div>
                       @error('zoho_item_id')
                         <span class="text-danger" role="alert">
