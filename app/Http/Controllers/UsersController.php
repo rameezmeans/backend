@@ -192,12 +192,14 @@ class UsersController extends Controller
                 ->select('users.country', \DB::raw("count(users.id) as count"))
                 ->groupby('users.country')
                 ->orderBy('count', 'desc')
+                ->where('test','=', 0)
+                ->where('country', '!=' ,'Live Chat')
                 // ->whereDate('files.created_at', '>=' , $startDate)
                 // ->whereDate('files.created_at', '<=' , $endDate)
                 ->where('files.front_end_id', $request->front_end)
                 ->get();
 
-                // dd($countries);
+                dd($countries);
 
                 $table2 = [];
 
