@@ -193,7 +193,7 @@ class UsersController extends Controller
                 ->join('users', 'users.id', '=', 'credits.user_id')
                 ->whereDate('files.created_at', '>=' , $startDate)
                 ->whereDate('files.created_at', '<=' , $endDate)
-                ->where('front_end_id', $request->front_end)
+                ->where('users.front_end_id', $request->front_end)
                 ->get();
 
                 $table2 = [];
