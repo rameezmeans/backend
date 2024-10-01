@@ -190,7 +190,7 @@ class UsersController extends Controller
 
                 $countries = File::select('users.country')
                 ->groupby('users.country')
-                ->join('credits', 'credits.file_id', '=', 'files.id')
+                // ->join('credits', 'credits.file_id', '=', 'files.id')
                 ->join('users', 'files.user_id', '=', 'users.id')
                 ->whereDate('files.created_at', '>=' , $startDate)
                 ->whereDate('files.created_at', '<=' , $endDate)
