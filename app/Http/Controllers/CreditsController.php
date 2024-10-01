@@ -368,25 +368,26 @@ class CreditsController extends Controller
 
         $zohoItemID = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 1)->first();
 
-        if($request->zoho_item_id){
-            if($zohoItemID){
-                $creditPrice->label = "zoho_item_id";
-                $creditPrice->text_value = $request->zoho_item_id;
-                $creditPrice->front_end_id = 1;
-                $creditPrice->save();
-            }
-            else {
-                $newPrice = new Price();
-                $newPrice->label = "zoho_item_id";
-                $newPrice->text_value = $request->zoho_item_id;
-                $creditPrice->front_end_id = 1;
-                $newPrice->save();
-            }
-        }
+        // if($request->zoho_item_id){
+        //     if($zohoItemID){
+        //         $creditPrice->label = "zoho_item_id";
+        //         $creditPrice->text_value = $request->zoho_item_id;
+        //         $creditPrice->front_end_id = 1;
+        //         $creditPrice->save();
+        //     }
+        //     else {
+        //         $newPrice = new Price();
+        //         $newPrice->label = "zoho_item_id";
+        //         $newPrice->text_value = $request->zoho_item_id;
+        //         $creditPrice->front_end_id = 1;
+        //         $newPrice->save();
+        //     }
+        // }
 
         if($request->credit_price){
             if($creditPrice){
                 $creditPrice->label = "credit_price";
+                $creditPrice->zoho_item_id = $request->zoho_item_id;
                 $creditPrice->value = $request->credit_price;
                 $creditPrice->save();
             }
@@ -426,25 +427,26 @@ class CreditsController extends Controller
 
         $zohoItemID = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 2)->first();
 
-        if($request->zoho_item_id){
-            if($zohoItemID){
-                $creditPrice->label = "zoho_item_id";
-                $creditPrice->text_value = $request->zoho_item_id;
-                $creditPrice->front_end_id = 2;
-                $creditPrice->save();
-            }
-            else {
-                $newPrice = new Price();
-                $newPrice->label = "zoho_item_id";
-                $newPrice->text_value = $request->zoho_item_id;
-                $creditPrice->front_end_id = 2;
-                $newPrice->save();
-            }
-        }
+        // if($request->zoho_item_id){
+        //     if($zohoItemID){
+        //         $creditPrice->label = "zoho_item_id";
+        //         $creditPrice->text_value = $request->zoho_item_id;
+        //         $creditPrice->front_end_id = 2;
+        //         $creditPrice->save();
+        //     }
+        //     else {
+        //         $newPrice = new Price();
+        //         $newPrice->label = "zoho_item_id";
+        //         $newPrice->text_value = $request->zoho_item_id;
+        //         $creditPrice->front_end_id = 2;
+        //         $newPrice->save();
+        //     }
+        // }
 
         if($request->credit_price){
             if($creditPrice){
                 $creditPrice->label = "credit_price";
+                $creditPrice->zoho_item_id = $request->zoho_item_id;
                 $creditPrice->value = $request->credit_price;
                 $creditPrice->save();
             }
@@ -487,25 +489,26 @@ class CreditsController extends Controller
 
         $zohoItemID = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 3)->first();
 
-        if($request->zoho_item_id){
-            if($zohoItemID){
-                $creditPrice->label = "zoho_item_id";
-                $creditPrice->text_value = $request->zoho_item_id;
-                $creditPrice->front_end_id = 3;
-                $creditPrice->save();
-            }
-            else {
-                $newPrice = new Price();
-                $newPrice->label = "zoho_item_id";
-                $creditPrice->front_end_id = 3;
-                $newPrice->text_value = $request->zoho_item_id;
-                $newPrice->save();
-            }
-        }
+        // if($request->zoho_item_id){
+        //     if($zohoItemID){
+        //         $creditPrice->label = "zoho_item_id";
+        //         $creditPrice->text_value = $request->zoho_item_id;
+        //         $creditPrice->front_end_id = 3;
+        //         $creditPrice->save();
+        //     }
+        //     else {
+        //         $newPrice = new Price();
+        //         $newPrice->label = "zoho_item_id";
+        //         $creditPrice->front_end_id = 3;
+        //         $newPrice->text_value = $request->zoho_item_id;
+        //         $newPrice->save();
+        //     }
+        // }
 
         if($request->credit_price){
             if($creditPrice){
                 $creditPrice->label = "credit_price";
+                $creditPrice->zoho_item_id = $request->zoho_item_id;
                 $creditPrice->value = $request->credit_price;
                 $creditPrice->save();
             }
