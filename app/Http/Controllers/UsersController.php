@@ -189,11 +189,11 @@ class UsersController extends Controller
                 // ->get();
 
                 $countries = File::join('users', 'files.user_id', '=', 'users.id')
-                ->select('users.country', \DB::raw("count(users.id) as count"))
+                ->select('*', \DB::raw("count(users.id) as count"))
                 ->groupby('users.country')
                 ->orderBy('count', 'desc')
-                // ->whereDate('files.created_at', '>=' , $startDate)
-                // ->whereDate('files.created_at', '<=' , $endDate)
+                ->whereDate('files.created_at', '>=' , $startDate)
+                ->whereDate('files.created_at', '<=' , $endDate)
                 ->where('files.front_end_id', $request->front_end)
                 ->get();
 
