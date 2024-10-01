@@ -189,7 +189,7 @@ class UsersController extends Controller
                 // ->get();
 
                 $countries = File::join('users', 'files.user_id', '=', 'users.id')
-                ->join('users', 'files.user_id', '=', 'users.id')
+                // ->join('users', 'files.user_id', '=', 'users.id')
                 ->select('users.country')
                 ->groupby('users.country')
                 // ->join('credits', 'credits.file_id', '=', 'files.id')
