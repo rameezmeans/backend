@@ -178,28 +178,27 @@ class UsersController extends Controller
 
                 $datesArray = $this->getDays($startDate, $endDate);
 
-                // $countries = User::select('country', \DB::raw("count(id) as count"))
-                // ->groupby('country')
-                // ->orderBy('count', 'desc')
-                // ->where('test','=', 0)
-                // ->whereDate('created_at', '>=' , $startDate)
-                // ->whereDate('created_at', '<=' , $endDate)
-                // ->where('country', '!=' ,'Live Chat')
-                // ->where('front_end_id', $request->front_end)
-                // ->get();
-
-                $countries = File::join('users', 'files.user_id', '=', 'users.id')
-                ->select('users.country', \DB::raw("count(users.id) as count"))
-                ->groupby('users.country')
+                $countries = User::select('country', \DB::raw("count(id) as count"))
+                ->groupby('country')
                 ->orderBy('count', 'desc')
                 ->where('test','=', 0)
+                // ->whereDate('created_at', '>=' , $startDate)
+                // ->whereDate('created_at', '<=' , $endDate)
                 ->where('country', '!=' ,'Live Chat')
-                // ->whereDate('files.created_at', '>=' , $startDate)
-                // ->whereDate('files.created_at', '<=' , $endDate)
-                ->where('files.front_end_id', $request->front_end)
+                ->where('front_end_id', $request->front_end)
                 ->get();
 
-                dd($countries);
+                // $countries = User::select('users.country', \DB::raw("count(users.id) as count"))
+                // ->groupby('users.country')
+                // ->orderBy('count', 'desc')
+                // ->where('users.test','=', 0)
+                // ->where('users.country', '!=' ,'Live Chat')
+                // // ->whereDate('files.created_at', '>=' , $startDate)
+                // // ->whereDate('files.created_at', '<=' , $endDate)
+                // ->where('users.front_end_id', $request->front_end)
+                // ->get();
+
+                // dd($countries);
 
                 $table2 = [];
 
