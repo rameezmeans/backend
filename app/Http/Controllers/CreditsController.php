@@ -348,9 +348,7 @@ class CreditsController extends Controller
             'creditPriceTuningX' => $creditPriceTuningX, 
             'creditPriceEfiles' => $creditPriceEfiles, 
 
-            'zohoItemIDForEfiles' => $zohoItemIDForEfiles,
-            'zohoItemIDForTuningX' => $zohoItemIDForTuningX,
-            'zohoItemIDForECUTech' => $zohoItemIDForECUTech,
+            
 
             'evcCreditPrice' => $evcCreditPrice
 
