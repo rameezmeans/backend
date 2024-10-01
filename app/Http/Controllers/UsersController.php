@@ -182,8 +182,8 @@ class UsersController extends Controller
                 ->groupby('country')
                 ->orderBy('count', 'desc')
                 ->where('test','=', 0)
-                ->whereDate('created_at', '>=' , $startDate)
-                ->whereDate('created_at', '<=' , $endDate)
+                // ->whereDate('created_at', '>=' , $startDate)
+                // ->whereDate('created_at', '<=' , $endDate)
                 ->where('country', '!=' ,'Live Chat')
                 ->where('front_end_id', $request->front_end)
                 ->get();
@@ -268,7 +268,12 @@ class UsersController extends Controller
                         
                     }
 
-                    $avg = round( array_sum($countsArray) / count(array_filter($countsArray)), 2);
+                    if(count(array_filter($countsArray)) == 0){
+                        $avg = 0;
+                    }
+                    else{
+                        $avg = round( array_sum($countsArray) / count(array_filter($countsArray)), 2);
+                    }
 
                     $temp[$country->country] = [ $usersCount, $filesCount, $creditsCount, max($countsArray), min($countsArray), $avg, $filesOverallCount, $creditsOverallCount ];
                     $table2[$country->country]= $temp[$country->country];
