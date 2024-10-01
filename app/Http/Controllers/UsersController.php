@@ -279,7 +279,12 @@ class UsersController extends Controller
                         
                     }
 
-                    $avg = round( array_sum($countsArray) / count(array_filter($countsArray)), 2);
+                    if(count(array_filter($countsArray)) != 0){
+                        $avg = round( array_sum($countsArray) / count(array_filter($countsArray)), 2);
+                    }
+                    else{
+                        $avg = 0;
+                    }
 
                     $temp[$country->country] = [ $usersCount, $filesCount, $creditsCount, max($countsArray), min($countsArray), $avg, $filesOverallCount, $creditsOverallCount ];
                     $table2[$country->country]= $temp[$country->country];
