@@ -372,14 +372,14 @@ class CreditsController extends Controller
             if($zohoItemID){
                 $creditPrice->label = "zoho_item_id";
                 $creditPrice->text_value = $request->zoho_item_id;
-                $creditPrice->font_end_id = 1;
+                $creditPrice->front_end_id = 1;
                 $creditPrice->save();
             }
             else {
                 $newPrice = new Price();
                 $newPrice->label = "zoho_item_id";
                 $newPrice->text_value = $request->zoho_item_id;
-                $creditPrice->font_end_id = 1;
+                $creditPrice->front_end_id = 1;
                 $newPrice->save();
             }
         }
@@ -430,14 +430,14 @@ class CreditsController extends Controller
             if($zohoItemID){
                 $creditPrice->label = "zoho_item_id";
                 $creditPrice->text_value = $request->zoho_item_id;
-                $creditPrice->font_end_id = 2;
+                $creditPrice->front_end_id = 2;
                 $creditPrice->save();
             }
             else {
                 $newPrice = new Price();
                 $newPrice->label = "zoho_item_id";
                 $newPrice->text_value = $request->zoho_item_id;
-                $creditPrice->font_end_id = 2;
+                $creditPrice->front_end_id = 2;
                 $newPrice->save();
             }
         }
@@ -491,13 +491,13 @@ class CreditsController extends Controller
             if($zohoItemID){
                 $creditPrice->label = "zoho_item_id";
                 $creditPrice->text_value = $request->zoho_item_id;
-                $creditPrice->font_end_id = 3;
+                $creditPrice->front_end_id = 3;
                 $creditPrice->save();
             }
             else {
                 $newPrice = new Price();
                 $newPrice->label = "zoho_item_id";
-                $creditPrice->font_end_id = 3;
+                $creditPrice->front_end_id = 3;
                 $newPrice->text_value = $request->zoho_item_id;
                 $newPrice->save();
             }
