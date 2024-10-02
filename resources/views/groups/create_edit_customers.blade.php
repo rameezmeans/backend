@@ -428,7 +428,7 @@
 
                 <div class="form-group form-group-default">
                   <label>Elorus Account ID</label>
-                  <input value="@if(isset($customer)) @if($customer->elorus_id != NULL){{$customer->elorus_id}} @else {{''}} @endif@endif"  name="elorus_id" type="text" class="form-control" autocomplete="off">
+                  <input value="@if(isset($customer)) @if($customer->elorus_id != NULL){{$customer->elorus_id}} @else {{''}} @endif @endif"  name="elorus_id" type="text" class="form-control" autocomplete="off">
                 </div>
                 @error('elorus_id')
                   <span class="text-danger" role="alert">
