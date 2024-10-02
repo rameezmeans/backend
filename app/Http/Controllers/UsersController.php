@@ -375,6 +375,7 @@ class UsersController extends Controller
         $customer->group_id = $request->group_id;
         $customer->front_end_id = $request->front_end_id;
         $customer->role_id = $customerID;
+        $customer->sn = $request->sn;
 
         if($request->exclude_vat_check == 'on'){
             $customer->exclude_vat_check = 1;
@@ -488,6 +489,7 @@ class UsersController extends Controller
 
         // $customer->email = trim($request->email);
         $customer->phone = $request->phone;
+        $customer->sn = $request->sn;
         $customer->language = $request->language;
         $customer->address = $request->address;
         $customer->zip = $request->zip;
