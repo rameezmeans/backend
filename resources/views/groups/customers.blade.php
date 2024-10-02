@@ -44,6 +44,7 @@
                         <thead>
                             <tr role="row">
                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus Account</th>
                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Portal</th>
                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Email</th>
                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Phone</th>
@@ -56,6 +57,11 @@
                             <tr role="row" class="@if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-customers')) redirect-click @endif" @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-customers')) data-redirect="{{ route('edit-customer', $customer->id) }}" @endif>
                                 <td class="v-align-middle semi-bold sorting_1">
                                     <p>{{$customer->name}}</p>
+                                </td>
+
+                                <td class="v-align-middle semi-bold sorting_1">
+                                  <p>@if($customer->elorus_id)<a href="{{'https://ecutech.elorus.com/contacts/'.$customer->elorus_id}}" target="_blank">Go To Elorus Account</a>@else No Elorus @endif</p>
+                                  
                                 </td>
                                 
                                 <td class="v-align-middle semi-bold sorting_1">
