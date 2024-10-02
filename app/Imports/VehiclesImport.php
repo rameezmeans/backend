@@ -22,6 +22,7 @@ class VehiclesImport implements ToModel
             "Generation" => $row[3],
             "Engine" => $row[4],
             "Engine_ECU" => $row[5],
+            "Engine_URL" => $row[6],
             "Brand_image_URL" => $row[6],
             "type" => $row[7],
             "BHP_standard" => $row[8],
