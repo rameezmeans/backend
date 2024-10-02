@@ -374,6 +374,7 @@ class UsersController extends Controller
         $customer->evc_customer_id = $request->evc_customer_id;
         $customer->group_id = $request->group_id;
         $customer->front_end_id = $request->front_end_id;
+        $customer->elorus_id = $request->elorus_id;
         $customer->role_id = $customerID;
         $customer->sn = $request->sn;
 
@@ -501,6 +502,7 @@ class UsersController extends Controller
         $customer->evc_customer_id = $request->evc_customer_id;
         $customer->group_id = $request->group_id;
         $customer->front_end_id = $request->front_end_id;
+        $customer->elorus_id = $request->elorus_id;
         // $customer->elorus_id = null;
 
         if($request->exclude_vat_check == 'on'){

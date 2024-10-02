@@ -426,6 +426,16 @@
                   </span>
                 @enderror
 
+                <div class="form-group form-group-default required ">
+                  <label>Elorus Account ID</label>
+                  <input value="@if(isset($customer)){{ $customer->elorus_id }}@else{{old('elorus_id') }}@endif"  name="elorus_id" type="text" class="form-control">
+                </div>
+                @error('elorus_id')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+
                 <div class="form-group form-group-default">
                   <label>EVC Customer ID</label>
                   <input value="@if(isset($customer)){{ $customer->evc_customer_id }}@else{{old('evc_customer_id')}}@endif"  name="evc_customer_id" type="text" class="form-control">
