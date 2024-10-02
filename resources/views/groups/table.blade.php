@@ -217,9 +217,16 @@
 
                                     </tr>
 
+                                    </tbody>
+                                </table>
+
                                 @endforeach
 
-                                <tr role="row">
+                                <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                                <tbody>
+                                
+                                    <tr role="row">
+                                    
                                     <td class="v-align-middle semi-bold sorting_1">
                                         <p>Total: {{$r1}}</p>
                                     </td>
@@ -247,6 +254,7 @@
                                     <td class="v-align-middle semi-bold sorting_1">
                                         <p>Total: {{$r9}}</p>
                                     </td>
+
                                 </tr>
                             </tbody>
                         </table>
