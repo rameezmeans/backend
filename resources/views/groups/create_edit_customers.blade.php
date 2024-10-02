@@ -37,7 +37,7 @@
             </div>
             <div class="card-body">
 
-              <form class="" role="form" method="POST" action="@if(isset($customer)){{route('update-customer')}}@else{{ route('add-customer') }}@endif" enctype="multipart/form-data">
+              <form class="" role="form" method="POST" action="@if(isset($customer)){{route('update-customer')}}@else{{ route('add-customer') }}@endif" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                 @if(isset($customer))
                   <input name="id" type="hidden" value="{{ $customer->id }}">
