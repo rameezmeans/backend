@@ -217,10 +217,12 @@
 
                                     </tr>
 
-                                    </tbody>
-                                </table>
+                                    
 
                                 @endforeach
+
+                                    </tbody>
+                                </table>
 
                                 <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                                 <tbody>
