@@ -16,14 +16,21 @@ class VehiclesImport implements ToModel
     {
         
         return new Vehicle([
-            "Name" => $row[0].' '. $row[1].' '.$row[3],
-            "Make" => $row[0],
-            "Model" => $row[1],
-            "Generation" => $row[2],
-            "Engine" => $row[3],
-            "Engine_ECU" => $row[4],
-            "Engine_URL" => $row[5],
-            "type" => $row[6],
+            "Name" => $row[0],
+            "Make" => $row[1],
+            "Model" => $row[2],
+            "Generation" => $row[3],
+            "Engine" => $row[4],
+            "Engine_ECU" => $row[5],
+            "Brand_image_URL" => $row[6],
+            "type" => $row[7],
+            "BHP_standard" => $row[8],
+            "BHP_tuned" => $row[9],
+            "BHP_difference" => $row[10],
+            "TORQUE_standard" => $row[11],
+            "TORQUE_tuned" => $row[12],
+            "TORQUE_difference" => $row[13],
+            "Type_of_fuel" => $row[14],
         ]);
     }
 }
