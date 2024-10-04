@@ -97,7 +97,7 @@ class ProcessingSoftwaresController extends Controller
     
     public function ajaxSoftwareReport(Request $request){
 
-        dd($request->all());
+        // dd($request->all());
 
         $softwaresAndBrandsRecords = File::join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
         ->whereNotNull('files.ecu')
