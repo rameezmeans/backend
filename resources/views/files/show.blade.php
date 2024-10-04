@@ -661,16 +661,28 @@ margin-bottom: 10px !important;
                           </div>
                           <div class="b-t b-grey p-b-10 p-t-10">
 
+                            @php
+
+                                $records = \App\Models\FileReplySoftwareService::join('files', 'files.id', '=', 'file_reply_software_service.file_id')
+                                ->where('file_reply_software_service.service_id', $stage->id)
+                                ->where('files.ecu', $file->ecu)
+                                ->where('files.brand', $file->brand)
+                                ->select('file_reply_software_service.software_id')
+                                ->distinct('file_reply_software_service.software_id')->get();
+
+                                dd($records);
+
+                            @endphp
                             
 
-                            {{-- <div style="display: flow-root;" class="b-b b-grey">
+                            <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                            
                               <div class="pull-right">
                                 {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
                               </div>
                            
-                            </div> --}}
+                            </div>
                             
                           </div>
                         @endif
