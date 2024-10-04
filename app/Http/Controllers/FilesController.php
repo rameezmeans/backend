@@ -229,7 +229,9 @@ class FilesController extends Controller
 
             if (!in_array($key, $exclude)){
 
-                $latest = FileReplySoftwareService::where('file_id', $fileID)->latest('created_at')->first();
+                $latest = FileReplySoftwareService::where('file_id', $fileID)
+                ->where('service_id', $key)
+                ->latest('created_at')->first();
 
                 if($latest){
                     $latest->revised = 1;
