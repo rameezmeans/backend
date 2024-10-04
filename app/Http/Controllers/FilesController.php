@@ -229,18 +229,19 @@ class FilesController extends Controller
 
             if (!in_array($key, $exclude)){
 
+                $latest = FileReplySoftwareService::where('file_id', $fileID)->latest('created_at')->first();
+
+                if($latest){
+                    $latest->revised = 1;
+                    $latest->save();
+                }
+
                 $newRecord = new FileReplySoftwareService();
                 $newRecord->file_id = $fileID;
                 $newRecord->service_id = $key;
                 $newRecord->software_id = $value;
                 $newRecord->save();
 
-                $latest = FileReplySoftwareService::where('file_id', $request->file_id)->orderBy('created_at', 'desc')->first();
-
-                if($latest){
-                    $latest->revised = 1;
-                    $latest->save();
-                }
             }
 
         }
@@ -2575,7 +2576,6 @@ class FilesController extends Controller
         $engineerFile->file_type = 'engineer_file';
         $engineerFile->tool_type = 'not_relevant';
         $engineerFile->master_tools = 'not_relevant';
-        // $engineerFile->revised = 0;
         $engineerFile->file_id = $request->file_id;
         $engineerFile->engineer = true;
 
