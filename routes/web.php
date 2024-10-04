@@ -93,82 +93,82 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 Route::get('/tasks', function () {
 
 
-    $allSoftwareRecs = FileReplySoftwareService::all();
+    // $allSoftwareRecs = FileReplySoftwareService::all();
 
-    $big = [];
-    foreach($allSoftwareRecs as $r){
-        $count = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->count();
-        // $big []= $allMultiples;
+    // $big = [];
+    // foreach($allSoftwareRecs as $r){
+    //     $count = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->count();
+    //     // $big []= $allMultiples;
 
-        if($count > 1){
-            $multilple = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->first();
-            $big []= $multilple->file_id;
-        }
+    //     if($count > 1){
+    //         $multilple = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->first();
+    //         $big []= $multilple->file_id;
+    //     }
 
-        // if($count>1){
-        //     $multiple = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->get();
+    //     // if($count>1){
+    //     //     $multiple = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->get();
 
-        //     $inner = 1;
-        //     foreach($multiple as $m){
+    //     //     $inner = 1;
+    //     //     foreach($multiple as $m){
 
-        //         $inner++;
+    //     //         $inner++;
 
-        //         $m->revised = 1;
-        //         $m->save();
+    //     //         $m->revised = 1;
+    //     //         $m->save();
 
-        //         if($inner == $count){
-        //             break;
-        //         }
-        //     }
-        }
+    //     //         if($inner == $count){
+    //     //             break;
+    //     //         }
+    //     //     }
+    //     }
 
         
     
 
-    $uniques = array_unique($big);
+    // $uniques = array_unique($big);
 
-    // dd(count($uniques));
+    // // dd(count($uniques));
 
-    foreach($uniques as $u){
+    // foreach($uniques as $u){
 
-        // if($u == 3229){
+    //     // if($u == 3229){
 
-        $serviceIDs = FileReplySoftwareService::select('service_id')->where('file_id', $u)->distinct('service_id')->get();
+    //     $serviceIDs = FileReplySoftwareService::select('service_id')->where('file_id', $u)->distinct('service_id')->get();
         
-        $sArrays = [];
+    //     $sArrays = [];
         
-        foreach($serviceIDs as $i){
-            $sArrays []= $i->service_id;
-        }
+    //     foreach($serviceIDs as $i){
+    //         $sArrays []= $i->service_id;
+    //     }
 
-        // dd($sArrays);
+    //     // dd($sArrays);
 
-        foreach($sArrays as $s){
+    //     foreach($sArrays as $s){
 
-         $count = FileReplySoftwareService::where('file_id', $u)->where('service_id',$s)->count();
-        $mu = FileReplySoftwareService::where('file_id', $u)->where('service_id',$s)->get();
+    //      $count = FileReplySoftwareService::where('file_id', $u)->where('service_id',$s)->count();
+    //     $mu = FileReplySoftwareService::where('file_id', $u)->where('service_id',$s)->get();
             
-        // dd($mu);
+    //     // dd($mu);
         
-            $inner = 1;
-                foreach($mu as $m){
+    //         $inner = 1;
+    //             foreach($mu as $m){
 
-                    $inner++;
+    //                 $inner++;
 
-                    $m->revised = 1;
-                    $m->save();
+    //                 $m->revised = 1;
+    //                 $m->save();
 
-                    if($inner == $count){
-                        break;
-                    }
-                }
+    //                 if($inner == $count){
+    //                     break;
+    //                 }
+    //             }
 
-            }
-        // }
+    //         }
+    //     // }
 
-    }
+    // }
 
-    dd('finals');
+    // dd('finals');
 
     abort(404);
 
