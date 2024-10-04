@@ -670,19 +670,32 @@ margin-bottom: 10px !important;
                                 ->select('file_reply_software_service.software_id')
                                 ->distinct('file_reply_software_service.software_id')->get();
 
-                                dd($records);
+                                
 
                             @endphp
-                            
+                          
+                          @foreach($records as $record)
 
-                            <div style="display: flow-root;" class="b-b b-grey">
-                            <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
-                           
-                              <div class="pull-right">
-                                {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
-                              </div>
-                           
+                          @php
+
+                              $totals = all_files_with_this_ecu_brand_and_service_and_software($file->brand, $file->ecu, $stage->id, $record->software_id);
+                              $revised = all_files_with_this_ecu_brand_and_service_and_software_revisions($file->brand, $file->ecu, $stage->id, $record->software_id);
+
+                          @endphp
+                          @if($totals != 0)
+                          <div style="display: flow-root;" class="b-b b-grey">
+                          <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
+                          
+                            <div class="pull-right">
+                              {{round((($totals - $revised) / $totals)*100, 2).'%'}}
                             </div>
+                          
+                          </div>
+                          @endif
+
+                          @endforeach
+                           
+                            
                             
                           </div>
                         @endif
@@ -3038,15 +3051,41 @@ margin-bottom: 10px !important;
                           <div class="b-t b-grey p-b-10 p-t-10">
 
                             
+                            @php
+
+                                $records = \App\Models\FileReplySoftwareService::join('files', 'files.id', '=', 'file_reply_software_service.file_id')
+                                ->where('file_reply_software_service.service_id', $stage->id)
+                                ->where('files.ecu', $file->ecu)
+                                ->where('files.brand', $file->brand)
+                                ->select('file_reply_software_service.software_id')
+                                ->distinct('file_reply_software_service.software_id')->get();
+
+                                
+
+                            @endphp
+                          
+                          @foreach($records as $record)
+
+                          @php
+
+                              $totals = all_files_with_this_ecu_brand_and_service_and_software($file->brand, $file->ecu, $stage->id, $record->software_id);
+                              $revised = all_files_with_this_ecu_brand_and_service_and_software_revisions($file->brand, $file->ecu, $stage->id, $record->software_id);
+
+                          @endphp
+                          @if($totals != 0)
+                          <div style="display: flow-root;" class="b-b b-grey">
+                          <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
+                          
+                            <div class="pull-right">
+                              {{round((($totals - $revised) / $totals)*100, 2).'%'}}
+                            </div>
+                          
+                          </div>
+                          @endif
+
+                          @endforeach
                             
-                            {{-- <div style="display: flow-root;" class="b-b b-grey">
-                            <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
                             
-                              <div class="pull-right">
-                                {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
-                              </div>
-                            
-                            </div> --}}
                            
                           </div>
                         @endif
@@ -3084,14 +3123,40 @@ margin-bottom: 10px !important;
                         <div class="b-t b-grey p-b-10 p-t-10">
                           
 
-                          {{-- <div style="display: flow-root;" class="b-b b-grey">
-                          <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
+                          @php
+
+                                $records = \App\Models\FileReplySoftwareService::join('files', 'files.id', '=', 'file_reply_software_service.file_id')
+                                ->where('file_reply_software_service.service_id', $stage->id)
+                                ->where('files.ecu', $file->ecu)
+                                ->where('files.brand', $file->brand)
+                                ->select('file_reply_software_service.software_id')
+                                ->distinct('file_reply_software_service.software_id')->get();
+
+                                
+
+                            @endphp
                           
-                          <div class="pull-right">
-                            {{$stage->revisions($s->software_id, $file->ecu, $file->brand)}}
+                          @foreach($records as $record)
+
+                          @php
+
+                              $totals = all_files_with_this_ecu_brand_and_service_and_software($file->brand, $file->ecu, $stage->id, $record->software_id);
+                              $revised = all_files_with_this_ecu_brand_and_service_and_software_revisions($file->brand, $file->ecu, $stage->id, $record->software_id);
+
+                          @endphp
+                          @if($totals != 0)
+                          <div style="display: flow-root;" class="b-b b-grey">
+                          <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
+                          
+                            <div class="pull-right">
+                              {{round((($totals - $revised) / $totals)*100, 2).'%'}}
+                            </div>
+                          
                           </div>
-                        
-                          </div> --}}
+                          @endif
+
+                          @endforeach
+
                           
                         </div>
                         @endif
@@ -3127,14 +3192,39 @@ margin-bottom: 10px !important;
                               <div class="b-t b-grey p-b-10 p-t-10">
                                 
 
-                                <div style="display: flow-root;" class="b-b b-grey">
-                                {{-- <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($s->software_id)->name}}</div>
+                                @php
+
+                                $records = \App\Models\FileReplySoftwareService::join('files', 'files.id', '=', 'file_reply_software_service.file_id')
+                                ->where('file_reply_software_service.service_id', $optionInner->id)
+                                ->where('files.ecu', $file->ecu)
+                                ->where('files.brand', $file->brand)
+                                ->select('file_reply_software_service.software_id')
+                                ->distinct('file_reply_software_service.software_id')->get();
+
                                 
-                                <div class="pull-right">
-                                  {{$optionInner->revisions($s->software_id, $file->ecu, $file->brand)}}
-                                </div> --}}
-                                
-                                </div>
+
+                            @endphp
+                          
+                          @foreach($records as $record)
+
+                          @php
+
+                              $totals = all_files_with_this_ecu_brand_and_service_and_software($file->brand, $file->ecu, $optionInner->id, $record->software_id);
+                              $revised = all_files_with_this_ecu_brand_and_service_and_software_revisions($file->brand, $file->ecu, $optionInner->id, $record->software_id);
+
+                          @endphp
+                          @if($totals != 0)
+                          <div style="display: flow-root;" class="b-b b-grey">
+                          <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
+                          
+                            <div class="pull-right">
+                              {{round((($totals - $revised) / $totals)*100, 2).'%'}}
+                            </div>
+                          
+                          </div>
+                          @endif
+
+                          @endforeach
                                 
                                 
                               </div>
