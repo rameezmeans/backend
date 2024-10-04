@@ -1013,6 +1013,8 @@ if(!function_exists('all_files_with_this_ecu_brand_and_service')){
 if(!function_exists('all_files_with_this_ecu_brand_and_service_and_software')){
 
     function all_files_with_this_ecu_brand_and_service_and_software( $brand ,$ecu, $serviceID, $softwareID){
+
+        dd($brand);
         
         // $fileProcessedWithSoftware = File::where('files.ecu', $ecu)->where('files.brand', $brand)
         // ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
