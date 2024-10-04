@@ -172,9 +172,6 @@
 
 
         getReport(brand, ecu);
-
-        
-
         
     });
 
@@ -197,8 +194,7 @@
                 $('#recordsRows').html(res.html);
                 // $('#tasks').html(res.tasks);
                 // $('#replies').html(res.replies);
-            
-
+                
             }
         });
 
