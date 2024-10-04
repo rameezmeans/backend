@@ -2559,7 +2559,7 @@ class FilesController extends Controller
 
         // dd($request->all());
 
-        $latest = FileReplySoftwareService::where('file_id', $request->file_id)->latest('created_at')->first();
+        $latest = FileReplySoftwareService::where('file_id', $request->file_id)->orderBy('created_at', 'desc')->first();
 
         if($latest){
             $latest->revised = 1;
