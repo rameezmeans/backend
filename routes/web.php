@@ -141,28 +141,29 @@ Route::get('/tasks', function () {
             $sArrays []= $i->service_id;
         }
 
-        dd($sArrays);
-        
-        $count = FileReplySoftwareService::where('file_id', $u)->where('service_id',$serviceID)->count();
+        // dd($sArrays);
 
-        
-        $mu = FileReplySoftwareService::where('file_id', $u)->where('service_id',$serviceID)->get();
+        foreach($sArrays as $s){
+
+         $count = FileReplySoftwareService::where('file_id', $u)->where('service_id',$s)->count();
+        $mu = FileReplySoftwareService::where('file_id', $u)->where('service_id',$s)->get();
             
         // dd($mu);
         
-        $inner = 1;
-            foreach($mu as $m){
+            $inner = 1;
+                foreach($mu as $m){
 
-                $inner++;
+                    $inner++;
 
-                $m->revised = 1;
-                $m->save();
+                    $m->revised = 1;
+                    $m->save();
 
-                if($inner == $count){
-                    break;
+                    if($inner == $count){
+                        break;
+                    }
                 }
-            }
 
+            }
         }
 
     }
