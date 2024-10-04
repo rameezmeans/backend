@@ -720,6 +720,18 @@ margin-bottom: 10px !important;
 
                         <div class="b-t b-grey p-b-10 p-t-10">
 
+                          @php
+
+                                $records = \App\Models\FileReplySoftwareService::join('files', 'files.id', '=', 'file_reply_software_service.file_id')
+                                ->where('file_reply_software_service.service_id', $stage->id)
+                                ->where('files.ecu', $file->ecu)
+                                ->where('files.brand', $file->brand)
+                                ->select('file_reply_software_service.software_id')
+                                ->distinct('file_reply_software_service.software_id')->get();
+
+                                dd($records);
+
+                            @endphp
                           
 
                           {{-- <div style="display: flow-root;" class="b-b b-grey">
