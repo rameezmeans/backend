@@ -2558,6 +2558,13 @@ class FilesController extends Controller
         $magic = (boolean) $request->magic;
 
         // dd($request->all());
+
+        $latest = FileReplySoftwareService::latest('upload_time')->first();
+
+        if($latest){
+            $latest->revised = 1;
+            $latest->save();
+        }
          
         $file = File::findOrFail($request->file_id);
         
