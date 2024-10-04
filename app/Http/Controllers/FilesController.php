@@ -228,11 +228,19 @@ class FilesController extends Controller
         foreach($finalArray as $key => $value){
 
             if (!in_array($key, $exclude)){
+                
                 $newRecord = new FileReplySoftwareService();
                 $newRecord->file_id = $fileID;
                 $newRecord->service_id = $key;
                 $newRecord->software_id = $value;
                 $newRecord->save();
+
+                $latest = FileReplySoftwareService::where('file_id', $request->file_id)->orderBy('created_at', 'desc')->first();
+
+                if($latest){
+                    $latest->revised = 1;
+                    $latest->save();
+                }
             }
 
         }
@@ -2558,14 +2566,7 @@ class FilesController extends Controller
         $magic = (boolean) $request->magic;
 
         // dd($request->all());
-
-        $latest = FileReplySoftwareService::where('file_id', $request->file_id)->orderBy('created_at', 'desc')->first();
-
-        if($latest){
-            $latest->revised = 1;
-            $latest->save();
-        }
-         
+        
         $file = File::findOrFail($request->file_id);
         
         $engineerFile = new RequestFile();
