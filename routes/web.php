@@ -95,31 +95,32 @@ Route::get('/tasks', function () {
 
     $allSoftwareRecs = FileReplySoftwareService::all();
 
+    $big = [];
     foreach($allSoftwareRecs as $r){
         $allMultiples = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->get('file_id')->toArray();
-        dd($allMultiples);
-        
-        if($count>1){
-            $multiple = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->get();
+        $big []= $allMultiples;
 
-            $inner = 1;
-            foreach($multiple as $m){
+        // if($count>1){
+        //     $multiple = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->get();
 
-                $inner++;
+        //     $inner = 1;
+        //     foreach($multiple as $m){
 
-                $m->revised = 1;
-                $m->save();
+        //         $inner++;
 
-                if($inner == $count){
-                    break;
-                }
-            }
+        //         $m->revised = 1;
+        //         $m->save();
+
+        //         if($inner == $count){
+        //             break;
+        //         }
+        //     }
         }
 
         
-    }
+    
 
-    dd('mog');
+    dd($big);
 
     abort(404);
 
