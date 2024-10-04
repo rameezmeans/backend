@@ -98,7 +98,11 @@ Route::get('/tasks', function () {
     $big = [];
     foreach($allSoftwareRecs as $r){
         $allMultiples = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->get('file_id')->toArray();
-        $big []= $allMultiples;
+        // $big []= $allMultiples;
+
+        foreach($allMultiples as $m){
+            $big []= $m->file_id;
+        }
 
         // if($count>1){
         //     $multiple = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->get();
