@@ -96,13 +96,26 @@ Route::get('/tasks', function () {
     $allSoftwareRecs = FileReplySoftwareService::all();
 
     foreach($allSoftwareRecs as $r){
-        $count = FileReplySoftwareService::where('file_id', $r->file_id)->count();
+        $count = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->count();
 
         if($count>1){
-            $multiple = FileReplySoftwareService::where('file_id', $r->file_id)->get();
+            $multiple = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->get();
 
-            dd($multiple);
+            $inner = 1;
+            foreach($multiple as $m){
+
+                $inner++;
+
+                $m->revised = 1;
+                $m->save();
+
+                if($inner == $count){
+                    break;
+                }
+            }
         }
+
+        dd('check');
     }
 
     abort(404);
