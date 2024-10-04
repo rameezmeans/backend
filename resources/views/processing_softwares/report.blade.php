@@ -183,7 +183,7 @@
             url:credit_url,
             type: "POST",
             data: {
-                brand: ecu,
+                brand: brand,
                 ecu: ecu,
                 
             },
@@ -194,7 +194,7 @@
                 $('#recordsRows').html(res.html);
                 // $('#tasks').html(res.tasks);
                 // $('#replies').html(res.replies);
-                
+
             }
         });
 
