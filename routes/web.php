@@ -97,11 +97,12 @@ Route::get('/tasks', function () {
 
     $big = [];
     foreach($allSoftwareRecs as $r){
-        $allMultiples = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->get('file_id')->toArray();
+        $count = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->count();
         // $big []= $allMultiples;
 
-        foreach($allMultiples as $m){
-            $big []= $m['file_id'];
+        if($count > 1){
+            $multilple = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->first();
+            $big []= $multilple->file_id;
         }
 
         // if($count>1){
