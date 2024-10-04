@@ -127,7 +127,32 @@ Route::get('/tasks', function () {
 
     $uniques = array_unique($big);
 
-    dd(count($uniques));
+    // dd(count($uniques));
+
+    foreach($uniques as $u){
+
+        $serviceID = FileReplySoftwareService::where('file_id', $u)->first()->service_id;
+
+        $count = FileReplySoftwareService::where('file_id', $u)->where('service_id',$serviceID)->count();
+
+        $multiple = FileReplySoftwareService::where('file_id', $u)->where('service_id',$serviceID)->get();
+
+        $inner = 1;
+        foreach($multiple as $m){
+
+            $inner++;
+
+            $m->revised = 1;
+            $m->save();
+
+            if($inner == $count){
+                break;
+            }
+        }
+
+    }
+
+    dd('finals');
 
     abort(404);
 
