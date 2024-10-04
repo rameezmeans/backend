@@ -105,7 +105,7 @@ class ProcessingSoftwaresController extends Controller
         ->where('files.ecu', $request->ecu)
         ->select('file_reply_software_service.software_id as software_id', 'file_reply_software_service.service_id as service_id')
         ->distinct('software_id', 'service_id')
-        ->orderBy('file_id', 'desc')
+        // ->orderBy('file_id', 'desc')
         ->get();
 
         $rows = "";
