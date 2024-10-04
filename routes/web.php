@@ -140,7 +140,7 @@ Route::get('/tasks', function () {
         
         $mu = FileReplySoftwareService::where('file_id', $u)->where('service_id',$serviceID)->get();
             
-        dd($mu);
+        // dd($mu);
         
         $inner = 1;
             foreach($mu as $m){
