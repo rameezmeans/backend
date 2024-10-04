@@ -124,7 +124,7 @@ class ProcessingSoftwaresController extends Controller
             "<td>".\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name."</td>".
             "<td><p class='text-success'>".$totals."</p></td>".
             "<td><p class='text-danger'>".$revised."</p></td>".
-            "<td><p class='text-danger'>". round((($totals - $revised) / $totals)*100, 2) ."</p></td>"
+            "<td><p class='text-danger'>". round((($totals - $revised) / $totals)*100, 2) ."%"."</p></td>"
             ."</tr>";
 
             // $replies += all_files_with_this_ecu_brand_and_service_and_software($record->file_id, $record->service_id, $record->software_id);
