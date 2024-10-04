@@ -228,7 +228,7 @@ class FilesController extends Controller
         foreach($finalArray as $key => $value){
 
             if (!in_array($key, $exclude)){
-                
+
                 $newRecord = new FileReplySoftwareService();
                 $newRecord->file_id = $fileID;
                 $newRecord->service_id = $key;
@@ -2575,7 +2575,7 @@ class FilesController extends Controller
         $engineerFile->file_type = 'engineer_file';
         $engineerFile->tool_type = 'not_relevant';
         $engineerFile->master_tools = 'not_relevant';
-        $engineerFile->revised = 0;
+        // $engineerFile->revised = 0;
         $engineerFile->file_id = $request->file_id;
         $engineerFile->engineer = true;
 
