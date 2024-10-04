@@ -92,6 +92,11 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 Route::get('/tasks', function () {
 
+
+    $allSoftwareRecs = FileReplySoftwareService::all();
+
+    dd($allSoftwareRecs);
+
     abort(404);
 
     // $files = File::all();
