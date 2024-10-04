@@ -133,8 +133,16 @@ Route::get('/tasks', function () {
 
         if($u == 3229){
 
-        $serviceID = FileReplySoftwareService::where('file_id', $u)->first()->service_id;
-        // dd($serviceID);
+        $serviceIDs = FileReplySoftwareService::select('service_id')->where('file_id', $u)->distinct('service_id')->get();
+        
+        $sArrays = [];
+        
+        foreach($serviceIDs as $i){
+            $sArrays []= $i->service_id;
+        }
+
+        dd($sArrays);
+        
         $count = FileReplySoftwareService::where('file_id', $u)->where('service_id',$serviceID)->count();
 
         
