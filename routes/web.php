@@ -136,6 +136,7 @@ Route::get('/tasks', function () {
         $count = FileReplySoftwareService::where('file_id', $u)->where('service_id',$serviceID)->count();
 
         if($u == 3229){
+            dd($u);
         $multiple = FileReplySoftwareService::where('file_id', $u)->get();
         echo 'here';
         dd($multilple);
