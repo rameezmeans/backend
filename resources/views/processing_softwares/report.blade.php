@@ -10,7 +10,7 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                    <h3>Softare Report</h3>
+                    <h3>Software Report</h3>
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
@@ -41,10 +41,10 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    {{-- <div class="col-lg-4">
                         <p>Tasks: <span id="tasks">0</span></p>
                         <p>Replies: <span id="replies">0</span></p>
-                    </div>
+                    </div> --}}
                 </div>
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
@@ -56,12 +56,10 @@
                         <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Task ID</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Brand</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">ECU</th>
+                                    
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Service</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Softare</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Number of Engineer Uploads</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Software</th>
+                                    {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Number of Engineer Uploads</th> --}}
                                     {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Tasks</th> --}}
                                     {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">All Files Uploaded</th> --}}
                                 </tr>
@@ -140,67 +138,69 @@
         });
 
 
-        $(document).on('change', '#service_id', function(e){
+        $(document).on('change', '#ecu', function(e){
         
             $('#progress').show();
 
-            let service_id = $('#service_id').val();
-            let software_id = $('#software_id').val();
+            let brand = $('#brand').val();
+            let ecu = $('#ecu').val();
 
 
-            getReport(service_id, software_id);
+            getReport(brand, ecu);
 
         });
 
-        $(document).on('change', '#software_id', function(e){
+        // $(document).on('change', '#software_id', function(e){
         
-        $('#progress').show();
+        // $('#progress').show();
 
-        let service_id = $('#service_id').val();
-        let software_id = $('#software_id').val();
-
-
-        getReport(service_id, software_id);
-
-    });
+        // let brand = $('#brand').val();
+        //     let ecu = $('#ecu').val();
 
 
-        $('#progress').show();
+        // getReport(brand, ecu);
 
-        let service_id = $('#service_id').val();
-        let software_id = $('#software_id').val();
-        
-        
-        getReport(service_id, software_id);
-
-        function getReport(service_id, software_id){
-
-        let credit_url = '{{route('get-software-report')}}';
     
-        $.ajax({
-                url:credit_url,
-                type: "POST",
-                data: {
-                    service_id: service_id,
-                    software_id: software_id,
-                    
-                },
-                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-                success: function(res) {
 
-                    $('#progress').hide();
-                    $('#recordsRows').html(res.html);
-                    $('#tasks').html(res.tasks);
-                    $('#replies').html(res.replies);
-                
 
-                }
-            });
-        }
+        $('#progress').show();
 
+        let brand = $('#brand').val();
+        let ecu = $('#ecu').val();
+
+
+        getReport(brand, ecu);
+
+        
 
         
     });
+
+    function getReport(brand, ecu){
+
+    let credit_url = '{{route('get-software-report')}}';
+
+    $.ajax({
+            url:credit_url,
+            type: "POST",
+            data: {
+                brand: ecu,
+                ecu: ecu,
+                
+            },
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            success: function(res) {
+
+                $('#progress').hide();
+                $('#recordsRows').html(res.html);
+                // $('#tasks').html(res.tasks);
+                // $('#replies').html(res.replies);
+            
+
+            }
+        });
+
+    }
 
 </script>
 
