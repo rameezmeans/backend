@@ -2574,6 +2574,7 @@ class FilesController extends Controller
         $engineerFile->file_type = 'engineer_file';
         $engineerFile->tool_type = 'not_relevant';
         $engineerFile->master_tools = 'not_relevant';
+        $engineerFile->revised = 0;
         $engineerFile->file_id = $request->file_id;
         $engineerFile->engineer = true;
 
