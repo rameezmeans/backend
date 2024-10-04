@@ -116,6 +116,8 @@
 
         $(document).on('change', '#brand', function(e){
 
+        $('#progress').show();
+
         $('#ecu').html('');
 
         console.log(e);
@@ -130,7 +132,8 @@
                 },
                 headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
                 success: function(res) {
-
+                    
+                    $('#progress').hide();
                     
                     $('#ecu').html(res.html);
                     
