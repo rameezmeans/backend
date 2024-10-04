@@ -131,7 +131,7 @@ Route::get('/tasks', function () {
 
     foreach($uniques as $u){
 
-        if($u == 3229){
+        // if($u == 3229){
 
         $serviceIDs = FileReplySoftwareService::select('service_id')->where('file_id', $u)->distinct('service_id')->get();
         
@@ -164,7 +164,7 @@ Route::get('/tasks', function () {
                 }
 
             }
-        }
+        // }
 
     }
 
