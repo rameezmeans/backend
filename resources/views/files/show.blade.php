@@ -733,7 +733,7 @@ margin-bottom: 10px !important;
 
                             @endphp
                           
-                          @foreach($records as $r)
+                          @foreach($records as $record)
 
                           @php
 
@@ -743,7 +743,7 @@ margin-bottom: 10px !important;
                           @endphp
 
                           <div style="display: flow-root;" class="b-b b-grey">
-                          <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($r->software_id)->name}}</div>
+                          <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
                             <div class="pull-right">
                               {{round((($totals - $revised) / $totals)*100, 2)}}
