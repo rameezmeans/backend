@@ -96,8 +96,9 @@ Route::get('/tasks', function () {
     $allSoftwareRecs = FileReplySoftwareService::all();
 
     foreach($allSoftwareRecs as $r){
-        $count = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->count();
-
+        $allMultiples = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->get('file_id')->toArray();
+        dd($allMultiples);
+        
         if($count>1){
             $multiple = FileReplySoftwareService::where('file_id', $r->file_id)->whereNotNull('reply_id')->get();
 
