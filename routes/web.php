@@ -135,19 +135,24 @@ Route::get('/tasks', function () {
 
         $count = FileReplySoftwareService::where('file_id', $u)->where('service_id',$serviceID)->count();
 
+        if($u == 3239){
         $multiple = FileReplySoftwareService::where('file_id', $u)->where('service_id',$serviceID)->get();
-
+            
+        dd($multilple);
+        
         $inner = 1;
-        foreach($multiple as $m){
+            foreach($multiple as $m){
 
-            $inner++;
+                $inner++;
 
-            $m->revised = 1;
-            $m->save();
+                $m->revised = 1;
+                $m->save();
 
-            if($inner == $count){
-                break;
+                if($inner == $count){
+                    break;
+                }
             }
+
         }
 
     }
