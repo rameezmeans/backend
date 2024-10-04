@@ -103,7 +103,7 @@ class ProcessingSoftwaresController extends Controller
         ->whereNotNull('files.ecu')
         ->where('files.brand', $request->brand)
         ->where('files.ecu', $request->ecu)
-        ->select('file_reply_software_service.service_id as service_id','file_reply_software_service.software_id as software_id', '*')
+        ->select('file_reply_software_service.service_id as service_id','file_reply_software_service.software_id as software_id')
         ->distinct('service_id')
         // ->orderBy('file_id', 'desc')
         ->get();
@@ -124,7 +124,7 @@ class ProcessingSoftwaresController extends Controller
             // $replies += all_files_with_this_ecu_brand_and_service_and_software($record->file_id, $record->service_id, $record->software_id);
         }
 
-        return response()->json(['html' =>$rows, 'tasks' => count($softwaresAndBrandsRecords), 'replies' => $replies ], 200);
+        return response()->json(['html' =>$rows, 'tasks' => count($softwaresAndBrandsRecords) ], 200);x
     }
 
     public function update(Request $request)
