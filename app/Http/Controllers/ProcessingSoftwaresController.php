@@ -124,7 +124,7 @@ class ProcessingSoftwaresController extends Controller
             // $replies += all_files_with_this_ecu_brand_and_service_and_software($record->file_id, $record->service_id, $record->software_id);
         }
 
-        return response()->json(['html' =>$rows, 'tasks' => count($softwaresAndBrandsRecords) ], 200);x
+        return response()->json(['html' =>$rows, 'tasks' => count($softwaresAndBrandsRecords) ], 200);
     }
 
     public function update(Request $request)
