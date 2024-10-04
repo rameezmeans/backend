@@ -1012,7 +1012,7 @@ if(!function_exists('all_files_with_this_ecu_brand_and_service')){
 
 if(!function_exists('all_files_with_this_ecu_brand_and_service_and_software')){
 
-    function all_files_with_this_ecu_brand_and_service_and_software($ecu, $serviceID, $softwareID){
+    function all_files_with_this_ecu_brand_and_service_and_software( $brand ,$ecu, $serviceID, $softwareID){
         
         // $fileProcessedWithSoftware = File::where('files.ecu', $ecu)->where('files.brand', $brand)
         // ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
@@ -1024,9 +1024,34 @@ if(!function_exists('all_files_with_this_ecu_brand_and_service_and_software')){
         $fileProcessedWithSoftware = FileReplySoftwareService::join('files', 'files.id', '=', 'file_reply_software_service.file_id')
         ->where('file_reply_software_service.service_id', $serviceID)
         ->where('files.ecu', $ecu)
-        // ->where('files.ecu', $brand)
+        ->where('files.brand', $brand)
         // ->where('files.id', $fileID)
         // ->where('files.brand', $brand)
+        ->where('file_reply_software_service.software_id', $softwareID)
+        ->select('file_reply_software_service.id')
+        ->distinct()->count('file_reply_software_service.id');
+
+        return $fileProcessedWithSoftware;
+    }
+}
+
+if(!function_exists('all_files_with_this_ecu_brand_and_service_and_software_revisions')){
+
+    function all_files_with_this_ecu_brand_and_service_and_software_revisions( $brand ,$ecu, $serviceID, $softwareID){
+        
+        // $fileProcessedWithSoftware = File::where('files.ecu', $ecu)->where('files.brand', $brand)
+        // ->join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        // ->where('file_reply_software_service.service_id', $serviceID)
+        // ->where('file_reply_software_service.software_id', $softwareID)
+        // ->select('file_reply_software_service.reply_id')
+        // ->distinct()->count('file_reply_software_service.reply_id');
+
+        $fileProcessedWithSoftware = FileReplySoftwareService::join('files', 'files.id', '=', 'file_reply_software_service.file_id')
+        ->where('file_reply_software_service.service_id', $serviceID)
+        ->where('files.ecu', $ecu)
+        ->where('files.brand', $brand)
+        // ->where('files.id', $fileID)
+        ->where('file_reply_software_service.revised', 1)
         ->where('file_reply_software_service.software_id', $softwareID)
         ->select('file_reply_software_service.id')
         ->distinct()->count('file_reply_software_service.id');

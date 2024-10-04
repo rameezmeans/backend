@@ -118,7 +118,8 @@ class ProcessingSoftwaresController extends Controller
             
             "<tr><td>".\App\Models\Service::findOrFail($record->service_id)->name."</td>".
             "<td>".\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name."</td>".
-            "<td><p class='text-success'>".all_files_with_this_ecu_brand_and_service_and_software($request->ecu, $record->service_id, $record->software_id)."</p></td>"
+            "<td><p class='text-success'>".all_files_with_this_ecu_brand_and_service_and_software($request->brand, $request->ecu, $record->service_id, $record->software_id)."</p></td>".
+            "<td><p class='text-success'>".all_files_with_this_ecu_brand_and_service_and_software_revisions($request->brand, $request->ecu, $record->service_id, $record->software_id)."</p></td>"
             ."</tr>";
 
             // $replies += all_files_with_this_ecu_brand_and_service_and_software($record->file_id, $record->service_id, $record->software_id);
