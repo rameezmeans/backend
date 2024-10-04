@@ -101,7 +101,7 @@ Route::get('/tasks', function () {
         // $big []= $allMultiples;
 
         foreach($allMultiples as $m){
-            $big []= $m->file_id;
+            $big []= $m['file_id'];
         }
 
         // if($count>1){
