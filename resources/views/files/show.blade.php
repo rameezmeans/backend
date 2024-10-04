@@ -737,8 +737,8 @@ margin-bottom: 10px !important;
 
                           @php
 
-                              $totals = all_files_with_this_ecu_brand_and_service_and_software($file->brand, $file->ecu, $record->service_id, $record->software_id);
-                              $revised = all_files_with_this_ecu_brand_and_service_and_software_revisions($file->brand, $file->ecu, $record->service_id, $record->software_id);
+                              $totals = all_files_with_this_ecu_brand_and_service_and_software($file->brand, $file->ecu, $stage->id, $record->software_id);
+                              $revised = all_files_with_this_ecu_brand_and_service_and_software_revisions($file->brand, $file->ecu, $stage->id, $record->software_id);
 
                           @endphp
                           @if($totals != 0)
