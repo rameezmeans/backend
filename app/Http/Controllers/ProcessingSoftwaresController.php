@@ -111,7 +111,7 @@ class ProcessingSoftwaresController extends Controller
         $rows = "";
         // $replies = 0;
 
-        dd($softwaresAndBrandsRecords);
+        // dd($softwaresAndBrandsRecords);
 
         foreach($softwaresAndBrandsRecords as $record){
             $rows .= 
