@@ -138,7 +138,7 @@ Route::get('/tasks', function () {
         if($u == 3229){
         $mu = FileReplySoftwareService::where('file_id', $u)->where('service_id',$serviceID)->get();
             
-        // dd($mu);
+        dd($mu);
         
         $inner = 1;
             foreach($mu as $m){
