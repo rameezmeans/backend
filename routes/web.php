@@ -125,7 +125,9 @@ Route::get('/tasks', function () {
         
     
 
-    dd($big);
+    $uniques = array_unique($big);
+
+    dd(count($uniques));
 
     abort(404);
 
