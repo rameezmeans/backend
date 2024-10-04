@@ -741,7 +741,7 @@ margin-bottom: 10px !important;
                               $revised = all_files_with_this_ecu_brand_and_service_and_software_revisions($file->brand, $file->ecu, $record->service_id, $record->software_id);
 
                           @endphp
-
+                          @if($totals != 0)
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
@@ -750,6 +750,7 @@ margin-bottom: 10px !important;
                             </div>
                           
                           </div>
+                          @endif
 
                           @endforeach
                           
