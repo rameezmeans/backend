@@ -110,6 +110,8 @@
 
     $(document).ready(function(event){
 
+        $('#progress').hide();
+
         $(document).on('change', '#brand', function(e){
 
         $('#ecu').html('');
