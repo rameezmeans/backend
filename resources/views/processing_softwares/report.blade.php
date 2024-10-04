@@ -25,23 +25,19 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group form-group-default">
-                            <label>Select Serivce</label>
-                            <select class="full-width" id="service_id" data-init-plugin="select2" name="service_id">  
-                            @foreach($services as $service)
-                                @if(\App\Models\Service::where('id',$service->service_id)->first() != NULL)
-                                    <option value="{{$service->service_id}}">{{\App\Models\Service::findOrFail($service->service_id)->name.', '}}({{\App\Models\Service::findOrFail($service->service_id)->vehicle_type}}) @if(\App\Models\Service::findOrFail($service->service_id)->active == 1) ECUTech @elseif(\App\Models\Service::findOrFail($service->service_id)->tuningx_active == 1) Tuning-X @endif</option>
-                                @endif
-                                @endforeach
+                            <label>Select Brand</label>
+                            <select class="full-width" id="brand" data-init-plugin="select2" name="brand">  
+                            @foreach($brands as $brand)
+                                <option value="{{$brand->brand}}">{{$brand->brand}}</option>
+                            @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group form-group-default">
-                            <label>Select Software</label>
-                            <select class="full-width" id="software_id" data-init-plugin="select2" name="software_id">
-                            @foreach($softwares as $software)
-                                <option value="{{$software->software_id}}">{{\App\Models\ProcessingSoftware::findOrFail($software->software_id)->name}}</option>
-                            @endforeach
+                            <label>Select ECU</label>
+                            <select class="full-width" id="ecu" data-init-plugin="select2" name="ecu">
+                                
                             </select>
                         </div>
                     </div>
@@ -115,6 +111,33 @@
 <script type="text/javascript">
 
     $(document).ready(function(event){
+
+        $(document).on('change', '#brand', function(e){
+
+        $('#ecu').html('');
+
+        console.log(e);
+
+        let brand = $(this).val();
+
+            $.ajax({
+                url:'{{route('get-comments-ecus')}}',
+                type: "POST",
+                data: {
+                    brand: brand
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(res) {
+
+                    
+                    $('#ecu').html(res.html);
+                    
+                
+
+                }
+            });
+
+        });
 
 
         $(document).on('change', '#service_id', function(e){

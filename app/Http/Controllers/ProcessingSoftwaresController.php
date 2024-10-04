@@ -74,6 +74,8 @@ class ProcessingSoftwaresController extends Controller
 
     public function softwareReport(){
 
+        $brands = File::select('brand')->distinct()->orderBy('brand', 'asc')->get();
+
         // $softwaresAndBrandsRecords = FileReplySoftwareService::join('files', 'file_reply_software_service.file_id', '=', 'files.id')
         // ->whereNotNull('files.ecu')
         // ->select('files.brand','files.ecu', 'file_reply_software_service.software_id', 'file_reply_software_service.service_id')
@@ -86,11 +88,11 @@ class ProcessingSoftwaresController extends Controller
         // ->orderBy('file_id', 'desc')
         // ->get();
 
-        $services = FileReplySoftwareService::select('service_id')->distinct()->orderBy('service_id', 'asc')->get();
+        // $services = FileReplySoftwareService::select('service_id')->distinct()->orderBy('service_id', 'asc')->get();
         
-        $softwares = FileReplySoftwareService::select('software_id')->distinct()->orderBy('software_id', 'asc')->get();
+        // $softwares = FileReplySoftwareService::select('software_id')->distinct()->orderBy('software_id', 'asc')->get();
         
-        return view('processing_softwares.report', ['services' => $services, 'softwares' => $softwares]);
+        return view('processing_softwares.report', ['brands' => $brands]);
     }  
     
     public function ajaxSoftwareReport(Request $request){
