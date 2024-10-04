@@ -103,13 +103,13 @@ class ProcessingSoftwaresController extends Controller
         ->whereNotNull('files.ecu')
         ->where('files.brand', $request->brand)
         ->where('files.ecu', $request->ecu)
-        ->select('files.brand','files.ecu', 'files.id as file_id', 'file_reply_software_service.software_id as software_id', 'file_reply_software_service.service_id as service_id')
+        ->select('files.id as file_id', 'file_reply_software_service.software_id as software_id', 'file_reply_software_service.service_id as service_id')
         ->distinct('file_id', 'software_id', 'service_id')
         ->orderBy('file_id', 'desc')
         ->get();
 
         $rows = "";
-        $replies = 0;
+        // $replies = 0;
 
         dd($softwaresAndBrandsRecords);
 
@@ -121,7 +121,7 @@ class ProcessingSoftwaresController extends Controller
             // "<td>".all_files_with_this_ecu_brand_and_service_and_software($record->file_id, $record->service_id, $record->software_id)."</td>"
             ."</tr>";
 
-            $replies += all_files_with_this_ecu_brand_and_service_and_software($record->file_id, $record->service_id, $record->software_id);
+            // $replies += all_files_with_this_ecu_brand_and_service_and_software($record->file_id, $record->service_id, $record->software_id);
         }
 
         return response()->json(['html' =>$rows, 'tasks' => count($softwaresAndBrandsRecords), 'replies' => $replies ], 200);
