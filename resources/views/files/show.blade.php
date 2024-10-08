@@ -5077,7 +5077,7 @@ margin-bottom: 10px !important;
   </div>
 
 
-  <div class="modal fade slide-up disable-scroll " id="softwareOptionsModal-{{$o_file->id}}" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal fade slide-up disable-scroll " id="softwareOptionsModal-{{$o_file->id}}" role="dialog" aria-hidden="false">
     <div class="modal-dialog modal-lg" class="width:90% !important;">
       <div class="modal-content-wrapper">
         <div class="modal-content">
