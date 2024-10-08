@@ -3549,7 +3549,7 @@ class FilesController extends Controller
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
         $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
 
-        $prossingSoftwares = ProcessingSoftware::all();
+        $prossingSoftwares = ProcessingSoftware::orderBy('name', 'asc')->get();
 
         if(env('APP_ENV') == 'live'){
             return view('files.show', ['optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
