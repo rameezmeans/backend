@@ -38,7 +38,7 @@
             <div class="card-body">
 
               @if(isset($customer))
-              <div class="pull-right">
+              <div class="m-b-20">
                 <span class="label @if($customer->front_end_id == 1) text-white bg-primary @elseif($customer->front_end_id == 3) text-white bg-info @else text-black bg-warning @endif">{{$customer->frontend->name}}<span>
               </div>
               @endif
