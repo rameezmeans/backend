@@ -90,7 +90,7 @@ class User extends Authenticatable
     public function credits(){
         return $this->hasMany(Credit::class)->where('is_evc', 0)->orderby('created_at', 'desc'); 
     }
-
+    
     public function tools_slave(){
         return $this->hasMany(UserTool::class, 'user_id', 'id')->where('type', 'slave'); 
     }

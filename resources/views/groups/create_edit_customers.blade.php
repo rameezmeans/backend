@@ -37,6 +37,11 @@
             </div>
             <div class="card-body">
 
+              @if(isset($customer))
+              <div class="pull-right">
+                <span class="label @if($customer->front_end_id == 1) text-white bg-primary @elseif($customer->front_end_id == 3) text-white bg-info @else text-black bg-warning @endif">{{$customer->frontend->name}}<span>
+              </div>
+              @endif
               <form class="" role="form" method="POST" action="@if(isset($customer)){{route('update-customer')}}@else{{ route('add-customer') }}@endif" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                 @if(isset($customer))
@@ -471,14 +476,14 @@
                 </span>
               @enderror
               
-              <div class="form-group form-group-default required ">
+              {{-- <div class="form-group form-group-default required ">
                 <label>Frontend</label>
                 <select class="full-width" data-init-plugin="select2" name="front_end_id">
                   @foreach($frontends as $frontend)
                     <option @if(isset($customer) && $customer->frontend->id == $frontend->id) selected @endif value="{{$frontend->id}}">{{$frontend->name}}</option>
                   @endforeach
                 </select>
-              </div>
+              </div> --}}
             
             @error('front_end_id')
               <span class="text-danger" role="alert">

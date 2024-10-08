@@ -501,7 +501,7 @@ class UsersController extends Controller
         $customer->company_id = $request->company_id;
         $customer->evc_customer_id = $request->evc_customer_id;
         $customer->group_id = $request->group_id;
-        $customer->front_end_id = $request->front_end_id;
+        // $customer->front_end_id = $request->front_end_id;
         $customer->elorus_id = $request->elorus_id;
         // $customer->elorus_id = null;
 
