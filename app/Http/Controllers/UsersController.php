@@ -704,7 +704,24 @@ class UsersController extends Controller
     } 
 
     public function updateTestStatus(Request $request){
-        dd($request->all());
+        
+        if($request->passkey == '4589'){
+
+            $customer = User::findOrFail($request->customer_id);
+            if($request->status == 'on'){
+                $customer->test = 1;
+            }
+            else{
+                $customer->test = 0;
+            }
+
+            $customer->save();
+
+            return redirect()->route('customers')->with(['success' => 'Status Changed, successfully.']);
+        }
+        else{
+            return redirect()->route('customers')->with(['success' => 'Status Not Changed, successfully.']);
+        }
     }
 
     public function deleteCustomer(Request $request){
