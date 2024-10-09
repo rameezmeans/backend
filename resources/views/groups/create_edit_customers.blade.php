@@ -30,8 +30,8 @@
                     <button data-redirect="{{route('customers')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Customers</span>
                     </button>
 
-                    <button id="testButton" class="btn btn-success btn-cons m-b-10" type="button"><i class="pg-plus_circle"></i> <span class="bold">Set Test Status</span>
-                    </button>
+                    {{-- <button id="testButton" class="btn btn-success btn-cons m-b-10" type="button"><i class="pg-plus_circle"></i> <span class="bold">Set Test Status</span>
+                    </button> --}}
 
                     {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                 </div>
