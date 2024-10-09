@@ -531,42 +531,33 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group form-group-default">
-                    <label>Company Name</label>
-                    <input type="email" class="form-control">
+                    <div class="checkbox ">
+                      <input type="checkbox" @if($customer->test) value="1" @endif id="checkbox1">
+                      <label for="checkbox1">Test Status</label>
+                    </div>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-8">
                   <div class="form-group form-group-default">
-                    <label>Card Number</label>
-                    <input type="text" class="form-control">
+                    <label>Pass Code</label>
+                    <input type="password" class="form-control" name="passkey">
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="form-group form-group-default">
-                    <label>Card Holder</label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
+                
               </div>
             </div>
-          </form>
+          
           <div class="row">
-            <div class="col-md-8">
-              <div class="p-t-20 clearfix p-l-10 p-r-10">
-                <div class="pull-left">
-                  <p class="bold font-montserrat text-uppercase">TOTAL</p>
-                </div>
-                <div class="pull-right">
-                  <p class="bold font-montserrat text-uppercase">$20.00</p>
-                </div>
-              </div>
-            </div>
+            
             <div class="col-md-4 m-t-10 sm-m-t-10">
-              <button type="button" class="btn btn-primary btn-block m-t-5">Pay Now</button>
+              <button type="submit" class="btn btn-primary btn-block m-t-5">Set Status</button>
             </div>
           </div>
+
+        </form>
+
         </div>
       </div>
     </div>
