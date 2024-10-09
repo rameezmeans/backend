@@ -704,7 +704,7 @@ class UsersController extends Controller
     } 
 
     public function updateTestStatus(Request $request){
-        
+
         if($request->passkey == '4589'){
 
             $customer = User::findOrFail($request->customer_id);
@@ -717,10 +717,10 @@ class UsersController extends Controller
 
             $customer->save();
 
-            return redirect()->route('customers')->with(['success' => 'Status Changed, successfully.']);
+            return redirect()->back()->with(['success' => 'Status Changed, successfully.']);
         }
         else{
-            return redirect()->route('customers')->with(['success' => 'Status Not Changed, successfully.']);
+            return redirect()->back()->with(['success' => 'Status Not Changed, successfully.']);
         }
     }
 
