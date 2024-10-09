@@ -720,7 +720,7 @@ class UsersController extends Controller
             return redirect()->back()->with(['success' => 'Status Changed, successfully.']);
         }
         else{
-            return redirect()->back()->with(['success' => 'Status Not Changed, successfully.']);
+            return redirect()->back()->with(['success' => 'Status Not Changed.']);
         }
     }
 
