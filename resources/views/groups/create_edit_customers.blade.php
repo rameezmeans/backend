@@ -508,6 +508,39 @@
                   @endif
                 </div>
               </form>
+
+              <form role="form">
+                <div class="">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="checkbox checkbox-success">
+                          <input type="checkbox" @if($customer->test == 1) value="1" @else value="0" @endif id="checkbox1">
+                          <label for="checkbox1">Test Status</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group form-group-default">
+                        <label>Pass Code</label>
+                        <input type="password" class="form-control" name="passkey">
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              
+              <div class="row">
+                
+                <div class="col-md-4 m-t-10 sm-m-t-10">
+                  <button type="submit" class="btn btn-primary btn-block m-t-5">Set Status</button>
+                </div>
+              </div>
+    
+            </form>
+    
                 
             </div>
           </div>
@@ -526,38 +559,7 @@
           <p class="p-b-10">We need set the test status for user.</p>
         </div>
         <div class="modal-body">
-          <form role="form">
-            <div class="">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <div class="checkbox checkbox-success">
-                      <input type="checkbox" @if($customer->test == 1) value="1" @else value="0" @endif id="checkbox1">
-                      <label for="checkbox1">Test Status</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8">
-                  <div class="form-group form-group-default">
-                    <label>Pass Code</label>
-                    <input type="password" class="form-control" name="passkey">
-                  </div>
-                </div>
-                
-              </div>
-            </div>
           
-          <div class="row">
-            
-            <div class="col-md-4 m-t-10 sm-m-t-10">
-              <button type="submit" class="btn btn-primary btn-block m-t-5">Set Status</button>
-            </div>
-          </div>
-
-        </form>
-
         </div>
       </div>
     </div>
@@ -576,12 +578,12 @@
 
       $( document ).ready(function(event) {
 
-        $(document).on('click', '#testButton', function(e){
+        // $(document).on('click', '#testButton', function(e){
 
-          e.preventDefault();
-          $('#testModal').modal('show');
+        //   e.preventDefault();
+        //   $('#testModal').modal('show');
 
-          });
+        //   });
         
         $('.btn-delete').click(function() {
           Swal.fire({
