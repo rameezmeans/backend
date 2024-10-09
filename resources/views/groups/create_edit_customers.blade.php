@@ -514,6 +514,7 @@
               </h5>
 
               <form action="{{route('update-test-status')}}" method="POST" role="form">
+                @csrf
                 <div class="">
                   <div class="row">
                     <div class="col-md-12">
