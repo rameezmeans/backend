@@ -845,6 +845,7 @@ Route::get('/edit_customer/{id}', [App\Http\Controllers\UsersController::class,'
 Route::post('/add-customer', [App\Http\Controllers\UsersController::class,'addCustomer'])->name('add-customer');
 Route::post('/update-customer', [App\Http\Controllers\UsersController::class,'updateCustomer'])->name('update-customer');
 Route::post('/delete_customer', [App\Http\Controllers\UsersController::class,'deleteCustomer'])->name('delete-customer');
+Route::post('/update_test_status', [App\Http\Controllers\UsersController::class,'updateTestStatus'])->name('update-test-status');
 
 Route::get('/engineers', [App\Http\Controllers\UsersController::class,'Engineers'])->name('engineers');
 Route::get('/create_engineer', [App\Http\Controllers\UsersController::class,'createEngineer'])->name('create-engineer');

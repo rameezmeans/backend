@@ -703,6 +703,10 @@ class UsersController extends Controller
         return view('engineers.engineers', ['engineers' => $engineers]);
     } 
 
+    public function updateTestStatus(Request $request){
+        dd($request->all());
+    }
+
     public function deleteCustomer(Request $request){
 
         if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'delete-customers')){
