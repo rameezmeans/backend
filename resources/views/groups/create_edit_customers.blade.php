@@ -522,8 +522,8 @@
         <div class="modal-header clearfix text-left">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
           </button>
-          <h5>Payment <span class="semi-bold">Information</span></h5>
-          <p class="p-b-10">We need payment information inorder to process your order</p>
+          <h5>Set Test <span class="semi-bold">Status</span></h5>
+          <p class="p-b-10">We need set the test status for user.</p>
         </div>
         <div class="modal-body">
           <form role="form">
@@ -532,7 +532,7 @@
                 <div class="col-md-12">
                   <div class="form-group form-group-default">
                     <div class="checkbox ">
-                      <input type="checkbox" @if($customer->test) value="1" @endif id="checkbox1">
+                      <input type="checkbox" @if($customer->test) value="1" @else value="0" @endif id="checkbox1">
                       <label for="checkbox1">Test Status</label>
                     </div>
                   </div>
