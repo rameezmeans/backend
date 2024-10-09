@@ -531,8 +531,8 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <div class="checkbox ">
-                      <input class="checkbox-success checkbox" type="checkbox" @if($customer->test) value="1" @else value="0" @endif id="checkbox1">
+                    <div class="checkbox checkbox-success">
+                      <input type="checkbox" @if($customer->test == 1) value="1" @else value="0" @endif id="checkbox1">
                       <label for="checkbox1">Test Status</label>
                     </div>
                   </div>
