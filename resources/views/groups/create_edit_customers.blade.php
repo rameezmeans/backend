@@ -527,12 +527,12 @@
         </div>
         <div class="modal-body">
           <form role="form">
-            <div class="form-group-attached">
+            <div class="">
               <div class="row">
                 <div class="col-md-12">
-                  <div class="form-group form-group-default">
+                  <div class="form-group">
                     <div class="checkbox ">
-                      <input type="checkbox" @if($customer->test) value="1" @else value="0" @endif id="checkbox1">
+                      <input type="checkbox checkbox-success" @if($customer->test) value="1" @else value="0" @endif id="checkbox1">
                       <label for="checkbox1">Test Status</label>
                     </div>
                   </div>
