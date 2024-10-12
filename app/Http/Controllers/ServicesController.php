@@ -756,7 +756,7 @@ class ServicesController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|max:255|min:3',
-            'label' => 'required|max:255|min:3',
+            'label' => 'required|max:255|min:2',
             'type' => 'required',
             // 'credits' => 'required',
             // 'tuningx_credits' => 'required',
