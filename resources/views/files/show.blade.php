@@ -61,7 +61,7 @@ margin-bottom: 10px !important;
 @section('content')
 
 @php
-  $arrayversionlua = NULL;
+  // $arrayversionlua = NULL;
 @endphp
 <div class="page-content-wrapper ">
   <!-- START PAGE CONTENT -->
