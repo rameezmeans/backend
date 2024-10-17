@@ -59,6 +59,10 @@ margin-bottom: 10px !important;
   </style>
 @endsection
 @section('content')
+
+@php
+  $arrayversionlua = ;
+@endphp
 <div class="page-content-wrapper ">
   <!-- START PAGE CONTENT -->
   <div class="content sm-gutter">
