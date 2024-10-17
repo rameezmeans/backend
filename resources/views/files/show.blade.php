@@ -2147,6 +2147,8 @@ margin-bottom: 10px !important;
                             $username = "admin_ecu_portal";
                             $password = "e24BTBDTQMRBmC";
                             $dbname = "admin_ecu_portal_db";
+
+                            $arrayversionlua = NULL;
                             
                             // Create a PDO instance
                             try {
