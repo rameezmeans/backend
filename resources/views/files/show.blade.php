@@ -2183,6 +2183,8 @@ margin-bottom: 10px !important;
                                         echo 'error decoding';
                                     } else {
                                         foreach ($arrayversionslua as $arrayversionlua) {
+
+                                          dd($arrayversionlua);
                                             
                                             ?>
                                             <div class="col-lg-12">
