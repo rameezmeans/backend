@@ -59,7 +59,6 @@ margin-bottom: 10px !important;
   </style>
 @endsection
 @section('content')
-
 <div class="page-content-wrapper ">
   <!-- START PAGE CONTENT -->
   <div class="content sm-gutter">
