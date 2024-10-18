@@ -2142,7 +2142,8 @@ margin-bottom: 10px !important;
                                   
                             </div>
                             <div class="col-md-4">
-<?php
+                          
+                          <?php 
                             $servername = "127.0.0.1";
                             $username = "admin_ecu_portal";
                             $password = "e24BTBDTQMRBmC";
@@ -3401,7 +3402,8 @@ margin-bottom: 10px !important;
                               <p class="pull-left">{{$message['request_file']." "}}</p>@if($message['old_name'])<br><p class="hint-text">({{$message['old_name']}})</p>@endif
                                 
                                          
-                              <?
+                              <?php
+
                                 $madeproject = DB::table('lua_make_project')
                                 ->where('requestfile', $message['id'])
                                 ->limit(1)
