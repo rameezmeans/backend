@@ -2045,7 +2045,7 @@ margin-bottom: 10px !important;
                                     @if(\App\Models\Service::where('name', $file->stages)->first())
                                       <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                                         <div class="pull-right">
-                                            <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons2').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons2').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons2').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
+                                            <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
                                             <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span>
                                             
                                             <?
@@ -2061,7 +2061,7 @@ margin-bottom: 10px !important;
                                     @if(\App\Models\Service::FindOrFail($file->stage_services->service_id))
                                     <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                                       <div class="pull-right">
-                                          <img alt="{{\App\Models\Service::FindOrFail($file->stage_services->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon}}" data-src="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}" src="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}">
+                                          <img alt="{{\App\Models\Service::FindOrFail($file->stage_services->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}">
                                           <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_services->service_id)->name }}</span>
                                           
                                           <?
@@ -2082,7 +2082,7 @@ margin-bottom: 10px !important;
                                     @foreach($file->options_services()->get() as $option) 
                                         @if(\App\Models\Service::where('id', $option->service_id)->first())
                                           <div class="p-l-20 b-b b-grey b-t p-b-10 p-t-10"> 
-                                            <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons2').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons2').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons2').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
+                                            <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
                                             {{\App\Models\Service::where('id', $option->service_id)->first()->label}}
                                             <?
                                             $value = \App\Models\Service::where('id', $option->service_id)->first()->label;
@@ -2114,9 +2114,9 @@ margin-bottom: 10px !important;
                                         @if(\App\Models\Service::FindOrFail($option->service_id))
                                           <div class="p-l-20 b-b b-grey"> 
                                             <img alt="{{\App\Models\Service::FindOrFail($option->service_id)->name}}" width="40" height="40" 
-                                            data-src-retina="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
-                                            data-src="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
-                                            src="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
+                                            data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                            data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                            src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
                                             {{\App\Models\Service::FindOrFail($option->service_id)->label}}  
                                             <?
                                             $value = \App\Models\Service::FindOrFail($option->service_id)->label;
@@ -4296,7 +4296,7 @@ margin-bottom: 10px !important;
                                     @if(\App\Models\Service::where('name', $file->stages)->first())
                                       <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                                         <div class="pull-right">
-                                            <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons2').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons2').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons2').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
+                                            <img alt="{{$file->stages}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon }}">
                                             <span class="text-black" style="top: 2px; position:relative;">{{ $file->stages }}</span>
                                             
                                             <?
@@ -4312,7 +4312,7 @@ margin-bottom: 10px !important;
                                     @if(\App\Models\Service::FindOrFail($file->stage_services->service_id))
                                     <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                                       <div class="pull-right">
-                                          <img alt="{{\App\Models\Service::FindOrFail($file->stage_services->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon}}" data-src="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}" src="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}">
+                                          <img alt="{{\App\Models\Service::FindOrFail($file->stage_services->service_id)->name}}" width="33" height="" data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon}}" data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}" src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($file->stage_services->service_id)->icon }}">
                                           <span class="text-black" style="top: 2px; position:relative;">{{ \App\Models\Service::FindOrFail($file->stage_services->service_id)->name }}</span>
                                           
                                           <?
@@ -4333,7 +4333,7 @@ margin-bottom: 10px !important;
                                     @foreach($file->options_services()->get() as $option) 
                                         @if(\App\Models\Service::where('id', $option->service_id)->first())
                                           <div class="p-l-20 b-b b-grey b-t p-b-10 p-t-10"> 
-                                            <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons2').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons2').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons2').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
+                                            <img alt="{{\App\Models\Service::where('id', $option->service_id)->first()->name}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('id', $option->service_id)->first()->icon }}">
                                             {{\App\Models\Service::where('id', $option->service_id)->first()->label}}
                                             <?
                                             $value = \App\Models\Service::where('id', $option->service_id)->first()->label;
@@ -4365,9 +4365,9 @@ margin-bottom: 10px !important;
                                         @if(\App\Models\Service::FindOrFail($option->service_id))
                                           <div class="p-l-20 b-b b-grey"> 
                                             <img alt="{{\App\Models\Service::FindOrFail($option->service_id)->name}}" width="40" height="40" 
-                                            data-src-retina="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
-                                            data-src="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
-                                            src="{{ url('icons2').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
+                                            data-src-retina="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                            data-src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}" 
+                                            src="{{ url('icons').'/'.\App\Models\Service::FindOrFail($option->service_id)->icon }}">
                                             {{\App\Models\Service::FindOrFail($option->service_id)->label}}  
                                             <?
                                             $value = \App\Models\Service::FindOrFail($option->service_id)->label;
