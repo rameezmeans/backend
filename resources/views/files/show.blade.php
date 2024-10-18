@@ -2148,7 +2148,7 @@ margin-bottom: 10px !important;
                             $password = "e24BTBDTQMRBmC";
                             $dbname = "admin_ecu_portal_db";
 
-                            $arrayversionlua = NULL;
+                            // $arrayversionlua = NULL;
                             
                             // Create a PDO instance
                             try {
@@ -2184,7 +2184,7 @@ margin-bottom: 10px !important;
                                     } else {
                                         foreach ($arrayversionslua as $arrayversionlua) {
 
-                                          dd($arrayversionlua);
+                                          // dd($arrayversionlua);
                                             
                                             ?>
                                             <div class="col-lg-12">
@@ -2250,13 +2250,13 @@ margin-bottom: 10px !important;
                                           <?
                                           foreach ($arrayversionslua as $arrayversionlua){
 
-                                            dd($arrayversionlua);
+                                            // dd($arrayversionlua);
                                             ?>
                                                 
                                                 
                                               <?
 
-                                              dd($arrayversionlua);
+                                              // dd($arrayversionlua);
                                               foreach ($arrayversionlua as $key => $value) {
                                                   if (is_numeric($key) && $value !== 'Original') {
                                                     $modifiedString = str_replace('/', '-', $value);
@@ -2482,12 +2482,12 @@ margin-bottom: 10px !important;
                                           <option value="">Nothing</option>
                                           <?
                                           foreach ($data as $arrayversionlua){
-                                            dd($arrayversionlua);
+                                            // dd($arrayversionlua);
                                             ?>
                                                 
                                                 
                                               <?
-                                              dd($arrayversionlua);
+                                              // dd($arrayversionlua);
                                               foreach ($arrayversionlua as $key => $value) {
                                                   if (is_numeric($key) && $value !== 'Original') {
                                                     $modifiedString = str_replace('/', '-', $value);
@@ -4429,7 +4429,7 @@ margin-bottom: 10px !important;
                                     } else {
                                         foreach ($arrayversionslua as $arrayversionlua) {
 
-                                          dd($arrayversionlua);
+                                          // dd($arrayversionlua);
                                             
                                             ?>
                                             <div class="col-lg-12">
@@ -4441,7 +4441,7 @@ margin-bottom: 10px !important;
                                                 </h5>
                                                 <?php
 
-                                                dd($arrayversionlua);
+                                                // dd($arrayversionlua);
                                                 foreach ($arrayversionlua as $key => $value) {
                                                     if (is_numeric($key) && $value !== 'Original') {
                                                         ?>
@@ -4496,16 +4496,16 @@ margin-bottom: 10px !important;
                                           <option value="">Nothing</option>
                                           <?
                                           foreach ($arrayversionslua as $arrayversionlua){
-                                            dd($arrayversionlua);
+                                            // dd($arrayversionlua);
                                             ?>
                                                 
                                                 
                                               <?
-                                              dd($arrayversionlua);
+                                              // dd($arrayversionlua);
                                               foreach ($arrayversionlua as $key => $value) {
                                                   if (is_numeric($key) && $value !== 'Original') {
                                                     $modifiedString = str_replace('/', '-', $value);
-                                                    dd($arrayversionlua);
+                                                    // dd($arrayversionlua);
                                                       ?>
                                                       <option value="<? echo $mod;?> // <? echo $arrayversionlua['name'];?> // <? echo $key;?>">
                                                       <?php echo $arrayversionlua['name'].' // '.$arrayversionlua['percentage'].'% // '.$modifiedString;?>
@@ -4713,7 +4713,7 @@ margin-bottom: 10px !important;
                                               foreach ($arrayversionlua as $key => $value) {
                                                   if (is_numeric($key) && $value !== 'Original') {
                                                     $modifiedString = str_replace('/', '-', $value);
-                                                    dd($arrayversionlua);
+                                                    // dd($arrayversionlua);
                                                       ?>
                                                       <option value="<? echo $mod;?> // <? echo $arrayversionlua['name'];?> // <? echo $key;?>">
                                                       <?php echo $arrayversionlua['name'].' // '.$arrayversionlua['percentage'].'% // '.$modifiedString;?>
