@@ -28,6 +28,9 @@
                 <a href="#" class="active" data-toggle="tab" data-target="#slide1"><span>Service Credit Price</span></a>
               </li>
               <li class="nav-item">
+                <a href="#" data-toggle="tab" data-target="#slide3"><span>Online File Search Status</span></a>
+              </li>
+              <li class="nav-item">
                 <a href="#" data-toggle="tab" data-target="#slide2"><span>EVC Credit Price</span></a>
               </li>
             </ul>
@@ -165,6 +168,25 @@
                 </div>
 
               </div>
+              <div class="tab-pane slide-left" id="slide3">
+              
+                <div class="card card-transparent m-t-20">
+                  <div class="card-header ">
+                      <div class="card-title">
+                       
+                        <h5>
+                          Online File Search Status
+                        </h5>
+                      
+                      </div>
+                      
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="card-body">
+                  </div>
+                </div>
+              </div>
+
               <div class="tab-pane slide-left" id="slide2">
               
                 <div class="card card-transparent m-t-20">
