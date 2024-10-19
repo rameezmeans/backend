@@ -185,11 +185,11 @@
                   <div class="card-body">
 
                     
-                      <p><input data-frontend_id="1" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($ecutechOnlineStatus) checked="checked" @endif/></p>
+                      <p>ECUTech Online File Search Status: <input data-frontend_id="1" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($ecutechOnlineStatus) checked="checked" @endif/></p>
                     
-                      <p><input data-frontend_id="2" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($tuningXOnlineStatus) checked="checked" @endif/></p>
+                      <p>TuningX Online File Search Status:<input data-frontend_id="2" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($tuningXOnlineStatus) checked="checked" @endif/></p>
                     
-                      <p><input data-frontend_id="3" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($etfOnlineStatus) checked="checked" @endif/></p>
+                      <p>ETF Online File Search Status:<input data-frontend_id="3" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($etfOnlineStatus) checked="checked" @endif/></p>
                    
 
                   </div>
