@@ -183,6 +183,15 @@
                       <div class="clearfix"></div>
                   </div>
                   <div class="card-body">
+
+                    
+                      <p><input data-frontend_id="1" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($ecutechOnlineStatus) checked="checked" @endif/></p>
+                    
+                      <p><input data-frontend_id="2" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($tuningXOnlineStatus) checked="checked" @endif/></p>
+                    
+                      <p><input data-frontend_id="3" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($etfOnlineStatus) checked="checked" @endif/></p>
+                   
+
                   </div>
                 </div>
               </div>
@@ -239,9 +248,38 @@
 <script type="text/javascript">
 
       $( document ).ready(function(event) {
-        
+
+        $(document).on('change', '.online_search_active', function(e) {
+
+            let frontend_id = $(this).data('frontend_id');
+            console.log(frontend_id);
+
+            if ($(this).is(':checked')) {
+                status = $(this).is(':checked');
+                console.log(status);
+            }
+            else {
+                status = $(this).is(':checked');
+                console.log(status);
+            }
+
+            $.ajax({
+                url: "/change_online_search_status",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "frontend_id": frontend_id,
+                    "status": status,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+
+        });
        
-    });
+      });
 
 </script>
 

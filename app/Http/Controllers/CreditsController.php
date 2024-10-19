@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Credit;
 use App\Models\FrontEnd;
 use App\Models\Group;
+use App\Models\IntegerMeta;
 use App\Models\Key;
 use App\Models\Price;
 use App\Models\Role;
@@ -30,6 +31,31 @@ class CreditsController extends Controller
         $this->middleware('auth');
         // $this->middleware('adminOnly');
     }
+
+    public function changeOnlineStatus(Request $request) {
+
+        if($request->frontend_id == 1){
+            $OnlineStatus = IntegerMeta::where('key', 'ecutech_online_status')->first();
+        }
+        else if($request->frontend_id == 2){
+            $OnlineStatus = IntegerMeta::where('key', 'tuningx_online_status')->first();
+        }
+        else if($request->frontend_id == 3){
+            $OnlineStatus = IntegerMeta::where('key', 'etf_online_status')->first();
+        }
+
+        if($request->status == 'true'){
+            $OnlineStatus->value = 1;
+        }
+        else if($request->status == 'false'){
+            $OnlineStatus->value = 0;
+        }
+
+        $OnlineStatus->save();
+
+        return response()->json(['status' => $OnlineStatus->value], 200);
+    }
+
 
     public function updateDefaultTemplate(Request $request) {
 
@@ -332,12 +358,15 @@ class CreditsController extends Controller
         }
 
         $creditPriceECUTech = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 1)->first();
+        $ecutechOnlineStatus = IntegerMeta::where('key', 'ecutech_online_status')->first()->value;
         // $zohoItemIDForECUTech = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 1)->first();
         
         $creditPriceTuningX = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 2)->first();
+        $tuningXOnlineStatus = IntegerMeta::where('key', 'tuningx_online_status')->first()->value;
         // $zohoItemIDForTuningX = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 2)->first();
 
         $creditPriceEfiles = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 3)->first();
+        $etfOnlineStatus = IntegerMeta::where('key', 'etf_online_status')->first()->value;
         // $zohoItemIDForEfiles = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 3)->first();
         
         $evcCreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
@@ -348,8 +377,10 @@ class CreditsController extends Controller
             'creditPriceTuningX' => $creditPriceTuningX, 
             'creditPriceEfiles' => $creditPriceEfiles, 
 
+            'ecutechOnlineStatus' => $ecutechOnlineStatus, 
+            'tuningXOnlineStatus' => $tuningXOnlineStatus, 
+            'etfOnlineStatus' => $etfOnlineStatus, 
             
-
             'evcCreditPrice' => $evcCreditPrice
 
         ]);
