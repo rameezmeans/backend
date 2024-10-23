@@ -170,7 +170,7 @@ Route::get('/tasks', function () {
 
     // dd('finals');
 
-    abort(404);
+    // abort(404);
 
     // $files = File::all();
 
@@ -257,7 +257,7 @@ Route::get('/tasks', function () {
     foreach($files as $f){
         $user = User::findOrFail($f->user_id);
 
-        if($user->test){
+        if($user->test == 1){
             $f->test = 1;
             $f->save();
         }
@@ -266,7 +266,7 @@ Route::get('/tasks', function () {
     foreach($credits as $c){
         $user = User::findOrFail($c->user_id);
 
-        if($user->test){
+        if($user->test == 1){
             $c->test = 1;
             $c->save();
         }
