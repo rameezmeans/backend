@@ -1792,7 +1792,7 @@ margin-bottom: 10px !important;
                             @else
                               <div class="message clearfix">
                                 <div class="chat-bubble from-them bg-success">
-                                    {{ $message['events_internal_notes'] }}<br>
+                                    {{ $message['events_attachement'] }}<br>
                                     @if(isset($message['events_internal_notes']))
                                       <div class="text-center m-t-10">
                                         <a href="{{route('download',[$message['file_id'], $message['events_attachement'], 0])}}" class="text-danger">Download</a>
