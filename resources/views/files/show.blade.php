@@ -1789,7 +1789,7 @@ margin-bottom: 10px !important;
                             
                           @endif
 
-                          @if(isset($message['file_url']))
+                          {{-- @if(isset($message['file_url']))
                             
                             <div class="message clearfix">
                               <div class="chat-bubble bg-success from-them text-white">
@@ -1803,7 +1803,7 @@ margin-bottom: 10px !important;
                             </div>
           
                             
-                          @endif
+                          @endif --}}
 
                           
                                   
@@ -4064,14 +4064,14 @@ margin-bottom: 10px !important;
                               </div>
                             @endif
                           @endif
-                          @if(isset($message['file_url']))
+                          @if(isset($message['events_internal_notes']))
                             
                             <div class="message clearfix">
                               <div class="chat-bubble bg-success from-them text-white">
-                                {{ $message['file_url'] }}<br>
-                                @if(isset($message['file_url_attachement']))
+                                {{ $message['events_internal_notes'] }}<br>
+                                @if(isset($message['events_attachement']))
                                       <div class="text-center m-t-10">
-                                        <a href="{{route('download',[$message['file_id'], $message['file_url_attachement'], 0])}}" class="text-danger">Download</a>
+                                        <a href="{{route('download',[$message['file_id'], $message['events_attachement'], 0])}}" class="text-danger">Download</a>
                                       </div>
                                     @endif
                               </div>
