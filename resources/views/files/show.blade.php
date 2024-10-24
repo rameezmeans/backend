@@ -1732,7 +1732,8 @@ margin-bottom: 10px !important;
                         
                          
                           @if(isset($message['egnineers_internal_notes']))
-                            @if($message['engineer'])
+                           
+                          @if(isset($message['engineer']))
                             <div class="message clearfix">
                               <div class="chat-bubble bg-primary from-me text-white">
                                 {!! $message['egnineers_internal_notes'] !!} 
@@ -1765,7 +1766,47 @@ margin-bottom: 10px !important;
                                 </div>
                               </div>
                             @endif
+
                           @endif
+
+                          @if(isset($message['events_internal_notes']))
+                           
+                          @if(isset($message['engineer']))
+                            <div class="message clearfix">
+                              <div class="chat-bubble bg-primary from-me text-white">
+                                {!! $message['events_internal_notes'] !!} 
+                                
+                                <i data-note_id="{{$message['id']}}" data-message="{{$message['events_internal_notes']}}" class="fa fa-edit m-l-20"></i> 
+                                <i class="pg-trash delete-message" data-note_id="{{$message['id']}}"></i> 
+                                <br>
+                                @if(isset($message['events_attachement']))
+                                  <div class="text-center m-t-10">
+                                    <a href="{{route('download',[$message['file_id'], $message['events_attachement'], 0])}}" class="text-danger">Download</a>
+                                  </div>
+                                @endif
+                                <br>
+                                <small class="m-t-20" style="font-size: 8px; float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
+                              </div>
+                            </div>
+          
+                            @else
+                              <div class="message clearfix">
+                                <div class="chat-bubble from-them bg-success">
+                                    {{ $message['events_internal_notes'] }}<br>
+                                    @if(isset($message['events_internal_notes']))
+                                      <div class="text-center m-t-10">
+                                        <a href="{{route('download',[$message['file_id'], $message['events_attachement'], 0])}}" class="text-danger">Download</a>
+                                      </div>
+                                    @endif
+                                    <br>
+                                    <br>
+                                    <small class="m-t-20" style="font-size: 8px;float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
+                                </div>
+                              </div>
+                            @endif
+                            
+                          @endif
+
                           @if(isset($message['file_url']))
                             
                             <div class="message clearfix">
