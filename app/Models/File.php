@@ -46,6 +46,8 @@ class File extends Model
             $createdTimes []= $b['created_at'];
         } 
 
+        dd($unsortedTimelineObjects);
+
         array_multisort($createdTimes, SORT_ASC, $unsortedTimelineObjects);
 
         return $unsortedTimelineObjects;
