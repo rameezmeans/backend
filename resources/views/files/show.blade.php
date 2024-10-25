@@ -1361,9 +1361,9 @@ margin-bottom: 10px !important;
                                     @if(!($file->front_end_id == 1 && $file->subdealer_group_id == NULL))
                                      
 
-                                      @if(count($messageFile->engineer_file_notes_have_unseen_messages))
+                                      {{-- @if(count($messageFile->engineer_file_notes_have_unseen_messages))
                                       <span id="circle"></span>
-                                      @endif
+                                      @endif --}}
                                       {{-- <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a> --}}
                                     @endif
 
@@ -3565,9 +3565,9 @@ margin-bottom: 10px !important;
                                         
                                       @endphp
 
-                                      @if(count($messageFile->engineer_file_notes_have_unseen_messages))
+                                      {{-- @if(count($messageFile->engineer_file_notes_have_unseen_messages))
                                       <span id="circle"></span>
-                                      @endif
+                                      @endif --}}
                                       {{-- <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a> --}}
                                     @endif
 
