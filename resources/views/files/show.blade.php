@@ -4068,6 +4068,7 @@ margin-bottom: 10px !important;
                               <div class="message clearfix">
                                 <div class="chat-bubble from-them bg-success">
                                   @php
+                                    echo 'one';
                                     dd($message['request_file_id']);
                                   @endphp
                                   <small class="m-t-20" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::findOrFail($message['request_file_id'])->name }}@endif</small>
