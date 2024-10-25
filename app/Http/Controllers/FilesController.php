@@ -2415,11 +2415,14 @@ class FilesController extends Controller
 
         // dd($latest);
 
-        if($latest->request_file_id != NULL){
-            $reply->request_file_id = $latest->request_file_id;
-        }
-        else{
-            $reply->request_file_id = NULL;
+        if($latest != NULL){
+
+            if($latest->request_file_id != NULL){
+                $reply->request_file_id = $latest->request_file_id;
+            }
+            else{
+                $reply->request_file_id = NULL;
+            }
         }
 
         $reply->save();
