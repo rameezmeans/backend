@@ -1742,7 +1742,8 @@ margin-bottom: 10px !important;
                           @if($message['engineer'] == 1)
                             <div class="message clearfix">
                               <div class="chat-bubble bg-primary from-me text-white">
-                                {!! $message['egnineers_internal_notes'] !!} 
+                                <p class="" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::findOrFail($message['request_file_id'])->request_file }}@endif</p>
+                                <p>{!! $message['egnineers_internal_notes'] !!} </p>
                                 
                                 <i data-note_id="{{$message['id']}}" data-message="{{$message['egnineers_internal_notes']}}" class="fa fa-edit m-l-20"></i> 
                                 <i class="pg-trash delete-message" data-note_id="{{$message['id']}}"></i> 
@@ -4049,7 +4050,8 @@ margin-bottom: 10px !important;
                             @if($message['engineer'] == 1)
                             <div class="message clearfix">
                               <div class="chat-bubble bg-primary from-me text-white">
-                                {!! $message['egnineers_internal_notes'] !!} 
+                                <p class="" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::findOrFail($message['request_file_id'])->request_file }}@endif</p>
+                                <p>{!! $message['egnineers_internal_notes'] !!} </p>
                                 
                                 <i data-note_id="{{$message['id']}}" data-message="{{$message['egnineers_internal_notes']}}" class="fa fa-edit m-l-20"></i> 
                                 <i class="pg-trash delete-message" data-note_id="{{$message['id']}}"></i> 
