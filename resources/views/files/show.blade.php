@@ -4064,6 +4064,8 @@ margin-bottom: 10px !important;
                               </div>
                             @endif
                           @endif
+
+                          
                           @if(isset($message['events_internal_notes']))
                             
                             <div class="message clearfix">
