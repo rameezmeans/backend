@@ -1760,6 +1760,7 @@ margin-bottom: 10px !important;
                             @elseif($message['engineer'] == 0)
                               <div class="message clearfix">
                                 <div class="chat-bubble from-them bg-success">
+                                  <small class="m-t-20" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::findOrFail($message['request_file_id'])->name }}@endif</small>
                                     {{ $message['egnineers_internal_notes'] }}<br>
                                     @if(isset($message['engineers_attachement']))
                                       <div class="text-center m-t-10">
@@ -4063,6 +4064,7 @@ margin-bottom: 10px !important;
                             @elseif($message['engineer'] == 0)
                               <div class="message clearfix">
                                 <div class="chat-bubble from-them bg-success">
+                                  <small class="m-t-20" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::findOrFail($message['request_file_id'])->name }}@endif</small>
                                     {{ $message['egnineers_internal_notes'] }}<br>
                                     @if(isset($message['engineers_attachement']))
                                       <div class="text-center m-t-10">
