@@ -1739,7 +1739,7 @@ margin-bottom: 10px !important;
                          
                           @if(isset($message['egnineers_internal_notes']))
                            
-                          @if(isset($message['engineer']) == 1)
+                          @if($message['engineer'] == 1)
                             <div class="message clearfix">
                               <div class="chat-bubble bg-primary from-me text-white">
                                 {!! $message['egnineers_internal_notes'] !!} 
@@ -4033,10 +4033,10 @@ margin-bottom: 10px !important;
                         <!-- END From Me Message  !-->
                         <!-- BEGIN From Them Message  !-->
 
-                        @php
+                        {{-- @php
                           echo "one";
                           dd($file->files_and_messages_sorted());
-                        @endphp
+                        @endphp --}}
 
                         @foreach($file->files_and_messages_sorted() as $message)
                         
