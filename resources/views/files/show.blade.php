@@ -6611,7 +6611,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       location.reload();
     })
     .on("complete", function(file) {
-      // location.reload();
+      location.reload();
     }).on('error', function(e){
       
     });
