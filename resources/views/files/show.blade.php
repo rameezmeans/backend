@@ -4833,7 +4833,7 @@ margin-bottom: 10px !important;
             
             engineerFileDrop1.on("success", function(file) {
       
-                  console.log($file);
+                  console.log(file);
             
                   engineerFileDrop1.removeFile(file);
                   
