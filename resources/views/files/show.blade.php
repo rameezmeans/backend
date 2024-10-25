@@ -1364,7 +1364,7 @@ margin-bottom: 10px !important;
                                       @if(count($messageFile->engineer_file_notes_have_unseen_messages))
                                       <span id="circle"></span>
                                       @endif
-                                      <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
+                                      {{-- <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a> --}}
                                     @endif
 
                                     
@@ -3568,7 +3568,7 @@ margin-bottom: 10px !important;
                                       @if(count($messageFile->engineer_file_notes_have_unseen_messages))
                                       <span id="circle"></span>
                                       @endif
-                                      <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a>
+                                      {{-- <a target="_blank" href="{{route('support', $message['id'])}}" class="btn-sm btn-cons btn-info"><i class="fa fa-question text-white"></i> Support</a> --}}
                                     @endif
 
                                     @if($showComments)
