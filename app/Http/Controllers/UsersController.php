@@ -426,7 +426,7 @@ class UsersController extends Controller
         if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-customers')){
 
             $customer = User::findOrFail($id);
-            $groups = Group::where('test', $customer->test)->where('front_end_id', $customer->front_end_id)->get();
+            $groups = Group::where('test', $customer->test)->whereNULL('subdealer_group_id')->where('front_end_id', $customer->front_end_id)->get();
             $frontends = FrontEnd::all();
             return view('groups.create_edit_customers', ['customer' => $customer, 'groups' => $groups, 'frontends' => $frontends]);
         }
