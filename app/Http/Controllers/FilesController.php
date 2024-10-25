@@ -2411,7 +2411,7 @@ class FilesController extends Controller
         $reply->engineer = true;
         $reply->file_id = $request->file_id;
 
-        $latest = EngineerFileNote::where('file_id', $request->file_id)->latest();
+        $latest = EngineerFileNote::where('file_id', $request->file_id)->latest()->first();
 
         dd($latest);
 
