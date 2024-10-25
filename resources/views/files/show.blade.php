@@ -1724,6 +1724,11 @@ margin-bottom: 10px !important;
                       <div class="chat-inner" id="my-conversation" style="overflow: scroll !important; height:500px;">
                         <!-- END From Me Message  !-->
                         <!-- BEGIN From Them Message  !-->
+
+                        @php
+                          dd($file->files_and_messages_sorted());
+                        @endphp
+
                         @foreach($file->files_and_messages_sorted() as $message)
 
                         
@@ -4026,6 +4031,11 @@ margin-bottom: 10px !important;
                       <div class="chat-inner" id="my-conversation" style="overflow: scroll !important; height:500px;">
                         <!-- END From Me Message  !-->
                         <!-- BEGIN From Them Message  !-->
+
+                        @php
+                          dd($file->files_and_messages_sorted());
+                        @endphp
+                        
                         @foreach($file->files_and_messages_sorted() as $message)
                         
                          
