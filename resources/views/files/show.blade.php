@@ -1726,8 +1726,8 @@ margin-bottom: 10px !important;
                         <!-- BEGIN From Them Message  !-->
 
                         @php
-                          echo "two";
-                          dd($file->files_and_messages_sorted());
+                          // echo "two";
+                          // dd($file->files_and_messages_sorted());
                         @endphp
 
                         @foreach($file->files_and_messages_sorted() as $message)
