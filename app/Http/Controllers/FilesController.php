@@ -2410,7 +2410,16 @@ class FilesController extends Controller
 
         $reply->engineer = true;
         $reply->file_id = $request->file_id;
-        $reply->request_file_id = $request->request_file_id;
+
+        $latest = EngineerFileNote::where('file_id', $request->file_id)->latest();
+
+        if($latest->request_file_id != NULL){
+            $reply->request_file_id = $latest->request_file_id;
+        }
+        else{
+            $reply->request_file_id = NULL;
+        }
+
         $reply->save();
         
         $file->support_status = "closed";
