@@ -1733,7 +1733,7 @@ margin-bottom: 10px !important;
                          
                           @if(isset($message['egnineers_internal_notes']))
                            
-                          @if(isset($message['engineer']))
+                          @if(isset($message['engineer']) == 1)
                             <div class="message clearfix">
                               <div class="chat-bubble bg-primary from-me text-white">
                                 {!! $message['egnineers_internal_notes'] !!} 
@@ -4030,7 +4030,7 @@ margin-bottom: 10px !important;
                         
                          
                           @if(isset($message['egnineers_internal_notes']))
-                            @if($message['engineer'])
+                            @if($message['engineer'] == 1)
                             <div class="message clearfix">
                               <div class="chat-bubble bg-primary from-me text-white">
                                 {!! $message['egnineers_internal_notes'] !!} 
@@ -4065,7 +4065,7 @@ margin-bottom: 10px !important;
                             @endif
                           @endif
 
-                          
+
                           @if(isset($message['events_internal_notes']))
                             
                             <div class="message clearfix">
