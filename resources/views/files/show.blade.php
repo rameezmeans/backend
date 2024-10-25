@@ -1751,7 +1751,7 @@ margin-bottom: 10px !important;
                               </div>
                             </div>
           
-                            @else
+                            @elseif($message['engineer'] == 0)
                               <div class="message clearfix">
                                 <div class="chat-bubble from-them bg-success">
                                     {{ $message['egnineers_internal_notes'] }}<br>
@@ -4048,7 +4048,7 @@ margin-bottom: 10px !important;
                               </div>
                             </div>
           
-                            @else
+                            @elseif($message['engineer'] == 0)
                               <div class="message clearfix">
                                 <div class="chat-bubble from-them bg-success">
                                     {{ $message['egnineers_internal_notes'] }}<br>
