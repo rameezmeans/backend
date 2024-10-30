@@ -20,9 +20,7 @@
             @php
               Session::forget('success')
             @endphp
-
-
-
+        
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
@@ -53,7 +51,7 @@
 
                 <div class="tab-content">
                     <div class="tab-pane slide-left active" id="slide1">
-
+                        <p>ECUTech Online File Search Status: <input data-frontend_id="1" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($ecutechOnlineStatus) checked="checked" @endif/></p>
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
                         <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
@@ -88,6 +86,9 @@
 
                     <div class="tab-pane slide-left" id="slide2">
 
+                        <p>TuningX Online File Search Status:<input data-frontend_id="2" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($tuningXOnlineStatus) checked="checked" @endif/></p>
+
+
                         <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                             <div>
                                 <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
@@ -121,6 +122,8 @@
                     </div>
 
                     <div class="tab-pane slide-left" id="slide3">
+
+                        <p>ETF Online File Search Status:<input data-frontend_id="3" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($etfOnlineStatus) checked="checked" @endif/></p>
 
                         <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                             <div>
@@ -168,6 +171,38 @@
 <script type="text/javascript">
 
     $( document ).ready(function(event) {
+
+        $(document).on('change', '.online_search_active', function(e) {
+
+            let frontend_id = $(this).data('frontend_id');
+            console.log(frontend_id);
+
+            if ($(this).is(':checked')) {
+                status = $(this).is(':checked');
+                console.log(status);
+            }
+            else {
+                status = $(this).is(':checked');
+                console.log(status);
+            }
+
+            $.ajax({
+                url: "/change_online_search_status",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "frontend_id": frontend_id,
+                    "status": status,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+
+        });
+
+
         let switchStatus = true;
         $(document).on('change', '.active', function(e) {
             let feed_id = $(this).data('feed_id');

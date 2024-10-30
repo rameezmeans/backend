@@ -27,9 +27,9 @@
               <li class="nav-item">
                 <a href="#" class="active" data-toggle="tab" data-target="#slide1"><span>Service Credit Price</span></a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="#" data-toggle="tab" data-target="#slide3"><span>Online File Search Status</span></a>
-              </li>
+              </li> --}}
               <li class="nav-item">
                 <a href="#" data-toggle="tab" data-target="#slide2"><span>EVC Credit Price</span></a>
               </li>
@@ -168,7 +168,7 @@
                 </div>
 
               </div>
-              <div class="tab-pane slide-left" id="slide3">
+              {{-- <div class="tab-pane slide-left" id="slide3">
               
                 <div class="card card-transparent m-t-20">
                   <div class="card-header ">
@@ -194,7 +194,7 @@
 
                   </div>
                 </div>
-              </div>
+              </div> --}}
 
               <div class="tab-pane slide-left" id="slide2">
               

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\IntegerMeta;
 use App\Models\NewsFeed;
 use Illuminate\Http\Request;
 
@@ -30,11 +31,24 @@ class NewsFeedsController extends Controller
             $this->simulateActivation($newsFeeds);
         }
 
+        $ecutechOnlineStatus = IntegerMeta::where('key', 'ecutech_online_status')->first()->value;
+        $tuningXOnlineStatus = IntegerMeta::where('key', 'tuningx_online_status')->first()->value;
+        $etfOnlineStatus     = IntegerMeta::where('key', 'etf_online_status')->first()->value;
+
         $newsFeedsECUTech = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 1)->get();
         $newsFeedsTuningX = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 2)->get();
         $newsFeedsEfiles = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 3)->get();
 
-        return view( 'feeds.index', [ 'newsFeedsECUTech' => $newsFeedsECUTech, 'newsFeedsTuningX' => $newsFeedsTuningX, 'newsFeedsEfiles' =>$newsFeedsEfiles ] );
+        return view( 'feeds.index', [ 
+
+            'ecutechOnlineStatus' => $ecutechOnlineStatus, 
+            'tuningXOnlineStatus' => $tuningXOnlineStatus, 
+            'etfOnlineStatus' => $etfOnlineStatus, 
+
+            'newsFeedsECUTech' => $newsFeedsECUTech, 
+            'newsFeedsTuningX' => $newsFeedsTuningX, 
+            'newsFeedsEfiles' =>$newsFeedsEfiles 
+            ] );
     }
 
     public function simulateActivation($feeds){

@@ -335,7 +335,7 @@
               <span class="icon-thumbnail">Pa</span>
             </li>
             <li class="">
-              <a href="{{ route('unit-price') }}">Prices and Automatic Search Status</a>
+              <a href="{{ route('unit-price') }}">Prices</a>
               <span class="icon-thumbnail">UP</span>
             </li>
             <li class="">
