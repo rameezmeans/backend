@@ -2426,6 +2426,12 @@ class FilesController extends Controller
         }
 
         $reply->save();
+
+        if($file->original_file_id != NULL){
+            $ofile = File::findOrFail($file->original_file_id);
+            $ofile->support_status = "closed";
+            $ofile->save();
+        }
         
         $file->support_status = "closed";
         $file->save();
