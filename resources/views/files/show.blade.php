@@ -1765,7 +1765,8 @@ margin-bottom: 10px !important;
                                     dd($message['request_file_id']);
                                   @endphp --}}
                                   <p class="" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::findOrFail($message['request_file_id'])->request_file }}@endif</p>
-                                    <p>{{ $message['egnineers_internal_notes'] }}</p><br>
+                                  <br>  
+                                  <p>{{ $message['egnineers_internal_notes'] }}</p><br>
                                     @if(isset($message['engineers_attachement']))
                                       <div class="text-center m-t-10">
                                         <a href="{{route('download',[$message['file_id'], $message['engineers_attachement'], 0])}}" class="text-danger">Download</a>
@@ -1785,6 +1786,7 @@ margin-bottom: 10px !important;
                           
                               <div class="message clearfix">
                                 <div class="chat-bubble from-them bg-success">
+                                  <br>  
                                     {{ $message['events_internal_notes'] }}<br>
                                     @if(isset($message['events_attachement']))
                                       <div class="text-center m-t-10">
@@ -4074,7 +4076,8 @@ margin-bottom: 10px !important;
                                     dd($message['request_file_id']);
                                   @endphp --}}
                                   <p class="" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::findOrFail($message['request_file_id'])->request_file }}@endif</p>
-                                    <p>{{ $message['egnineers_internal_notes'] }}</p><br>
+                                  <br>  
+                                  <p>{{ $message['egnineers_internal_notes'] }}</p><br>
                                     @if(isset($message['engineers_attachement']))
                                       <div class="text-center m-t-10">
                                         <a href="{{route('download',[$message['file_id'], $message['engineers_attachement'], 0])}}" class="text-danger">Download</a>
