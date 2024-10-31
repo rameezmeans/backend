@@ -489,6 +489,11 @@
                     <input type="checkbox" name="elorus" @if(isset($account) && $account->elorus) checked="checked" @endif id="checkbox2">
                     <label for="checkbox2">Send Invoices to Elorus</label>
                   </div>
+
+                  <div class="checkbox check-success m-t-20">
+                    <input type="checkbox" name="test" @if(isset($account) && $account->test) checked="checked" @endif id="checkbox3">
+                    <label for="checkbox3">Test method</label>
+                  </div>
                  
                   @endif
 

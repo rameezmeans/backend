@@ -155,6 +155,13 @@ class PaymentAccountsController extends Controller
                 $account->elorus = 0;
             }
 
+            if($request->test == 'on' || $request->test == 1){
+                $account->test = 1;
+            }
+            else{
+                $account->test = 0;
+            }
+
             if(isset($request->companys_logo)){
 
                 $file = $request->file('companys_logo');
