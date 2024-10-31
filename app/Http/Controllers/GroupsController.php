@@ -47,14 +47,19 @@ class GroupsController extends Controller
                 }
 
                 if($group->test == 1){
-                    $stripeAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('test', 1)->where('type','stripe')->get();
-                    $paypalAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('test', 1)->where('type','paypal')->get();
-                    $vivaAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('test', 1)->where('type','viva')->get();
-                }
-                else{
+                    
                     $stripeAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','stripe')->get();
                     $paypalAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','paypal')->get();
                     $vivaAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','viva')->get();
+
+                }
+                else{
+
+                    $stripeAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('test', 0)->where('type','stripe')->get();
+                    $paypalAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('test', 0)->where('type','paypal')->get();
+                    $vivaAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('test', 0)->where('type','viva')->get();
+
+                    
                 }
                 
                 $stripePaymentAccount = null;
