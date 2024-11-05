@@ -19,9 +19,9 @@ class GroupsController extends Controller
 
         if( Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-groups') ){
             
-            $ecuTechGroups = Group::where('front_end_id',1)->get();
-            $tuningXGroups = Group::where('front_end_id',2)->get();
-            $etfGroups = Group::where('front_end_id',3)->get();
+            $ecuTechGroups = Group::where('front_end_id',1)->whereNull('subdealer_group_id')->get();
+            $tuningXGroups = Group::where('front_end_id',2)->whereNull('subdealer_group_id')->get();
+            $etfGroups = Group::where('front_end_id',3)->whereNull('subdealer_group_id')->get();
             // $subdGroups = Group::all();
 
             return view('groups.groups', [
