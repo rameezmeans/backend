@@ -55,7 +55,7 @@
                                                 <p>{{$group->name}}</p>
                                             </td>
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p><label class="label @if($customer->frontend->id == 1) text-white bg-primary @elseif($customer->frontend->id == 3) text-white bg-info @else text-black bg-warning @endif">{{$customer->frontend->name}}</label></p>
+                                                <p><label class="label @if($group->front_end_id == 1) text-white bg-primary @elseif($group->front_end_id == 3) text-white bg-info @else text-black bg-warning @endif">{{$group->frontend->name}}</label></p>
                                               </td>
                                             <td class="v-align-middle semi-bold sorting_1">
                                                 <p>{{$group->created_at->diffForHumans()}}</p>
