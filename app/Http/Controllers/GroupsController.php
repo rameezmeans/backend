@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FrontEnd;
 use App\Models\Group;
 use App\Models\PaymentAccount;
 use Illuminate\Http\Request;
@@ -40,8 +41,8 @@ class GroupsController extends Controller
         if(!Auth::user()->is_admin()){
             abort(404);
         }
-
-        return view('groups.groups_create_edit');
+        
+        return view('groups.groups_create_edit', ['frontends' =>  FrontEnd::all()]);
     }
 
     public function edit($id){
@@ -93,7 +94,8 @@ class GroupsController extends Controller
                     'group' => $group, 
                     'stripeAccounts' => $stripeAccounts ,
                     'paypalAccounts' => $paypalAccounts,
-                    'vivaAccounts' => $vivaAccounts 
+                    'vivaAccounts' => $vivaAccounts,
+                    'frontends' =>  FrontEnd::all()
                 ]);
         }
         else{
