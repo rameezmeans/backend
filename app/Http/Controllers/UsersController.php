@@ -434,10 +434,10 @@ class UsersController extends Controller
                 $groups = Group::where('test', $customer->test)->whereNULL('subdealer_group_id')->where('front_end_id', $customer->front_end_id)->get();
             }
 
-            foreach($groups as $group){
-                echo "Group Name:".$group->name.'<br>';          
-            }
-            dd('here');
+            // foreach($groups as $group){
+            //     echo "Group Name:".$group->name.'<br>';          
+            // }
+            // dd('here');
             // dd($groups);
 
             $frontends = FrontEnd::all();
