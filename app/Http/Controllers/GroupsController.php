@@ -54,7 +54,7 @@ class GroupsController extends Controller
                     abort(404);
                 }
 
-                if($group->test == 1){
+                if($group->test == 0){
                     
                     $stripeAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','stripe')->get();
                     $paypalAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','paypal')->get();
