@@ -42,15 +42,18 @@
 
                     <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
                         <li class="nav-item">
-                          <a href="#" class="active" data-toggle="tab" data-target="#slide1"><span>Home</span></a>
+                          <a href="#" class="active" data-toggle="tab" data-target="#slide1"><span>EcuTech</span></a>
                         </li>
                         <li class="nav-item">
-                          <a href="#" data-toggle="tab" data-target="#slide2"><span>Profile</span></a>
+                          <a href="#" data-toggle="tab" data-target="#slide2"><span>TuningX</span></a>
                         </li>
                         <li class="nav-item">
-                          <a href="#" data-toggle="tab" data-target="#slide3"><span>Messages</span></a>
+                          <a href="#" data-toggle="tab" data-target="#slide3"><span>ETF</span></a>
                         </li>
                       </ul>
+
+                      <div class="tab-content">
+                        <div class="tab-pane slide-left active" id="slide1">
 
                     <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                         <div>
@@ -80,6 +83,11 @@
                             </table>
                         </div>
                     </div>
+
+
+                        </div>
+                    </div>
+
                 </div>
             </div>     
         </div>
