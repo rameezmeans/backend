@@ -41,7 +41,7 @@ class GroupsController extends Controller
         if(!Auth::user()->is_admin()){
             abort(404);
         }
-        
+
         return view('groups.groups_create_edit', ['frontends' =>  FrontEnd::all()]);
     }
 
@@ -123,6 +123,7 @@ class GroupsController extends Controller
         $group->discount = $validated['discount'];
         $group->raise = $validated['raise'];
         $group->bonus_credits = $validated['bonus_credits'];
+        $group->front_end_id = $request->front_end_id;
         $group->save();
 
         return redirect()->route('groups')->with(['success' => 'Group added, successfully.']);
@@ -145,6 +146,7 @@ class GroupsController extends Controller
             $group->elorus_template_id = $request->elorus_template_id;
             $group->elorus_tax_id = $request->elorus_tax_id;
             $group->zohobooks_tax_id = $request->zohobooks_tax_id;
+            $group->front_end_id = $request->front_end_id;
 
             if(isset($request->stripe_active) && $request->stripe_active == 'on'){
                 $group->stripe_active = 1;
