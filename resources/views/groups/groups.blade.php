@@ -86,6 +86,10 @@
 
 
                         </div>
+
+                        <div class="tab-pane slide-left" id="slide2"></div>
+                        <div class="tab-pane slide-left" id="slide3"></div>
+
                     </div>
 
                 </div>
