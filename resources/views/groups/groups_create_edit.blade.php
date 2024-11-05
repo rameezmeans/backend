@@ -164,7 +164,7 @@
                 <label>Frontend</label>
                 <select class="full-width" data-init-plugin="select2" name="front_end_id">
                   @foreach($frontends as $frontend)
-                    <option @if(isset($customer) && $customer->frontend->id == $frontend->id) selected @endif value="{{$frontend->id}}">{{$frontend->name}}</option>
+                    <option @if(isset($group) && $group->frontend->id == $frontend->id) selected @endif value="{{$frontend->id}}">{{$frontend->name}}</option>
                   @endforeach
                 </select>
               </div>
