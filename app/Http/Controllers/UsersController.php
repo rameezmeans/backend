@@ -434,7 +434,7 @@ class UsersController extends Controller
                 $groups = Group::where('test', $customer->test)->whereNULL('subdealer_group_id')->where('front_end_id', $customer->front_end_id)->get();
             }
 
-            dd($groups);
+            // dd($groups);
 
             $frontends = FrontEnd::all();
             return view('groups.create_edit_customers', ['customer' => $customer, 'groups' => $groups, 'frontends' => $frontends]);
