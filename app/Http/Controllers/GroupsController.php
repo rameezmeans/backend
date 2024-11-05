@@ -19,8 +19,16 @@ class GroupsController extends Controller
 
         if( Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-groups') ){
             
-            $groups = Group::all();
-            return view('groups.groups', ['groups' => $groups]);
+            $ecuTechGroups = Group::where('front_end_id',1)->get();
+            $tuningXGroups = Group::where('front_end_id',2)->get();
+            $etfGroups = Group::where('front_end_id',3)->get();
+            // $subdGroups = Group::all();
+
+            return view('groups.groups', [
+                'ecuTechGroups' => $ecuTechGroups,
+                'tuningXGroups' => $tuningXGroups,
+                'etfGroups' => $etfGroups,
+            ]);
         }
         else{
             abort(404);
