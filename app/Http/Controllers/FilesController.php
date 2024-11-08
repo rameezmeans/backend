@@ -503,15 +503,18 @@ class FilesController extends Controller
             $new->save();
         }
 
-        for( $i=0; $i < count($request->option_id); $i++ ){
+        if($request->option_id != NULL){
 
-            $new = new FileReplySoftwareService();
-            $new->file_id = $request->file_id;
-            $new->reply_id = $request->reply_id;
-            $new->service_id = $request->option_id[$i];
-            $new->software_id = $request->option_softwares[$i];
-            $new->save();
+            for( $i=0; $i < count($request->option_id); $i++ ){
 
+                $new = new FileReplySoftwareService();
+                $new->file_id = $request->file_id;
+                $new->reply_id = $request->reply_id;
+                $new->service_id = $request->option_id[$i];
+                $new->software_id = $request->option_softwares[$i];
+                $new->save();
+
+            }
         }
 
         return redirect()->back()->with(['success' => 'Options and Servies are updated!']);
