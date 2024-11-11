@@ -524,6 +524,8 @@
                 </div>
               </form>
 
+              @if(isset($customer))
+
               <h5>
                 Customer Test Status
               </h5>
@@ -564,6 +566,8 @@
               </div>
     
             </form>
+
+            @endif
     
                 
             </div>
