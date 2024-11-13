@@ -838,7 +838,7 @@ margin-bottom: 10px !important;
                                 
                               </div>
                               @foreach($file->comments as $c)
-                              @if($c->service_id == $optionInner->service_id)
+                              @if($c->service_id == $option->service_id)
                                 <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                                   <p class="pull-left text-danger">{{$optionInner->name}} Customers Comments</p>
                                   <br>
