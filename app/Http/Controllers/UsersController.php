@@ -428,7 +428,7 @@ class UsersController extends Controller
             $customer = User::findOrFail($id);
             
             if($customer->test == 1){
-                $groups = Group::whereNULL('subdealer_group_id')->where('front_end_id', $customer->front_end_id);
+                $groups = Group::whereNULL('subdealer_group_id')->where('front_end_id', $customer->front_end_id)->get();
             }
             else{
                 $groups = Group::where('test', $customer->test)->whereNULL('subdealer_group_id')->where('front_end_id', $customer->front_end_id)->get();
