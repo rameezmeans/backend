@@ -326,6 +326,12 @@
           </a>
           <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
           <ul class="sub-menu">
+
+            <li class="m-t-30 ">
+              <a href="{{ route('payment-accounts') }}">Payment Methods</a>
+              <span class="icon-thumbnail">Pa</span>
+            </li>
+            
             <li class="m-t-30 ">
               <a href="{{ route('packages') }}">Packages</a>
               <span class="icon-thumbnail">Pa</span>
@@ -389,11 +395,6 @@
             <li class="">
               <a href="{{ route('dtc-lookup') }}">DTC Lookup</a>
               <span class="icon-thumbnail">DL</span>
-            </li>
-
-            <li class="m-t-30 ">
-              <a href="{{ route('payment-accounts') }}">Payment Methods</a>
-              <span class="icon-thumbnail">Pa</span>
             </li>
 
             <li class="m-t-30 ">
