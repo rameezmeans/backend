@@ -61,6 +61,7 @@
                                 <thead>
                                     <tr role="row">
                                         <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                        <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Tax percentage</th>
                                         <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Frontend</th>
                                         <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
                                     </tr>
@@ -70,6 +71,9 @@
                                         <tr role="row" @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-groups')) class="redirect-click" data-redirect="{{ route('edit-group', $group->id) }}" @endif>
                                             <td class="v-align-middle semi-bold sorting_1">
                                                 <p>{{$group->name}}</p>
+                                            </td>
+                                            <td class="v-align-middle semi-bold sorting_1">
+                                                <p>{{$group->tax}}%</p>
                                             </td>
                                             <td class="v-align-middle semi-bold sorting_1">
                                                 <p><label class="label @if($group->front_end_id == 1) text-white bg-primary @elseif($group->front_end_id == 3) text-white bg-info @else text-black bg-warning @endif">{{$group->frontend->name}}</label></p>
