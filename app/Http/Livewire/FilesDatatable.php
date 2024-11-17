@@ -118,7 +118,7 @@ class FilesDatatable extends LivewireDatatable
                     return '<lable class="label label-success text-white">'.$status.'</lable>';
                 }
                 else if($status == 'rejected'){
-                    return '<lable class="label label-danger text-white">'.$status.'</lable>';
+                    return '<lable class="label label-danger text-white">'.'canceled'.'</lable>';
                 }
                 else{
                     return '<lable class="label bg-blue-200 text-black">'.$status.'</lable>';

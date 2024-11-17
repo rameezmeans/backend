@@ -1924,7 +1924,7 @@ margin-bottom: 10px !important;
                       <div class="">
                         <select class="full-width" data-init-plugin="select2" name="status" id="select_status">
                             <option @if(isset($file) && $file->status == "submitted") selected @endif value="submitted">Submitted</option>
-                            <option @if(isset($file) && $file->status == "rejected") selected @endif value="rejected">Rejected</option>
+                            <option @if(isset($file) && $file->status == "rejected") selected @endif value="rejected">Canceled</option>
                             <option @if(isset($file) && $file->status == "completed") selected @endif value="completed">Completed</option>
                             <option @if(isset($file) && $file->status == "processing") selected @endif value="processing">Processing</option>
                             <option @if(isset($file) && $file->status == "on_hold") selected @endif value="on_hold">On Hold</option>
@@ -4197,7 +4197,7 @@ margin-bottom: 10px !important;
                       <div class="">
                         <select class="full-width" data-init-plugin="select2" name="status" id="select_status">
                             <option @if(isset($file) && $file->status == "submitted") selected @endif value="submitted">Submitted</option>
-                            <option @if(isset($file) && $file->status == "rejected") selected @endif value="rejected">Rejected</option>
+                            <option @if(isset($file) && $file->status == "rejected") selected @endif value="rejected">Canceled</option>
                             <option @if(isset($file) && $file->status == "completed") selected @endif value="completed">Completed</option>
                             <option @if(isset($file) && $file->status == "processing") selected @endif value="processing">Processing</option>
                             <option @if(isset($file) && $file->status == "on_hold") selected @endif value="on_hold">On Hold</option>

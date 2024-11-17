@@ -2227,8 +2227,8 @@ class FilesController extends Controller
                 $file->reason_to_reject = $request->reason_to_reject;
             }
             else{
-                $credit->message_to_credit = 'File rejected and refunded!';
-                $file->reason_to_reject = 'File rejected and refunded!';
+                $credit->message_to_credit = 'File Canceled!';
+                $file->reason_to_reject = 'File Canceled!';
             }
 
             $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
