@@ -23,6 +23,10 @@ class NewsFeedsController extends Controller
         $this->middleware('adminOnly');
     }
 
+    public function addResellersText(Request $request) {
+        dd($request->all());
+    }
+
     public function index() {
         
         $newsFeeds = NewsFeed::whereNull('subdealer_group_id')->get();

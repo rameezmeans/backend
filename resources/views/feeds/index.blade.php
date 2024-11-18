@@ -52,7 +52,29 @@
                 <div class="tab-content">
                     <div class="tab-pane slide-left active" id="slide1">
                         <p>ECUTech Online File Search Status: <input data-frontend_id="1" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($ecutechOnlineStatus) checked="checked" @endif/></p>
-                <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                
+                        <form class="form" role="form" method="POST" action="{{route('add-resellers-text')}}">
+                            @csrf
+                            
+                              <input name="id" type="hidden" value="1">
+                           
+                            <div>
+                              <label>Reseller Text *</label>
+                                <div class="form-group">
+                                    <input type="text" name="resellers_text" class="form-control" required>
+                                </div>
+                                @error('resellers_text')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="text-center m-t-40">                    
+                                <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
+                            </div>
+                        </form>
+                
+                        <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
                         <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
@@ -88,6 +110,26 @@
 
                         <p>TuningX Online File Search Status:<input data-frontend_id="2" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($tuningXOnlineStatus) checked="checked" @endif/></p>
 
+                        <form class="form" role="form" method="POST" action="{{route('add-resellers-text')}}">
+                            @csrf
+                            
+                              <input name="id" type="hidden" value="2">
+                           
+                            <div>
+                              <label>Reseller Text *</label>
+                                <div class="form-group">
+                                    <input type="text" name="resellers_text" class="form-control" required>
+                                </div>
+                                @error('resellers_text')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="text-center m-t-40">                    
+                                <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
+                            </div>
+                        </form>
 
                         <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                             <div>
@@ -124,6 +166,27 @@
                     <div class="tab-pane slide-left" id="slide3">
 
                         <p>ETF Online File Search Status:<input data-frontend_id="3" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($etfOnlineStatus) checked="checked" @endif/></p>
+
+                        <form class="form" role="form" method="POST" action="{{route('add-resellers-text')}}">
+                            @csrf
+                            
+                              <input name="id" type="hidden" value="3">
+                           
+                            <div>
+                              <label>Reseller Text *</label>
+                                <div class="form-group">
+                                    <input type="text" name="resellers_text" class="form-control" required>
+                                </div>
+                                @error('resellers_text')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="text-center m-t-40">                    
+                                <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
+                            </div>
+                        </form>
 
                         <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                             <div>

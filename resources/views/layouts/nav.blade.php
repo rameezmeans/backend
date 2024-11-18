@@ -392,10 +392,10 @@
           <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
           <ul class="sub-menu">
 
-            <li class="">
+            {{-- <li class="">
               <a href="{{ route('frontends') }}">Front Ends</a>
               <span class="icon-thumbnail">FE</span>
-            </li>
+            </li> --}}
 
             <li class="">
               <a href="{{ route('dtc-lookup') }}">DTC Lookup</a>

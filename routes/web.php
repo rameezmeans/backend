@@ -744,6 +744,7 @@ Route::post('update_processing_software', [App\Http\Controllers\FilesController:
 Route::post('fill_null_software_records', [App\Http\Controllers\FilesController::class, 'fillProcessingSoftware'])->name('fill-null-software-records');
 
 Route::post('set_new_request_comment', [App\Http\Controllers\FilesController::class, 'setNewRequestComment'])->name('set-new-request-comment');
+Route::post('add_resellers_text', [App\Http\Controllers\NewsFeedsController::class, 'addResellersText'])->name('add-resellers-text');
 
 Route::get('original_files', [App\Http\Controllers\OriginalFilesController::class, 'index'])->name('original-files');
 // Route::get('original_files_live', [App\Http\Controllers\OriginalFilesController::class, 'live'])->name('original-files-live');
@@ -898,7 +899,7 @@ Route::get('/send_test_message', [App\Http\Controllers\FilesController::class, '
 
 Route::get('/logs', [App\Http\Controllers\LogsController::class, 'index'])->name('logs');
 
-Route::get('/frontends', [App\Http\Controllers\FrontEndController::class, 'index'])->name('frontends');
+// Route::get('/frontends', [App\Http\Controllers\FrontEndController::class, 'index'])->name('frontends');
 // Route::get('/create_frontend', [App\Http\Controllers\FrontEndController::class, 'create'])->name('create-frontend');
 // Route::post('/post_frontend', [App\Http\Controllers\FrontEndController::class, 'store'])->name('post-frontend');
 // Route::post('/update_frontend', [App\Http\Controllers\FrontEndController::class, 'update'])->name('update-frontend');
