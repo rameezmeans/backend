@@ -28,6 +28,7 @@ class NewsFeedsController extends Controller
         
         $frontend = FrontEnd::findOrFail($request->id);
         $frontend->resellers_text = $request->resellers_text;
+        $frontend->type = $request->type;
         $frontend->save();
 
         return redirect()->route('feeds')->with(['success' => 'Resellers Text Updated, successfully.']);

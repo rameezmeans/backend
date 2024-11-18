@@ -57,17 +57,31 @@
                             @csrf
                             
                               <input name="id" type="hidden" value="1">
+
+                              @php
+                                $ecutechObj = \App\Models\FrontEnd::findOrFail(1);
+                            @endphp
                            
                             <div>
-                              <label>Reseller Text *</label>
+                              <label>Reseller Text</label>
                                 <div class="form-group">
-                                    <input type="text" name="resellers_text" class="form-control" value="{{\App\Models\FrontEnd::findOrFail(1)->resellers_text}}" required>
+                                    <input type="text" name="resellers_text" class="form-control" value="{{$ecutechObj->resellers_text}}">
                                 </div>
                                 @error('resellers_text')
                                     <span class="text-danger" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>
+                            <div class="form-group form-group-default required ">
+                                <label>Type</label>
+                                <select class="full-width" data-init-plugin="select2" name="type">
+                               
+                                    <option @if($ecutechObj->type == 'danger') selected @endif value="danger">Danger</option>
+                                    <option @if($ecutechObj->type == 'success') selected @endif value="success">Success</option>
+                                    <option @if($ecutechObj->type == 'info') selected @endif value="info">Info</option>
+                                
+                                </select>
                             </div>
                             <div class="text-center m-t-40">                    
                                 <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
@@ -115,10 +129,13 @@
                             
                               <input name="id" type="hidden" value="2">
                            
+                            @php
+                                $tunningxObj = \App\Models\FrontEnd::findOrFail(2);
+                            @endphp
                             <div>
                               <label>Reseller Text</label>
                                 <div class="form-group">
-                                    <input type="text" name="resellers_text" class="form-control" value="{{\App\Models\FrontEnd::findOrFail(2)->resellers_text}}">
+                                    <input type="text" name="resellers_text" class="form-control" value="{{$tunningxObj->resellers_text}}">
                                 </div>
                                 @error('resellers_text')
                                     <span class="text-danger" role="alert">
@@ -126,6 +143,22 @@
                                     </span>
                                 @enderror
                             </div>
+                            <div class="form-group form-group-default required ">
+                                <label>Type</label>
+                                <select class="full-width" data-init-plugin="select2" name="type">
+                               
+                                    <option @if($tunningxObj->type == 'danger') selected @endif value="danger">Danger</option>
+                                    <option @if($tunningxObj->type == 'success') selected @endif value="success">Success</option>
+                                    <option @if($tunningxObj->type == 'info') selected @endif value="info">Info</option>
+                                
+                                </select>
+                            </div>
+                            
+                            @error('type')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                             <div class="text-center m-t-40">                    
                                 <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
                             </div>
@@ -171,11 +204,15 @@
                             @csrf
                             
                               <input name="id" type="hidden" value="3">
+
+                              @php
+                                $etfObj = \App\Models\FrontEnd::findOrFail(3);
+                            @endphp
                            
                             <div>
-                              <label>Reseller Text *</label>
+                              <label>Reseller Text</label>
                                 <div class="form-group">
-                                    <input type="text" name="resellers_text" class="form-control" value="{{\App\Models\FrontEnd::findOrFail(3)->resellers_text}}" required>
+                                    <input type="text" name="resellers_text" class="form-control" value="{{$etfObj->resellers_text}}">
                                 </div>
                                 @error('resellers_text')
                                     <span class="text-danger" role="alert">
@@ -183,6 +220,22 @@
                                     </span>
                                 @enderror
                             </div>
+                            <div class="form-group form-group-default required ">
+                                <label>Type</label>
+                                <select class="full-width" data-init-plugin="select2" name="type">
+                               
+                                    <option @if($etfObj->type == 'danger') selected @endif value="danger">Danger</option>
+                                    <option @if($etfObj->type == 'success') selected @endif value="success">Success</option>
+                                    <option @if($etfObj->type == 'info') selected @endif value="info">Info</option>
+                                
+                                </select>
+                            </div>
+                            
+                            @error('type')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                             <div class="text-center m-t-40">                    
                                 <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
                             </div>
