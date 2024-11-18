@@ -494,14 +494,14 @@
                 </span>
               @enderror
               
-              {{-- <div class="form-group form-group-default required ">
+              <div class="form-group form-group-default required ">
                 <label>Frontend</label>
                 <select class="full-width" data-init-plugin="select2" name="front_end_id">
                   @foreach($frontends as $frontend)
                     <option @if(isset($customer) && $customer->frontend->id == $frontend->id) selected @endif value="{{$frontend->id}}">{{$frontend->name}}</option>
                   @endforeach
                 </select>
-              </div> --}}
+              </div>
             
             @error('front_end_id')
               <span class="text-danger" role="alert">

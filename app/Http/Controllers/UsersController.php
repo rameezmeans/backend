@@ -315,42 +315,87 @@ class UsersController extends Controller
         if(!Auth::user()->is_admin()){
             abort(404);
         }
+
+        // dd($request->all());
+
+        $unique = User::where('email', $request->email)->where('front_end_id', $request->front_end_id)->first();
         
 
         if($request->evc_customer_id){
 
-            $validated = $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                'phone' => ['required', 'string', 'max:255'],
-                'language' => ['required', 'string', 'max:255'],
-                'address' => ['required', 'string', 'max:255'],
-                'zip' => ['required', 'string', 'max:255'],
-                'city' => ['required', 'string', 'max:255'],
-                'country' => ['required', 'string', 'max:255'],
-                'status' => ['required', 'string', 'max:255'],
-                'company_name' => ['required', 'string', 'max:255'],
-                'company_id' => ['string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:8'],
-                'evc_customer_id' => ['unique:users'],
-            ]);
+            if($unique != NULL){
+
+                $validated = $request->validate([
+                    'name' => ['required', 'string', 'max:255'],
+                    'phone' => ['required', 'string', 'max:255'],
+                    'language' => ['required', 'string', 'max:255'],
+                    'address' => ['required', 'string', 'max:255'],
+                    'zip' => ['required', 'string', 'max:255'],
+                    'city' => ['required', 'string', 'max:255'],
+                    'country' => ['required', 'string', 'max:255'],
+                    'status' => ['required', 'string', 'max:255'],
+                    'company_name' => ['required', 'string', 'max:255'],
+                    'company_id' => ['string', 'max:255'],
+                    'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                    'password' => ['required', 'string', 'min:8'],
+                    'evc_customer_id' => ['unique:users'],
+                ]);
+
+            }
+            else{
+                $validated = $request->validate([
+                    'name' => ['required', 'string', 'max:255'],
+                    'phone' => ['required', 'string', 'max:255'],
+                    'language' => ['required', 'string', 'max:255'],
+                    'address' => ['required', 'string', 'max:255'],
+                    'zip' => ['required', 'string', 'max:255'],
+                    'city' => ['required', 'string', 'max:255'],
+                    'country' => ['required', 'string', 'max:255'],
+                    'status' => ['required', 'string', 'max:255'],
+                    'company_name' => ['required', 'string', 'max:255'],
+                    'company_id' => ['string', 'max:255'],
+                    'email' => ['required', 'string', 'email', 'max:255'],
+                    'password' => ['required', 'string', 'min:8'],
+                    'evc_customer_id' => ['unique:users'],
+                ]);
+            }
+
         }
         else{
 
-            $validated = $request->validate([
-                'name' => ['required', 'string', 'max:255'],
-                'phone' => ['required', 'string', 'max:255'],
-                'language' => ['required', 'string', 'max:255'],
-                'address' => ['required', 'string', 'max:255'],
-                'zip' => ['required', 'string', 'max:255'],
-                'city' => ['required', 'string', 'max:255'],
-                'country' => ['required', 'string', 'max:255'],
-                'status' => ['required', 'string', 'max:255'],
-                'company_name' => ['required', 'string', 'max:255'],
-                'company_id' => ['string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:8'],
-            ]);
+            if($unique != NULL){
+
+                $validated = $request->validate([
+                    'name' => ['required', 'string', 'max:255'],
+                    'phone' => ['required', 'string', 'max:255'],
+                    'language' => ['required', 'string', 'max:255'],
+                    'address' => ['required', 'string', 'max:255'],
+                    'zip' => ['required', 'string', 'max:255'],
+                    'city' => ['required', 'string', 'max:255'],
+                    'country' => ['required', 'string', 'max:255'],
+                    'status' => ['required', 'string', 'max:255'],
+                    'company_name' => ['required', 'string', 'max:255'],
+                    'company_id' => ['string', 'max:255'],
+                    'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                    'password' => ['required', 'string', 'min:8'],
+                ]);
+            }
+            else{
+                $validated = $request->validate([
+                    'name' => ['required', 'string', 'max:255'],
+                    'phone' => ['required', 'string', 'max:255'],
+                    'language' => ['required', 'string', 'max:255'],
+                    'address' => ['required', 'string', 'max:255'],
+                    'zip' => ['required', 'string', 'max:255'],
+                    'city' => ['required', 'string', 'max:255'],
+                    'country' => ['required', 'string', 'max:255'],
+                    'status' => ['required', 'string', 'max:255'],
+                    'company_name' => ['required', 'string', 'max:255'],
+                    'company_id' => ['string', 'max:255'],
+                    'email' => ['required', 'string', 'email', 'max:255'],
+                    'password' => ['required', 'string', 'min:8'],
+                ]);
+            }
 
         }
 
