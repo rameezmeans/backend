@@ -920,6 +920,9 @@ Route::post('/set_status_for_reminder_manager', [App\Http\Controllers\ReminderMa
 Route::get('/dtc_lookup', [App\Http\Controllers\DTCLookupController::class, 'index'])->name('dtc-lookup');
 Route::get('/create_dtc_lookup', [App\Http\Controllers\DTCLookupController::class, 'create'])->name('create-dtclookup');
 
+Route::get('/dtc_lookup', [App\Http\Controllers\DTCLookupController::class, 'bosch'])->name('bosch-lookup');
+Route::get('/create_dtc_lookup', [App\Http\Controllers\DTCLookupController::class, 'create-bosch'])->name('bosch-dtclookup');
+
 Route::get('/message_templates', [App\Http\Controllers\MessageTemplatesController::class, 'index'])->name('message-templates');
 Route::get('/add_message_template', [App\Http\Controllers\MessageTemplatesController::class, 'add'])->name('add-message-template');
 Route::get('/edit_message_template/{id}', [App\Http\Controllers\MessageTemplatesController::class, 'edit'])->name('edit-message-template');

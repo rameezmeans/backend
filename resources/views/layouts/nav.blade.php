@@ -402,6 +402,11 @@
               <span class="icon-thumbnail">DL</span>
             </li>
 
+            <li class="">
+              <a href="{{ route('bosch-lookup') }}">BOSCH Lookup</a>
+              <span class="icon-thumbnail">BL</span>
+            </li>
+
             <li class="m-t-30 ">
               <a href="{{ route('logs') }}">Logs</a>
               <span class="icon-thumbnail">Lg</span>
