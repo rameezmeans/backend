@@ -116,9 +116,9 @@
                               <input name="id" type="hidden" value="2">
                            
                             <div>
-                              <label>Reseller Text *</label>
+                              <label>Reseller Text</label>
                                 <div class="form-group">
-                                    <input type="text" name="resellers_text" class="form-control" value="{{\App\Models\FrontEnd::findOrFail(2)->resellers_text}}" required>
+                                    <input type="text" name="resellers_text" class="form-control" value="{{\App\Models\FrontEnd::findOrFail(2)->resellers_text}}">
                                 </div>
                                 @error('resellers_text')
                                     <span class="text-danger" role="alert">
