@@ -61,7 +61,7 @@
                             <div>
                               <label>Reseller Text *</label>
                                 <div class="form-group">
-                                    <input type="text" name="resellers_text" class="form-control" value={{\App\Models\FrontEnd::findOrFail(1)->resellers_text}} required>
+                                    <input type="text" name="resellers_text" class="form-control" value="{{\App\Models\FrontEnd::findOrFail(1)->resellers_text}}" required>
                                 </div>
                                 @error('resellers_text')
                                     <span class="text-danger" role="alert">
@@ -118,7 +118,7 @@
                             <div>
                               <label>Reseller Text *</label>
                                 <div class="form-group">
-                                    <input type="text" name="resellers_text" class="form-control" value={{\App\Models\FrontEnd::findOrFail(2)->resellers_text}} required>
+                                    <input type="text" name="resellers_text" class="form-control" value="{{\App\Models\FrontEnd::findOrFail(2)->resellers_text}}" required>
                                 </div>
                                 @error('resellers_text')
                                     <span class="text-danger" role="alert">
@@ -175,7 +175,7 @@
                             <div>
                               <label>Reseller Text *</label>
                                 <div class="form-group">
-                                    <input type="text" name="resellers_text" class="form-control" value={{\App\Models\FrontEnd::findOrFail(3)->resellers_text}} required>
+                                    <input type="text" name="resellers_text" class="form-control" value="{{\App\Models\FrontEnd::findOrFail(3)->resellers_text}}" required>
                                 </div>
                                 @error('resellers_text')
                                     <span class="text-danger" role="alert">

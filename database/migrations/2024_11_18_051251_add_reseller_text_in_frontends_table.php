@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('front_ends', function (Blueprint $table) {
-            $table->string('resellers_tex')->nullable();
+            $table->string('resellers_text')->nullable();
         });
     }
 
