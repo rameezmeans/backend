@@ -20,7 +20,7 @@ class DTCLookupController extends Controller
         return view('dtc_lookup.index', ['dtclookupRecords' => $dtclookupRecords]);
     }
 
-    public function bosc(){
+    public function bosch(){
 
         $boschNumbers = BoschNumber::all();
         return view('dtc_lookup.bosc', ['boschNumbers' => $boschNumbers]);
