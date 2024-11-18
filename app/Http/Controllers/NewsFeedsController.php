@@ -25,8 +25,9 @@ class NewsFeedsController extends Controller
     }
 
     public function addResellersText(Request $request) {
-        dd($request->all());
+        // dd($request->all());
         $frontend = FrontEnd::findOrFail($request->id);
+        dd($frontend);
         $frontend->resellers_text = $request->resellers_text;
         $frontend->save();
 
