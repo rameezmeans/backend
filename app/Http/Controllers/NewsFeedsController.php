@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FrontEnd;
 use App\Models\IntegerMeta;
 use App\Models\NewsFeed;
 use Illuminate\Http\Request;
@@ -24,7 +25,11 @@ class NewsFeedsController extends Controller
     }
 
     public function addResellersText(Request $request) {
-        dd($request->all());
+        $frontend = FrontEnd::findOrFail($request->id);
+        $frontend->resellers_text = $request->resellers_text;
+        $frontend->save();
+
+        return redirect()->route('feeds')->with(['success' => 'Resellers Text Updated, successfully.']);
     }
 
     public function index() {
