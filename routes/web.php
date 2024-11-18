@@ -898,7 +898,7 @@ Route::get('/send_test_message', [App\Http\Controllers\FilesController::class, '
 
 Route::get('/logs', [App\Http\Controllers\LogsController::class, 'index'])->name('logs');
 
-// Route::get('/frontends', [App\Http\Controllers\FrontEndController::class, 'index'])->name('frontends');
+Route::get('/frontends', [App\Http\Controllers\FrontEndController::class, 'index'])->name('frontends');
 // Route::get('/create_frontend', [App\Http\Controllers\FrontEndController::class, 'create'])->name('create-frontend');
 // Route::post('/post_frontend', [App\Http\Controllers\FrontEndController::class, 'store'])->name('post-frontend');
 // Route::post('/update_frontend', [App\Http\Controllers\FrontEndController::class, 'update'])->name('update-frontend');

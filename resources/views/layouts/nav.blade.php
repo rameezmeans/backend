@@ -393,6 +393,11 @@
           <ul class="sub-menu">
 
             <li class="">
+              <a href="{{ route('frontends') }}">Front Ends</a>
+              <span class="icon-thumbnail">FE</span>
+            </li>
+
+            <li class="">
               <a href="{{ route('dtc-lookup') }}">DTC Lookup</a>
               <span class="icon-thumbnail">DL</span>
             </li>
