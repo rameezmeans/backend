@@ -572,6 +572,15 @@ class UsersController extends Controller
 
         $customer->save();
 
+        $files = File::where('user_id', $customer->id)->get();
+
+        foreach($files as $file){
+            $file->name = $customer->name;
+            $file->phone = $customer->phone;
+            $file->email = $customer->email;
+            $file->save();
+        }
+
         if($customer->evc_customer_id){
 
             try{
