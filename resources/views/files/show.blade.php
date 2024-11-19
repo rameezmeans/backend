@@ -130,13 +130,14 @@ margin-bottom: 10px !important;
           @endif --}}
           
           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks'))
-          @if($file->status != "rejected")
+          
 
 
           <li class="nav-item">
             <a href="#" data-toggle="tab" data-target="#slide3"><span>Admin Tasks</span></a>
           </li>
-          @endif
+          
+
           @endif
           
           <li class="nav-item">
@@ -1877,7 +1878,7 @@ margin-bottom: 10px !important;
           @endif
           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks'))
           
-          @if($file->status != "rejected")
+          
           
           <div class="tab-pane slide-left" id="slide3">
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
@@ -1894,6 +1895,7 @@ margin-bottom: 10px !important;
               <div class="row">
                 <div class="col-lg-12">
                   
+                  @if($file->status != "rejected")
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Assign This File to An Engineer</p>
                       <form action="{{route('assign-engineer')}}" method="POST">
@@ -1914,6 +1916,8 @@ margin-bottom: 10px !important;
                       </form>
                       <div class="clearfix"></div>
                     </div>
+
+                    
                   
 
                   <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -1941,6 +1945,9 @@ margin-bottom: 10px !important;
                     </form>
                     <div class="clearfix"></div>
                   </div>
+
+                  @endif
+
                   @if(Auth::user()->is_admin() or Auth::user()->is_head())
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Support Status</p>
@@ -1966,7 +1973,7 @@ margin-bottom: 10px !important;
                 </div>
               </div>
             </div>
-            @endif
+            
             @endif
             <div class="tab-pane slide-left" id="slide4">
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
@@ -2617,13 +2624,13 @@ margin-bottom: 10px !important;
           
           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks'))
           
-          @if($file->status != "rejected")
+          
 
           <li class="nav-item">
             <a href="#" data-toggle="tab" data-target="#slide3{{$file->id}}"><span>Admin Tasks</span></a>
           </li>
 
-          @endif
+          
           @endif
           
           <li class="nav-item">
@@ -4150,7 +4157,7 @@ margin-bottom: 10px !important;
           @endif
           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks'))
           
-          @if($file->status != "rejected")
+          
           
           <div class="tab-pane slide-left" id="slide3{{$file->id}}">
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
@@ -4167,6 +4174,7 @@ margin-bottom: 10px !important;
               <div class="row">
                 <div class="col-lg-12">
                   
+                  @if($file->status != "rejected")
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Assign This File to An Engineer</p>
                       <form action="{{route('assign-engineer')}}" method="POST">
@@ -4214,6 +4222,9 @@ margin-bottom: 10px !important;
                     </form>
                     <div class="clearfix"></div>
                   </div>
+
+                  @endif 
+                  
                   @if(Auth::user()->is_admin() or Auth::user()->is_head())
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Support Status</p>
@@ -4240,7 +4251,7 @@ margin-bottom: 10px !important;
               </div>
             </div>
             @endif
-            @endif
+           
             <div class="tab-pane slide-left" id="slide4{{$file->id}}">
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
