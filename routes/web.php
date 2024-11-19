@@ -172,13 +172,17 @@ Route::get('/tasks', function () {
 
     // abort(404);
 
-    // $files = File::all();
+    $files = File::all();
 
-    // foreach($files as $file){
-    //     $user = User::findOrFail($file->user_id);
-    //     $file->username = $user->name;
-    //     $file->save();
-    // }
+    foreach($files as $file){
+        $user = User::findOrFail($file->user_id);
+        $file->name = $user->name;
+        $file->phone = $user->phone;
+        $file->email = $user->email;
+        $file->save();
+    }
+
+    dd('files updated');
 
     // $excel = Excel::load(public_path('codes.xlsx'), function($reader) {})->get();
     // dd($excel);
