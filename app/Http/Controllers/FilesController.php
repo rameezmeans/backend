@@ -268,6 +268,7 @@ class FilesController extends Controller
        
 
         $file->reupload_time = Carbon::now();
+        $file->updated_at = Carbon::now();
         
         $file->response_time = $this->getResponseTime($file);
         $file->save();
@@ -542,6 +543,7 @@ class FilesController extends Controller
             $file = File::findOrFail($reqfile->file_id);
 
             $file->status = 'completed';
+            $file->updated_at = Carbon::now();
             $file->reupload_time = Carbon::now();
             $file->response_time = $this->getResponseTime($file);
 
@@ -825,6 +827,7 @@ class FilesController extends Controller
         }
 
         $file->status = 'on_hold';
+        $file->updated_at = Carbon::now();
         $file->save();
     
         return redirect()->back()->with(['success' => 'New stages and options proposed!']);
@@ -2203,6 +2206,7 @@ class FilesController extends Controller
         $file = File::findOrFail($request->file_id);
 
         $file->status = $request->status;
+        $file->updated_at = Carbon::now();
         
         $customer = User::findOrFail($file->user_id);
 
@@ -2895,6 +2899,7 @@ class FilesController extends Controller
             if($file->status == 'submitted'){
 
                 $file->status = 'completed';
+                $file->updated_at = Carbon::now();
                 $file->save();
             }
             
@@ -3690,6 +3695,7 @@ class FilesController extends Controller
 
             if($file->status == 'submitted'){
                 $file->status = 'completed';
+                $file->updated_at = Carbon::now();
                 $file->save();
             }
             
