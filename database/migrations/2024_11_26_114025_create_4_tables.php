@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('paypal_id');
             $table->float('amount');
             $table->float('tax');
-            $table->string('desc');
+            $table->longText('desc');
             $table->timestamps();
         });
 
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('stripe_id');
             $table->float('amount');
             $table->float('tax');
-            $table->string('desc');
+            $table->longText('desc');
             $table->timestamps();
         });
 
@@ -36,7 +36,7 @@ return new class extends Migration
             $table->string('elorus_id');
             $table->float('amount');
             $table->float('tax');
-            $table->string('desc');
+            $table->longText('desc');
             $table->timestamps();
         });
 
@@ -45,7 +45,7 @@ return new class extends Migration
             $table->string('zoho_id');
             $table->float('amount');
             $table->float('tax');
-            $table->string('desc');
+            $table->longText('desc');
             $table->timestamps();
         });
     }
