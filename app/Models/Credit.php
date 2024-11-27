@@ -22,7 +22,14 @@ class Credit extends Model
     }
 
     public function payment(){
-        dd($this->hasOne(PaypalRecord::class, 'credit_id', 'id'));
+        $paypalRecord = $this->hasOne(PaypalRecord::class, 'credit_id', 'id');
+
+        if($paypalRecord){
+            return $paypalRecord;
+        }
+        else{
+            $this->hasOne(StripeRecord::class, 'credit_id', 'id');
+        }
     }
 
     public function elorus_able(){

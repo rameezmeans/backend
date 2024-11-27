@@ -74,17 +74,27 @@
                         <thead>
                           <tr>
                             <th class="">Payment Type</th>
-                            <th class="">Payment</th>
+                            <th class="">Payment ID</th>
+                            <th class="">Payment Amount</th>
                             
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
                             <td class="">
-                              €{{$credit->type}}
+                              {{$credit->type}}
                             </td>
                             <td class="">
-                              €{{$credit->payment}}
+                              
+                              @if($credit->type == 'paypal')
+                                {{$credit->paypal_id}}
+                              @else
+                                {{$credit->stripe_id}}
+                              @endif
+
+                            </td>
+                            <td class="">
+                              €{{$credit->payment->amount}}
                             </td>
                           </tr>
                           
