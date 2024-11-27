@@ -707,6 +707,7 @@ Route::get('/payment_logs/{id}', [App\Http\Controllers\PaymentLogController::cla
 Route::get('/payments/{id}', [App\Http\Controllers\PaymentLogController::class, 'payments'])->name('payments');
 Route::get('/all_payment_logs', [App\Http\Controllers\PaymentLogController::class, 'allPaymentLogs'])->name('all-payment-logs');
 Route::get('/all_payments', [App\Http\Controllers\PaymentLogController::class, 'allPayments'])->name('all-payments');
+Route::get('/payment_details/{id}', [App\Http\Controllers\PaymentLogController::class, 'paymentDetails'])->name('payment-details');
 
 Route::get('/processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'index'])->name('processing-softwares');
 Route::get('/add_edit_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'add'])->name('add-processing-softwares');

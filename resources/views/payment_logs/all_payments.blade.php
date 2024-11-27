@@ -41,6 +41,7 @@
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Price</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Admin Entry</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Details</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Zohobooks</th>
                                             
@@ -115,6 +116,11 @@
 
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>@if($p->gifted) Yes @else No @endif</p>
+                                                    
+                                                </td>
+
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p><a class="btn btn-warning text-black" target="_blank" href="{{route('payment-details')}}">Payment Details</a></p>
                                                     
                                                 </td>
 

@@ -65,6 +65,12 @@ class PaymentLogController extends Controller
         ]);
     }
 
+    public function paymentDetails($id){
+        $credit = Credit::findOrFail($id);
+
+        dd($credit);
+    }
+
     public function allPayments(){
         $allPayments = Credit::orderBy('created_at', 'desc')->where('price_payed', '>', 0)->orWhere('gifted', 1)->where('credits', '>', 0)->get();
         
