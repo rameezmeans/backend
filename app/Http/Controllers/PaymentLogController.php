@@ -66,9 +66,16 @@ class PaymentLogController extends Controller
     }
 
     public function paymentDetails($id){
-        $credit = Credit::findOrFail($id);
 
-        dd($credit);
+        $credit = Credit::findOrFail($id);
+        $user = User::findOrFail($credit->user_id);
+        $group = $user->group;
+
+        return view('payment_logs.details', [
+            'credit' => $credit,
+            'user' => $user,
+            'group' => $group,
+        ]);
     }
 
     public function allPayments(){

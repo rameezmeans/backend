@@ -120,7 +120,7 @@
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p><a class="btn btn-warning text-black" target="_blank" href="{{route('payment-details', $p->id)}}">Payment Details</a></p>
+                                                    <p>@if($p->gifted == 0)<a class="btn btn-warning text-black" target="_blank" href="{{route('payment-details', $p->id)}}">Payment Details</a>@endif</p>
                                                     
                                                 </td>
 
