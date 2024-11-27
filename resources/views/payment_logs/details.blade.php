@@ -34,7 +34,7 @@
                   </li>
                 </ul>
                 <div class="tab-content bg-white">
-                  <div class="tab-pane show" id="tab3hellowWorld">
+                  <div class="tab-pane active" id="tab3hellowWorld">
 
                     <div class="table-responsive table-invoice">
                       <table class="table m-t-20">
@@ -63,7 +63,7 @@
                     </div>
                     
                   </div>
-                  <div class="tab-pane active" id="tab3FollowUs">
+                  <div class="tab-pane" id="tab3FollowUs">
                     
                   </div>
                   <div class="tab-pane" id="tab3Inspire">
