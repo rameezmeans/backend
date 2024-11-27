@@ -22,14 +22,13 @@ class Credit extends Model
     }
 
     public function payment(){
+        
         $paypalRecord = $this->hasOne(PaypalRecord::class, 'credit_id', 'id');
-
-        dd($paypalRecord->first());
-
-        if($paypalRecord){
+        if($paypalRecord->first()){
             return $paypalRecord;
         }
         else{
+            
             return $this->hasOne(StripeRecord::class, 'credit_id', 'id');
         }
     }
