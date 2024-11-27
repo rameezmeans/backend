@@ -28,7 +28,7 @@ class Credit extends Model
             return $paypalRecord;
         }
         else{
-            $this->hasOne(StripeRecord::class, 'credit_id', 'id');
+            return $this->hasOne(StripeRecord::class, 'credit_id', 'id');
         }
     }
 
