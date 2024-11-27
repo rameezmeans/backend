@@ -30,47 +30,69 @@
                   </li>
                   <li class="nav-item">
                     <a href="#" data-toggle="tab" data-target="#tab3Inspire">Three</a>
+                    <a href="#" data-toggle="tab" data-target="#tab4Inspire">Three</a>
                   </li>
                 </ul>
                 <div class="tab-content bg-white">
                   <div class="tab-pane" id="tab3hellowWorld">
-                    <div class="row column-seperation">
-                      <div class="col-lg-6">
-                        <h3>
-                        <span class="semi-bold">Sometimes </span>Small things in life
-                        means the most
-                        </h3>
-                      </div>
-                      <div class="col-lg-6">
-                        <h3 class="semi-bold">
-                          great tabs
-                        </h3>
-                        <p>Native boostrap tabs customized to Pages look and feel, simply changing class name you can change color as well as its animations</p>
-                      </div>
+
+                    <div class="table-responsive table-invoice">
+                      <table class="table m-t-50">
+                        <thead>
+                          <tr>
+                            <th class="">Task Description</th>
+                            <th class="text-center">Rate</th>
+                            <th class="text-center">Hours</th>
+                            <th class="text-right">Total</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="">
+                              <p class="text-black">Character Illustration</p>
+                              <p class="small hint-text">
+                                Character Design projects from the latest top online portfolios on Behance.
+                              </p>
+                            </td>
+                            <td class="text-center">$65.00</td>
+                            <td class="text-center">84</td>
+                            <td class="text-right">$5,376.00</td>
+                          </tr>
+                          <tr>
+                            <td class="">
+                              <p class="text-black">Cross Heart Charity Branding</p>
+                              <p class="small hint-text">
+                                Attempt to attach higher credibility to a new product by associating it with a well established company name
+                              </p>
+                            </td>
+                            <td class="text-center">$89.00</td>
+                            <td class="text-center">100</td>
+                            <td class="text-right">$8,900.00</td>
+                          </tr>
+                          <tr>
+                            <td class="">
+                              <p class="text-black">iOs App</p>
+                              <p class="small hint-text">
+                                A video game franchise Inspired primarily by a sketch of stylized wingless - Including Branding / Graphics / Motion Picture &amp; Videos
+                              </p>
+                            </td>
+                            <td class="text-center">$100.00</td>
+                            <td class="text-center">500</td>
+                            <td class="text-right">$50,000.00</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
+                    
                   </div>
                   <div class="tab-pane active" id="tab3FollowUs">
-                    <h3>
-                      “ Nothing is <span class="semi-bold">impossible</span>, the word
-                      itself says 'I'm <span class="semi-bold">possible</span>'! ”
-                    </h3>
-                    <p>
-                      A style represents visual customizations on top of a layout. By editing a style, you can use Squarespace's visual interface to customize your...
-                    </p>
-                    <br>
-                    <p class="pull-right">
-                      <button class="btn btn-default btn-cons" type="button">White</button>
-                      <button class="btn btn-success btn-cons" type="button">Success</button>
-                    </p>
+                    
                   </div>
                   <div class="tab-pane" id="tab3Inspire">
-                    <h3>
-                      Follow us &amp; get updated!
-                    </h3>
-                    <p>
-                      Instantly connect to what's most important to you. Follow your friends, experts, favorite celebrities, and breaking news.
-                    </p>
-                    <br>
+                    
+                  </div>
+                  <div class="tab-pane" id="tab4Inspire">
+                    
                   </div>
                 </div>
               </div>
