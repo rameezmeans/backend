@@ -13,7 +13,7 @@
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
-                    <button data-redirect="" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Blank</span>
+                    <button ata-redirect="{{route('all-payments')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">All Payments</span>
                     </button>
                 </div>
                 </div>
