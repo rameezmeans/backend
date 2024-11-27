@@ -37,49 +37,27 @@
                   <div class="tab-pane" id="tab3hellowWorld">
 
                     <div class="table-responsive table-invoice">
-                      <table class="table m-t-50">
+                      <table class="table m-t-20">
                         <thead>
                           <tr>
-                            <th class="">Task Description</th>
-                            <th class="text-center">Rate</th>
-                            <th class="text-center">Hours</th>
-                            <th class="text-right">Total</th>
+                            <th class="">Payment</th>
+                            <th class="text-center">Tax</th>
+                            <th class="text-center">User</th>
+                            <th class="text-right">Group</th>
+                            <th class="text-right">Group Tax (%)</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
                             <td class="">
-                              <p class="text-black">Character Illustration</p>
-                              <p class="small hint-text">
-                                Character Design projects from the latest top online portfolios on Behance.
-                              </p>
+                              €{{$credit->price_without_tax}}
                             </td>
-                            <td class="text-center">$65.00</td>
-                            <td class="text-center">84</td>
-                            <td class="text-right">$5,376.00</td>
+                            <td class="text-center">€{{$credit->tax}}</td>
+                            <td class="text-center">{{$user}}</td>
+                            <td class="text-right">{{$group}}</td>
+                            <td class="text-right">{{$group->tax}}</td>
                           </tr>
-                          <tr>
-                            <td class="">
-                              <p class="text-black">Cross Heart Charity Branding</p>
-                              <p class="small hint-text">
-                                Attempt to attach higher credibility to a new product by associating it with a well established company name
-                              </p>
-                            </td>
-                            <td class="text-center">$89.00</td>
-                            <td class="text-center">100</td>
-                            <td class="text-right">$8,900.00</td>
-                          </tr>
-                          <tr>
-                            <td class="">
-                              <p class="text-black">iOs App</p>
-                              <p class="small hint-text">
-                                A video game franchise Inspired primarily by a sketch of stylized wingless - Including Branding / Graphics / Motion Picture &amp; Videos
-                              </p>
-                            </td>
-                            <td class="text-center">$100.00</td>
-                            <td class="text-center">500</td>
-                            <td class="text-right">$50,000.00</td>
-                          </tr>
+                          
                         </tbody>
                       </table>
                     </div>
