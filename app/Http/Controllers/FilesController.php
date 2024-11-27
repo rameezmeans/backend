@@ -1800,7 +1800,7 @@ class FilesController extends Controller
                 
                 }
                 else{
-                    $path = public_path('/../../e-tuningfiles/public'.$file->file_path);
+                    $path = '/../../e-tuningfiles/public'.$file->file_path;
                 }
             }
         }
