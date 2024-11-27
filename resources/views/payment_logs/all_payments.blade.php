@@ -110,7 +110,7 @@
                                                 </td>
 
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>${{$p->price_payed}}</p>
+                                                    <p>€{{$p->price_payed}}</p>
                                                     
                                                 </td>
 

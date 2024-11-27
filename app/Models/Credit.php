@@ -21,6 +21,10 @@ class Credit extends Model
         return $this->hasOne(PaymentLog::class, 'payment_id', 'id');
     }
 
+    public function payment(){
+        dd($this->hasOne(PaypalRecord::class, 'credit_id', 'id'));
+    }
+
     public function elorus_able(){
 
         $user = User::findOrFail($this->user_id);

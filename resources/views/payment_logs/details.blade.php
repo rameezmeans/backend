@@ -41,6 +41,7 @@
                         <thead>
                           <tr>
                             <th class="">Payment</th>
+                            <th class="">Payment Without Tax</th>
                             <th class="text-center">Tax</th>
                             <th class="text-center">User</th>
                             <th class="text-right">Group</th>
@@ -49,6 +50,9 @@
                         </thead>
                         <tbody>
                           <tr>
+                            <td class="">
+                              €{{$credit->price_payed}}
+                            </td>
                             <td class="">
                               €{{$credit->price_without_tax}}
                             </td>
@@ -64,6 +68,29 @@
                     
                   </div>
                   <div class="tab-pane" id="tab3FollowUs">
+
+                    <div class="table-responsive table-invoice">
+                      <table class="table m-t-20">
+                        <thead>
+                          <tr>
+                            <th class="">Payment Type</th>
+                            <th class="">Payment</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="">
+                              €{{$credit->type}}
+                            </td>
+                            <td class="">
+                              €{{$credit->payment}}
+                            </td>
+                          </tr>
+                          
+                        </tbody>
+                      </table>
+                    </div>
                     
                   </div>
                   <div class="tab-pane" id="tab3Inspire">
