@@ -9,5 +9,5 @@ class ZohoRecord extends Model
 {
     use HasFactory;
 
-    private $table = 'zoho_records';
+    protected $table = 'zoho_records';
 }

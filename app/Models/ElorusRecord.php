@@ -9,5 +9,5 @@ class ElorusRecord extends Model
 {
     use HasFactory;
 
-    private $table = 'elorus_records';
+    protected $table = 'elorus_records';
 }

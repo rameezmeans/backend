@@ -9,5 +9,5 @@ class PaypalRecord extends Model
 {
     use HasFactory;
 
-    private $table = 'paypal_records';
+    protected $table = 'paypal_records';
 }

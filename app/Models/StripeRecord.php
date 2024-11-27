@@ -9,5 +9,5 @@ class StripeRecord extends Model
 {
     use HasFactory;
 
-    private $table = 'stripe_records';
+    protected $table = 'stripe_records';
 }
