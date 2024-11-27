@@ -24,7 +24,7 @@ class Credit extends Model
     public function payment(){
         $paypalRecord = $this->hasOne(PaypalRecord::class, 'credit_id', 'id');
 
-        dd($paypalRecord->amount);
+        dd($paypalRecord->first());
 
         if($paypalRecord){
             return $paypalRecord;
