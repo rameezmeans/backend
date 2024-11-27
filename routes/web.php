@@ -21,6 +21,7 @@ use App\Models\FileService;
 use App\Models\Group;
 use App\Models\Key;
 use App\Models\PaymentLog;
+use App\Models\PaypalRecord;
 use App\Models\ReminderManager;
 use App\Models\RequestFile;
 use App\Models\Role;
@@ -91,6 +92,10 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 });
 
 Route::get('/tasks', function () {
+
+    $paypalRecords = PaypalRecord::all();
+
+    dd($paypalRecords);
 
 
     // $allSoftwareRecs = FileReplySoftwareService::all();
