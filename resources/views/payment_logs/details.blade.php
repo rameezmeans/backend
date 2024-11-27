@@ -33,7 +33,7 @@
                     <a href="#" data-toggle="tab" data-target="#tab4Inspire">Three</a>
                   </li>
                 </ul>
-                <div class="tab-content bg-white">
+                <div class="tab-content bg-white" style="width: 100%;">
                   <div class="tab-pane active" id="tab3hellowWorld">
 
                     <div class="table-responsive table-invoice">
