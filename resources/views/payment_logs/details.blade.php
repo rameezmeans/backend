@@ -23,14 +23,14 @@
               <div class="card card-transparent flex-row">
                 <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
                   <li class="nav-item">
-                    <a href="#" class="active" data-toggle="tab" data-target="#tab3hellowWorld">One</a>
+                    <a href="#" class="active" data-toggle="tab" data-target="#tab3hellowWorld">Backend</a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" data-toggle="tab" data-target="#tab3FollowUs">Two</a>
+                    <a href="#" data-toggle="tab" data-target="#tab3FollowUs">Payment</a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" data-toggle="tab" data-target="#tab3Inspire">Three</a>
-                    <a href="#" data-toggle="tab" data-target="#tab4Inspire">Three</a>
+                    <a href="#" data-toggle="tab" data-target="#tab3Inspire">Elorus</a>
+                    <a href="#" data-toggle="tab" data-target="#tab4Inspire">Zohobooks</a>
                   </li>
                 </ul>
                 <div class="tab-content bg-white" style="width: 100%;">
