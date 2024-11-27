@@ -87,9 +87,9 @@
                             <td class="">
                               
                               @if($credit->type == 'paypal')
-                                {{$credit->paypal_id}}
+                                {{$credit->payment->paypal_id}}
                               @else
-                                {{$credit->stripe_id}}
+                                {{$credit->payment->stripe_id}}
                               @endif
 
                             </td>
