@@ -34,7 +34,7 @@
                   </li>
                 </ul>
                 <div class="tab-content bg-white">
-                  <div class="tab-pane" id="tab3hellowWorld">
+                  <div class="tab-pane show" id="tab3hellowWorld">
 
                     <div class="table-responsive table-invoice">
                       <table class="table m-t-20">
@@ -53,8 +53,8 @@
                               €{{$credit->price_without_tax}}
                             </td>
                             <td class="text-center">€{{$credit->tax}}</td>
-                            <td class="text-center">{{$user}}</td>
-                            <td class="text-right">{{$group}}</td>
+                            <td class="text-center">{{$user->name}}</td>
+                            <td class="text-right">{{$group->name}}</td>
                             <td class="text-right">{{$group->tax}}</td>
                           </tr>
                           
