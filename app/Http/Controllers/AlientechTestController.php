@@ -271,6 +271,8 @@ class AlientechTestController extends Controller
         $response = Http::withHeaders($headers)->get($url);
         $responseBody = json_decode($response->getBody(), true);
 
+        dd($responseBody);
+
         foreach($responseBody as $row){
             
             if($row['isClosed'] == false){
