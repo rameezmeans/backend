@@ -33,6 +33,18 @@ class Credit extends Model
         }
     }
 
+
+    public function elorus(){
+        return $this->hasOne(ElorusRecord::class, 'credit_id', 'id');
+        
+    }
+
+    public function zoho(){
+        return $this->hasOne(ZohoRecord::class, 'credit_id', 'id');
+        
+    }
+
+
     public function elorus_able(){
 
         $user = User::findOrFail($this->user_id);

@@ -530,6 +530,20 @@ margin-bottom: 10px !important;
                           </div>
                           <div class="clearfix"></div>
                         </div>
+								  
+								  @if($file->gearbox_ecu)
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Gearbox ECu</p>
+                          <div class="pull-right">
+                            @if($file->gearbox_ecu)
+                              <span class="label bg-warning">{{App\Models\ECU::findOrFail($file->gearbox_ecu)->type}}<span>
+                            @else
+                              <span class="label label-danger">NO ECU<span>
+                            @endif
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        @endif
                         
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Gear Box</p>
@@ -1162,9 +1176,11 @@ margin-bottom: 10px !important;
                               <li class="nav-item">
                                 <a href="#" class="active" data-toggle="tab" data-target="#reply_data_{{$message['id']}}"><span>Version Information</span></a>
                               </li>
+								@if($vehicle->type == 'truck' || $vehicle->type == 'machine' || $vehicle->type == 'agri')
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                               </li>
+								@endif
                               @if($file->softwares->isNotEmpty())
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Software Information</span></a>
@@ -1777,6 +1793,10 @@ margin-bottom: 10px !important;
                                     @endif
                                     <br>
                                     <br>
+									<small class="m-t-20" style="font-size: 8px;float:left">
+										
+										
+									</small>
                                     <small class="m-t-20" style="font-size: 8px;float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
                                 </div>
                               </div>
@@ -1798,6 +1818,11 @@ margin-bottom: 10px !important;
                                     @endif
                                     <br>
                                     <br>
+									<small class="m-t-20" style="font-size: 8px;float:left">
+										@if(is_text_english($message['events_internal_notes']))
+										<button class="btn btn-default btn-xs translate" href="#" data-id="{{$message['id']}}"><i class="fa fa-language" aria-hidden="true"></i></button>
+										@endif
+									</small>
                                     <small class="m-t-20" style="font-size: 8px;float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
                                 </div>
                               </div>
@@ -2189,16 +2214,16 @@ margin-bottom: 10px !important;
                             <div class="col-md-4">
                           
                           <?php 
-                            $servername = "127.0.0.1";
+                            $servername = "localhost";
                             $username = "admin_ecu_portal";
-                            $password = "e24BTBDTQMRBmC";
+                            $password = "cWY3MEbSqgb2sYYK";
                             $dbname = "admin_ecu_portal_db";
 
                             // $arrayversionlua = NULL;
                             
                             // Create a PDO instance
                             try {
-                                $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                                $conn = new PDO("mysql:host=$servername;unix_socket=/var/lib/mysql/mysql-master.sock;dbname=$dbname", $username, $password);
                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             
                                 // Query to get the latest version from the table 'lua_versions' where file_id = 1
@@ -3008,6 +3033,19 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
                         
+						@if($file->gearbox_ecu)
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Gearbox ECu</p>
+                          <div class="pull-right">
+                            @if($file->gearbox_ecu)
+                              <span class="label bg-warning">{{App\Models\ECU::findOrFail($file->gearbox_ecu)->type}}<span>
+                            @else
+                              <span class="label label-danger">NO ECU<span>
+                            @endif
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        @endif	  
         
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Gear Box</p>
@@ -3423,9 +3461,11 @@ margin-bottom: 10px !important;
                               <li class="nav-item">
                                 <a href="#" class="active" data-toggle="tab" data-target="#reply_data_{{$message['id']}}"><span>Version Information</span></a>
                               </li>
+								@if($vehicle->type == 'truck' || $vehicle->type == 'machine' || $vehicle->type == 'agri')
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
                               </li>
+								@endif
                               @if($file->softwares->isNotEmpty())
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Software Information</span></a>
@@ -4096,6 +4136,11 @@ margin-bottom: 10px !important;
                                     @endif
                                     <br>
                                     <br>
+									<small class="m-t-20" style="font-size: 8px;float:left">
+										@if(is_text_english($message['events_internal_notes']))
+										<button class="btn btn-default btn-xs translate" href="#" data-id="{{$message['id']}}"><i class="fa fa-language" aria-hidden="true"></i></button>
+									@endif
+									</small>
                                     <small class="m-t-20" style="font-size: 8px;float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
                                 </div>
                               </div>
@@ -5021,6 +5066,22 @@ margin-bottom: 10px !important;
 
       
     </div>
+  </div>
+</div>
+							
+<div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="translateModal" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          
+        </div>
+        <div class="modal-body">
+          <p id="translated_text"></p>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
   </div>
 </div>
 
@@ -6540,6 +6601,28 @@ $('#engineerOptionsModal').modal('show');
 <script>
 
   $( document ).ready(function(event) {
+	  
+	  
+	  $(document).on('click', '.translate', function(e) {
+                    console.log('translate');
+
+                    let id = $(this).data('id');
+
+                    $.ajax({
+                        url: "/translate_message",
+                        type: "POST",
+                        data: {
+                        "_token": "{{ csrf_token() }}",
+                        "id": id
+                      },
+                        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                        success: function(response) {
+							$('#translated_text').html(response);
+                          $('#translateModal').modal('show');
+                      }
+                    });  
+              });
+	  
 
     let showFile = false;
     
@@ -6633,9 +6716,10 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
     }).on('error', function(e){
       
     });
-
-  });
-
+	  
+	  });
+	  
+	  
 </script>
 
 

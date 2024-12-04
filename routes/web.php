@@ -28,6 +28,7 @@ use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\Service;
 use App\Models\ServiceSubdealerGroup;
+use App\Models\StripeRecord;
 use App\Models\Tool;
 use App\Models\User;
 use App\Models\UserTool;
@@ -100,6 +101,28 @@ Route::get('/tasks', function () {
         $record->credit_id = $credit->id;
         $record->save();
     }
+
+	
+	 $stripeRecords = StripeRecord::all();
+
+    foreach($stripeRecords as $record){
+        $credit = Credit::where('stripe_id', $record->stripe_id)->first();
+        $record->credit_id = $credit->id;
+        $record->save();
+    }
+
+    // $stripeRecords = Credit::where('id', '>', 8791)->where('type', 'stripe')->get();
+
+    // foreach($stripeRecords as $record){
+    //     $new = new StripeRecord();
+    //     $new->stripe_id = $record->stripe_id;
+    //     $new->amount = $record->price_payed;
+    //     $new->tax = 0;
+    //     $new->desc = $record->stripe_id;
+    //     $new->credit_id = $record->id;
+    //     $new->save();
+    // }
+
 
     dd('done deal');
 
@@ -914,6 +937,14 @@ Route::post('/delete_feed', [App\Http\Controllers\NewsFeedsController::class, 'd
 Route::get('/send_test_message', [App\Http\Controllers\FilesController::class, 'sendTestMessage'])->name('send-test-message');
 
 Route::get('/logs', [App\Http\Controllers\LogsController::class, 'index'])->name('logs');
+Route::get('/all_logs', [App\Http\Controllers\LogsController::class, 'all'])->name('all-logs');
+
+Route::get('/alientech_logs', [App\Http\Controllers\LogsController::class, 'alientechLogs'])->name('alientech-logs');
+Route::get('/magic_logs', [App\Http\Controllers\LogsController::class, 'magicLogs'])->name('magic-logs');
+Route::get('/elorus_logs', [App\Http\Controllers\LogsController::class, 'elorusLogs'])->name('elorus-logs');
+Route::get('/zoho_logs', [App\Http\Controllers\LogsController::class, 'zohoLogs'])->name('zoho-logs');
+Route::get('/sms_logs', [App\Http\Controllers\LogsController::class, 'smsLogs'])->name('sms-logs');
+Route::get('/email_logs', [App\Http\Controllers\LogsController::class, 'emailLogs'])->name('email-logs');
 
 // Route::get('/frontends', [App\Http\Controllers\FrontEndController::class, 'index'])->name('frontends');
 // Route::get('/create_frontend', [App\Http\Controllers\FrontEndController::class, 'create'])->name('create-frontend');
@@ -948,6 +979,8 @@ Route::post('/delete_message_template', [App\Http\Controllers\MessageTemplatesCo
 
 // Route::get('/test_html', [App\Http\Controllers\EmailTemplatesController::class, 'test'])->name('test-html');
 Route::get('/test_message', [App\Http\Controllers\FilesController::class, 'sendTestMessage'])->name('test-message');
+Route::post('/translate_message', [App\Http\Controllers\FilesController::class, 'translateMessage'])->name('translate-message');
+
 // Route::get('/test_email', [App\Http\Controllers\FilesController::class, 'testEmail'])->name('test-feedback');
 
     /*
@@ -1051,6 +1084,7 @@ Route::get('upload_engineers_file/{folder_path}/{file_name}', [AlientechTestCont
 Route::get('download_encoded_file/{folder_id}', [AlientechTestController::class, 'downloadEncodedFile'])->name('download-encoded-file');
 Route::get('close_all', [AlientechTestController::class, 'closeAllSlots'])->name('close-all');
 Route::get('show_all', [AlientechTestController::class, 'showAllSlots'])->name('show-all');
+Route::get('token_request', [AlientechTestController::class, 'requestToken'])->name('token-request');
 
 Route::get('subdealers_groups', [SubdealerGroupsController::class, 'groups'])->name('subdealer-groups');
 

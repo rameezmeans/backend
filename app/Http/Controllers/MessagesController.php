@@ -423,8 +423,10 @@ class MessagesController extends Controller
      */
     public function getContactsMain(Request $request)
     {
+		return response('abstract', 200);
         // get all users that received/sent message from/to [Auth user]
-        $users = Message::join('users',  function ($join) {
+        /*
+		$users = Message::join('users',  function ($join) {
             $join->on('ch_messages.from_id', '=', 'users.id')
                 ->orOn('ch_messages.to_id', '=', 'users.id');
         })
@@ -454,6 +456,7 @@ class MessagesController extends Controller
             'total' => $users->total() ?? 0,
             'last_page' => $users->lastPage() ?? 1,
         ], 200);
+		*/
     }
 
     /**
@@ -464,7 +467,10 @@ class MessagesController extends Controller
      */
     public function getContacts(Request $request)
     {
+		return response('abstract', 200);
         // get all users that received/sent message from/to [Auth user]
+		
+		/*
         $users = Message::join('users',  function ($join) {
             $join->on('ch_messages.from_id', '=', 'users.id')
                 ->orOn('ch_messages.to_id', '=', 'users.id');
@@ -495,6 +501,7 @@ class MessagesController extends Controller
             'total' => $users->total() ?? 0,
             'last_page' => $users->lastPage() ?? 1,
         ], 200);
+		*/
     }
 
     public function getContactItemMain($user)

@@ -17,7 +17,7 @@ class AlientechTestController extends Controller
 
     public function __construct(){
 
-        $this->token = Key::where('key', 'alientech_access_token')->first()->value;
+        $this->token = Key::where('key', 'alientech_access_token')->whereNull('subdealer_group_id')->first()->value;
         $this->uploadCustomersFileURL = 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3';
         $this->uploadEngineersFileURLBootBench = 'https://encodingapi.alientech.to/api/kess3/encode-boot-bench-file';
         $this->uploadedEngineersEnocdeURlBootBench = "https://encodingapi.alientech.to/api/kess3/encode-boot-bench-file";
@@ -66,6 +66,36 @@ class AlientechTestController extends Controller
         }
 
        
+    }
+	
+	public function requestToken() {
+
+        $curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://encodingapi.alientech.to/api/access-tokens/request?clientApplicationGUID=f8b0f518-8de7-4528-b8db-3995e1b787e9&secretKey=%235!%2FThmmM*%3F%3BD%5CjvjQ6%9%2F',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS =>'{
+	"clientApplicationGUID": "f8b0f518-8de7-4528-b8db-3995e1b787e9",
+	"secretKey": "#5!/ThmmM*?;D\\\\jvjQ6%9/"
+}
+',
+  CURLOPT_HTTPHEADER => array(
+    'clientApplicationGUID: f8b0f518-8de7-4528-b8db-3995e1b787e9',
+    'Content-Type: application/json'
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
     }
 
     public function reopenSlot( $slotID ) {
@@ -271,7 +301,7 @@ class AlientechTestController extends Controller
         $response = Http::withHeaders($headers)->get($url);
         $responseBody = json_decode($response->getBody(), true);
 
-        dd($responseBody);
+
 
         foreach($responseBody as $row){
             

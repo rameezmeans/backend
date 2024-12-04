@@ -382,7 +382,39 @@
           </ul>
         </li>
         
-       
+       <li class="m-t-30 ">
+          <a href="javascript:;">
+            <span class="title">API Logs</span>
+            <span class=" arrow"></span>
+          </a>
+          <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
+          <ul class="sub-menu">
+            <li class="">
+              <a href="{{ route('alientech-logs') }}">Alientech Logs</a>
+              <span class="icon-thumbnail">NF</span>
+            </li>
+            <li class="">
+              <a href="{{ route('magic-logs') }}">Magic Logs</a>
+              <span class="icon-thumbnail">ET</span>
+            </li>
+            <li class="">
+              <a href="{{ route('elorus-logs') }}">Elorus Logs</a>
+              <span class="icon-thumbnail">MT</span>
+            </li>
+            <li class="">
+              <a href="{{ route('zoho-logs') }}">Zoho Logs</a>
+              <span class="icon-thumbnail">WH</span>
+            </li>
+            <li class="">
+              <a href="{{ route('sms-logs') }}">SMS Logs</a>
+              <span class="icon-thumbnail">Rm</span>
+            </li>
+            <li class="">
+              <a href="{{ route('email-logs') }}">Email Logs</a>
+              <span class="icon-thumbnail">Rm</span>
+            </li>
+            </ul>
+        </li>
 
         <li class="m-t-30 ">
           <a href="javascript:;">

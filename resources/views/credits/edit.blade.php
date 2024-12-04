@@ -73,7 +73,100 @@
                         <div class="border border-1 p-1">
                         <h5 class="text-center">Credits Bought or Added</h5>
                                 <p class="text-center">Total Amount Spent: <span class="label label-warning text-black">€{{$customer->amount()}}</span></p>
-                                    <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+
+                                <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 20%">Date</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 5%">Purchase</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 10%">Spent</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 25%">Note To Client</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Invoice Number</th>
+                                            
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Download PDF Or Task</th>
+                                            
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Actions</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($credits as $credit)
+
+                                        @php 
+                                            if($credit->file_id){
+                                                $file = \App\Models\File::where('id',$credit->file_id)->first();
+                                            }
+                                            
+                                        @endphp
+                                            
+                                                <tr role="row">
+                                                    <td class="v-align-middle semi-bold sorting_1">
+                                                        <p><span class="label  @if($credit->credits > 0) label-success @else label-danger @endif">{{\Carbon\Carbon::parse($credit->created_at)->format('d/m/Y')}}</span></p>
+                                                    </td>
+                                                    
+                                                    @if($credit->credits > 0)
+                                                        <td class="v-align-middle semi-bold sorting_1">
+                                                            <p><span class="label @if($credit->gifted) label-info @else label-warning @endif">{{$credit->credits}}</span></p>
+                                                        </td>
+                                                        <td></td>
+                                                    @else
+                                                        <td></td>   
+                                                        <td class="v-align-middle semi-bold sorting_1">
+                                                            <p><span class="label label-danger">{{-1*(int)$credit->credits}}</span></p>
+                                                        </td>
+                                                    @endif
+                                                    <td class="v-align-middle semi-bold sorting_1">
+                                                        <p>{{$credit->message_to_credit}}</p>
+                                                    </td>
+                                                    <td class="v-align-middle semi-bold sorting_1">
+                                                        <p>@if($credit->credits > 0)<span class="label label-">{{$credit->invoice_id}}</span>@endif</p>
+                                                    </td>
+                                                    <td>
+                                                        @if($credit->credits > 0)
+                                                            @if(!$credit->gifted)
+                                                                @if(!$credit->elorus_permalink)
+                                                                <a href="{{ route('pdfview',['id'=>$credit->id]) }}" target="_blank" class="btn btn-sm btn-primary"><i class="pg-printer"></i></a>
+
+                                                                @else
+                                                                <a href="{{ $credit->elorus_permalink }}" target="_blank" class="btn btn-sm btn-primary"><i class="pg-printer"></i></a>
+                                                                @endif
+                                                            @endif
+                                                        @else
+
+                                                        @if($credit->file_id)
+                                                        @if($file)
+                                                            @if($file->subdealer_group_id)
+                                                                <span class="label label-danger text-white">LUA Entry</span>
+                                                            @else
+                                                                @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files'))
+                                                                    <a href="{{route('file', $credit->file_id)}}" class="btn btn-sm btn-primary"><i class="fa fa-file"></i></a>
+                                                                @endif
+                                                            @endif
+        
+                                                            @else
+                                                                <p>Record Deleted: {{$credit->file_id}}</p>
+                                                            @endif
+                                                        
+                                                            @else
+                                                                <span class="label label-warning text-black">Manual Entry</span>
+            
+                                                            @endif
+                                                        
+
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($credit->credits > 0)
+                                                            <a href="{{ route('update-credit',['id'=>$credit->id]) }}" class="btn btn-sm btn-success">Edit</a>
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            
+                                        @endforeach
+                                    </tbody>
+                                </table> 
+
+                                    {{-- <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                                         <thead>
                                             <tr role="row">
                                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 20%">Invoice ID</th>
@@ -124,21 +217,21 @@
                                                 @endif
                                             @endforeach
                                         </tbody>
-                                    </table>
+                                    </table> --}}
                                
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    {{-- <div class="col-lg-12">
                         <div class="border border-1 p-1">
-                        <h5 class="text-center">Credits Spent</h5>
-                        <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                        <h5 class="text-center">Credits Spent</h5> --}}
+                        {{-- <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 15%">Invoice ID</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 5%">Credits</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 25%">Reason to Decrease credits</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 25%">Date</th>
-                                    {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Download PDF</th> --}}
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Download PDF</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">File</th>
                                 </tr>
                             </thead>
@@ -177,7 +270,7 @@
                                             <td class="v-align-middle semi-bold sorting_1">
                                                 <p><span class="label label-success">{{\Carbon\Carbon::parse($credit->created_at)->format('d/m/Y')}}</span></p>
                                             </td>
-                                            {{-- <td><button class="btn btn-sm btn-primary"><i class="pg-printer"></i></button></td> --}}
+                                            <td><button class="btn btn-sm btn-primary"><i class="pg-printer"></i></button></td>
                                             <td>
                                                 @if($credit->file_id)
                                                 @if($file)
@@ -202,9 +295,9 @@
                                     @endif
                                 @endforeach
                             </tbody>
-                        </table>
-                        </div>
-                    </div>
+                        </table> --}}
+                        {{-- </div> --}}
+                    {{-- </div> --}}
                 </div>
             </div>
         </div>

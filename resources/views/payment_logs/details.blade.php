@@ -21,23 +21,19 @@
             </div>
             <div class="card-body">
               <div class="card card-transparent flex-row">
-                <ul class="nav nav-tabs nav-tabs-simple nav-tabs-left bg-white" id="tab-3">
-                  <li class="nav-item">
-                    <a href="#" class="active" data-toggle="tab" data-target="#tab3hellowWorld">Backend</a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" data-toggle="tab" data-target="#tab3FollowUs">Payment</a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" data-toggle="tab" data-target="#tab3Inspire">Elorus</a>
-                    <a href="#" data-toggle="tab" data-target="#tab4Inspire">Zohobooks</a>
-                  </li>
-                </ul>
-                <div class="tab-content bg-white" style="width: 100%;">
-                  <div class="tab-pane active" id="tab3hellowWorld">
 
+                
+                
+
+                <div class="row">
+
+                  <div class="card-title"><h5>Backend</h5>
+                  </div>
+
+                  <div class="col-lg-12">
                     <div class="table-responsive table-invoice">
-                      <table class="table m-t-20">
+                      <table class="table">
+
                         <thead>
                           <tr>
                             <th class="">Payment</th>
@@ -67,10 +63,17 @@
                     </div>
                     
                   </div>
-                  <div class="tab-pane" id="tab3FollowUs">
 
+                  
+                  @if($credit->payment)
+
+                  <div class="card-title m-t-40"><h5>Payment</h5>
+                  </div>
+
+                  <div class="col-lg-12">
                     <div class="table-responsive table-invoice">
-                      <table class="table m-t-20">
+                      <table class="table">
+
                         <thead>
                           <tr>
                             <th class="">Payment Type</th>
@@ -103,12 +106,110 @@
                     </div>
                     
                   </div>
+<<<<<<< HEAD
                   <div class="tab-pane" id="tab3Inspire">
                     
                   </div>
                   <div class="tab-pane" id="tab4Inspire">
                     
                   </div>
+=======
+
+                  @endif
+
+                  @if($credit->elorus)
+
+                  <div class="card-title m-t-40"><h5>Elorus</h5>
+                  </div>
+
+                  <div class="col-lg-12">
+                    <div class="table-responsive table-invoice">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="">Elorus ID</th>
+                            <th class="">Amount</th>
+                            <th class="">Tax</th>
+                            <th class="">Invoice ID</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="">
+                              {{$credit->elorus->elorus_id}}
+                            </td>
+                            <td class="">
+                              
+                              
+                              €{{$credit->elorus->amount}}
+                              
+
+                            </td>
+                            <td class="">
+                              €{{$credit->elorus->tax}}
+                            </td>
+                            <td class="">
+                              {{$credit->elorus->desc}}
+                            </td>
+                          </tr>
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                    
+                  </div>
+
+                  @endif
+
+                  @if($credit->zoho)
+
+                  <div class="card-title m-t-40"><h5>Zoho</h5>
+                  </div>
+
+                  <div class="col-lg-12">
+                    <div class="table-responsive table-invoice">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th class="">Zoho ID</th>
+                            <th class="">Amount</th>
+                            <th class="">Tax</th>
+                            <th class="">Invoice ID</th>
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="">
+                              {{$credit->zoho->zoho_id}}
+                            </td>
+                            <td class="">
+                              
+                              
+                              €{{$credit->zoho->amount+$credit->zoho->tax}}
+                              
+
+                            </td>
+                            <td class="">
+                              €{{$credit->zoho->tax}}
+                            </td>
+                            <td class="">
+                              {{$credit->zoho->desc}}
+                            </td>
+                          </tr>
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                    
+                  </div>
+
+                  @endif
+
+                  </div>
+                  
+>>>>>>> 0c5e701 (new code)
                 </div>
               </div>
             </div>

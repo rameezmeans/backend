@@ -12,6 +12,7 @@ use App\Models\EngineersPermission;
 use App\Models\FileReplySoftwareService;
 use Danielebarbaro\LaravelVatEuValidator\Facades\VatValidatorFacade as VatValidator;
 use Illuminate\Support\Facades\Auth;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 function fullescape($in)
 
@@ -63,6 +64,16 @@ if(!function_exists('default_elorus_id')){
     function default_elorus_id(){
         $defaultTemplateID = Key::where('key', 'default_elorus_template_id')->first();
         return $defaultTemplateID->value;
+    }
+}
+
+if(!function_exists('is_text_english')){
+
+    function is_text_english($str){
+       $tr = new GoogleTranslate();
+        $text = $tr->translate($str);
+        // dd($tr->getLastDetectedSource()); 
+		return true;
     }
 }
 

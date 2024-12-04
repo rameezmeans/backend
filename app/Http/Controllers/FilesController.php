@@ -53,6 +53,8 @@ use Svg\Tag\Rect;
 use Twilio\Rest\Client;
 use Yajra\DataTables\DataTables;
 
+use Stichoza\GoogleTranslate\GoogleTranslate;
+
 use PDO;
 use stdClass;
 use Symfony\Component\Mailer\Exception\TransportException;
@@ -75,6 +77,17 @@ class FilesController extends Controller
         $reminderManager = new ReminderManagerController();
         $this->manager = $reminderManager->getAllManager();
         $this->middleware('auth',['except' => ['recordFeedback']]);
+    }
+	
+	public function translateMessage(Request $request){
+        $record = EngineerFileNote::findOrFail($request->id);
+		
+        $text = $record->egnineers_internal_notes;
+        $tr = new GoogleTranslate();
+        $tr->setTarget('en');
+        $translation = $tr->translate($text);
+		
+        return response($translation, 200);
     }
     
     public function getSearchResults(Request $request){
@@ -165,7 +178,7 @@ class FilesController extends Controller
             else{
 
                 
-                $attachment->move(public_path('/../../e-tuningfiles/public'.$file->file_path),$newFileName);
+                $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
             }
 
         }
@@ -959,7 +972,7 @@ class FilesController extends Controller
                     $attachment->move(public_path('/../../EcuTechV2/public/'.$file->file_path),$fileName);
                 }
                 else{
-                    $attachment->move(public_path('/../../e-tuningfiles/public/'.$file->file_path),$fileName);
+                    $attachment->move(public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path),$fileName);
                 }
 
             }
@@ -1608,7 +1621,7 @@ class FilesController extends Controller
             }
             else{
 
-                $file_path = public_path('/../../e-tuningfiles/public/'.$file->file_path).$$magicEncryptedFile->name;
+                $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$$magicEncryptedFile->name;
             }
 
         }
@@ -1678,7 +1691,7 @@ class FilesController extends Controller
                     }
                     else{
 
-                        $file_path = public_path('/../../e-tuningfiles/public/'.$file->file_path).$fileNameEncoded;
+                        $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$fileNameEncoded;
                     }
 
                 }
@@ -1743,7 +1756,7 @@ class FilesController extends Controller
                 }
                 else{
 
-                    $file_path = public_path('/../../e-tuningfiles/public/'.$file->file_path).$finalFileName;
+                    $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$finalFileName;
                 }
 
             }
@@ -1800,7 +1813,7 @@ class FilesController extends Controller
                 
                 }
                 else{
-                    $path = public_path('/../../e-tuningfiles/public'.$file->file_path);
+                    $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path);
                 }
             }
         }
@@ -1848,6 +1861,7 @@ class FilesController extends Controller
         $file->delete();
 
         $softwareRecords = FileReplySoftwareService::where('reply_id', $request->request_file_id)->delete();
+		$messagesRecords = EngineerFileNote::where('request_file_id', $request->request_file_id)->delete();
 
         return response('File deleted', 200);
     }
@@ -2397,7 +2411,7 @@ class FilesController extends Controller
                 }
                 else{
 
-                    $attachment->move(public_path('/../../e-tuningfiles/public/'.$file->file_path),$fileName);
+                    $attachment->move(public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path),$fileName);
                 }
             }
             else{
@@ -2665,7 +2679,7 @@ class FilesController extends Controller
                 //     $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
                 // }
                 // else{
-                    $attachment->move(public_path('/../../e-tuningfiles/public'.$file->file_path),$newFileName);
+                    $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
                 // }
 
             }
@@ -2709,7 +2723,7 @@ class FilesController extends Controller
                     //     $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
                     // }
                     // else{
-                        $attachment->move(public_path('/../../e-tuningfiles/public'.$file->file_path),$newFileName);
+                        $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
                     // }
     
                 }
@@ -2752,7 +2766,7 @@ class FilesController extends Controller
                         $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
                     }
                     else{
-                        $path = public_path('/../../e-tuningfiles/public'.$file->file_path).$newFileName;
+                        $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path).$newFileName;
                     }
 
                 }
@@ -2802,7 +2816,7 @@ class FilesController extends Controller
             //         //     $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
             //         // }
             //         // else{
-            //             $attachment->move(public_path('/../../e-tuningfiles/public'.$file->file_path),$newFileName);
+            //             $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
             //         // }
     
             //     }
@@ -2846,7 +2860,7 @@ class FilesController extends Controller
                         $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
                     }
                     else{
-                        $path = public_path('/../../e-tuningfiles/public'.$file->file_path).$newFileName;
+                        $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path).$newFileName;
                     }
 
                 }

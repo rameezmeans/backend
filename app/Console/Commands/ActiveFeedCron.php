@@ -153,8 +153,8 @@ class ActiveFeedCron extends Command
         $flag = chmod( public_path("/../../tuningX/public/uploads") , 0777 );
         $theFlag = $this->recursiveChmod(public_path("/../../tuningX/public/uploads"));
 
-        $flag = chmod( public_path("/../../e-tuningfiles/public/uploads") , 0777 );
-        $theFlag = $this->recursiveChmod(public_path("/../../e-tuningfiles/public/uploads"));
+        $flag = chmod( public_path("/../../portal.e-tuningfiles.com/public/uploads") , 0777 );
+        $theFlag = $this->recursiveChmod(public_path("/../../portal.e-tuningfiles.com/public/uploads"));
         // $flag1 = chmod( public_path("/../../tuningX/resources/lang/gr.json") , 0777 );
 
         $flag = chmod( public_path("/../../TuningXV2/public/uploads") , 0777 );
@@ -176,8 +176,8 @@ class ActiveFeedCron extends Command
         $flag = chmod( public_path("/../../tuningX/storage/logs") , 0777 );
         $theTuningXFlag = $this->recursiveChmod(public_path("/../../tuningX/storage/logs"));
 
-        $flag = chmod( public_path("/../../e-tuningfiles/storage/logs") , 0777 );
-        $theTuningXFlag = $this->recursiveChmod(public_path("/../../e-tuningfiles/storage/logs"));
+        $flag = chmod( public_path("/../../portal.e-tuningfiles.com/storage/logs") , 0777 );
+        $theTuningXFlag = $this->recursiveChmod(public_path("/../../portal.e-tuningfiles.com/storage/logs"));
 
         $flag = chmod( public_path("/../../portal/storage/logs") , 0777 );
         $thePortalFlag = $this->recursiveChmod(public_path("/../../portal/storage/logs"));

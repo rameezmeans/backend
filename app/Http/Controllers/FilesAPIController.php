@@ -763,11 +763,11 @@ class FilesAPIController extends Controller
                         // unlink( public_path('/../../e-tuningfiles/public/uploads/filesready').'/'.$file->tunned_files->file );
 
                         copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
-                        public_path('/../../e-tuningfiles/public'.$file->file_path.$fileToSave) );
+                        public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path.$fileToSave) );
 
                         unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                        $path = public_path('/../../e-tuningfiles/public'.$file->file_path.$fileToSave);
+                        $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path.$fileToSave);
                 
                     }
 
