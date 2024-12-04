@@ -72,7 +72,7 @@ if(!function_exists('is_text_english')){
     function is_text_english($str){
        $tr = new GoogleTranslate();
         $text = $tr->translate($str);
-        // dd($tr->getLastDetectedSource()); 
+        dd($tr->getLastDetectedSource()); 
 		return false;
     }
 }
