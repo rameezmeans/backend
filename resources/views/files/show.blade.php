@@ -1794,7 +1794,7 @@ margin-bottom: 10px !important;
                                     <br>
                                     <br>
 									<small class="m-t-20" style="font-size: 8px;float:left">
-										@if(is_text_english($message['events_internal_notes']))
+										@if(is_text_english($message['egnineers_internal_notes']))
 										<button class="btn btn-default btn-xs translate" href="#" data-id="{{$message['id']}}"><i class="fa fa-language" aria-hidden="true"></i></button>
 										@endif
 										
