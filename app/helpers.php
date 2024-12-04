@@ -73,7 +73,7 @@ if(!function_exists('is_text_english')){
        $tr = new GoogleTranslate();
         $text = $tr->translate($str);
         // dd($tr->getLastDetectedSource()); 
-		return true;
+		return false;
     }
 }
 
