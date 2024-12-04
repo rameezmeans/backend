@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('temporary_files', function (Blueprint $table) {
-            $table->string('gearbox_ecu')->nullable();
-        });
+        // Schema::table('temporary_files', function (Blueprint $table) {
+        //     $table->string('gearbox_ecu')->nullable();
+        // });
 
-        Schema::table('files', function (Blueprint $table) {
-            $table->string('gearbox_ecu')->nullable();
-        });
+        // Schema::table('files', function (Blueprint $table) {
+        //     $table->string('gearbox_ecu')->nullable();
+        // });
     }
 
     /**
