@@ -264,7 +264,7 @@ class ActiveFeedCron extends Command
         // \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " theTuningxFlag:". $theTuningXFlag);
         // \Log::info("permissions are updated at ".date('d-m-y h:i:s'). " thePortalFlag:". $thePortalFlag);
         
-        // \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
+        \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
 
         $feeds = NewsFeed::all();
 
