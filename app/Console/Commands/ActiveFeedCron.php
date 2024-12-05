@@ -144,44 +144,44 @@ class ActiveFeedCron extends Command
 
         ///////////////////////
 
-        $flag = chmod( public_path("/../../portal/public/uploads") , 0777 );
-        $theFlag = $this->recursiveChmod(public_path("/../../portal/public/uploads"));
-        $flag1 = chmod( public_path("/../../portal/resources/lang/gr.json") , 0777 );
+        // $flag = chmod( public_path("/../../portal/public/uploads") , 0777 );
+        // $theFlag = $this->recursiveChmod(public_path("/../../portal/public/uploads"));
+        // $flag1 = chmod( public_path("/../../portal/resources/lang/gr.json") , 0777 );
 
-        \Log::info("lang/gr: permission: ".$flag1);
+        // \Log::info("lang/gr: permission: ".$flag1);
 
-        $flag = chmod( public_path("/../../tuningX/public/uploads") , 0777 );
-        $theFlag = $this->recursiveChmod(public_path("/../../tuningX/public/uploads"));
+        // $flag = chmod( public_path("/../../tuningX/public/uploads") , 0777 );
+        // $theFlag = $this->recursiveChmod(public_path("/../../tuningX/public/uploads"));
 
-        $flag = chmod( public_path("/../../portal.e-tuningfiles.com/public/uploads") , 0777 );
-        $theFlag = $this->recursiveChmod(public_path("/../../portal.e-tuningfiles.com/public/uploads"));
-        // $flag1 = chmod( public_path("/../../tuningX/resources/lang/gr.json") , 0777 );
+        // $flag = chmod( public_path("/../../portal.e-tuningfiles.com/public/uploads") , 0777 );
+        // $theFlag = $this->recursiveChmod(public_path("/../../portal.e-tuningfiles.com/public/uploads"));
+        // // $flag1 = chmod( public_path("/../../tuningX/resources/lang/gr.json") , 0777 );
 
-        $flag = chmod( public_path("/../../TuningXV2/public/uploads") , 0777 );
-        $theFlag = $this->recursiveChmod(public_path("/../../TuningXV2/public/uploads"));
+        // $flag = chmod( public_path("/../../TuningXV2/public/uploads") , 0777 );
+        // $theFlag = $this->recursiveChmod(public_path("/../../TuningXV2/public/uploads"));
 
-        //here we are 
-        // $flag = chmod( public_path("/../../EcuTechV2/public/uploads") , 0777 );
-        // $theFlag = $this->recursiveChmod(public_path("/../../EcuTechV2/public/uploads"));
+        // //here we are 
+        // // $flag = chmod( public_path("/../../EcuTechV2/public/uploads") , 0777 );
+        // // $theFlag = $this->recursiveChmod(public_path("/../../EcuTechV2/public/uploads"));
 
-        // $flag = chmod( public_path("/../../backend/public/uploads") , 0777 );
-        $flagBackned = chmod( public_path("/../../backend/storage/logs") , 0777 );
-        $theBackendFlag = $this->recursiveChmod(public_path("/../../backend/storage/logs"));
+        // // $flag = chmod( public_path("/../../backend/public/uploads") , 0777 );
+        // $flagBackned = chmod( public_path("/../../backend/storage/logs") , 0777 );
+        // $theBackendFlag = $this->recursiveChmod(public_path("/../../backend/storage/logs"));
 
 
 
-        $flag = chmod( public_path("/../../devback/storage/logs") , 0777 );
-        $theBackendFlagLog = $this->recursiveChmod(public_path("/../../devback/storage/logs"));
+        // $flag = chmod( public_path("/../../devback/storage/logs") , 0777 );
+        // $theBackendFlagLog = $this->recursiveChmod(public_path("/../../devback/storage/logs"));
 
-        $flag = chmod( public_path("/../../tuningX/storage/logs") , 0777 );
-        $theTuningXFlag = $this->recursiveChmod(public_path("/../../tuningX/storage/logs"));
+        // $flag = chmod( public_path("/../../tuningX/storage/logs") , 0777 );
+        // $theTuningXFlag = $this->recursiveChmod(public_path("/../../tuningX/storage/logs"));
 
-        $flag = chmod( public_path("/../../portal.e-tuningfiles.com/storage/logs") , 0777 );
-        $theTuningXFlag = $this->recursiveChmod(public_path("/../../portal.e-tuningfiles.com/storage/logs"));
+        // $flag = chmod( public_path("/../../portal.e-tuningfiles.com/storage/logs") , 0777 );
+        // $theTuningXFlag = $this->recursiveChmod(public_path("/../../portal.e-tuningfiles.com/storage/logs"));
 
-        $flag = chmod( public_path("/../../portal/storage/logs") , 0777 );
-        $thePortalFlag = $this->recursiveChmod(public_path("/../../portal/storage/logs"));
-        // $flag1 = chmod( public_path("/../../backend/resources/lang/gr.json") , 0777 );
+        // $flag = chmod( public_path("/../../portal/storage/logs") , 0777 );
+        // $thePortalFlag = $this->recursiveChmod(public_path("/../../portal/storage/logs"));
+        // // $flag1 = chmod( public_path("/../../backend/resources/lang/gr.json") , 0777 );
 
         $creditsWithoutZohoID = Credit::whereNull('zohobooks_id')
         ->where('credits','>', 0)
@@ -350,36 +350,36 @@ class ActiveFeedCron extends Command
         return Command::SUCCESS;
     }
 
-    function recursiveChmod($path, $filePerm=0777, $dirPerm=0777) {
-        // Check if the path exists
-        if (!file_exists($path)) {
-            return(false);
-        }
+    // function recursiveChmod($path, $filePerm=0777, $dirPerm=0777) {
+    //     // Check if the path exists
+    //     if (!file_exists($path)) {
+    //         return(false);
+    //     }
  
-        // See whether this is a file
-        if (is_file($path)) {
-            // Chmod the file with our given filepermissions
-            chmod($path, $filePerm);
+    //     // See whether this is a file
+    //     if (is_file($path)) {
+    //         // Chmod the file with our given filepermissions
+    //         chmod($path, $filePerm);
  
-        // If this is a directory...
-        } elseif (is_dir($path)) {
-            // Then get an array of the contents
-            $foldersAndFiles = scandir($path);
+    //     // If this is a directory...
+    //     } elseif (is_dir($path)) {
+    //         // Then get an array of the contents
+    //         $foldersAndFiles = scandir($path);
  
-            // Remove "." and ".." from the list
-            $entries = array_slice($foldersAndFiles, 2);
+    //         // Remove "." and ".." from the list
+    //         $entries = array_slice($foldersAndFiles, 2);
  
-            // Parse every result...
-            foreach ($entries as $entry) {
-                // And call this function again recursively, with the same permissions
-                $this->recursiveChmod($path."/".$entry, $filePerm, $dirPerm);
-            }
+    //         // Parse every result...
+    //         foreach ($entries as $entry) {
+    //             // And call this function again recursively, with the same permissions
+    //             $this->recursiveChmod($path."/".$entry, $filePerm, $dirPerm);
+    //         }
  
-            // When we are done with the contents of the directory, we chmod the directory itself
-            chmod($path, $dirPerm);
-        }
+    //         // When we are done with the contents of the directory, we chmod the directory itself
+    //         chmod($path, $dirPerm);
+    //     }
  
-        // Everything seemed to work out well, return true
-        return(true);
-    }
+    //     // Everything seemed to work out well, return true
+    //     return(true);
+    // }
 }
