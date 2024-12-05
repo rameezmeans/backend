@@ -106,14 +106,7 @@
                     </div>
                     
                   </div>
-<<<<<<< HEAD
-                  <div class="tab-pane" id="tab3Inspire">
-                    
-                  </div>
-                  <div class="tab-pane" id="tab4Inspire">
-                    
-                  </div>
-=======
+
 
                   @endif
 
@@ -209,7 +202,7 @@
 
                   </div>
                   
->>>>>>> 0c5e701 (new code)
+
                 </div>
               </div>
             </div>
