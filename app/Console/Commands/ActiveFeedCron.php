@@ -110,7 +110,8 @@ class ActiveFeedCron extends Command
     {
 
         \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
-        
+        \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
+
         $reminders = EmailReminder::all();
 
         $dateCheck = date('Y-m-d');
