@@ -65,7 +65,7 @@
                             <div>
                               <label>Reseller Text</label>
                                 <div class="form-group">
-                                    <input type="text" name="resellers_text" class="form-control" value="{{$ecutechObj->resellers_text}}">
+                                    <textarea type="text" name="resellers_text" class="form-control">{{$ecutechObj->resellers_text}}</textarea>
                                 </div>
                                 @error('resellers_text')
                                     <span class="text-danger" role="alert">
@@ -135,7 +135,7 @@
                             <div>
                               <label>Reseller Text</label>
                                 <div class="form-group">
-                                    <input type="text" name="resellers_text" class="form-control" value="{{$tunningxObj->resellers_text}}">
+                                    <textarea type="text" name="resellers_text" class="form-control">{{$tunningxObj->resellers_text}}</textarea>
                                 </div>
                                 @error('resellers_text')
                                     <span class="text-danger" role="alert">
