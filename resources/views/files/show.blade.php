@@ -4141,11 +4141,11 @@ margin-bottom: 10px !important;
                                     @endif
                                     <br>
                                     <br>
-									<small class="m-t-20" style="font-size: 8px;float:left">
-										@if(is_text_english($message['egnineers_internal_notes']))
-										<button class="btn btn-default btn-xs translate" href="#" data-id="{{$message['id']}}"><i class="fa fa-language" aria-hidden="true"></i></button>
-									@endif
-									</small>
+                                    <small class="m-t-20" style="font-size: 8px;float:left">
+                                      @if(is_text_english($message['egnineers_internal_notes']))
+                                      <button class="btn btn-default btn-xs translate" href="#" data-id="{{$message['id']}}"><i class="fa fa-language" aria-hidden="true"></i></button>
+                                    @endif
+                                    </small>
                                     <small class="m-t-20" style="font-size: 8px;float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
                                 </div>
                               </div>

@@ -21,9 +21,7 @@
               Session::forget('success')
             @endphp
             <!-- START card -->
-
-           
-
+            
             <div class="tab-content">
               <div class="tab-pane slide-left active" id="slide1">
                 <div class="card card-transparent m-t-20">

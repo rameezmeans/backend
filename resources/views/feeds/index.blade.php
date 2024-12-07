@@ -212,7 +212,7 @@
                             <div>
                               <label>Reseller Text</label>
                                 <div class="form-group">
-                                    <input type="text" name="resellers_text" class="form-control" value="{{$etfObj->resellers_text}}">
+                                    <textarea type="text" name="resellers_text" class="form-control">{{$etfObj->resellers_text}}</textarea>
                                 </div>
                                 @error('resellers_text')
                                     <span class="text-danger" role="alert">
