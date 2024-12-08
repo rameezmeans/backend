@@ -23,10 +23,10 @@
             </div>
             <div class="card-body">
                 
-                <form class="" role="form" enctype="multipart/form-data">
+                <form class="" method="POST" action="{{route('search-bosch-number')}}" role="form" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group form-group-default required ">
-                      <label>Name</label>
+                      <label>Manufacturer Number</label>
                       <input id="manufacturer_number"  name="manufacturer_number" type="text" class="form-control" required>
                     </div>
                     @error('manufacturer_number')
@@ -38,15 +38,38 @@
                       <button id="get-ecu" class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Get ECU</span></button>
                       
                     </div>
-                  </form>
+                </form>
+
+                @if(isset($record))
+
+                    <div class="card card-default">
+                        <div class="card-header ">
+                        <div class="card-title">Results
+                        </div>
+                        <div class="card-controls">
+                            
+                        </div>
+                        </div>
+                        <div class="card-body">
+                            @if(is_object($record))
+                                <h3 class="semi-bold">ECU: {{$record->ecu}}</h3>
+                                <p>Manufacturer Number: {{$record->manufacturer_number}}</p>
+                            @elseif(is_string($record))
+                                <h3 class="semi-bold">{{$record}}</h3>
+                            @endif
+                        </div>
+                    </div>
+
+                @endif
 
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
                         <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Code</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Desc</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Manufacturer Number</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">ECU</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">ACTIONS</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,6 +80,14 @@
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$bosch->ecu}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <div class="btn-group">
+                                                <button type="button" data-redirect="{{ route('edit-bosch-numbers', $bosch->id) }}" class="btn btn-success redirect-click"><i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i>
+                                                </button>
+                                              </div>
                                         </td>
                                     </tr>
                                 @endforeach

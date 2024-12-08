@@ -967,7 +967,12 @@ Route::get('/dtc_lookup', [App\Http\Controllers\DTCLookupController::class, 'ind
 // Route::get('/create_dtc_lookup', [App\Http\Controllers\DTCLookupController::class, 'create'])->name('create-dtclookup');
 
 Route::get('/bosch_lookup', [App\Http\Controllers\DTCLookupController::class, 'bosch'])->name('bosch-lookup');
-// Route::get('/create_dtc_lookup', [App\Http\Controllers\DTCLookupController::class, 'create-bosch'])->name('bosch-dtclookup');
+Route::get('/create_bosch_numbers', [App\Http\Controllers\DTCLookupController::class, 'createBosch'])->name('create-bosch-numbers');
+Route::post('/add_bosch_numbers', [App\Http\Controllers\DTCLookupController::class, 'addBosch'])->name('add-bosch');
+Route::get('/edit_bosch_numbers/{id}', [App\Http\Controllers\DTCLookupController::class, 'editBosch'])->name('edit-bosch-numbers');
+Route::post('/update_bosch_numbers', [App\Http\Controllers\DTCLookupController::class, 'updateBosch'])->name('update-bosch');
+Route::post('/search_bosch_number', [App\Http\Controllers\DTCLookupController::class, 'searchBosch'])->name('search-bosch-number');
+Route::get('/delete_bosch_number', [App\Http\Controllers\DTCLookupController::class, 'deleteBosch'])->name('delete-bosch-number');
 
 Route::get('/message_templates', [App\Http\Controllers\MessageTemplatesController::class, 'index'])->name('message-templates');
 Route::get('/add_message_template', [App\Http\Controllers\MessageTemplatesController::class, 'add'])->name('add-message-template');

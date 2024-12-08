@@ -239,3 +239,11 @@
     </div>
   </form>
 
+  <div class="btn-group">
+    
+    <button type="button" class="btn btn-success"><i class="fa fa-pencil"></i>
+    </button>
+    <button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i>
+    </button>
+  </div>
+
