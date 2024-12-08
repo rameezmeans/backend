@@ -18,7 +18,7 @@ class DTCLookupController extends Controller
 
     public function index(){
 
-        $dtclookupRecords = DTCLookup::paginate(10);
+        $dtclookupRecords = DTCLookup::orderBy('created_at', 'desc')->paginate(10);
         return view('dtc_lookup.index', ['dtclookupRecords' => $dtclookupRecords]);
     }
 
