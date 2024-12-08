@@ -471,12 +471,12 @@
 
           </ul>
         </li> 
-        <li class="m-t-30 ">
+        {{-- <li class="m-t-30 ">
           <a href="{{ route('numbers') }}" class="detailed">
             <span class="title">Bosch ECU Numbers</span>
           </a>
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
-        </li>
+        </li> --}}
 
         @endif
 
