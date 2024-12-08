@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\BoschImport;
+use App\Imports\DTCImport;
 use App\Models\BoschNumber;
 use App\Models\DTCLookup;
 use Illuminate\Http\Request;
@@ -27,6 +28,17 @@ class DTCLookupController extends Controller
         return redirect()->route('bosch-lookup')->with('success',  'Bosch Records added, successfully.');
     }
 
+    public function importDTCPost(Request $request){
+
+        Excel::import(new DTCImport,request()->file);
+        return redirect()->route('dtc-lookup')->with('success',  'DTC Records added, successfully.');
+    }
+
+    public function importDTC(){
+
+        return view('dtc_lookup.import_dtc');
+    }
+
     public function importBosch(){
 
         return view('dtc_lookup.import_bosch');
@@ -34,6 +46,11 @@ class DTCLookupController extends Controller
 
     public function deleteBosch(Request $request){
         $number = BoschNumber::findOrFail($request->id);
+        $number->delete();
+    }
+
+    public function deleteDTC(Request $request){
+        $number = DTCLookup::findOrFail($request->id);
         $number->delete();
     }
 
@@ -49,6 +66,28 @@ class DTCLookupController extends Controller
         return view('dtc_lookup.bosch', ['record' => $record, 'boschNumbers' => $boschNumbers]);
     }
 
+    public function searchDTC(Request $request){
+
+        $dtclookupRecords = DTCLookup::paginate(10);
+        $record = DTCLookup::where('code', $request->code)->first();
+        
+        if($record == NULL){
+            $record = 'Record Not Found!';
+        }
+
+        return view('dtc_lookup.index', ['record' => $record, 'dtclookupRecords' => $dtclookupRecords]);
+    }
+
+    public function addDTC(Request $request){
+
+        $add = new DTCLookup();
+        $add->code = $request->code;
+        $add->desc = $request->desc;
+        $add->save();
+
+        return redirect()->route('dtc-lookup')->with(['success' => 'DTC Record added, successfully.']);
+    }
+
     public function addBosch(Request $request){
 
         $add = new BoschNumber;
@@ -57,6 +96,16 @@ class DTCLookupController extends Controller
         $add->save();
 
         return redirect()->route('bosch-lookup')->with(['success' => 'ECU Record added, successfully.']);
+    }
+
+    public function updateDTC(Request $request){
+
+        $add = DTCLookup::findOrFail($request->id);
+        $add->code = $request->code;
+        $add->desc = $request->desc;
+        $add->save();
+
+        return redirect()->route('dtc-lookup')->with(['success' => 'DTC Record updated, successfully.']);
     }
 
     public function updateBosch(Request $request){
@@ -73,6 +122,16 @@ class DTCLookupController extends Controller
 
         $boschRecord = BoschNumber::findOrFail($id);
         return view('dtc_lookup.create_edit_bosch', ['boschRecord' => $boschRecord]);
+    }
+
+    public function editDTC($id){
+
+        $dtcRecord = DTCLookup::findOrFail($id);
+        return view('dtc_lookup.create_edit_dtc', ['dtcRecord' => $dtcRecord]);
+    }
+
+    public function createDTC(){
+        return view('dtc_lookup.create_edit_dtc');
     }
 
     public function createBosch(){

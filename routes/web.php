@@ -968,13 +968,21 @@ Route::get('/dtc_lookup', [App\Http\Controllers\DTCLookupController::class, 'ind
 
 Route::get('/bosch_lookup', [App\Http\Controllers\DTCLookupController::class, 'bosch'])->name('bosch-lookup');
 Route::get('/create_bosch_numbers', [App\Http\Controllers\DTCLookupController::class, 'createBosch'])->name('create-bosch-numbers');
+Route::get('/create_dtc_records', [App\Http\Controllers\DTCLookupController::class, 'createDTC'])->name('create-dtc-records');
 Route::post('/add_bosch_numbers', [App\Http\Controllers\DTCLookupController::class, 'addBosch'])->name('add-bosch');
+Route::post('/add_dtc', [App\Http\Controllers\DTCLookupController::class, 'addDTC'])->name('add-dtc');
 Route::get('/edit_bosch_numbers/{id}', [App\Http\Controllers\DTCLookupController::class, 'editBosch'])->name('edit-bosch-numbers');
+Route::get('/edit_dtc_records/{id}', [App\Http\Controllers\DTCLookupController::class, 'editDTC'])->name('edit-dtc-records');
 Route::post('/update_bosch_numbers', [App\Http\Controllers\DTCLookupController::class, 'updateBosch'])->name('update-bosch');
+Route::post('/update_dtc_records', [App\Http\Controllers\DTCLookupController::class, 'updateDTC'])->name('update-dtc');
 Route::post('/search_bosch_number', [App\Http\Controllers\DTCLookupController::class, 'searchBosch'])->name('search-bosch-number');
+Route::post('/search_dtc_record', [App\Http\Controllers\DTCLookupController::class, 'searchDTC'])->name('search-dtc-record');
 Route::post('/delete_bosch', [App\Http\Controllers\DTCLookupController::class, 'deleteBosch'])->name('delete-bosch');
+Route::post('/delete_dtc', [App\Http\Controllers\DTCLookupController::class, 'deleteDTC'])->name('delete-dtc');
 Route::get('/import_bosch_numbers', [App\Http\Controllers\DTCLookupController::class, 'importBosch'])->name('import-bosch-numbers');
+Route::get('/import_dtc_records', [App\Http\Controllers\DTCLookupController::class, 'importDTC'])->name('import-dtc-records');
 Route::post('/import_bosch', [App\Http\Controllers\DTCLookupController::class, 'importBoschPost'])->name('import-bosch-post');
+Route::post('/import_dtc', [App\Http\Controllers\DTCLookupController::class, 'importDTCPost'])->name('import-dtc-post');
 
 Route::get('/message_templates', [App\Http\Controllers\MessageTemplatesController::class, 'index'])->name('message-templates');
 Route::get('/add_message_template', [App\Http\Controllers\MessageTemplatesController::class, 'add'])->name('add-message-template');

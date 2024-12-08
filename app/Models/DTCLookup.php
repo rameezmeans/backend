@@ -10,4 +10,8 @@ class DTCLookup extends Model
     use HasFactory;
 
     public $table = 'dtc_lookup';
+
+    protected $fillable = [
+        'code', 'desc'
+    ];
 }
