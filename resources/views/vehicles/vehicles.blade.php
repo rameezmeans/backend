@@ -39,7 +39,6 @@
                             </button>
                             <button data-redirect="{{ route('import-vehicles') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Import Vehicles</span>
                             </button>
-                            
                             {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                         </div>
                         </div>

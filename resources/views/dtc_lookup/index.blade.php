@@ -45,6 +45,7 @@
                             </tbody>
                         </table>
                     </div>
+                    {{ $dtclookupRecords->links() }}
                 </div>
             </div>
           </div>

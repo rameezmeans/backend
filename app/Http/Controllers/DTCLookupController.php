@@ -16,13 +16,13 @@ class DTCLookupController extends Controller
 
     public function index(){
 
-        $dtclookupRecords = DTCLookup::all();
+        $dtclookupRecords = DTCLookup::paginate(10);
         return view('dtc_lookup.index', ['dtclookupRecords' => $dtclookupRecords]);
     }
 
     public function bosch(){
 
-        $boschNumbers = BoschNumber::all();
+        $boschNumbers = BoschNumber::paginate(10);
         return view('dtc_lookup.bosch', ['boschNumbers' => $boschNumbers]);
     }
     
