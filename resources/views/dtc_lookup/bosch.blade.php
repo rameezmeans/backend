@@ -85,7 +85,7 @@
                                             <div class="btn-group">
                                                 <button type="button" data-redirect="{{ route('edit-bosch-numbers', $bosch->id) }}" class="btn btn-success redirect-click"><i class="fa fa-pencil"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i>
+                                                <button type="button" class="btn btn-danger btn-delete" data-id="{{$bosch->id}}"><i class="fa fa-trash-o"></i>
                                                 </button>
                                               </div>
                                         </td>
@@ -131,12 +131,12 @@
                         success: function(response) {
                             Swal.fire({
                                 title: "Deleted!",
-                                text: "Engineer has been deleted.",
+                                text: "Bosch Number has been deleted.",
                                 type: "success",
                                 timer: 3000
                             });
 
-                            window.location.href = '/engineers';
+                            window.location.href = '/bosch_lookup';
                         }
                     });            
                 }

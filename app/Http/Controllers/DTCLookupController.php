@@ -20,7 +20,8 @@ class DTCLookupController extends Controller
     }
 
     public function deleteBosch(Request $request){
-
+        $number = BoschNumber::findOrFail($request->id);
+        $number->delete();
     }
 
     public function searchBosch(Request $request){

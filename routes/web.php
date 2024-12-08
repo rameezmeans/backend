@@ -972,7 +972,7 @@ Route::post('/add_bosch_numbers', [App\Http\Controllers\DTCLookupController::cla
 Route::get('/edit_bosch_numbers/{id}', [App\Http\Controllers\DTCLookupController::class, 'editBosch'])->name('edit-bosch-numbers');
 Route::post('/update_bosch_numbers', [App\Http\Controllers\DTCLookupController::class, 'updateBosch'])->name('update-bosch');
 Route::post('/search_bosch_number', [App\Http\Controllers\DTCLookupController::class, 'searchBosch'])->name('search-bosch-number');
-Route::get('/delete_bosch_number', [App\Http\Controllers\DTCLookupController::class, 'deleteBosch'])->name('delete-bosch-number');
+Route::get('/delete_bosch', [App\Http\Controllers\DTCLookupController::class, 'deleteBosch'])->name('delete-bosch');
 
 Route::get('/message_templates', [App\Http\Controllers\MessageTemplatesController::class, 'index'])->name('message-templates');
 Route::get('/add_message_template', [App\Http\Controllers\MessageTemplatesController::class, 'add'])->name('add-message-template');
