@@ -81,7 +81,7 @@ class DTCLookupController extends Controller
 
     public function bosch(){
 
-        $boschNumbers = BoschNumber::paginate(10);
+        $boschNumbers = BoschNumber::orderBy('created_at', 'desc')->paginate(10);
         return view('dtc_lookup.bosch', ['boschNumbers' => $boschNumbers]);
     }
     
