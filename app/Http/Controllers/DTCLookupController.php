@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\BoschImport;
 use App\Models\BoschNumber;
 use App\Models\DTCLookup;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DTCLookupController extends Controller
 {
@@ -17,6 +19,17 @@ class DTCLookupController extends Controller
 
         $dtclookupRecords = DTCLookup::paginate(10);
         return view('dtc_lookup.index', ['dtclookupRecords' => $dtclookupRecords]);
+    }
+
+    public function importBoschPost(Request $request){
+
+        Excel::import(new BoschImport,request()->file);
+        return redirect()->route('bosch-lookup')->with('success',  'Bosch Records added, successfully.');
+    }
+
+    public function importBosch(){
+
+        return view('dtc_lookup.import_bosch');
     }
 
     public function deleteBosch(Request $request){

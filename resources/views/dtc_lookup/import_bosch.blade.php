@@ -11,12 +11,12 @@
             <div class="card-header ">
                 <div class="card-title">
                   <h5>
-                    Import Vehicles
+                    Import Bosch
                   </h5>
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
-                    <button data-redirect="{{route('vehicles')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Engineers</span>
+                    <button data-redirect="{{route('bosch-lookup')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Bosch Lookup</span>
                     </button>
                     {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                 </div>
@@ -24,7 +24,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
-              <form class="" role="form" method="POST" action="{{route('import-vehicles-post')}}" enctype="multipart/form-data">
+              <form class="" role="form" method="POST" action="{{route('import-bosch-post')}}" enctype="multipart/form-data">
                 @csrf
                 
                 <div class="form-group form-group-default required ">
