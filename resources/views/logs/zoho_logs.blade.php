@@ -10,7 +10,7 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                    <h3>Alientch Logs</h3>
+                    <h3>Zoho Logs</h3>
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
@@ -28,7 +28,7 @@
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Type</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Task</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credit ID</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
                                 </tr>
                             </thead>
@@ -42,8 +42,8 @@
                                             <p>{{$log->message}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            @if($log->file_id != 0)
-                                            <p><a href="{{route('file', $log->file_id)}}">{{'Task'.$log->file_id}}</a></p>
+                                            @if($log->credit_id != 0)
+                                            <p><a href="{{route('payment-details', $log->credit_id)}}">{{$log->credit_id}}</a></p>
                                             @endif
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
