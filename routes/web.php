@@ -94,6 +94,16 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 Route::get('/tasks', function () {
 
+    $credits = Credit::all();
+
+    foreach($credits as $c){
+        $user = User::findOrFail($c->user_id);
+        $c->country = code_to_country($user->country);
+        $c->save();
+    }
+
+    dd('here');
+
     $paypalRecords = PaypalRecord::all();
 
     foreach($paypalRecords as $record){
