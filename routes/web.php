@@ -100,10 +100,10 @@ Route::get('/tasks', function () {
 
         $user = User::findOrFail($c->user_id);
 
-        if(!$c->country){
+        // if(!$c->country){
             $c->country = code_to_country($user->country);
             $c->save();
-        }
+        // }
         
     }
 
