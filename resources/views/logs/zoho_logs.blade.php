@@ -34,6 +34,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($zohoLogs as $log)
+                                @if($log->credit_id != 0)
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$log->type}}</p>
@@ -50,6 +51,7 @@
                                             <p>{{$log->created_at}}</p>
                                         </td>
                                     </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
