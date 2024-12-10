@@ -42,8 +42,8 @@
                                             <p>{{$log->message}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            @if($log->file_id != 0)
-                                            <p><a href="{{route('file', $log->file_id)}}">{{'Task'.$log->file_id}}</a></p>
+                                            @if($log->credit_id != 0)
+                                            <p><a target="_blank" href="{{route('payment-details', $log->credit_id)}}">{{$log->credit_id}}</a></p>
                                             @endif
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
