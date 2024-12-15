@@ -59,6 +59,17 @@ class LogsController extends Controller
         ]);
     }
 
+    public function alientechDetails($id){   
+        $record = ModelLog::findOrFail($id);
+        $logsUrl = 'alientech-logs';
+
+        return view('logs.details', [
+            'record' => $record,
+            'logsUrl' => $logsUrl,
+            
+        ]);
+    }
+
     public function elorusLogs(){   
 
         $elorusLogs = ModelLog::orderBy('created_at', 'desc')
