@@ -38,7 +38,7 @@
                                 @if($log->credit_id != 0)
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p><span class="@if($log->type == 'success') label label-success @elseif($log->type == 'error') label label-danger @endif">{{$log->type}}</span></p>
+                                            <p><span class="@if($log->request_type == 'success') label label-success @elseif($log->request_type == 'error') label label-danger @endif">{{$log->type}}</span></p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$log->message}}</p>
