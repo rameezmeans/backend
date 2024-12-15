@@ -954,6 +954,7 @@ Route::get('/all_logs', [App\Http\Controllers\LogsController::class, 'all'])->na
 Route::get('/alientech_logs', [App\Http\Controllers\LogsController::class, 'alientechLogs'])->name('alientech-logs');
 Route::get('/magic_logs', [App\Http\Controllers\LogsController::class, 'magicLogs'])->name('magic-logs');
 Route::get('/elorus_logs', [App\Http\Controllers\LogsController::class, 'elorusLogs'])->name('elorus-logs');
+Route::get('/elorus_details', [App\Http\Controllers\LogsController::class, 'elorusDetails'])->name('elorus-details');
 Route::get('/zoho_logs', [App\Http\Controllers\LogsController::class, 'zohoLogs'])->name('zoho-logs');
 Route::get('/sms_logs', [App\Http\Controllers\LogsController::class, 'smsLogs'])->name('sms-logs');
 Route::get('/email_logs', [App\Http\Controllers\LogsController::class, 'emailLogs'])->name('email-logs');

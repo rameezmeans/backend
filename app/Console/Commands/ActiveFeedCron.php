@@ -219,10 +219,7 @@ class ActiveFeedCron extends Command
         ->whereDate('created_at', Carbon::today())
         ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
         ->get();
-
         
-
-
         foreach($creditsWithoutElorusID as $c){
             if($c->elorus_able()){
                 

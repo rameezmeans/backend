@@ -30,6 +30,7 @@
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Type</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Task</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Details</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,7 +38,7 @@
                                 @if($log->credit_id != 0)
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$log->type}}</p>
+                                            <p><span class="@if($log->type == 'success') label label-success @elseif($log->type == 'error') label label-danger @endif">{{$log->type}}</span></p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$log->message}}</p>
@@ -49,6 +50,9 @@
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$log->created_at}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p><a class="btn btn-warning text-black" target="_blank" href="{{route('elorus-details', $log->id)}}">Details</a></p>
                                         </td>
                                     </tr>
                                     @endif
