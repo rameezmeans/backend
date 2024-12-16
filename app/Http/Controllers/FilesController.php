@@ -1973,6 +1973,7 @@ class FilesController extends Controller
 
         } catch (\Exception $e) {
             \Log::info($e->getMessage());
+            $this->makeLogEntry('error', $e->getMessage(), 'sms', $fileID);
         }
     }
 
