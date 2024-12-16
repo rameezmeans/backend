@@ -98,7 +98,7 @@ class AlientechController extends Controller
                     $flag = file_put_contents(public_path('/../../EcuTechV2/public/'.$pathAndNameArrayEncoded['path']), $contents);
                 }
                 else{
-                    $flag = file_put_contents(public_path('/../../e-tuningfiles/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                    $flag = file_put_contents(public_path('/../../portal.e-tuningfiles.com/public/'.$pathAndNameArrayEncoded['path']), $contents);
                 }
             }
             else{
