@@ -3654,7 +3654,7 @@ class FilesController extends Controller
         }
         else{
 
-            $this->makeAlientechLogEntry( $file->id, 'success', 'file uploaded successfully.', $alientechObj, $response->getBody());
+            $this->makeAlientechLogEntry( $file->id, 'success', 'file uploaded successfully.', $alientechObj, $responseBody['result']['name']);
             $var = $responseBody['result']['name'];
 
         $fileName = substr($var, strrpos($var, '/') + 1);
