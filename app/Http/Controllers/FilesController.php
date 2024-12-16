@@ -78,6 +78,32 @@ class FilesController extends Controller
         $this->manager = $reminderManager->getAllManager();
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
+
+    public function makeAlientechLogEntry( $fileID, $type, $message, $call, $response, $tempFileID = 0 ){
+
+        $log = new Log();
+        $log->type = $type;
+        $log->request_type = 'alientech';
+        $log->message = $message;
+        $log->file_id = $fileID;
+        $log->temporary_file_id = $tempFileID;
+
+        if(is_array($call) || is_object($call)){
+            $log->call = json_encode($call);
+        }
+        else if(is_string($call)){
+            $log->call = $call;
+        }
+        if(is_array($response) || is_object($response)){
+            $log->response = json_encode($response);
+        }
+        else if(is_string($response)){
+            $log->response = $response;
+        }
+
+        $log->save();
+
+    }
 	
 	public function translateMessage(Request $request){
         $record = EngineerFileNote::findOrFail($request->id);
@@ -2574,19 +2600,19 @@ class FilesController extends Controller
 
     }
 
-    public function makeLogEntry($fileID, $type, $message){
+    // public function makeLogEntry($fileID, $type, $message){
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
+    //     if(!Auth::user()->is_admin()){
+    //         return abort(404);
+    //     }
 
-        $log = new Log();
-        $log->file_id = $fileID;
-        $log->type = $type;
-        $log->message = $message;
-        $log->save();
+    //     $log = new Log();
+    //     $log->file_id = $fileID;
+    //     $log->type = $type;
+    //     $log->message = $message;
+    //     $log->save();
 
-    }
+    // }
 
     public function callbackKess3Complete(Request $request){
 
@@ -3624,11 +3650,12 @@ class FilesController extends Controller
         $responseBody = json_decode($response->getBody(), true);
 
         if(!isset($responseBody['result']['name'])){
-            $this->makeLogEntry($file->id, 'error', 'line 1998; file is not uploaded successfully.');
+            $this->makeAlientechLogEntry( $file->id, 'error', 'line 3653; file is not uploaded successfully.', $alientechObj, $response->getBody());
         }
         else{
 
-        $var = $responseBody['result']['name'];
+            $this->makeAlientechLogEntry( $file->id, 'success', 'file uploaded successfully.', $alientechObj, $response->getBody());
+            $var = $responseBody['result']['name'];
 
         $fileName = substr($var, strrpos($var, '/') + 1);
         $fileName = str_replace('#', '', $fileName);

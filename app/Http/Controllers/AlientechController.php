@@ -36,7 +36,8 @@ class AlientechController extends Controller
         $responseBody = json_decode($response->getBody(), true);
 
         if(!isset($responseBody['result']['name'])){
-            $this->makeLogEntry($file->id, 'error', 'line 41; file is not uploaded successfully.');
+            $this->makeAlientechLogEntry( $file->id, 'error', 'line 41; file is not uploaded successfully.', $alientechObj, $response->getBody());
+            
             $file->disable_customers_download = 1;
             $file->no_longer_auto = 1;
             $file->status = 'submitted';
@@ -44,6 +45,8 @@ class AlientechController extends Controller
             return $modifiedfileName;
         }
         else{
+
+        $this->makeAlientechLogEntry( $file->id, 'success', 'file uploaded successfully.', $alientechObj, $response->getBody());
 
         $var = $responseBody['result']['name'];
 
@@ -174,7 +177,7 @@ class AlientechController extends Controller
         $result = $responseBody['result'];
 
         if($result == NULL){
-            $this->makeLogEntry( 0, 'error', 'File can not be downloaded. Line 47.', $file->id );
+            $this->makeAlientechLogEntry( $file->id, 'error', 'line 3653; file is not uploaded successfully.', $getsyncOpURL, $response->getBody());
             $file->disable_customers_download = 1;
             $file->no_longer_auto = 1;
             $file->status = 'submitted';
@@ -194,6 +197,8 @@ class AlientechController extends Controller
         
                 $response = Http::withHeaders($headers)->get($url);
                 $responseBody = json_decode($response->getBody(), true);
+
+                $this->makeAlientechLogEntry( $file->id, 'success', 'file uploaded successfully.', $getsyncOpURL, $response->getBody());
 
                 $base64_string = $responseBody['data'];
                 $contents   = base64_decode($base64_string);
@@ -439,9 +444,13 @@ class AlientechController extends Controller
         dd($response);
 
         if($response == NULL){
-            $this->makeLogEntry($tempFileID, 'error', 'Too Much Slots are opened');
+            
+            $this->makeAlientechLogEntry( 0, 'error', 'too much slots opened.', $post, $response->getBody(), $tempFileID);
         }
         else{
+
+            $this->makeAlientechLogEntry( 0, 'success', 'guid is saved.', $post, $response->getBody(), $tempFileID);
+
             $alientTechFile = new AlientechFile();
             $alientTechFile->guid = $response->guid;
             $alientTechFile->slot_id = $response->slotGUID;
@@ -551,10 +560,13 @@ class AlientechController extends Controller
             $syncResponseBody = json_decode($syncResponse->getBody(), true);
 
             if($syncResponseBody == NULL){
-                $this->makeLogEntry($file->id, 'error', 'File Upload error.');
+                
+                $this->makeAlientechLogEntry( $file->id, 'error', 'File Upload error.', $postInput, $response->getBody());
             }
             else{
             
+                $this->makeAlientechLogEntry( $file->id, 'success', 'File Upload success.', $postInput, $response->getBody());
+
                 $alientTechFile = new AlientechFile();
                 $alientTechFile->guid = $syncResponseBody['guid'];
                 $alientTechFile->slot_id = $slotID;
@@ -572,7 +584,9 @@ class AlientechController extends Controller
 
         }
         else{
-            $this->makeLogEntry(0, 'error', 'File Upload error. Line: 408.', $file->id);
+
+            $this->makeAlientechLogEntry( $file->id, 'error', 'File Upload error.', $post, $response->getBody());
+
             // $file->disable_customers_download = 1;
             $file->no_longer_auto = 1;
             
@@ -589,13 +603,28 @@ class AlientechController extends Controller
         $this->closeOneSlot($slotID);
     }
 
-    public function makeLogEntry( $temporaryFileID, $type, $message, $fileID = 0 ){
+    public function makeAlientechLogEntry( $fileID, $type, $message, $call, $response, $tempFileID = 0 ){
 
         $log = new Log();
-        $log->temporary_file_id = $temporaryFileID;
-        $log->file_id = $fileID;
         $log->type = $type;
+        $log->request_type = 'alientech';
         $log->message = $message;
+        $log->file_id = $fileID;
+        $log->temporary_file_id = $tempFileID;
+
+        if(is_array($call) || is_object($call)){
+            $log->call = json_encode($call);
+        }
+        else if(is_string($call)){
+            $log->call = $call;
+        }
+        if(is_array($response) || is_object($response)){
+            $log->response = json_encode($response);
+        }
+        else if(is_string($response)){
+            $log->response = $response;
+        }
+
         $log->save();
 
     }
