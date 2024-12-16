@@ -561,11 +561,11 @@ class AlientechController extends Controller
 
             if($syncResponseBody == NULL){
                 
-                $this->makeAlientechLogEntry( $file->id, 'error', 'File Upload error.', $postInput, $syncResponse->getBody());
+                $this->makeAlientechLogEntry( $file->id, 'error', 'File Upload error.', $postInput, $syncResponse);
             }
             else{
             
-                $this->makeAlientechLogEntry( $file->id, 'success', 'File Upload success.', $postInput, $syncResponse->getBody());
+                $this->makeAlientechLogEntry( $file->id, 'success', 'File Upload success.', $postInput, $syncResponse);
 
                 $alientTechFile = new AlientechFile();
                 $alientTechFile->guid = $syncResponseBody['guid'];
