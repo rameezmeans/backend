@@ -90,6 +90,7 @@ class FilesAPIController extends Controller
             $credit->price_payed = $servieCredits*$price;
             $credit->invoice_id = 'INV-'.$customer->stripe_payment_account()->prefix.mt_rand(1000,9999);
             $credit->user_id = $customer->id;
+            $credit->country = code_to_country( $customer->country );
             $credit->save();
 
             if($customer->test == 1){
@@ -350,6 +351,7 @@ class FilesAPIController extends Controller
         $credit = new Credit();
         $credit->credits = $request->credits;
         $credit->user_id = $subdealer->id;
+        $credit->country = code_to_country( $subdealer->country );
         $credit->stripe_id = $request->stripe_id;
         $credit->price_payed = $request->price_payed;
         $credit->invoice_id = 'Remote-'.mt_rand(1000,9999);
@@ -365,6 +367,7 @@ class FilesAPIController extends Controller
         $credit = new Credit();
         $credit->credits = -1*($request->credits);
         $credit->user_id = $subdealer->id;
+        $credit->country = code_to_country( $subdealer->country );
         $credit->stripe_id = $request->stripe_id;
         $credit->price_payed = 0;
         $credit->invoice_id = 'Remote-'.mt_rand(1000,9999);

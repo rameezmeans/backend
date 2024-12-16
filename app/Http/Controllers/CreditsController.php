@@ -280,6 +280,7 @@ class CreditsController extends Controller
         $credit = new Credit();
         $credit->credits = $difference;
         $credit->user_id = $customer->id;
+        $credit->country = code_to_country( $customer->country );
         $credit->front_end_id = $customer->front_end_id;
         $credit->stripe_id = NULL;
 

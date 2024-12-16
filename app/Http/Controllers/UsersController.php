@@ -642,6 +642,7 @@ class UsersController extends Controller
         $credit->credits = $credits;
         $credit->user_id = $customer->id;
         $credit->stripe_id = NULL;
+        $credit->country = code_to_country( $customer->country );
         $credit->price_payed = 0;
         $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
 

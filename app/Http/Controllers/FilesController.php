@@ -813,6 +813,7 @@ class FilesController extends Controller
             $credit->credits = $differece;
             $credit->user_id = $user->id;
             $credit->front_end_id = $user->front_end_id;
+            $credit->country = code_to_country( $user->country );
             $credit->file_id = $file->id;
             $credit->stripe_id = NULL;
 
@@ -2281,6 +2282,7 @@ class FilesController extends Controller
             $credit->credits = $file->credits;
             $credit->user_id = $customer->id;
             $credit->file_id = $file->id;
+            $credit->country = code_to_country( $customer->country );
             $credit->front_end_id = $customer->front_end_id;
             $credit->stripe_id = NULL;
 
