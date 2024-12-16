@@ -387,9 +387,11 @@ class FilesController extends Controller
 
             try{
                 \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
             }
             catch(TransportException $e){
                 \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$customer->email.$e->getMessage(), 'email', $file->id);
             }
 
         }
@@ -397,10 +399,12 @@ class FilesController extends Controller
 
             try{
                 \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
 
             }
             catch(TransportException $e){
                 \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
             }
         }
         
@@ -663,9 +667,11 @@ class FilesController extends Controller
 
                 try{
                     \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
                 }
                 catch(TransportException $e){
                     \Log::info($e->getMessage());
+                    $this->makeLogEntry('error', 'email not sent to:'.$customer->email.$e->getMessage(), 'email', $file->id);
                 }
 
             }
@@ -673,10 +679,12 @@ class FilesController extends Controller
 
                 try{
                     \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
 
                 }
                 catch(TransportException $e){
                     \Log::info($e->getMessage());
+                    $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
                 }
             }
             
@@ -2052,10 +2060,13 @@ class FilesController extends Controller
             try{
 
                 \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$engineer->email, 'email', $file->id);
             
             }
             catch(TransportException $e){
                 \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$engineer->email.$e->getMessage(), 'email', $file->id);
+                
             }
         }
 
@@ -2372,10 +2383,12 @@ class FilesController extends Controller
             try{
                 
                 \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
 
             }
             catch(TransportException $e){
                 \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$customer->email.$e->getMessage(), 'email', $file->id);
             }
         }
 
@@ -2383,10 +2396,12 @@ class FilesController extends Controller
 
             try{
                 \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
 
             }
             catch(TransportException $e){
                 \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
             }
         }
 
@@ -2569,19 +2584,23 @@ class FilesController extends Controller
 
             try{
                 \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
             }
             catch(TransportException $e){
                 \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$customer->email.$e->getMessage(), 'email', $file->id);
             }
         }
         if($this->manager['msg_eng_admin_email'.$file->front_end_id]){
 
             try{
                 \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
 
             }
             catch(TransportException $e){
                 \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
             }
         }
         
@@ -3059,6 +3078,8 @@ class FilesController extends Controller
 
                 try{
                     \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
+                    
                 }
                 catch(TransportException $e){
                     \Log::info($e->getMessage());
@@ -3069,10 +3090,12 @@ class FilesController extends Controller
 
                 try{
                     \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
 
                 }
                 catch(TransportException $e){
                     \Log::info($e->getMessage());
+                    $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
                 }
             }
             
@@ -3846,6 +3869,7 @@ class FilesController extends Controller
 
                 try{
                     \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
                 }
                 catch(TransportException $e){
                     \Log::info($e->getMessage());
@@ -3855,10 +3879,12 @@ class FilesController extends Controller
                 
                 try{
                     \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
 
                 }
                 catch(TransportException $e){
                     \Log::info($e->getMessage());
+                    $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
                 }
             }
             
