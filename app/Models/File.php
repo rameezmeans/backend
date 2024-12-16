@@ -184,7 +184,7 @@ class File extends Model
                     $path = public_path('/../../portal/public'.$this->file_path.$name);
                 }
                 else if($this->front_end_id == 3){
-                    $path = public_path('/../../e-tuningfiles/public'.$this->file_path.$name);
+                    $path = public_path('/../../portal.e-tuningfiles/public'.$this->file_path.$name);
                 }
                 else{
                     $path = public_path('/../../tuningX/public'.$this->file_path.$name);
@@ -229,7 +229,7 @@ class File extends Model
                     $path = public_path('/../../portal/public'.$this->file_path.$name);
                 }
                 else if($this->front_end_id == 3){
-                    $path = public_path('/../../e-tuningfiles/public'.$this->file_path.$name);
+                    $path = public_path('/../../portal.e-tuningfiles/public'.$this->file_path.$name);
                 }
                 else{
                     $path = public_path('/../../tuningX/public'.$this->file_path.$name);
