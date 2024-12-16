@@ -197,8 +197,8 @@
             </li>
             
             <li class="">
-              <a href="{{ route('groups') }}">Customer Groups</a>
-              <span class="icon-thumbnail">Gr</span>
+              <a href="{{ route('groups') }}">VAT Groups</a>
+              <span class="icon-thumbnail">Vg</span>
             </li>
             
           </ul>
