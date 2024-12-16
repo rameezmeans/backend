@@ -405,7 +405,7 @@ class FilesController extends Controller
         }
         
         if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
-            $this->sendMessage($admin->phone, $message1, $file->front_end_id);
+            $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
         }
 
         if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
@@ -413,7 +413,7 @@ class FilesController extends Controller
         }
 
         if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
-            $this->sendMessage($customer->phone, $message2, $file->front_end_id);
+            $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
         }
 
         if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
@@ -681,7 +681,7 @@ class FilesController extends Controller
             }
             
             if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
-                $this->sendMessage($admin->phone, $message1, $file->front_end_id);
+                $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
             }
 
             if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
@@ -689,7 +689,7 @@ class FilesController extends Controller
             }
 
             if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
-                $this->sendMessage($customer->phone, $message2, $file->front_end_id);
+                $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
             }
 
             if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
@@ -1927,7 +1927,7 @@ class FilesController extends Controller
         }
     }
 
-    public function sendMessage($receiver, $message, $frontendID)
+    public function sendMessage($receiver, $message, $frontendID, $fileID)
     {
         try {
             
@@ -1969,10 +1969,23 @@ class FilesController extends Controller
             }
 
             \Log::info('message sent to:'.$receiver);
+            $this->makeLogEntry('success', 'message sent to:'.$receiver, 'sms', $fileID);
 
         } catch (\Exception $e) {
             \Log::info($e->getMessage());
         }
+    }
+
+    public function makeLogEntry( $type, $message, $requestType, $fileID = 0 ){
+
+        $log = new Log();
+        // $log->temporary_file_id = $temporaryFileID;
+        $log->file_id = $fileID;
+        $log->type = $type;
+        $log->request_type = $requestType;
+        $log->message = $message;
+        $log->save();
+
     }
 
     public function assignEngineer(Request $request){
@@ -2047,7 +2060,7 @@ class FilesController extends Controller
 
         if($this->manager['eng_assign_eng_sms'.$file->front_end_id]){
         
-            $this->sendMessage($engineer->phone, $message, $file->front_end_id);
+            $this->sendMessage($engineer->phone, $message, $file->front_end_id, $file->id);
         }
 
         if($this->manager['eng_assign_eng_whatsapp'.$file->front_end_id]){
@@ -2377,7 +2390,7 @@ class FilesController extends Controller
         }
 
         if($this->manager['status_change_admin_sms'.$file->front_end_id]){
-            $this->sendMessage($admin->phone, $message1, $file->front_end_id);
+            $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
         }
 
         if($this->manager['status_change_admin_whatsapp'.$file->front_end_id]){
@@ -2386,7 +2399,7 @@ class FilesController extends Controller
         }
 
         if($this->manager['status_change_cus_sms'.$file->front_end_id]){
-            $this->sendMessage($customer->phone, $message2, $file->front_end_id);
+            $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
         }
 
         if($this->manager['status_change_cus_whatsapp'.$file->front_end_id]){
@@ -2573,7 +2586,7 @@ class FilesController extends Controller
         
         if($this->manager['msg_eng_admin_sms'.$file->front_end_id]){
             
-            $this->sendMessage($admin->phone, $message1, $file->front_end_id);
+            $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
         }
 
         if($this->manager['msg_eng_admin_whatsapp'.$file->front_end_id]){
@@ -2582,7 +2595,7 @@ class FilesController extends Controller
         }
 
         if($this->manager['msg_eng_cus_sms'.$file->front_end_id]){
-            $this->sendMessage($customer->phone, $message2, $file->front_end_id);
+            $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
         }
 
         if($this->manager['msg_eng_cus_whatsapp'.$file->front_end_id]){
@@ -3063,7 +3076,7 @@ class FilesController extends Controller
             }
             
             if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
-                $this->sendMessage($admin->phone, $message1, $file->front_end_id);
+                $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
             }
 
             if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
@@ -3071,7 +3084,7 @@ class FilesController extends Controller
             }
 
             if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
-                $this->sendMessage($customer->phone, $message2, $file->front_end_id);
+                $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
             }
 
             if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
@@ -3849,7 +3862,7 @@ class FilesController extends Controller
             }
             
             if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
-                $this->sendMessage($admin->phone, $message1, $file->front_end_id);
+                $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
             }
 
             if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
@@ -3857,7 +3870,7 @@ class FilesController extends Controller
             }
 
             if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
-                $this->sendMessage($customer->phone, $message2, $file->front_end_id);
+                $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
             }
 
             if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
