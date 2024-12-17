@@ -2019,9 +2019,11 @@ margin-bottom: 10px !important;
               <div class="row" style="">
 
                 @foreach($file->logs as $log)
-                  <div class="col-12 col-xl-12 @if($log->type == 'error') bg-danger-light @else bg-success-light @endif text-white m-b-10 m-t-10 m-l-10" style="height: 50px;">
-                    <p class="no-margin p-t-10 p-b-10">{{$log->message}}</p>
-                  </div>
+                  @if($log->request_type == 'alientech' && $log->request_type == 'magic')
+                    <div class="col-12 col-xl-12 @if($log->type == 'error') bg-danger-light @else bg-success-light @endif text-white m-b-10 m-t-10 m-l-10" style="height: 50px;">
+                      <p class="no-margin p-t-10 p-b-10">{{$log->message}}</p>
+                    </div>
+                  @endif
                 @endforeach
 
               </div>
@@ -4317,9 +4319,11 @@ margin-bottom: 10px !important;
               <div class="row" style="">
 
                 @foreach($file->logs as $log)
-                  <div class="col-12 col-xl-12 @if($log->type == 'error') bg-danger-light @else bg-success-light @endif text-white m-b-10 m-t-10 m-l-10" style="height: 50px;">
-                    <p class="no-margin p-t-10 p-b-10">{{$log->message}}</p>
-                  </div>
+                  @if($log->request_type == 'alientech' && $log->request_type == 'magic')
+                    <div class="col-12 col-xl-12 @if($log->type == 'error') bg-danger-light @else bg-success-light @endif text-white m-b-10 m-t-10 m-l-10" style="height: 50px;">
+                      <p class="no-margin p-t-10 p-b-10">{{$log->message}}</p>
+                    </div>
+                  @endif
                 @endforeach
 
               </div>
