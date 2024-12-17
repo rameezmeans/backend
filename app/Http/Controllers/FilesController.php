@@ -1656,7 +1656,7 @@ class FilesController extends Controller
             }
             else{
 
-                $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$$magicEncryptedFile->name;
+                $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$magicEncryptedFile->name;
             }
 
         }
