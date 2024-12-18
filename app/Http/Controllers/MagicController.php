@@ -8,14 +8,29 @@ use App\Models\User;
 
 class MagicController extends Controller
 {
-
-    public function makeLogEntry( $temporaryFileID, $type, $message, $fileID = 0 ){
+    
+    public function makeMagicLogEntry( $tempFileID, $type, $message, $call, $response, $fileID = 0 ){
 
         $log = new Log();
-        $log->temporary_file_id = $temporaryFileID;
-        $log->file_id = $fileID;
         $log->type = $type;
+        $log->request_type = 'magic';
         $log->message = $message;
+        $log->file_id = $fileID;
+        $log->temporary_file_id = $tempFileID;
+
+        if(is_array($call) || is_object($call)){
+            $log->call = json_encode($call);
+        }
+        else if(is_string($call)){
+            $log->call = $call;
+        }
+        if(is_array($response) || is_object($response)){
+            $log->response = json_encode($response);
+        }
+        else if(is_string($response)){
+            $log->response = $response;
+        }
+
         $log->save();
 
     }
@@ -60,17 +75,23 @@ class MagicController extends Controller
         $magicFile->save();
 
         if($response == NULL){
-            $this->makeLogEntry($file->id, 'error', 'Magic API Failed.');
+
+            $this->makeMagicLogEntry(0, 'error', 'Magic API Failed.', $post, $response, $file->id);
             $magicFile->desc = "Magic API Failed.";
             $engineerFile->uploaded_successfully = 0;
+
         }
         else if($response->status == 'ERROR'){
-            $this->makeLogEntry($file->id, 'error', 'Magic API Failed. Bad request');
+
+            $this->makeMagicLogEntry(0, 'error', 'Magic API Failed. Bad request', $post, $response, $file->id);
             $magicFile->desc = "Magic API Failed. Bad request";
             $engineerFile->uploaded_successfully = 0;
+
         }
         else{
 
+            $this->makeMagicLogEntry(0, 'success', 'Magic API worked.', $post, $response, $file->id);
+            
             $base64_string = $response->output_file_base64;
             $contents   = base64_decode($base64_string);
             $flag = file_put_contents($path.'_magic_encrypted.mmf' , $contents );
