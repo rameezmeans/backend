@@ -54,9 +54,7 @@
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p><a class="btn btn-warning text-black" target="_blank" href="{{route('zoho-details', $log->id)}}">Details</a></p>
                                         </td>
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p><a class="btn btn-warning text-black" target="_blank" href="{{route('zoho-details', $log->id)}}">Details</a></p>
-                                        </td>
+                                        
                                     </tr>
                                     @endif
                                 @endforeach
