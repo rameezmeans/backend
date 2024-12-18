@@ -113,8 +113,10 @@ Route::get('/tasks', function () {
 
     foreach($paypalRecords as $record){
         $credit = Credit::where('stripe_id', $record->paypal_id)->first();
-        $record->credit_id = $credit->id;
-        $record->save();
+        if($credit){
+            $record->credit_id = $credit->id;
+            $record->save();
+        }
     }
 
     dd('here');
