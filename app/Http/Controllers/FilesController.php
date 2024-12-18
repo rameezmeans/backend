@@ -173,7 +173,20 @@ class FilesController extends Controller
 
         $file = File::findOrFail($request->file_id);
 
-        $newFileName = str_replace('/', '', $fileName);
+        $middleName = $file->id;
+        $middleName .= date("dmy");
+        
+        foreach($file->softwares as $s){
+            if($s->service_id != 1){
+                if($s->reply_id == $engineerFile->id){
+                    $middleName .= $s->service_id.$s->software_id;
+                }
+            }
+        }
+        
+        $newFileName = $file->brand.'_'.$file->model.'_'.$middleName.'acm_v'.$file->files->count();
+        
+        $newFileName = str_replace('/', '', $newFileName);
         $newFileName = str_replace('\\', '', $newFileName);
         $newFileName = str_replace('#', '', $newFileName);
         $newFileName = str_replace(' ', '_', $newFileName);
@@ -189,8 +202,6 @@ class FilesController extends Controller
                 $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
             }
             else{
-
-                
                 $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
             }
 
