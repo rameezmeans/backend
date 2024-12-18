@@ -52,7 +52,7 @@ class LogsController extends Controller
     public function paypalLogs(){   
 
         $paypalLogs = ModelLog::orderBy('created_at', 'desc')
-        ->where('request_type', 'stripe')->get();
+        ->where('request_type', 'paypal')->get();
 
         return view('logs.paypal_logs', [
             'paypalLogs' => $paypalLogs,
@@ -64,7 +64,7 @@ class LogsController extends Controller
     public function paypalDetails($id){  
 
         $record = ModelLog::findOrFail($id);
-        $logsUrl = 'elorus-logs';
+        $logsUrl = 'paypal-logs';
 
         return view('logs.details', [
             'record' => $record,
@@ -76,7 +76,7 @@ class LogsController extends Controller
     public function stripeDetails($id){  
         
         $record = ModelLog::findOrFail($id);
-        $logsUrl = 'elorus-logs';
+        $logsUrl = 'stripe-logs';
 
         return view('logs.details', [
             'record' => $record,
