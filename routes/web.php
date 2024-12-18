@@ -94,20 +94,20 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 Route::get('/tasks', function () {
 
-    $credits = Credit::all();
+    // $credits = Credit::all();
 
-    foreach($credits as $c){
+    // foreach($credits as $c){
 
-        $user = User::findOrFail($c->user_id);
+    //     $user = User::findOrFail($c->user_id);
 
-        if(!$c->country){
-            $c->country = code_to_country($user->country);
-            $c->save();
-        }
+    //     if(!$c->country){
+    //         $c->country = code_to_country($user->country);
+    //         $c->save();
+    //     }
         
-    }
+    // }
 
-    dd('here');
+    // dd('here');
 
     $paypalRecords = PaypalRecord::all();
 
@@ -117,14 +117,16 @@ Route::get('/tasks', function () {
         $record->save();
     }
 
-	
-	 $stripeRecords = StripeRecord::all();
+    dd('here');
 
-    foreach($stripeRecords as $record){
-        $credit = Credit::where('stripe_id', $record->stripe_id)->first();
-        $record->credit_id = $credit->id;
-        $record->save();
-    }
+	
+	//  $stripeRecords = StripeRecord::all();
+
+    // foreach($stripeRecords as $record){
+    //     $credit = Credit::where('stripe_id', $record->stripe_id)->first();
+    //     $record->credit_id = $credit->id;
+    //     $record->save();
+    // }
 
     // $stripeRecords = Credit::where('id', '>', 8791)->where('type', 'stripe')->get();
 
