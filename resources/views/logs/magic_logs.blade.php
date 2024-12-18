@@ -36,7 +36,7 @@
                                 @foreach ($magicLogs as $log)
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$log->type}}</p>
+                                            <p><span class="@if($log->type == 'successs') label label-success @elseif($log->type == 'error') label label-danger @endif">{{$log->type}}</span></p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$log->message}}</p>
