@@ -394,7 +394,7 @@
               <span class="icon-thumbnail">NF</span>
             </li>
             <li class="">
-              <a href="{{ route('paypal-logs') }}">paypal-logs Logs</a>
+              <a href="{{ route('paypal-logs') }}">Paypal Logs</a>
               <span class="icon-thumbnail">NF</span>
             </li>
             <li class="">
