@@ -184,7 +184,7 @@ class FilesController extends Controller
             }
         }
         
-        $newFileName = $file->brand.'_'.$file->model.'_'.$middleName.'acm_v'.$file->files->count();
+        $newFileName = $file->brand.'_'.$file->model.'_'.$middleName.'_acm_v'.$file->files->count();
         
         $newFileName = str_replace('/', '', $newFileName);
         $newFileName = str_replace('\\', '', $newFileName);
