@@ -59,6 +59,17 @@ class LogsController extends Controller
         ]);
     }
 
+    public function magicDetails($id){   
+        $record = ModelLog::findOrFail($id);
+        $logsUrl = 'magic-logs';
+
+        return view('logs.details', [
+            'record' => $record,
+            'logsUrl' => $logsUrl,
+            
+        ]);
+    }
+
     public function alientechDetails($id){   
         $record = ModelLog::findOrFail($id);
         $logsUrl = 'alientech-logs';
