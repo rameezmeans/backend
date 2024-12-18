@@ -34,7 +34,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($stripeLogs as $log)
+                                @foreach ($paypalLogs as $log)
                                 @if($log->credit_id != 0)
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
