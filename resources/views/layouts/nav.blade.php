@@ -390,6 +390,14 @@
           <span class="icon-thumbnail bg-success"><i class="pg-form"></i></span>
           <ul class="sub-menu">
             <li class="">
+              <a href="{{ route('stripe-logs') }}">Stripe Logs</a>
+              <span class="icon-thumbnail">NF</span>
+            </li>
+            <li class="">
+              <a href="{{ route('paypal-logs') }}">paypal-logs Logs</a>
+              <span class="icon-thumbnail">NF</span>
+            </li>
+            <li class="">
               <a href="{{ route('alientech-logs') }}">Alientech Logs</a>
               <span class="icon-thumbnail">NF</span>
             </li>

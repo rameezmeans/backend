@@ -36,6 +36,54 @@ class LogsController extends Controller
         ]);
        
     }
+
+    public function stripeLogs(){   
+
+        $stripeLogs = ModelLog::orderBy('created_at', 'desc')
+        ->where('request_type', 'stripe')->get();
+
+        return view('logs.stripe_logs', [
+            'stripeLogs' => $stripeLogs,
+            
+        ]);
+       
+    }
+
+    public function paypalLogs(){   
+
+        $paypalLogs = ModelLog::orderBy('created_at', 'desc')
+        ->where('request_type', 'stripe')->get();
+
+        return view('logs.paypal_logs', [
+            'paypalLogs' => $paypalLogs,
+            
+        ]);
+       
+    }
+
+    public function paypalDetails($id){  
+
+        $record = ModelLog::findOrFail($id);
+        $logsUrl = 'elorus-logs';
+
+        return view('logs.details', [
+            'record' => $record,
+            'logsUrl' => $logsUrl,
+            
+        ]);
+    }
+
+    public function stripeDetails($id){  
+        
+        $record = ModelLog::findOrFail($id);
+        $logsUrl = 'elorus-logs';
+
+        return view('logs.details', [
+            'record' => $record,
+            'logsUrl' => $logsUrl,
+            
+        ]);
+    }
     
     public function elorusDetails($id){   
         $record = ModelLog::findOrFail($id);
