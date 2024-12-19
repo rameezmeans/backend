@@ -1897,13 +1897,19 @@ margin-bottom: 10px !important;
                         </div>
                       </form>
 
+                      
+
+                      </div>
+
+                      <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10 text-center">
+
                       <form method="POST" action="{{ route('set-file-on-hold') }}">
                         @csrf
                         <input type="hidden" value="{{$file->id}}" name="file_id">
                         <button class="btn btn-info" type="submit">On Hold</button>
                       </form>
 
-                      <a href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
+                      <a class="btn btn-info" href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
 
                       </div>
                       <!-- END Chat Input  !-->
@@ -4207,6 +4213,19 @@ margin-bottom: 10px !important;
                           
                         </div>
                       </form>
+
+                      <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10 text-center">
+
+                        <form method="POST" action="{{ route('set-file-on-hold') }}">
+                          @csrf
+                          <input type="hidden" value="{{$file->id}}" name="file_id">
+                          <button class="btn btn-info" type="submit">On Hold</button>
+                        </form>
+  
+                        <a class="btn btn-info" href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
+  
+                        </div>
+
                       </div>
                       <!-- END Chat Input  !-->
                     </div>
