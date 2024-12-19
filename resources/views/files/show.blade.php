@@ -1903,11 +1903,14 @@ margin-bottom: 10px !important;
 
                       <div class="b-t b-grey bg-white clearfix m-t-15">
                       <span style="display: flex; float:right;" class="p-t-5">
-                        <form method="POST" action="{{ route('set-file-on-hold') }}">
-                          @csrf
-                          <input type="hidden" value="{{$file->id}}" name="file_id">
-                          <button class="btn btn-info" type="submit">Task On Hold</button>
-                        </form>
+                        
+                        @if($file->status != 'on_hold')
+                          <form method="POST" action="{{ route('set-file-on-hold') }}">
+                            @csrf
+                            <input type="hidden" value="{{$file->id}}" name="file_id">
+                            <button class="btn btn-info" type="submit">Task On Hold</button>
+                          </form>
+                        @endif
 
                         <a class="btn btn-info m-l-5" href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
                       </span>
@@ -4216,11 +4219,14 @@ margin-bottom: 10px !important;
 
                       <div class="b-t b-grey bg-white m-t-15 clearfix">
                         <span style="display: flex; float:right;" class="p-t-5">
-                          <form method="POST" action="{{ route('set-file-on-hold') }}">
-                            @csrf
-                            <input type="hidden" value="{{$file->id}}" name="file_id">
-                            <button class="btn btn-info" type="submit">Task On Hold</button>
-                          </form>
+
+                          @if($file->status != 'on_hold')
+                            <form method="POST" action="{{ route('set-file-on-hold') }}">
+                              @csrf
+                              <input type="hidden" value="{{$file->id}}" name="file_id">
+                              <button class="btn btn-info" type="submit">Task On Hold</button>
+                            </form>
+                          @endif
     
                           <a class="btn btn-info m-l-5" href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
                         </span>
