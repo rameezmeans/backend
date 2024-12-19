@@ -1906,7 +1906,7 @@ margin-bottom: 10px !important;
                         <form method="POST" action="{{ route('set-file-on-hold') }}">
                           @csrf
                           <input type="hidden" value="{{$file->id}}" name="file_id">
-                          <button class="btn btn-info" type="submit">On Hold</button>
+                          <button class="btn btn-info" type="submit">Task On Hold</button>
                         </form>
 
                         <a class="btn btn-info m-l-5" href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
@@ -4219,7 +4219,7 @@ margin-bottom: 10px !important;
                           <form method="POST" action="{{ route('set-file-on-hold') }}">
                             @csrf
                             <input type="hidden" value="{{$file->id}}" name="file_id">
-                            <button class="btn btn-info" type="submit">On Hold</button>
+                            <button class="btn btn-info" type="submit">Task On Hold</button>
                           </form>
     
                           <a class="btn btn-info m-l-5" href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
