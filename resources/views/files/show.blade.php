@@ -1909,7 +1909,7 @@ margin-bottom: 10px !important;
                           <button class="btn btn-info" type="submit">On Hold</button>
                         </form>
 
-                        <a class="btn btn-info" href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
+                        <a class="btn btn-info m-l-5" href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
                       </span>
                       </div>
                       <!-- END Chat Input  !-->
@@ -4222,7 +4222,7 @@ margin-bottom: 10px !important;
                             <button class="btn btn-info" type="submit">On Hold</button>
                           </form>
     
-                          <a class="btn btn-info" href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
+                          <a class="btn btn-info m-l-5" href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
                         </span>
                         </div>
 
