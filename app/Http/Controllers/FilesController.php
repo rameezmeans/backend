@@ -105,6 +105,10 @@ class FilesController extends Controller
 
     }
 	
+	public function setFileOnHold(Request $request){
+        dd($request->all());
+    }
+
 	public function translateMessage(Request $request){
         $record = EngineerFileNote::findOrFail($request->id);
 		

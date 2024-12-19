@@ -1896,6 +1896,15 @@ margin-bottom: 10px !important;
                           
                         </div>
                       </form>
+
+                      <form method="POST" action="{{ route('set-file-on-hold') }}">
+                        @csrf
+                        <input type="hidden" value="{{$file->id}}" name="file_id">
+                        <button class="btn btn-info" type="submit">On Hold</button>
+                      </form>
+
+                      <a href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
+
                       </div>
                       <!-- END Chat Input  !-->
                     </div>
