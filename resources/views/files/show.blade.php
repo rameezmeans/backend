@@ -1902,7 +1902,7 @@ margin-bottom: 10px !important;
                       </div>
 
                       <div class="b-t b-grey bg-white clearfix m-t-15">
-                      <span>
+                      <span style="display: flex;">
                         <form method="POST" action="{{ route('set-file-on-hold') }}">
                           @csrf
                           <input type="hidden" value="{{$file->id}}" name="file_id">
@@ -4215,7 +4215,7 @@ margin-bottom: 10px !important;
                       </form>
 
                       <div class="b-t b-grey bg-white m-t-15 clearfix">
-                        <span>
+                        <span style="display: flex;">
                           <form method="POST" action="{{ route('set-file-on-hold') }}">
                             @csrf
                             <input type="hidden" value="{{$file->id}}" name="file_id">
