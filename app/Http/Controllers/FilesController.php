@@ -106,7 +106,13 @@ class FilesController extends Controller
     }
 	
 	public function setFileOnHold(Request $request){
-        dd($request->all());
+
+        $file = File::findOrFail($request->file_id);
+        $file->status = 'on_hold';
+        $file->updated_at = Carbon::now();
+        $file->save();
+
+        return Redirect::back()->withErrors(['success' => 'Comments added']);
     }
 
 	public function translateMessage(Request $request){
