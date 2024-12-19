@@ -1901,7 +1901,7 @@ margin-bottom: 10px !important;
 
                       </div>
 
-                      <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10 text-center">
+                      <div class="b-t b-grey bg-white clearfix m-t-15">
 
                       <form method="POST" action="{{ route('set-file-on-hold') }}">
                         @csrf
@@ -4214,7 +4214,7 @@ margin-bottom: 10px !important;
                         </div>
                       </form>
 
-                      <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10 text-center">
+                      <div class="b-t b-grey bg-white m-t-15 clearfix">
 
                         <form method="POST" action="{{ route('set-file-on-hold') }}">
                           @csrf
