@@ -722,16 +722,22 @@ margin-bottom: 10px !important;
                               </div>
                           </div>
 
-                          @if($totals != 0)
+                          
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
+                            @if($totals != 0)
                             <div class="pull-right">
                               {{round((($totals - $revised) / $totals)*100, 2).'%'}}
                             </div>
+                            @endif
+
+                            <div class="pull-right">
+                              {{$totals}}
+                            </div>
                           
                           </div>
-                          @endif
+                          
 
                           @endforeach
                            
@@ -802,16 +808,22 @@ margin-bottom: 10px !important;
                               </div>
                           </div>
 
-                          @if($totals != 0)
+                         
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
-                            <div class="pull-right">
-                              {{round((($totals - $revised) / $totals)*100, 2).'%'}}
-                            </div>
-                          
+                          @if($totals != 0)
+                          <div class="pull-right">
+                            {{round((($totals - $revised) / $totals)*100, 2).'%'}}
                           </div>
                           @endif
+
+                          <div class="pull-right">
+                            {{$totals}}
+                          </div>
+                          
+                          </div>
+                          
 
                           @endforeach
                           
@@ -878,16 +890,22 @@ margin-bottom: 10px !important;
                               </div>
                           </div>
 
-                          @if($totals != 0)
+                          
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
+                            @if($totals != 0)
                             <div class="pull-right">
                               {{round((($totals - $revised) / $totals)*100, 2).'%'}}
                             </div>
+                            @endif
+
+                            <div class="pull-right">
+                              {{$totals}}
+                            </div>
                           
                           </div>
-                          @endif
+                          
 
                           @endforeach
 
@@ -3247,22 +3265,28 @@ margin-bottom: 10px !important;
 
                           @endphp
 
-                          <div style="display: flow-root;" class="b-b b-grey">
+                          {{-- <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                               <div class="pull-right">
                                 No of File: {{$totals}}
                               </div>
-                          </div>
-                          @if($totals != 0)
+                          </div> --}}
+                          
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
+                          @if($totals != 0)
                             <div class="pull-right">
                               {{round((($totals - $revised) / $totals)*100, 2).'%'}}
                             </div>
+                          @endif
+
+                          <div class="pull-right">
+                            {{$totals}}
+                          </div>
                           
                           </div>
-                          @endif
+                          
 
                           @endforeach
                             
@@ -3326,23 +3350,29 @@ margin-bottom: 10px !important;
 
                           @endphp
 
-                          <div style="display: flow-root;" class="b-b b-grey">
+                          {{-- <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                               <div class="pull-right">
                                 No of File: {{$totals}}
                               </div>
-                          </div>
+                          </div> --}}
 
-                          @if($totals != 0)
+                         
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
+                          @if($totals != 0)
                             <div class="pull-right">
                               {{round((($totals - $revised) / $totals)*100, 2).'%'}}
                             </div>
+                          @endif
+
+                          <div class="pull-right">
+                            {{$totals}}
+                          </div>
                           
                           </div>
-                          @endif
+                          
 
                           @endforeach
 
@@ -3409,16 +3439,22 @@ margin-bottom: 10px !important;
                                 No of File: {{$totals}}
                               </div>
                           </div>
-                          @if($totals != 0)
+                          
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
+                            @if($totals != 0)
                             <div class="pull-right">
                               {{round((($totals - $revised) / $totals)*100, 2).'%'}}
                             </div>
+                            @endif
+
+                            <div class="pull-right">
+                              {{$totals}}
+                            </div>
                           
                           </div>
-                          @endif
+                          
 
                           @endforeach
                                 
