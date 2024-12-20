@@ -733,7 +733,7 @@ margin-bottom: 10px !important;
                             @endif
 
                             <div class="pull-right">
-                              <span class="label label-danger m-r-5">{{$totals}}</span>
+                              <span class="label label-success m-r-5">{{$totals}}</span>
                             </div>
                           
                           </div>
@@ -819,7 +819,7 @@ margin-bottom: 10px !important;
                           @endif
 
                           <div class="pull-right">
-                            <span class="label label-danger m-r-5">{{$totals}}</span>
+                            <span class="label label-success m-r-5">{{$totals}}</span>
                           </div>
                           
                           </div>
@@ -893,7 +893,7 @@ margin-bottom: 10px !important;
                             @endif
 
                             <div class="pull-right">
-                              <span class="label label-danger m-r-5">{{$totals}}</span>
+                              <span class="label label-success m-r-5">{{$totals}}</span>
                             </div>
                           
                           </div>
@@ -3274,7 +3274,7 @@ margin-bottom: 10px !important;
                           @endif
 
                           <div class="pull-right">
-                            <span class="label label-danger m-r-5">{{$totals}}</span>
+                            <span class="label label-success m-r-5">{{$totals}}</span>
                           </div>
                           
                           </div>
@@ -3360,7 +3360,7 @@ margin-bottom: 10px !important;
                           @endif
 
                           <div class="pull-right">
-                            <span class="label label-danger m-r-5">{{$totals}}</span>
+                            <span class="label label-success m-r-5">{{$totals}}</span>
                           </div>
                           
                           </div>
@@ -3442,7 +3442,7 @@ margin-bottom: 10px !important;
                             @endif
 
                             <div class="pull-right">
-                              <span class="label label-danger m-r-5">{{$totals}}</span>
+                              <span class="label label-success m-r-5">{{$totals}}</span>
                             </div>
                           
                           </div>
