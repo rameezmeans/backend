@@ -245,9 +245,10 @@ margin-bottom: 10px !important;
 
                           <form method="POST" action="{{route('assigned-to-me')}}">
                             @csrf
-                            <button class="btn btn-success" type="submit">Assigned To Me</button>
+                            <input type="hidden" name="file_id" value="{{$file->id}}">
+                            <button class="btn btn-danger" type="submit">Assigned To Me</button>
                           </form>
-                          
+
                         </div>
                       </div>
                       
@@ -2786,6 +2787,12 @@ margin-bottom: 10px !important;
                           @endif
 
                           @endif
+
+                          <form method="POST" action="{{route('assigned-to-me')}}">
+                            @csrf
+                            <input type="hidden" name="file_id" value="{{$file->id}}">
+                            <button class="btn btn-danger" type="submit">Assigned To Me</button>
+                          </form>
 
                         </div>
                       </div>
