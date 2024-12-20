@@ -178,7 +178,7 @@ class FilesDatatable extends LivewireDatatable
 
             Column::callback(['assigned_to'], function($assigned_to){
                 
-                if(User::findOrFail($assigned_to)->first()){
+                if(User::where('id',$assigned_to)->first()){
                     return User::findOrFail($assigned_to)->name;
                 }
                 else{
