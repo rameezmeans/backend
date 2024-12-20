@@ -106,7 +106,9 @@ class FilesController extends Controller
     }
 	
 	public function assignedToMe(Request $request){
-        dd($request->all());
+        $file = File::findOrFail($request->file_id);
+        $file->assigned_to = Auth::user()->id;
+        $file->save();
     }
 
 	public function setFileOnHold(Request $request){
