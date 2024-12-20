@@ -1850,6 +1850,8 @@ class FilesController extends Controller
 
     public function download($id,$file_name, $deleteFile = false) {
 
+        dd($id);
+        
         $file = File::findOrFail($id);
 
         dd($file);
