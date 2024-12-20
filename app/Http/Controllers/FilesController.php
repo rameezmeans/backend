@@ -1850,11 +1850,7 @@ class FilesController extends Controller
 
     public function download($id,$file_name, $deleteFile = false) {
 
-        dd($id);
-        
         $file = File::findOrFail($id);
-
-        dd($file);
 
         if($file->front_end_id == 1){
             if($file->subdealer_group_id){
@@ -1897,7 +1893,7 @@ class FilesController extends Controller
             }
         }
 
-        $file_path = $path.$file_name;
+        $file_path = $path.urlencode($file_name);
 
         if($deleteFile){
             return response()->download($file_path)->deleteFileAfterSend(true);
