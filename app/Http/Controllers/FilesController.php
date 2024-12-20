@@ -3427,7 +3427,7 @@ class FilesController extends Controller
 
     public function getResponseTime($file){
         
-        $fileAssignmentDateTime = Carbon::parse($file->assignment_time);
+        $fileAssignmentDateTime = Carbon::parse($file->created_at);
         $carbonUploadDateTime = Carbon::parse($file->reupload_time);
 
         $feed = NewsFeed::findOrFail(1);
@@ -3451,9 +3451,9 @@ class FilesController extends Controller
         $fileUploadDayWorkHourStart = Carbon::parse( $fileUploadDay.' '.$feed->daily_activation_time );
         $fileUploadDayWorkHourEnd = Carbon::parse( $fileUploadDay.' '.$feed->daily_deactivation_time );
 
-        $fileAssignmentDateAndTime = Carbon::parse($file->assignment_time);
+        $fileAssignmentDateAndTime = Carbon::parse($file->created_at);
 
-        $fileAssignmentDateTime = Carbon::parse($file->assignment_time);
+        $fileAssignmentDateTime = Carbon::parse($file->created_at);
         $carbonUploadDateTime = Carbon::parse($file->reupload_time);
 
         $totalTimeWihoutSubtraction = ($timeDiff * $daysDiff);
