@@ -733,7 +733,7 @@ margin-bottom: 10px !important;
                             @endif
 
                             <div class="pull-right">
-                              {{$totals}}
+                              <span class="label label-danger">{{$totals}}</span>
                             </div>
                           
                           </div>
@@ -819,7 +819,7 @@ margin-bottom: 10px !important;
                           @endif
 
                           <div class="pull-right">
-                            {{$totals}}
+                            <span class="label label-danger">{{$totals}}</span>
                           </div>
                           
                           </div>
@@ -901,7 +901,7 @@ margin-bottom: 10px !important;
                             @endif
 
                             <div class="pull-right">
-                              {{$totals}}
+                              <span class="label label-danger">{{$totals}}</span>
                             </div>
                           
                           </div>
@@ -3282,7 +3282,7 @@ margin-bottom: 10px !important;
                           @endif
 
                           <div class="pull-right">
-                            {{$totals}}
+                            <span class="label label-danger">{{$totals}}</span>
                           </div>
                           
                           </div>
@@ -3368,7 +3368,7 @@ margin-bottom: 10px !important;
                           @endif
 
                           <div class="pull-right">
-                            {{$totals}}
+                            <span class="label label-danger">{{$totals}}</span>
                           </div>
                           
                           </div>
@@ -3450,7 +3450,7 @@ margin-bottom: 10px !important;
                             @endif
 
                             <div class="pull-right">
-                              {{$totals}}
+                              <span class="label label-danger">{{$totals}}</span>
                             </div>
                           
                           </div>
