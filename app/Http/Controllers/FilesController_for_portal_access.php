@@ -2384,46 +2384,46 @@ class FilesController extends Controller
             $attachment = $request->file('engineers_attachement');
             $fileName = $attachment->getClientOriginalName();
 
-            $fileName = str_replace('/', '', $fileName);
-            $fileName = str_replace('\\', '', $fileName);
-            $fileName = str_replace('#', '', $fileName);
-            $fileName = str_replace(' ', '_', $fileName);
+            $fileName1 = str_replace('/', '', $fileName);
+            $fileName1 = str_replace('\\', '', $fileName1);
+            $fileName1 = str_replace('#', '', $fileName1);
+            $fileName1 = str_replace(' ', '_', $fileName1);
 
             $model = str_replace('/', '', $file->model );
 
             if($file->front_end_id == 1){
                 
                 if($file->subdealer_group_id){
-                    $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName);
+                    $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName1);
                 }
                 else{
 
-                    $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+                    $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName1);
                 }
             }
             else if($file->front_end_id == 3){
                 
                 if($file->subdealer_group_id){
-                    $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName);
+                    $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName1);
                 }
                 else{
 
-                    $attachment->move(public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path),$fileName);
+                    $attachment->move(public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path),$fileName1);
                 }
             }
             else{
 
                 if($file->on_dev == 1){
-                    $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
+                    $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName1);
                 }
                 
                 else{
-                    $attachment->move(public_path('/../../tuningX/public/'.$file->file_path),$fileName);
+                    $attachment->move(public_path('/../../tuningX/public/'.$file->file_path),$fileName1);
                 }
 
             }
 
-            $reply->engineers_attachement = $fileName;
+            $reply->engineers_attachement = $fileName1;
         }
 
         $reply->engineer = true;
