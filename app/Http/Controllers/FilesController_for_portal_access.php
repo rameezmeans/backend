@@ -935,6 +935,11 @@ class FilesController extends Controller
             $attachment = $request->file('decrypted_file');
             $fileName = $attachment->getClientOriginalName();
 
+            $fileName = str_replace('/', '', $fileName);
+            $fileName = str_replace('\\', '', $fileName);
+            $fileName = str_replace('#', '', $fileName);
+            $fileName = str_replace(' ', '_', $fileName);
+
             // $file->file_attached = $fileName;
             
             $file->save();
@@ -2378,6 +2383,12 @@ class FilesController extends Controller
 
             $attachment = $request->file('engineers_attachement');
             $fileName = $attachment->getClientOriginalName();
+
+            $fileName = str_replace('/', '', $fileName);
+            $fileName = str_replace('\\', '', $fileName);
+            $fileName = str_replace('#', '', $fileName);
+            $fileName = str_replace(' ', '_', $fileName);
+
             $model = str_replace('/', '', $file->model );
 
             if($file->front_end_id == 1){
@@ -2590,7 +2601,10 @@ class FilesController extends Controller
         $encode = (boolean) $request->encode;
         $magic = (boolean) $request->magic;
 
-        // dd($request->all());
+        $oldName = str_replace('/', '', $oldName);
+        $oldName = str_replace('\\', '', $oldName);
+        $oldName = str_replace('#', '', $oldName);
+        $oldName = str_replace(' ', '_', $oldName);
         
         $file = File::findOrFail($request->file_id);
         
