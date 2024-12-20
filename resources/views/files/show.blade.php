@@ -1957,7 +1957,7 @@ margin-bottom: 10px !important;
 
                   @if($file->status != "rejected")
 
-                  @if(Auth::user()->is_admin)
+                  @if(Auth::user()->is_admin())
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Assign This File to An Engineer</p>
                       <form action="{{route('assign-engineer')}}" method="POST">
@@ -4285,7 +4285,7 @@ margin-bottom: 10px !important;
                   
                   @if($file->status != "rejected")
 
-                  @if(Auth::user()->is_admin)
+                  @if(Auth::user()->is_admin())
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Assign This File to An Engineer</p>
                       <form action="{{route('assign-engineer')}}" method="POST">
