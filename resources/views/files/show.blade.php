@@ -715,12 +715,12 @@ margin-bottom: 10px !important;
 
                           @endphp
 
-                          <div style="display: flow-root;" class="b-b b-grey">
+                          {{-- <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                               <div class="pull-right">
                                 No of File: {{$totals}}
                               </div>
-                          </div>
+                          </div> --}}
 
                           
                           <div style="display: flow-root;" class="b-b b-grey">
@@ -801,12 +801,12 @@ margin-bottom: 10px !important;
 
                           @endphp
 
-                          <div style="display: flow-root;" class="b-b b-grey">
+                          {{-- <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                               <div class="pull-right">
                                 No of File: {{$totals}}
                               </div>
-                          </div>
+                          </div> --}}
 
                          
                           <div style="display: flow-root;" class="b-b b-grey">
@@ -883,12 +883,12 @@ margin-bottom: 10px !important;
 
                           @endphp
 
-                          <div style="display: flow-root;" class="b-b b-grey">
+                          {{-- <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                               <div class="pull-right">
                                 No of File: {{$totals}}
                               </div>
-                          </div>
+                          </div> --}}
 
                           
                           <div style="display: flow-root;" class="b-b b-grey">
@@ -3433,12 +3433,12 @@ margin-bottom: 10px !important;
 
                           @endphp
 
-                          <div style="display: flow-root;" class="b-b b-grey">
+                          {{-- <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                               <div class="pull-right">
                                 No of File: {{$totals}}
                               </div>
-                          </div>
+                          </div> --}}
                           
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
