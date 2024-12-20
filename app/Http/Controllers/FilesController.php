@@ -2703,6 +2703,7 @@ class FilesController extends Controller
         $engineerFile->tool_type = 'not_relevant';
         $engineerFile->master_tools = 'not_relevant';
         $engineerFile->file_id = $request->file_id;
+        $engineerFile->user_id = Auth::user()->id;
         $engineerFile->engineer = true;
 
         $engineerFile->save();
