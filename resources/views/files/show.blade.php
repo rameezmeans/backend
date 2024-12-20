@@ -243,7 +243,7 @@ margin-bottom: 10px !important;
 
                           @endif 
 
-                          @if($file->assinged_to == NULL)
+                          @if($file->assigned_to == NULL)
                           <form method="POST" action="{{route('assigned-to-me')}}">
                             @csrf
                             <input type="hidden" name="file_id" value="{{$file->id}}">
@@ -2790,7 +2790,7 @@ margin-bottom: 10px !important;
 
                           @endif
 
-                          @if($file->assinged_to == NULL)
+                          @if($file->assigned_to == NULL)
                             <form method="POST" action="{{route('assigned-to-me')}}">
                               @csrf
                               <input type="hidden" name="file_id" value="{{$file->id}}">
