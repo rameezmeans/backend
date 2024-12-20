@@ -91,7 +91,7 @@
                         <form class="form" role="form" method="POST" action="{{route('add-caution-text')}}">
                             @csrf
                             
-                              <input name="id" type="hidden" value="2">
+                              <input name="id" type="hidden" value="1">
 
                               <div>
                                 <label>Caution Text</label>
@@ -286,7 +286,7 @@
                         <form class="form" role="form" method="POST" action="{{route('add-caution-text')}}">
                             @csrf
                             
-                              <input name="id" type="hidden" value="2">
+                              <input name="id" type="hidden" value="3">
 
                               <div>
                                 <label>Caution Text</label>
