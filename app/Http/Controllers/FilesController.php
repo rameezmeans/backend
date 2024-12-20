@@ -109,6 +109,8 @@ class FilesController extends Controller
         $file = File::findOrFail($request->file_id);
         $file->assigned_to = Auth::user()->id;
         $file->save();
+
+        return Redirect::back()->withErrors(['success' => 'Comments added']);
     }
 
 	public function setFileOnHold(Request $request){
