@@ -2460,11 +2460,6 @@ class FilesController extends Controller
 
     public function fileEngineersNotes(Request $request)
     {   
-
-        // if(!Auth::user()->is_admin()){
-        //     return abort(404);
-        // }
-
         $noteItself = $request->egnineers_internal_notes;
         
         $file = File::findOrFail($request->file_id);
@@ -2480,6 +2475,11 @@ class FilesController extends Controller
             $attachment = $request->file('engineers_attachement');
             $fileName = $attachment->getClientOriginalName();
             $model = str_replace('/', '', $file->model );
+
+            $fileName = str_replace('/', '', $fileName);
+            $fileName = str_replace('\\', '', $fileName);
+            $fileName = str_replace('#', '', $fileName);
+            $fileName = str_replace(' ', '_', $fileName);
 
             if($file->front_end_id == 1){
                 
@@ -2695,8 +2695,6 @@ class FilesController extends Controller
         $oldName = $attachment->getClientOriginalName();
         $encode = (boolean) $request->encode;
         $magic = (boolean) $request->magic;
-
-        // dd($request->all());
         
         $file = File::findOrFail($request->file_id);
         
