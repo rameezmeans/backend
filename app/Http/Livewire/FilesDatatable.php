@@ -177,7 +177,13 @@ class FilesDatatable extends LivewireDatatable
                 ->label('Upload Date')->sortable()->format('d/m/Y h:i A')->filterable(),
 
             Column::callback(['assigned_to'], function($assigned_to){
-                return User::findOrFail($assigned_to)->name;
+                
+                if(User::findOrFail($assigned_to)->first()){
+                    return User::findOrFail($assigned_to)->name;
+                }
+                else{
+                    return "NONE";
+                }
             })->label('Assigned to')
             // ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))
             ->searchable(),
