@@ -733,7 +733,7 @@ margin-bottom: 10px !important;
                             @endif
 
                             <div class="pull-right">
-                              <span class="label label-danger">{{$totals}}</span>
+                              <span class="label label-danger m-r-5">{{$totals}}</span>
                             </div>
                           
                           </div>
@@ -819,7 +819,7 @@ margin-bottom: 10px !important;
                           @endif
 
                           <div class="pull-right">
-                            <span class="label label-danger">{{$totals}}</span>
+                            <span class="label label-danger m-r-5">{{$totals}}</span>
                           </div>
                           
                           </div>
@@ -883,14 +883,6 @@ margin-bottom: 10px !important;
 
                           @endphp
 
-                          {{-- <div style="display: flow-root;" class="b-b b-grey">
-                            <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
-                              <div class="pull-right">
-                                No of File: {{$totals}}
-                              </div>
-                          </div> --}}
-
-                          
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
@@ -901,7 +893,7 @@ margin-bottom: 10px !important;
                             @endif
 
                             <div class="pull-right">
-                              <span class="label label-danger">{{$totals}}</span>
+                              <span class="label label-danger m-r-5">{{$totals}}</span>
                             </div>
                           
                           </div>
@@ -3282,7 +3274,7 @@ margin-bottom: 10px !important;
                           @endif
 
                           <div class="pull-right">
-                            <span class="label label-danger">{{$totals}}</span>
+                            <span class="label label-danger m-r-5">{{$totals}}</span>
                           </div>
                           
                           </div>
@@ -3368,7 +3360,7 @@ margin-bottom: 10px !important;
                           @endif
 
                           <div class="pull-right">
-                            <span class="label label-danger">{{$totals}}</span>
+                            <span class="label label-danger m-r-5">{{$totals}}</span>
                           </div>
                           
                           </div>
@@ -3450,7 +3442,7 @@ margin-bottom: 10px !important;
                             @endif
 
                             <div class="pull-right">
-                              <span class="label label-danger">{{$totals}}</span>
+                              <span class="label label-danger m-r-5">{{$totals}}</span>
                             </div>
                           
                           </div>
