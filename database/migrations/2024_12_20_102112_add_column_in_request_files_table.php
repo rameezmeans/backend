@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('request_files', function (Blueprint $table) {
-            $table->timestamp('downloaded_at');
+            $table->timestamp('downloaded_at')->nullable();
         });
     }
 
