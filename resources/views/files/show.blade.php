@@ -129,7 +129,7 @@ margin-bottom: 10px !important;
           </li>
           @endif --}}
           
-          @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks'))
+          {{-- @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks')) --}}
           
 
 
@@ -138,7 +138,7 @@ margin-bottom: 10px !important;
           </li>
           
 
-          @endif
+          {{-- @endif --}}
           
           <li class="nav-item">
             <a href="#" data-toggle="tab" data-target="#slide4"><span>Logs</span></a>
@@ -4320,10 +4320,7 @@ margin-bottom: 10px !important;
             </div>
           </div>
           @endif
-          @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks'))
-          
-          
-          
+          {{-- @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks')) --}}
           <div class="tab-pane slide-left" id="slide3{{$file->id}}">
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
@@ -4417,7 +4414,7 @@ margin-bottom: 10px !important;
                 </div>
               </div>
             </div>
-            @endif
+            {{-- @endif --}}
            
             <div class="tab-pane slide-left" id="slide4{{$file->id}}">
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
