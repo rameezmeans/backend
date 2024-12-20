@@ -243,13 +243,13 @@ margin-bottom: 10px !important;
 
                           @endif 
 
-                          @if($file->assigned_to == NULL)
+                          {{-- @if($file->assigned_to == NULL) --}}
                           <form method="POST" action="{{route('assigned-to-me')}}">
                             @csrf
                             <input type="hidden" name="file_id" value="{{$file->id}}">
                             <button class="btn btn-danger" type="submit">Assigned To Me</button>
                           </form>
-                          @endif
+                          {{-- @endif --}}
 
                         </div>
                       </div>
@@ -1954,7 +1954,10 @@ margin-bottom: 10px !important;
               <div class="row">
                 <div class="col-lg-12">
                   
+
                   @if($file->status != "rejected")
+
+                  @if(Auth::user()->is_admin)
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Assign This File to An Engineer</p>
                       <form action="{{route('assign-engineer')}}" method="POST">
@@ -1975,7 +1978,7 @@ margin-bottom: 10px !important;
                       </form>
                       <div class="clearfix"></div>
                     </div>
-
+                    @endif
                     
                   
 
@@ -2790,13 +2793,13 @@ margin-bottom: 10px !important;
 
                           @endif
 
-                          @if($file->assigned_to == NULL)
+                          {{-- @if($file->assigned_to == NULL) --}}
                             <form method="POST" action="{{route('assigned-to-me')}}">
                               @csrf
                               <input type="hidden" name="file_id" value="{{$file->id}}">
                               <button class="btn btn-danger" type="submit">Assigned To Me</button>
                             </form>
-                          @endif
+                          {{-- @endif --}}
 
                         </div>
                       </div>
@@ -4281,6 +4284,8 @@ margin-bottom: 10px !important;
                 <div class="col-lg-12">
                   
                   @if($file->status != "rejected")
+
+                  @if(Auth::user()->is_admin)
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Assign This File to An Engineer</p>
                       <form action="{{route('assign-engineer')}}" method="POST">
@@ -4301,7 +4306,7 @@ margin-bottom: 10px !important;
                       </form>
                       <div class="clearfix"></div>
                     </div>
-                  
+                  @endif
 
                   <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                     <p class="pull-left">File Status</p>
