@@ -2039,7 +2039,7 @@ margin-bottom: 10px !important;
 
                   @endif
 
-                  @if(Auth::user()->is_admin() or Auth::user()->is_head())
+                  {{-- @if(Auth::user()->is_admin() or Auth::user()->is_head()) --}}
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Support Status</p>
                       <form action="{{route('change-support-status')}}" method="POST">
@@ -2059,7 +2059,7 @@ margin-bottom: 10px !important;
                       </form>
                       <div class="clearfix"></div>
                     </div>
-                  @endif
+                  {{-- @endif --}}
                   <br>
                 </div>
               </div>
@@ -4392,7 +4392,7 @@ margin-bottom: 10px !important;
 
                   @endif 
                   
-                  @if(Auth::user()->is_admin() or Auth::user()->is_head())
+                  {{-- @if(Auth::user()->is_admin() or Auth::user()->is_head()) --}}
                     <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                       <p class="pull-left">Support Status</p>
                       <form action="{{route('change-support-status')}}" method="POST">
@@ -4412,7 +4412,7 @@ margin-bottom: 10px !important;
                       </form>
                       <div class="clearfix"></div>
                     </div>
-                  @endif
+                  {{-- @endif --}}
                   <br>
                 </div>
               </div>
