@@ -243,6 +243,11 @@ margin-bottom: 10px !important;
 
                           @endif 
 
+                          <form method="POST" action="{{route('assigned-to-me')}}">
+                            @csrf
+                            <button class="btn btn-success" type="submit">Assigned To Me</button>
+                          </form>
+                          
                         </div>
                       </div>
                       
@@ -278,14 +283,6 @@ margin-bottom: 10px !important;
                      
 
                       <div class="col-lg-6  m-t-30">
-
-                        <p class="pull-left">
-                          <form method="POST" action="{{route('assigned-to-me')}}">
-                            @csrf
-                            <button class="btn btn-success" type="submit">Assigned To Me</button>
-                          </form>
-                        </p>
-                        <div class="clearfix"></div>
 
                         <h5 class="">General Information</h5>
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
