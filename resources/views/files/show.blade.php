@@ -1788,7 +1788,7 @@ margin-bottom: 10px !important;
                                 @endif
                                 <br>
                                 <small class="m-t-20" style="font-size: 8px; float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
-                                <small class="m-t-20" style="font-size: 8px; float:left">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
+                                <small class="m-t-20" style="font-size: 8px; float:left">{{  $message['created_at']  }}</small>
                               </div>
                             </div>
           
@@ -4166,6 +4166,7 @@ margin-bottom: 10px !important;
                                 @endif
                                 <br>
                                 <small class="m-t-20" style="font-size: 8px; float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
+                                <small class="m-t-20" style="font-size: 8px; float:right">{{  $message['created_at'] }}</small>
                               </div>
                             </div>
           
