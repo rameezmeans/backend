@@ -1893,7 +1893,7 @@ class FilesController extends Controller
             }
         }
 
-        $file_path = $path.urlencode($file_name);
+        $file_path = $path.$file_name;
 
         if($deleteFile){
             return response()->download($file_path)->deleteFileAfterSend(true);
