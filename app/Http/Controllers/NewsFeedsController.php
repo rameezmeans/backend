@@ -34,6 +34,10 @@ class NewsFeedsController extends Controller
         return redirect()->route('feeds')->with(['success' => 'Resellers Text Updated, successfully.']);
     }
 
+    public function addCautionText(Request $request) {
+        dd($request->all());
+    }
+
     public function index() {
         
         $newsFeeds = NewsFeed::whereNull('subdealer_group_id')->get();

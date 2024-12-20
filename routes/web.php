@@ -941,6 +941,7 @@ Route::post('/update_price_efiles', [App\Http\Controllers\CreditsController::cla
 Route::post('/update_credits', [App\Http\Controllers\CreditsController::class, 'updateCredits'])->name('update-credits');
 Route::get('/pdfview', [App\Http\Controllers\CreditsController::class, 'makePDF'])->name('pdfview');
 
+Route::get('/add_caution_text', [App\Http\Controllers\NewsFeedsController::class, 'addCautionText'])->name('add-caution-text');
 Route::get('/feeds', [App\Http\Controllers\NewsFeedsController::class, 'index'])->name('feeds');
 Route::get('/add-feeds', [App\Http\Controllers\NewsFeedsController::class, 'add'])->name('add-feed');
 Route::post('/post-feeds', [App\Http\Controllers\NewsFeedsController::class, 'post'])->name('post-feed');
