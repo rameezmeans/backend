@@ -35,7 +35,12 @@ class NewsFeedsController extends Controller
     }
 
     public function addCautionText(Request $request) {
-        dd($request->all());
+
+        $frontend = FrontEnd::findOrFail($request->id);
+        $frontend->caution_text = $request->caution_text;
+        $frontend->save();
+
+        return redirect()->route('feeds')->with(['success' => 'Caution Text Updated, successfully.']);
     }
 
     public function index() {

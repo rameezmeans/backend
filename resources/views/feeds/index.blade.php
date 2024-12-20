@@ -87,6 +87,27 @@
                                 <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
                             </div>
                         </form>
+
+                        <form class="form" role="form" method="POST" action="{{route('add-caution-text')}}">
+                            @csrf
+                            
+                              <input name="id" type="hidden" value="2">
+
+                              <div>
+                                <label>Caution Text</label>
+                                  <div class="form-group">
+                                      <textarea type="text" name="caution_text" class="form-control">{{$ecutechObj->caution_text}}</textarea>
+                                  </div>
+                                  @error('resellers_text')
+                                      <span class="text-danger" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                              </div>
+                              <div class="text-center m-t-40">                    
+                                <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
+                            </div>
+                        </form>
                 
                         <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
@@ -170,9 +191,9 @@
                               <input name="id" type="hidden" value="2">
 
                               <div>
-                                <label>Reseller Text</label>
+                                <label>Caution Text</label>
                                   <div class="form-group">
-                                      <textarea type="text" name="resellers_text" class="form-control">{{$tunningxObj->caution_text}}</textarea>
+                                      <textarea type="text" name="caution_text" class="form-control">{{$tunningxObj->caution_text}}</textarea>
                                   </div>
                                   @error('resellers_text')
                                       <span class="text-danger" role="alert">
@@ -258,6 +279,27 @@
                             </span>
                             @enderror
                             <div class="text-center m-t-40">                    
+                                <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
+                            </div>
+                        </form>
+
+                        <form class="form" role="form" method="POST" action="{{route('add-caution-text')}}">
+                            @csrf
+                            
+                              <input name="id" type="hidden" value="2">
+
+                              <div>
+                                <label>Caution Text</label>
+                                  <div class="form-group">
+                                      <textarea type="text" name="caution_text" class="form-control">{{$etfObj->caution_text}}</textarea>
+                                  </div>
+                                  @error('resellers_text')
+                                      <span class="text-danger" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                              </div>
+                              <div class="text-center m-t-40">                    
                                 <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
                             </div>
                         </form>
