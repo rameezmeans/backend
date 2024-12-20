@@ -365,7 +365,7 @@ margin-bottom: 10px !important;
                       
                         @endif
 
-                        @if(Auth::user()->is_admin())
+                        
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Assigned To</p>
@@ -405,7 +405,7 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
 
-                        @endif
+                        
 
                         @endif
 
@@ -2903,7 +2903,7 @@ margin-bottom: 10px !important;
                       
                         @endif
 
-                        @if(Auth::user()->is_admin())
+                        
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Assigned To</p>
@@ -2943,7 +2943,7 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
 
-                        @endif
+                        
 
                         @endif
 
