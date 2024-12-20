@@ -1852,6 +1852,8 @@ class FilesController extends Controller
 
         $file = File::findOrFail($id);
 
+        dd($file);
+
         if($file->front_end_id == 1){
             if($file->subdealer_group_id){
                 $path = public_path('/../../subportal/public'.$file->file_path);
