@@ -275,7 +275,10 @@ margin-bottom: 10px !important;
                         @endif
                       @endif --}}
 
-                      <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                     
+
+                      <div class="col-lg-6  m-t-30">
+
                         <p class="pull-left">
                           <form method="POST" action="{{route('assigned-to-me')}}">
                             @csrf
@@ -283,9 +286,7 @@ margin-bottom: 10px !important;
                           </form>
                         </p>
                         <div class="clearfix"></div>
-                      </div>
 
-                      <div class="col-lg-6  m-t-30">
                         <h5 class="">General Information</h5>
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Status</p>
