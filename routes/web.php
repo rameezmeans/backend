@@ -1018,6 +1018,7 @@ Route::post('/delete_message_template', [App\Http\Controllers\MessageTemplatesCo
 Route::get('/test_message', [App\Http\Controllers\FilesController::class, 'sendTestMessage'])->name('test-message');
 Route::post('/translate_message', [App\Http\Controllers\FilesController::class, 'translateMessage'])->name('translate-message');
 Route::post('/set_file_on_hold', [App\Http\Controllers\FilesController::class, 'setFileOnHold'])->name('set-file-on-hold');
+Route::post('/assigned_to_me', [App\Http\Controllers\FilesController::class, 'assignedToMe'])->name('assigned-to-me');
 
 // Route::get('/test_email', [App\Http\Controllers\FilesController::class, 'testEmail'])->name('test-feedback');
 

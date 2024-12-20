@@ -105,6 +105,10 @@ class FilesController extends Controller
 
     }
 	
+	public function assignedToMe(Request $request){
+        dd($request->all());
+    }
+
 	public function setFileOnHold(Request $request){
 
         $file = File::findOrFail($request->file_id);
