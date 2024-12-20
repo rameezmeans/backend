@@ -108,6 +108,7 @@ class FilesController extends Controller
 	public function assignedToMe(Request $request){
         $file = File::findOrFail($request->file_id);
         $file->assigned_to = Auth::user()->id;
+        $file->assignment_time = Carbon::now();
         $file->save();
 
         return Redirect::back()->withErrors(['success' => 'Comments added']);
