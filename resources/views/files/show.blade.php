@@ -715,7 +715,7 @@ margin-bottom: 10px !important;
                           <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                               <div class="pull-right">
-                                No of File: {{$total}}
+                                No of File: {{$totals}}
                               </div>
                           </div>
 
@@ -795,7 +795,7 @@ margin-bottom: 10px !important;
                           <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                               <div class="pull-right">
-                                No of File: {{$total}}
+                                No of File: {{$totals}}
                               </div>
                           </div>
 
@@ -871,7 +871,7 @@ margin-bottom: 10px !important;
                           <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                               <div class="pull-right">
-                                No of File: {{$total}}
+                                No of File: {{$totals}}
                               </div>
                           </div>
 
@@ -3244,7 +3244,7 @@ margin-bottom: 10px !important;
                           <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                               <div class="pull-right">
-                                No of File: {{$total}}
+                                No of File: {{$totals}}
                               </div>
                           </div>
                           @if($totals != 0)
@@ -3323,7 +3323,7 @@ margin-bottom: 10px !important;
                           <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                               <div class="pull-right">
-                                No of File: {{$total}}
+                                No of File: {{$totals}}
                               </div>
                           </div>
 
@@ -3400,7 +3400,7 @@ margin-bottom: 10px !important;
                           <div style="display: flow-root;" class="b-b b-grey">
                             <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                               <div class="pull-right">
-                                No of File: {{$total}}
+                                No of File: {{$totals}}
                               </div>
                           </div>
                           @if($totals != 0)
