@@ -3532,7 +3532,7 @@ margin-bottom: 10px !important;
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
                             <div class="p-l-20 p-r-20 p-b-10 p-t-10">
-                              <p class="pull-left">{{$message['request_file']." "}}@if($message['user_id']){{' (Uploaded By: '.App\Models\User::findOrFail($engineerFile->user_id = Auth::user()->id;)->name.')'}}@endif</p>@if($message['old_name'])<br><p class="hint-text">({{$message['old_name']}})</p>@endif
+                              <p class="pull-left">{{$message['request_file']." "}}@if($message['user_id']){{' (Uploaded By: '.App\Models\User::findOrFail($engineerFile->user_id = Auth::user()->id)->name.')'}}@endif</p>@if($message['old_name'])<br><p class="hint-text">({{$message['old_name']}})</p>@endif
                                 
                                          
                               <?php
