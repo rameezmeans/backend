@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('front_ends', function (Blueprint $table) {
-            $table->longText('caution_text')->nullable();
+        Schema::table('processing_softwares', function (Blueprint $table) {
+            $table->boolean('external_source')->default(0);
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('front_ends', function (Blueprint $table) {
-            
+        Schema::table('softwares', function (Blueprint $table) {
+            //
         });
     }
 };
