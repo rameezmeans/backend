@@ -35,7 +35,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($stripeLogs as $log)
-                                @if($log->credit_id != 0)
+                                
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p><span class="@if($log->type == 'successs') label label-success @elseif($log->type == 'error') label label-danger @endif">{{$log->type}}</span></p>
@@ -55,7 +55,7 @@
                                             <p><a class="btn btn-warning text-black" target="_blank" href="{{route('elorus-details', $log->id)}}">Details</a></p>
                                         </td>
                                     </tr>
-                                    @endif
+                                    
                                 @endforeach
                             </tbody>
                         </table>
