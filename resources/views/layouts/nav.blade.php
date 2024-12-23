@@ -92,6 +92,11 @@
               <span class="icon-thumbnail">CR</span>
             </li>
 
+            <li class="">
+              <a href="{{ route('database-import') }}">Database Import</a>
+              <span class="icon-thumbnail">DI</span>
+            </li>
+
           </ul>
         </li>
 
