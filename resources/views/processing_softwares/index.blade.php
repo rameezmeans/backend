@@ -38,7 +38,7 @@
                                             <p>{{$ps->name}}</p>
                                         </td>
                                         <td class="v-align-middle">
-                                            <p><input data-service_id={{$ps->id}} class="stage_active" type="checkbox" data-init-plugin="switchery" @if($ps->external_source) checked="checked" @endif onclick="status_change()"/></p>
+                                            <p><input data-ps_id={{$ps->id}} class="ps_active" type="checkbox" data-init-plugin="switchery" @if($ps->external_source) checked="checked" @endif onclick="status_change()"/></p>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -61,9 +61,9 @@
     $( document ).ready(function(event) {
         
         let switchStatus = true;
-        $(document).on('change', '.stage_active', function(e) {
-            let service_id = $(this).data('service_id');
-            console.log(service_id);
+        $(document).on('change', '.ps_active', function(e) {
+            let ps_id = $(this).data('ps_id');
+            console.log(ps_id);
             if ($(this).is(':checked')) {
                 switchStatus = $(this).is(':checked');
                 console.log(switchStatus);
@@ -73,7 +73,7 @@
                 console.log(switchStatus);
             }
 
-            change_status(service_id, switchStatus);
+            change_status(ps_id, switchStatus);
         });
 
         function change_status(ps_id, status){
@@ -82,7 +82,7 @@
                 type: "POST",
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    "service_id": service_id,
+                    "service_id": ps_id,
                     "status": status,
                 },
                 headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
