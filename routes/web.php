@@ -756,6 +756,10 @@ Route::post('/create_processing_softwares', [App\Http\Controllers\ProcessingSoft
 Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
 Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
 Route::get('/softwares_report', [App\Http\Controllers\ProcessingSoftwaresController::class, 'softwareReport'])->name('softwares-report');
+
+Route::post('/change_ps_external_source', [App\Http\Controllers\ProcessingSoftwaresController::class, 'changePsExternalSource'])->name('change-ps-external-source');
+Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
+
 Route::get('/countires_report', [App\Http\Controllers\UsersController::class, 'countriesReport'])->name('countries-report');
 Route::get('/services_report', [App\Http\Controllers\ServicesController::class, 'servicesReport'])->name('services-report');
 Route::get('/options_comments', [App\Http\Controllers\ServicesController::class, 'optionsComments'])->name('options-comments');

@@ -133,6 +133,10 @@ class ProcessingSoftwaresController extends Controller
         return response()->json(['html' =>$rows, 'tasks' => count($softwaresAndBrandsRecords) ], 200);
     }
 
+    public function changePsExternalSource(Request $request){
+        dd($request->all());
+    }
+
     public function update(Request $request)
     {   
         if(!Auth::user()->is_admin()){

@@ -28,6 +28,7 @@
                             <thead>
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">External Source</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,6 +36,9 @@
                                     <tr role="row" class="redirect-click" data-redirect="{{ route('edit-processing-softwares', $ps->id) }}">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$ps->name}}</p>
+                                        </td>
+                                        <td class="v-align-middle">
+                                            <p><input data-service_id={{$ps->id}} class="stage_active" type="checkbox" data-init-plugin="switchery" @if($ps->external_source) checked="checked" @endif onclick="status_change()"/></p>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -56,6 +60,37 @@
 
     $( document ).ready(function(event) {
         
+        let switchStatus = true;
+        $(document).on('change', '.stage_active', function(e) {
+            let service_id = $(this).data('service_id');
+            console.log(service_id);
+            if ($(this).is(':checked')) {
+                switchStatus = $(this).is(':checked');
+                console.log(switchStatus);
+            }
+            else {
+                switchStatus = $(this).is(':checked');
+                console.log(switchStatus);
+            }
+
+            change_status(service_id, switchStatus);
+        });
+
+        function change_status(ps_id, status){
+            $.ajax({
+                url: "/change_ps_external_source",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "service_id": service_id,
+                    "status": status,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    
+                }
+            });  
+        }
        
     });
 
