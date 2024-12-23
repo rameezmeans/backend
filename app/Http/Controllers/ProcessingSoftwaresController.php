@@ -72,6 +72,20 @@ class ProcessingSoftwaresController extends Controller
         
     }
 
+    public function getExternalSourced(Request $request){
+
+        $softwaresAndBrandsRecords = File::join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        ->whereNotNull('files.ecu')
+        ->select('files.brand as brand', 'files.model as model', 'files.version as version', 'files.engine as engine', 'files.ecu as ecu', 'files.id as file_id', 'file_reply_software_service.service_id as service_id','file_reply_software_service.software_id as software_id')
+        ->join('processing_softwares', 'processing_softwares.id', '=', 'file_reply_software_service.software_id')
+        ->where('processing_softwares.external_source', '=', 1)
+        ->distinct('service_id')
+        ->get();
+        
+        return view('processing_softwares.database_import', ['softwaresAndBrandsRecords' => $softwaresAndBrandsRecords]);
+
+    }
+
     public function databaseImport(){
         
         $softwaresAndBrandsRecords = File::join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')

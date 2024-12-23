@@ -22,6 +22,21 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group form-group-default">
+                            <form method="POST" action="{{route('get-external-sourced')}}">
+                                @csrf
+                                <label>Select External Source</label>
+                                <select class="full-width" id="external_source" data-init-plugin="select2" name="external_source">  
+                                    <option value="external_source">External Source</option>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
                         <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
