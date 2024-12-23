@@ -60,10 +60,10 @@
                                         </td>
                                        
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$record->service_id}}</p>
+                                            <p>{{\App\Model\Service::findOrFail($record->service_id)->name}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$record->software_id}}</p>
+                                            <p>{{\App\Model\ProcessingSoftware::findOrFail($record->software_id)->name}}</p>
                                         </td>
                                     </tr>
                                 @endforeach
