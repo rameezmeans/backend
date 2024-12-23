@@ -36,6 +36,30 @@
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$record->file_id}}</p>
                                         </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$record->brand}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$record->model}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$record->version}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$record->engine}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$record->ecu}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$record->ecu}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$record->service_id}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$record->software_id}}</p>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
