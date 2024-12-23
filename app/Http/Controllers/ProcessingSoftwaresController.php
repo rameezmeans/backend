@@ -72,6 +72,20 @@ class ProcessingSoftwaresController extends Controller
         
     }
 
+    public function databaseImport(){
+        
+        $softwaresAndBrandsRecords = File::join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
+        ->whereNotNull('files.ecu')
+        ->select('file_reply_software_service.service_id as service_id','file_reply_software_service.software_id as software_id')
+        ->distinct('service_id')
+        // ->orderBy('file_id', 'desc')
+        ->get();
+
+        dd($softwaresAndBrandsRecords);
+        
+        return view('processing_softwares.report', ['softwaresAndBrandsRecords' => $softwaresAndBrandsRecords]);
+    }
+
     public function softwareReport(){
 
         $brands = File::select('brand')->distinct()->orderBy('brand', 'asc')->get();

@@ -757,6 +757,7 @@ Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoft
 Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
 Route::get('/softwares_report', [App\Http\Controllers\ProcessingSoftwaresController::class, 'softwareReport'])->name('softwares-report');
 
+Route::post('/database_import', [App\Http\Controllers\ProcessingSoftwaresController::class, 'databaseImport'])->name('database-import');
 Route::post('/change_ps_external_source', [App\Http\Controllers\ProcessingSoftwaresController::class, 'changePsExternalSource'])->name('change-ps-external-source');
 Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
 
