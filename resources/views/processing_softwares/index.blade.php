@@ -82,8 +82,8 @@
                 type: "POST",
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    "service_id": ps_id,
-                    "status": status,
+                    "ps_id": ps_id,
+                    "external_source": status,
                 },
                 headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
                 success: function(response) {

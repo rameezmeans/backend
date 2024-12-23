@@ -134,7 +134,11 @@ class ProcessingSoftwaresController extends Controller
     }
 
     public function changePsExternalSource(Request $request){
-        dd($request->all());
+        
+        $ps = ProcessingSoftware::fineOrFail($request->ps_id);
+        $ps->external_source = $request->external_source;
+        $ps->save();
+        
     }
 
     public function update(Request $request)
