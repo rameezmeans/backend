@@ -23,6 +23,7 @@
             </div>
             <div class="card-body">
 
+                @if($button == true)
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group form-group-default">
@@ -37,6 +38,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
 
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
