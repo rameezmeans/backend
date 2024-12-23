@@ -82,7 +82,7 @@ class ProcessingSoftwaresController extends Controller
 
         // dd($softwaresAndBrandsRecords);
         
-        return view('processing_softwares.report', ['softwaresAndBrandsRecords' => $softwaresAndBrandsRecords]);
+        return view('processing_softwares.database_import', ['softwaresAndBrandsRecords' => $softwaresAndBrandsRecords]);
     }
 
     public function softwareReport(){
