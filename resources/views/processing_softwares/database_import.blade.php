@@ -29,10 +29,7 @@
                         <div class="form-group form-group-default">
                             <form method="POST" action="{{route('get-external-sourced')}}">
                                 @csrf
-                                <label>Select External Source</label>
-                                <select class="full-width" id="external_source" data-init-plugin="select2" name="external_source">  
-                                    <option value="external_source">External Source</option>
-                                </select>
+                                 
                                 <button class="btn btn-success m-t-20" type="submit">Get External Sourced Softwares</button>
                             </form>
                         </div>
