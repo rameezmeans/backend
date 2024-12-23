@@ -79,7 +79,7 @@ class ProcessingSoftwaresController extends Controller
         ->select('*','file_reply_software_service.service_id as service_id','file_reply_software_service.software_id as software_id')
         ->distinct('service_id')
         // ->orderBy('file_id', 'desc')
-        ->get();
+        ->limit(10);
 
         dd($softwaresAndBrandsRecords);
         
