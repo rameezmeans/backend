@@ -31,10 +31,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($tools as $tools)
-                                    <tr role="row" class="redirect-click" data-redirect="{{ route('edit-service', $service->id) }}">
+                                @foreach ($softwaresAndBrandsRecords as $record)
+                                    <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$service->name}}</p>
+                                            <p>{{$record->file_id}}</p>
                                         </td>
                                     </tr>
                                 @endforeach
