@@ -104,7 +104,10 @@
 
 console.log('outside the page ??????????????');
 
-    // $( document ).ready(function(event) {
+    $( document ).ready(function(event) {
+        console.log('now here ????');
+
+    });
 
     //     console.log('outside');
         
