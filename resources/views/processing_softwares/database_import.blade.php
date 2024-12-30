@@ -107,9 +107,7 @@
         let switchStatus = true;
 
         $(document).on('change', '.ps_active', function(e) {
-
-            console.log('inside');
-
+            
             let file_id = $(this).data('file_id');
             let brand = $(this).data('brand');
             let version = $(this).data('version');
