@@ -105,7 +105,7 @@ class ProcessingSoftwaresController extends Controller
             else if($request->selected_records == 'added_to_database'){
 
                 $softwaresAndBrandsRecords = File::join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
-                ->leftjoin('files_software_service_database', 'file_reply_software_service.file_id', '=', 'files.id')
+                ->join('files_software_service_database', 'files_software_service_database.file_id', '=', 'files.id')
                 ->whereNotNull('files.ecu')
                 ->select('files.brand as brand', 'files.model as model', 'files.version as version', 'files.engine as engine', 'files.ecu as ecu', 'files.id as file_id', 'file_reply_software_service.service_id as service_id','file_reply_software_service.software_id as software_id')
                 ->distinct('service_id')
