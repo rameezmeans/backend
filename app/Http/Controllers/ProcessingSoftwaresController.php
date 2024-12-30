@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Models\FileReplySoftwareService;
+use App\Models\FilesSoftwareService;
 use App\Models\ProcessingSoftware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -164,11 +165,25 @@ class ProcessingSoftwaresController extends Controller
 
     public function changePsExternalSource(Request $request){
 
-        dd($request->all());
-        
-        $ps = ProcessingSoftware::findOrFail($request->ps_id);
-        $ps->external_source = ($request->external_source == 'true')? 1: 0;
-        $ps->save();
+        if($request->added_in_database == "true") {
+
+            $record = new FilesSoftwareService();
+            $record->file_id = $request->file_id;
+            $record->software_id = $request->software_id;
+            $record->service_id = $request->service_id;
+            $record->save();
+        }
+
+        if($request->added_in_database == "false") {
+
+            $record = FilesSoftwareService::where('file_id', $request->file_id)
+            ->where('software_id', $request->software_id)
+            ->where('service_id', $request->service_id)
+            ->first();
+
+            $record->delete();
+            
+        }
 
     }
 
