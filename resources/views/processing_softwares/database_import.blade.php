@@ -102,10 +102,41 @@
 
 <script type="text/javascript">
 
-console.log('outside the page ??????????????');
+// console.log('outside the page ??????????????');
 
     $( document ).ready(function(event) {
-        console.log('now here ????');
+
+        console.log('inside ????');
+        
+            let switchStatus = true;
+
+            $(document).on('change', '.ps_active', function(e) {
+
+                console.log('inside');
+
+                let file_id = $(this).data('file_id');
+                let brand = $(this).data('brand');
+                let version = $(this).data('version');
+                let model = $(this).data('model');
+                let version = $(this).data('version');
+                let engine = $(this).data('engine');
+                let ecu = $(this).data('ecu');
+                let software_id = $(this).data('software_id');
+                let service_id = $(this).data('service_id');
+
+                console.log(file_id);
+
+                if ($(this).is(':checked')) {
+                    switchStatus = $(this).is(':checked');
+                    console.log(switchStatus);
+                }
+                else {
+                    switchStatus = $(this).is(':checked');
+                    console.log(switchStatus);
+                }
+
+                // change_status(file_id, switchStatus);
+            });
 
     });
 
