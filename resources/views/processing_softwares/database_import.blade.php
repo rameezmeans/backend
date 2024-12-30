@@ -103,9 +103,13 @@
 <script type="text/javascript">
 
     $( document ).ready(function(event) {
+
+        console.log('outside');
         
         let switchStatus = true;
         $(document).on('change', '.ps_active', function(e) {
+
+            console.log('inside');
 
             let file_id = $(this).data('file_id');
             let brand = $(this).data('brand');
@@ -117,7 +121,8 @@
             let software_id = $(this).data('software_id');
             let service_id = $(this).data('service_id');
 
-            console.log(ps_id);
+            console.log(file_id);
+
             if ($(this).is(':checked')) {
                 switchStatus = $(this).is(':checked');
                 console.log(switchStatus);
