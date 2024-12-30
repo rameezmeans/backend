@@ -107,7 +107,14 @@ class FeedbackTable extends LivewireDatatable
             })->label('Feedback')
             ->filterable($feedbacks),
             Column::callback(['assigned_to'], function($assigned_to){
-                return User::findOrFail($assigned_to)->name;
+                
+                if(User::where('id', $assigned_to)->first()){
+                    return User::findOrFail($assigned_to)->name;
+                }
+                else{
+                    return "Not Assigned";
+                }
+
             })->label('Assigned to'),
             // ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))
             // ->searchable(),
