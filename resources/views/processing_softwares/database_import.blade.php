@@ -135,7 +135,7 @@
 
     });
 
-    function change_status(file_id, brand, model, version, engine, ecu, software_id, service_id, switchStatus){
+    function change_status(file_id, brand, model, version, engine, ecu, software_id, service_id, added_in_database){
             $.ajax({
                 url: "/change_ps_external_source",
                 type: "POST",
@@ -150,7 +150,7 @@
                     "ecu": ecu,
                     "software_id": software_id,
                     "service_id": service_id,
-                    "added_in_database": status,
+                    "added_in_database": added_in_database,
                 },
                 headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
                 success: function(response) {
