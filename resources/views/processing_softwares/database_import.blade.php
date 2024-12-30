@@ -23,11 +23,11 @@
             </div>
             <div class="card-body">
 
-                @if($button == true)
+                
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group form-group-default">
-                            <form method="POST" action="{{route('get-external-sourced')}}">
+                            <form method="POST" action="{{route('database-import')}}">
                                 @csrf
                                  
                                 <button class="btn btn-success m-t-20" type="submit">Get External Sourced Softwares</button>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                @endif
+                
 
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
