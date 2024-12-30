@@ -100,7 +100,7 @@
 
 @section('pagespecificscripts')
 
-<script type="text/javascript">
+<script type="text/javascript" tag>
 
     $( document ).ready(function(event) {
 
