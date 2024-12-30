@@ -101,6 +101,8 @@ class ProcessingSoftwaresController extends Controller
                 ->select('files.brand as brand', 'files.model as model', 'files.version as version', 'files.engine as engine', 'files.ecu as ecu', 'files.id as file_id', 'file_reply_software_service.service_id as service_id','file_reply_software_service.software_id as software_id')
                 ->distinct('service_id')
                 ->get();
+
+                $selected = 'all';
             }
             else if($request->selected_records == 'added_to_database'){
 
@@ -110,6 +112,8 @@ class ProcessingSoftwaresController extends Controller
                 ->select('files.brand as brand', 'files.model as model', 'files.version as version', 'files.engine as engine', 'files.ecu as ecu', 'files.id as file_id', 'file_reply_software_service.service_id as service_id','file_reply_software_service.software_id as software_id')
                 ->distinct('service_id')
                 ->get();
+
+                $selected = 'added_to_database';
             }
 
         }
@@ -119,9 +123,11 @@ class ProcessingSoftwaresController extends Controller
             ->select('files.brand as brand', 'files.model as model', 'files.version as version', 'files.engine as engine', 'files.ecu as ecu', 'files.id as file_id', 'file_reply_software_service.service_id as service_id','file_reply_software_service.software_id as software_id')
             ->distinct('service_id')
             ->get();
+
+            $selected = NULL;
         }
         
-        return view('processing_softwares.database_import', ['softwaresAndBrandsRecords' => $softwaresAndBrandsRecords]);
+        return view('processing_softwares.database_import', ['softwaresAndBrandsRecords' => $softwaresAndBrandsRecords, 'selected' => $selected]);
     }
 
     public function softwareReport(){
