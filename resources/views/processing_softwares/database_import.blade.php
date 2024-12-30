@@ -100,13 +100,14 @@
 
 @section('pagespecificscripts')
 
-<script type="text/javascript" tag>
+<script type="text/javascript">
 
     $( document ).ready(function(event) {
 
         console.log('outside');
         
         let switchStatus = true;
+        
         $(document).on('change', '.ps_active', function(e) {
 
             console.log('inside');
@@ -135,7 +136,10 @@
             change_status(file_id, switchStatus);
         });
 
-        function change_status(file_id, status){
+        
+    });
+
+    function change_status(file_id, status){
             $.ajax({
                 url: "/change_ps_external_source",
                 type: "POST",
@@ -159,7 +163,6 @@
             });  
        
         }
-    });
 
 </script>
 
