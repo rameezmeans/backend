@@ -163,6 +163,8 @@ class ProcessingSoftwaresController extends Controller
     }
 
     public function changePsExternalSource(Request $request){
+
+        dd($request->all());
         
         $ps = ProcessingSoftware::findOrFail($request->ps_id);
         $ps->external_source = ($request->external_source == 'true')? 1: 0;

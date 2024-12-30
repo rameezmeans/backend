@@ -50,6 +50,7 @@
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">ECU</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Service ID</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Software ID</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Added In Database</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,6 +81,9 @@
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</p>
                                         </td>
+                                        <td class="v-align-middle">
+                                            <p><input data-brand={{$record->brand}} data-model={{$record->model}} data-version={{$record->version}} data-engine={{$record->engine}} data-ecu={{$record->ecu}} data-service_id={{$record->service_id}} data-software_id={{$record->software_id}} data-file_id={{$record->file_id}} class="ps_active" type="checkbox" data-init-plugin="switchery"/></p>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -100,7 +104,56 @@
 
     $( document ).ready(function(event) {
         
+        let switchStatus = true;
+        $(document).on('change', '.ps_active', function(e) {
+
+            let file_id = $(this).data('file_id');
+            let brand = $(this).data('brand');
+            let version = $(this).data('version');
+            let model = $(this).data('model');
+            let version = $(this).data('version');
+            let engine = $(this).data('engine');
+            let ecu = $(this).data('ecu');
+            let software_id = $(this).data('software_id');
+            let service_id = $(this).data('service_id');
+
+            console.log(ps_id);
+            if ($(this).is(':checked')) {
+                switchStatus = $(this).is(':checked');
+                console.log(switchStatus);
+            }
+            else {
+                switchStatus = $(this).is(':checked');
+                console.log(switchStatus);
+            }
+
+            change_status(file_id, switchStatus);
+        });
+
+        function change_status(file_id, status){
+            $.ajax({
+                url: "/change_ps_external_source",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "file_id": file_id,
+                    "brand": brand,
+                    "version": version,
+                    "model": model,
+                    "version": version,
+                    "engine": engine,
+                    "ecu": ecu,
+                    "software_id": software_id,
+                    "service_id": service_id,
+                    "added_in_database": status,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    
+                }
+            });  
        
+        }
     });
 
 </script>
