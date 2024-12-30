@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\EngineersPermission;
 use App\Models\FileReplySoftwareService;
+use App\Models\FilesSoftwareService;
 use Danielebarbaro\LaravelVatEuValidator\Facades\VatValidatorFacade as VatValidator;
 use Illuminate\Support\Facades\Auth;
 use Stichoza\GoogleTranslate\GoogleTranslate;
@@ -353,6 +354,25 @@ if(!function_exists('count_of_files_per_country')){
 
     }
 }
+
+if(!function_exists('added_to_db')){
+
+    function added_to_db($record){
+
+        $record = FilesSoftwareService::where('file_id', $record->file_id)
+            ->where('software_id', $record->software_id)
+            ->where('service_id', $record->service_id)
+            ->first();
+
+            if($record == NULL){
+                return false;
+            }
+
+            return true;
+
+    }
+}
+
 
 if(!function_exists('count_of_files')){
 
