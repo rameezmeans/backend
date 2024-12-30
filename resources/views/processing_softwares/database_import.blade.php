@@ -102,102 +102,63 @@
 
 <script type="text/javascript">
 
-// console.log('outside the page ??????????????');
-
     $( document ).ready(function(event) {
 
-        console.log('inside ????');
-        
-            let switchStatus = true;
+        let switchStatus = true;
 
-            $(document).on('change', '.ps_active', function(e) {
+        $(document).on('change', '.ps_active', function(e) {
 
-                console.log('inside');
+            console.log('inside');
 
-                let file_id = $(this).data('file_id');
-                let brand = $(this).data('brand');
-                let version = $(this).data('version');
-                let model = $(this).data('model');
-                let engine = $(this).data('engine');
-                let ecu = $(this).data('ecu');
-                let software_id = $(this).data('software_id');
-                let service_id = $(this).data('service_id');
+            let file_id = $(this).data('file_id');
+            let brand = $(this).data('brand');
+            let version = $(this).data('version');
+            let model = $(this).data('model');
+            let engine = $(this).data('engine');
+            let ecu = $(this).data('ecu');
+            let software_id = $(this).data('software_id');
+            let service_id = $(this).data('service_id');
 
-                console.log(file_id);
+            console.log(file_id);
 
-                if ($(this).is(':checked')) {
-                    switchStatus = $(this).is(':checked');
-                    console.log(switchStatus);
-                }
-                else {
-                    switchStatus = $(this).is(':checked');
-                    console.log(switchStatus);
-                }
+            if ($(this).is(':checked')) {
+                switchStatus = $(this).is(':checked');
+                console.log(switchStatus);
+            }
+            else {
+                switchStatus = $(this).is(':checked');
+                console.log(switchStatus);
+            }
 
-                // change_status(file_id, switchStatus);
-            });
+            change_status(file_id, switchStatus);
+        });
 
     });
 
-    //     console.log('outside');
-        
-    //     let switchStatus = true;
-
-    //     $(document).on('change', '.ps_active', function(e) {
-
-    //         console.log('inside');
-
-    //         let file_id = $(this).data('file_id');
-    //         let brand = $(this).data('brand');
-    //         let version = $(this).data('version');
-    //         let model = $(this).data('model');
-    //         let version = $(this).data('version');
-    //         let engine = $(this).data('engine');
-    //         let ecu = $(this).data('ecu');
-    //         let software_id = $(this).data('software_id');
-    //         let service_id = $(this).data('service_id');
-
-    //         console.log(file_id);
-
-    //         if ($(this).is(':checked')) {
-    //             switchStatus = $(this).is(':checked');
-    //             console.log(switchStatus);
-    //         }
-    //         else {
-    //             switchStatus = $(this).is(':checked');
-    //             console.log(switchStatus);
-    //         }
-
-    //         change_status(file_id, switchStatus);
-    //     });
-
-        
-    // });
-
-    // function change_status(file_id, status){
-    //         $.ajax({
-    //             url: "/change_ps_external_source",
-    //             type: "POST",
-    //             data: {
-    //                 "_token": "{{ csrf_token() }}",
-    //                 "file_id": file_id,
-    //                 "brand": brand,
-    //                 "version": version,
-    //                 "model": model,
-    //                 "version": version,
-    //                 "engine": engine,
-    //                 "ecu": ecu,
-    //                 "software_id": software_id,
-    //                 "service_id": service_id,
-    //                 "added_in_database": status,
-    //             },
-    //             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-    //             success: function(response) {
+    function change_status(file_id, status){
+            $.ajax({
+                url: "/change_ps_external_source",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "file_id": file_id,
+                    "brand": brand,
+                    "version": version,
+                    "model": model,
+                    "version": version,
+                    "engine": engine,
+                    "ecu": ecu,
+                    "software_id": software_id,
+                    "service_id": service_id,
+                    "added_in_database": status,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
                     
-    //             }
-    //         });  
+                }
+            });  
        
-    //     }
+        }
 
 </script>
 
