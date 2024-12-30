@@ -86,7 +86,12 @@ class FileEngineerTable extends LivewireDatatable
             ->label('Credits'),
 
             Column::callback(['assigned_to'], function($id){
-                return User::findOrFail($id)->name;
+                if(User::where('id', $id)->first()){
+                    return User::findOrFail($id)->name;
+                }
+                else{
+                    return "Not Assigned";
+                }
             })->label('Assigned to'),
             // ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))->searchable(),
 
