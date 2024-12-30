@@ -91,7 +91,10 @@ class ProcessingSoftwaresController extends Controller
 
     public function databaseImport(Request $request){
 
-        dd($request->all());
+        
+        if (Request::isMethod('post')){
+            dd($request->all());
+        }
 
         $softwaresAndBrandsRecords = File::join('file_reply_software_service', 'file_reply_software_service.file_id', '=', 'files.id')
         ->whereNotNull('files.ecu')
