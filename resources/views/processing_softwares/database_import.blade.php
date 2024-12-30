@@ -102,12 +102,14 @@
 
 <script type="text/javascript">
 
+console.log('outside');
+
     $( document ).ready(function(event) {
 
         console.log('outside');
         
         let switchStatus = true;
-        
+
         $(document).on('change', '.ps_active', function(e) {
 
             console.log('inside');
