@@ -118,7 +118,6 @@
                 let brand = $(this).data('brand');
                 let version = $(this).data('version');
                 let model = $(this).data('model');
-                let version = $(this).data('version');
                 let engine = $(this).data('engine');
                 let ecu = $(this).data('ecu');
                 let software_id = $(this).data('software_id');
