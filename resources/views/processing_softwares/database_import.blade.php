@@ -62,7 +62,7 @@
                                 @foreach ($softwaresAndBrandsRecords as $record)
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$record->file_id}}</p>
+                                            <p><a href="{{route('file', $record->file_id)}}">{{'Task'.$record->file_id}}</a></p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$record->brand}}</p>
