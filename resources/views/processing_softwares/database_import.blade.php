@@ -130,12 +130,12 @@
                 console.log(switchStatus);
             }
 
-            change_status(file_id, switchStatus);
+            change_status(file_id, brand, model, version, engine, ecu, software_id, service_id, switchStatus);
         });
 
     });
 
-    function change_status(file_id, status){
+    function change_status(file_id, brand, model, version, engine, ecu, software_id, service_id, switchStatus){
             $.ajax({
                 url: "/change_ps_external_source",
                 type: "POST",
