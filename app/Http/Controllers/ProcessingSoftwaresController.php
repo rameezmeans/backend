@@ -91,8 +91,8 @@ class ProcessingSoftwaresController extends Controller
 
     public function databaseImport(Request $request){
 
-        
-        if (Request::isMethod('post')){
+
+        if ($request->isMethod('post')){
             dd($request->all());
         }
 
