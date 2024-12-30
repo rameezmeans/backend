@@ -29,6 +29,11 @@
                         <div class="form-group form-group-default">
                             <form method="POST" action="{{route('database-import')}}">
                                 @csrf
+
+                                <select name="selected_records" class=" full-width" data-init-plugin="select2">
+                                    <option value="All">All</option>
+                                    <option value="added_to_database">Added To Database</option>
+                                  </select>
                                  
                                 <button class="btn btn-success m-t-20" type="submit">Get External Sourced Softwares</button>
                             </form>
