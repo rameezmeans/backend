@@ -31,7 +31,7 @@
                                 @csrf
 
                                 <select name="selected_records" class=" full-width" data-init-plugin="select2">
-                                    <option value="All">All</option>
+                                    <option value="all">All</option>
                                     <option value="added_to_database">Added To Database</option>
                                   </select>
                                  
