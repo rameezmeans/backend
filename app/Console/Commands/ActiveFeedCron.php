@@ -56,7 +56,9 @@ class ActiveFeedCron extends Command
 
     public function deactivateAllExceptThisFeed($ThatFeed) {
         
-        $allOtherFeed = NewsFeed::where('id', '!=', $ThatFeed->id)->get();
+        $allOtherFeed = NewsFeed::where('id', '!=', $ThatFeed->id)
+        ->where('front_end_id', $ThatFeed->front_end_id)
+        ->get();
 
         foreach($allOtherFeed as $feed){
             if($feed->active == 1){
