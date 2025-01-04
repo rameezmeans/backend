@@ -561,7 +561,7 @@ class AlientechController extends Controller
 
             if($syncResponseBody == NULL){
                 
-                $this->makeAlientechLogEntry( $file->id, 'error', 'File Upload error.', $postInput, $syncResponse);
+                $this->makeAlientechLogEntry( $file->id, 'error', $syncResponse, $postInput, $syncResponse);
             }
             else{
             
@@ -585,7 +585,7 @@ class AlientechController extends Controller
         }
         else{
 
-            $this->makeAlientechLogEntry( $file->id, 'error', 'File Upload error.', $post, $response);
+            $this->makeAlientechLogEntry( $file->id, 'error', $response, $post, $response);
 
             // $file->disable_customers_download = 1;
             $file->no_longer_auto = 1;
