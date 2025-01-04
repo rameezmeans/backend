@@ -269,7 +269,7 @@ class ActiveFeedCron extends Command
         
         \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
 
-        $feeds = NewsFeed::all();
+        $feeds = NewsFeed::where('front_end_id', 2)->get();
 
         $dateCheck = date('l');
         $timeCheck = date('H:i');
