@@ -269,7 +269,19 @@ class ActiveFeedCron extends Command
         
         \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
 
+        $feeds = NewsFeed::where('front_end_id', 1)->get();
+        $this->feedManage($feeds);
+
         $feeds = NewsFeed::where('front_end_id', 2)->get();
+        $this->feedManage($feeds);
+
+        $feeds = NewsFeed::where('front_end_id', 3)->get();
+        $this->feedManage($feeds);
+
+        return Command::SUCCESS;
+    }
+
+    function feedManage($feeds){
 
         $dateCheck = date('l');
         $timeCheck = date('H:i');
@@ -350,7 +362,6 @@ class ActiveFeedCron extends Command
                 }
         }
 
-        return Command::SUCCESS;
     }
 
     // function recursiveChmod($path, $filePerm=0777, $dirPerm=0777) {
