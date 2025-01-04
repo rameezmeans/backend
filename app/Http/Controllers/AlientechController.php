@@ -608,7 +608,14 @@ class AlientechController extends Controller
         $log = new Log();
         $log->type = $type;
         $log->request_type = 'alientech';
-        $log->message = $message;
+
+        if(is_array($message) || is_object($message)){
+            $log->message = json_encode($message);
+        }
+        else if(is_string($response)){
+            $log->message = $message;
+        }
+        
         $log->file_id = $fileID;
         $log->temporary_file_id = $tempFileID;
 
