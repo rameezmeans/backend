@@ -615,7 +615,10 @@ class AlientechController extends Controller
         else if(is_string($response)){
             $log->message = $message;
         }
-        
+        else{
+            $log->message = $message;
+        }
+
         $log->file_id = $fileID;
         $log->temporary_file_id = $tempFileID;
 
