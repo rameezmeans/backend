@@ -61,6 +61,45 @@
                             </thead>
                             <tbody>
                                 @foreach ($softwaresAndBrandsRecords as $record)
+
+                                @if($selected == 'not_added_to_database')
+                                @if(!added_to_db($record))   
+                                
+                                <tr role="row">
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p><a target="_blank" href="{{route('file', $record->file_id)}}">{{'Task'.$record->file_id}}</a></p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$record->brand}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$record->model}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$record->version}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$record->engine}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$record->ecu}}</p>
+                                        </td>
+                                       
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{\App\Models\Service::findOrFail($record->service_id)->name}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</p>
+                                        </td>
+                                        <td class="v-align-middle">
+                                            <p><input data-brand="{{$record->brand}}" data-model="{{$record->model}}" data-version="{{$record->version}}" data-engine="{{$record->engine}}" data-ecu="{{$record->ecu}}" data-service_id={{$record->service_id}} data-software_id={{$record->software_id}} data-file_id={{$record->file_id}} class="ps_active" type="checkbox" data-init-plugin="switchery"  @if(added_to_db($record)) checked="checked" @endif onclick="status_change()"/></p>
+                                        </td>
+                                    </tr>
+
+                                    @endif
+
+                                    @else
+
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p><a target="_blank" href="{{route('file', $record->file_id)}}">{{'Task'.$record->file_id}}</a></p>
@@ -91,6 +130,8 @@
                                             <p><input data-brand="{{$record->brand}}" data-model="{{$record->model}}" data-version="{{$record->version}}" data-engine="{{$record->engine}}" data-ecu="{{$record->ecu}}" data-service_id={{$record->service_id}} data-software_id={{$record->software_id}} data-file_id={{$record->file_id}} class="ps_active" type="checkbox" data-init-plugin="switchery"  @if(added_to_db($record)) checked="checked" @endif onclick="status_change()"/></p>
                                         </td>
                                     </tr>
+
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
