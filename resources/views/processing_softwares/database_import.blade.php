@@ -33,6 +33,7 @@
                                 <select name="selected_records" class=" full-width" data-init-plugin="select2">
                                     <option @if($selected == 'all') selected @endif value="all">All</option>
                                     <option  @if($selected == 'added_to_database') selected @endif value="added_to_database">Added To database</option>
+                                    <option  @if($selected == 'not_added_to_database') selected @endif value="not_added_to_database">Not added To database</option>
                                   </select>
                                  
                                 <button class="btn btn-success m-t-20" type="submit">Get External Sourced Softwares</button>
