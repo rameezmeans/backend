@@ -16,7 +16,7 @@
                 <div class="col-xs-12">
                     <button data-redirect="{{ route('add-processing-softwares') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Add Processing Software</span>
                     </button>
-                    <input type="text" id="search-table" class="form-control pull-right" placeholder="Search">
+                    {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                 </div>
                 </div>
                 <div class="clearfix"></div>
@@ -28,7 +28,7 @@
                             <thead>
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
-                                    {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">External Source</th> --}}
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">External Source</th>
                                 </tr>
                             </thead>
                             <tbody>
