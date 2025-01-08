@@ -37,9 +37,9 @@
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$ps->name}}</p>
                                         </td>
-                                        {{-- <td class="v-align-middle">
+                                        <td class="v-align-middle">
                                             <p><input data-ps_id={{$ps->id}} class="ps_active" type="checkbox" data-init-plugin="switchery" @if($ps->external_source) checked="checked" @endif onclick="status_change()"/></p>
-                                        </td> --}}
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
