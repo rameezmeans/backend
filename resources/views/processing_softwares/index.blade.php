@@ -78,7 +78,7 @@
 
         function change_status(ps_id, status){
             $.ajax({
-                url: "/change_ps_external_source",
+                url: "/change_ps_external_source_software",
                 type: "POST",
                 data: {
                     "_token": "{{ csrf_token() }}",

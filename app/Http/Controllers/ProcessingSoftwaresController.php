@@ -191,6 +191,14 @@ class ProcessingSoftwaresController extends Controller
         return response()->json(['html' =>$rows, 'tasks' => count($softwaresAndBrandsRecords) ], 200);
     }
 
+    public function changePsExternalSourceSoftware(Request $request){
+
+        $record = ProcessingSoftware::findOrFail($request->ps_id);
+        $record->external_source = ($request->external_source == 'true')?1:0;
+        $record->save();
+        
+    }
+
     public function changePsExternalSource(Request $request){
 
         if($request->added_in_database == "true") {

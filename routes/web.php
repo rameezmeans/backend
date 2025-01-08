@@ -761,6 +761,7 @@ Route::get('/database_import', [App\Http\Controllers\ProcessingSoftwaresControll
 Route::post('/database_import', [App\Http\Controllers\ProcessingSoftwaresController::class, 'databaseImport'])->name('database-import');
 Route::post('/get_external_sourced', [App\Http\Controllers\ProcessingSoftwaresController::class, 'getExternalSourced'])->name('get-external-sourced');
 Route::post('/change_ps_external_source', [App\Http\Controllers\ProcessingSoftwaresController::class, 'changePsExternalSource'])->name('change-ps-external-source');
+Route::post('/change_ps_external_source_software', [App\Http\Controllers\ProcessingSoftwaresController::class, 'changePsExternalSourceSoftware'])->name('change-ps-external-source-software');
 Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
 
 Route::get('/countires_report', [App\Http\Controllers\UsersController::class, 'countriesReport'])->name('countries-report');
