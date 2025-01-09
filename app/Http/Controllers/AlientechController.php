@@ -585,7 +585,7 @@ class AlientechController extends Controller
         }
         else{
 
-            $this->makeAlientechLogEntry( $file->id, 'error', $response, $post, $response);
+            $this->makeAlientechLogEntry( $file->id, 'error', "file is not uploaded.", $post, $response);
 
             // $file->disable_customers_download = 1;
             $file->no_longer_auto = 1;
