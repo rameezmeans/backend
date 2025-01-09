@@ -197,9 +197,9 @@ class FilesController extends Controller
         
         foreach($file->softwares as $s){
             if($s->service_id != 1){
-                if($s->reply_id == $engineerFile->id){
+                // if($s->reply_id == $engineerFile->id){
                     $middleName .= $s->service_id.$s->software_id;
-                }
+                // }
             }
         }
         
