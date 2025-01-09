@@ -732,10 +732,12 @@ margin-bottom: 10px !important;
                             </div>
                             @endif
 
+                            @if($totals != 0)
                             <div class="pull-right">
                               <span class="label label-success m-r-5">{{$totals}}</span>
                             </div>
-                          
+                            @endif
+
                           </div>
                           
 
@@ -818,9 +820,11 @@ margin-bottom: 10px !important;
                           </div>
                           @endif
 
+                          @if($totals != 0)
                           <div class="pull-right">
                             <span class="label label-success m-r-5">{{$totals}}</span>
                           </div>
+                          @endif
                           
                           </div>
                           
@@ -892,9 +896,11 @@ margin-bottom: 10px !important;
                             </div>
                             @endif
 
+                            @if($totals != 0)
                             <div class="pull-right">
                               <span class="label label-success m-r-5">{{$totals}}</span>
                             </div>
+                            @endif
                           
                           </div>
                           
@@ -3273,9 +3279,11 @@ margin-bottom: 10px !important;
                             </div>
                           @endif
 
+                          @if($totals != 0)
                           <div class="pull-right">
                             <span class="label label-success m-r-5">{{$totals}}</span>
                           </div>
+                          @endif
                           
                           </div>
                           
@@ -3359,9 +3367,11 @@ margin-bottom: 10px !important;
                             </div>
                           @endif
 
+                          @if($totals != 0)
                           <div class="pull-right">
                             <span class="label label-success m-r-5">{{$totals}}</span>
                           </div>
+                          @endif
                           
                           </div>
                           
@@ -3441,9 +3451,11 @@ margin-bottom: 10px !important;
                             </div>
                             @endif
 
+                            @if($totals != 0)
                             <div class="pull-right">
                               <span class="label label-success m-r-5">{{$totals}}</span>
                             </div>
+                            @endif
                           
                           </div>
                           
