@@ -526,6 +526,22 @@
 
               @if(isset($customer))
 
+
+              <h5>
+                Update Customer Tools
+              </h5>
+
+              <form method="POST" action="{{ route('update-tools') }}">
+
+                @csrf
+                <input type="hidden" name="user_id" value="{{$customer->id}}">
+                
+
+                <button type="submit" class="btn btn-info waves-effect waves-light m-sm">Save Changes</button>
+                
+              </form>
+
+
               <h5>
                 Customer Test Status
               </h5>

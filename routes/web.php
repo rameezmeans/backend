@@ -807,6 +807,7 @@ Route::post('/delete_option_comment', [App\Http\Controllers\ServicesController::
 Route::post('/get_services_report', [App\Http\Controllers\ServicesController::class, 'getServicesReport'])->name('get-services-report');
 Route::post('/fetch_softwares_report', [App\Http\Controllers\ProcessingSoftwaresController::class, 'ajaxSoftwareReport'])->name('get-software-report');
 Route::post('/get_country_report', [App\Http\Controllers\UsersController::class, 'getCountriesReport'])->name('get-country-report');
+Route::post('/update_tools', [App\Http\Controllers\UsersController::class, 'updateTools'])->name('update-tools');
 
 Route::get('/services', [App\Http\Controllers\ServicesController::class, 'index'])->name('services');
 Route::get('/create_service', [App\Http\Controllers\ServicesController::class, 'create'])->name('create-service');

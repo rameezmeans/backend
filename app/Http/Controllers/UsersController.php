@@ -27,6 +27,12 @@ class UsersController extends Controller
         // $this->middleware('adminOnly');
     }
 
+    public function updateTools(Request $request){
+
+        dd($request->all());
+
+    }
+    
     public function changeEngineerPermission(Request $request){
 
         if(!Auth::user()->is_admin()){
