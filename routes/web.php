@@ -101,8 +101,8 @@ Route::get('/autotuner', function () {
     $ch = curl_init($host);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/json',
-        'X-Autotuner-Id: 20104321',
-        'X-Autotuner-API-Key: mysecretapikey',
+        'X-Autotuner-Id: 20220959',
+        'X-Autotuner-API-Key: AsHPN3R2tDCnFwVDHbbcZDP1shPlKRDkJMJR1Kaa3M/owhJFYRhsF7VqR7mw2T6b',
     ));
     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 
