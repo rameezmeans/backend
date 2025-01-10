@@ -12,6 +12,7 @@ use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\Tool;
 use App\Models\User;
+use App\Models\UserTool;
 use Carbon\Carbon;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
@@ -32,7 +33,7 @@ class UsersController extends Controller
 
         $user = User::findOrFail($request->user_id);
 
-        Tool::where('user_id', $user->id)->where('type', 'master')->delete();
+        UserTool::where('user_id', $user->id)->where('type', 'master')->delete();
 
         $masterTools = $request->master_tools;
 
@@ -40,7 +41,7 @@ class UsersController extends Controller
         
             foreach($masterTools as $mid){
 
-                $record = new Tool();
+                $record = new UserTool();
                 $record->type = 'master';
                 $record->user_id = $user->id;
                 $record->tool_id = $mid;
@@ -49,7 +50,7 @@ class UsersController extends Controller
             }
         }
 
-        Tool::where('user_id', $user->id)->where('type', 'slave')->delete();
+        UserTool::where('user_id', $user->id)->where('type', 'slave')->delete();
 
         $slaveTools = $request->slave_tools;
 
@@ -57,7 +58,7 @@ class UsersController extends Controller
 
             foreach($slaveTools as $sid){
 
-                $record = new Tool();
+                $record = new UserTool();
                 $record->type = 'slave';
                 $record->user_id = $user->id;
                 $record->tool_id = $sid;
