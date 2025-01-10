@@ -536,8 +536,11 @@
                 @csrf
                 <input type="hidden" name="user_id" value="{{$customer->id}}">
                 
-
-                <button type="submit" class="btn btn-primary btn-block m-t-5">Save Changes</button>
+                <div class="row">
+                  <div class="col-md-4 m-t-10 sm-m-t-10">
+                    <button type="submit" class="btn btn-primary btn-block m-t-5">Save Changes</button>
+                  </div>
+                </div>
                 
               </form>
 
