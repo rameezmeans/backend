@@ -293,7 +293,7 @@ class CreditsController extends Controller
             $credit->price_payed = 0;
         }
         else{
-            $credit->gifted = 0;
+            $credit->gifted = 1;
 
             $request->validate([
                 'price_payed' => 'required|numeric|min:1'
