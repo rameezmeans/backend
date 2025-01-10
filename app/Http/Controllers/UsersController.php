@@ -67,7 +67,7 @@ class UsersController extends Controller
             }
         }
 
-        return redirect()->route('customers')->with(['success' => 'Tools updated, successfully.']);
+        return redirect()->back()->with(['success' => 'Tools updated, successfully.']);
 
     }
 
