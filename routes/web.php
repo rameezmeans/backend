@@ -96,7 +96,7 @@ Route::get('/autotuner', function () {
 
     $host ='https://api.autotuner-tool.com/v2/api/v1/master/metadata';
 
-    $request = array("type" => "slave", "slave_id" => "20101234");
+    $request = array("type" => "slave", "slave_id" => "20220958");
 
     $ch = curl_init($host);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
