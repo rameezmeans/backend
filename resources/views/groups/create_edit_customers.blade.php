@@ -535,6 +535,15 @@
 
                 @csrf
                 <input type="hidden" name="user_id" value="{{$customer->id}}">
+
+                <div class="form-group form-group-default form-group-default-select2">
+                  <label>Master Tools</label>
+                  <select class=" full-width" data-init-plugin="select2" multiple>
+                    <option value="Jim">Jim</option>
+                    <option value="John">John</option>
+                    <option value="Lucy">Lucy</option>
+                  </select>
+                </div>
                 
                 <div class="row">
                   <div class="col-md-4 m-t-10 sm-m-t-10">
