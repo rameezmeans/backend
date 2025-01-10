@@ -92,6 +92,38 @@ Route::get('/all_files_with_software/{id}/{service_id}/{software_id}', function 
 
 });
 
+Route::get('/autotuner', function () {
+
+    $host ='https://api.autotuner-tool.com/v2/api/v1/master/metadata';
+
+    $request = array("type" => "slave", "slave_id" => "20101234");
+
+    $ch = curl_init($host);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json',
+        'X-Autotuner-Id: 20104321',
+        'X-Autotuner-API-Key: mysecretapikey',
+    ));
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($request));
+
+    $response = curl_exec($ch);
+
+    $response_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    if ($response_code == 200) {
+        print_r(json_decode($response, true));
+    }
+    else{
+        print_r(json_decode($response, true));
+    }
+
+    curl_close($ch);
+
+
+});
+
 Route::get('/tasks', function () {
 
     // $credits = Credit::all();
