@@ -538,7 +538,7 @@
 
                 <div class="form-group form-group-default form-group-default-select2">
                   <label>Master Tools</label>
-                  <select class=" full-width" data-init-plugin="select2" multiple>
+                  <select name="master_tools[]" class=" full-width" data-init-plugin="select2" multiple>
                     <option value="Jim">Jim</option>
                     <option value="John">John</option>
                     <option value="Lucy">Lucy</option>
