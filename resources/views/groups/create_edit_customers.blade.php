@@ -539,9 +539,18 @@
                 <div class="form-group form-group-default form-group-default-select2">
                   <label>Master Tools</label>
                   <select name="master_tools[]" class=" full-width" data-init-plugin="select2" multiple>
-                    <option value="Jim">Jim</option>
-                    <option value="John">John</option>
-                    <option value="Lucy">Lucy</option>
+                    @foreach($allMasterTools as $mtool)
+                      <option value="{{ $mtool->id }}" @if( in_array($mtool->id, $masterTools)) selected @endif>{{$mtool->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+
+                <div class="form-group form-group-default form-group-default-select2">
+                  <label>Slave Tools</label>
+                  <select name="slave_tools[]" class=" full-width" data-init-plugin="select2" multiple>
+                    @foreach($allSlaveTools as $stool)
+                      <option value="{{ $stool->id }}" @if( in_array($stool->id, $slaveTools)) selected @endif>{{$stool->name}}</option>
+                    @endforeach
                   </select>
                 </div>
                 

@@ -10,6 +10,7 @@ use App\Models\FrontEnd;
 use App\Models\Group;
 use App\Models\Role;
 use App\Models\RoleUser;
+use App\Models\Tool;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Client\ConnectionException;
@@ -32,7 +33,7 @@ class UsersController extends Controller
         dd($request->all());
 
     }
-    
+
     public function changeEngineerPermission(Request $request){
 
         if(!Auth::user()->is_admin()){
@@ -492,7 +493,31 @@ class UsersController extends Controller
             // dd($groups);
 
             $frontends = FrontEnd::all();
-            return view('groups.create_edit_customers', ['customer' => $customer, 'groups' => $groups, 'frontends' => $frontends]);
+            
+            $masterTools = $customer->tools_master;
+
+            $masterToolsArray = [];
+            if($masterTools){
+                foreach($masterTools as $m){
+                    $masterToolsArray []= $m->tool_id;
+                }
+            }   
+
+            $slaveTools =  $customer->tools_slave;
+
+            $slaveToolsArray = [];
+            if($slaveTools){
+                foreach($slaveTools as $s){
+                    $slaveToolsArray []= $s->tool_id;
+                }
+            }   
+
+            $allMasterTools = Tool::where('type', 'master')->get();
+            $allSlaveTools = Tool::where('type', 'slave')->get();
+
+            return view('groups.create_edit_customers', [
+                'allMasterTools' => $allMasterTools, 'allSlaveTools' => $allSlaveTools, 'masterTools' =>  $masterToolsArray,'slaveTools' => $slaveToolsArray,
+                'customer' => $customer, 'groups' => $groups, 'frontends' => $frontends]);
         }
         else{
             abort(404);
