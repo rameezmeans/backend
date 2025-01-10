@@ -30,7 +30,43 @@ class UsersController extends Controller
 
     public function updateTools(Request $request){
 
-        dd($request->all());
+        $user = User::findOrFail($request->user_id);
+
+        Tool::where('user_id', $user->id)->where('type', 'master')->delete();
+
+        $masterTools = $request->master_tools;
+
+        if($masterTools){
+        
+            foreach($masterTools as $mid){
+
+                $record = new Tool();
+                $record->type = 'master';
+                $record->user_id = $user->id;
+                $record->tool_id = $mid;
+                $record->save();
+               
+            }
+        }
+
+        Tool::where('user_id', $user->id)->where('type', 'slave')->delete();
+
+        $slaveTools = $request->slave_tools;
+
+        if($slaveTools){
+
+            foreach($slaveTools as $sid){
+
+                $record = new Tool();
+                $record->type = 'slave';
+                $record->user_id = $user->id;
+                $record->tool_id = $sid;
+                $record->save();
+                
+            }
+        }
+
+        return redirect()->route('customers')->with(['success' => 'Tools updated, successfully.']);
 
     }
 
