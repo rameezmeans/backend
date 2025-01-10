@@ -537,7 +537,7 @@
                 <input type="hidden" name="user_id" value="{{$customer->id}}">
                 
 
-                <button type="submit" class="btn btn-info waves-effect waves-light m-sm">Save Changes</button>
+                <button type="submit" class="btn btn-primary btn-block m-t-5">Save Changes</button>
                 
               </form>
 
