@@ -527,7 +527,7 @@
               @if(isset($customer))
 
 
-              <h5>
+              <h5 class="m-t-50">
                 Update Customer Tools
               </h5>
 
