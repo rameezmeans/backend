@@ -628,6 +628,19 @@ margin-bottom: 10px !important;
                               <p>{{$record->results}}</p>
                               </div>
                             @endforeach
+
+                            @if($file->modification)
+                            
+                            <h5 class="m-t-40">Brand ECU Options Comment</h5>
+                            <div class="clearfix"></div>
+                            <br>
+                            <p>{{$file->modification}}</p>
+                            <br>
+                            @if($file->mention_modification)
+                              <p>{{$file->mention_modification}}</p>
+                            @endif
+                            
+                            @endif
                       </div>
 
                       <div class="col-lg-6">
