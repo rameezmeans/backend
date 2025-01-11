@@ -443,6 +443,11 @@
             </li> --}}
 
             <li class="">
+              <a href="{{ route('modifications') }}">Modification</a>
+              <span class="icon-thumbnail">MO</span>
+            </li>
+
+            <li class="">
               <a href="{{ route('dtc-lookup') }}">DTC Lookup</a>
               <span class="icon-thumbnail">DL</span>
             </li>

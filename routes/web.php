@@ -1028,6 +1028,13 @@ Route::post('/delete_template', [App\Http\Controllers\EmailTemplatesController::
 Route::get('/reminder_manager', [App\Http\Controllers\ReminderManagerController::class, 'index'])->name('reminder-manager');
 Route::post('/set_status_for_reminder_manager', [App\Http\Controllers\ReminderManagerController::class, 'setStatus'])->name('set-status-for-reminder-manager');
 
+Route::get('/modifications', [App\Http\Controllers\ModificationsController::class, 'index'])->name('modifications');
+Route::get('/create_modification', [App\Http\Controllers\ModificationsController::class, 'create'])->name('create-modification');
+Route::get('/edit_modification/{id}', [App\Http\Controllers\ModificationsController::class, 'edit'])->name('edit-modification');
+Route::post('/add_modification', [App\Http\Controllers\ModificationsController::class, 'add'])->name('add-modification');
+Route::post('/update_modification', [App\Http\Controllers\ModificationsController::class, 'update'])->name('update-modification');
+Route::post('/delete_modification', [App\Http\Controllers\ModificationsController::class, 'delete'])->name('delete-modification');
+
 Route::get('/dtc_lookup', [App\Http\Controllers\DTCLookupController::class, 'index'])->name('dtc-lookup');
 // Route::get('/create_dtc_lookup', [App\Http\Controllers\DTCLookupController::class, 'create'])->name('create-dtclookup');
 
