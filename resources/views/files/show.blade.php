@@ -636,7 +636,7 @@ margin-bottom: 10px !important;
 
                         @if($file->modification)
                             
-                            <h5 class="m-t-40">File Modifications</h5>
+                            <h5 class="m-t-40 text-danger">File Modifications</h5>
 
 
                             <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
