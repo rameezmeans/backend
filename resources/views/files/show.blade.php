@@ -629,21 +629,34 @@ margin-bottom: 10px !important;
                               </div>
                             @endforeach
 
-                            @if($file->modification)
                             
-                            <h5 class="m-t-40">Brand ECU Options Comment</h5>
-                            <div class="clearfix"></div>
-                            <br>
-                            <p>{{$file->modification}}</p>
-                            <br>
-                            @if($file->mention_modification)
-                              <p>{{$file->mention_modification}}</p>
-                            @endif
-                            
-                            @endif
                       </div>
 
                       <div class="col-lg-6">
+
+                        @if($file->modification)
+                            
+                            <h5 class="m-t-40">File Modifications</h5>
+
+
+                            <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                              <p class="pull-left">Modification</p>
+                              <div class="pull-right">
+                                <p>{{$file->modification}}</p>
+                              </div>
+
+                              @if($file->mention_modification)
+                                <p class="pull-left">Mentioned Modification</p>
+                                <div class="pull-right">
+                                  <p>{{$file->mention_modification}}</p>
+                                </div>
+                              @endif
+                              
+                            </div>
+
+                            @endif
+
+
                         <h5 class="m-t-40">Reading Tool</h5>
         
                             
