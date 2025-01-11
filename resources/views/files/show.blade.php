@@ -645,11 +645,15 @@ margin-bottom: 10px !important;
                                 <p>{{$file->modification}}</p>
                               </div>
                               <div class="clearfix"></div>
+                            </div>
+                            
+                            <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                               @if($file->mention_modification)
                                 <p class="pull-left">Mentioned Modification</p>
                                 <div class="pull-right">
                                   <p>{{$file->mention_modification}}</p>
                                 </div>
+                                <div class="clearfix"></div>
                               @endif
                               
                             </div>
