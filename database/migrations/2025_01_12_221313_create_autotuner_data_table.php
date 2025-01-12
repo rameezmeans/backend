@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('autotuner_data', function (Blueprint $table) {
             $table->id();
             $table->foreignId('file_id');
+            $table->foreignId('temporary_file_id');
             $table->integer('slave_id');
             $table->integer('ecu_id');
             $table->integer('model_id');
