@@ -27,185 +27,36 @@
 
                 <div class="row">
 
-                  <div class="card-title"><h5>Call</h5>
-                  </div>
+                  
 
-                  <div class="col-lg-12">
+                  <div class="col-lg-3">
+
+                    <div class="card-title"><h5>Call</h5>
+                    </div>
                     
                     {{$record->call}}
 
-                    {{-- <div class="table-responsive table-invoice">
-                      <table class="table">
-
-                        <thead>
-                          <tr>
-                            <th class="">Payment</th>
-                            <th class="">Payment Without Tax</th>
-                            <th class="text-center">Tax</th>
-                            <th class="text-center">User</th>
-                            <th class="text-right">Group</th>
-                            <th class="text-right">Group Tax (%)</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td class="">
-                              €{{$credit->price_payed}}
-                            </td>
-                            <td class="">
-                              €{{$credit->price_without_tax}}
-                            </td>
-                            <td class="text-center">€{{$credit->tax}}</td>
-                            <td class="text-center">{{$user->name}}</td>
-                            <td class="text-right">{{$group->name}}</td>
-                            <td class="text-right">{{$group->tax}}</td>
-                          </tr>
-                          
-                        </tbody>
-                      </table>
-                    </div> --}}
+                   
                     
                   </div>
 
                   
-                  {{-- @if($credit->payment) --}}
+                  
 
-                  <div class="card-title m-t-40"><h5>Response</h5>
-                  </div>
+                  
 
-                  <div class="col-lg-12">
+                  <div class="col-lg-3">
+
+                    <div class="card-title m-t-40"><h5>Response</h5>
+                    </div>
 
                     {{$record->response}}
-                    {{-- <div class="table-responsive table-invoice">
-                      <table class="table">
-
-                        <thead>
-                          <tr>
-                            <th class="">Payment Type</th>
-                            <th class="">Payment ID</th>
-                            <th class="">Payment Amount</th>
-                            
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td class="">
-                              {{$credit->type}}
-                            </td>
-                            <td class="">
-                              
-                              @if($credit->type == 'paypal')
-                                {{$credit->payment->paypal_id}}
-                              @else
-                                {{$credit->payment->stripe_id}}
-                              @endif
-
-                            </td>
-                            <td class="">
-                              €{{$credit->payment->amount}}
-                            </td>
-                          </tr>
-                          
-                        </tbody>
-                      </table>
-                    </div> --}}
+                    
                     
                   </div>
 
 
-                  {{-- @endif --}}
-
-                  {{-- @if($credit->elorus) --}}
-
-                  {{-- <div class="card-title m-t-40"><h5>Elorus</h5>
-                  </div>
-
-                  <div class="col-lg-12"> --}}
-                    
-                    {{-- <div class="table-responsive table-invoice">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                            <th class="">Elorus ID</th>
-                            <th class="">Amount</th>
-                            <th class="">Tax</th>
-                            <th class="">Invoice ID</th>
-                            
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td class="">
-                              {{$credit->elorus->elorus_id}}
-                            </td>
-                            <td class="">
-                              
-                              
-                              €{{$credit->elorus->amount}}
-                              
-
-                            </td>
-                            <td class="">
-                              €{{$credit->elorus->tax}}
-                            </td>
-                            <td class="">
-                              {{$credit->elorus->desc}}
-                            </td>
-                          </tr>
-                          
-                        </tbody>
-                      </table>
-                    </div> --}}
-                    
-                  {{-- </div>
-
-                  @endif
-
-                  @if($credit->zoho)
-
-                  <div class="card-title m-t-40"><h5>Zoho</h5>
-                  </div>
-
-                  <div class="col-lg-12"> --}}
-                    
-                    {{-- <div class="table-responsive table-invoice">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                            <th class="">Zoho ID</th>
-                            <th class="">Amount</th>
-                            <th class="">Tax</th>
-                            <th class="">Invoice ID</th>
-                            
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td class="">
-                              {{$credit->zoho->zoho_id}}
-                            </td>
-                            <td class="">
-                              
-                              
-                              €{{$credit->zoho->amount+$credit->zoho->tax}}
-                              
-
-                            </td>
-                            <td class="">
-                              €{{$credit->zoho->tax}}
-                            </td>
-                            <td class="">
-                              {{$credit->zoho->desc}}
-                            </td>
-                          </tr>
-                          
-                        </tbody>
-                      </table>
-                    </div> --}}
-                    
-                  {{-- </div> --}}
-
-                  {{-- @endif --}}
+                  
 
                   </div>
                   
@@ -216,7 +67,6 @@
           </div>
         </div>
     </div>
-</div>
 @endsection
 
 
