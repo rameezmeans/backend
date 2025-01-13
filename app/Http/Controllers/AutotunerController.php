@@ -31,6 +31,7 @@ class AutotunerController extends Controller
         }
         if(is_array($response) || is_object($response)){
             unset($response['data']);
+            unset($response['hash']);
             $log->response = json_encode($response);
         }
         else if(is_string($response)){
