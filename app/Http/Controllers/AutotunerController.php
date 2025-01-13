@@ -23,12 +23,14 @@ class AutotunerController extends Controller
         $log->temporary_file_id = $tempFileID;
 
         if(is_array($call) || is_object($call)){
+            unset($call['data']);
             $log->call = json_encode($call);
         }
         else if(is_string($call)){
             $log->call = $call;
         }
         if(is_array($response) || is_object($response)){
+            unset($response['data']);
             $log->response = json_encode($response);
         }
         else if(is_string($response)){
