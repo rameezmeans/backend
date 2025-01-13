@@ -407,6 +407,10 @@
               <span class="icon-thumbnail">NF</span>
             </li>
             <li class="">
+              <a href="{{ route('autoturner-logs') }}">Autoturner Logs</a>
+              <span class="icon-thumbnail">NF</span>
+            </li>
+            <li class="">
               <a href="{{ route('magic-logs') }}">Magic Logs</a>
               <span class="icon-thumbnail">ET</span>
             </li>
