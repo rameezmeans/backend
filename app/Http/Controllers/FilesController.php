@@ -65,6 +65,7 @@ class FilesController extends Controller
     private $manager;
     private $alientechObj;
     private $magicObj;
+    private $autotunerObj;
     /**
      * Create a new controller instance.
      *
@@ -74,6 +75,7 @@ class FilesController extends Controller
     {
         $this->alientechObj = new AlientechController();
         $this->magicObj = new MagicController();
+        $this->autotunerObj = new AutotunerController();
         $reminderManager = new ReminderManagerController();
         $this->manager = $reminderManager->getAllManager();
         $this->middleware('auth',['except' => ['recordFeedback']]);
@@ -2973,6 +2975,12 @@ class FilesController extends Controller
                 $this->magicObj->magicEncrypt( $path, $file, $newFileName, $engineerFile, $magicEncryptionType );
             }
 
+        }
+
+        $autotunerLabel = Tool::where('label', 'Autotuner')->where('type', 'slave')->first();
+
+        if($file->tool_type == 'slave' && $file->tool_id == $autotunerLabel->id){
+            $this->autotunerObj->encrypt( $path, $file, $newFileName, $engineerFile);
         }
         
         $allEearlierReminders = EmailReminder::where('user_id', $file->user_id)

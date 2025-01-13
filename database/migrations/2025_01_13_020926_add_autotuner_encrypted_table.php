@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('autotuner_data', function (Blueprint $table) {
+        Schema::create('autotuner_encrypted', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('file_id')->default(0);
-            $table->foreignId('temporary_file_id');
-            $table->integer('slave_id');
-            $table->integer('ecu_id');
-            $table->integer('model_id');
-            $table->integer('mcu_id');
+            $table->foreignId('file_id');
+            $table->foreignId('request_file_id');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('autotuner_data');
+        //
     }
 };
