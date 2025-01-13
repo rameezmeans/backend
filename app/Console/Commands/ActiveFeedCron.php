@@ -269,14 +269,14 @@ class ActiveFeedCron extends Command
         
         \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
 
-        $feeds = NewsFeed::where('front_end_id', 1)->get();
-        $this->feedManage($feeds);
+        $feeds1 = NewsFeed::where('front_end_id', 1)->get();
+        $this->feedManage($feeds1);
 
-        $feeds = NewsFeed::where('front_end_id', 2)->get();
-        $this->feedManage($feeds);
+        $feeds2 = NewsFeed::where('front_end_id', 2)->get();
+        $this->feedManage($feeds2);
 
-        $feeds = NewsFeed::where('front_end_id', 3)->get();
-        $this->feedManage($feeds);
+        $feeds3 = NewsFeed::where('front_end_id', 3)->get();
+        $this->feedManage($feeds3);
 
         return Command::SUCCESS;
     }
