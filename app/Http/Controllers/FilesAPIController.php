@@ -644,6 +644,7 @@ class FilesAPIController extends Controller
         $chatID = env('CHAT_USER_ID');
 
         $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
+        $autotunerLabel = Tool::where('label', 'Autotuner')->where('type', 'slave')->first();
 
         if($file->checking_status == 'unchecked'){
 
@@ -795,6 +796,11 @@ class FilesAPIController extends Controller
                         // dd($file->final_magic_decoded_file());
                         $magicEncryptionType = 'int_flash';
                         (new MagicController)->magicEncrypt( $path, $file, $fileToSave, $engineerFile, $magicEncryptionType );
+                    }
+
+                    if($file->tool_type == 'slave' && $file->tool_id == $autotunerLabel->id){
+                        
+                        (new AutotunerController)->encrypt( $path, $file, $fileToSave, $engineerFile );
                     }
 
                     if($file->alientech_file){ // if slot id is assigned
