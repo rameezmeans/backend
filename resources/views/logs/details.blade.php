@@ -29,7 +29,7 @@
 
                   
 
-                  <div class="col-lg-3">
+                  <div class="col-lg-12">
 
                     <div class="card-title"><h5>Call</h5>
                     </div>
@@ -47,7 +47,7 @@
 
                   
 
-                  <div class="col-lg-3">
+                  <div class="col-lg-12">
 
                     <div class="card-title m-t-40"><h5>Response</h5>
                     </div>
