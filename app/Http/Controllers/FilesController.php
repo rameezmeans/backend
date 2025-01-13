@@ -2980,6 +2980,51 @@ class FilesController extends Controller
         $autotunerLabel = Tool::where('label', 'Autotuner')->where('type', 'slave')->first();
 
         if($file->tool_type == 'slave' && $file->tool_id == $autotunerLabel->id){
+
+            if($file->subdealer_group_id){
+
+                $path = public_path('/../../subportal/public'.$file->file_path).$newFileName;
+            }
+            else{
+                if($file->front_end_id == 1){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    }
+
+                }
+                else if($file->front_end_id == 3){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path).$newFileName;
+                    }
+
+                }
+                else{
+
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../tuningX/public'.$file->file_path).$newFileName;
+                    }
+                }
+            }
+
+
             $this->autotunerObj->encrypt( $path, $file, $newFileName, $engineerFile);
         }
         
