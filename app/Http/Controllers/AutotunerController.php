@@ -83,7 +83,7 @@ class AutotunerController extends Controller
                 $this->makeAututunerLogEntry(0, 'error', 'Error: hash mismatch.', $request, $response, $file->id);
             } else {
 
-                file_put_contents(public_path('/uploads/'.$newFileName.'_encrypted.slave'), $maps_data);
+                file_put_contents(public_path($path.'_encrypted.slave'), $maps_data);
 
                 $new = new AutotunerEncrypted();
                 $new->request_file_id = $engineerFile->id;
