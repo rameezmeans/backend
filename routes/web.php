@@ -998,6 +998,7 @@ Route::get('/logs', [App\Http\Controllers\LogsController::class, 'index'])->name
 Route::get('/all_logs', [App\Http\Controllers\LogsController::class, 'all'])->name('all-logs');
 
 Route::get('/alientech_logs', [App\Http\Controllers\LogsController::class, 'alientechLogs'])->name('alientech-logs');
+Route::get('/autoturner_logs', [App\Http\Controllers\LogsController::class, 'autoturnerLogs'])->name('autoturner-logs');
 Route::get('/magic_logs', [App\Http\Controllers\LogsController::class, 'magicLogs'])->name('magic-logs');
 Route::get('/elorus_logs', [App\Http\Controllers\LogsController::class, 'elorusLogs'])->name('elorus-logs');
 Route::get('/stripe_logs', [App\Http\Controllers\LogsController::class, 'stripeLogs'])->name('stripe-logs');

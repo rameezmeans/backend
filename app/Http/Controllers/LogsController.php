@@ -13,6 +13,17 @@ class LogsController extends Controller
         $this->middleware('adminOnly');
     }
 	
+	 public function autoturnerLogs(){  
+         
+        $autoTurnerLogs = ModelLog::orderBy('created_at', 'desc')
+        ->where('request_type', 'autotuner')->get();
+
+        return view('logs.autoturner_logs', [
+            'autoTurnerLogs' => $autoTurnerLogs,
+            
+        ]);
+
+     }
 	 public function alientechLogs(){   
 
         $alientechLogs = ModelLog::orderBy('created_at', 'desc')
