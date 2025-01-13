@@ -34,36 +34,23 @@
                     <div class="card-title"><h5>Call</h5>
                     </div>
                     
-                    {{$record->call}}
+                    <p>{{$record->call}}</p>
+
+                    <br>
+
+                    <div class="card-title m-t-40"><h5>Response</h5>
+                    </div>
+
+                    <p>{{$record->response}}</p>
 
                    
                     
                   </div>
                 </div>
 
-                <br>
                 
-                  <div class="row">
 
                   
-                  
-
-                  
-
-                  <div class="col-lg-12">
-
-                    <div class="card-title m-t-40"><h5>Response</h5>
-                    </div>
-
-                    {{$record->response}}
-                    
-                    
-                  </div>
-
-
-                  
-
-                  </div>
                   
 
                 </div>
