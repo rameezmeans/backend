@@ -807,26 +807,28 @@ class FilesAPIController extends Controller
                         $slotID = $file->alientech_file->slot_id;
                         $encodingType = $this->getEncodingType($file);
                         (new AlientechController)->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType, $engineerFile );
-                    }
 
-                    if($file->status == 'submitted'){
-                        if($file->no_longer_auto == 0){
-                            if($file->inner_search == 0){
-                                $file->status = 'completed';
-                                $file->support_status = "closed";
-                                $file->checked_by = 'engineer';
-                                $file->save();
+
+                        if($file->status == 'submitted'){
+                            if($file->no_longer_auto == 0){
+                                if($file->inner_search == 0){
+                                    $file->status = 'completed';
+                                    $file->support_status = "closed";
+                                    $file->checked_by = 'engineer';
+                                    $file->save();
+                                }
                             }
                         }
                     }
+                    else{
+                        if($file->status == 'submitted'){
 
-                    if($file->status == 'submitted'){
-
-                        $file->status = 'completed';
-                        $file->support_status = "closed";
-                        $file->checked_by = 'engineer';
-                        $file->save();
-                        
+                            $file->status = 'completed';
+                            $file->support_status = "closed";
+                            $file->checked_by = 'engineer';
+                            $file->save();
+                            
+                        }
                     }
 
                     if(!$file->response_time){
