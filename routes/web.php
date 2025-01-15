@@ -162,6 +162,7 @@ Route::get('/tasks', function () {
 
                             // dd($file);
                             print_r( strtotime($file->timer) );
+                            print_r( $fsat*60000 );
 
                             dd(strtotime(now()));
 
