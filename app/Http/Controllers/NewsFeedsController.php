@@ -389,13 +389,13 @@ class NewsFeedsController extends Controller
         $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
         $fsat = Key::where('key', 'file_submitted_alert_time')->first()->value;
         $foat = Key::where('key', 'file_open_alert_time')->first()->value;
-        $fsdt = Key::where('key', 'file_open_delay_time')->first()->value;
+        $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
 
         return view('feeds.timers', [
             'fsdt' => $fsdt, 
             'fsat' => $fsat,
             'foat' => $foat,
-            'fsdt' => $fsdt
+            'fodt' => $fodt
         ]);
     }
 
