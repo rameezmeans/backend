@@ -20,6 +20,7 @@ use App\Models\FileReplySoftwareService;
 use App\Models\FileService;
 use App\Models\Group;
 use App\Models\Key;
+use App\Models\NewsFeed;
 use App\Models\PaymentLog;
 use App\Models\PaypalRecord;
 use App\Models\ReminderManager;
@@ -125,6 +126,73 @@ Route::get('/autotuner', function () {
 });
 
 Route::get('/tasks', function () {
+
+    $frontendID = 2;
+    $files = File::where('support_status', 'open')->where('front_end_id', 2)->get();
+    
+    $activeFeed = NewsFeed::where('active', 1)->where('front_end_id', $frontendID)->first();
+
+        $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+        $fsat = Key::where('key', 'file_submitted_alert_time')->first()->value;
+        $foat = Key::where('key', 'file_open_alert_time')->first()->value;
+        $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
+
+        if($activeFeed){
+            foreach($files as $file){
+
+                if($file->timer == NULL){
+
+                    $file->timer = Carbon::now();
+                    $file->save();
+                }
+
+                if($file->timer != NULL){
+
+                    if($file->red == 0){
+
+                        if($file->support_status == 'open') {
+
+                            if( (strtotime($file->timer)+$foat*60000)  <= strtotime(now())){
+                                $file->red = 1;
+                                $file->save();
+                            }   
+                        }
+                        
+                        if($file->status == 'submitted') {
+                            
+                            if( (strtotime($file->timer)+$fsat*60000)  <= strtotime(now())){
+                                $file->red = 1;
+                                $file->save();
+                            } 
+                        }
+                    }
+
+                    if($file->delay == 0){
+
+                        if($file->support_status == 'open') {
+
+                            if( (strtotime($file->timer)+$fodt*60000)  <= strtotime(now())){
+                                $file->delayed = 1;
+                                $file->save();
+                            }   
+                        }
+                        
+                        if($file->status == 'submitted') {
+
+                            if( (strtotime($file->timer)+$fsdt*60000)  <= strtotime(now())){
+                                $file->delayed = 1;
+                                $file->save();
+                            } 
+
+                        }
+                    }
+
+                }
+            }
+        }
+
+
+    dd('testing');
 
     // $credits = Credit::all();
 
