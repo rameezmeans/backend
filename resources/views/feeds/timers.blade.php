@@ -15,7 +15,7 @@
                     Timers
                   </h5>
                 
-                @endif
+                
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
