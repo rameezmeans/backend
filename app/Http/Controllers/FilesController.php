@@ -332,6 +332,7 @@ class FilesController extends Controller
 
         $file->disable_customers_download = 0;
         $file->status = 'completed';
+        $file->red = 0;
        
 
         $file->support_status = "closed";
@@ -618,6 +619,7 @@ class FilesController extends Controller
             $file = File::findOrFail($reqfile->file_id);
 
             $file->status = 'completed';
+            $file->red = 0;
             $file->updated_at = Carbon::now();
             $file->reupload_time = Carbon::now();
             $file->response_time = $this->getResponseTime($file);
@@ -2290,6 +2292,13 @@ class FilesController extends Controller
 
         $file = File::findOrFail($request->file_id);
         $file->support_status = $request->support_status;
+
+        if($file->support_status == 'closed'){
+            if($file->red == 1){
+                $file->red = 0;
+            }
+        }
+
         $file->save();
 
         return Redirect::back()->with(['success' => 'File Support status changed.']);
@@ -2307,6 +2316,12 @@ class FilesController extends Controller
         $file->updated_at = Carbon::now();
         
         $customer = User::findOrFail($file->user_id);
+
+        if($file->status == 'completed'){
+            if($file->red == 1){
+                $file->red = 0;
+            }
+        }
 
         if($request->status == 'rejected'){
 
@@ -3057,6 +3072,7 @@ class FilesController extends Controller
             if($file->status == 'submitted'){
 
                 $file->status = 'completed';
+                $file->red = 0;
                 $file->updated_at = Carbon::now();
                 $file->save();
             }
@@ -3080,6 +3096,7 @@ class FilesController extends Controller
 
             // if($file->no_longer_auto == 0){
                 $file->support_status = "closed";
+                $file->red = 0;
                 $file->checked_by = 'engineer';
                 $file->save();
             // }
@@ -3858,6 +3875,7 @@ class FilesController extends Controller
 
             if($file->status == 'submitted'){
                 $file->status = 'completed';
+                $file->red = 0;
                 $file->updated_at = Carbon::now();
                 $file->save();
             }
@@ -3876,10 +3894,12 @@ class FilesController extends Controller
                 $old = File::findOrFail($file->original_file_id);
                 $old->checked_by = 'engineer';
                 $file->support_status = "closed";
+                $file->red = 0;
                 $old->save();
             }
 
                 $file->support_status = "closed";
+                $file->red = 0;
                 $file->checked_by = 'engineer';
                 $file->save();
 
