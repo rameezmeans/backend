@@ -39,6 +39,37 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
+
+                <div class="form-group form-group-default required ">
+                  <label>File submitted Alert time</label>
+                  <input value="@if(isset($fsat)) {{ $fsat }} @else{{old('file_submitted_alert_time') }}@endif"  name="file_submitted_alert_time" type="text" class="form-control" required>
+                </div>
+                @error('file_submitted_alert_time')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+
+                <div class="form-group form-group-default required ">
+                  <label>File open Alert time</label>
+                  <input value="@if(isset($foat)) {{ $foat }} @else{{old('file_open_alert_time') }}@endif"  name="file_open_alert_time" type="text" class="form-control" required>
+                </div>
+                @error('file_open_alert_time')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+
+                <div class="form-group form-group-default required ">
+                  <label>File open Delay time</label>
+                  <input value="@if(isset($fodt)) {{ $fodt }} @else{{old('file_open_delay_time') }}@endif"  name="file_open_delay_time" type="text" class="form-control" required>
+                </div>
+                @error('file_open_delay_time')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+
                 <div class="text-center m-t-40">                    
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold"> Update Timers </span></button>
                 </div>
