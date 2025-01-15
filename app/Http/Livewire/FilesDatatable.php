@@ -41,6 +41,7 @@ class FilesDatatable extends LivewireDatatable
                 ->orderBy('ss', 'asc')
                 ->orderBy('s', 'asc')
                 ->where('is_credited', 1)
+                ->where('delayed', 0)
                 ->whereNull('original_file_id')
                 ->where('assigned_to', Auth::user()->id);
                 
@@ -203,6 +204,10 @@ class FilesDatatable extends LivewireDatatable
 
     public function rowClasses($row, $loop)
     {  
+        if($row->red == 1){
+            return 'bg-red-500 hover:bg-red-300 divide-x divide-red-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
+        }
+
         if($row->checked_by == 'customer'){
             return 'bg-gray-500 hover:bg-gray-300 divide-x divide-gray-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
         }
