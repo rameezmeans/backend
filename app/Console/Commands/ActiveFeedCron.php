@@ -278,9 +278,23 @@ class ActiveFeedCron extends Command
         $feeds3 = NewsFeed::where('front_end_id', 3)->get();
         $this->feedManage($feeds3);
 
-        $submittedFiles1 = File::where('status', 'submitted')->get();
+        $submittedFiles1 = File::where('status', 'submitted')->where('front_end_id', 1)->get();
+
+
+
+        $submittedFiles2 = File::where('status', 'submitted')->where('front_end_id', 2)->get();
+        $submittedFiles1 = File::where('status', 'submitted')->where('front_end_id', 3)->get();
 
         return Command::SUCCESS;
+    }
+
+    function manageFiles($files, $frontendID){
+
+        $activeFeed = NewsFeed::where('active', 1)->where('front_end_id', $frontendID)->first();
+
+        
+
+
     }
 
     function feedManage($feeds){
