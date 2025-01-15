@@ -142,7 +142,7 @@
         </li>
 
         <li class="m-t-30 ">
-          <a href="{{ route('countires-report') }}" class="detailed">
+          <a href="{{ route('countries-report') }}" class="detailed">
             <span class="title">Countries Reports</span>
           </a>
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
