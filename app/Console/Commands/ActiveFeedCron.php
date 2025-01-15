@@ -297,10 +297,10 @@ class ActiveFeedCron extends Command
         if($activeFeed){
             foreach($files as $file){
                 if($file->timer == NULL){
-                    $file->time = Carbon::now();
+                    $file->timer = Carbon::now();
                     $file->save();
                 }
-                if($file->time != NULL){
+                if($file->timer != NULL){
                     
                 }
             }

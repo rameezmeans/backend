@@ -401,7 +401,7 @@ class NewsFeedsController extends Controller
 
     public function updateTimers(Request $request){
 
-        dd($request->all());
+        
     }
 
     public function delete(Request $request)
