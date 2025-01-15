@@ -161,11 +161,11 @@ Route::get('/tasks', function () {
                         if($file->status == 'submitted') {
 
                             // dd($file);
-                            print_r(strtotime($file->timer)+$fsat*60000);
+                            print_r(strtotime($file->timer)+($fsat*60000));
 
                             dd(strtotime(now()));
 
-                            if( (strtotime($file->timer)+$fsat*60000)  <= strtotime(now())){
+                            if( (strtotime($file->timer)+($fsat*60000))  <= strtotime(now())){
                                 $file->red = 1;
                                 $file->save();
                             } 
