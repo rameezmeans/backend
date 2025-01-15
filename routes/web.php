@@ -161,8 +161,8 @@ Route::get('/tasks', function () {
                         if($file->status == 'submitted') {
 
                             // dd($file);
-                            print_r( strtotime($file->timer) );
-                            print_r( $fsat*60000 );
+                            print_r( strtotime($file->timer) .'<br>' );
+                            print_r( $fsat*60000 .'<br>' );
                             print_r( strtotime($file->timer) + $fsat*60000 );
 
                             dd(strtotime(now()));
