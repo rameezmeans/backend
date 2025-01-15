@@ -309,61 +309,63 @@ class ActiveFeedCron extends Command
         $foat = Key::where('key', 'file_open_alert_time')->first()->value;
         $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
 
-        if($activeFeed->type == 'good_news'){
-            
-            foreach($files as $file){
+        if($activeFeed != NULL){
 
-                if($file->timer == NULL){
+            if($activeFeed->type == 'good_news'){
 
-                    $file->timer = Carbon::now();
-                    $file->save();
-                }
+                foreach($files as $file){
 
-                if($file->timer != NULL){
+                    if($file->timer == NULL){
 
-                    if($file->red == 0){
+                        $file->timer = Carbon::now();
+                        $file->save();
+                    }
 
-                        if($file->support_status == 'open') {
+                    if($file->timer != NULL){
 
-                            if( (strtotime($file->timer)+($foat*60))  <= strtotime(now())){
-                                $file->red = 1;
-                                $file->save();
-                            }   
-                        }
-                        
-                        if($file->status == 'submitted') {
+                        if($file->red == 0){
+
+                            if($file->support_status == 'open') {
+
+                                if( (strtotime($file->timer)+($foat*60))  <= strtotime(now())){
+                                    $file->red = 1;
+                                    $file->save();
+                                }   
+                            }
                             
-                            if( (strtotime($file->timer)+($fsat*60))  <= strtotime(now())){
-                                $file->red = 1;
-                                $file->save();
-                            } 
+                            if($file->status == 'submitted') {
+                                
+                                if( (strtotime($file->timer)+($fsat*60))  <= strtotime(now())){
+                                    $file->red = 1;
+                                    $file->save();
+                                } 
+                            }
                         }
+
+                        if($file->delay == 0){
+
+                            if($file->support_status == 'open') {
+
+                                if( (strtotime($file->timer)+($fodt*60))  <= strtotime(now())){
+                                    $file->delayed = 1;
+                                    $file->save();
+                                }   
+                            }
+
+                            if($file->status == 'submitted') {
+
+                                if( (strtotime($file->timer)+($fsdt*60))  <= strtotime(now())){
+                                    $file->delayed = 1;
+                                    $file->save();
+                                } 
+
+                            }
+                        }
+
                     }
-
-                    if($file->delay == 0){
-
-                        if($file->support_status == 'open') {
-
-                            if( (strtotime($file->timer)+($fodt*60))  <= strtotime(now())){
-                                $file->delayed = 1;
-                                $file->save();
-                            }   
-                        }
-
-                        if($file->status == 'submitted') {
-
-                            if( (strtotime($file->timer)+($fsdt*60))  <= strtotime(now())){
-                                $file->delayed = 1;
-                                $file->save();
-                            } 
-
-                        }
-                    }
-
                 }
             }
         }
-
 
     }
 
