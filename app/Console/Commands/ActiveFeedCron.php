@@ -279,11 +279,13 @@ class ActiveFeedCron extends Command
         $this->feedManage($feeds3);
 
         $submittedFiles1 = File::where('status', 'submitted')->where('front_end_id', 1)->get();
-
-
+        $this->manageFiles($submittedFiles1, 1);
 
         $submittedFiles2 = File::where('status', 'submitted')->where('front_end_id', 2)->get();
-        $submittedFiles1 = File::where('status', 'submitted')->where('front_end_id', 3)->get();
+        $this->manageFiles($submittedFiles2, 2);
+
+        $submittedFiles3 = File::where('status', 'submitted')->where('front_end_id', 3)->get();
+        $this->manageFiles($submittedFiles3, 3);
 
         return Command::SUCCESS;
     }
@@ -292,7 +294,17 @@ class ActiveFeedCron extends Command
 
         $activeFeed = NewsFeed::where('active', 1)->where('front_end_id', $frontendID)->first();
 
-        
+        if($activeFeed){
+            foreach($files as $file){
+                if($file->timer == NULL){
+                    $file->time = Carbon::now();
+                    $file->save();
+                }
+                if($file->time != NULL){
+                    
+                }
+            }
+        }
 
 
     }

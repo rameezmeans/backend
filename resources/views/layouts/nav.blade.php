@@ -452,6 +452,11 @@
             </li>
 
             <li class="">
+              <a href="{{ route('timers') }}">Timers</a>
+              <span class="icon-thumbnail">Ti</span>
+            </li>
+
+            <li class="">
               <a href="{{ route('dtc-lookup') }}">DTC Lookup</a>
               <span class="icon-thumbnail">DL</span>
             </li>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FrontEnd;
 use App\Models\IntegerMeta;
+use App\Models\Key;
 use App\Models\NewsFeed;
 use Illuminate\Http\Request;
 
@@ -381,6 +382,26 @@ class NewsFeedsController extends Controller
 
         return redirect()->route('feeds')->with(['success' => 'Feed added, successfully.']);
 
+    }
+
+    public function timers(){
+
+        $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+        $fsat = Key::where('key', 'file_submitted_alert_time')->first()->value;
+        $foat = Key::where('key', 'file_open_alert_time')->first()->value;
+        $fsdt = Key::where('key', 'file_open_delay_time')->first()->value;
+
+        return view('feeds.timers', [
+            'fsdt' => $fsdt, 
+            'fsat' => $fsat,
+            'foat' => $foat,
+            'fsdt' => $fsdt
+        ]);
+    }
+
+    public function updateTimers(Request $request){
+
+        dd($request->all());
     }
 
     public function delete(Request $request)

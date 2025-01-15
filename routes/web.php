@@ -992,6 +992,9 @@ Route::get('/edit-feeds/{id}', [App\Http\Controllers\NewsFeedsController::class,
 Route::post('/change_status_feeds', [App\Http\Controllers\NewsFeedsController::class, 'changeStatus'])->name('change-status-feeds');
 Route::post('/delete_feed', [App\Http\Controllers\NewsFeedsController::class, 'delete'])->name('delete-feed');
 
+Route::post('/update_timers', [App\Http\Controllers\NewsFeedsController::class, 'updateTimers'])->name('update-timers');
+Route::get('/timers', [App\Http\Controllers\NewsFeedsController::class, 'timers'])->name('timers');
+
 Route::get('/send_test_message', [App\Http\Controllers\FilesController::class, 'sendTestMessage'])->name('send-test-message');
 
 Route::get('/logs', [App\Http\Controllers\LogsController::class, 'index'])->name('logs');
