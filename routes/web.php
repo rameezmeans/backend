@@ -129,7 +129,7 @@ Route::get('/tasks', function () {
 
     $frontendID = 2;
     $files = File::where('status', 'submitted')->where('front_end_id', 2)->limit(1)->get();
-    dd($files);
+    // dd($files);
     $activeFeed = NewsFeed::where('active', 1)->where('front_end_id', $frontendID)->first();
 
         $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
@@ -159,6 +159,8 @@ Route::get('/tasks', function () {
                         }
                         
                         if($file->status == 'submitted') {
+
+                            dd($file);
                             
                             if( (strtotime($file->timer)+$fsat*60000)  <= strtotime(now())){
                                 $file->red = 1;
