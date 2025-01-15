@@ -6,6 +6,7 @@ use App\Models\Credit;
 use App\Models\EmailReminder;
 use App\Models\EmailTemplate;
 use App\Models\File;
+use App\Models\Key;
 use App\Models\NewsFeed;
 use App\Models\PaymentLog;
 use App\Models\Schedualer;
@@ -294,14 +295,48 @@ class ActiveFeedCron extends Command
 
         $activeFeed = NewsFeed::where('active', 1)->where('front_end_id', $frontendID)->first();
 
+        $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+        $fsat = Key::where('key', 'file_submitted_alert_time')->first()->value;
+        $foat = Key::where('key', 'file_open_alert_time')->first()->value;
+        $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
+
         if($activeFeed){
             foreach($files as $file){
+
                 if($file->timer == NULL){
+
                     $file->timer = Carbon::now();
                     $file->save();
                 }
+
                 if($file->timer != NULL){
-                    
+
+                    if($file->red == 0){
+
+                        if( (strtotime($file->timer)+$foat*60000)  <= strtotime(now())){
+                            $file->red = 1;
+                            $file->save();
+                        }   
+
+                        if( (strtotime($file->timer)+$fsat*60000)  <= strtotime(now())){
+                            $file->red = 1;
+                            $file->save();
+                        } 
+                    }
+
+                    if($file->delay == 0){
+
+                        if( (strtotime($file->timer)+$fodt*60000)  <= strtotime(now())){
+                            $file->delay = 1;
+                            $file->save();
+                        }   
+
+                        if( (strtotime($file->timer)+$fsdt*60000)  <= strtotime(now())){
+                            $file->delay = 1;
+                            $file->save();
+                        } 
+                    }
+
                 }
             }
         }
