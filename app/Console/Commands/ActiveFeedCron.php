@@ -327,12 +327,12 @@ class ActiveFeedCron extends Command
                     if($file->delay == 0){
 
                         if( (strtotime($file->timer)+$fodt*60000)  <= strtotime(now())){
-                            $file->delay = 1;
+                            $file->delayed = 1;
                             $file->save();
                         }   
 
                         if( (strtotime($file->timer)+$fsdt*60000)  <= strtotime(now())){
-                            $file->delay = 1;
+                            $file->delayed = 1;
                             $file->save();
                         } 
                     }

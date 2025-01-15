@@ -61,6 +61,7 @@ class FilesDatatable extends LivewireDatatable
                 ->orderBy('ss', 'asc')
                 ->orderBy('s', 'asc')
                 ->where('is_credited', 1)
+                ->where('delayed', 0)
                 ->whereNull('original_file_id')
                 ->where(function ($query) {
                 $query->where('type', '=', 'master')
