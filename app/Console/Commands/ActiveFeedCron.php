@@ -309,7 +309,8 @@ class ActiveFeedCron extends Command
         $foat = Key::where('key', 'file_open_alert_time')->first()->value;
         $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
 
-        if($activeFeed){
+        if($activeFeed->type == 'good_news'){
+            
             foreach($files as $file){
 
                 if($file->timer == NULL){
