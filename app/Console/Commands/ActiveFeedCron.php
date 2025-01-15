@@ -328,6 +328,9 @@ class ActiveFeedCron extends Command
                                 $file->red = 1;
                                 $file->save();
                             }   
+                        }
+                        
+                        if($file->status == 'submitted') {
                             
                             if( (strtotime($file->timer)+$fsat*60000)  <= strtotime(now())){
                                 $file->red = 1;
@@ -338,18 +341,21 @@ class ActiveFeedCron extends Command
 
                     if($file->delay == 0){
 
-                        if($file->status == 'submitted') {
+                        if($file->support_status == 'open') {
 
                             if( (strtotime($file->timer)+$fodt*60000)  <= strtotime(now())){
                                 $file->delayed = 1;
                                 $file->save();
                             }   
+                        }
+                        
+                        if($file->status == 'submitted') {
 
                             if( (strtotime($file->timer)+$fsdt*60000)  <= strtotime(now())){
                                 $file->delayed = 1;
                                 $file->save();
                             } 
-                            
+
                         }
                     }
 
