@@ -78,6 +78,13 @@ class FilesDatatable extends LivewireDatatable
 
             NumberColumn::name('id')->label('Task ID'),
 
+            Column::callback(['id'], function($id){
+
+                return '<lable class="label label-info text-white">'.$id.'</lable><lable class="label label-info text-white">'.$id.'</lable>';
+
+            })
+            ->label('Count Down Timer'),
+            
             Column::callback(['front_end_id'], function($frontEndID){
                 if($frontEndID == 1){
                     return '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
