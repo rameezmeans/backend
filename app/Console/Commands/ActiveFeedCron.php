@@ -288,6 +288,15 @@ class ActiveFeedCron extends Command
         $submittedFiles3 = File::where('status', 'submitted')->where('front_end_id', 3)->get();
         $this->manageFiles($submittedFiles3, 3);
 
+        $openFiles1 = File::where('support_status', 'open')->where('front_end_id', 1)->get();
+        $this->manageFiles($openFiles1, 1);
+
+        $openFiles2 = File::where('support_status', 'open')->where('front_end_id', 2)->get();
+        $this->manageFiles($openFiles2, 2);
+
+        $openFiles3 = File::where('support_status', 'open')->where('front_end_id', 3)->get();
+        $this->manageFiles($openFiles3, 3);
+
         return Command::SUCCESS;
     }
 
@@ -313,28 +322,35 @@ class ActiveFeedCron extends Command
 
                     if($file->red == 0){
 
-                        if( (strtotime($file->timer)+$foat*60000)  <= strtotime(now())){
-                            $file->red = 1;
-                            $file->save();
-                        }   
+                        if($file->support_status == 'open') {
 
-                        if( (strtotime($file->timer)+$fsat*60000)  <= strtotime(now())){
-                            $file->red = 1;
-                            $file->save();
-                        } 
+                            if( (strtotime($file->timer)+$foat*60000)  <= strtotime(now())){
+                                $file->red = 1;
+                                $file->save();
+                            }   
+                            
+                            if( (strtotime($file->timer)+$fsat*60000)  <= strtotime(now())){
+                                $file->red = 1;
+                                $file->save();
+                            } 
+                        }
                     }
 
                     if($file->delay == 0){
 
-                        if( (strtotime($file->timer)+$fodt*60000)  <= strtotime(now())){
-                            $file->delayed = 1;
-                            $file->save();
-                        }   
+                        if($file->status == 'submitted') {
 
-                        if( (strtotime($file->timer)+$fsdt*60000)  <= strtotime(now())){
-                            $file->delayed = 1;
-                            $file->save();
-                        } 
+                            if( (strtotime($file->timer)+$fodt*60000)  <= strtotime(now())){
+                                $file->delayed = 1;
+                                $file->save();
+                            }   
+
+                            if( (strtotime($file->timer)+$fsdt*60000)  <= strtotime(now())){
+                                $file->delayed = 1;
+                                $file->save();
+                            } 
+                            
+                        }
                     }
 
                 }
