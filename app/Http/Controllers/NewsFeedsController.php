@@ -401,7 +401,24 @@ class NewsFeedsController extends Controller
 
     public function updateTimers(Request $request){
 
-        
+        $fsdt = Key::where('key', 'file_submitted_delay_time')->first();
+        $fsdt->value = $request->file_submitted_delay_time;
+        $fsdt->save();
+
+        $fsat = Key::where('key', 'file_submitted_alert_time')->first();
+        $fsat->value = $request->file_submitted_alert_time;
+        $fsat->save();
+
+        $foat = Key::where('key', 'file_open_alert_time')->first();
+        $foat->value = $request->file_open_alert_time;
+        $foat->save();
+
+        $fodt = Key::where('key', 'file_open_delay_time')->first();
+        $fodt->value = $request->file_open_delay_time;
+        $fodt->save();
+
+        return redirect()->route('timers')->with(['success' => 'Timers updated, successfully.']);
+
     }
 
     public function delete(Request $request)

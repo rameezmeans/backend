@@ -32,7 +32,7 @@
                   
                 <div class="form-group form-group-default required ">
                   <label>File submitted Delay time</label>
-                  <input value="@if(isset($fsdt)) {{ $fsdt }} @else{{old('file_submitted_delay_time') }}@endif"  name="file_submitted_delay_time" type="text" class="form-control" required>
+                  <input value="@if(isset($fsdt)){{ $fsdt }}@else{{old('file_submitted_delay_time') }}@endif"  name="file_submitted_delay_time" type="text" class="form-control" required>
                 </div>
                 @error('file_submitted_delay_time')
                   <span class="text-danger" role="alert">
@@ -42,7 +42,7 @@
 
                 <div class="form-group form-group-default required ">
                   <label>File submitted Alert time</label>
-                  <input value="@if(isset($fsat)) {{ $fsat }} @else{{old('file_submitted_alert_time') }}@endif"  name="file_submitted_alert_time" type="text" class="form-control" required>
+                  <input value="@if(isset($fsat)){{ $fsat }}@else{{old('file_submitted_alert_time') }}@endif"  name="file_submitted_alert_time" type="text" class="form-control" required>
                 </div>
                 @error('file_submitted_alert_time')
                   <span class="text-danger" role="alert">
@@ -52,7 +52,7 @@
 
                 <div class="form-group form-group-default required ">
                   <label>File open Alert time</label>
-                  <input value="@if(isset($foat)) {{ $foat }} @else{{old('file_open_alert_time') }}@endif"  name="file_open_alert_time" type="text" class="form-control" required>
+                  <input value="@if(isset($foat)){{ $foat }}@else{{old('file_open_alert_time') }}@endif"  name="file_open_alert_time" type="text" class="form-control" required>
                 </div>
                 @error('file_open_alert_time')
                   <span class="text-danger" role="alert">
@@ -62,7 +62,7 @@
 
                 <div class="form-group form-group-default required ">
                   <label>File open Delay time</label>
-                  <input value="@if(isset($fodt)) {{ $fodt }} @else{{old('file_open_delay_time') }}@endif"  name="file_open_delay_time" type="text" class="form-control" required>
+                  <input value="@if(isset($fodt)){{ $fodt }}@else{{old('file_open_delay_time') }}@endif"  name="file_open_delay_time" type="text" class="form-control" required>
                 </div>
                 @error('file_open_delay_time')
                   <span class="text-danger" role="alert">
