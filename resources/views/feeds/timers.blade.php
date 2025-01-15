@@ -32,7 +32,7 @@
                   
                 <div class="form-group form-group-default required ">
                   <label>File submitted Delay time</label>
-                  <input value="@if(isset($fsdt)) {{ $fsdt->file_submitted_delay_time }} @else{{old('file_submitted_delay_time') }}@endif"  name="file_submitted_delay_time" type="text" class="form-control" required>
+                  <input value="@if(isset($fsdt)) {{ $fsdt }} @else{{old('file_submitted_delay_time') }}@endif"  name="file_submitted_delay_time" type="text" class="form-control" required>
                 </div>
                 @error('file_submitted_delay_time')
                   <span class="text-danger" role="alert">
