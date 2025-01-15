@@ -80,7 +80,7 @@ class FilesDatatable extends LivewireDatatable
 
             Column::callback(['id'], function($id){
 
-                return '<lable class="label label-info text-white">'.$id.'</lable><lable class="label label-info text-white">'.$id.'</lable>';
+                return '<lable class="label label-info text-white m-r-5">'.$id.'</lable><lable class="label label-info text-white">'.$id.'</lable>';
 
             })
             ->label('Count Down Timer'),
