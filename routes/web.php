@@ -152,7 +152,7 @@ Route::get('/tasks', function () {
 
                         if($file->support_status == 'open') {
 
-                            if( (strtotime($file->timer)+$foat*60000)  <= strtotime(now())){
+                            if( (strtotime($file->timer)+$foat*60)  <= strtotime(now())){
                                 $file->red = 1;
                                 $file->save();
                             }   
@@ -160,14 +160,14 @@ Route::get('/tasks', function () {
                         
                         if($file->status == 'submitted') {
 
-                            // dd($file);
-                            print_r( strtotime($file->timer) .'<br>' );
-                            print_r( $fsat*60000 .'<br>' );
-                            print_r( strtotime($file->timer) + $fsat*60000 );
+                            // // dd($file);
+                            // print_r( strtotime($file->timer) .'<br>' );
+                            // print_r( $fsat*60000 .'<br>' ); 
+                            // print_r( strtotime($file->timer) + $fsat*60000 );
 
-                            dd(strtotime(now()));
+                            // dd(strtotime(now()));
 
-                            if( (strtotime($file->timer)+($fsat*60000))  <= strtotime(now())){
+                            if( (strtotime($file->timer)+($fsat*60))  <= strtotime(now())){
                                 $file->red = 1;
                                 $file->save();
                             } 
@@ -178,7 +178,7 @@ Route::get('/tasks', function () {
 
                         if($file->support_status == 'open') {
 
-                            if( (strtotime($file->timer)+$fodt*60000)  <= strtotime(now())){
+                            if( (strtotime($file->timer)+$fodt*60)  <= strtotime(now())){
                                 $file->delayed = 1;
                                 $file->save();
                             }   
@@ -186,7 +186,7 @@ Route::get('/tasks', function () {
                         
                         if($file->status == 'submitted') {
 
-                            if( (strtotime($file->timer)+$fsdt*60000)  <= strtotime(now())){
+                            if( (strtotime($file->timer)+$fsdt*60)  <= strtotime(now())){
                                 $file->delayed = 1;
                                 $file->save();
                             } 
