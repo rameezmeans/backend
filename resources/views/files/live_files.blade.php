@@ -87,10 +87,10 @@
 
           function startTimer(secs, id) {
             timeInSecs = parseInt(secs);
-            ticker = setInterval("tick(id)", 1000); 
+            ticker = setInterval("tick()", 1000); 
           }
 
-          function tick( id) {
+          function tick() {
             var secs = timeInSecs;
             if (secs > 0) {
             timeInSecs--; 
