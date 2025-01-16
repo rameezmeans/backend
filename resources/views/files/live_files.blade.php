@@ -100,10 +100,12 @@
 }
 
           
+          // display = document.querySelector('#'.val);  
+          //   startTimer(5*60, val);
 
           $.each(ek , function(index, val) { 
             console.log(index, val);
-            display = document.querySelector('#'.val);
+            display = document.querySelector('#'+val);
             startTimer(5*60, val);
           });
 
