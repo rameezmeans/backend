@@ -90,11 +90,11 @@ class FilesDatatable extends LivewireDatatable
                     $submissionTimeLeft = (strtotime($file->timer)+($fsdt*60)) - strtotime(now());
                     $openTimeLeft = (strtotime($file->timer)+($fodt*60)) - strtotime(now());
 
-                    return '<lable class="label label-info text-white m-r-5">'.gmdate("H:i:s", $submissionTimeLeft).'</lable><lable class="label label-info text-white">'.gmdate("H:i:s", $openTimeLeft).'</lable>';
+                    return '<lable class="label label-danger text-white m-r-5">'.gmdate("H:i:s", $submissionTimeLeft).'</lable><lable class="label label-info text-white">'.gmdate("H:i:s", $openTimeLeft).'</lable>';
                 }
 
             })
-            ->label('Count Down Timer'),
+            ->label('Submission Countdown / Reply Countdown'),
             
             Column::callback(['front_end_id'], function($frontEndID){
                 if($frontEndID == 1){
