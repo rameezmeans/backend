@@ -85,11 +85,6 @@
           var timeInSecs;
           var ticker;
 
-          function startTimer(secs, id) {
-            timeInSecs = parseInt(secs);
-            ticker = setInterval("tick()", 1000); 
-          }
-
           function tick() {
             var secs = timeInSecs;
             if (secs > 0) {
@@ -106,6 +101,13 @@
 
             document.getElementById(id).innerHTML = pretty;
           }
+
+          function startTimer(secs, id) {
+            timeInSecs = parseInt(secs);
+            ticker = setInterval("tick()", 1000); 
+          }
+
+          
 
           $.each(ek , function(index, val) { 
             console.log(index, val);
