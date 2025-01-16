@@ -95,7 +95,7 @@ class FilesDatatable extends LivewireDatatable
                     $returnStr = "";
 
                     if($submissionTimeLeft > 0){
-                        $returnStr .='<lable class="label label-info text-white m-r-5 submission" id=s_'.$file->id. 'data-seconds='.$submissionTimeLeft.'>'.gmdate("i:s", $submissionTimeLeft).'</lable>';
+                        $returnStr .='<lable class="label label-info text-white m-r-5 submission" id="s_'.$file->id.'" data-seconds="'.$submissionTimeLeft.'">'.gmdate("i:s", $submissionTimeLeft).'</lable>';
                     }
                     if($openTimeLeft > 0){
                         $returnStr .='<lable class="label label-danger text-white m-r-5 ">'.gmdate("i:s", $openTimeLeft).'</lable>';
