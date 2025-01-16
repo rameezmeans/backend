@@ -90,7 +90,7 @@ class FilesDatatable extends LivewireDatatable
                     $submissionTimeLeft = (strtotime($file->timer)+($fsdt*60)) - strtotime(now());
                     $openTimeLeft = (strtotime($file->timer)+($fodt*60)) - strtotime(now());
 
-                    return '<lable class="label label-info text-white m-r-5">'.date("H:i:s",-57600 +$submissionTimeLeft).'</lable><lable class="label label-info text-white">'.date("H:i:s",-57600 + $openTimeLeft).'</lable>';
+                    return '<lable class="label label-info text-white m-r-5">'.gmdate("H:i:s", $submissionTimeLeft).'</lable><lable class="label label-info text-white">'.gmdate("H:i:s", $openTimeLeft).'</lable>';
                 }
 
             })
