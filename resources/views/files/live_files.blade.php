@@ -82,36 +82,27 @@
           console.log(ek);
 
 
-          var timeInSecs;
-          var ticker;
+          function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10)
+                seconds = parseInt(timer % 60, 10);
 
-          function tick() {
-            var secs = timeInSecs;
-            if (secs > 0) {
-            timeInSecs--; 
-            }
-            else {
-              clearInterval(ticker);
-              startTimer(5*60); // 4 minutes in seconds
-            }
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
 
-            var mins = Math.floor(secs/60);
-            secs %= 60;
-            var pretty = ( (mins < 10) ? "0" : "" ) + mins + ":" + ( (secs < 10) ? "0" : "" ) + secs;
+                display.textContent = minutes + ":" + seconds;
 
-            document.getElementById(id).innerHTML = pretty;
-          }
-
-          function startTimer(secs, id) {
-            timeInSecs = parseInt(secs);
-            ticker = setInterval("tick()", 1000); 
-          }
+                if (--timer < 0) {
+                    timer = duration;
+                }
+            }, 1000);
+}
 
           
 
           $.each(ek , function(index, val) { 
             console.log(index, val);
-
             startTimer(5*60, val);
 
           });
