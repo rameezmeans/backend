@@ -82,6 +82,40 @@
           console.log(ek);
 
 
+          var timeInSecs;
+          var ticker;
+
+          function startTimer(secs, id) {
+            timeInSecs = parseInt(secs);
+            ticker = setInterval("tick(id)", 1000); 
+          }
+
+          function tick( id) {
+            var secs = timeInSecs;
+            if (secs > 0) {
+            timeInSecs--; 
+            }
+            else {
+              clearInterval(ticker);
+              startTimer(5*60); // 4 minutes in seconds
+            }
+
+            var mins = Math.floor(secs/60);
+            secs %= 60;
+            var pretty = ( (mins < 10) ? "0" : "" ) + mins + ":" + ( (secs < 10) ? "0" : "" ) + secs;
+
+            document.getElementById(id).innerHTML = pretty;
+          }
+
+          $.each(ek , function(index, val) { 
+            console.log(index, val);
+
+            startTimer(5*60, val);
+
+          });
+
+          
+
         });
     </script>
 @endsection
