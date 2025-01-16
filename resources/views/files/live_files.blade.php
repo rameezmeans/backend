@@ -78,7 +78,7 @@
           });
     
           var ek=[];
-          $('.submission').each(function() { ek.push($(this).html); });
+          $('.submission').each(function() { ek.push($(this).data('id')); });
           console.log(ek);
 
 
