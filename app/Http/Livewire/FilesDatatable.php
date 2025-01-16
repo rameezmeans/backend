@@ -99,7 +99,7 @@ class FilesDatatable extends LivewireDatatable
                             $returnStr .='<span class="label label-info text-white m-r-5 submission" id="s_'.$file->id.'" data-seconds="'.$submissionTimeLeft.'"></span>';
                         }
                     }
-                    
+
                     if($file->support_status == 'open'){
                         if($openTimeLeft > 0){
                             $returnStr .='<lable class="label label-danger text-white m-r-5 open" id="o_'.$file->id.'" data-seconds="'.$openTimeLeft.'"></lable>';
@@ -238,6 +238,10 @@ class FilesDatatable extends LivewireDatatable
 
     public function rowClasses($row, $loop)
     {  
+        if($row->delayed == 1){
+            return 'bg-red-400 hover:bg-red-400 divide-x divide-red-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
+        }
+
         if($row->red == 1){
             return 'bg-red-200 hover:bg-red-200 divide-x divide-red-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
         }
