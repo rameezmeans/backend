@@ -19,6 +19,8 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\NumberColumn;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 
+use function PHPUnit\Framework\returnSelf;
+
 class FilesDatatable extends LivewireDatatable
 {
     public function builder()
@@ -90,7 +92,16 @@ class FilesDatatable extends LivewireDatatable
                     $submissionTimeLeft = (strtotime($file->timer)+($fsdt*60)) - strtotime(now());
                     $openTimeLeft = (strtotime($file->timer)+($fodt*60)) - strtotime(now());
 
-                    return '<lable class="label label-info text-white m-r-5 ">'.gmdate("H:i:s", $submissionTimeLeft).'secs:'.$submissionTimeLeft.'</lable><lable class="label label-danger text-white">'.gmdate("H:i:s", $openTimeLeft).'secs:'.$openTimeLeft.'</lable>';
+                    $returnStr = "";
+
+                    if($submissionTimeLeft > 0){
+                        $returnStr .='<lable class="label label-info text-white m-r-5 ">'.gmdate("H:i:s", $submissionTimeLeft).'secs:'.$submissionTimeLeft.'</lable>';
+                    }
+                    if($openTimeLeft > 0){
+                        $returnStr .='<lable class="label label-info text-white m-r-5 ">'.gmdate("H:i:s", $openTimeLeft).'secs:'.$openTimeLeft.'</lable>';
+                    }
+                    
+                    return $returnStr;
                 }
 
             })
