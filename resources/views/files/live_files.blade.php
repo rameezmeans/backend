@@ -80,8 +80,7 @@
           var ek=[];
           $('.submission').each(function() { ek.push($(this).attr('id')); });
           console.log(ek);
-
-
+          
           function startTimer(duration, display) {
             var timer = duration, minutes, seconds;
             setInterval(function () {
@@ -97,16 +96,13 @@
                     timer = duration;
                 }
             }, 1000);
-}
-
-          
-            // display = document.querySelector('#s_7923');  
-            // startTimer(5*60, val);
+          }
 
           $.each(ek , function(index, val) { 
             console.log(index, val);
-            display = document.querySelector('#'+val);
-            startTimer(5*60, display);
+            let display = document.querySelector('#'+val);
+            let seconds = $('#'+val).data('seconds');
+            startTimer(seconds, display);
           });
 
           
