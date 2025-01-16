@@ -41,7 +41,7 @@ class FilesDatatable extends LivewireDatatable
                 ->orderBy('ss', 'asc')
                 ->orderBy('s', 'asc')
                 ->where('is_credited', 1)
-                ->where('delayed', 0)
+                // ->where('delayed', 0)
                 ->whereNull('original_file_id')
                 ->where('assigned_to', Auth::user()->id);
                 
@@ -62,7 +62,7 @@ class FilesDatatable extends LivewireDatatable
                 ->orderBy('ss', 'asc')
                 ->orderBy('s', 'asc')
                 ->where('is_credited', 1)
-                ->where('delayed', 0)
+                // ->where('delayed', 0)
                 ->whereNull('original_file_id')
                 ->where(function ($query) {
                 $query->where('type', '=', 'master')
@@ -90,7 +90,7 @@ class FilesDatatable extends LivewireDatatable
                     $submissionTimeLeft = (strtotime($file->timer)+($fsdt*60)) - strtotime(now());
                     $openTimeLeft = (strtotime($file->timer)+($fodt*60)) - strtotime(now());
 
-                    return '<lable class="label label-info text-white m-r-5">'.gmdate("H:i:s", $submissionTimeLeft).'</lable><lable class="label label-danger text-white">'.gmdate("H:i:s", $openTimeLeft).'</lable>';
+                    return '<lable class="label label-info text-white m-r-5 ">'.gmdate("H:i:s", $submissionTimeLeft).'</lable><lable class="label label-danger text-white">'.gmdate("H:i:s", $openTimeLeft).'</lable>';
                 }
 
             })
@@ -223,7 +223,7 @@ class FilesDatatable extends LivewireDatatable
     public function rowClasses($row, $loop)
     {  
         if($row->red == 1){
-            return 'bg-red-500 hover:bg-red-300 divide-x divide-red-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
+            return 'bg-red-900 hover:bg-red-900 divide-x divide-red-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
         }
 
         if($row->checked_by == 'customer'){
