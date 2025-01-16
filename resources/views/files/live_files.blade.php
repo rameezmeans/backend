@@ -100,13 +100,13 @@
 }
 
           
-          // display = document.querySelector('#'.val);  
-          //   startTimer(5*60, val);
+            // display = document.querySelector('#s_7923');  
+            // startTimer(5*60, val);
 
           $.each(ek , function(index, val) { 
             console.log(index, val);
             display = document.querySelector('#'+val);
-            startTimer(5*60, val);
+            startTimer(5*60, display);
           });
 
           
