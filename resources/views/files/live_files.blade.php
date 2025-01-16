@@ -64,7 +64,9 @@
 @section('pagespecificscripts')
     <script type="text/javascript">
       $( document ).ready(function(event) {
+
         $('.parent-adjusted').parent().addClass('flex');
+
         $(document).on('click','.redirect-click-file',function(e) {
           console.log('clicked');
             var lastClass = $(this).attr('class').split(' ').pop();
@@ -74,6 +76,12 @@
             window.location.href = "/file/"+lastClass;
             
           });
+    
+          var ek=[];
+          $('.submission').each(function() { ek.push($(this).val()); });
+          console.log(ek);
+
+
         });
     </script>
 @endsection
