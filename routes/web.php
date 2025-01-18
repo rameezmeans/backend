@@ -127,6 +127,8 @@ Route::get('/autotuner', function () {
 
 Route::get('/tasks', function () {
 
+    dd(Carbon::now());
+
     $frontendID = 3;
     $activeFeed = NewsFeed::where('active', 1)->where('front_end_id', $frontendID)->get();
     dd($activeFeed);
