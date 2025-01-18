@@ -321,6 +321,12 @@ class ActiveFeedCron extends Command
                         $file->save();
                     }
 
+                    if($file->submission_timer == NULL){
+
+                        $file->submission_timer = Carbon::now();
+                        $file->save();
+                    }
+
                     if($file->timer != NULL){
 
                         if($file->red == 0){
@@ -335,7 +341,7 @@ class ActiveFeedCron extends Command
                             
                             if($file->status == 'submitted') {
                                 
-                                if( (strtotime($file->timer)+($fsat*60))  <= strtotime(now())){
+                                if( (strtotime($file->submission_timer)+($fsat*60))  <= strtotime(now())){
                                     $file->red = 1;
                                     $file->save();
                                 } 
@@ -354,7 +360,7 @@ class ActiveFeedCron extends Command
 
                             if($file->status == 'submitted') {
 
-                                if( (strtotime($file->timer)+($fsdt*60))  <= strtotime(now())){
+                                if( (strtotime($file->submission_timer)+($fsdt*60))  <= strtotime(now())){
                                     $file->delayed = 1;
                                     $file->save();
                                 } 
