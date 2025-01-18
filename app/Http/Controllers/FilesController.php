@@ -333,6 +333,7 @@ class FilesController extends Controller
         $file->disable_customers_download = 0;
         $file->status = 'completed';
         $file->red = 0;
+        $file->submission_timer = NULL;
         $file->timer = NULL;
         
         $file->support_status = "closed";
@@ -619,7 +620,7 @@ class FilesController extends Controller
 
             $file->status = 'completed';
             $file->red = 0;
-            $file->timer = NULL;
+            $file->submission_timer = NULL;
             $file->updated_at = Carbon::now();
             $file->reupload_time = Carbon::now();
             $file->response_time = $this->getResponseTime($file);
@@ -2321,7 +2322,7 @@ class FilesController extends Controller
         if($file->status == 'completed'){
             if($file->red == 1){
                 $file->red = 0;
-                $file->timer = NULL;
+                $file->submission_timer = NULL;
             }
         }
 
@@ -3075,7 +3076,7 @@ class FilesController extends Controller
 
                 $file->status = 'completed';
                 $file->red = 0;
-                $file->timer = NULL;
+                $file->submission_timer = NULL;
                 $file->updated_at = Carbon::now();
                 $file->save();
             }
@@ -3094,6 +3095,8 @@ class FilesController extends Controller
                 $old = File::findOrFail($file->original_file_id);
                 $old->checked_by = 'engineer';
                 $old->support_status = "closed";
+                $old->red = 0;
+                $old->timer = NULL;
                 $old->save();
             }
 
@@ -3171,7 +3174,7 @@ class FilesController extends Controller
         else if($file->front_end_id == 3){
             $subject = "E-files: Engineer uploaded a file in reply.";
         }
-        else{
+        else if($file->front_end_id == 2){
             $subject = "TuningX: Engineer uploaded a file in reply.";
         }
 
@@ -3880,7 +3883,7 @@ class FilesController extends Controller
             if($file->status == 'submitted'){
                 $file->status = 'completed';
                 $file->red = 0;
-                $file->timer = NULL;
+                $file->submission_timer = NULL;
                 $file->updated_at = Carbon::now();
                 $file->save();
             }

@@ -88,25 +88,36 @@ class FilesDatatable extends LivewireDatatable
                     return '<span class="label label-danger text-white m-r-5">Late</span>';
                 }
 
-                if($file->timer != NULL && ($file->status == 'submitted' ||  $file->support_status == 'open')){
+                $returnStr = "";
+
+                if($file->timer != NULL){
+
+                    $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+                    $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
+
+                    $openTimeLeft = (strtotime($file->timer)+($fodt*60)) - strtotime(now());
+
+                    $returnStr = "";
+
+                    if($file->support_status == 'open'){
+                        if($openTimeLeft > 0){
+                            $returnStr .='<lable class="label label-danger text-white m-r-5 open" id="o_'.$file->id.'" data-seconds="'.$openTimeLeft.'"></lable>';
+                        }
+                    }
+                    
+                    return $returnStr;
+                }
+
+                if($file->submission_timer != NULL){
 
                     $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
                     $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
 
                     $submissionTimeLeft = (strtotime($file->timer)+($fsdt*60)) - strtotime(now());
-                    $openTimeLeft = (strtotime($file->timer)+($fodt*60)) - strtotime(now());
-
-                    $returnStr = "";
 
                     if($file->status == 'submitted'){
                         if($submissionTimeLeft > 0){
                             $returnStr .='<span class="label label-info text-white m-r-5 submission" id="s_'.$file->id.'" data-seconds="'.$submissionTimeLeft.'"></span>';
-                        }
-                    }
-
-                    if($file->support_status == 'open'){
-                        if($openTimeLeft > 0){
-                            $returnStr .='<lable class="label label-danger text-white m-r-5 open" id="o_'.$file->id.'" data-seconds="'.$openTimeLeft.'"></lable>';
                         }
                     }
                     
