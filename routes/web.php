@@ -127,6 +127,10 @@ Route::get('/autotuner', function () {
 
 Route::get('/tasks', function () {
 
+    $frontendID = 3;
+    $activeFeed = NewsFeed::where('active', 1)->where('front_end_id', $frontendID)->first();
+    dd($activeFeed);
+
     // $frontendID = 2;
     // $files = File::where('status', 'submitted')->where('front_end_id', 2)->limit(1)->get();
     // // dd($files);
