@@ -96,7 +96,7 @@ class FilesDatatable extends LivewireDatatable
                     $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
 
                     $openTimeLeft = (strtotime($file->timer)+($fodt*60)) - strtotime(now());
-                    
+
                     if($file->support_status == 'open'){
                         if($openTimeLeft > 0){
                             $returnStr .='<lable class="label label-danger text-white m-r-5 open" id="o_'.$file->id.'" data-seconds="'.$openTimeLeft.'"></lable>';
@@ -111,7 +111,7 @@ class FilesDatatable extends LivewireDatatable
                     $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
                     $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
 
-                    $submissionTimeLeft = (strtotime($file->timer)+($fsdt*60)) - strtotime(now());
+                    $submissionTimeLeft = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
 
                     if($file->status == 'submitted'){
                         if($submissionTimeLeft > 0){
