@@ -103,7 +103,7 @@ class FilesDatatable extends LivewireDatatable
                         }
                     }
                     
-                    return $returnStr;
+                    
                 }
 
                 if($file->submission_timer != NULL){
@@ -119,8 +119,9 @@ class FilesDatatable extends LivewireDatatable
                         }
                     }
                     
-                    return $returnStr;
                 }
+
+                return $returnStr;
 
             })
             ->label('Submission Countdown / Reply Countdown'),
