@@ -315,11 +315,11 @@ class ActiveFeedCron extends Command
 
                 foreach($files as $file){
 
-                    // if($file->timer == NULL){
+                    if($file->timer == NULL){
 
-                    //     $file->timer = Carbon::now();
-                    //     $file->save();
-                    // }
+                        $file->timer = Carbon::now();
+                        $file->save();
+                    }
 
                     if($file->submission_timer == NULL){
 
