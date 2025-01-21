@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Key;
 use GuzzleHttp\Exception\ClientException;
-use Illuminate\Support\Facades\Log;
-use Cache\Adapter\PHPArray\ArrayCachePool;
-use ECUApp\SharedCode\Models\Key;
-use ECUApp\SharedCode\Models\Log as ModelsLog;
-use ECUApp\SharedCode\Models\Package;
-use ECUApp\SharedCode\Models\PaymentLog;
-use ECUApp\SharedCode\Models\Price;
-use ECUApp\SharedCode\Models\ZohoRecord;
+use App\Models\Log as ModelsLog;
+use App\Models\Package;
+use App\Models\PaymentLog;
+use App\Models\Price;
+use App\Models\ZohoRecord;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Request;
@@ -18,7 +16,7 @@ use GuzzleHttp\Psr7\Request;
 
 class ZohoController extends Controller
 {   
-    
+
     public function makeZohoLogEntry( $creditID, $type, $message, $call, $response ){
 
         $log = new ModelsLog();
