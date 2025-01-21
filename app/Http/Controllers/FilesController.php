@@ -1932,6 +1932,7 @@ class FilesController extends Controller
 
         $softwareRecords = FileReplySoftwareService::where('reply_id', $request->request_file_id)->delete();
 		$messagesRecords = EngineerFileNote::where('request_file_id', $request->request_file_id)->delete();
+		$messagesRecords = EngineerFileNote::where('request_file_id', $request->request_file_id)->delete();
 
         return response('File deleted', 200);
     }
