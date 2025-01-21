@@ -356,9 +356,9 @@ class UsersController extends Controller
 
     public function addCustomer(Request $request){
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     abort(404);
+        // }
 
         // dd($request->all());
 
@@ -476,6 +476,8 @@ class UsersController extends Controller
 
         $customer->save();
 
+        (new ZohoController)->createNewZohoCustomer($customer);
+
         if($customer->evc_customer_id){
 
             try{
@@ -501,9 +503,9 @@ class UsersController extends Controller
 
     public function createCustomer(){
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     abort(404);
+        // }
 
         $groups = Group::all();
         $frontends = FrontEnd::all();
@@ -702,9 +704,9 @@ class UsersController extends Controller
 
     public function addCredits($credits, $customer){
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     abort(404);
+        // }
 
         $credit = new Credit();
         $credit->credits = $credits;
@@ -762,9 +764,9 @@ class UsersController extends Controller
 
     public function updateEngineer(Request $request){
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     abort(404);
+        // }
 
         $engineer = User::findOrFail($request->id);
 
@@ -812,18 +814,18 @@ class UsersController extends Controller
 
     public function createEngineer(){
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     abort(404);
+        // }
 
         return view('engineers.create_edit_engineers');
     }
 
     public function editEngineer($id){
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     abort(404);
+        // }
 
         $engineer = User::findOrfail($id);
         return view('engineers.create_edit_engineers', ['engineer' => $engineer]);
