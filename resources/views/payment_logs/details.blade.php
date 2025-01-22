@@ -85,14 +85,14 @@
                             <td class="text-center">€{{$credit->tax}}</td>
                             <td class="text-center">{{$user->name}}</td>
                             <td class="text-right">
-                              @if($credit->group_id != 0)
-                                {{$credit->group->name}}
+                              @if($credit->my_group && $credit->group_id != 0)
+                                {{$credit->my_group->name}}
                               @else
                                 Not Recorded
                               @endif</td>
                             <td class="text-right">
-                              @if($credit->group_id != 0)
-                                {{$credit->group->tax}}%
+                              @if($credit->my_group && $credit->group_id != 0)
+                                {{$credit->my_group->tax}}%
                               @else
                                 Not Recorded
                               @endif</td>
