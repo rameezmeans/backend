@@ -35,7 +35,7 @@
                                 @foreach ($change as $c)
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$change->name}}</p>
+                                            <p>{{$c->name}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$user->name}}</p>
