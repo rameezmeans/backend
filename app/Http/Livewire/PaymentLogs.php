@@ -34,6 +34,19 @@ class PaymentLogs extends LivewireDatatable
 
             NumberColumn::name('id')->label('Payment ID'),
             Column::name('invoice_id')->label('Invoice ID')->searchable(),
+            Column::callback(['front_end_id'], function($frontEndID){
+                if($frontEndID == 1){
+                    return '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+                if($frontEndID == 3){
+                    return '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+                else{
+                    return '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+            })->label('Front End')
+            ->filterable(FrontEnd::get(['id', 'name']))
+            ->searchable(),
         ];
     }
 }
