@@ -43,7 +43,7 @@
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             
-                                            <a href="{{ route('change', $change->id) }}" class="button button-success" target="_blank" rel="noopener">Changings</a>
+                                            <a href="{{ route('change', $change->id) }}" class="btn btn-success" target="_blank" rel="noopener">Changings</a>
                                                 
                                         </td>
                                     </tr>
