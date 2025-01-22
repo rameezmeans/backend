@@ -7,7 +7,7 @@
       <!-- START CONTAINER FLUID -->
         <div class=" container-fluid   container-fixed-lg bg-white">
 
-          <div class="card card-transparent m-t-40">
+          {{-- <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title"><h3>User Details</h3>
                 </div>
@@ -42,7 +42,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> --}}
 
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
@@ -58,9 +58,6 @@
             </div>
             <div class="card-body">
               <div class="card card-transparent flex-row">
-
-                
-                
 
                   <div class="card-title"><h5>Backend</h5>
                   </div>
