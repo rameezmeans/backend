@@ -78,7 +78,7 @@ class PaymentLogs extends LivewireDatatable
                 
                 return $user->name;
 
-            }) ->label('Customer'),
+            }) ->label('Customer')->searchable(),
 
             Column::callback(['user_id', 'type'], function($userId){
                 $user = User::findOrFail($userId);
