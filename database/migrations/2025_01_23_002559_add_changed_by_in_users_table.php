@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('user_changes', function (Blueprint $table) {
             $table->foreignId('changed_by');
         });
     }
