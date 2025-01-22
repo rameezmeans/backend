@@ -27,7 +27,7 @@
 
                 <div class="row">
 
-                  <div class="card-title"><h5>User Details</h5>
+                  <div class="card-title"><h5>User Details (Right now)</h5>
                   </div>
 
                   <div class="col-lg-12">
