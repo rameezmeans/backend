@@ -77,6 +77,12 @@ class PaymentLogs extends LivewireDatatable
             Column::name('customer')->label('Customer')->searchable(),
             Column::name('email')->label('Email')->searchable(),
             Column::name('group')->label('Group')->searchable(),
+            Column::name('credits')->label('Credits'),
+            Column::callback(['price_payed'], function($pricePayed){
+                
+                return '$'.$pricePayed;
+                    
+            })->label('Price'),
         ];
     }
 }
