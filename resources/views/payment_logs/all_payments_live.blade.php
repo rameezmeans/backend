@@ -43,7 +43,7 @@
             <div class="card-body">
 
                 <livewire:payment-logs 
-                    searchable="id,invoice_id,customer,email"
+                    searchable="id,invoice_id,customer,email,group"
                 />
 
             </div>
