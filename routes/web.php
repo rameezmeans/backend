@@ -1040,6 +1040,7 @@ Route::post('/update-group', [App\Http\Controllers\GroupsController::class,'upda
 Route::get('/customers', [App\Http\Controllers\UsersController::class,'Customers'])->name('customers');
 Route::get('/create_customer', [App\Http\Controllers\UsersController::class,'createCustomer'])->name('create-customer');
 Route::get('/edit_customer/{id}', [App\Http\Controllers\UsersController::class,'editCustomer'])->name('edit-customer');
+Route::get('/changes/{id}', [App\Http\Controllers\UsersController::class,'changes'])->name('changes');
 Route::post('/add-customer', [App\Http\Controllers\UsersController::class,'addCustomer'])->name('add-customer');
 Route::post('/update-customer', [App\Http\Controllers\UsersController::class,'updateCustomer'])->name('update-customer');
 Route::post('/delete_customer', [App\Http\Controllers\UsersController::class,'deleteCustomer'])->name('delete-customer');

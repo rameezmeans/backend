@@ -517,6 +517,12 @@ class UsersController extends Controller
         return view('groups.create_edit_customers', ['groups' => $groups, 'frontends' => $frontends]);
     } 
 
+    public function changes($id){
+        $user = User::findOrFail($id);
+
+        dd($user);
+    }
+
     public function editCustomer($id){
 
         if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-customers')){
