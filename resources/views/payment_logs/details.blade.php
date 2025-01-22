@@ -26,12 +26,19 @@
                 
 
                 <div class="row">
+                  <div class="col-lg-4">
+                    <div>
+                    <h4>
+                      User Group (At the Moment): {{$group->name}} 
+                    </h4>
+                    </div>
 
-                  <h4>
-                    User Group (At the Moment): {{$group->name}} </h4>
-                  <h4>
-                    User Group Tax Rate (At the Moment): {{$group->tax}}%
-                  </h4>
+                    <div>
+                      <h4>
+                        User Group Tax Rate (At the Moment): {{$group->tax}}%
+                      </h4>
+                    </div>
+                  </div>
 
                   <div class="card-title"><h5>Backend</h5>
                   </div>
