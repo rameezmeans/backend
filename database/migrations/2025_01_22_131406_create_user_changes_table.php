@@ -30,7 +30,6 @@ return new class extends Migration
             $table->string('elorus_id')->nullable();
             $table->string('exclude_vat_check')->nullable();
             $table->string('evc_customer_id')->nullable();
-            $table->string('evc_customer_id')->nullable();
             $table->string('mailchimp_id')->nullable();
             $table->string('zohobooks_id')->nullable();
             $table->boolean('test')->default(0);
