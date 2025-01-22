@@ -43,7 +43,7 @@
                         <tbody>
                           <tr>
                             <td class="">
-                              €{{$group->name}}
+                              {{$group->name}}
                             </td>
                             <td class="">
                               €{{$group->tax}}%
@@ -57,7 +57,7 @@
                     
                   </div>
 
-                  <div class="card-title"><h5>Backend Payment Details</h5>
+                  <div class="card-title m-t-40"><h5>Backend Payment Details</h5>
                   </div>
 
                   <div class="col-lg-12">
