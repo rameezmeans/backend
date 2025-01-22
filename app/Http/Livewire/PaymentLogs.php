@@ -90,13 +90,15 @@ class PaymentLogs extends LivewireDatatable
                     
             })->label('Details'),
             Column::callback(['elorus_permalink'], function($elorusPermalink){
-                
-                return '<a class="btn btn-warning text-black" target="_blank" href="'.$elorusPermalink.'">Go To Elorus</a>';
+                if($elorusPermalink){
+                    return '<a class="btn btn-warning text-black" target="_blank" href="'.$elorusPermalink.'">Go To Elorus</a>';
+                }
                     
             })->label('Elorus'),
             Column::callback(['zohobooks_id'], function($zohobooksID){
-                
-                return '<a class="btn btn-warning text-black" target="_blank" href="'.'https://books.zoho.com/app/8745725#/invoices/'.$zohobooksID.'">Go To Zohobooks</a>';
+                if($zohobooksID){
+                    return '<a class="btn btn-warning text-black" target="_blank" href="'.'https://books.zoho.com/app/8745725#/invoices/'.$zohobooksID.'">Go To Zohobooks</a>';
+                }
                     
             })->label('Zohobooks'),
         ];
