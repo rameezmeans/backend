@@ -22,13 +22,16 @@
             <div class="card-body">
               <div class="card card-transparent flex-row">
 
-                <h4>
-                  User Group (At the Moment): {{$group->name}}
-                  User Group Tax Rate (At the Moment): {{$group->tax}}%
-                </h4>
+                
                 
 
                 <div class="row">
+
+                  <h4>
+                    User Group (At the Moment): {{$group->name}} </h4>
+                  <h4>
+                    User Group Tax Rate (At the Moment): {{$group->tax}}%
+                  </h4>
 
                   <div class="card-title"><h5>Backend</h5>
                   </div>
