@@ -23,7 +23,9 @@
             </div>
             <div class="card-body">
 
-                        
+                <livewire:payment-logs 
+                    searchable="id"
+                />
 
             </div>
           </div>
