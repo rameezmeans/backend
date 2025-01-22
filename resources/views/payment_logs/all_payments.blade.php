@@ -36,14 +36,14 @@
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Date</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Customer</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Email</th>
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Group</th>
+                                            {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Group</th> --}}
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Invoice ID</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Price</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Admin Entry</th>
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Details</th>
+                                            {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Details</th>
                                             <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus</th>
-                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Zohobooks</th>
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Zohobooks</th> --}}
                                             
                                         </tr>
                                     </thead>
@@ -96,10 +96,10 @@
                                                     <p>{{\App\Models\User::findOrFail($p->user_id)->email}}</p>
                                                     
                                                 </td>
-                                                <td class="v-align-middle semi-bold sorting_1">
+                                                {{-- <td class="v-align-middle semi-bold sorting_1">
                                                     <p>@if($p->my_group && $p->group_id != 0){{$p->my_group->name}}@else Not Recorded @endif</p>
                                                     
-                                                </td>
+                                                </td> --}}
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>{{$p->invoice_id}}</p>
                                                     
@@ -119,7 +119,7 @@
                                                     
                                                 </td>
 
-                                                <td class="v-align-middle semi-bold sorting_1">
+                                                {{-- <td class="v-align-middle semi-bold sorting_1">
                                                     <p>@if($p->gifted == 0)<a class="btn btn-warning text-black" target="_blank" href="{{route('payment-details', $p->id)}}">Payment Details</a>@endif</p>
                                                     
                                                 </td>
@@ -132,7 +132,7 @@
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>@if($p->zohobooks_id)<a class="btn btn-warning text-black" target="_blank" href="{{'https://books.zoho.com/app/8745725#/invoices/'.$p->zohobooks_id}}">Go To Zohobooks</a>@else No Zohobooks @endif</p>
                                                     
-                                                </td>
+                                                </td> --}}
 
                                                
                                             </tr>
