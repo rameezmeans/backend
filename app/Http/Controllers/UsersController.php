@@ -520,7 +520,7 @@ class UsersController extends Controller
     public function change($id){
 
         $change = UserChange::FindOrFail($id);
-        $user = User::FindOrFail($id);
+        $user = User::FindOrFail($change->user_id);
         return view('groups.customer_changings', ['change' => $change, 'user' => $user]);
 
     }
