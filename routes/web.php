@@ -876,8 +876,8 @@ Route::get('/payment_and_customers', [App\Http\Controllers\PaymentLogController:
 Route::get('/payment_logs/{id}', [App\Http\Controllers\PaymentLogController::class, 'paymentLogs'])->name('payment-logs');
 Route::get('/payments/{id}', [App\Http\Controllers\PaymentLogController::class, 'payments'])->name('payments');
 Route::get('/all_payment_logs', [App\Http\Controllers\PaymentLogController::class, 'allPaymentLogs'])->name('all-payment-logs');
-Route::get('/all_payments', [App\Http\Controllers\PaymentLogController::class, 'allPayments'])->name('all-payments');
-Route::get('/all_payments_live', [App\Http\Controllers\PaymentLogController::class, 'livePayments'])->name('all-payments-live');
+// Route::get('/all_payments', [App\Http\Controllers\PaymentLogController::class, 'allPayments'])->name('all-payments');
+Route::get('/all_payments', [App\Http\Controllers\PaymentLogController::class, 'livePayments'])->name('all-payments-live');
 Route::get('/payment_details/{id}', [App\Http\Controllers\PaymentLogController::class, 'paymentDetails'])->name('payment-details');
 
 Route::get('/processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'index'])->name('processing-softwares');
