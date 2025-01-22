@@ -139,6 +139,8 @@ Route::get('/tasks', function () {
         else{
             $credit->group = Group::findOrFail($credit->group_id)->name;
         }
+
+        $credit->save();
     }
 
     dd('here');
