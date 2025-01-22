@@ -83,6 +83,12 @@ class PaymentLogs extends LivewireDatatable
                 return '$'.$pricePayed;
                     
             })->label('Price'),
+
+            Column::callback(['id','group'], function($id){
+                
+                return '<a class="btn btn-warning text-black" target="_blank" href="{{route("payment-details", '.$id.')}}">Payment Details</a>';
+                    
+            })->label('Details'),
         ];
     }
 }
