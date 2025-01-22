@@ -33,7 +33,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($change as $c)
-                                    <tr role="row" class="redirect-click" data-redirect="{{ route('edit-service', $service->id) }}">
+                                    <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->name}}</p>
                                         </td>
