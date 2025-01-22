@@ -12,6 +12,7 @@ use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\Tool;
 use App\Models\User;
+use App\Models\UserChange;
 use App\Models\UserTool;
 use Carbon\Carbon;
 use Illuminate\Http\Client\ConnectionException;
@@ -644,6 +645,24 @@ class UsersController extends Controller
             $customer->exclude_vat_check = 0;
         }
 
+        $customerChanges = new UserChange();
+
+        $customerChanges->name = $request->name;
+        $customerChanges->phone = $request->phone;
+        $customerChanges->language = $request->language;
+        $customerChanges->address = $request->address;
+        $customerChanges->zip = $request->zip;
+        $customerChanges->city = $request->city;
+        $customerChanges->country = $request->country;
+        $customerChanges->status = $request->status;
+        $customerChanges->company_name = $request->company_name;
+        $customerChanges->company_id = $request->company_id;
+        $customerChanges->evc_customer_id = $request->evc_customer_id;
+        $customerChanges->group_id = $request->group_id;
+        $customerChanges->front_end_id = $request->front_end_id;
+        $customerChanges->elorus_id = $request->elorus_id;
+        $customerChanges->exclude_vat_check = 1;
+        $customerChanges->sn = $request->sn;
         $customer->save();
 
         $files = File::where('user_id', $customer->id)->get();
@@ -858,6 +877,12 @@ class UsersController extends Controller
             }
 
             $customer->save();
+
+            $customerChanges = new UserChange();
+
+            $customerChanges->name = $request->name;
+
+            $customerChanges->
 
             return redirect()->back()->with(['success' => 'Status Changed, successfully.']);
         }
