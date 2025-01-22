@@ -882,7 +882,7 @@ class UsersController extends Controller
 
             $customerChanges->name = $request->name;
 
-            $customerChanges->
+            $customerChanges->save();
 
             return redirect()->back()->with(['success' => 'Status Changed, successfully.']);
         }
