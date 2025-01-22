@@ -73,20 +73,9 @@ class PaymentLogs extends LivewireDatatable
             DatetimeColumn::name('created_at')
                 ->label('Payment Date')->sortable()->format('d/m/Y h:i A')->filterable(),
             
-            Column::callback(['user_id'], function($userId){
-                $user = User::findOrFail($userId);
-                
-                return $user->name;
-
-            }) ->label('Customer')->searchable(),
-
-            Column::callback(['user_id', 'type'], function($userId){
-                $user = User::findOrFail($userId);
-                
-                return $user->email;
-
-            }) ->label('Email'),
             
+            Column::name('customer')->label('Customer')->searchable(),
+            Column::name('email')->label('Email')->searchable(),
         ];
     }
 }

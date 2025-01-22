@@ -41,7 +41,7 @@
             <div class="card-body">
 
                 <livewire:payment-logs 
-                    searchable="id,invoice_id"
+                    searchable="id,invoice_id,customer,email"
                 />
 
             </div>
