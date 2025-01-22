@@ -69,6 +69,9 @@ class PaymentLogs extends LivewireDatatable
                 }
                     
             })->label('Type'),
+
+            DatetimeColumn::name('created_at')
+                ->label('Payment Date')->sortable()->format('d/m/Y h:i A')->filterable(),
             
         ];
     }
