@@ -97,7 +97,7 @@
                                                     
                                                 </td>
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>@if($p->group->id != 0 ){{$p->group->name}}@else Not Recorded @endif</p>
+                                                    <p>@if($p->group_id != 0 ){{$p->group->name}}@else Not Recorded @endif</p>
                                                     
                                                 </td>
                                                 <td class="v-align-middle semi-bold sorting_1">
