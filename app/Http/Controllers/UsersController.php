@@ -517,10 +517,16 @@ class UsersController extends Controller
         return view('groups.create_edit_customers', ['groups' => $groups, 'frontends' => $frontends]);
     } 
 
-    public function changes($id){
-        $user = User::findOrFail($id);
+    public function change($id){
 
-        dd($user);
+        $change = UserChange::FindOrFail($id);
+        dd($change);
+
+    }
+
+    public function changes($id){
+        $changes = UserChange::where('user_id', $id)->get();
+        return view('groups.customer_changes', ['changes' => $changes]);
     }
 
     public function editCustomer($id){
