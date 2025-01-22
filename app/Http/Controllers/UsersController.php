@@ -897,6 +897,7 @@ class UsersController extends Controller
 
             $customerChanges->test = $customer->test;
             $customerChanges->user_id = $customer->id;
+            $customerChanges->changed_by = Auth::user()->id;
 
             $customerChanges->save();
 
