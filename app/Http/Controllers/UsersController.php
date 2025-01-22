@@ -665,6 +665,8 @@ class UsersController extends Controller
             $customer->exclude_vat_check = 0;
         }
 
+        $customer->save();
+
         $files = File::where('user_id', $customer->id)->get();
 
         foreach($files as $file){
