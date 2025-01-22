@@ -22,6 +22,8 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
+                <div>Changed By: {{$change->changed_by}}</div>
+                <div>Changed at: {{$change->created_at}}</div>
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
                         <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
@@ -189,7 +191,7 @@
                                             <p>{{$user->sn}}</p>
                                         </td>
                                     </tr>
-                                    
+
                             </tbody>
                         </table>
                     </div>
