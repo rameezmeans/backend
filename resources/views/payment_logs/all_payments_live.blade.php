@@ -14,6 +14,10 @@
     cursor: pointer;
   }
 
+  .w-full{
+    width: 500px !important;
+  }
+
 </style>
 @endsection
 
