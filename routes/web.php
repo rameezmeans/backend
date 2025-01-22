@@ -127,11 +127,27 @@ Route::get('/autotuner', function () {
 
 Route::get('/tasks', function () {
 
-    dd(Carbon::now());
+    $credits = Credit::where('price_payed', '>', 0)->get();
 
-    $frontendID = 3;
-    $activeFeed = NewsFeed::where('active', 1)->where('front_end_id', $frontendID)->get();
-    dd($activeFeed);
+    foreach($credits as $credit){
+        $credit->customer = User::findOrFail($credit->user_id)->name;
+        $credit->email = User::findOrFail($credit->user_id)->email;
+
+        if($credit->group_id == 0){
+            $credit->group = "Not Recorded";
+        }
+        else{
+            $credit->group = Group::findOrFail($credit->group_id)->name;
+        }
+    }
+
+    dd('here');
+
+    // dd(Carbon::now());
+
+    // $frontendID = 3;
+    // $activeFeed = NewsFeed::where('active', 1)->where('front_end_id', $frontendID)->get();
+    // dd($activeFeed);
 
     // $frontendID = 2;
     // $files = File::where('status', 'submitted')->where('front_end_id', 2)->limit(1)->get();
