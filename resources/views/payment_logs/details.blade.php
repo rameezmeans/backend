@@ -27,7 +27,37 @@
 
                 <div class="row">
 
-                  <div class="card-title"><h5>Backend</h5>
+                  <div class="card-title"><h5>User Details</h5>
+                  </div>
+
+                  <div class="col-lg-12">
+                    <div class="table-responsive table-invoice">
+                      <table class="table">
+
+                        <thead>
+                          <tr>
+                            <th class="">Group</th>
+                            <th class="">Group Tax Rate</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="">
+                              €{{$group->name}}
+                            </td>
+                            <td class="">
+                              €{{$group->tax}}%
+                            </td>
+                            
+                          </tr>
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                    
+                  </div>
+
+                  <div class="card-title"><h5>Backend Payment Details</h5>
                   </div>
 
                   <div class="col-lg-12">
