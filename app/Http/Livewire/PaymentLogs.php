@@ -76,6 +76,7 @@ class PaymentLogs extends LivewireDatatable
             
             Column::name('customer')->label('Customer')->searchable(),
             Column::name('email')->label('Email')->searchable(),
+            Column::name('group')->label('Group')->searchable(),
         ];
     }
 }
