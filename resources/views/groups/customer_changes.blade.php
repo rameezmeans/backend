@@ -10,7 +10,7 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                    <h3>Tools</h3>
+                    <h3>Changes</h3>
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
@@ -34,7 +34,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($changes as $change)
-                                    <tr role="row" class="redirect-click" data-redirect="{{ route('edit-service', $service->id) }}">
+                                    <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->name}}</p>
                                         </td>
