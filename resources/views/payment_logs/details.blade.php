@@ -7,9 +7,9 @@
       <!-- START CONTAINER FLUID -->
         <div class=" container-fluid   container-fixed-lg bg-white">
 
-          {{-- <div class="card card-transparent m-t-40">
+          <div class="card card-transparent m-t-40">
             <div class="card-header ">
-                <div class="card-title"><h3>User Details</h3>
+                <div class="card-title"><h3>Details</h3>
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
@@ -26,38 +26,6 @@
                 
 
                 <div class="row">
-                  <div class="col-lg-4">
-                    <div>
-                    <h4>
-                      User Group (At the Moment): {{$group->name}} 
-                    </h4>
-                    </div>
-
-                    <div>
-                      <h4>
-                        User Group Tax Rate (At the Moment): {{$group->tax}}%
-                      </h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> --}}
-
-          <div class="card card-transparent m-t-40">
-            <div class="card-header ">
-                <div class="card-title"><h3>Payment Details</h3>
-                </div>
-                <div class="pull-right">
-                {{-- <div class="col-xs-12">
-                    <button data-redirect="{{route('all-payments')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">All Payments</span>
-                    </button>
-                </div> --}}
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="card-body">
-              <div class="card card-transparent flex-row">
 
                   <div class="card-title"><h5>Backend</h5>
                   </div>
