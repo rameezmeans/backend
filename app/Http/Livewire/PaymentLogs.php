@@ -59,6 +59,16 @@ class PaymentLogs extends LivewireDatatable
                     return '<span class="label bg-warning">'.code_to_country(User::findOrFail($userId)->country).'</span>';
                 }
             })->label('Country'),
+
+            Column::callback(['type'], function($type){
+                if($type != ''){
+                    return ucfirst($type);
+                }
+                else{
+                    return "Admin";
+                }
+                    
+            })->label('Type'),
             
         ];
     }
