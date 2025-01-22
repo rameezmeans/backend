@@ -474,6 +474,10 @@ class UsersController extends Controller
             $customer->exclude_vat_check = 0;
         }
 
+        if($request->front_end_id == 1){
+            $customer->exclude_vat_check = 1;
+        }
+
         $customer->save();
 
         (new ZohoController)->createNewZohoCustomer($customer);
