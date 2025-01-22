@@ -614,6 +614,26 @@ class UsersController extends Controller
 
         $customer = User::findOrFail($request->id);
 
+        $customerChanges = new UserChange();
+
+        $customerChanges->name = $customer->name;
+        $customerChanges->phone = $customer->phone;
+        $customerChanges->language = $customer->language;
+        $customerChanges->address = $customer->address;
+        $customerChanges->zip = $customer->zip;
+        $customerChanges->city = $customer->city;
+        $customerChanges->country = $customer->country;
+        $customerChanges->status = $customer->status;
+        $customerChanges->company_name = $customer->company_name;
+        $customerChanges->company_id = $customer->company_id;
+        $customerChanges->evc_customer_id = $customer->evc_customer_id;
+        $customerChanges->group_id = $customer->group_id;
+        $customerChanges->front_end_id = $customer->front_end_id;
+        $customerChanges->elorus_id = $customer->elorus_id;
+        $customerChanges->exclude_vat_check = $customer->exclude_vat_check;
+        $customerChanges->sn = $customer->sn;
+        $customer->save();
+
         $customer->name = $request->name;
         
 
@@ -644,26 +664,6 @@ class UsersController extends Controller
         else{
             $customer->exclude_vat_check = 0;
         }
-
-        $customerChanges = new UserChange();
-
-        $customerChanges->name = $request->name;
-        $customerChanges->phone = $request->phone;
-        $customerChanges->language = $request->language;
-        $customerChanges->address = $request->address;
-        $customerChanges->zip = $request->zip;
-        $customerChanges->city = $request->city;
-        $customerChanges->country = $request->country;
-        $customerChanges->status = $request->status;
-        $customerChanges->company_name = $request->company_name;
-        $customerChanges->company_id = $request->company_id;
-        $customerChanges->evc_customer_id = $request->evc_customer_id;
-        $customerChanges->group_id = $request->group_id;
-        $customerChanges->front_end_id = $request->front_end_id;
-        $customerChanges->elorus_id = $request->elorus_id;
-        $customerChanges->exclude_vat_check = 1;
-        $customerChanges->sn = $request->sn;
-        $customer->save();
 
         $files = File::where('user_id', $customer->id)->get();
 
@@ -876,13 +876,13 @@ class UsersController extends Controller
                 $customer->test = 0;
             }
 
-            $customer->save();
-
             $customerChanges = new UserChange();
 
-            $customerChanges->name = $request->name;
+            $customerChanges->test = $customer->test;
 
             $customerChanges->save();
+
+            $customer->save();
 
             return redirect()->back()->with(['success' => 'Status Changed, successfully.']);
         }
