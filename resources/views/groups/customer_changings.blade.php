@@ -40,6 +40,8 @@
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$user->name}}</p>
                                         </td>
+                                    </tr>
+                                    <tr>
 
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->phone}}</p>
@@ -47,6 +49,8 @@
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$user->phone}}</p>
                                         </td>
+                                    </tr>
+                                    <tr>
 
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->language}}</p>
@@ -55,12 +59,18 @@
                                             <p>{{$user->language}}</p>
                                         </td>
 
+                                    </tr>
+                                    <tr>
+
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->address}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$user->address}}</p>
                                         </td>
+
+                                    </tr>
+                                    <tr>
 
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->address}}</p>
