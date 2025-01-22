@@ -526,7 +526,7 @@ class UsersController extends Controller
 
     public function changes($id){
         $changes = UserChange::where('user_id', $id)->get();
-        return view('groups.customer_changes', ['changes' => $changes]);
+        return view('groups.customer_changes', ['changes' => $changes, 'userId' => $id]);
     }
 
     public function editCustomer($id){
