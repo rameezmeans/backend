@@ -17,6 +17,10 @@ class Credit extends Model
         return $this->belongsTo(File::class);
     }
 
+    public function group(){
+        return $this->hasOne(Group::class);
+    }
+
     public function log(){
         return $this->hasOne(PaymentLog::class, 'payment_id', 'id');
     }
@@ -38,7 +42,7 @@ class Credit extends Model
         return $this->hasOne(ElorusRecord::class, 'credit_id', 'id');
         
     }
-
+    
     public function zoho(){
         return $this->hasOne(ZohoRecord::class, 'credit_id', 'id');
         

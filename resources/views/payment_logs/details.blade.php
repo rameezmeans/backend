@@ -54,8 +54,19 @@
                             </td>
                             <td class="text-center">€{{$credit->tax}}</td>
                             <td class="text-center">{{$user->name}}</td>
-                            <td class="text-right">{{$group->name}}</td>
-                            <td class="text-right">{{$group->tax}}</td>
+                            <td class="text-right">
+                              @if($credit->group_id != 0)
+                                {{$credit->group->name}}
+                              @else
+                                Not Recorded
+                              @endif</td>
+                            <td class="text-right">
+                              @if($credit->group_id != 0)
+                                {{$credit->group->tax}}%
+                              @else
+                                Not Recorded
+                              @endif</td>
+                            </td>
                           </tr>
                           
                         </tbody>
