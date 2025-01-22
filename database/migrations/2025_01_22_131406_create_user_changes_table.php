@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('evc_customer_id')->nullable();
             $table->integer('front_end_id');
             $table->string('mailchimp_id')->nullable();
+            $table->string('sn')->nullable();
             $table->string('zohobooks_id')->nullable();
             $table->boolean('test')->default(0);
             $table->timestamps();
