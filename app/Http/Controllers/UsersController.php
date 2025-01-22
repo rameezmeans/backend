@@ -638,7 +638,7 @@ class UsersController extends Controller
         $customerChanges->elorus_id = $customer->elorus_id;
         $customerChanges->exclude_vat_check = $customer->exclude_vat_check;
         $customerChanges->sn = $customer->sn;
-        $customerChanges->user_id = $customer->user_id;
+        $customerChanges->user_id = $customer->id;
         $customerChanges->save();
 
         $customer->name = $request->name;
@@ -888,7 +888,7 @@ class UsersController extends Controller
             $customerChanges = new UserChange();
 
             $customerChanges->test = $customer->test;
-            $customerChanges->user_id = $customer->user_id;
+            $customerChanges->user_id = $customer->id;
 
             $customerChanges->save();
 
