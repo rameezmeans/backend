@@ -14,7 +14,7 @@
     cursor: pointer;
   }
 
-  .w-full{
+  .w-full .text-sm{
     width: 500px !important;
   }
 
