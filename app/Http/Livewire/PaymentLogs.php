@@ -33,6 +33,7 @@ class PaymentLogs extends LivewireDatatable
         return [
 
             NumberColumn::name('id')->label('Payment ID'),
+            Column::name('invoice_id')->label('Invoice ID')->searchable(),
         ];
     }
 }
