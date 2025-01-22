@@ -90,7 +90,7 @@ class PaymentLogController extends Controller
     }
 
     public function allPayments(){
-        $allPayments = Credit::orderBy('created_at', 'desc')->where('price_payed', '>', 0)->orWhere('gifted', 1)->where('credits', '>', 0)->get();
+        $allPayments = Credit::orderBy('created_at', 'desc')->where('gifted', 1)->where('credits', '>', 0)->get();
         
         return view('payment_logs.all_payments', [
             'allPayments' => $allPayments,

@@ -33,6 +33,8 @@
                     <div class="col-xs-12">
                         <button data-redirect="{{ route('payment-and-customers') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Payments And Customers</span>
                         </button>
+                        <button data-redirect="{{ route('all-payments-admin') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">All Admin Entries</span>
+                        </button>
                         {{-- <input type="text" id="search-table" class="form-control pull-right" placeholder="Search"> --}}
                     </div>
                 </div>
