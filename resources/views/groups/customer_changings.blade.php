@@ -32,16 +32,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($change as $c)
+                                
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$c->name}}</p>
+                                            <p>{{$change->name}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$user->name}}</p>
                                         </td>
                                     </tr>
-                                @endforeach
+                                
                             </tbody>
                         </table>
                     </div>
