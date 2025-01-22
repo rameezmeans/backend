@@ -646,7 +646,7 @@ class UsersController extends Controller
         $customerChanges->exclude_vat_check = $customer->exclude_vat_check;
         $customerChanges->sn = $customer->sn;
         $customerChanges->user_id = $customer->id;
-        $customerChanges->user_id = $customer->id;
+        $customerChanges->changed_by = Auth::user()->id;
         $customerChanges->save();
 
         $customer->name = $request->name;
