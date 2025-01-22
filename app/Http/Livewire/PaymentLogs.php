@@ -94,6 +94,11 @@ class PaymentLogs extends LivewireDatatable
                 return '<a class="btn btn-warning text-black" target="_blank" href="'.$elorusPermalink.'">Go To Elorus</a>';
                     
             })->label('Elorus'),
+            Column::callback(['zohobooks_id'], function($zohobooksID){
+                
+                return '<a class="btn btn-warning text-black" target="_blank" href="'.'https://books.zoho.com/app/8745725#/invoices/'.$zohobooksID.'">Go To Zohobooks</a>';
+                    
+            })->label('Zohobooks'),
         ];
     }
 }
