@@ -89,6 +89,11 @@ class PaymentLogs extends LivewireDatatable
                 return '<a class="btn btn-warning text-black" target="_blank" href="'.route("payment-details", $id).'">Payment Details</a>';
                     
             })->label('Details'),
+            Column::callback(['elorus_ermalink'], function($elorusPermalink){
+                
+                return '<a class="btn btn-warning text-black" target="_blank" href="'.$elorusPermalink.'">Go To Elorus</a>';
+                    
+            })->label('Elorus'),
         ];
     }
 }
