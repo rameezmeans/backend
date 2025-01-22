@@ -23,7 +23,7 @@ class PaymentLogs extends LivewireDatatable
 {
     public function builder()
     {
-        $allPayments = Credit::where('credits', '>', 0);
+        $allPayments = Credit::where('credits', '>', 0)->where('price_payed', '>', 0);
 
         return $allPayments;
     }
