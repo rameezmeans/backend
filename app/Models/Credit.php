@@ -17,7 +17,7 @@ class Credit extends Model
         return $this->belongsTo(File::class);
     }
 
-    public function group(){
+    public function my_group(){
         return $this->belongsTo(Group::class);
     }
 
