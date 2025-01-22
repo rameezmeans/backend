@@ -13,11 +13,7 @@
   .redirect-click-file{
     cursor: pointer;
   }
-
-  .w-full .text-sm{
-    width: 500px !important;
-  }
-
+  
 </style>
 @endsection
 
