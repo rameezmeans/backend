@@ -73,13 +73,123 @@
                                     <tr>
 
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$change->address}}</p>
+                                            <p>{{$change->zip}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$user->address}}</p>
+                                            <p>{{$user->zip}}</p>
                                         </td>
                                     </tr>
-                                
+
+                                    <tr>
+
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$change->city}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$user->city}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$change->country}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$user->country}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$change->company_name}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$user->company_name}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$change->company_id}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$user->company_id}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$change->group_id}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$user->group_id}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$change->company_id}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$user->company_id}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$change->front_end_id}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$user->front_end_id}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$change->elorus_id}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$user->elorus_id}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$change->exclude_vat_check}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$user->exclude_vat_check}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$change->company_id}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$user->company_id}}</p>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$change->sn}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$user->sn}}</p>
+                                        </td>
+                                    </tr>
+                                    
                             </tbody>
                         </table>
                     </div>
