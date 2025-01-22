@@ -97,7 +97,7 @@
                                                     
                                                 </td>
                                                 <td class="v-align-middle semi-bold sorting_1">
-                                                    <p>@if(\App\Models\User::findOrFail($p->user_id)->group){{\App\Models\User::findOrFail($p->user_id)->group->name}}@else No Group @endif</p>
+                                                    <p>@if($p->group->id != 0 ){{$p->group->name}}@else Not Recorded @endif</p>
                                                     
                                                 </td>
                                                 <td class="v-align-middle semi-bold sorting_1">
