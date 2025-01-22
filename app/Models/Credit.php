@@ -18,7 +18,7 @@ class Credit extends Model
     }
 
     public function my_group(){
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(Group::class, 'group_id', 'id');
     }
 
     public function log(){

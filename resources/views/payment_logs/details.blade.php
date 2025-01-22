@@ -91,8 +91,8 @@
                                 Not Recorded
                               @endif</td>
                             <td class="text-right">
-                              @if($credit->my_group && $credit->group_id != 0)
-                                {{$credit->my_group->tax}}%
+                              @if($credit->group_id != 0)
+                                {{$credit->group_id}}%
                               @else
                                 Not Recorded
                               @endif</td>
