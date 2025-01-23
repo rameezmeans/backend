@@ -253,16 +253,16 @@
 
                                     <tr>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>Zohobooks id</p>
+                                            <p>EVC Customer ID</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$change->zohobooks_id}}</p>
+                                            <p>{{$change->evc_customer_id}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            @if($change->zohobooks_id != $user->zohobooks_id)
-                                            <p class="label label-danger">{{$user->zohobooks_id}}</p>  
+                                            @if($change->evc_customer_id != $user->evc_customer_id)
+                                            <p class="label label-danger">{{$user->evc_customer_id}}</p>  
                                         @else
-                                            <p>{{$user->zohobooks_id}}</p>
+                                            <p>{{$user->evc_customer_id}}</p>
                                         @endif
                                         </td>
                                     </tr>
