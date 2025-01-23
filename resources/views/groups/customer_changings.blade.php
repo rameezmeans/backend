@@ -53,7 +53,11 @@
                                             <p>{{$change->phone}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->phone != $user->phone)
+                                            <p class="label label-danger">{{$user->phone}}</p>  
+                                        @else
                                             <p>{{$user->phone}}</p>
+                                        @endif
                                         </td>
                                     </tr>
                                     <tr>
