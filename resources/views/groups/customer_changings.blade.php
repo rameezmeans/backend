@@ -29,6 +29,7 @@
                         <table class="table table-hover demo-table-search table-responsive-block no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr role="row">
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Column</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">From</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">To</th>
                                 </tr>
@@ -36,6 +37,9 @@
                             <tbody>
                                 
                                     <tr role="row">
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>Name</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->name}}</p>
                                         </td>
@@ -48,7 +52,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>Phone</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->phone}}</p>
                                         </td>
@@ -61,7 +67,9 @@
                                         </td>
                                     </tr>
                                     <tr>
-
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>Language</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->language}}</p>
                                         </td>
@@ -75,7 +83,9 @@
 
                                     </tr>
                                     <tr>
-
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>Address</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->address}}</p>
                                         </td>
@@ -91,6 +101,9 @@
                                     <tr>
 
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            <p>zip</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->zip}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
@@ -103,7 +116,9 @@
                                     </tr>
 
                                     <tr>
-
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>City</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->city}}</p>
                                         </td>
@@ -117,7 +132,9 @@
                                     </tr>
 
                                     <tr>
-
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>country</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->country}}</p>
                                         </td>
@@ -131,7 +148,9 @@
                                     </tr>
 
                                     <tr>
-
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>Company Name</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->company_name}}</p>
                                         </td>
@@ -145,7 +164,9 @@
                                     </tr>
 
                                     <tr>
-
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>Company ID</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->company_id}}</p>
                                         </td>
@@ -164,6 +185,9 @@
                                         $userGroup = \App\Models\Group::findOrFail($user->group_id)->name;
                                         @endphp
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            <p>VAT Group</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$changeGroup}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
@@ -176,24 +200,13 @@
                                     </tr>
 
                                     <tr>
-
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$change->company_id}}</p>
-                                        </td>
-                                        <td class="v-align-middle semi-bold sorting_1">
-                                            @if($change->company_id != $user->company_id)
-                                            <p class="label label-danger">{{$user->company_id}}</p>  
-                                        @else
-                                            <p>{{$user->company_id}}</p>
-                                        @endif
-                                        </td>
-                                    </tr>
-
-                                    <tr>
                                         @php
                                         $changeFrontend = \App\Models\FrontEnd::findOrFail($change->front_end_id)->name;
                                         $userFrontend = \App\Models\FrontEnd::findOrFail($user->front_end_id)->name;
                                         @endphp
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>Frontend</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$changeFrontend}}</p>
                                         </td>
@@ -207,7 +220,9 @@
                                     </tr>
 
                                     <tr>
-
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>Elorus ID</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->elorus_id}}</p>
                                         </td>
@@ -221,7 +236,9 @@
                                     </tr>
 
                                     <tr>
-
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>Exclude vat check</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->exclude_vat_check}}</p>
                                         </td>
@@ -235,21 +252,25 @@
                                     </tr>
 
                                     <tr>
-
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$change->company_id}}</p>
+                                            <p>Zohobooks id</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            @if($change->company_id != $user->company_id)
-                                            <p class="label label-danger">{{$user->company_id}}</p>  
+                                            <p>{{$change->zohobooks_id}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->zohobooks_id != $user->zohobooks_id)
+                                            <p class="label label-danger">{{$user->zohobooks_id}}</p>  
                                         @else
-                                            <p>{{$user->company_id}}</p>
+                                            <p>{{$user->zohobooks_id}}</p>
                                         @endif
                                         </td>
                                     </tr>
-
+                                    
                                     <tr>
-
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>Magic SN</p>
+                                        </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->sn}}</p>
                                         </td>
