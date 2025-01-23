@@ -886,14 +886,6 @@ class UsersController extends Controller
         if($request->passkey == '4589'){
 
             $customer = User::findOrFail($request->customer_id);
-            if($request->status == 'on'){
-                $customer->test = 1;
-            }
-            else{
-                $customer->test = 0;
-            }
-
-            $customer->save();
 
             $customerChanges = new UserChange();
 
@@ -921,6 +913,15 @@ class UsersController extends Controller
 
             $customerChanges->save();
 
+            if($request->status == 'on'){
+                $customer->test = 1;
+            }
+            else{
+                $customer->test = 0;
+            }
+
+            $customer->save();
+            
             return redirect()->back()->with(['success' => 'Status Changed, successfully.']);
         }
         else{
