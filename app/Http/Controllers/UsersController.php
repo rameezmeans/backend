@@ -643,7 +643,6 @@ class UsersController extends Controller
         $customerChanges->group_id = $customer->group_id;
         $customerChanges->front_end_id = $customer->front_end_id;
         $customerChanges->elorus_id = $customer->elorus_id;
-        $customerChanges->zohobooks_id = $customer->zohobooks_id;
         $customerChanges->exclude_vat_check = $customer->exclude_vat_check;
         $customerChanges->sn = $customer->sn;
         $customerChanges->user_id = $customer->id;
@@ -899,7 +898,7 @@ class UsersController extends Controller
             $customerChanges = new UserChange();
 
             $customerChanges->test = $customer->test;
-            
+
             $customerChanges->name = $customer->name;
             $customerChanges->phone = $customer->phone;
             $customerChanges->language = $customer->language;
@@ -914,7 +913,7 @@ class UsersController extends Controller
             $customerChanges->group_id = $customer->group_id;
             $customerChanges->front_end_id = $customer->front_end_id;
             $customerChanges->elorus_id = $customer->elorus_id;
-            $customerChanges->zohobooks_id = $customer->zohobooks_id;
+            
             $customerChanges->exclude_vat_check = $customer->exclude_vat_check;
             $customerChanges->sn = $customer->sn;
             $customerChanges->user_id = $customer->id;
