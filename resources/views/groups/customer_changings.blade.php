@@ -66,7 +66,11 @@
                                             <p>{{$change->language}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->language != $user->language)
+                                            <p class="label label-danger">{{$user->language}}</p>  
+                                        @else
                                             <p>{{$user->language}}</p>
+                                        @endif
                                         </td>
 
                                     </tr>
@@ -76,7 +80,11 @@
                                             <p>{{$change->address}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->address != $user->address)
+                                            <p class="label label-danger">{{$user->address}}</p>  
+                                        @else
                                             <p>{{$user->address}}</p>
+                                        @endif
                                         </td>
 
                                     </tr>
@@ -86,7 +94,11 @@
                                             <p>{{$change->zip}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->zip != $user->zip)
+                                            <p class="label label-danger">{{$user->zip}}</p>  
+                                        @else
                                             <p>{{$user->zip}}</p>
+                                        @endif
                                         </td>
                                     </tr>
 
@@ -96,7 +108,11 @@
                                             <p>{{$change->city}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->city != $user->city)
+                                            <p class="label label-danger">{{$user->city}}</p>  
+                                        @else
                                             <p>{{$user->city}}</p>
+                                        @endif
                                         </td>
                                     </tr>
 
@@ -106,7 +122,11 @@
                                             <p>{{$change->country}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->country != $user->country)
+                                            <p class="label label-danger">{{$user->country}}</p>  
+                                        @else
                                             <p>{{$user->country}}</p>
+                                        @endif
                                         </td>
                                     </tr>
 
@@ -116,7 +136,11 @@
                                             <p>{{$change->company_name}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->company_name != $user->company_name)
+                                            <p class="label label-danger">{{$user->company_name}}</p>  
+                                        @else
                                             <p>{{$user->company_name}}</p>
+                                        @endif
                                         </td>
                                     </tr>
 
@@ -126,17 +150,28 @@
                                             <p>{{$change->company_id}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->company_id != $user->company_id)
+                                            <p class="label label-danger">{{$user->company_id}}</p>  
+                                        @else
                                             <p>{{$user->company_id}}</p>
+                                        @endif
                                         </td>
                                     </tr>
 
                                     <tr>
-
+                                        @php
+                                        $changeGroup = \App\Models\Group::findOrFail($change->group_id)->name;
+                                        $userGroup = \App\Models\Group::findOrFail($user->group_id)->name;
+                                        @endphp
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$change->group_id}}</p>
+                                            <p>{{$changeGroup}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$user->group_id}}</p>
+                                            @if($changeGroup != $userGroup)
+                                            <p class="label label-danger">{{$userGroup}}</p>  
+                                        @else
+                                            <p>{{$userGroup}}</p>
+                                        @endif
                                         </td>
                                     </tr>
 
@@ -146,17 +181,28 @@
                                             <p>{{$change->company_id}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->company_id != $user->company_id)
+                                            <p class="label label-danger">{{$user->company_id}}</p>  
+                                        @else
                                             <p>{{$user->company_id}}</p>
+                                        @endif
                                         </td>
                                     </tr>
 
                                     <tr>
-
+                                        @php
+                                        $changeFrontend = \App\Models\FrontEnd::findOrFail($change->front_end_id)->name;
+                                        $userFrontend = \App\Models\FrontEnd::findOrFail($user->front_end_id)->name;
+                                        @endphp
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$change->front_end_id}}</p>
+                                            <p>{{$changeFrontend}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$user->front_end_id}}</p>
+                                            @if($changeFrontend != $userFrontend)
+                                            <p class="label label-danger">{{$userFrontend}}</p>  
+                                        @else
+                                            <p>{{$userFrontend}}</p>
+                                        @endif
                                         </td>
                                     </tr>
 
@@ -166,7 +212,11 @@
                                             <p>{{$change->elorus_id}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->elorus_id != $user->elorus_id)
+                                            <p class="label label-danger">{{$user->elorus_id}}</p>  
+                                        @else
                                             <p>{{$user->elorus_id}}</p>
+                                        @endif
                                         </td>
                                     </tr>
 
@@ -176,7 +226,11 @@
                                             <p>{{$change->exclude_vat_check}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->exclude_vat_check != $user->exclude_vat_check)
+                                            <p class="label label-danger">{{$user->exclude_vat_check}}</p>  
+                                        @else
                                             <p>{{$user->exclude_vat_check}}</p>
+                                        @endif
                                         </td>
                                     </tr>
 
@@ -186,7 +240,11 @@
                                             <p>{{$change->company_id}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->company_id != $user->company_id)
+                                            <p class="label label-danger">{{$user->company_id}}</p>  
+                                        @else
                                             <p>{{$user->company_id}}</p>
+                                        @endif
                                         </td>
                                     </tr>
 
@@ -196,7 +254,11 @@
                                             <p>{{$change->sn}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->sn != $user->sn)
+                                            <p class="label label-danger">{{$user->sn}}</p>  
+                                        @else
                                             <p>{{$user->sn}}</p>
+                                        @endif
                                         </td>
                                     </tr>
 
