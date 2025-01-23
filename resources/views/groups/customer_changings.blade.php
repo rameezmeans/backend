@@ -40,7 +40,11 @@
                                             <p>{{$change->name}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$user->name}}</p>
+                                            @if($change->name != $user->name)
+                                                <p class="label label-danger">{{$user->name}}</p>  
+                                            @else
+                                                <p>{{$user->name}}</p>
+                                            @endif
                                         </td>
                                     </tr>
                                     <tr>
