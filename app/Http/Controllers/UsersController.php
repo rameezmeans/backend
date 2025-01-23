@@ -646,6 +646,7 @@ class UsersController extends Controller
         $customerChanges->exclude_vat_check = $customer->exclude_vat_check;
         $customerChanges->sn = $customer->sn;
         $customerChanges->user_id = $customer->id;
+        $customerChanges->test = $customer->test;
         $customerChanges->changed_by = Auth::user()->id;
         $customerChanges->save();
 
@@ -921,7 +922,7 @@ class UsersController extends Controller
             }
 
             $customer->save();
-            
+
             return redirect()->back()->with(['success' => 'Status Changed, successfully.']);
         }
         else{
