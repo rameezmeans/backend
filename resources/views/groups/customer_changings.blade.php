@@ -266,7 +266,7 @@
                                         @endif
                                         </td>
                                     </tr>
-                                    
+
                                     <tr>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>Magic SN</p>
@@ -279,6 +279,22 @@
                                             <p class="label label-danger">{{$user->sn}}</p>  
                                         @else
                                             <p>{{$user->sn}}</p>
+                                        @endif
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>Test</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{$change->test}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            @if($change->test != $user->test)
+                                            <p class="label label-danger">{{$user->test}}</p>  
+                                        @else
+                                            <p>{{$user->test}}</p>
                                         @endif
                                         </td>
                                     </tr>
