@@ -894,6 +894,8 @@ class UsersController extends Controller
                 $customer->test = 0;
             }
 
+            $customer->save();
+
             $customerChanges = new UserChange();
 
             $customerChanges->test = $customer->test;
@@ -902,9 +904,7 @@ class UsersController extends Controller
             $customerChanges->changed_by = Auth::user()->id;
 
             $customerChanges->save();
-
-            $customer->save();
-
+            
             return redirect()->back()->with(['success' => 'Status Changed, successfully.']);
         }
         else{
