@@ -127,6 +127,13 @@ Route::get('/autotuner', function () {
 
 Route::get('/tasks', function () {
 
+    $credits = Credit::where('created_at', '2025-01-17')->get();
+
+    dd($credits);
+    
+
+    dd('report');
+
     $credits = Credit::where('price_payed', '>', 0)->get();
 
     foreach($credits as $credit){
