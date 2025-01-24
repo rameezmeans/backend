@@ -127,7 +127,7 @@ Route::get('/autotuner', function () {
 
 Route::get('/tasks', function () {
 
-    $credits = Credit::whereDate('created_at', '2025-01-17')->where('credits', '>', 0)->sql();
+    $credits = Credit::whereDate('created_at', '2025-01-17')->where('credits', '>', 0)->toSql();
 
     dd($credits);
     
