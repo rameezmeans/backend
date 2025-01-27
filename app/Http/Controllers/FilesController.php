@@ -1660,7 +1660,7 @@ class FilesController extends Controller
         ->where('request_file_id', $requestFileID)
         ->first();
 
-        dd($autoTunerEncryptedFile);
+        // dd($autoTunerEncryptedFile);
 
 
         if($file->front_end_id == 1){
