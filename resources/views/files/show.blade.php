@@ -3871,7 +3871,7 @@ margin-bottom: 10px !important;
                                       <p>Please click on "Download Encrypted Autoturner File" Button to download and test the system. This way user will get Encrypted file or you will get the error so that you can process the file, manually.</p>
                                     </div>
                                     <div class="text-center">
-                                      <a href="{{ route('download-magic',[$message['file_id'], $message['id']]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download Encrypted Magic File</span>
+                                      <a href="{{ route('download-magic',[$message['file_id'], $message['id']]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download Encrypted Autotuner File</span>
                                       </a>
                                     </div>
                                   @endif
