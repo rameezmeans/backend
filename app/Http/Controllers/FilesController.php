@@ -1656,9 +1656,11 @@ class FilesController extends Controller
 
         $file = File::findOrFail($id); 
 
-        $magicEncryptedFile = AutotunerEncrypted::where('file_id', $id)
+        $autoTunerEncryptedFile = AutotunerEncrypted::where('file_id', $id)
         ->where('request_file_id', $requestFileID)
         ->first();
+
+        dd($autoTunerEncryptedFile);
 
 
         if($file->front_end_id == 1){
@@ -1667,12 +1669,12 @@ class FilesController extends Controller
 
             if($file->on_dev == 1){
 
-                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile->name;
+                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$autoTunerEncryptedFile->name;
 
             }
             else{
 
-                $file_path = public_path('/../../portal/public/'.$file->file_path).$magicEncryptedFile->name;
+                $file_path = public_path('/../../portal/public/'.$file->file_path).$autoTunerEncryptedFile->name;
             }
 
         }
@@ -1682,12 +1684,12 @@ class FilesController extends Controller
 
             if($file->on_dev == 1){
 
-                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile->name;
+                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$autoTunerEncryptedFile->name;
 
             }
             else{
 
-                $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$magicEncryptedFile->name;
+                $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$autoTunerEncryptedFile->name;
             }
 
         }
@@ -1695,12 +1697,12 @@ class FilesController extends Controller
 
             if($file->on_dev == 1){
 
-                $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$magicEncryptedFile->name;
+                $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$autoTunerEncryptedFile->name;
 
             }
             else{
 
-                $file_path = public_path('/../../tuningX/public/'.$file->file_path).$magicEncryptedFile->name;
+                $file_path = public_path('/../../tuningX/public/'.$file->file_path).$autoTunerEncryptedFile->name;
             }
         }
         
