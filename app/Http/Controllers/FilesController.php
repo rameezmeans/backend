@@ -19,6 +19,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Controllers\ReminderManagerController;
 use App\Models\ACMFile;
 use App\Models\AlientechFile;
+use App\Models\AutotunerEncrypted;
 use App\Models\Credit;
 use App\Models\EngineerOptionsOffer;
 use App\Models\FileFeedback;
@@ -1651,6 +1652,62 @@ class FilesController extends Controller
         ->with('tab','chat');
     }
     
+    public function downloadAutotuner( $id,$requestFileID ) {
+
+        $file = File::findOrFail($id); 
+
+        $magicEncryptedFile = AutotunerEncrypted::where('file_id', $id)
+        ->where('request_file_id', $requestFileID)
+        ->first();
+
+
+        if($file->front_end_id == 1){
+
+            // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+
+            if($file->on_dev == 1){
+
+                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile->name;
+
+            }
+            else{
+
+                $file_path = public_path('/../../portal/public/'.$file->file_path).$magicEncryptedFile->name;
+            }
+
+        }
+        else if($file->front_end_id == 3){
+
+            // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+
+            if($file->on_dev == 1){
+
+                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile->name;
+
+            }
+            else{
+
+                $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$magicEncryptedFile->name;
+            }
+
+        }
+        else{
+
+            if($file->on_dev == 1){
+
+                $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$magicEncryptedFile->name;
+
+            }
+            else{
+
+                $file_path = public_path('/../../tuningX/public/'.$file->file_path).$magicEncryptedFile->name;
+            }
+        }
+        
+        return response()->download($file_path);
+
+    }
+
     public function downloadMagic( $id,$requestFileID ) {
 
         if(!Auth::user()->is_admin()){
@@ -3758,14 +3815,15 @@ class FilesController extends Controller
         
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
         $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
+        $autotunerLabel = Tool::where('label', 'Autotuner')->where('type', 'slave')->first();
 
         $prossingSoftwares = ProcessingSoftware::orderBy('name', 'asc')->get();
 
         if(env('APP_ENV') == 'live'){
-            return view('files.show', ['optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show', ['optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
         else{
-            return view('files.show_backup', ['optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares, 'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show_backup', ['optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares, 'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
 
         }
