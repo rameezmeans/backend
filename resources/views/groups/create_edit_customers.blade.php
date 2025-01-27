@@ -453,15 +453,17 @@
                   </span>
                 @enderror
 
-                <div class="form-group form-group-default">
-                  <label>Elorus Account ID</label>
-                  <input value="@if(isset($customer)) @if($customer->elorus_id != NULL){{$customer->elorus_id}}@endif @else{{old('elorus_id')}}@endif" name="elorus_id" type="text" class="form-control" autocomplete="off" value="">
-                </div>
-                @error('elorus_id')
-                  <span class="text-danger" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-                @enderror
+                @if(isset($customer))
+                  <div class="form-group form-group-default">
+                    <label>Elorus Account ID</label>
+                    <input value="@if(isset($customer)) @if($customer->elorus_id != NULL){{$customer->elorus_id}}@endif @else{{old('elorus_id')}}@endif" name="elorus_id" type="text" class="form-control" autocomplete="off" value="">
+                  </div>
+                  @error('elorus_id')
+                    <span class="text-danger" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                  @enderror
+                @endif
 
                 <div class="form-group form-group-default">
                   <label>EVC Customer ID</label>
