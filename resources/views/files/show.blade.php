@@ -326,10 +326,19 @@ margin-bottom: 10px !important;
                           </div>
                           <div class="clearfix"></div>
                         </div>
+
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Canceld Files</p>
                           <div class="pull-right">
                             <span class="label label-success">{{$file->user_rejected_files_count()}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Registerd Since</p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{$file->user_registered_since()}}<span>
                           </div>
                           <div class="clearfix"></div>
                         </div>

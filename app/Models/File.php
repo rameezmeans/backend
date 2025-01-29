@@ -88,6 +88,11 @@ class File extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function user_registered_since(){
+        $user = User::findOrFail($this->user_id);
+        return $user->created_at->diffForHumans();
+    }
+
     public function user_files_count(){
         $filesCount = File::where('user_id', $this->user_id)->where('is_credited', 1)->count();
         return $filesCount;
