@@ -32,6 +32,7 @@
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Uploaded By</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,6 +51,9 @@
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$file->created_at->diffForHumans()}}</p>
+                                        </td>
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p><a target="_blank" href="{{route('file', $file->id)}}">Go To File</a></p>
                                         </td>
                                     </tr>
                                 @endforeach
