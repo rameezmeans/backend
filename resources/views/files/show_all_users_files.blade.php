@@ -55,7 +55,18 @@
 <script type="text/javascript">
 
     $( document ).ready(function(event) {
+      
+      $('.parent-adjusted').parent().addClass('flex');
+
+    $(document).on('click','.redirect-click-file',function(e) {
+    console.log('clicked');
+        var lastClass = $(this).attr('class').split(' ').pop();
+        console.log(lastClass);
+        // console.log("http://backend.test/file/"+lastClass);
+
+        window.location.href = "/file/"+lastClass;
         
+    });
        
     });
 
