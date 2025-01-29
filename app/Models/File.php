@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -89,8 +90,16 @@ class File extends Model
     }
 
     public function user_registered_since(){
+
         $user = User::findOrFail($this->user_id);
-        return $user->created_at->diffForHumans();
+
+        $created = new Carbon($user->created_at);
+        $now = Carbon::now();
+        $difference = ($created->diff($now)->days < 1)
+            ? 'today'
+            : $created->diffForHumans($now);
+            
+        return $difference;
     }
 
     public function user_files_count(){
