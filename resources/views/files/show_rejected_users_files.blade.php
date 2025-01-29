@@ -27,7 +27,7 @@
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
                 <div class="card-title">
-                    <h3>All {{\App\Models\User::findOrfail($id)->name}}'s Files</h3>
+                    <h3>All {{\App\Models\User::findOrfail($id)->name}}'s Canceled Files</h3>
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
