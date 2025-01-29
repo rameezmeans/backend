@@ -53,7 +53,7 @@
                                             <p>{{$file->created_at->diffForHumans()}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p><a target="_blank" href="{{route('file', $file->id)}}">Go To File</a></p>
+                                            <p><a class="btn btn-success btn-sm" target="_blank" href="{{route('file', $file->id)}}">Go To File</a></p>
                                         </td>
                                     </tr>
                                 @endforeach
