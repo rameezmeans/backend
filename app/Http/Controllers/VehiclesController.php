@@ -51,9 +51,9 @@ class VehiclesController extends Controller
 
     public function addEngineerComment(Request $request){
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     abort(404);
+        // }
         
         $noteExists = VehiclesNote::where('ecu', $request->ecu)
         ->where('make', $request->make)->first();
