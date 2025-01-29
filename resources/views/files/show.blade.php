@@ -319,7 +319,7 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
 
-                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        {{-- <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Total Tasks</p>
                           <div class="pull-right">
                             <span class="label label-success">{{$file->user_files_count()}}</span>
@@ -343,11 +343,15 @@ margin-bottom: 10px !important;
                             <span class="label label-success">{{$file->user_registered_since()}}<span>
                           </div>
                           <div class="clearfix"></div>
-                        </div>
+                        </div> --}}
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">
-                            <span class="label label-success">{{count_of_files_per_country($file->user->id)}}</span>
+                            {{-- <span class="label label-success">{{count_of_files_per_country($file->user->id)}}</span> --}}
+                            <span class="label label-success"><a target="_blank" href="{{route('show-files', $file->user->id)}}">{{$file->user_files_count()}}</a></span>
+                            <span class="label label-success"><a target="_blank" href="{{route('show-rejected-files', $file->user->id)}}">{{$file->user_rejected_files_count()}}</a></span>
+                            <span class="label label-success">{{$file->user_registered_since()}}</span>
+                            {{-- <span class="label label-success">{{count_of_files_per_country($file->user->id)}}</span> --}}
                           </p>
                           <div class="pull-right">
                             <span class="">{{getFlags($file->user->country).' '.code_to_country($file->user->country)}}<span>
