@@ -1026,65 +1026,66 @@ class FilesController extends Controller
 
         $differece = $file->credits - $proposedCredits;
 
-        $user = User::findOrfail($file->user_id);
+            $user = User::findOrfail($file->user_id);
 
-        if( $differece > 0 ){
+            if( $differece > 0 ){
 
-            $credit = new Credit();
-            $credit->credits = $differece;
-            $credit->user_id = $user->id;
-            $credit->front_end_id = $user->front_end_id;
-            $credit->country = code_to_country( $user->country );
-            $credit->file_id = $file->id;
-            $credit->stripe_id = NULL;
+                $credit = new Credit();
+                $credit->credits = $differece;
+                $credit->user_id = $user->id;
+                $credit->front_end_id = $user->front_end_id;
+                $credit->country = code_to_country( $user->country );
+                $credit->file_id = $file->id;
+                $credit->stripe_id = NULL;
 
-            if($user->test == 1){
-                $credit->test = 1;
-            }
+                if($user->test == 1){
+                    $credit->test = 1;
+                }
 
-            $credit->gifted = 1;
-            $credit->price_payed = 0;
+                $credit->gifted = 1;
+                $credit->price_payed = 0;
+                
+                $credit->message_to_credit = 'File options updated and credits returned!';
+                
+                $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
+                $credit->save();
             
-            $credit->message_to_credit = 'File options updated and credits returned!';
+
+            $file->credits = $proposedCredits;
             
-            $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
-            $credit->save();
-        
+            $file->save();
 
-        $file->credits = $proposedCredits;
-        
-        $file->save();
+            return redirect()->back()->with(['success' => 'Options updated!']);
 
-        return redirect()->back()->with(['success' => 'Options updated!']);
-
-    }else{
-
-        $file = File::findOrFail($request->file_id);
-        
-        $proposed = new EngineerOptionsOffer();
-        $proposed->file_id = $request->file_id;
-        $proposed->type = 'stage';
-        $proposed->service_id = $request->proposed_stage;
-        $proposed->save();
-
-        $proposedOptions = $request->proposed_options;
-        
-        if($proposedOptions){
-            foreach($proposedOptions as $o){
-                $proposed = new EngineerOptionsOffer();
-                $proposed->file_id = $request->file_id;
-                $proposed->type = 'option';
-                $proposed->service_id = $o;
-                $proposed->save();
-            }
         }
+        else{
 
-        $file->status = 'on_hold';
-        $file->updated_at = Carbon::now();
-        $file->save();
-    
-        return redirect()->back()->with(['success' => 'New stages and options proposed!']);
-    }
+            $file = File::findOrFail($request->file_id);
+            
+            $proposed = new EngineerOptionsOffer();
+            $proposed->file_id = $request->file_id;
+            $proposed->type = 'stage';
+            $proposed->service_id = $request->proposed_stage;
+            $proposed->save();
+
+            $proposedOptions = $request->proposed_options;
+            
+            if($proposedOptions){
+                foreach($proposedOptions as $o){
+                    $proposed = new EngineerOptionsOffer();
+                    $proposed->file_id = $request->file_id;
+                    $proposed->type = 'option';
+                    $proposed->service_id = $o;
+                    $proposed->save();
+                }
+            }
+
+            $file->status = 'on_hold';
+            $file->updated_at = Carbon::now();
+            $file->save();
+        
+            return redirect()->back()->with(['success' => 'New stages and options proposed!']);
+        }
     }
 
     public function flipDecodedMode(Request $request){
