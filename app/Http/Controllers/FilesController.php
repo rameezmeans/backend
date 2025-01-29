@@ -798,7 +798,7 @@ class FilesController extends Controller
         if($file->front_end_id == 1){
             $proposedCredits += Service::findOrFail($file->stage_services->service_id)->credits;
         }
-        else{
+        else if($file->front_end_id == 2){
             if($file->tool_type == 'master'){
 
                 $proposedCredits += Service::findOrFail($file->stage_services->service_id)->tuningx_credits;
@@ -808,6 +808,19 @@ class FilesController extends Controller
 
                 $proposedCredits += Service::findOrFail($file->stage_services->service_id)->tuningx_slave_credits;
             }
+        }
+        else if($file->front_end_id == 3){
+
+            if($file->tool_type == 'master'){
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->efiles_credits;
+
+            }
+            else{
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->efiles_slave_credits;
+            }
+
         }
 
         if($forceProposedOptions){
@@ -824,7 +837,7 @@ class FilesController extends Controller
                         $option->credits = Service::findOrFail($offer)->credits;
 
                     }
-                    else{
+                    else if($file->front_end_id == 2){
 
                         $service = Service::findOrFail($offer);
 
@@ -840,6 +853,24 @@ class FilesController extends Controller
                             $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
                         }
 
+                    }
+                    else if($file->front_end_id == 3){
+                        
+                        $service = Service::findOrFail($offer);
+
+                        // code is same because we have different service IDs for different frontends when it comes to options
+
+                        if($file->tool_type == 'master'){
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+        
+                        }
+                        else{
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                        }
                     }
 
                     $option->file_id = $fileID;
@@ -894,9 +925,139 @@ class FilesController extends Controller
 
     public function addOptionsOffer(Request $request){
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
+
+        $forceProposedOptions = $request->proposed_stage;
+
+        $fileID = $request->file_id;
+
+        $file = File::findOrFail($fileID);
+
+        foreach($file->options as $service){
+            $service->delete();
         }
+
+        $proposedCredits = 0;
+
+        if($file->front_end_id == 1){
+            $proposedCredits += Service::findOrFail($file->stage_services->service_id)->credits;
+        }
+        else if($file->front_end_id == 2){
+            if($file->tool_type == 'master'){
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->tuningx_credits;
+
+            }
+            else{
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->tuningx_slave_credits;
+            }
+        }
+        else if($file->front_end_id == 3){
+
+            if($file->tool_type == 'master'){
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->efiles_credits;
+
+            }
+            else{
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->efiles_slave_credits;
+            }
+
+        }
+
+        if($forceProposedOptions){
+
+            foreach($forceProposedOptions as $offer){
+
+                    $option = new FileService();
+                    $option->service_id = $offer; 
+                    $option->type = 'option'; 
+
+                    if($file->front_end_id == 1){
+
+                        $proposedCredits += Service::findOrFail($offer)->credits;
+                        $option->credits = Service::findOrFail($offer)->credits;
+
+                    }
+                    else if($file->front_end_id == 2){
+
+                        $service = Service::findOrFail($offer);
+
+                        if($file->tool_type == 'master'){
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+        
+                        }
+                        else{
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                        }
+
+                    }
+                    else if($file->front_end_id == 3){
+                        
+                        $service = Service::findOrFail($offer);
+
+                        // code is same because we have different service IDs for different frontends when it comes to options
+
+                        if($file->tool_type == 'master'){
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+        
+                        }
+                        else{
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                        }
+                    }
+
+                    $option->file_id = $fileID;
+                    $option->save();
+            }
+        }
+
+        $differece = $file->credits - $proposedCredits;
+
+        $user = User::findOrfail($file->user_id);
+
+        if( $differece > 0 ){
+
+            $credit = new Credit();
+            $credit->credits = $differece;
+            $credit->user_id = $user->id;
+            $credit->front_end_id = $user->front_end_id;
+            $credit->country = code_to_country( $user->country );
+            $credit->file_id = $file->id;
+            $credit->stripe_id = NULL;
+
+            if($user->test == 1){
+                $credit->test = 1;
+            }
+
+            $credit->gifted = 1;
+            $credit->price_payed = 0;
+            
+            $credit->message_to_credit = 'File options updated and credits returned!';
+            
+            $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
+            $credit->save();
+        
+
+        $file->credits = $proposedCredits;
+        
+        $file->save();
+
+        return redirect()->back()->with(['success' => 'Options updated!']);
+
+    }else{
 
         $file = File::findOrFail($request->file_id);
         
@@ -923,6 +1084,7 @@ class FilesController extends Controller
         $file->save();
     
         return redirect()->back()->with(['success' => 'New stages and options proposed!']);
+    }
     }
 
     public function flipDecodedMode(Request $request){
