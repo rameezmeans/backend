@@ -92,7 +92,7 @@ class File extends Model
     public function user_registered_since(){
 
         $user = User::findOrFail($this->user_id);
-        $difference = Carbon::now()->diff($user->entry_date);
+        $difference = Carbon::now()->diff($user->created_at);
 
         return $difference->y . ' Year(s) ' . $difference->m . ' Month(s) ' . $difference->d . ' Day(s)';
 
