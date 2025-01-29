@@ -89,12 +89,12 @@ class File extends Model
     }
 
     public function user_files_count(){
-        $filesCount = File::where('user_id', $this->user_id)->count();
+        $filesCount = File::where('user_id', $this->user_id)->where('is_credited', 1)->count();
         return $filesCount;
     }
 
     public function user_rejected_files_count(){
-        $rejectedFilesCount = File::where('user_id', $this->user_id)->where('status', 'rejected')->count();
+        $rejectedFilesCount = File::where('user_id', $this->user_id)->where('is_credited', 1)->where('status', 'rejected')->count();
         return $rejectedFilesCount;
     }
 
