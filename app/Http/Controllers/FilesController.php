@@ -929,7 +929,7 @@ class FilesController extends Controller
         //     return abort(404);
         // }
 
-        $forceProposedOptions = $request->proposed_stage;
+        $forceProposedOptions = $request->proposed_options;
 
         $fileID = $request->file_id;
 
