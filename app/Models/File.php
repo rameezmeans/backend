@@ -88,6 +88,14 @@ class File extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function user_files_count(){
+        $user = $this->belongsTo(User::class);
+
+        $filesCount = File::where('user_id', $user->id)->count();
+
+        return $filesCount;
+    }
+
     public function engineer_file_notes(){
         return $this->hasMany(EngineerFileNote::class); 
     }
