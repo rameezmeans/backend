@@ -190,12 +190,14 @@ class FilesController extends Controller
 
     public function showFiles($id){
         $files = File::where('user_id', $id)->get();
-        dd($files);
+        $title = "All Files";
+        return view('files.show_files', ['title' => $title, 'files' => $files ]);
     }
 
     public function showRejectedFiles($id){
         $files = File::where('user_id', $id)->get();
-        dd($files);
+        $title = "All Rejected Files";
+        return view('files.show_files', ['title' => $title, 'files' => $files ]);
     }
 
     public function uploadACMReply(Request $request){
