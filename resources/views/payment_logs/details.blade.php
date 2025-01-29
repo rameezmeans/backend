@@ -119,6 +119,7 @@
                           <tr>
                             <th class="">Payment Type</th>
                             <th class="">Payment ID</th>
+                            <th class="">Payer Email</th>
                             <th class="">Payment Amount</th>
                             
                           </tr>
@@ -136,6 +137,9 @@
                                 {{$credit->payment->stripe_id}}
                               @endif
 
+                            </td>
+                            <td class="">
+                              {{$credit->payment->email}}
                             </td>
                             <td class="">
                               €{{$credit->payment->amount}}
