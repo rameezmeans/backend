@@ -193,8 +193,7 @@ class FilesController extends Controller
     }
 
     public function showRejectedFiles($id){
-        $title = "All Rejected Files";
-        return view('files.show_files', ['title' => $title, 'id' => $id ]);
+        return view('files.show_rejected_users_files', ['id' => $id]);
     }
 
     public function uploadACMReply(Request $request){
