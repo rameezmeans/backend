@@ -93,6 +93,11 @@ class File extends Model
         return $filesCount;
     }
 
+    public function user_rejected_files_count(){
+        $rejectedFilesCount = File::where('user_id', $this->user_id)->where('status', 'rejected')->count();
+        return $rejectedFilesCount;
+    }
+
     public function engineer_file_notes(){
         return $this->hasMany(EngineerFileNote::class); 
     }
