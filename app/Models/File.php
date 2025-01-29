@@ -92,14 +92,19 @@ class File extends Model
     public function user_registered_since(){
 
         $user = User::findOrFail($this->user_id);
+        $difference = Carbon::now()->diff($user->entry_date);
 
-        $created = new Carbon($user->created_at);
-        $now = Carbon::now();
-        $difference = ($created->diff($now)->days < 1)
-            ? 'today'
-            : $created->diffForHumans();
+        return $difference->y . ' Year(s) ' . $difference->m . ' Month(s) ' . $difference->d . ' Day(s)';
+
+        // $user = User::findOrFail($this->user_id);
+
+        // $created = new Carbon($user->created_at);
+        // $now = Carbon::now();
+        // $difference = ($created->diff($now)->days < 1)
+        //     ? 'today'
+        //     : $created->diffForHumans();
             
-        return $difference;
+        // return $difference;
     }
 
     public function user_files_count(){
