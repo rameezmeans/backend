@@ -89,10 +89,7 @@ class File extends Model
     }
 
     public function user_files_count(){
-        $user = $this->belongsTo(User::class);
-
-        $filesCount = File::where('user_id', $user->id)->count();
-
+        $filesCount = File::where('user_id', $this->user_id)->count();
         return $filesCount;
     }
 
