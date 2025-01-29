@@ -94,6 +94,16 @@ class File extends Model
         $user = User::findOrFail($this->user_id);
         $difference = Carbon::now()->diff($user->created_at);
 
+        if($difference->y == 0){
+            return $difference->m . ' Month(s) ' . $difference->d . ' Day(s)';
+        }
+        if($difference->m == 0){
+            return $difference->d . ' Day(s)';
+        }
+        if($difference->d == 0){
+            return "Today";
+        }
+        
         return $difference->y . ' Year(s) ' . $difference->m . ' Month(s) ' . $difference->d . ' Day(s)';
 
         // $user = User::findOrFail($this->user_id);
