@@ -39,7 +39,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
-                <livewire:show-all-users-files :id="$id"
+                <livewire:show-all-users-files :params="$id"
                   searchable="id,username,brand,model,ecu"
                 />
             </div>
