@@ -349,8 +349,8 @@ margin-bottom: 10px !important;
                           <p class="pull-left">
                             
                             <span class="label label-success"><a class="text-white" target="_blank" href="{{route('show-files', $file->user->id)}}">{{$file->user_files_count()}}</a></span>
-                            <span class="label label-success"><a class="text-white" target="_blank" href="{{route('show-rejected-files', $file->user->id)}}">{{$file->user_rejected_files_count()}}</a></span>
-                            <span class="label label-success">{{$file->user_registered_since()}}</span>
+                            <span class="label label-danger"><a class="text-white" target="_blank" href="{{route('show-rejected-files', $file->user->id)}}">{{$file->user_rejected_files_count()}}</a></span>
+                            <span class="label label-info">{{$file->user_registered_since()}}</span>
                             
                           </p>
                           <div class="pull-right">
