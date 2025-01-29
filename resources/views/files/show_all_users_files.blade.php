@@ -22,7 +22,7 @@
     <!-- START PAGE CONTENT -->
     <div class="content sm-gutter">
       <!-- START CONTAINER FLUID -->
-        <div class=" container-fluid   container-fixed-lg bg-white">
+        <div class=" container-fluid bg-white">
 
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
