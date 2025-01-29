@@ -17,7 +17,7 @@ class ShowRejectedUsersFiles extends LivewireDatatable
     public function builder()
     {
         $id = $this->params;
-        $files = File::where('is_credited', 1)->where('status', 'rejected')->where('user_id', $id);
+        $files = File::select('*', 'id as row_id')->where('is_credited', 1)->where('status', 'rejected')->where('user_id', $id);
 
         return $files;
     }
@@ -149,5 +149,10 @@ class ShowRejectedUsersFiles extends LivewireDatatable
                 }
             })->label('Response Time'),
         ];
+    }
+
+    public function rowClasses($row, $loop)
+    {  
+        return 'hover:bg-gray-300 divide-x divide-gray-100 text-sm text-gray-900 ' . ($loop->even ? 'bg-gray-100' : 'bg-gray-50').' '.$row->row_id.' redirect-click-file '.$row->row_id;
     }
 }
