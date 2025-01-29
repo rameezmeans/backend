@@ -97,7 +97,7 @@ class File extends Model
         $now = Carbon::now();
         $difference = ($created->diff($now)->days < 1)
             ? 'today'
-            : $created->diffForHumans($now);
+            : $created->diffForHumans();
             
         return $difference;
     }
