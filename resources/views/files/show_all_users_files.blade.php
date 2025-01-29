@@ -1,5 +1,22 @@
 @extends('layouts.app')
 
+@section('pagespecificstyles')
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+<style>
+  
+  .flex {
+    display: flex !important;
+    width: max-content;
+  }
+
+  .redirect-click-file{
+    cursor: pointer;
+  }
+
+</style>
+@endsection
+
 @section('content')
 <div class="page-content-wrapper ">
     <!-- START PAGE CONTENT -->
