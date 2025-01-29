@@ -17,8 +17,8 @@ class ShowAllUsersFiles extends LivewireDatatable
 
     public function builder()
     {
-        dd($this->params);
-        $files = File::where('is_credited', 1);
+        $id = $this->params;
+        $files = File::where('is_credited', 1)->where('user_id', $id);
 
         return $files;
     }
