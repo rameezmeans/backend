@@ -323,7 +323,7 @@ margin-bottom: 10px !important;
                           <p class="pull-left">Total Tasks</p>
                           <div class="pull-right">
                             <span class="label label-success">{{$file->user_files_count()}}</span>
-                            <a href="#" class="btn btn-sm">Show</a>
+                            <a href="#" class="btn-tag btn-tag-light btn-tag-rounded">Show</a>
                           </div>
                           <div class="clearfix"></div>
                         </div>
@@ -332,7 +332,7 @@ margin-bottom: 10px !important;
                           <p class="pull-left">Canceld Tasks</p>
                           <div class="pull-right">
                             <span class="label label-success">{{$file->user_rejected_files_count()}}</span>
-                            <a href="#" class="btn btn-sm">Show</a>
+                            <a href="#" class="btn-tag btn-tag-light btn-tag-rounded">Show</a>
                           </div>
                           <div class="clearfix"></div>
                         </div>
