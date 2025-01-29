@@ -348,8 +348,13 @@ if(!function_exists('count_of_files_per_country')){
 
     function count_of_files_per_country($userID){
 
-        $count =  File::where('user_id', $userID)
-        ->count();
+        $user = User::findOrFail($userID);
+
+        $count = File::join('users', 'user.id', '=', 'files.user_id')->where('users.country', $user->country)->count();
+
+        // $count =  File::where('user_id', $userID)
+        // ->count();
+
         return $count;
 
     }
