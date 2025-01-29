@@ -150,21 +150,4 @@ class ShowAllUsersFiles extends LivewireDatatable
             })->label('Response Time'),
         ];
     }
-
-    public function rowClasses($row, $loop)
-    {  
-        if($row->delayed == 1){
-            return 'bg-red-200 hover:bg-red-200 divide-x divide-red-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
-        }
-
-        if($row->red == 1){
-            return 'bg-red-200 hover:bg-red-200 divide-x divide-red-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
-        }
-
-        if($row->checked_by == 'customer'){
-            return 'bg-gray-500 hover:bg-gray-300 divide-x divide-gray-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
-        }
-
-            return 'hover:bg-gray-300 divide-x divide-gray-100 text-sm text-gray-900 ' . ($loop->even ? 'bg-gray-100' : 'bg-gray-50').' '.$row->row_id.' redirect-click-file '.$row->row_id;
-    }
 }
