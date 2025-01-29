@@ -994,6 +994,8 @@ Route::post('/delete_file', [App\Http\Controllers\FilesController::class, 'delet
 Route::post('/delete_acm_file', [App\Http\Controllers\FilesController::class, 'deleteACMFile'])->name('delete-acm-file');
 Route::post('/fill_stage_options', [App\Http\Controllers\FilesController::class, 'fillStageOptions'])->name('fill-stage-options');
 Route::post('/upload_acm_reply', [App\Http\Controllers\FilesController::class, 'uploadACMReply'])->name('upload-acm-reply');
+Route::get('/show_files/{id}', [App\Http\Controllers\FilesController::class, 'showFiles'])->name('show-files');
+Route::get('/show_rejected_files/{id}', [App\Http\Controllers\FilesController::class, 'showRejectedFiles'])->name('show-rejected-files');
 
 Route::get('/message_search', [App\Http\Controllers\FilesController::class, 'messageSearch'])->name('message-search');
 Route::any('/get_search_results', [App\Http\Controllers\FilesController::class, 'getSearchResults'])->name('get-search-results');

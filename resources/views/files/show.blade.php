@@ -323,7 +323,7 @@ margin-bottom: 10px !important;
                           <p class="pull-left">Total Tasks</p>
                           <div class="pull-right">
                             <span class="label label-success">{{$file->user_files_count()}}</span>
-                            <a href="#" class="btn-tag btn-tag-light btn-tag-rounded">Show</a>
+                            <a href="{{route('show-files', $file->user->id)}}" class="btn-tag btn-tag-light btn-tag-rounded">Show</a>
                           </div>
                           <div class="clearfix"></div>
                         </div>

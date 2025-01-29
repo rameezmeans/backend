@@ -188,6 +188,16 @@ class FilesController extends Controller
         $file->delete();
     }
 
+    public function showFiles($id){
+        $files = File::where('user_id', $id)->get();
+        dd($files);
+    }
+
+    public function showRejectedFiles($id){
+        $files = File::where('user_id', $id)->get();
+        dd($files);
+    }
+
     public function uploadACMReply(Request $request){
         
         $attachment = $request->file('acm_file');
