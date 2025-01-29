@@ -322,7 +322,7 @@ margin-bottom: 10px !important;
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Total Tasks</p>
                           <div class="pull-right">
-                            <span class="label label-success">{{$file->user_files_count()}}<span>
+                            <span class="label label-success">{{$file->user_files_count()}}</span>
                             <a href="#" class="btn btn-sm">Show</a>
                           </div>
                           <div class="clearfix"></div>
@@ -331,7 +331,7 @@ margin-bottom: 10px !important;
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Canceld Tasks</p>
                           <div class="pull-right">
-                            <span class="label label-success">{{$file->user_rejected_files_count()}}<span>
+                            <span class="label label-success">{{$file->user_rejected_files_count()}}</span>
                             <a href="#" class="btn btn-sm">Show</a>
                           </div>
                           <div class="clearfix"></div>
