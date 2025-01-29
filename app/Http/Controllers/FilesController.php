@@ -189,19 +189,12 @@ class FilesController extends Controller
     }
 
     public function showFiles($id){
-        $files = File::where('user_id', $id)
-        ->where('is_credited', 1)
-        ->get();
-        $title = "All Files";
-        return view('files.show_files', ['title' => $title, 'files' => $files ]);
+        return view('files.show_all_users_files', ['id' => $id]);
     }
 
     public function showRejectedFiles($id){
-        $files = File::where('user_id', $id)
-        ->where('status', 'rejected')
-        ->get();
         $title = "All Rejected Files";
-        return view('files.show_files', ['title' => $title, 'files' => $files ]);
+        return view('files.show_files', ['title' => $title, 'id' => $id ]);
     }
 
     public function uploadACMReply(Request $request){
