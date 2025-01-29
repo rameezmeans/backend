@@ -1639,9 +1639,9 @@ class FilesController extends Controller
 
     public function editMessage( Request $request ) {
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
 
         $message = EngineerFileNote::findOrFail($request->id);
         $message->egnineers_internal_notes = $request->message;
