@@ -252,9 +252,9 @@ class FilesDatatable extends LivewireDatatable
 
     public function rowClasses($row, $loop)
     {  
-        if($row->delayed == 1){
-            return 'bg-red-200 hover:bg-red-200 divide-x divide-red-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
-        }
+        // if($row->delayed == 1){
+        //     return 'bg-red-200 hover:bg-red-200 divide-x divide-red-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
+        // }
 
         if($row->red == 1){
             return 'bg-red-200 hover:bg-red-200 divide-x divide-red-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
