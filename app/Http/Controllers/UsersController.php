@@ -466,6 +466,7 @@ class UsersController extends Controller
         $customer->front_end_id = $request->front_end_id;
         $customer->elorus_id = $request->elorus_id;
         $customer->role_id = $customerID;
+        $customer->created_by = Auth::user()->id;
         $customer->sn = $request->sn;
 
         if($request->exclude_vat_check == 'on'){
