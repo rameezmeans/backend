@@ -7,7 +7,7 @@
       <!-- START CONTAINER FLUID -->
         <div class=" container-fluid   container-fixed-lg bg-white">
 
-            @if($user->created_by != 0)
+            @if($userInit->created_by != 0)
 
             <div class="card card-transparent m-t-40">
                 <div class="card-header ">
@@ -39,17 +39,17 @@
                                     
                                     <tr role="row">
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$user->name}}</p>
+                                            <p>{{$userInit->name}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$user->phone}}</p>
+                                            <p>{{$userInit->phone}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{ \App\Models\User::findOrFail($user->created_by)->name}}</p>
+                                            <p>{{ \App\Models\User::findOrFail($userInit->created_by)->name}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
                                             
-                                            <a href="{{ route('user-init', $user->id) }}" class="btn btn-success" target="_blank" rel="noopener">Details</a>
+                                            <a href="{{ route('user-init', $userInit->id) }}" class="btn btn-success" target="_blank" rel="noopener">Details</a>
                                                 
                                         </td>
                                     </tr>
