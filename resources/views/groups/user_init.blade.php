@@ -22,7 +22,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="card-body">
-                <div>Created By: {{\App\Models\User::findOrFail($user->changed_by)->name}}</div>
+                <div>Created By: {{\App\Models\User::findOrFail($user->created_by)->name}}</div>
                 <div>Created at: {{date('d/m/Y h:i:sa',strtotime($user->created_at))}}</div>
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
