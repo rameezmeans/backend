@@ -528,8 +528,8 @@ class UsersController extends Controller
 
     public function userInit($id){
 
-        $userInit = User::findOrFail($id);
-        return view('groups.user_init', ['userInit' => $userInit]);
+        $user = User::findOrFail($id);
+        return view('groups.user_init', ['user' => $user]);
 
     }
 
