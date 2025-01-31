@@ -127,7 +127,7 @@
 
                                     <tr>
                                         @php
-                                        $changeGroup = \App\Models\Group::findOrFail($change->group_id)->name;
+                                        
                                         $userGroup = \App\Models\Group::findOrFail($user->group_id)->name;
                                         @endphp
                                         <td class="v-align-middle semi-bold sorting_1">
@@ -141,7 +141,7 @@
 
                                     <tr>
                                         @php
-                                        $changeFrontend = \App\Models\FrontEnd::findOrFail($change->front_end_id)->name;
+                                        
                                         $userFrontend = \App\Models\FrontEnd::findOrFail($user->front_end_id)->name;
                                         @endphp
                                         <td class="v-align-middle semi-bold sorting_1">
