@@ -85,6 +85,7 @@
                                 <tr role="row">
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Phone</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Changed Made By</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Actions</th>
                                 </tr>
                             </thead>
@@ -97,6 +98,11 @@
                                         <td class="v-align-middle semi-bold sorting_1">
                                             <p>{{$change->phone}}</p>
                                         </td>
+
+                                        <td class="v-align-middle semi-bold sorting_1">
+                                            <p>{{App\Models\User::findOrFail($change->changed_by)->name}}</p>
+                                        </td>
+
                                         <td class="v-align-middle semi-bold sorting_1">
                                             
                                             <a href="{{ route('change', $change->id) }}" class="btn btn-success" target="_blank" rel="noopener">Changings</a>
