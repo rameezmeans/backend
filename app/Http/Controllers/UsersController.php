@@ -526,9 +526,17 @@ class UsersController extends Controller
 
     }
 
+    public function userInit($id){
+
+        $userInit = User::findOrFail($id);
+        return view('groups.user_init', ['userInit' => $userInit]);
+
+    }
+
     public function changes($id){
         $changes = UserChange::where('user_id', $id)->get();
-        return view('groups.customer_changes', ['changes' => $changes, 'userId' => $id]);
+        $userInit = User::findOrFail($id);
+        return view('groups.customer_changes', ['changes' => $changes, 'userId' => $id, 'userInit' => $userInit]);
     }
 
     public function editCustomer($id){

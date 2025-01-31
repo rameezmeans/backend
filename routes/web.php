@@ -1050,6 +1050,7 @@ Route::post('/update-group', [App\Http\Controllers\GroupsController::class,'upda
 Route::get('/customers', [App\Http\Controllers\UsersController::class,'Customers'])->name('customers');
 Route::get('/create_customer', [App\Http\Controllers\UsersController::class,'createCustomer'])->name('create-customer');
 Route::get('/edit_customer/{id}', [App\Http\Controllers\UsersController::class,'editCustomer'])->name('edit-customer');
+Route::get('/user_init/{id}', [App\Http\Controllers\UsersController::class,'userInit'])->name('user-init');
 Route::get('/changes/{id}', [App\Http\Controllers\UsersController::class,'changes'])->name('changes');
 Route::get('/change/{id}', [App\Http\Controllers\UsersController::class,'change'])->name('change');
 Route::post('/add-customer', [App\Http\Controllers\UsersController::class,'addCustomer'])->name('add-customer');
