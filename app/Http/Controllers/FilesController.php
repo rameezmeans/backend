@@ -2797,11 +2797,11 @@ class FilesController extends Controller
 
         if($file->original_file_id != NULL){
             $ofile = File::findOrFail($file->original_file_id);
-            $this->changeStatusLog($ofile, 'closed', 'support_status', 'Original File support status changed by engineer from panel.');
+            $this->changeStatusLog($ofile, 'closed', 'support_status', 'Chat reply was sent from engineer on request file.');
             $ofile->support_status = "closed";
             $ofile->save();
         }
-        $this->changeStatusLog($file, 'closed', 'support_status', 'File support status changed by engineer from panel.');
+        $this->changeStatusLog($file, 'closed', 'support_status', 'Chat reply was sent from engineer.');
         $file->support_status = "closed";
         $file->save();
         $customer = User::findOrFail($file->user_id);
