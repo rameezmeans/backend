@@ -2179,8 +2179,8 @@ margin-bottom: 10px !important;
 
               </div>
 
-              <div class="row" style="">
-                <div class="table-responsive m-t-100">
+              <div class="row m-t-40">
+                <div class="table-responsive">
                   <div id="condensedTable_wrapper" class="dataTables_wrapper no-footer"><table class="table table-hover table-condensed dataTable no-footer" id="condensedTable" role="grid">
                     <thead>
                       <tr role="row">
