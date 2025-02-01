@@ -2531,8 +2531,8 @@ class FilesController extends Controller
         // }
 
         $file = File::findOrFail($request->file_id);
-        $file->support_status = $request->support_status;
         $this->changeStatusLog($file, $request->support_status, 'support_status', 'File support status changed by engineer from panel.');
+        $file->support_status = $request->support_status;
         if($file->support_status == 'closed'){
             if($file->red == 1){
                 $file->red = 0;
