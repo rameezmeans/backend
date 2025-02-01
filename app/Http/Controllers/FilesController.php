@@ -2795,13 +2795,12 @@ class FilesController extends Controller
 
         if($file->original_file_id != NULL){
             $ofile = File::findOrFail($file->original_file_id);
-            $ofile->support_status = "closed";
             $this->changeStatusLog($ofile, 'closed', 'support_status', 'Original File support status changed by engineer from panel.');
+            $ofile->support_status = "closed";
             $ofile->save();
         }
-        
-        $file->support_status = "closed";
         $this->changeStatusLog($file, 'closed', 'support_status', 'File support status changed by engineer from panel.');
+        $file->support_status = "closed";
         $file->save();
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
@@ -3314,7 +3313,7 @@ class FilesController extends Controller
             $haltEmailAndStatus = true;
         }
 
-        if($haltEmailAndStatus == 0){
+        if(!$haltEmailAndStatus){
 
             if($file->status == 'submitted'){
 
@@ -3340,16 +3339,18 @@ class FilesController extends Controller
             if($file->original_file_id){
                 $old = File::findOrFail($file->original_file_id);
                 $old->checked_by = 'engineer';
-                $old->support_status = "closed";
                 $this->changeStatusLog($old, 'closed', 'support_status', 'Engineer uploaded the file.');
+                $old->support_status = "closed";
+                
                 $old->red = 0;
                 $old->timer = NULL;
                 $old->save();
             }
 
             // if($file->no_longer_auto == 0){
-                $file->support_status = "closed";
                 $this->changeStatusLog($file, 'closed', 'support_status', 'Engineer uploaded the file.');
+                $file->support_status = "closed";
+                
                 $file->red = 0;
                 $file->timer = NULL;
                 $file->checked_by = 'engineer';
@@ -4151,15 +4152,17 @@ class FilesController extends Controller
             if($file->original_file_id){
                 $old = File::findOrFail($file->original_file_id);
                 $old->checked_by = 'engineer';
-                $old->support_status = "closed";
                 $this->changeStatusLog($old, 'closed', 'support_status', 'Engineer uploaded the file.');
+                $old->support_status = "closed";
+                
                 $old->red = 0;
                 $old->timer = NULL;
                 $old->save();
             }
 
+            $this->changeStatusLog($file, 'closed', 'support_status', 'Engineer uploaded the file.');
                 $file->support_status = "closed";
-                $this->changeStatusLog($file, 'closed', 'support_status', 'Engineer uploaded the file.');
+                
                 $file->red = 0;
                 $file->timer = NULL;
                 $file->checked_by = 'engineer';
