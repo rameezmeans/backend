@@ -3339,7 +3339,11 @@ class FilesController extends Controller
             if($file->original_file_id){
                 $old = File::findOrFail($file->original_file_id);
                 $old->checked_by = 'engineer';
-                $this->changeStatusLog($old, 'closed', 'support_status', 'Engineer uploaded the file.');
+
+                if($old->support_status == 'open'){
+                    $this->changeStatusLog($old, 'closed', 'support_status', 'Engineer uploaded the file.');
+                }
+
                 $old->support_status = "closed";
                 
                 $old->red = 0;
@@ -3348,7 +3352,10 @@ class FilesController extends Controller
             }
 
             // if($file->no_longer_auto == 0){
-                $this->changeStatusLog($file, 'closed', 'support_status', 'Engineer uploaded the file.');
+                
+                if($file->support_status == 'open'){
+                    $this->changeStatusLog($file, 'closed', 'support_status', 'Engineer uploaded the file.');
+                }
                 $file->support_status = "closed";
                 
                 $file->red = 0;
