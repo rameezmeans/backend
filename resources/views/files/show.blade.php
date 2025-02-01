@@ -149,7 +149,7 @@ margin-bottom: 10px !important;
           </li>
 
           <li class="nav-item">
-            <a href="#" data-toggle="tab" data-target="#slide34"><span>Engineer Assignment Logs</span></a>
+            <a href="#" data-toggle="tab" data-target="#slide24"><span>Engineer Assignment Logs</span></a>
           </li>
 
           {{-- @if($file->decoded_files->isEmpty()) --}}
