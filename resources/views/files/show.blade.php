@@ -2189,6 +2189,7 @@ margin-bottom: 10px !important;
                         <th style="width: 20%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Condensed: activate to sort column ascending">To</th>
                         <th style="width: 40%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Condensed: activate to sort column ascending">Desc</th>
                         <th style="width: 10%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Condensed: activate to sort column ascending">Changed By</th>
+                        <th style="width: 10%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Condensed: activate to sort column ascending">Changed At</th>
                       </tr>
                     </thead>
                       <tbody>
@@ -2201,6 +2202,7 @@ margin-bottom: 10px !important;
                                 <td class="v-align-middle semi-bold">{{$s->to}}</td>
                                 <td class="v-align-middle semi-bold">{{$s->desc}}</td>
                                 <td class="v-align-middle semi-bold">{{\App\Models\User::findOrFail($s->changed_by)->name}}</td>
+                                <td class="v-align-middle semi-bold">{{$s->created_at->diffForHumans()}}</td>
                             </tr>
 
                         @endforeach
