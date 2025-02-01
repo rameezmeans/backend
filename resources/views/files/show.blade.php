@@ -2200,7 +2200,7 @@ margin-bottom: 10px !important;
                                 <td class="v-align-middle">{{$s->from}}</td>
                                 <td class="v-align-middle semi-bold">{{$s->to}}</td>
                                 <td class="v-align-middle semi-bold">{{$s->desc}}</td>
-                                <td class="v-align-middle semi-bold">{{\App\Model\User::findOrFail($s->changed_by)->name}}</td>
+                                <td class="v-align-middle semi-bold">{{\App\Models\User::findOrFail($s->changed_by)->name}}</td>
                             </tr>
 
                         @endforeach
