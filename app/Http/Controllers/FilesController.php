@@ -21,6 +21,7 @@ use App\Models\ACMFile;
 use App\Models\AlientechFile;
 use App\Models\AutotunerEncrypted;
 use App\Models\Credit;
+use App\Models\EngineerAssignmentLog;
 use App\Models\EngineerOptionsOffer;
 use App\Models\FileFeedback;
 use App\Models\FileInternalEvent;
@@ -114,6 +115,12 @@ class FilesController extends Controller
         $file->assigned_to = Auth::user()->id;
         $file->assignment_time = Carbon::now();
         $file->save();
+
+        $assign = new EngineerAssignmentLog();
+        $assign->assigned_from = "No One";
+        $assign->assigned_to = Auth::user()->name;
+        $assign->assigned_by = Auth::user()->name;
+        $assign->save();
 
         return Redirect::back()->withErrors(['success' => 'Comments added']);
     }
@@ -2281,9 +2288,18 @@ class FilesController extends Controller
         }
     
         $file = File::findOrFail($request->file_id);
+
+        $assign = new EngineerAssignmentLog();
+        $assign->assigned_from = User::findOrFail($file->assigned_to)->name;
+        $assign->assigned_to = User::findOrFail($request->assigned_to)->name;
+        $assign->assigned_by = Auth::user()->name;
+        $assign->save();
+
         $file->assigned_to = $request->assigned_to;
         $file->assignment_time = Carbon::now();
         $file->save();
+
+        
 
         $engineer = User::findOrFail($request->assigned_to);
         $customer = User::findOrFail($file->user_id);
