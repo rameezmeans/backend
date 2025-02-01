@@ -779,6 +779,7 @@ class FilesController extends Controller
             FileFeedback::where('file_id', $file->id)->delete();
             AlientechFile::where('file_id', $file->id)->delete();
             EngineerFileNote::where('file_id', $file->id)->delete();
+            FilesStatusLog::where('file_id', $file->id)->delete();
             FileUrl::where('file_id', $file->id)->delete();
             Log::where('file_id', $file->id)->delete();
             FileReplySoftwareService::where('file_id', $file->id)->delete();
@@ -1273,6 +1274,7 @@ class FilesController extends Controller
             FileFeedback::where('file_id', $file->id)->delete();
             AlientechFile::where('file_id', $file->id)->delete();
             EngineerFileNote::where('file_id', $file->id)->delete();
+            FilesStatusLog::where('file_id', $file->id)->delete();
             FileUrl::where('file_id', $file->id)->delete();
             Log::where('file_id', $file->id)->delete();
             FileReplySoftwareService::where('file_id', $file->id)->delete();
@@ -3352,7 +3354,7 @@ class FilesController extends Controller
             }
 
             // if($file->no_longer_auto == 0){
-                
+
                 if($file->support_status == 'open'){
                     $this->changeStatusLog($file, 'closed', 'support_status', 'Engineer uploaded the file.');
                 }
