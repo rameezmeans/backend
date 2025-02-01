@@ -148,6 +148,10 @@ margin-bottom: 10px !important;
             <a href="#" data-toggle="tab" data-target="#slide23"><span>Status Logs</span></a>
           </li>
 
+          <li class="nav-item">
+            <a href="#" data-toggle="tab" data-target="#slide34"><span>Engineer Assignment Logs</span></a>
+          </li>
+
           {{-- @if($file->decoded_files->isEmpty()) --}}
             {{-- @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id) --}}
               <li class="nav-item">
@@ -2224,6 +2228,53 @@ margin-bottom: 10px !important;
                                 <td class="v-align-middle semi-bold">{{$s->to}}</td>
                                 <td class="v-align-middle semi-bold">{{$s->desc}}</td>
                                 <td class="v-align-middle semi-bold">{{\App\Models\User::findOrFail($s->changed_by)->name}}</td>
+                                <td class="v-align-middle semi-bold">{{$s->created_at->diffForHumans()}}</td>
+                            </tr>
+
+                        @endforeach
+
+                  </tbody>
+              </table>
+            </div>
+          </div>
+
+              </div>
+              
+            </div>
+
+            <div class="tab-pane slide-left" id="slide24">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                <div class="text-center">
+                  <div class="card-title">
+                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <h4 class="m-t-20">Logs</h4>
+                    </div>
+                  </div>
+                  
+                  <div class="clearfix"></div>
+              </div>
+              
+
+              <div class="row m-t-40">
+                <div class="table-responsive">
+                  <div id="condensedTable_wrapper" class="dataTables_wrapper no-footer"><table class="table table-hover table-condensed dataTable no-footer" id="condensedTable" role="grid">
+                    <thead>
+                      <tr role="row">
+                        <th style="width:10%" class="sorting_asc" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Assigned From</th>
+                        <th style="width: 20%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column ascending">Assigned to</th>
+                        <th style="width: 20%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Condensed: activate to sort column ascending">Assigned BY</th>
+                        <th style="width: 10%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Condensed: activate to sort column ascending">Assigned At</th>
+                      </tr>
+                    </thead>
+                      <tbody>
+
+                        @foreach($file->assignment_log as $t)
+                        
+                            <tr role="row" class="odd">
+                                <td class="v-align-middle semi-bold">{{$t->assigned_from}}</td>
+                                <td class="v-align-middle semi-bold">{{$t->assigned_to}}</td>
+                                <td class="v-align-middle semi-bold">{{$t->assigned_by}}</td>
                                 <td class="v-align-middle semi-bold">{{$s->created_at->diffForHumans()}}</td>
                             </tr>
 

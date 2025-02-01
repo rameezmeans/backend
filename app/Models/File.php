@@ -58,6 +58,11 @@ class File extends Model
         return $this->hasMany(Log::class); 
     }
 
+    public function assignment_log(){
+        return $this->hasMany(EngineerAssignmentLog::class)->orderBy('created_at', 'desc'); 
+    }
+
+
     public function status_logs(){
         return $this->hasMany(FilesStatusLog::class)->orderBy('created_at', 'desc'); 
     }
