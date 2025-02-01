@@ -120,6 +120,7 @@ class FilesController extends Controller
         $assign->assigned_from = "No One";
         $assign->assigned_to = Auth::user()->name;
         $assign->assigned_by = Auth::user()->name;
+        $assign->file_id = $file->id;
         $assign->save();
 
         return Redirect::back()->withErrors(['success' => 'Comments added']);
@@ -2293,6 +2294,7 @@ class FilesController extends Controller
         $assign->assigned_from = User::findOrFail($file->assigned_to)->name;
         $assign->assigned_to = User::findOrFail($request->assigned_to)->name;
         $assign->assigned_by = Auth::user()->name;
+        $assign->file_id = $file->id;
         $assign->save();
 
         $file->assigned_to = $request->assigned_to;
