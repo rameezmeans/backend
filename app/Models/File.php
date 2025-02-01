@@ -59,7 +59,7 @@ class File extends Model
     }
 
     public function status_logs(){
-        return $this->hasMany(FilesStatusLog::class); 
+        return $this->hasMany(FilesStatusLog::class)->orderBy('created_at', 'desc'); 
     }
 
     public function new_requests(){
