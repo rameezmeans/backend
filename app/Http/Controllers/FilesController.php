@@ -2325,7 +2325,7 @@ class FilesController extends Controller
         else if($file->front_end_id == 3){
             $subject = "E-files: Task Assigned!";
         }
-        else{
+        else if($file->front_end_id == 2){
             $subject = "TuningX: Task Assigned!";
         }
 
