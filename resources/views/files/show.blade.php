@@ -1309,9 +1309,9 @@ margin-bottom: 10px !important;
                             <div class="tab-content">
                               <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 100%;">
 
-                                @if($file->status == 'completed')
+                                {{-- @if($file->status == 'completed') --}}
                                     <button style="float: right;" class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
-                                @endif
+                                {{-- @endif --}}
 
                           @php
                             if(isset($message['request_file'])){
@@ -2167,6 +2167,18 @@ margin-bottom: 10px !important;
                   
                   <div class="clearfix"></div>
               </div>
+              <div class="row" style="">
+
+                @foreach($file->logs as $log)
+                  @if($log->request_type == 'alientech' || $log->request_type == 'magic' || $log->request_type == 'autotuner')
+                    <div class="col-12 col-xl-12 @if($log->type == 'error') bg-danger-light @else bg-success-light @endif text-white m-b-10 m-t-10 m-l-10" style="height: 50px;">
+                      <p class="no-margin p-t-10 p-b-10">{{$log->message}}</p>
+                    </div>
+                  @endif
+                @endforeach
+
+              </div>
+
               <div class="row" style="">
 
                 @foreach($file->logs as $log)
@@ -3692,9 +3704,9 @@ margin-bottom: 10px !important;
                             <div class="tab-content">
                               <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 100%;">
 
-                                @if($file->status == 'completed')
+                                {{-- @if($file->status == 'completed') --}}
                                     <button style="float: right;" class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
-                                @endif
+                                {{-- @endif --}}
 
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
