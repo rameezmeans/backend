@@ -2275,7 +2275,7 @@ margin-bottom: 10px !important;
                                 <td class="v-align-middle semi-bold">{{$t->assigned_from}}</td>
                                 <td class="v-align-middle semi-bold">{{$t->assigned_to}}</td>
                                 <td class="v-align-middle semi-bold">{{$t->assigned_by}}</td>
-                                <td class="v-align-middle semi-bold">{{$s->created_at->diffForHumans()}}</td>
+                                <td class="v-align-middle semi-bold">{{$t->created_at->diffForHumans()}}</td>
                             </tr>
 
                         @endforeach
