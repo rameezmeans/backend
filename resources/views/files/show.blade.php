@@ -144,6 +144,10 @@ margin-bottom: 10px !important;
             <a href="#" data-toggle="tab" data-target="#slide4"><span>Logs</span></a>
           </li>
 
+          <li class="nav-item">
+            <a href="#" data-toggle="tab" data-target="#slide23"><span>Status Logs</span></a>
+          </li>
+
           {{-- @if($file->decoded_files->isEmpty()) --}}
             {{-- @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id) --}}
               <li class="nav-item">
@@ -2179,6 +2183,24 @@ margin-bottom: 10px !important;
 
               </div>
 
+              
+
+            </div>
+
+            <div class="tab-pane slide-left" id="slide23">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                <div class="text-center">
+                  <div class="card-title">
+                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <h4 class="m-t-20">Logs</h4>
+                    </div>
+                  </div>
+                  
+                  <div class="clearfix"></div>
+              </div>
+              
+
               <div class="row m-t-40">
                 <div class="table-responsive">
                   <div id="condensedTable_wrapper" class="dataTables_wrapper no-footer"><table class="table table-hover table-condensed dataTable no-footer" id="condensedTable" role="grid">
@@ -2213,6 +2235,7 @@ margin-bottom: 10px !important;
           </div>
 
               </div>
+              
             </div>
            
             {{-- @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id) --}}
@@ -2852,6 +2875,9 @@ margin-bottom: 10px !important;
           
           <li class="nav-item">
             <a href="#" data-toggle="tab" data-target="#slide4{{$file->id}}"><span>Logs</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="#" data-toggle="tab" data-target="#slide23{{$file->id}}"><span>Status Logs</span></a>
           </li>
 
           {{-- @if($file->decoded_files->isEmpty()) --}}
