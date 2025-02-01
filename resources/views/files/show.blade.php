@@ -2172,7 +2172,7 @@ margin-bottom: 10px !important;
                 @foreach($file->logs as $log)
                   @if($log->request_type == 'alientech' || $log->request_type == 'magic' || $log->request_type == 'autotuner')
                     <div class="col-12 col-xl-12 @if($log->type == 'error') bg-danger-light @else bg-success-light @endif text-white m-b-10 m-t-10 m-l-10" style="height: 50px;">
-                      <p class="no-margin p-t-10 p-b-10">{{$log->message}}</p>
+                      <p class="no-margin p-t-10 p-b-10">{{$log->request_type.": ".$log->message}}</p>
                     </div>
                   @endif
                 @endforeach
@@ -2180,14 +2180,35 @@ margin-bottom: 10px !important;
               </div>
 
               <div class="row" style="">
+                <div class="table-responsive">
+                  <div id="condensedTable_wrapper" class="dataTables_wrapper no-footer"><table class="table table-hover table-condensed dataTable no-footer" id="condensedTable" role="grid">
+                    <thead>
+                      <tr role="row">
+                        <th style="width:10%" class="sorting_asc" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Type</th>
+                        <th style="width: 20%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column ascending">From</th>
+                        <th style="width: 20%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Condensed: activate to sort column ascending">To</th>
+                        <th style="width: 40%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Condensed: activate to sort column ascending">Desc</th>
+                        <th style="width: 10%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Condensed: activate to sort column ascending">Changed By</th>
+                      </tr>
+                    </thead>
+                      <tbody>
 
-                @foreach($file->logs as $log)
-                  @if($log->request_type == 'alientech' || $log->request_type == 'magic')
-                    <div class="col-12 col-xl-12 @if($log->type == 'error') bg-danger-light @else bg-success-light @endif text-white m-b-10 m-t-10 m-l-10" style="height: 50px;">
-                      <p class="no-margin p-t-10 p-b-10">{{$log->message}}</p>
-                    </div>
-                  @endif
-                @endforeach
+                        @foreach($file->status_logs as $s)
+                        
+                            <tr role="row" class="odd">
+                                <td class="v-align-middle semi-bold sorting_1">{{$s->type}}</td>
+                                <td class="v-align-middle">{{$s->from}}</td>
+                                <td class="v-align-middle semi-bold">{{$s->to}}</td>
+                                <td class="v-align-middle semi-bold">{{$s->desc}}</td>
+                                <td class="v-align-middle semi-bold">{{\App\Model\User::findOrFail($s->changed_by)->name}}</td>
+                            </tr>
+
+                        @endforeach
+
+                  </tbody>
+              </table>
+            </div>
+          </div>
 
               </div>
             </div>

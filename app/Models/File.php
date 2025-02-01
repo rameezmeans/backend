@@ -58,6 +58,10 @@ class File extends Model
         return $this->hasMany(Log::class); 
     }
 
+    public function status_logs(){
+        return $this->hasMany(FilesStatusLog::class); 
+    }
+
     public function new_requests(){
         return $this->hasMany(File::class, 'original_file_id', 'id'); 
     }
