@@ -26,6 +26,7 @@ use App\Models\FileFeedback;
 use App\Models\FileInternalEvent;
 use App\Models\FileReplySoftwareService;
 use App\Models\FileService;
+use App\Models\FilesStatusLog;
 use App\Models\FileUrl;
 use App\Models\Key;
 use App\Models\Log;
@@ -121,10 +122,13 @@ class FilesController extends Controller
 
         $file = File::findOrFail($request->file_id);
         $file->status = 'on_hold';
+
+        $this->changeStatusLog($file, 'on_hold', 'status', 'File is set on hold by engineer or admin.');
+
         $file->updated_at = Carbon::now();
         $file->save();
 
-        return Redirect::back()->withErrors(['success' => 'Comments added']);
+        return Redirect::back()->withErrors(['success' => 'Files is on Hold']);
     }
 
 	public function translateMessage(Request $request){
@@ -341,11 +345,13 @@ class FilesController extends Controller
 
         $file->disable_customers_download = 0;
         $file->status = 'completed';
+        $this->changeStatusLog($file, 'completed', 'status', 'File is enabled to download.');
         $file->red = 0;
         $file->submission_timer = NULL;
         $file->timer = NULL;
         
         $file->support_status = "closed";
+        $this->changeStatusLog($file, 'closed', 'support_status', 'File is enabled to download.');
         $file->checked_by = 'engineer';
         
         $file->reupload_time = Carbon::now();
@@ -628,6 +634,7 @@ class FilesController extends Controller
             $file = File::findOrFail($reqfile->file_id);
 
             $file->status = 'completed';
+            $this->changeStatusLog($file, 'completed', 'status', 'File is shown to customer to download.');
             $file->red = 0;
             $file->submission_timer = NULL;
             $file->updated_at = Carbon::now();
@@ -1081,6 +1088,7 @@ class FilesController extends Controller
             }
 
             $file->status = 'on_hold';
+            $this->changeStatusLog($file, 'on_hold', 'status', 'File is set on hold after offering options to customer.');
             $file->updated_at = Carbon::now();
             $file->save();
         
@@ -2524,7 +2532,7 @@ class FilesController extends Controller
 
         $file = File::findOrFail($request->file_id);
         $file->support_status = $request->support_status;
-
+        $this->changeStatusLog($file, $request->support_status, 'support_status', 'File support status changed by engineer from panel.');
         if($file->support_status == 'closed'){
             if($file->red == 1){
                 $file->red = 0;
@@ -2546,6 +2554,7 @@ class FilesController extends Controller
         $file = File::findOrFail($request->file_id);
 
         $file->status = $request->status;
+        $this->changeStatusLog($file, $request->status, 'status', 'File status changed by engineer from Admin Task panel.');
         $file->updated_at = Carbon::now();
         
         $customer = User::findOrFail($file->user_id);
@@ -2785,10 +2794,12 @@ class FilesController extends Controller
         if($file->original_file_id != NULL){
             $ofile = File::findOrFail($file->original_file_id);
             $ofile->support_status = "closed";
+            $this->changeStatusLog($ofile, 'closed', 'support_status', 'Original File support status changed by engineer from panel.');
             $ofile->save();
         }
         
         $file->support_status = "closed";
+        $this->changeStatusLog($file, 'closed', 'support_status', 'File support status changed by engineer from panel.');
         $file->save();
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
@@ -3305,6 +3316,8 @@ class FilesController extends Controller
 
             if($file->status == 'submitted'){
 
+                $this->changeStatusLog($file, 'completed', 'status', 'Engineer uploaded the file.');
+
                 $file->status = 'completed';
                 $file->red = 0;
                 $file->submission_timer = NULL;
@@ -3326,6 +3339,7 @@ class FilesController extends Controller
                 $old = File::findOrFail($file->original_file_id);
                 $old->checked_by = 'engineer';
                 $old->support_status = "closed";
+                $this->changeStatusLog($old, 'closed', 'support_status', 'Engineer uploaded the file.');
                 $old->red = 0;
                 $old->timer = NULL;
                 $old->save();
@@ -3333,6 +3347,7 @@ class FilesController extends Controller
 
             // if($file->no_longer_auto == 0){
                 $file->support_status = "closed";
+                $this->changeStatusLog($file, 'closed', 'support_status', 'Engineer uploaded the file.');
                 $file->red = 0;
                 $file->timer = NULL;
                 $file->checked_by = 'engineer';
@@ -4113,6 +4128,7 @@ class FilesController extends Controller
             $reminder->save();
 
             if($file->status == 'submitted'){
+                $this->changeStatusLog($file, 'completed', 'status', 'File is enabled to download.');
                 $file->status = 'completed';
                 $file->red = 0;
                 $file->submission_timer = NULL;
@@ -4133,13 +4149,15 @@ class FilesController extends Controller
             if($file->original_file_id){
                 $old = File::findOrFail($file->original_file_id);
                 $old->checked_by = 'engineer';
-                $file->support_status = "closed";
-                $file->red = 0;
-                $file->timer = NULL;
+                $old->support_status = "closed";
+                $this->changeStatusLog($old, 'closed', 'support_status', 'Engineer uploaded the file.');
+                $old->red = 0;
+                $old->timer = NULL;
                 $old->save();
             }
 
                 $file->support_status = "closed";
+                $this->changeStatusLog($file, 'closed', 'support_status', 'Engineer uploaded the file.');
                 $file->red = 0;
                 $file->timer = NULL;
                 $file->checked_by = 'engineer';
@@ -4253,6 +4271,25 @@ class FilesController extends Controller
 
             }
         } 
+    }
+
+    public function changeStatusLog($file, $to, $type, $desc){
+
+        $new = new FilesStatusLog();
+        $new->type = $type;
+
+        if($type == 'status'){
+            $new->from = $file->status;
+        }
+        else if($type == 'support_status'){
+            $new->from = $file->support_status;
+        }
+
+        $new->to = $to;
+        $new->desc = $desc;
+        $new->file_id = $file->id;
+        $new->changed_by = Auth::user()->id;
+        $new->save();
     }
 
     public function emailStagesAndOption($file){
