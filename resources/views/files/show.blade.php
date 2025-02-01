@@ -2929,6 +2929,10 @@ margin-bottom: 10px !important;
           </li>
           <li class="nav-item">
             <a href="#" data-toggle="tab" data-target="#slide23{{$file->id}}"><span>Status Logs</span></a>
+            
+          </li>
+
+          <li class="nav-item">
             <a href="#" data-toggle="tab" data-target="#slide24{{$file->id}}"><span>Engineer Assignment Logs</span></a>
           </li>
 
