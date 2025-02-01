@@ -2552,7 +2552,7 @@ class FilesController extends Controller
         // }
         
         $file = File::findOrFail($request->file_id);
-        dd($file);
+        // dd($file);
         $this->changeStatusLog($file, $request->status, 'status', 'File status changed by engineer from Admin Task panel.');
 
         $file->status = $request->status;
