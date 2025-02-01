@@ -4632,6 +4632,57 @@ margin-bottom: 10px !important;
 
               </div>
             </div>
+
+            <div class="tab-pane slide-left" id="slide23{{$file->id}}">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                <div class="text-center">
+                  <div class="card-title">
+                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <h4 class="m-t-20">Logs</h4>
+                    </div>
+                  </div>
+                  
+                  <div class="clearfix"></div>
+              </div>
+              
+              <div class="row m-t-40">
+                <div class="table-responsive">
+                  <div id="condensedTable_wrapper" class="dataTables_wrapper no-footer"><table class="table table-hover table-condensed dataTable no-footer" id="condensedTable" role="grid">
+                    <thead>
+                      <tr role="row">
+                        <th style="width:10%" class="sorting_asc" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Type</th>
+                        <th style="width: 20%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Key: activate to sort column ascending">From</th>
+                        <th style="width: 20%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Condensed: activate to sort column ascending">To</th>
+                        <th style="width: 40%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Condensed: activate to sort column ascending">Desc</th>
+                        <th style="width: 10%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Condensed: activate to sort column ascending">Changed By</th>
+                        <th style="width: 10%;" class="sorting" tabindex="0" aria-controls="condensedTable" rowspan="1" colspan="1" aria-label="Condensed: activate to sort column ascending">Changed At</th>
+                      </tr>
+                    </thead>
+                      <tbody>
+
+                        @foreach($file->status_logs as $s)
+                        
+                            <tr role="row" class="odd">
+                                <td class="v-align-middle semi-bold sorting_1">{{$s->type}}</td>
+                                <td class="v-align-middle">{{$s->from}}</td>
+                                <td class="v-align-middle semi-bold">{{$s->to}}</td>
+                                <td class="v-align-middle semi-bold">{{$s->desc}}</td>
+                                <td class="v-align-middle semi-bold">{{\App\Models\User::findOrFail($s->changed_by)->name}}</td>
+                                <td class="v-align-middle semi-bold">{{$s->created_at->diffForHumans()}}</td>
+                            </tr>
+
+                        @endforeach
+
+                  </tbody>
+              </table>
+            </div>
+          </div>
+
+              </div>
+
+
+            </div>
            
             {{-- @if($file->tool_type == 'slave' && $file->tool_id != $kess3Label->id) --}}
               <div class="tab-pane slide-left" id="slide5{{$file->id}}">
