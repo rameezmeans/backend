@@ -6715,16 +6715,27 @@ re_calculate_proposed_credits(file_id);
 $(document).on('click', '.btn-add-message', function(e){
     
     let file_id = $(this).data('file_id');
-    console.log(file_id);
     let customer_message = $("#customer_message_"+file_id).val();
 
     if(customer_message === ""){
       $("#validation_"+file_id).html('please add Message for Customer.');
     }
+    else{
 
-    // let formJson = JSON.stringify(formElements);
+      $.ajax({
+        url: "/add_message_record",
+        type: "POST",
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        data: {
+            'file_id': file_id,
+            'customer_message': customer_message
+        },
+        success: function(d) {
+          $('#softwareOptionsModal-'+file_id).modal('show');
+        }
+      });
 
-
+    }
 });
 
 $(document).on('click', '.btn-options-change', function(e){

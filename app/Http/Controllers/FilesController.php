@@ -284,6 +284,10 @@ class FilesController extends Controller
         return  response()->json( ['msg' => 'records deleted.', 'file_id' => $request->file_id] );
     }
 
+    public function addMessageRecord(Request $request){
+        dd($request->all());
+    }
+
     public function removeNullMessages(Request $request){
         $allNulls = FileMessage::where('file_id', $request->file_id)
         ->whereNull('request_file_id')->delete();
