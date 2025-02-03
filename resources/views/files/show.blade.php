@@ -6457,9 +6457,7 @@ margin-bottom: 10px !important;
   <script type="text/javascript">
   $(document).ready(function(){
 
-    $("input[@name='notifyFile']").change(function(){
-      console.log($this.value());
-    });
+    
 
     $(".download_directly").change(function(e){
       let val = $(this).val();
