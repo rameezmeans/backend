@@ -6715,7 +6715,7 @@ $(document).on('click', '.btn-add-message', function(e){
     
     let file_id = $(this).data('file_id');
     console.log(file_id);
-    let customer_message = $("#customer_message_"+file_id).value();
+    let customer_message = $("#customer_message_"+file_id).val();
 
     console.log(customer_message);
 
