@@ -3366,8 +3366,8 @@ class FilesController extends Controller
             if($file->status == 'submitted'){
 
                 if($file->customer_message){
-                    $this->changeStatusLog($file, 'on_hold', 'status', 'Engineer uploaded the file but for showing it later to customer.');
-                    $file->status = 'on_hold';
+                    $this->changeStatusLog($file, 'ready_to_send', 'status', 'Engineer uploaded the file but for showing it later to customer.');
+                    $file->status = 'ready_to_send';
                 }
                 else{
                     $this->changeStatusLog($file, 'completed', 'status', 'Engineer uploaded the file.');
