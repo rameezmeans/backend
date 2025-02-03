@@ -6794,7 +6794,7 @@ $.ajax({
 
 });
 
-$(document).on('click', '.show-file-chat-form'.{{$file_id}}, function(e){
+$(document).on('click', '.show-file-chat-form'.{{$file->id}}, function(e){
 
 let file_id = $(this).data('file_id');
 
