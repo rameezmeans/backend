@@ -5407,7 +5407,7 @@ margin-bottom: 10px !important;
                 </div>
 
                 <div class="col-md-4 m-t-10 sm-m-t-10">
-                  <button type="button" class="btn btn-success btn-block m-t-5" data-file_id="{{$file->id}}">Submit</button>
+                  <button type="button" class="btn btn-success btn-block m-t-5 btn-show-software-form" data-file_id="{{$file->id}}">Submit</button>
                 </div>
 
               </div>
@@ -5749,18 +5749,15 @@ margin-bottom: 10px !important;
           <p class="p-b-10">You can upload the file without notifying the customer with a Message. When you will upload later. Customer will be notified and Message will go in Chat.</p>
         </div>
         <div class="modal-body">
-          <form role="form" id="QuestionForm-{{$file->id}}">
-            <input type="hidden" name="file_id" value="{{$file->id}}">
+          <form role="form" id="QuestionForm-{{$o_file->id}}">
+            <input type="hidden" name="file_id" value="{{$o_file->id}}">
             <div class="form-group-attached">
               <div class="row">
-                
-
                 <div class="col-md-8">
                 
                 </div>
-
                 <div class="col-md-4 m-t-10 sm-m-t-10">
-                  <button type="button" class="btn btn-success btn-block m-t-5" data-file_id="{{$file->id}}">Submit</button>
+                  <button type="button" class="btn btn-success btn-block m-t-5" data-file_id="{{$o_file->id}}">Submit</button>
                 </div>
 
               </div>
