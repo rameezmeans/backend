@@ -6672,6 +6672,8 @@ $('#softwareOptionsModal-'+file_id).modal('show');
 
 $(document).on('click', '.btn-show-chat-form', function(e){
 
+  console.log('btn-show-chat-form');
+
   // e.preventDefault();
 
 let file_id = $(this).data('file_id');
