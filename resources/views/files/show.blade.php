@@ -5773,21 +5773,26 @@ margin-bottom: 10px !important;
                 
 
               </div>
-              <div class="row">
+              
                 <div id="later-area-{{$o_file->id}}" class="hide">
-                  <form role="form" id="addQuestionForm-{{$o_file->id}}">
-                    <input type="hidden" name="file_id" value="{{$o_file->id}}">
-                    <div class="col-md-8">
-                      <textarea name="customer_message" class="form-control" placeholder="Add Message for customer to show him later." required></textarea>
-                    </div>
-                    <div class="col-md-4 m-t-10 sm-m-t-10">
-                      <button type="button" class="btn btn-success btn-block m-t-5" data-file_id="{{$o_file->id}}">Submit Message</button>
-                    </div>
-                  </form>
-                </div>
+                  <div class="row">
+                    <form role="form" id="addQuestionForm-{{$o_file->id}}">
+                      <input type="hidden" name="file_id" value="{{$o_file->id}}">
+                      <div class="col-md-8">
+                        <textarea style="width: 100%;" name="customer_message" class="form-control" placeholder="Add Message for customer to show him later." required></textarea>
+                      </div>
+                      <div class="col-md-4 m-t-10 sm-m-t-10">
+                        <button type="button" class="btn btn-success btn-block m-t-5" data-file_id="{{$o_file->id}}">Submit Message</button>
+                      </div>
+                    
+                    </form>
+                  </div>
+                
                 <div id="now-area-{{$o_file->id}}">
-                  <div class="col-md-4 m-t-10 sm-m-t-10">
-                    <button type="button" class="btn btn-success btn-block m-t-5 btn-show-software-form" data-file_id="{{$o_file->id}}">Go To Next Step</button>
+                  <div class="row">
+                    <div class="col-md-8 m-t-10 sm-m-t-10">
+                      <button type="button" class="btn btn-success btn-block m-t-5 btn-show-software-form" data-file_id="{{$o_file->id}}">Go To Next Step</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -6485,7 +6490,7 @@ margin-bottom: 10px !important;
 
         $('#later-area-'+file_id).removeClass('hide');
         $('#now-area-'+file_id).addClass('hide');
-        
+
       }
 
     }); 
