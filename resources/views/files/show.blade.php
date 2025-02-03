@@ -6475,6 +6475,7 @@ margin-bottom: 10px !important;
       let value = $(this).val();
 
       if(value == 'now'){
+        console.log($(this).data('file_id'));
         $('later-area-'+$(this).data('file_id')).addClass('hide');
         $('now-area-'+$(this).data('file_id')).addClass('show');
       }
