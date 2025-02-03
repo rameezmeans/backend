@@ -5406,9 +5406,9 @@ margin-bottom: 10px !important;
 
                   <div class="radio radio-success">
                     <input type="radio" checked="checked" value="now" name="notifyFile" id="notifyLater">
-                    <label for="yes">Notify Customer Now</label>
+                    <label for="notifyLater">Notify Customer Now</label>
                     <input type="radio" value="later" name="notifyFile" id="notifyNow">
-                    <label for="no">Notify Customer Later</label>
+                    <label for="notifyNow">Notify Customer Later</label>
                   </div>
                 
                 </div>
@@ -6457,6 +6457,17 @@ margin-bottom: 10px !important;
   <script type="text/javascript">
   $(document).ready(function(){
 
+    $('#notifyNow input:radio').click(function() {
+      if ($(this).val() === 'now') {
+        console.log('now');
+      } 
+    });
+
+    $('#notifyLater input:radio').click(function() {
+      if ($(this).val() === 'later') {
+        console.log('later');
+      } 
+    });
     
 
     $(".download_directly").change(function(e){
