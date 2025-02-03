@@ -285,7 +285,14 @@ class FilesController extends Controller
     }
 
     public function addMessageRecord(Request $request){
-        dd($request->all());
+
+        $newMessage = new FileMessage();
+        $newMessage->file_id = $request->file_id; 
+        $newMessage->customer_message = $request->customer_message; 
+        $newMessage->save();
+
+        return  response()->json( ['msg' => 'message added.']);
+
     }
 
     public function removeNullMessages(Request $request){
@@ -3011,6 +3018,14 @@ class FilesController extends Controller
         foreach($allSoftwareRecrods as $record){
             $record->reply_id = $engineerFile->id;
             $record->save();
+        }
+
+        $allMessagesRecrods = FileMessage::where('file_id', $engineerFile->file_id)
+        ->whereNull('request_file_id')->get();
+
+        foreach($allMessagesRecrods as $message){
+            $message->request_file_id = $engineerFile->id;
+            $message->save();
         }
 
         // if($file->front_end_id == 2){
