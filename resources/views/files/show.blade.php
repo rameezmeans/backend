@@ -5762,6 +5762,13 @@ margin-bottom: 10px !important;
               <div class="row">
                 <div class="col-md-8">
                 
+                  <div class="radio radio-success">
+                    <input type="radio" checked="checked" value="now" name="notifyFile" id="notifyLater">
+                    <label for="yes">Notify Customer Now</label>
+                    <input type="radio" value="later" name="notifyFile" id="notifyNow">
+                    <label for="no">Notify Customer Later</label>
+                  </div>
+                  
                 </div>
                 <div class="col-md-4 m-t-10 sm-m-t-10">
                   <button type="button" class="btn btn-success btn-block m-t-5 btn-show-software-form" data-file_id="{{$o_file->id}}">Submit</button>
