@@ -6810,7 +6810,7 @@ $.ajax({
 
 });
 
-$(document).on('click', '.show-file-chat-form'.{{$file->id}}, function(e){
+$(document).on('click', '.btn-show-software-form', function(e){
 
 let file_id = $(this).data('file_id');
 
