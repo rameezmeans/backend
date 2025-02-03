@@ -6478,11 +6478,11 @@ margin-bottom: 10px !important;
       if(value == 'now'){
         
         $('#later-area-'+file_id).addClass('hide');
-        $('#now-area-'+file_id).addClass('show');
+        $('#now-area-'+file_id).removeClass('show');
       }
       else if(value == 'later'){
         $('#later-area-'+file_id).addClass('show');
-        $('#now-area-'+file_id).addClass('hide');
+        $('#now-area-'+file_id).removeClass('hide');
       }
 
     }); 
