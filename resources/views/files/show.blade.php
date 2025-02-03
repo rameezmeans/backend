@@ -6475,12 +6475,12 @@ margin-bottom: 10px !important;
       let value = $(this).val();
 
       if(value == 'now'){
-        $('later-area-'+$this.data('file_id')).addClass('hide');
-        $('now-area-'+$this.data('file_id')).addClass('show');
+        $('later-area-'+$(this).data('file_id')).addClass('hide');
+        $('now-area-'+$(this).data('file_id')).addClass('show');
       }
       else if(value == 'later'){
-        $('later-area-'+$this.data('file_id')).addClass('show');
-        $('now-area-'+$this.data('file_id')).addClass('hide');
+        $('later-area-'+$(this).data('file_id')).addClass('hide');
+        $('now-area-'+$(this).data('file_id')).addClass('show');
       }
 
     }); 
