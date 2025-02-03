@@ -6473,15 +6473,16 @@ margin-bottom: 10px !important;
     $("input:radio[name=notifyFile]").click(function() { 
 
       let value = $(this).val();
+      let file_id = $(this).data('file_id');
 
       if(value == 'now'){
-        console.log($(this).data('file_id'));
-        $('later-area-'+$(this).data('file_id')).addClass('hide');
-        $('now-area-'+$(this).data('file_id')).addClass('show');
+        
+        $('later-area-'+file_id).addClass('hide');
+        $('now-area-'+file_id).addClass('show');
       }
       else if(value == 'later'){
-        $('later-area-'+$(this).data('file_id')).addClass('hide');
-        $('now-area-'+$(this).data('file_id')).addClass('show');
+        $('later-area-'+file_id).addClass('show');
+        $('now-area-'+file_id).addClass('hide');
       }
 
     }); 
