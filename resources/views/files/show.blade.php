@@ -6462,7 +6462,7 @@ margin-bottom: 10px !important;
     // });
 
     $("input:radio[name=notifyFile]").click(function() { 
-      console.log(this.val());
+      console.log($(this).val());
     }); 
 
     $(".download_directly").change(function(e){
