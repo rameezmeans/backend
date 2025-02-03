@@ -5779,6 +5779,7 @@ margin-bottom: 10px !important;
                     <form role="form" id="addMessageForm-{{$o_file->id}}">
                       <input type="hidden" name="file_id" value="{{$o_file->id}}">
                       <div class="col-md-8">
+                        <p class="text-danger" id="validation_{{$o_file->id}}"></p>
                         <textarea style="width: 100%;" id="customer_message_{{$o_file->id}}" class="form-control" placeholder="Add Message for customer to show him later." required></textarea>
                       </div>
                       <div class="col-md-4 m-t-10 sm-m-t-10">
@@ -6717,7 +6718,9 @@ $(document).on('click', '.btn-add-message', function(e){
     console.log(file_id);
     let customer_message = $("#customer_message_"+file_id).val();
 
-    console.log(customer_message);
+    if(customer_message === ""){
+      $("#validation"+file_id).html('please add Message for Customer.');
+    }
 
     // let formJson = JSON.stringify(formElements);
 
