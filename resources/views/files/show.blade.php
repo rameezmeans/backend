@@ -5763,9 +5763,9 @@ margin-bottom: 10px !important;
                 <div class="col-md-8">
                 
                   <div class="radio radio-success">
-                    <input type="radio" checked="checked" value="now" name="notifyFile" id="notifyNow" data-file_id="{{$ofile->id}}">
+                    <input type="radio" checked="checked" value="now" name="notifyFile" id="notifyNow" data-file_id="{{$o_file->id}}">
                     <label for="notifyNow">Notify Customer Now</label>
-                    <input type="radio" value="later" name="notifyFile" id="notifyLater" data-file_id="{{$ofile->id}}">
+                    <input type="radio" value="later" name="notifyFile" id="notifyLater" data-file_id="{{$o_file->id}}">
                     <label for="notifyLater">Notify Customer Later</label>
                   </div>
 
