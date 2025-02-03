@@ -5779,7 +5779,7 @@ margin-bottom: 10px !important;
                     <form role="form" id="addMessageForm-{{$o_file->id}}">
                       <input type="hidden" name="file_id" value="{{$o_file->id}}">
                       <div class="col-md-8">
-                        <textarea style="width: 100%;" name="customer_message" class="form-control" placeholder="Add Message for customer to show him later." required></textarea>
+                        <textarea style="width: 100%;" id="customer_message_{{$o_file->id}}" class="form-control" placeholder="Add Message for customer to show him later." required></textarea>
                       </div>
                       <div class="col-md-4 m-t-10 sm-m-t-10">
                         <button type="button" class="btn btn-success btn-block m-t-5 btn-add-message" data-file_id="{{$o_file->id}}">Submit Message</button>
@@ -6712,13 +6712,12 @@ re_calculate_proposed_credits(file_id);
 });
 
 $(document).on('click', '.btn-add-message', function(e){
-    console.log('oh yes');
-
+    
     let file_id = $(this).data('file_id');
     console.log(file_id);
-    let formElements = $("#addMessageForm-"+file_id).serializeArray();
+    let customer_message = $("#customer_message_"+file_id).value();
 
-    console.log(formElements);
+    console.log(customer_message);
 
     // let formJson = JSON.stringify(formElements);
 
