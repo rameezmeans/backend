@@ -5396,28 +5396,49 @@ margin-bottom: 10px !important;
           <p class="p-b-10">You can upload the file without notifying the customer with a Message. When you will upload later. Customer will be notified and Message will go in Chat.</p>
         </div>
         <div class="modal-body">
-          <form role="form" id="MessageForm-{{$file->id}}">
-            <input type="hidden" name="file_id" value="{{$file->id}}">
+          <form role="form" id="QuestionForm-{{$o_file->id}}">
+            <input type="hidden" name="file_id" value="{{$o_file->id}}">
             <div class="form-group-attached">
               <div class="row">
-                
-
                 <div class="col-md-8">
-
-                  <div class="radio radio-success">
-                    <input type="radio" checked="checked" value="now" name="notifyFile" id="notifyLater" data-file_id="{{$file->id}}">
-                    <label for="notifyLater">Notify Customer Now</label>
-                    <input type="radio" value="later" name="notifyFile" id="notifyNow" data-file_id="{{$file->id}}">
-                    <label for="notifyNow">Notify Customer Later</label>
-                  </div>
                 
-                </div>
+                  <div class="radio radio-success">
+                    <input type="radio" checked="checked" value="now" name="notifyFile" id="notifyNow" data-file_id="{{$o_file->id}}">
+                    <label for="notifyNow">Notify Customer Now</label>
+                    <input type="radio" value="later" name="notifyFile" id="notifyLater" data-file_id="{{$o_file->id}}">
+                    <label for="notifyLater">Notify Customer Later</label>
+                  </div>
 
-                <div class="col-md-4 m-t-10 sm-m-t-10">
-                  <button type="button" class="btn btn-success btn-block m-t-5 btn-show-software-form" data-file_id="{{$file->id}}">Submit</button>
                 </div>
+                
 
               </div>
+              
+                <div id="later-area-{{$o_file->id}}" class="hide">
+                  <div class="row">
+                    <form role="form" id="addMessageForm-{{$o_file->id}}">
+                      <input type="hidden" name="file_id" value="{{$o_file->id}}">
+                      <div class="col-md-8">
+                        <p class="text-danger" id="validation_{{$o_file->id}}"></p>
+                        <textarea style="width: 100%;" id="customer_message_{{$o_file->id}}" class="form-control" placeholder="Add Message for customer to show him later." required></textarea>
+                      </div>
+                      <div class="col-md-4 m-t-10 sm-m-t-10">
+                        <button type="button" class="btn btn-success btn-block m-t-5 btn-add-message" data-file_id="{{$o_file->id}}">Submit Message</button>
+                      </div>
+                    
+                    </form>
+                  </div>
+                </div>
+                
+                <div id="now-area-{{$o_file->id}}">
+                  <div class="row">
+                    <div class="col-md-8 m-t-10 sm-m-t-10">
+                      <button type="button" class="btn btn-success btn-block m-t-5 btn-show-software-form" data-file_id="{{$o_file->id}}">Go To Next Step</button>
+                    </div>
+                  </div>
+                </div>
+              
+
             </div>
           </form>
 
