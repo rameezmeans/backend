@@ -5396,13 +5396,20 @@ margin-bottom: 10px !important;
           <p class="p-b-10">You can upload the file without notifying the customer with a Message. When you will upload later. Customer will be notified and Message will go in Chat.</p>
         </div>
         <div class="modal-body">
-          <form role="form" id="QuestionForm-{{$file->id}}">
+          <form role="form" id="MessageForm-{{$file->id}}">
             <input type="hidden" name="file_id" value="{{$file->id}}">
             <div class="form-group-attached">
               <div class="row">
                 
 
                 <div class="col-md-8">
+
+                  <div class="radio radio-success">
+                    <input type="radio" checked="checked" value="now" name="notifyFile" id="notifyLater">
+                    <label for="yes">Notify Customer Now</label>
+                    <input type="radio" value="later" name="notifyFile" id="notifyNow">
+                    <label for="no">Notify Customer Later</label>
+                  </div>
                 
                 </div>
 
