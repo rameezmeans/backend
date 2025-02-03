@@ -5757,7 +5757,7 @@ margin-bottom: 10px !important;
                 
                 </div>
                 <div class="col-md-4 m-t-10 sm-m-t-10">
-                  <button type="button" class="btn btn-success btn-block m-t-5" data-file_id="{{$o_file->id}}">Submit</button>
+                  <button type="button" class="btn btn-success btn-block m-t-5 btn-show-software-form" data-file_id="{{$o_file->id}}">Submit</button>
                 </div>
 
               </div>
