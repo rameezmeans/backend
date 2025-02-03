@@ -1279,7 +1279,7 @@ margin-bottom: 10px !important;
 
                         @if($file->status == 'submitted' || $file->status == 'completed')
                           @if($file->id == 8993)
-                            <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version (New)</button>
+                            <button class="btn btn-success m-b-20 btn-show-message-form btn-show-software-form-old" data-file_id="{{$file->id}}">Upload Version (New)</button>
                           @else  
                             <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
                           
@@ -5383,6 +5383,48 @@ margin-bottom: 10px !important;
               };
             
             </script>
+
+<!-- Modal -->
+<div class="modal fade slide-up disable-scroll " id="MessageModal-{{$file->id}}" role="dialog" aria-hidden="false">
+  <div class="modal-dialog modal-lg" class="width:90% !important;">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+          </button>
+          <h5>Upload File <span class="semi-bold"> Wihout notifying Customers.</span></h5>
+          <p class="p-b-10">You can upload the file without notifying the customer with a Message. When you will upload later. Customer will be notified and Message will go in Chat.</p>
+        </div>
+        <div class="modal-body">
+          <form role="form" id="QuestionForm-{{$file->id}}">
+            <input type="hidden" name="file_id" value="{{$file->id}}">
+            <div class="form-group-attached">
+              <div class="row">
+                
+
+                <div class="col-md-8">
+                
+                </div>
+
+                <div class="col-md-4 m-t-10 sm-m-t-10">
+                  <button type="button" class="btn btn-success btn-block m-t-5" data-file_id="{{$file->id}}">Submit</button>
+                </div>
+
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
+<!-- /.modal-dialog -->
+<!-- MODAL SLIDE UP SMALL  -->
+<!-- Modal -->
+
+
             <!-- Modal -->
 <div class="modal fade slide-up disable-scroll " id="softwareOptionsModal-{{$file->id}}" role="dialog" aria-hidden="false">
   <div class="modal-dialog modal-lg" class="width:90% !important;">
@@ -6613,6 +6655,18 @@ $('#softwareOptionsModal-'+file_id).modal('show');
 
 });
 
+$(document).on('click', '.btn-show-message-form', function(e){
+
+let file_id = $(this).data('file_id');
+
+console.log(file_id);
+
+removeNullMessageRecords(file_id);
+
+$('#MessageModal-'+file_id).modal('show');
+
+});
+
 $(document).on('click', '.btn-show-software-edit-form', function(e){
 
   let file_id = $(this).data('file_id');
@@ -6651,6 +6705,22 @@ function removeNullSoftwareRecords(file_id){
 
 $.ajax({
       url: "/remove_null_software_records",
+      type: "POST",
+      headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+      data: {
+          'file_id': file_id
+      },
+      success: function(d) {
+        console.log(d);
+        
+      }
+  });
+}
+
+function removeNullMessageRecords(file_id){
+
+$.ajax({
+      url: "/remove_null_message_records",
       type: "POST",
       headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
       data: {
