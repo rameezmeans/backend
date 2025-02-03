@@ -6457,19 +6457,10 @@ margin-bottom: 10px !important;
   <script type="text/javascript">
   $(document).ready(function(){
 
-    $('#notifyNow input:radio').click(function() {
-      if ($(this).val() === 'now') {
-        console.log('now');
-      } 
-    });
-
-    $('#notifyLater input:radio').click(function() {
-      if ($(this).val() === 'later') {
-        console.log('later');
-      } 
+    $("input[@name='notifyFile']").change(function(){
+    // Do something interesting here
     });
     
-
     $(".download_directly").change(function(e){
       let val = $(this).val();
 
