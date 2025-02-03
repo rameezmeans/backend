@@ -1002,7 +1002,7 @@ Route::any('/get_search_results', [App\Http\Controllers\FilesController::class, 
 
 Route::post('/add_softwares_services', [App\Http\Controllers\FilesController::class, 'addSoftwares'])->name('add-softwares-services');
 Route::post('/remove_null_software_records', [App\Http\Controllers\FilesController::class, 'removeNullSoftwares'])->name('remove-null-software-records');
-Route::post('/remove_null_question_records', [App\Http\Controllers\FilesController::class, 'removeNullQuestion'])->name('remove-null-question-records');
+Route::post('/remove_null_message_records', [App\Http\Controllers\FilesController::class, 'removeNullMessages'])->name('remove-null-message-records');
 
 // Route::get('/feedback_reports', [App\Http\Controllers\FilesController::class,'feedbackReports'])->name('feedback-reports');
 Route::get('/feedback_reports', [App\Http\Controllers\FilesController::class,'feedbackReportsLive'])->name('feedback-reports');
