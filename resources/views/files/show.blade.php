@@ -6715,6 +6715,7 @@ $(document).on('click', '.btn-add-message', function(e){
     console.log('oh yes');
 
     let file_id = $(this).data('file_id');
+    console.log(file_id);
     let formElements = $("#addMessageForm-"+file_id).serializeArray();
 
     console.log(formElements);
