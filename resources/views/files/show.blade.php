@@ -1278,7 +1278,7 @@ margin-bottom: 10px !important;
                         <h5 class="m-t-40">Versions</h5>
 
                         @if($file->status == 'submitted' || $file->status == 'completed')
-                          <button class="btn btn-success m-b-20 btn-show-chat-form btn-show-software-form1" data-file_id="{{$file->id}}">Upload Version</button>
+                          <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
                         @else
                           <h5 class="text-danger">File Status must be sumbitted or completed.</h5>
                         @endif
@@ -5378,54 +5378,6 @@ margin-bottom: 10px !important;
               };
             
             </script>
-
-            <!-- Modal -->
-            <div class="modal fade slide-up disable-scroll " id="fileChatModal-{{$file->id}}" role="dialog" aria-hidden="false">
-              <div class="modal-dialog modal-lg" class="width:90% !important;">
-                <div class="modal-content-wrapper">
-                  <div class="modal-content">
-                    <div class="modal-header clearfix text-left">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
-                      </button>
-                      <h5>Offline File Upload <span class="semi-bold">Upload the file if You do not want customer to see it.</span></h5>
-                      <p class="p-b-10">Please upload the file with a message and later you can show the file to customer with a message in chat.</p>
-                    </div>
-                    <div class="modal-body">
-                      <form role="form" id="chatForm-{{$file->id}}">
-                        <input type="hidden" name="file_id" value="{{$file->id}}">
-                        <div class="form-group-attached">
-                          <div class="row">
-                            
-                            <div class="col-md-8">
-                              <div class="form-group form-group-default required">
-                                <label>Message</label>
-                                <textarea id="chat_message" name="chat_message" required style="height: 100px;" class="form-control"></textarea>
-                              </div>
-                            </div>
-            
-                            <div class="col-md-4 m-t-10 sm-m-t-10">
-                              <button type="submit" class="btn btn-success btn-block m-t-5" data-file_id="{{$file->id}}">Submit</button>
-                            </div>
-            
-                          </div>
-                        </div>
-                      </form>
-
-                      <div class="col-md-4 m-t-10 sm-m-t-10">
-                        <button type="button" class="btn btn-success btn-block m-t-5 btn-show-software-form" data-file_id="{{$file->id}}">Go To Next Step</button>
-                      </div>
-            
-                    </div>
-                  </div>
-                </div>
-                <!-- /.modal-content -->
-              </div>
-            </div>
-            <!-- /.modal-dialog -->
-            <!-- MODAL SLIDE UP SMALL  -->
-            <!-- Modal -->
-
-
             <!-- Modal -->
 <div class="modal fade slide-up disable-scroll " id="softwareOptionsModal-{{$file->id}}" role="dialog" aria-hidden="false">
   <div class="modal-dialog modal-lg" class="width:90% !important;">
@@ -6656,36 +6608,6 @@ $('#softwareOptionsModal-'+file_id).modal('show');
 
 });
 
-// $(document).on('click', '.btn-show-chat-form', function(e){
-
-// e.preventDefault();
-
-// let file_id = $(this).data('file_id');
-
-// console.log(file_id);
-
-// removeNullChatRecords(file_id);
-
-// $('#fileChatModal-'+file_id).modal('show');
-
-// });
-
-$(document).on('click', '.btn-show-chat-form', function(e){
-
-  console.log('btn-show-chat-form');
-
-  // e.preventDefault();
-
-let file_id = $(this).data('file_id');
-
-console.log(file_id);
-
-removeNullChatRecords(file_id);
-
-$('#fileChatModal-'+file_id).modal('show');
-
-});
-
 $(document).on('click', '.btn-show-software-edit-form', function(e){
 
   let file_id = $(this).data('file_id');
@@ -6736,81 +6658,7 @@ $.ajax({
   });
 }
 
-function removeNullChatRecords(file_id){
-
-$.ajax({
-      url: "/remove_null_chat_records",
-      type: "POST",
-      headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-      data: {
-          'file_id': file_id
-      },
-      success: function(d) {
-        console.log(d);
-        
-      }
-  });
-}
-
 $(document).on('click', '.show-file-upload-section', function(e){
-
-let file_id = $(this).data('file_id');
-
-console.log(file_id);
-
-let formElements = $("#softwareForm-"+file_id).serializeArray();
-
-// console.log(formElements);
-
-let formJson = JSON.stringify(formElements);
-
-$.ajax({
-      url: "/add_softwares_services",
-      type: "POST",
-      headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-      data: {
-          'form_data': formJson
-      },
-      success: function(d) {
-        console.log(d);
-        $("#softwareForm-"+d.file_id).addClass('hide');
-        $("#fileUploadForm-"+d.file_id).removeClass('hide');
-      }
-  });
-
-
-});
-
-$(document).on('click', '.show-file-upload-section', function(e){
-
-let file_id = $(this).data('file_id');
-
-console.log(file_id);
-
-let formElements = $("#softwareForm-"+file_id).serializeArray();
-
-// console.log(formElements);
-
-let formJson = JSON.stringify(formElements);
-
-$.ajax({
-      url: "/add_softwares_services",
-      type: "POST",
-      headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-      data: {
-          'form_data': formJson
-      },
-      success: function(d) {
-        console.log(d);
-        $("#softwareForm-"+d.file_id).addClass('hide');
-        $("#fileUploadForm-"+d.file_id).removeClass('hide');
-      }
-  });
-
-
-});
-
-$(document).on('click', '.btn-show-software-form', function(e){
 
 let file_id = $(this).data('file_id');
 
