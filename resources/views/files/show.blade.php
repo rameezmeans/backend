@@ -5787,6 +5787,7 @@ margin-bottom: 10px !important;
                     
                     </form>
                   </div>
+                </div>
                 
                 <div id="now-area-{{$o_file->id}}">
                   <div class="row">
@@ -5795,7 +5796,7 @@ margin-bottom: 10px !important;
                     </div>
                   </div>
                 </div>
-              </div>
+              
 
             </div>
           </form>
