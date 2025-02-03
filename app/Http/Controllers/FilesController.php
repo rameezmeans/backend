@@ -288,7 +288,7 @@ class FilesController extends Controller
 
         $newMessage = new FileMessage();
         $newMessage->file_id = $request->file_id; 
-        $newMessage->customer_message = $request->customer_message; 
+        $newMessage->message = $request->customer_message; 
         $newMessage->save();
 
         return  response()->json( ['msg' => 'message added.']);
