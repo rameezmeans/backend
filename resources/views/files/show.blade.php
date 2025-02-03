@@ -5768,13 +5768,17 @@ margin-bottom: 10px !important;
                     <input type="radio" value="later" name="notifyFile" id="notifyNow">
                     <label for="no">Notify Customer Later</label>
                   </div>
-                  
+
                 </div>
+                
+
+              </div>
+              <div class="row">
                 <div class="col-md-4 m-t-10 sm-m-t-10">
                   <button type="button" class="btn btn-success btn-block m-t-5 btn-show-software-form" data-file_id="{{$o_file->id}}">Submit</button>
                 </div>
-
               </div>
+
             </div>
           </form>
 
