@@ -1323,6 +1323,9 @@ margin-bottom: 10px !important;
                               <div class="tab-pane slide-left active" id="reply_data_{{$message['id']}}" style="height: 100%;">
 
                                 {{-- @if($file->status == 'completed') --}}
+                                  @if($file->id == 8993)
+                                    <button style="float: right;" class="btn btn-success m-b-20" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Send File To Customer</button>
+                                  @endif
                                     <button style="float: right;" class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
                                 {{-- @endif --}}
 
