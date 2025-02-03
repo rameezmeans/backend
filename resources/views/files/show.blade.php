@@ -6476,16 +6476,16 @@ margin-bottom: 10px !important;
       let file_id = $(this).data('file_id');
 
       if(value == 'now'){
-        
-        $('#now-area-'+file_id).addClass('show');
-        $('#later-area-'+file_id).removeClass('hide');
+
+        $('#now-area-'+file_id).removeClass('hide');
+        $('#later-area-'+file_id).addClass('hide');
         
       }
       else if(value == 'later'){
-        
 
+        $('#later-area-'+file_id).removeClass('hide');
         $('#now-area-'+file_id).addClass('hide');
-        $('#later-area-'+file_id).removeClass('show');
+        
       }
 
     }); 
