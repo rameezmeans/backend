@@ -5776,13 +5776,13 @@ margin-bottom: 10px !important;
               
                 <div id="later-area-{{$o_file->id}}" class="hide">
                   <div class="row">
-                    <form role="form" id="addQuestionForm-{{$o_file->id}}">
+                    <form role="form" id="addMessageForm-{{$o_file->id}}">
                       <input type="hidden" name="file_id" value="{{$o_file->id}}">
                       <div class="col-md-8">
                         <textarea style="width: 100%;" name="customer_message" class="form-control" placeholder="Add Message for customer to show him later." required></textarea>
                       </div>
                       <div class="col-md-4 m-t-10 sm-m-t-10">
-                        <button type="submit" class="btn btn-success btn-block m-t-5 btn-add-question" data-file_id="{{$o_file->id}}">Submit Message</button>
+                        <button type="button" class="btn btn-success btn-block m-t-5 btn-add-message" data-file_id="{{$o_file->id}}">Submit Message</button>
                       </div>
                     
                     </form>
@@ -6711,10 +6711,16 @@ re_calculate_proposed_credits(file_id);
 
 });
 
-$(document).on('click', '.btn-add-question', function(e){
-  e.preventDefault();
+$(document).on('click', '.btn-add-message', function(e){
+    console.log('oh yes');
 
-  console.log('oh yes');
+    let formElements = $("#addMessageForm-"+file_id).serializeArray();
+
+    console.log(formElements);
+
+    // let formJson = JSON.stringify(formElements);
+
+
 });
 
 $(document).on('click', '.btn-options-change', function(e){
