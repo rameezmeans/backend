@@ -3364,9 +3364,14 @@ class FilesController extends Controller
 
             if($file->status == 'submitted'){
 
-                $this->changeStatusLog($file, 'completed', 'status', 'Engineer uploaded the file.');
-
-                $file->status = 'completed';
+                if($file->customer_message){
+                    $this->changeStatusLog($file, 'on_hold', 'status', 'Engineer uploaded the file but for showing it later to customer.');
+                    $file->status = 'on_hold';
+                }
+                else{
+                    $this->changeStatusLog($file, 'completed', 'status', 'Engineer uploaded the file.');
+                    $file->status = 'completed';
+                }
                 $file->red = 0;
                 $file->submission_timer = NULL;
                 $file->updated_at = Carbon::now();
@@ -3414,6 +3419,8 @@ class FilesController extends Controller
                 $file->revisions = $file->files->count()+1;
                 $file->save();
         }
+
+        if(!$file->customer_message){
 
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
@@ -3528,6 +3535,7 @@ class FilesController extends Controller
             }
 
         }
+    }
         
         return response('file uploaded', 200);
     }
