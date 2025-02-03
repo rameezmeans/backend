@@ -6719,7 +6719,7 @@ $(document).on('click', '.btn-add-message', function(e){
     let customer_message = $("#customer_message_"+file_id).val();
 
     if(customer_message === ""){
-      $("#validation"+file_id).html('please add Message for Customer.');
+      $("#validation_"+file_id).html('please add Message for Customer.');
     }
 
     // let formJson = JSON.stringify(formElements);
