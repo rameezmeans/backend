@@ -5782,7 +5782,7 @@ margin-bottom: 10px !important;
                         <textarea style="width: 100%;" name="customer_message" class="form-control" placeholder="Add Message for customer to show him later." required></textarea>
                       </div>
                       <div class="col-md-4 m-t-10 sm-m-t-10">
-                        <button type="button" class="btn btn-success btn-block m-t-5" data-file_id="{{$o_file->id}}">Submit Message</button>
+                        <button type="submit" class="btn btn-success btn-block m-t-5 btn-add-question" data-file_id="{{$o_file->id}}">Submit Message</button>
                       </div>
                     
                     </form>
@@ -6709,6 +6709,12 @@ $(document).on('change', '#proposed_stage', function(e){
 let file_id = $('#proposed_file_id').val();
 re_calculate_proposed_credits(file_id);
 
+});
+
+$(document).on('click', '.btn-add-question', function(e){
+  e.preventDefault();
+
+  console.log('oh yes');
 });
 
 $(document).on('click', '.btn-options-change', function(e){
