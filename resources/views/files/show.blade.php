@@ -5404,7 +5404,7 @@ margin-bottom: 10px !important;
                             </div>
             
                             <div class="col-md-4 m-t-10 sm-m-t-10">
-                              <button type="submit" class="btn btn-success btn-block m-t-5 btn-show-chat-form" data-file_id="{{$file->id}}">Submit</button>
+                              <button type="submit" class="btn btn-success btn-block m-t-5" data-file_id="{{$file->id}}">Submit</button>
                             </div>
             
                           </div>
@@ -6656,9 +6656,23 @@ $('#softwareOptionsModal-'+file_id).modal('show');
 
 });
 
+// $(document).on('click', '.btn-show-chat-form', function(e){
+
+// e.preventDefault();
+
+// let file_id = $(this).data('file_id');
+
+// console.log(file_id);
+
+// removeNullChatRecords(file_id);
+
+// $('#fileChatModal-'+file_id).modal('show');
+
+// });
+
 $(document).on('click', '.btn-show-chat-form', function(e){
 
-  e.preventDefault();
+  // e.preventDefault();
 
 let file_id = $(this).data('file_id');
 
@@ -6666,7 +6680,7 @@ console.log(file_id);
 
 removeNullChatRecords(file_id);
 
-$('#softwareOptionsModal-'+file_id).modal('show');
+$('#fileChatModal-'+file_id).modal('show');
 
 });
 
