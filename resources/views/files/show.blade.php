@@ -6477,12 +6477,12 @@ margin-bottom: 10px !important;
 
       if(value == 'now'){
         
-        $(#'later-area-'+file_id).addClass('hide');
-        $(#'now-area-'+file_id).addClass('show');
+        $('#later-area-'+file_id).addClass('hide');
+        $('#now-area-'+file_id).addClass('show');
       }
       else if(value == 'later'){
-        $(#'later-area-'+file_id).addClass('show');
-        $(#'now-area-'+file_id).addClass('hide');
+        $('#later-area-'+file_id).addClass('show');
+        $('#now-area-'+file_id).addClass('hide');
       }
 
     }); 
