@@ -1909,9 +1909,9 @@ class FilesController extends Controller
 
     public function downloadMagic( $id,$requestFileID ) {
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
 
         $file = File::findOrFail($id); 
 
