@@ -5405,9 +5405,9 @@ margin-bottom: 10px !important;
                 <div class="col-md-8">
 
                   <div class="radio radio-success">
-                    <input type="radio" checked="checked" value="now" name="notifyFile" id="notifyLater">
+                    <input type="radio" checked="checked" value="now" name="notifyFile" id="notifyLater" data-file_id="{{$file->id}}">
                     <label for="notifyLater">Notify Customer Now</label>
-                    <input type="radio" value="later" name="notifyFile" id="notifyNow">
+                    <input type="radio" value="later" name="notifyFile" id="notifyNow" data-file_id="{{$file->id}}">
                     <label for="notifyNow">Notify Customer Later</label>
                   </div>
                 
@@ -5774,8 +5774,21 @@ margin-bottom: 10px !important;
 
               </div>
               <div class="row">
-                <div class="col-md-4 m-t-10 sm-m-t-10">
-                  <button type="button" class="btn btn-success btn-block m-t-5 btn-show-software-form" data-file_id="{{$o_file->id}}">Go To Next Step</button>
+                <div id="later-area-{{$o_file->id}}" class="hide">
+                  <form role="form" id="addQuestionForm-{{$o_file->id}}">
+                    <input type="hidden" name="file_id" value="{{$o_file->id}}">
+                    <div class="col-md-8">
+                      <textarea name="customer_message" class="form-control" placeholder="Add Message for customer to show him later." required></textarea>
+                    </div>
+                    <div class="col-md-4 m-t-10 sm-m-t-10">
+                      <button type="button" class="btn btn-success btn-block m-t-5" data-file_id="{{$o_file->id}}">Submit Message</button>
+                    </div>
+                  </form>
+                </div>
+                <div id="now-area-{{$o_file->id}}">
+                  <div class="col-md-4 m-t-10 sm-m-t-10">
+                    <button type="button" class="btn btn-success btn-block m-t-5 btn-show-software-form" data-file_id="{{$o_file->id}}">Go To Next Step</button>
+                  </div>
                 </div>
               </div>
 
@@ -6457,12 +6470,19 @@ margin-bottom: 10px !important;
   <script type="text/javascript">
   $(document).ready(function(){
 
-    // $("input[@name='notifyFile']").change(function(){
-    // // Do something interesting here
-    // });
-
     $("input:radio[name=notifyFile]").click(function() { 
-      console.log($(this).val());
+
+      let value = $(this).val();
+
+      if(value == 'now'){
+        $('later-area-'+$this.data('file_id')).addClass('hide');
+        $('now-area-'+$this.data('file_id')).addClass('show');
+      }
+      else if(value == 'later'){
+        $('later-area-'+$this.data('file_id')).addClass('show');
+        $('now-area-'+$this.data('file_id')).addClass('hide');
+      }
+
     }); 
 
     $(".download_directly").change(function(e){
