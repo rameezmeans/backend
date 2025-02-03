@@ -5763,10 +5763,10 @@ margin-bottom: 10px !important;
                 <div class="col-md-8">
                 
                   <div class="radio radio-success">
-                    <input type="radio" checked="checked" value="now" name="notifyFile" id="notifyLater">
-                    <label for="yes">Notify Customer Now</label>
-                    <input type="radio" value="later" name="notifyFile" id="notifyNow">
-                    <label for="no">Notify Customer Later</label>
+                    <input type="radio" checked="checked" value="now" name="notifyFile" id="notifyNow">
+                    <label for="notifyNow">Notify Customer Now</label>
+                    <input type="radio" value="later" name="notifyFile" id="notifyLater">
+                    <label for="notifyLater">Notify Customer Later</label>
                   </div>
 
                 </div>
