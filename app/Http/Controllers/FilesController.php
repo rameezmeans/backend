@@ -3363,16 +3363,18 @@ class FilesController extends Controller
 
         if(!$haltEmailAndStatus){
 
+            if($file->customer_message){
+                $this->changeStatusLog($file, 'ready_to_send', 'status', 'Engineer uploaded the file but for showing it later to customer.');
+                $file->status = 'ready_to_send';
+            }
+
             if($file->status == 'submitted'){
 
-                if($file->customer_message){
-                    $this->changeStatusLog($file, 'ready_to_send', 'status', 'Engineer uploaded the file but for showing it later to customer.');
-                    $file->status = 'ready_to_send';
-                }
-                else{
+                if(!$file->customer_message){
                     $this->changeStatusLog($file, 'completed', 'status', 'Engineer uploaded the file.');
                     $file->status = 'completed';
                 }
+                
                 $file->red = 0;
                 $file->submission_timer = NULL;
                 $file->updated_at = Carbon::now();
