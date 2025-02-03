@@ -25,6 +25,7 @@ use App\Models\EngineerAssignmentLog;
 use App\Models\EngineerOptionsOffer;
 use App\Models\FileFeedback;
 use App\Models\FileInternalEvent;
+use App\Models\FileMessage;
 use App\Models\FileReplySoftwareService;
 use App\Models\FileService;
 use App\Models\FilesStatusLog;
@@ -279,6 +280,13 @@ class FilesController extends Controller
     public function removeNullSoftwares(Request $request){
         $allNulls = FileReplySoftwareService::where('file_id', $request->file_id)
         ->whereNull('reply_id')->delete();
+
+        return  response()->json( ['msg' => 'records deleted.', 'file_id' => $request->file_id] );
+    }
+
+    public function removeNullChats(Request $request){
+        $allNulls = FileMessage::where('file_id', $request->file_id)
+        ->whereNull('request_file_id')->delete();
 
         return  response()->json( ['msg' => 'records deleted.', 'file_id' => $request->file_id] );
     }
