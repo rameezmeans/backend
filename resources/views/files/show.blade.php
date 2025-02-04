@@ -5644,15 +5644,17 @@ margin-bottom: 10px !important;
                     <form role="form" action="{{route('edit-customer-message')}}" method="POST">
                       @csrf
                       <input type="hidden" id="request_file_id_send_file" name="request_file_id" value="">
-                      <textarea id="customer_message_textarea" name="message" required style="height: 100px;" class="form-control"></textarea>
-                      <button type="submit" class="btn btn-success btn-block m-t-5">Edit Message</button>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <textarea id="customer_message_textarea" name="message" required style="height: 100px;" class="form-control"></textarea>
+                        </div>
+                        <div class="col-md-12">
+                          <button type="submit" class="btn btn-success btn-block m-t-5">Edit Message</button>
+                        </div>
+                      </div>
                     </form>
                   </div>
-            </div>
-            <div class="col-md-12">
-
-            </div>
-          </div>
+            
         </div>
       </div>
     </div>
