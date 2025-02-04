@@ -6835,7 +6835,7 @@ $('#MessageModal-'+file_id).modal('show');
 
 $(document).on('click', '.btn-show-send-file-form', function(e){
   let request_file_id = $(this).data('request_file_id');
-  $('#request_file_id_send_file').val(new_request_id);
+  $('#request_file_id_send_file').val(request_file_id);
 
   $.ajax({
       url: "/get_customer_message",
