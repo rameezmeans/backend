@@ -1324,7 +1324,9 @@ margin-bottom: 10px !important;
 
                                 {{-- @if($file->status == 'completed') --}}
                                   @if($file->id == 8993)
-                                    <button style="float: right;" class="btn btn-info m-b-2 btn-show-send-file-form m-l-10" data-file_id="{{$file->id}}" data-request_file_id="{{$message['id']}}">Send File To Customer</button>
+                                    @if($message['show_later'] == 1)
+                                      <button style="float: right;" class="btn btn-info m-b-2 btn-show-send-file-form m-l-10" data-file_id="{{$file->id}}" data-request_file_id="{{$message['id']}}">Send File To Customer</button>
+                                    @endif
                                   @endif
                                     <button style="float: right;" class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
                                 {{-- @endif --}}
