@@ -347,9 +347,8 @@ class FilesController extends Controller
             if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
                 $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
             }
-
-        
-
+            
+            return redirect()->back()->with(['success' => 'File sent to customer!']);
 
     }
 
