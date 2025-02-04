@@ -1324,7 +1324,7 @@ margin-bottom: 10px !important;
 
                                 {{-- @if($file->status == 'completed') --}}
                                   @if($file->id == 8993)
-                                    <button style="float: right;" class="btn btn-info m-b-20 m-l-10" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Send File To Customer</button>
+                                    <button style="float: right;" class="btn btn-info m-b-20 m-l-10 btn-show-file-send-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Send File To Customer</button>
                                   @endif
                                     <button style="float: right;" class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
                                 {{-- @endif --}}
@@ -5630,6 +5630,43 @@ margin-bottom: 10px !important;
   </div>
 </div>
 
+<div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="sendFile" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form role="form" method="POST">
+            @csrf
+            <input type="hidden" id="edit-modal-id" name="id" value="">
+            
+            <div class="form-group-attached ">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-group-default required">
+                    <label>Message</label>
+                    <textarea id="edit-modal" name="message" required style="height: 100px;" class="form-control"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+          <div class="row">
+            <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+              <button type="submit" class="btn btn-success btn-block m-t-5">Send File To Customer</button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
+
 <div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="editModal" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog">
     <div class="modal-content-wrapper">
@@ -6532,6 +6569,10 @@ margin-bottom: 10px !important;
         $('.options-show').removeClass('hide');
         $('.stages-show').removeClass('hide');
       }
+    });
+
+    $(document).on('click', '.btn-show-file-send-form', function(e){
+      $('#sendFileModal').modal('show');
     });
 
     $(document).on('click', '.fa-edit', function(e){
