@@ -3375,6 +3375,9 @@ class FilesController extends Controller
             if($file->customer_message){
                 $this->changeStatusLog($file, 'ready_to_send', 'status', 'Engineer uploaded the file but for showing it later to customer.');
                 $file->status = 'ready_to_send';
+
+                $engineerFile->show_later = 1;
+                $engineerFile->save();
             }
 
             if($file->status == 'submitted'){
