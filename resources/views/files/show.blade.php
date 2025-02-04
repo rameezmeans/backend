@@ -5645,10 +5645,10 @@ margin-bottom: 10px !important;
                       @csrf
                       <input type="hidden" id="request_file_id_send_file" name="request_file_id" value="">
                       <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                           <textarea id="customer_message_textarea" name="message" required style="height: 100px;" class="form-control"></textarea>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-4">
                           <button type="submit" class="btn btn-success btn-block m-t-5">Edit Message</button>
                         </div>
                       </div>
