@@ -1324,7 +1324,7 @@ margin-bottom: 10px !important;
 
                                 {{-- @if($file->status == 'completed') --}}
                                   @if($file->id == 8993)
-                                    <button style="float: right;" class="btn btn-success m-b-2" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Send File To Customer</button>
+                                    <button style="float: right;" class="btn btn-success m-b-2 btn-show-send-file-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Send File To Customer</button>
                                   @endif
                                     <button style="float: right;" class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
                                 {{-- @endif --}}
@@ -5630,6 +5630,22 @@ margin-bottom: 10px !important;
   </div>
 </div>
 
+<div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="sendFile" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          
+        </div>
+        <div class="modal-body">
+          
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
+
 <div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="editModal" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog">
     <div class="modal-content-wrapper">
@@ -6811,6 +6827,10 @@ removeNullMessageRecords(file_id);
 
 $('#MessageModal-'+file_id).modal('show');
 
+});
+
+$(document).on('click', '.btn-show-send-file-form', function(e){
+  $('#sendFile').modal('show');
 });
 
 $(document).on('click', '.btn-show-software-edit-form', function(e){
