@@ -5635,7 +5635,7 @@ margin-bottom: 10px !important;
     <div class="modal-content-wrapper">
       <div class="modal-content">
         <div class="modal-header clearfix text-left">
-          Send File to Customer
+          <h5>Send File to Customer</h5>
         </div>
         <div class="modal-body">
           <div class="row">
