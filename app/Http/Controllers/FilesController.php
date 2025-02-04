@@ -2831,7 +2831,7 @@ class FilesController extends Controller
         $reply->file_id = $request->file_id;
         $reply->user_id = Auth::user()->id;
 
-        $latest = RequestFile::where('file_id', $request->file_id)->latest()->first();
+        $latest = RequestFile::where('file_id', $request->file_id)->where('show_later', 0)->latest()->first();
         
         if($latest != NULL){
             $reply->request_file_id = $latest->id;
