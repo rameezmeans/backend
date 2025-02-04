@@ -1277,7 +1277,7 @@ margin-bottom: 10px !important;
                       <div class="col-lg-12">
                         <h5 class="m-t-40">Versions</h5>
 
-                        @if($file->status == 'submitted' || $file->status == 'completed')
+                        @if($file->status == 'submitted' || $file->status == 'ready_to_send' || $file->status == 'completed')
                           @if($file->id == 8993)
                             <button class="btn btn-success m-b-20 btn-show-message-form btn-show-software-form-old" data-file_id="{{$file->id}}">Upload Version (New)</button>
                           @else  
