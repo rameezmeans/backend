@@ -1277,7 +1277,7 @@ margin-bottom: 10px !important;
                       <div class="col-lg-12">
                         <h5 class="m-t-40">Versions</h5>
 
-                        @if($file->status == 'submitted' || $file->status == 'ready_to_send' || $file->status == 'completed')
+                        @if($file->status == 'submitted' || $file->status == 'completed')
                           @if($file->id == 8993)
                             <button class="btn btn-success m-b-20 btn-show-message-form btn-show-software-form-old" data-file_id="{{$file->id}}">Upload Version (New)</button>
                           @else  
@@ -1324,7 +1324,7 @@ margin-bottom: 10px !important;
 
                                 {{-- @if($file->status == 'completed') --}}
                                   @if($file->id == 8993)
-                                    <button style="float: right;" class="btn btn-info m-b-20 m-l-10 btn-show-file-send-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Send File To Customer</button>
+                                    <button style="float: right;" class="btn btn-success m-b-2" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Send File To Customer</button>
                                   @endif
                                     <button style="float: right;" class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
                                 {{-- @endif --}}
@@ -5630,8 +5630,6 @@ margin-bottom: 10px !important;
   </div>
 </div>
 
-
-
 <div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="editModal" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog">
     <div class="modal-content-wrapper">
@@ -6534,10 +6532,6 @@ margin-bottom: 10px !important;
         $('.options-show').removeClass('hide');
         $('.stages-show').removeClass('hide');
       }
-    });
-
-    $(document).on('click', '.btn-show-file-send-form', function(e){
-      $('#sendFileModal').modal('show');
     });
 
     $(document).on('click', '.fa-edit', function(e){
