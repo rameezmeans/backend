@@ -5640,7 +5640,7 @@ margin-bottom: 10px !important;
         <div class="modal-body">
           <div class="row">
             <div class="col-md-12">
-                  <div class="form-group form-group-default required">
+                  <div class="form-group">
                     <form role="form" action="{{route('edit-customer-message')}}" method="POST">
                       @csrf
                       <input type="hidden" id="request_file_id_send_file" name="request_file_id" value="">
