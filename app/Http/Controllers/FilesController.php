@@ -205,6 +205,15 @@ class FilesController extends Controller
         return view('files.show_all_users_files', ['id' => $id]);
     }
 
+    public function getCustomerMessage(Request $request){
+        $message = FileMessage::where('request_file_id')->first();
+        return  response()->json($message);
+    }
+
+    public function editCustomerMessage(Request $request){
+        dd($request->all());
+    }
+
     public function showRejectedFiles($id){
         return view('files.show_rejected_users_files', ['id' => $id]);
     }

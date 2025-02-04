@@ -1324,7 +1324,7 @@ margin-bottom: 10px !important;
 
                                 {{-- @if($file->status == 'completed') --}}
                                   @if($file->id == 8993)
-                                    <button style="float: right;" class="btn btn-success m-b-2 btn-show-send-file-form m-l-10" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Send File To Customer</button>
+                                    <button style="float: right;" class="btn btn-info m-b-2 btn-show-send-file-form m-l-10" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Send File To Customer</button>
                                   @endif
                                     <button style="float: right;" class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
                                 {{-- @endif --}}
@@ -5638,7 +5638,11 @@ margin-bottom: 10px !important;
           
         </div>
         <div class="modal-body">
-          
+          <form role="form" action="{{route('edit-customer-message')}}" method="POST">
+            @csrf
+            <input type="hidden" id="request_file_id_send_file" name="request_file_id" value="">
+            <textarea id="customer_message_textarea" name="message" required style="height: 100px;" class="form-control"></textarea>
+          </form>
         </div>
       </div>
     </div>
@@ -6830,6 +6834,21 @@ $('#MessageModal-'+file_id).modal('show');
 });
 
 $(document).on('click', '.btn-show-send-file-form', function(e){
+  let new_request_id = $(this).data('new_request_id');
+  $('#request_file_id_send_file').val(new_request_id);
+
+  $.ajax({
+      url: "/get_customer_message",
+      type: "POST",
+      headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+      data: {
+          'new_request_id': new_request_id
+      },
+      success: function(d) {
+        $('#customer_message_textarea').html(d);
+        
+      }
+  });
   $('#sendFile').modal('show');
 });
 

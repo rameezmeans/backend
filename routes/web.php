@@ -996,6 +996,8 @@ Route::post('/fill_stage_options', [App\Http\Controllers\FilesController::class,
 Route::post('/upload_acm_reply', [App\Http\Controllers\FilesController::class, 'uploadACMReply'])->name('upload-acm-reply');
 Route::get('/show_files/{id}', [App\Http\Controllers\FilesController::class, 'showFiles'])->name('show-files');
 Route::get('/show_rejected_files/{id}', [App\Http\Controllers\FilesController::class, 'showRejectedFiles'])->name('show-rejected-files');
+Route::post('/edit_customer_message', [App\Http\Controllers\FilesController::class, 'editCustomerMessage'])->name('edit-customer-message');
+Route::post('/get_customer_message', [App\Http\Controllers\FilesController::class, 'getCustomerMessage'])->name('get-customer-message');
 
 Route::get('/message_search', [App\Http\Controllers\FilesController::class, 'messageSearch'])->name('message-search');
 Route::any('/get_search_results', [App\Http\Controllers\FilesController::class, 'getSearchResults'])->name('get-search-results');
