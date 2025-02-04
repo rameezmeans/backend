@@ -211,7 +211,11 @@ class FilesController extends Controller
     }
 
     public function editCustomerMessage(Request $request){
-        dd($request->all());
+        $message = FileMessage::where('request_file_id', $request->request_file_id)->first();
+        $message->message = $message->message;
+        $message->save();
+
+        return redirect()->back()->with(['success' => 'Message edited!']);
     }
 
     public function showRejectedFiles($id){

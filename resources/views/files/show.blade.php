@@ -5635,14 +5635,24 @@ margin-bottom: 10px !important;
     <div class="modal-content-wrapper">
       <div class="modal-content">
         <div class="modal-header clearfix text-left">
-          
+          Send File to Customer
         </div>
         <div class="modal-body">
-          <form role="form" action="{{route('edit-customer-message')}}" method="POST">
-            @csrf
-            <input type="hidden" id="request_file_id_send_file" name="request_file_id" value="">
-            <textarea id="customer_message_textarea" name="message" required style="height: 100px;" class="form-control"></textarea>
-          </form>
+          <div class="row">
+            <div class="col-md-12">
+                  <div class="form-group form-group-default required">
+                    <form role="form" action="{{route('edit-customer-message')}}" method="POST">
+                      @csrf
+                      <input type="hidden" id="request_file_id_send_file" name="request_file_id" value="">
+                      <textarea id="customer_message_textarea" name="message" required style="height: 100px;" class="form-control"></textarea>
+                      <button type="submit" class="btn btn-success btn-block m-t-5">Edit Message</button>
+                    </form>
+                  </div>
+            </div>
+            <div class="col-md-12">
+
+            </div>
+          </div>
         </div>
       </div>
     </div>
