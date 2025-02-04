@@ -212,7 +212,7 @@ class FilesController extends Controller
 
     public function editCustomerMessage(Request $request){
         $message = FileMessage::where('request_file_id', $request->request_file_id)->first();
-        $message->message = $message->message;
+        $message->message = $request->message;
         $message->save();
 
         return redirect()->back()->with(['success' => 'Message edited!']);
