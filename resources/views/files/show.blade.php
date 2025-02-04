@@ -1279,7 +1279,11 @@ margin-bottom: 10px !important;
 
                         @if($file->status == 'submitted' || $file->status == 'ready_to_send' || $file->status == 'completed')
                           {{-- @if($file->id == 8993) --}}
-                            <button class="btn btn-success m-b-20 btn-show-message-form btn-show-software-form-old" data-file_id="{{$file->id}}">Upload Version.</button>
+                          @if($activeFeedType == 'danger') 
+                            <button class="btn btn-success m-b-20 btn-show-message-form" data-file_id="{{$file->id}}">Upload Version.</button>
+                          @else
+                            <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version.</button>
+                          @endif
                           {{-- @else  
                             <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
                           
@@ -3779,7 +3783,13 @@ margin-bottom: 10px !important;
                         <h5 class="m-t-40">Versions</h5>
 
                         @if($file->status == 'submitted' || $file->status == 'ready_to_send' || $file->status == 'completed')
-                          <button class="btn btn-success m-b-20 btn-show-message-form btn-show-software-form-old" data-file_id="{{$file->id}}">Upload Version.</button>
+                        
+                        @if($activeFeedType == 'danger') 
+                          <button class="btn btn-success m-b-20 btn-show-message-form" data-file_id="{{$file->id}}">Upload Version.</button>
+                        @else
+                          <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version.</button>
+                        @endif
+
                         @else
                           <h5 class="text-danger">File Status must be sumbitted or completed.</h5>
                         @endif
