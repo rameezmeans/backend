@@ -218,6 +218,8 @@ class FilesController extends Controller
         $file->reupload_time = Carbon::now();
         $file->save();
 
+        $file->status = 'completed';
+
         $file->response_time = $this->getResponseTime($file);
         $file->save();
 
