@@ -6845,7 +6845,7 @@ $(document).on('click', '.btn-show-send-file-form', function(e){
           'new_request_id': new_request_id
       },
       success: function(d) {
-        $('#customer_message_textarea').html(d);
+        $('#customer_message_textarea').val(d);
         
       }
   });
