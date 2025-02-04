@@ -5533,7 +5533,7 @@ margin-bottom: 10px !important;
 
           <div class="row hide" id="fileUploadForm-{{$file->id}}">
             
-            @if($file->status == 'submitted' || $file->status == 'completed')
+            @if($file->status == 'submitted' || $file->status == 'ready_to_send' || $file->status == 'completed')
             @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
             <div class="col-xl-12 m-t-10">
               <div class="card card-transparent flex-row full-width">
