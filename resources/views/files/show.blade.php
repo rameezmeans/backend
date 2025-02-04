@@ -3776,7 +3776,7 @@ margin-bottom: 10px !important;
                       <div class="col-lg-12">
                         <h5 class="m-t-40">Versions</h5>
 
-                        @if($file->status == 'submitted' || $file->status == 'completed')
+                        @if($file->status == 'submitted' || $file->status == 'ready_to_send' || $file->status == 'completed')
                           <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
                         @else
                           <h5 class="text-danger">File Status must be sumbitted or completed.</h5>
@@ -6093,7 +6093,7 @@ margin-bottom: 10px !important;
   
             <div class="row hide" id="fileUploadForm-{{$file->id}}">
               
-              @if($file->status == 'submitted' || $file->status == 'completed')
+              @if($file->status == 'submitted' || $file->status == 'ready_to_send' || $file->status == 'completed')
               @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'submit-file'))
               <div class="col-xl-12 m-t-10">
                 <div class="card card-transparent flex-row full-width">
