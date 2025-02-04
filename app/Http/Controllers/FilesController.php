@@ -205,6 +205,10 @@ class FilesController extends Controller
         return view('files.show_all_users_files', ['id' => $id]);
     }
 
+    public function sendCustomerFile(Request $request){
+        dd($request->all());
+    }
+
     public function getCustomerMessage(Request $request){
         $message = FileMessage::where('request_file_id', $request->request_file_id)->first()->message;
         return  response()->json( ['message' => $message]);

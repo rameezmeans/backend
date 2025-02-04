@@ -5654,6 +5654,22 @@ margin-bottom: 10px !important;
                       </div>
                     </form>
                   </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <form role="form" action="{{route('send-customer-file')}}" method="POST">
+                        @csrf
+                        <input type="hidden" id="request_file_id_send_file_2" name="request_file_id" value="">
+                        <input type="hidden" id="file_id_to_send_file" name="file_id" value="">
+                        <div class="row">
+                          
+                          <div class="col-md-12">
+                            <button type="submit" class="btn btn-success btn-block m-t-5">Send File To Customer</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
             
         </div>
       </div>
