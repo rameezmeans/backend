@@ -5677,6 +5677,8 @@ margin-bottom: 10px !important;
     <!-- /.modal-content -->
   </div>
 </div>
+</div>
+</div>
 
 <div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="editModal" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog">
