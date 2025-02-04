@@ -5438,7 +5438,7 @@ margin-bottom: 10px !important;
                 <div id="now-area-{{$o_file->id}}">
                   <div class="row">
                     <div class="col-md-8 m-t-10 sm-m-t-10">
-                      <button type="button" class="btn btn-success btn-block m-t-5 btn-show-software-form" data-file_id="{{$o_file->id}}">Go To Next Step</button>
+                      <button type="button" class="btn btn-success btn-block m-t-5 btn-show-software-form" data-file_id="{{$o_file->id}}">Just Go To Next Step</button>
                     </div>
                   </div>
                 </div>
