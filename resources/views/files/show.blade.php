@@ -5874,12 +5874,12 @@ margin-bottom: 10px !important;
                   <div class="row">
                     <form role="form" id="addMessageForm-{{$o_file->id}}">
                       <input type="hidden" name="file_id" value="{{$o_file->id}}">
-                      <div class="col-md-8">
+                      {{-- <div class="col-md-8">
                         <p class="text-danger" id="validation_{{$o_file->id}}"></p>
                         <textarea style="width: 100%;" id="customer_message_{{$o_file->id}}" class="form-control" placeholder="Add Message for customer to show him later." required></textarea>
-                      </div>
-                      <div class="col-md-4 m-t-10 sm-m-t-10">
-                        <button type="button" class="btn btn-success btn-block m-t-5 btn-add-message" data-file_id="{{$o_file->id}}">Submit Message</button>
+                      </div> --}}
+                      <div class="col-md-12 m-t-10 sm-m-t-10">
+                        <button type="button" class="btn btn-success btn-block m-t-5 btn-add-message" data-file_id="{{$o_file->id}}">Add Softwares</button>
                       </div>
                     
                     </form>
