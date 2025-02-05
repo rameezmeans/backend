@@ -5443,12 +5443,12 @@ margin-bottom: 10px !important;
                   <div class="row">
                     <form role="form" id="addMessageForm-{{$file->id}}">
                       <input type="hidden" name="file_id" value="{{$file->id}}">
-                      <div class="col-md-8">
+                      {{-- <div class="col-md-8">
                         <p class="text-danger" id="validation_{{$file->id}}"></p>
                         <textarea style="width: 100%;" id="customer_message_{{$file->id}}" class="form-control" placeholder="Add Message for customer to show him later." required></textarea>
-                      </div>
-                      <div class="col-md-4 m-t-10 sm-m-t-10">
-                        <button type="button" class="btn btn-success btn-block m-t-5 btn-add-message" data-file_id="{{$file->id}}">Submit Message</button>
+                      </div> --}}
+                      <div class="col-md-12 m-t-10 sm-m-t-10">
+                        <button type="button" class="btn btn-success btn-block m-t-5 btn-add-message" data-file_id="{{$file->id}}">Add Softwares</button>
                       </div>
                     
                     </form>
@@ -6811,27 +6811,26 @@ re_calculate_proposed_credits(file_id);
 $(document).on('click', '.btn-add-message', function(e){
     
     let file_id = $(this).data('file_id');
-    let message = $("#customer_message_"+file_id).val();
+    // let message = $("#customer_message_"+file_id).val();
 
-    if(message === ""){
-      $("#validation_"+file_id).html('please add Message for Customer.');
-    }
-    else{
+    // if(message === ""){
+    //   $("#validation_"+file_id).html('please add Message for Customer.');
+    // }
+    // else{
 
-      $.ajax({
-        url: "/add_message_record",
-        type: "POST",
-        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-        data: {
-            'file_id': file_id,
-            'message': message
-        },
-        success: function(d) {
-          $('#softwareOptionsModal-'+file_id).modal('show');
-        }
-      });
+    $.ajax({
+      url: "/add_upload_later_record",
+      type: "POST",
+      headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+      data: {
+          'file_id': file_id,
+      },
+      success: function(d) {
+        $('#softwareOptionsModal-'+file_id).modal('show');
+      }
+    });
 
-    }
+    // }
 });
 
 $(document).on('click', '.btn-options-change', function(e){

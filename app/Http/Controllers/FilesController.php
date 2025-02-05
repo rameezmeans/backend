@@ -40,6 +40,7 @@ use App\Models\ProcessingSoftware;
 use App\Models\RoleUser;
 use App\Models\Service;
 use App\Models\Tool;
+use App\Models\UploadLater;
 use Exception;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Http\Client\RequestException;
@@ -210,7 +211,7 @@ class FilesController extends Controller
         $file = File::findOrFail($request->file_id);
         $requestFile = RequestFile::findOrFail($request->request_file_id);
 
-        $message = FileMessage::where('request_file_id', $request->request_file_id)->first();
+        // $message = FileMessage::where('request_file_id', $request->request_file_id)->first();
 
         $requestFile->show_later = 0;
         $requestFile->save();
@@ -223,20 +224,21 @@ class FilesController extends Controller
         $file->response_time = $this->getResponseTime($file);
         $file->save();
 
-        $reply = new EngineerFileNote();
+        // $reply = new EngineerFileNote();
 
-        $message = str_replace(PHP_EOL,"<br>",$message->message);
+        // $message = str_replace(PHP_EOL,"<br>",$message->message);
 
-        $reply->egnineers_internal_notes = $message;
+        // $reply->egnineers_internal_notes = $message;
 
-        $reply->engineer = true;
-        $reply->file_id = $file->id;
-        $reply->user_id = Auth::user()->id;
-        $reply->request_file_id = $requestFile->id;
+        // $reply->engineer = true;
+        // $reply->file_id = $file->id;
+        // $reply->user_id = Auth::user()->id;
+        // $reply->request_file_id = $requestFile->id;
         
-        $reply->save();
+        // $reply->save();
 
-        FileMessage::where('request_file_id', $request->request_file_id)->delete();
+        // FileMessage::where('request_file_id', $request->request_file_id)->delete();
+        UploadLater::where('request_file_id', $request->request_file_id)->delete();
 
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
@@ -446,19 +448,25 @@ class FilesController extends Controller
         return  response()->json( ['msg' => 'records deleted.', 'file_id' => $request->file_id] );
     }
 
-    public function addMessageRecord(Request $request){
+    public function addUploadLaterRecord(Request $request){
 
-        $newMessage = new FileMessage();
+        $newMessage = new UploadLater();
         $newMessage->file_id = $request->file_id; 
-        $newMessage->message = $request->message; 
         $newMessage->save();
 
-        return  response()->json( ['msg' => 'message added.']);
+        return  response()->json( ['msg' => 'upload later record added.']);
 
     }
 
     public function removeNullMessages(Request $request){
         $allNulls = FileMessage::where('file_id', $request->file_id)
+        ->whereNull('request_file_id')->delete();
+
+        return  response()->json( ['msg' => 'records deleted.', 'file_id' => $request->file_id] );
+    }
+
+    public function removeNullUploadLaterRecords(Request $request){
+        $allNulls = UploadLater::where('file_id', $request->file_id)
         ->whereNull('request_file_id')->delete();
 
         return  response()->json( ['msg' => 'records deleted.', 'file_id' => $request->file_id] );
@@ -2363,6 +2371,7 @@ class FilesController extends Controller
 		$messagesRecords = EngineerFileNote::where('request_file_id', $request->request_file_id)->delete();
 		$messagesRecords = EngineerFileNote::where('request_file_id', $request->request_file_id)->delete();
 		$messagesRecords = FileMessage::where('request_file_id', $request->request_file_id)->delete();
+		$messagesRecords = UploadLater::where('request_file_id', $request->request_file_id)->delete();
 
         return response('File deleted', 200);
     }
@@ -3191,6 +3200,14 @@ class FilesController extends Controller
             $message->save();
         }
 
+        $allUploadLaterRecrods = UploadLater::where('file_id', $engineerFile->file_id)
+        ->whereNull('request_file_id')->get();
+
+        foreach($allUploadLaterRecrods as $later){
+            $later->request_file_id = $engineerFile->id;
+            $later->save();
+        }
+
         // if($file->front_end_id == 2){
             $engineerFile->show_comments = 0;
         // }
@@ -3525,7 +3542,7 @@ class FilesController extends Controller
 
         if(!$haltEmailAndStatus){
 
-            if($file->customer_message){
+            if($file->upload_later){
                 $this->changeStatusLog($file, 'ready_to_send', 'status', 'Engineer uploaded the file but for showing it later to customer.');
                 $file->status = 'ready_to_send';
 
@@ -3535,7 +3552,7 @@ class FilesController extends Controller
 
             if($file->status == 'submitted'){
 
-                if(!$file->customer_message){
+                if(!$file->upload_later){
                     $this->changeStatusLog($file, 'completed', 'status', 'Engineer uploaded the file.');
                     $file->status = 'completed';
                 }
@@ -3588,7 +3605,7 @@ class FilesController extends Controller
                 $file->save();
         }
 
-        if(!$file->customer_message){
+        if(!$file->upload_later){
 
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();

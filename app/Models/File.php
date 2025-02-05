@@ -62,6 +62,10 @@ class File extends Model
         return $this->hasOne(FileMessage::class); 
     }
 
+    public function upload_later(){
+        return $this->hasOne(UploadLater::class); 
+    }
+
     public function assignment_log(){
         return $this->hasMany(EngineerAssignmentLog::class)->orderBy('created_at', 'desc'); 
     }
