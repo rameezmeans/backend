@@ -1278,22 +1278,13 @@ margin-bottom: 10px !important;
                         <h5 class="m-t-40">Versions</h5>
 
                         @if($file->status == 'submitted' || $file->status == 'ready_to_send' || $file->status == 'completed')
-                          {{-- @if($file->id == 8993) --}}
+                          
                           @if($activeFeedType == 'danger') 
                             <button class="btn btn-success m-b-20 btn-show-message-form" data-file_id="{{$file->id}}">Upload Version.</button>
                           @else
-
-                              @if($file->id == 9195)
-                                <button class="btn btn-success m-b-20 btn-show-message-form" data-file_id="{{$file->id}}">Upload Version.</button>
-                              @else
-                                <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version.</button>
-                              @endif
-
-                            @endif
-                          {{-- @else  
-                            <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
+                            <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version.</button>
+                          @endif
                           
-                          @endif --}}
                         @else
                           <h5 class="text-danger">File Status must be sumbitted or completed.</h5>
                         @endif
@@ -3794,11 +3785,8 @@ margin-bottom: 10px !important;
                           <button class="btn btn-success m-b-20 btn-show-message-form" data-file_id="{{$file->id}}">Upload Version.</button>
                         @else
                           
-                        @if($file->id == 9201)
-                        <button class="btn btn-success m-b-20 btn-show-message-form" data-file_id="{{$file->id}}">Upload Version.</button>
-                      @else
-                        <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version.</button>
-                      @endif
+                          <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version.</button>
+                        
                         @endif
 
                         @else
