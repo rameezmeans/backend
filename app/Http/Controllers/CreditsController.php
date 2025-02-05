@@ -267,9 +267,9 @@ class CreditsController extends Controller
 
     public function updateCredits(Request $request) {
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
         
         $customer = User::findOrFail($request->user_id);
 
