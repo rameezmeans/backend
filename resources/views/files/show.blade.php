@@ -1282,8 +1282,14 @@ margin-bottom: 10px !important;
                           @if($activeFeedType == 'danger') 
                             <button class="btn btn-success m-b-20 btn-show-message-form" data-file_id="{{$file->id}}">Upload Version.</button>
                           @else
-                            <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version.</button>
-                          @endif
+
+                            @if($file->id == 9195)
+                              <button class="btn btn-success m-b-20 btn-show-message-form" data-file_id="{{$file->id}}">Upload Version.</button>
+                            @else
+                              <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version.</button>
+                            @endif
+
+                              @endif
                           {{-- @else  
                             <button class="btn btn-success m-b-20 btn-show-software-form" data-file_id="{{$file->id}}">Upload Version</button>
                           
