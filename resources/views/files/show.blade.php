@@ -6878,7 +6878,7 @@ let file_id = $(this).data('file_id');
 
 console.log(file_id);
 
-removeNullMessageRecords(file_id);
+removeNullUploadLaterRecords(file_id);
 
 $('#MessageModal-'+file_id).modal('show');
 
@@ -6960,6 +6960,22 @@ function removeNullMessageRecords(file_id){
 
 $.ajax({
       url: "/remove_null_message_records",
+      type: "POST",
+      headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+      data: {
+          'file_id': file_id
+      },
+      success: function(d) {
+        console.log(d);
+        
+      }
+  });
+}
+
+function removeNullUploadLaterRecords(file_id){
+
+$.ajax({
+      url: "/remove_null_upload_later_records",
       type: "POST",
       headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
       data: {
