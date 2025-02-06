@@ -4583,6 +4583,13 @@ margin-bottom: 10px !important;
                         </span>
                         </div>
 
+                        <div class="b-t b-grey bg-white m-t-15 clearfix">
+                          <span style="display: flex; float:right;" class="p-t-5">
+                            <button class="btn btn-info" type="button">Save a Message to send Later</button>
+                            <button class="btn btn-success" type="button">Send Saved Message</button>
+                          </span>
+                        </div>
+
                       </div>
                       <!-- END Chat Input  !-->
                     </div>
