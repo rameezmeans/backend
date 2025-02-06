@@ -6898,18 +6898,20 @@ $(document).on('click', '.btn-show-send-file-form', function(e){
   $('#request_file_id_send_file_2').val(request_file_id);
   $('#file_id_to_send_file').val(file_id);
 
-  $.ajax({
-      url: "/get_customer_message",
-      type: "POST",
-      headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-      data: {
-          'request_file_id': request_file_id
-      },
-      success: function(d) {
-        $('#customer_message_textarea').val(d.message);
+  // $.ajax({
+  //     url: "/get_customer_message",
+  //     type: "POST",
+  //     headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+  //     data: {
+  //         'request_file_id': request_file_id
+  //     },
+  //     success: function(d) {
+  //       $('#customer_message_textarea').val(d.message);
         
-      }
-  });
+  //     }
+  // });
+
+
   $('#sendFile').modal('show');
 });
 
