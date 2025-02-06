@@ -17,7 +17,7 @@ class ShowRejectedUsersFiles extends LivewireDatatable
     public function builder()
     {
         $id = $this->params;
-        $files = File::select('*', 'id as row_id')->where('is_credited', 1)->where('status', 'rejected')->where('user_id', $id);
+        $files = File::select('*', 'id as row_id')->where('is_credited', 1)->where('status', 'rejected')->whereNull('original_file_id')->where('user_id', $id);
 
         return $files;
     }
