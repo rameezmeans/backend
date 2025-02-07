@@ -2349,9 +2349,10 @@ class FilesController extends Controller
     public function deleteMessage(Request $request)
     {
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
+        
         $note = EngineerFileNote::findOrFail($request->note_id);
         $note->delete();
         return response('Note deleted', 200);
