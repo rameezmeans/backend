@@ -4163,7 +4163,14 @@ class FilesController extends Controller
         
         $engineers = get_engineers();
 
-        $activeFeedType = NewsFeed::where('active', 1)->where('front_end_id', $file->front_end_id)->first()->type;
+        $activeFeed = NewsFeed::where('active', 1)->where('front_end_id', $file->front_end_id)->first();
+
+        if($activeFeed){
+            $activeFeedType = $activeFeed->type;
+        }
+        else{
+            $activeFeedType = 'good_news';
+        }
         
         // $withoutTypeArray = $file->files->toArray();
         // $unsortedTimelineObjects = [];
