@@ -4169,7 +4169,7 @@ class FilesController extends Controller
             $activeFeedType = $activeFeed->type;
         }
         else{
-            $activeFeedType = 'good_news';
+            $activeFeedType = 'danger';
         }
         
         // $withoutTypeArray = $file->files->toArray();
