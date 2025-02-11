@@ -5766,8 +5766,8 @@ margin-bottom: 10px !important;
         <div class="modal-body">
           <form role="form" action="{{route('edit-message')}}" method="POST">
             @csrf
-            <input type="hidden" id="edit-modal-id" name="id" value="">
-            <input type="hidden" name="file_id">
+            
+            <input type="hidden" name="file_id" id="file_id_message_later">
             
             <div class="form-group-attached ">
               <div class="row">
@@ -7078,6 +7078,7 @@ $.ajax({
 
 $(document).on('click', '.btn-msg-later', function(e){
     let file_id = $(this).data('file_id');
+    $('#file_id_message_later').val(file_id);
     $('#addMessageModal').modal('show');
 });
 
