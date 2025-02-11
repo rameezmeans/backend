@@ -4552,7 +4552,7 @@ margin-bottom: 10px !important;
                       <!-- BEGIN Chat Input  !-->
                       <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10 text-center">
                         <div class="row">
-                          <div class="col-md-9">
+                          <div class="col-lg-9">
                         <form method="POST" action="{{ route('file-engineers-notes') }}" enctype="multipart/form-data">
                           @csrf
                           <input type="hidden" value="{{$file->id}}" name="file_id">
@@ -4576,21 +4576,22 @@ margin-bottom: 10px !important;
                         </div>
                       </form>
                     </div>
-                    </div> 
-                      <div class="b-t b-grey bg-white m-t-15 clearfix">
-                        <span style="display: flex; float:right;" class="p-t-5">
+                    <div class="col-lg-3">
+                      <span style="display: flex; float:right;" class="p-t-5">
 
-                          @if($file->status != 'on_hold')
-                            <form method="POST" action="{{ route('set-file-on-hold') }}">
-                              @csrf
-                              <input type="hidden" value="{{$file->id}}" name="file_id">
-                              <button class="btn btn-info" type="submit">Task On Hold</button>
-                            </form>
-                          @endif
-    
-                          <a class="btn btn-info m-l-5" href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
-                        </span>
-                        </div>
+                        @if($file->status != 'on_hold')
+                          <form method="POST" action="{{ route('set-file-on-hold') }}">
+                            @csrf
+                            <input type="hidden" value="{{$file->id}}" name="file_id">
+                            <button class="btn btn-info" type="submit">Task On Hold</button>
+                          </form>
+                        @endif
+  
+                        <a class="btn btn-info m-l-5" href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
+                      </span>
+                    </div>
+                    </div> 
+                      
 
                         <div class="b-t b-grey bg-white m-t-15 clearfix">
                           <span style="display: flex; float:right;" class="p-t-5">
