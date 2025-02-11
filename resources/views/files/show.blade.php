@@ -7096,7 +7096,7 @@ $.ajax({
 
 $(document).on('click', '.btn-msg-later', function(e){
     let file_id = $(this).data('file_id');
-  $('#messageLaterModal').modal('show');
+  // $('#softwareOptionsEditModal').modal('show');
 });
 
 $(document).on('click', '.btn-options-change-force', function(e){
