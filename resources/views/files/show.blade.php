@@ -5764,7 +5764,7 @@ margin-bottom: 10px !important;
           </button>
         </div>
         <div class="modal-body">
-          <form role="form" action="{{route('edit-message')}}" method="POST">
+          <form role="form" action="{{route('add-later-message')}}" method="POST">
             @csrf
             
             <input type="hidden" name="file_id" id="file_id_message_later">

@@ -206,6 +206,10 @@ class FilesController extends Controller
         return view('files.show_all_users_files', ['id' => $id]);
     }
 
+    public function addLaterMessage(Request $request){
+        dd($request->all());
+    }
+
     public function sendCustomerFile(Request $request){
 
         $file = File::findOrFail($request->file_id);
