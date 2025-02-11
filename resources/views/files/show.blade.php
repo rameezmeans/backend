@@ -5808,7 +5808,7 @@ margin-bottom: 10px !important;
           </button>
         </div>
         <div class="modal-body">
-          <form role="form" action="{{route('send-message')}}" method="POST">
+          <form role="form" action="{{route('send-message-to-customer')}}" method="POST">
             @csrf
             
             <input type="hidden" name="file_id" id="file_id_message_sent">
