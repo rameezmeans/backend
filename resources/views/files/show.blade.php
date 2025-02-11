@@ -2070,9 +2070,12 @@ margin-bottom: 10px !important;
                       
                       <div class="b-t b-grey bg-white m-t-15 clearfix">
                         <span style="display: flex; float:right;" class="p-t-5">
-                          <button data-file_id="{{$file->id}}" class="btn btn-info btn-msg-later" type="button">Save a Message to send Later</button>
-                          <button data-file_id="{{$file->id}}" class="btn btn-success m-l-5" type="button">Send Saved Message</button>
-                        </span>
+                          @if($file->customer_message == NULL)
+                            <button data-file_id="{{$file->id}}" class="btn btn-info btn-msg-later" type="button">Save a Message to send Later</button>
+                          @else
+                            <button data-file_id="{{$file->id}}" class="btn btn-success m-l-5" type="button">Send Saved Message</button>
+                          @endif
+                          </span>
                       </div>
                       <!-- END Chat Input  !-->
                     </div>
