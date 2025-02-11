@@ -207,7 +207,12 @@ class FilesController extends Controller
     }
 
     public function addLaterMessage(Request $request){
-        dd($request->all());
+        $new = new FileMessage();
+        $new->file_id = $request->file_id;
+        $new->message = $request->message;
+        $new->save();
+
+        return redirect()->back()->with(['success' => 'Message added to send later!']);
     }
 
     public function sendCustomerFile(Request $request){
