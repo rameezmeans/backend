@@ -5864,7 +5864,7 @@ margin-bottom: 10px !important;
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
           </button>
           <h5>Upload File <span class="semi-bold"> Wihout notifying Customers.</span></h5>
-          <p class="p-b-10">You can upload the file without notifying the customer with a Message. When you will upload later. Customer will be notified and Message will go in Chat.</p>
+          <p class="p-b-10">You can upload the file without notifying the customer. When you will upload later. Customer will be notified and Message will go in Chat.</p>
         </div>
         <div class="modal-body">
           <form role="form" id="QuestionForm-{{$o_file->id}}">
@@ -6219,6 +6219,66 @@ margin-bottom: 10px !important;
           </div>
   
             
+          </div>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+  </div>
+
+
+  <div class="modal fade slide-up disable-scroll" id="messageLaterModal" tabindex="-1" role="dialog" style="display: block;">
+    <div class="modal-dialog">
+      <div class="modal-content-wrapper">
+        <div class="modal-content">
+          <div class="modal-header clearfix text-left">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+            </button>
+            <h5>Payment <span class="semi-bold">Information</span></h5>
+            <p class="p-b-10">We need payment information inorder to process your order</p>
+          </div>
+          <div class="modal-body">
+            <form role="form">
+              <div class="form-group-attached">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group form-group-default">
+                      <label>Company Name</label>
+                      <input type="email" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="form-group form-group-default">
+                      <label>Card Number</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group form-group-default">
+                      <label>Card Holder</label>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="p-t-20 clearfix p-l-10 p-r-10">
+                  <div class="pull-left">
+                    <p class="bold font-montserrat text-uppercase">TOTAL</p>
+                  </div>
+                  <div class="pull-right">
+                    <p class="bold font-montserrat text-uppercase">$20.00</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 m-t-10 sm-m-t-10">
+                <button type="button" class="btn btn-primary btn-block m-t-5">Pay Now</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -7035,8 +7095,8 @@ $.ajax({
 });
 
 $(document).on('click', '.btn-msg-later', function(e){
-    console.log($(this).data('file_id'));
-  // $('#softwareOptionsEditModal').modal('show');
+    let file_id = $(this).data('file_id');
+  $('#messageLaterModal').modal('show');
 });
 
 $(document).on('click', '.btn-options-change-force', function(e){
