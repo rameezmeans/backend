@@ -2023,47 +2023,51 @@ margin-bottom: 10px !important;
                       <!-- BEGIN Conversation  !-->
                       <!-- BEGIN Chat Input  !-->
                       <div class="b-t b-grey bg-white clearfix p-l-10 p-r-10 text-center">
+                      <div class="row">
+                      <div class="col-lg-9">
                         <form method="POST" action="{{ route('file-engineers-notes') }}" enctype="multipart/form-data">
                           @csrf
                           <input type="hidden" value="{{$file->id}}" name="file_id">
-                        <div class="row">
-                            <div class="col-6 no-padding">
-                              <textarea name="egnineers_internal_notes" class="form-control" placeholder="Reply to cusotmer." required></textarea>
-                              @error('egnineers_internal_notes')
-                                      <p class="text-danger" role="alert">
-                                          <strong>{{ $message }}</strong>
-                                      </p>
-                              @enderror
-                             
+                            <div class="row">
+                                <div class="col-6 no-padding">
+                                  <textarea name="egnineers_internal_notes" class="form-control" placeholder="Reply to cusotmer." required></textarea>
+                                  @error('egnineers_internal_notes')
+                                          <p class="text-danger" role="alert">
+                                              <strong>{{ $message }}</strong>
+                                          </p>
+                                  @enderror
+                                
+                                </div>
+                                <div  class="col-4 no-padding"> 
+                                  <input class="m-t-10" type="file" name="engineers_attachement" style="float: :left;">
+                                </div>
+                                <div class="col-2 link text-master m-t-15 p-l-10 b-l b-grey col-top">
+                                  <button class="btn btn-success" type="submit">Send</button>
+                                </div>
+                              
                             </div>
-                            <div  class="col-4 no-padding"> 
-                              <input class="m-t-10" type="file" name="engineers_attachement" style="float: :left;">
-                            </div>
-                            <div class="col-2 link text-master m-t-15 p-l-10 b-l b-grey col-top">
-                              <button class="btn btn-success" type="submit">Send</button>
-                            </div>
-                          
+                          </form>
                         </div>
-                      </form>
+                        <div class="col-lg-3">
+                          <span style="display: flex; float:right;" class="m-t-15">
+                            @if($file->status != 'on_hold')
+                              <form method="POST" action="{{ route('set-file-on-hold') }}">
+                                @csrf
+                                <input type="hidden" value="{{$file->id}}" name="file_id">
+                                <button class="btn btn-info" type="submit">On Hold</button>
+                              </form>
+                            @endif
+
+                            <a class="btn btn-info m-l-5" href="{{route('dtc-lookup')}}" target="_blank">DTC</a>
+                          </span>
+                        </div>
+                        </div>
 
                       
 
                       </div>
 
-                      <div class="b-t b-grey bg-white clearfix m-t-15">
-                      <span style="display: flex; float:right;" class="p-t-5">
-                        
-                        @if($file->status != 'on_hold')
-                          <form method="POST" action="{{ route('set-file-on-hold') }}">
-                            @csrf
-                            <input type="hidden" value="{{$file->id}}" name="file_id">
-                            <button class="btn btn-info" type="submit">Task On Hold</button>
-                          </form>
-                        @endif
-
-                        <a class="btn btn-info m-l-5" href="{{route('dtc-lookup')}}" target="_blank">DTC Lookup</a>
-                      </span>
-                      </div>
+                      
                       <div class="b-t b-grey bg-white m-t-15 clearfix">
                         <span style="display: flex; float:right;" class="p-t-5">
                           <button class="btn btn-info" type="button">Save a Message to send Later</button>
