@@ -366,7 +366,214 @@ class FilesController extends Controller
     }
 
     public function sendMessageToCustomer(Request $request){
-        dd($request->all());
+
+        $noteItself = $request->message;
+        
+        $file = File::findOrFail($request->file_id);
+
+        $reply = new EngineerFileNote();
+
+        $message = str_replace(PHP_EOL,"<br>",$request->message);
+
+        $reply->egnineers_internal_notes = $message;
+
+        if($request->file('engineers_attachement')){
+
+            $attachment = $request->file('engineers_attachement');
+            $fileName = $attachment->getClientOriginalName();
+            $model = str_replace('/', '', $file->model );
+
+            $fileName = str_replace('/', '', $fileName);
+            $fileName = str_replace('\\', '', $fileName);
+            $fileName = str_replace('#', '', $fileName);
+            $fileName = str_replace(' ', '_', $fileName);
+
+            if($file->front_end_id == 1){
+                
+                if($file->subdealer_group_id){
+                    $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName);
+                }
+                else{
+
+                    $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+                }
+            }
+            else if($file->front_end_id == 3){
+                
+                if($file->subdealer_group_id){
+                    $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName);
+                }
+                else{
+
+                    $attachment->move(public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path),$fileName);
+                }
+            }
+            else{
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
+                }
+                
+                else{
+                    $attachment->move(public_path('/../../tuningX/public/'.$file->file_path),$fileName);
+                }
+
+            }
+
+            $reply->engineers_attachement = $fileName;
+        }
+
+        $reply->engineer = true;
+        $reply->file_id = $request->file_id;
+        $reply->user_id = Auth::user()->id;
+
+        $latest = RequestFile::where('file_id', $request->file_id)->where('show_later', 0)->latest()->first();
+        
+        if($latest != NULL){
+            $reply->request_file_id = $latest->id;
+        }
+        else{
+            $reply->request_file_id = NULL;
+        }
+
+        $reply->save();
+
+        FileMessage::where('file_id', $request->file_id)->delete();
+
+        if($file->original_file_id != NULL){
+            $ofile = File::findOrFail($file->original_file_id);
+            $this->changeStatusLog($ofile, 'closed', 'support_status', 'Chat reply was sent from engineer on request file.');
+            $ofile->support_status = "closed";
+            $ofile->save();
+        }
+        $this->changeStatusLog($file, 'closed', 'support_status', 'Chat reply was sent from engineer.');
+        $file->support_status = "closed";
+        $file->save();
+        $customer = User::findOrFail($file->user_id);
+        $admin = get_admin();
+    
+        // $template = EmailTemplate::where('name', 'Message To Client')->first();
+        $template = EmailTemplate::where('slug', 'mess-to-client')->where('front_end_id', $file->front_end_id)->first();
+
+        $html1 = $template->html;
+
+        $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+        $html1 = str_replace("#customer_name", $customer->name ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
+        
+        $tunningType = $this->emailStagesAndOption($file);
+
+        $html1 = str_replace("#tuning_type", $tunningType,$html1);
+        $html1 = str_replace("#status", $file->status,$html1);
+        $html1 = str_replace("#note", $request->egnineers_internal_notes,$html1);
+        $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+        $html2 = $template->html;
+
+        $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+        $html2 = str_replace("#customer_name", $file->name ,$html2);
+        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
+        
+
+        $tunningType = $this->emailStagesAndOption($file);
+        
+        $html2 = str_replace("#tuning_type", $tunningType,$html2);
+        $html2 = str_replace("#status", $file->status,$html2);
+        $html2 = str_replace("#note", $request->egnineers_internal_notes,$html2);
+
+        if($file->front_end_id == 1){
+            $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+        }
+        else if($file->front_end_id == 3){
+            $html2 = str_replace("#file_url",  'http://portal.e-tuningfiles.com/'."file/".$file->id,$html2);
+        }
+        else{
+            $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+        }
+
+        $optionsMessage = "";
+        if($file->options){
+            foreach($file->options() as $option) {
+                $optionsMessage .= ",".$option." ";
+            }
+        }
+
+        // $messageTemplate = MessageTemplate::where('name', 'Message To Client')->first();
+        $messageTemplate = MessageTemplate::where('slug', 'mess-to-client')->where('front_end_id', $file->front_end_id)->first();
+
+        $message = $messageTemplate->text;
+
+        $message1 = str_replace("#customer", $customer->name ,$message);
+        $message2 = str_replace("#customer", $file->name ,$message);
+
+        // $message1 = "Hi, Status changed for a file by Customer: " .$customer->name;
+        // $message2 = "Hi, Status changed for a file by Customer: " .$file->name;
+
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getAllManager();
+
+        if($file->front_end_id == 1){
+            $subject = "ECU Tech: Engineer replied to your support message!";
+        }
+        else if($file->front_end_id == 3){
+            $subject = "E-files: Engineer replied to your support message!";
+        }
+        else{
+            $subject = "Tuningx: Engineer replied to your support message!";
+        }
+
+
+        if($this->manager['msg_eng_cus_email'.$file->front_end_id]){
+
+            try{
+                \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$customer->email.$e->getMessage(), 'email', $file->id);
+            }
+        }
+        if($this->manager['msg_eng_admin_email'.$file->front_end_id]){
+
+            try{
+                \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
+
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
+            }
+        }
+        
+        if($this->manager['msg_eng_admin_sms'.$file->front_end_id]){
+            
+            $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
+        }
+
+        if($this->manager['msg_eng_admin_whatsapp'.$file->front_end_id]){
+            
+            $this->sendWhatsappforEng($admin->name, $admin->phone, 'support_message_from_engineer', $file, $noteItself);
+        }
+
+        if($this->manager['msg_eng_cus_sms'.$file->front_end_id]){
+            $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
+        }
+
+        if($this->manager['msg_eng_cus_whatsapp'.$file->front_end_id]){
+            
+            $this->sendWhatsapp($customer->name, $customer->phone, 'support_message_from_engineer', $file, $noteItself);
+        }
+
+        $old = File::findOrFail($request->file_id);
+        $old->checked_by = 'engineer';
+        $old->save();
+
+        return redirect()->back()
+        ->with('success', 'Engineer message successfully Added!')
+        ->with('tab','chat');
+        
     }
 
     public function getCustomerMessage(Request $request){
@@ -376,7 +583,7 @@ class FilesController extends Controller
 
     public function editCustomerMessage(Request $request){
         $message = FileMessage::where('request_file_id', $request->request_file_id)->first();
-        $message->message = $request->message;
+        $message->message = str_replace(PHP_EOL,"<br>",$request->message);
         $message->save();
 
         return redirect()->back()->with(['success' => 'Message edited!']);
