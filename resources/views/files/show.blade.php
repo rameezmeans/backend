@@ -2073,7 +2073,7 @@ margin-bottom: 10px !important;
                           @if($file->customer_message == NULL)
                             <button data-file_id="{{$file->id}}" class="btn btn-info btn-msg-later" type="button">Save a Message to send Later</button>
                           @else
-                            <button data-file_id="{{$file->id}}" class="btn btn-success m-l-5" type="button">Send Saved Message</button>
+                            <button data-file_id="{{$file->id}}" class="btn btn-success m-l-5 btn-msg-sent" type="button">Send Saved Message</button>
                           @endif
                           </span>
                       </div>
@@ -4602,8 +4602,11 @@ margin-bottom: 10px !important;
 
                         <div class="b-t b-grey bg-white m-t-15 clearfix">
                           <span style="display: flex; float:right;" class="p-t-5">
-                            <button data-file_id="{{$file->id}}" class="btn btn-info btn-msg-later" type="button">Save a Message to send Later</button>
-                            <button data-file_id="{{$file->id}}" class="btn btn-success m-l-5" type="button">Send Saved Message</button>
+                            @if($file->customer_message == NULL)
+                              <button data-file_id="{{$file->id}}" class="btn btn-info btn-msg-later" type="button">Save a Message to send Later</button>
+                            @else
+                              <button data-file_id="{{$file->id}}" class="btn btn-success m-l-5" type="button">Send Saved Message</button>
+                            @endif
                           </span>
                         </div>
 
@@ -5778,6 +5781,44 @@ margin-bottom: 10px !important;
                   <div class="form-group form-group-default required">
                     <label>Message</label>
                     <textarea id="edit-modal" name="message" required style="height: 100px;" class="form-control"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+          <div class="row">
+            <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+              <button type="submit" class="btn btn-success btn-block m-t-5">Add Message</button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="sendMessageModal" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form role="form" action="{{route('add-later-message')}}" method="POST">
+            @csrf
+            
+            <input type="hidden" name="file_id" id="file_id_message_sent">
+            
+            <div class="form-group-attached ">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-group-default required">
+                    <label>Message</label>
+                    <textarea id="message_to_send" name="message" required style="height: 100px;" class="form-control"></textarea>
                   </div>
                 </div>
               </div>
@@ -7076,6 +7117,28 @@ $.ajax({
       }
   });
 
+
+});
+
+$(document).on('click', '.btn-msg-sent', function(e){
+
+    let file_id = $(this).data('file_id');
+    $('#file_id_message_sent').val(file_id);
+
+    $.ajax({
+        url: "/get_customer_message",
+        type: "POST",
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        data: {
+            'file_id': file_id
+        },
+        success: function(d) {
+          $('#message_to_send').html(d.message);
+          
+        }
+    });
+    
+    $('#sendMessageModal').modal('show');
 
 });
 
