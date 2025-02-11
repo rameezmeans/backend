@@ -5825,7 +5825,7 @@ margin-bottom: 10px !important;
             </div>
          
           <div class="row">
-            <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+            <div class="col-md-8 m-t-10 sm-m-t-10 text-center">
               <button type="submit" class="btn btn-success btn-block m-t-5">Send Message To Customer</button>
             </div>
           </div>
