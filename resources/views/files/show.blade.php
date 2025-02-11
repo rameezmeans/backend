@@ -5754,6 +5754,46 @@ margin-bottom: 10px !important;
     <!-- /.modal-content -->
   </div>
 </div>
+
+<div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="addMessageModal" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form role="form" action="{{route('edit-message')}}" method="POST">
+            @csrf
+            <input type="hidden" id="edit-modal-id" name="id" value="">
+            <input type="hidden" name="file_id">
+            
+            <div class="form-group-attached ">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-group-default required">
+                    <label>Message</label>
+                    <textarea id="edit-modal" name="message" required style="height: 100px;" class="form-control"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+          <div class="row">
+            <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
+              <button type="submit" class="btn btn-success btn-block m-t-5">Add Message</button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
+
+
 @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
 <div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="engineerOptionsModal" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog">
@@ -7038,7 +7078,7 @@ $.ajax({
 
 $(document).on('click', '.btn-msg-later', function(e){
     let file_id = $(this).data('file_id');
-  // $('#softwareOptionsEditModal').modal('show');
+    $('#addMessageModal').modal('show');
 });
 
 $(document).on('click', '.btn-options-change-force', function(e){
