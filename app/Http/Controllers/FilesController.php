@@ -365,6 +365,10 @@ class FilesController extends Controller
 
     }
 
+    public function sendMessageToCustomer(Request $request){
+        dd($request->all());
+    }
+
     public function getCustomerMessage(Request $request){
         $message = FileMessage::where('file_id', $request->file_id)->first()->message;
         return  response()->json( ['message' => $message]);

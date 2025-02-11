@@ -5808,7 +5808,7 @@ margin-bottom: 10px !important;
           </button>
         </div>
         <div class="modal-body">
-          <form role="form" action="{{route('add-later-message')}}" method="POST">
+          <form role="form" action="{{route('send-message')}}" method="POST">
             @csrf
             
             <input type="hidden" name="file_id" id="file_id_message_sent">
@@ -5826,7 +5826,7 @@ margin-bottom: 10px !important;
          
           <div class="row">
             <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
-              <button type="submit" class="btn btn-success btn-block m-t-5">Add Message</button>
+              <button type="submit" class="btn btn-success btn-block m-t-5">Send Message To Customer</button>
             </div>
           </div>
         </form>
@@ -7137,7 +7137,7 @@ $(document).on('click', '.btn-msg-sent', function(e){
           
         }
     });
-    
+
     $('#sendMessageModal').modal('show');
 
 });
