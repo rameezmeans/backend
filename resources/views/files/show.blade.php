@@ -4577,7 +4577,7 @@ margin-bottom: 10px !important;
                       </form>
                     </div>
                     <div class="col-lg-3">
-                      <span style="display: flex; float:right;" class="p-t-5">
+                      <span style="display: flex; float:right;" class="m-t-15">
 
                         @if($file->status != 'on_hold')
                           <form method="POST" action="{{ route('set-file-on-hold') }}">
