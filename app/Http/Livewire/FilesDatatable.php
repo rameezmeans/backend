@@ -59,7 +59,7 @@ class FilesDatatable extends LivewireDatatable
 
             $files = File::select('*', 'id as row_id')
                 // ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
-                ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "processing" THEN 2 ELSE 3 END AS s'))
+                ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "processing" THEN 2 WHEN status = "ready_to_send" THEN 3 ELSE 4 END AS s'))
                 ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
                 ->orderBy('ss', 'asc')
                 ->orderBy('s', 'asc')

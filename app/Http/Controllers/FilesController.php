@@ -212,6 +212,11 @@ class FilesController extends Controller
         $new->message = $request->message;
         $new->save();
 
+        $file = File::findOrFail($request->file_id);
+        $this->changeStatusLog($file, 'ready_to_send', 'status', 'Engineer uploaded the file but for showing it later to customer.');
+        $file->status = 'ready_to_send';
+        $file->save();
+
         return redirect()->back()->with(['success' => 'Message added to send later!']);
     }
 
@@ -376,53 +381,6 @@ class FilesController extends Controller
         $message = str_replace(PHP_EOL,"<br>",$request->message);
 
         $reply->egnineers_internal_notes = $message;
-
-        if($request->file('engineers_attachement')){
-
-            $attachment = $request->file('engineers_attachement');
-            $fileName = $attachment->getClientOriginalName();
-            $model = str_replace('/', '', $file->model );
-
-            $fileName = str_replace('/', '', $fileName);
-            $fileName = str_replace('\\', '', $fileName);
-            $fileName = str_replace('#', '', $fileName);
-            $fileName = str_replace(' ', '_', $fileName);
-
-            if($file->front_end_id == 1){
-                
-                if($file->subdealer_group_id){
-                    $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName);
-                }
-                else{
-
-                    $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
-                }
-            }
-            else if($file->front_end_id == 3){
-                
-                if($file->subdealer_group_id){
-                    $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName);
-                }
-                else{
-
-                    $attachment->move(public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path),$fileName);
-                }
-            }
-            else{
-
-                if($file->on_dev == 1){
-                    $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
-                }
-                
-                else{
-                    $attachment->move(public_path('/../../tuningX/public/'.$file->file_path),$fileName);
-                }
-
-            }
-
-            $reply->engineers_attachement = $fileName;
-        }
-
         $reply->engineer = true;
         $reply->file_id = $request->file_id;
         $reply->user_id = Auth::user()->id;
@@ -443,11 +401,15 @@ class FilesController extends Controller
         if($file->original_file_id != NULL){
             $ofile = File::findOrFail($file->original_file_id);
             $this->changeStatusLog($ofile, 'closed', 'support_status', 'Chat reply was sent from engineer on request file.');
+            $this->changeStatusLog($ofile, 'submitted', 'status', 'Chat reply was sent from engineer on request file.');
             $ofile->support_status = "closed";
+            $ofile->status = "submitted";
             $ofile->save();
         }
         $this->changeStatusLog($file, 'closed', 'support_status', 'Chat reply was sent from engineer.');
+        $this->changeStatusLog($file, 'submitted', 'status', 'Chat reply was sent from engineer on request file.');
         $file->support_status = "closed";
+        $file->status = "submitted";
         $file->save();
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
