@@ -627,7 +627,7 @@ margin-bottom: 10px !important;
 
                             @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'see-comments'))
 
-                            @if($file->ecu)
+                            @if($file->ecu && $vehicle !== NULL)
                               <a class="btn btn-success btn-cons m-b-10" href="{{route('add-comments', [$vehicle->id, 'file='.$file->id])}}"><span class="bold">Go To Comments</span></a>
                             @endif
 
@@ -635,8 +635,12 @@ margin-bottom: 10px !important;
 
                             @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-vehicles'))
 
-                            <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
+                              @if($vehicle !== NULL)
 
+                                <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
+
+                              @endif
+                              
                             @endif
 
                             @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-file'))
