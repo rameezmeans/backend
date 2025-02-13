@@ -194,8 +194,9 @@ margin-bottom: 10px !important;
 
                     <div class="text-center">
                       <div class="card-title">
-                          <img src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="" style="width: 30%;">
-                          <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                          <img src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="" style="width: 30%;">
+                          <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} 
+                            @if($file->vehicle()){{ $file->vehicle()->TORQUE_standard }}@endif</h3>
                           
                           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'download-client-file'))
                           
@@ -3005,7 +3006,7 @@ margin-bottom: 10px !important;
                       <div class="card-title">
                           <img src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="" style="width: 30%;">
                           
-                          <h4>{{$file->brand}} {{$file->model}} {{ $file->engine }} @if($file->vehicle()){{ $file->vehicle()->TORQUE_standard }} @enndif (New Request)</h4>
+                          <h4>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }} (New Request)</h4>
                           
                           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'download-client-file'))
                           
