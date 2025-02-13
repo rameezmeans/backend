@@ -640,7 +640,7 @@ margin-bottom: 10px !important;
                                 <a class="btn btn-success btn-cons m-b-10" href="{{route('vehicle', $vehicle->id)}}"><span class="bold">Go To Vehicle</span></a>
 
                               @endif
-                              
+
                             @endif
 
                             @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-file'))
@@ -1877,8 +1877,8 @@ margin-bottom: 10px !important;
                   <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @else bg-warning-light @endif">
                     <div class="text-center">
                       <div class="card-title">
-                          <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                          <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                          <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                          <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }}</h3>
                         </div>
                       </div>
                       
@@ -2098,8 +2098,8 @@ margin-bottom: 10px !important;
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
-                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }}</h3>
                       <h4 class="m-t-20">Adminstrative Tasks</h4>
                     </div>
                   </div>
@@ -2197,8 +2197,8 @@ margin-bottom: 10px !important;
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
-                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }}</h3>
                       <h4 class="m-t-20">Logs</h4>
                     </div>
                   </div>
@@ -2225,8 +2225,8 @@ margin-bottom: 10px !important;
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
-                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }}</h3>
                       <h4 class="m-t-20">Logs</h4>
                     </div>
                   </div>
@@ -2276,8 +2276,8 @@ margin-bottom: 10px !important;
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
-                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }}</h3>
                       <h4 class="m-t-20">Logs</h4>
                     </div>
                   </div>
@@ -2393,8 +2393,8 @@ margin-bottom: 10px !important;
                           <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
-                                  <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }}</h3>
                                   <h4 class="m-t-20">Lua</h4>
                                 </div>
                               </div>
@@ -2691,8 +2691,8 @@ margin-bottom: 10px !important;
                           <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
-                                  <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }}</h3>
                                   <h4 class="m-t-20">Lua</h4>
                                 </div>
                               </div>
@@ -2735,8 +2735,8 @@ margin-bottom: 10px !important;
                           <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
-                                  <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }}</h3>
                                   <h4 class="m-t-20">Lua</h4>
                                 </div>
                               </div>
@@ -3010,7 +3010,7 @@ margin-bottom: 10px !important;
                       <div class="card-title">
                           <img src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="" style="width: 30%;">
                           
-                          <h4>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }} (New Request)</h4>
+                          <h4>{{$file->brand}} {{$file->model}} {{ $file->engine }} (New Request)</h4>
                           
                           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'download-client-file'))
                           
@@ -4463,8 +4463,8 @@ margin-bottom: 10px !important;
                   <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @else bg-warning-light @endif">
                     <div class="text-center">
                       <div class="card-title">
-                          <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                          <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                          <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                          <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }}</h3>
                         </div>
                       </div>
                       
@@ -4629,8 +4629,8 @@ margin-bottom: 10px !important;
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
-                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }}</h3>
                       <h4 class="m-t-20">Adminstrative Tasks</h4>
                     </div>
                   </div>
@@ -4724,8 +4724,8 @@ margin-bottom: 10px !important;
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
-                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }}</h3>
                       <h4 class="m-t-20">Logs</h4>
                     </div>
                   </div>
@@ -4749,8 +4749,8 @@ margin-bottom: 10px !important;
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
-                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }}</h3>
                       <h4 class="m-t-20">Logs</h4>
                     </div>
                   </div>
@@ -4796,8 +4796,8 @@ margin-bottom: 10px !important;
               <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
-                      <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                      <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                      <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }}</h3>
                       <h4 class="m-t-20">Logs</h4>
                     </div>
                   </div>
@@ -4912,8 +4912,8 @@ margin-bottom: 10px !important;
                           <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
-                                  <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }}</h3>
                                   <h4 class="m-t-20">Lua</h4>
                                 </div>
                               </div>
@@ -5187,8 +5187,8 @@ margin-bottom: 10px !important;
                           <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
-                                  <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }}</h3>
                                   <h4 class="m-t-20">Lua</h4>
                                 </div>
                               </div>
@@ -5228,8 +5228,8 @@ margin-bottom: 10px !important;
                           <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
-                                  <img style="width: 30%;" src="{{ $file->vehicle()->Brand_image_URL }}" alt="{{$file->brand}}" class="">
-                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }} {{ $file->vehicle()->TORQUE_standard }}</h3>
+                                  <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
+                                  <h3>{{$file->brand}} {{$file->model}} {{ $file->engine }} {{ $file->engine }}</h3>
                                   <h4 class="m-t-20">Lua</h4>
                                 </div>
                               </div>
