@@ -77,7 +77,7 @@ class PaymentLogController extends Controller
             'group' => $group,
         ]);
     }
-
+    
     public function livePayments(){
 
         // $allPayments = Credit::orderBy('created_at', 'desc')->where('price_payed', '>', 0)->orWhere('gifted', 1)->where('credits', '>', 0)->get();
