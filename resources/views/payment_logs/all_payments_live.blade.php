@@ -52,7 +52,7 @@
 
                 <livewire:payment-logs 
                     searchable="id,invoice_id,customer,email,group"
-                    per-page="20"
+                    per-page="25"
                 />
 
             </div>
