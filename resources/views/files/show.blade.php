@@ -1312,11 +1312,15 @@ margin-bottom: 10px !important;
                               <li class="nav-item">
                                 <a href="#" class="active" data-toggle="tab" data-target="#reply_data_{{$message['id']}}"><span>Version Information</span></a>
                               </li>
-								@if($vehicle->type == 'truck' || $vehicle->type == 'machine' || $vehicle->type == 'agri')
-                              <li class="nav-item">
-                                <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
-                              </li>
-								@endif
+                              @if($vehicle)
+
+                                @if($vehicle->type == 'truck' || $vehicle->type == 'machine' || $vehicle->type == 'agri')
+                                              <li class="nav-item">
+                                                <a href="#" data-toggle="tab" data-target="#acm_data_{{$message['id']}}"><span>ACM Information</span></a>
+                                              </li>
+                                @endif
+                              @endif
+
                               @if($file->softwares->isNotEmpty())
                               <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Software Information</span></a>
