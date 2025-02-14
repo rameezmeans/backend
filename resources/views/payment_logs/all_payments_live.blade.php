@@ -13,6 +13,10 @@
   .redirect-click-file{
     cursor: pointer;
   }
+
+  [x-cloak] {
+    display: none;
+}
   
 </style>
 @endsection
