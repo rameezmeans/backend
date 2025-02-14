@@ -93,7 +93,7 @@ class ActiveFeedCron extends Command
         }
 
         $html = $feebdackTemplate->html;
-        $fileName = $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard;
+        $fileName = $file->brand." ".$file->engine;
 
         $html = str_replace('#file_name', $fileName, $html);
         $html = str_replace('#angry_link', $url.'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/angry', $html);
