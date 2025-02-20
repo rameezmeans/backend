@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::post('get_tools', [App\Http\Controllers\FilesAPIController::class, 'tools']);
+Route::post('get_files', [App\Http\Controllers\FilesAPIController::class, 'usersFiles']);
+Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'usersCredits']);
+
 Route::get('get_stages', [App\Http\Controllers\ServicesController::class, 'getStages']);
 Route::get('get_options', [App\Http\Controllers\ServicesController::class, 'getOptions']);
 
@@ -23,13 +28,9 @@ Route::post('get_versions', [App\Http\Controllers\FilesAPIController::class, 've
 Route::post('get_engines', [App\Http\Controllers\FilesAPIController::class, 'engines']);
 Route::post('get_ecus', [App\Http\Controllers\FilesAPIController::class, 'ecus']);
 
-Route::post('get_tools', [App\Http\Controllers\FilesAPIController::class, 'tools']);
-
-Route::post('get_files', [App\Http\Controllers\FilesAPIController::class, 'subdealersFiles']);
 Route::post('submit_file', [App\Http\Controllers\FilesAPIController::class, 'submitFile']);
 
-Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'subdealersCredits']);
-Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'subdealersCredits']);
+// Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'subdealersCredits']);
 Route::post('get_total_credits', [App\Http\Controllers\FilesAPIController::class, 'subdealersTotalCredits']);
 Route::post('add_credits', [App\Http\Controllers\FilesAPIController::class, 'addSubdealersCredits']);
 Route::post('subtract_credits', [App\Http\Controllers\FilesAPIController::class, 'subtractSubdealersCredits']);

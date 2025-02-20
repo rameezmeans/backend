@@ -19,6 +19,7 @@ use App\Models\TemporaryFile;
 use App\Models\Tool;
 use App\Models\TunnedFile;
 use App\Models\User;
+use App\Models\UserTool;
 use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -333,15 +334,23 @@ class FilesAPIController extends Controller
         return response()->json($ecusArray);
     }
 
-    public function subdealersFiles(Request $request){
-        $files = File::where('subdealer_group_id', $request->subdealer_group_id)->get();
+    public function usersFiles(Request $request){
+        $files = File::where('user_id', $request->user_id)
+        ->where('is_credited', 1)
+        ->get();
         return response()->json($files);
     }
 
-    public function subdealersCredits(Request $request){
-        $subdlear = get_subdealer_user($request->subdealer_group_id);
-        $credits = Credit::where('user_id', $subdlear->id)->get();
+    public function usersCredits(Request $request){
+        // $subdlear = get_subdealer_user($request->subdealer_group_id);
+        $credits = Credit::where('user_id', $request->user_id)->sum('credits');
         return response()->json($credits);
+    }
+
+    public function tools(Request $request){
+
+        $tools = UserTool::where('user_id', $request->user_id)->get();
+        return response()->json($tools);
     }
 
     public function addSubdealersCredits(Request $request){
@@ -382,11 +391,7 @@ class FilesAPIController extends Controller
         return response()->json($count);
     }
     
-    public function tools(){
-
-        $tools = Tool::all();
-        return response()->json($tools);
-    }
+    
 
     public function files($frontendID){
 
