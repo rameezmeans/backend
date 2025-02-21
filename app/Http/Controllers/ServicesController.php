@@ -1025,7 +1025,54 @@ class ServicesController extends Controller
      */
     public function getStages(Request $request)
     {
-        $stages = Service::orderBy('sorting', 'asc')->where('type', 'tunning')->where('active', 1)->get();
+        $frontendID = $request->front_end_id;
+        $vehicleType = $request->vehicle_type;
+
+        if($frontendID == 2){
+
+            $stagesFromLive = Service::orderBy('sorting', 'asc')
+            ->where('type', 'tunning')
+            ->whereNull('subdealer_group_id')
+            ->where('tuningx_active', 1)->get();
+
+            foreach($stagesFromLive as $stage ){
+                if( in_array( $vehicleType ,  explode(',', $stage['vehicle_type'] ) ) ){
+                    $stages []= $stage;
+                }
+            }
+
+        }
+
+        else if($frontendID == 3){
+
+            $stagesFromLive = Service::orderBy('sorting', 'asc')
+            ->where('type', 'tunning')
+            ->whereNull('subdealer_group_id')
+            ->where('efiles_active', 1)->get();
+
+            foreach($stagesFromLive as $stage ){
+                if( in_array( $vehicleType ,  explode(',', $stage['vehicle_type'] ) ) ){
+                    $stages []= $stage;
+                }
+            }
+
+        }
+
+        else{
+
+            $stagesFromLive = Service::orderBy('sorting', 'asc')
+            ->where('type', 'tunning')
+            ->whereNull('subdealer_group_id')
+            ->where('active', 1)->get();
+
+            foreach($stagesFromLive as $stage ){
+                if( in_array( $vehicleType ,  explode(',', $stage['vehicle_type'] ) ) ){
+                    $stages []= $stage;
+                }
+            }
+
+        }
+
         return response()->json(['stages' => $stages]);
     }
 
@@ -1036,7 +1083,52 @@ class ServicesController extends Controller
      */
     public function getOptions(Request $request)
     {
-        $options = Service::orderBy('sorting', 'asc')->where('type', 'option')->where('active', 1)->get();
+
+        $frontendID = $request->front_end_id;
+        $vehicleType = $request->vehicle_type;
+        
+        $options = [];
+
+        if($frontendID == 2){
+
+            $optionsFromLive = Service::orderBy('sorting', 'asc')
+            ->whereNull('subdealer_group_id')
+            ->where('type', 'option')->where('tuningx_active', 1)->get();
+            
+            foreach($optionsFromLive as $option ){
+                if( in_array( $vehicleType ,  explode(',', $option['vehicle_type'] ) ) ){
+                    $options []= $option;
+                }
+            }
+        }
+
+        else if($frontendID == 3){
+
+            $optionsFromLive = Service::orderBy('sorting', 'asc')
+            ->whereNull('subdealer_group_id')
+            ->where('type', 'option')->where('efiles_active', 1)->get();
+            
+            foreach($optionsFromLive as $option ){
+                if( in_array( $vehicleType ,  explode(',', $option['vehicle_type'] ) ) ){
+                    $options []= $option;
+                }
+            }
+        }
+
+        else{
+
+            $optionsFromLive = Service::orderBy('sorting', 'asc')
+            ->whereNull('subdealer_group_id')
+            ->where('type', 'option')->where('active', 1)->get();
+            
+            foreach($optionsFromLive as $option ){
+                if( in_array( $vehicleType ,  explode(',', $option['vehicle_type'] ) ) ){
+                    $options []= $option;
+                }
+            }
+
+        }
+
         return response()->json(['options' => $options]);
     }
 }
