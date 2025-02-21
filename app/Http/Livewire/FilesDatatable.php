@@ -3,55 +3,135 @@
 namespace App\Http\Livewire;
 
 use App\DataTables\DatetimeColumn;
+use App\Models\AlientechFile;
 use App\Models\File;
 use App\Models\FrontEnd;
+use App\Models\Key;
 use App\Models\Service;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\NumberColumn;
+use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
+
+use function PHPUnit\Framework\returnSelf;
 
 class FilesDatatable extends LivewireDatatable
 {
     public function builder()
     {
-        // if(Auth::user()->is_admin || Auth::user()->is_head){
-            // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
-            $files = File::select('*')
-            ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
-            ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
-            ->orderBy('ss', 'asc')
-            ->orderBy('s', 'asc')
-            ->where('is_credited', 1);
-            
-        // }
-        // else if(Auth::user()->is_engineer){
-        //     // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
-        //     $files = File::select('*')
-        //     ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
-        //     ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
-        //     ->orderBy('ss', 'asc')
-        //     ->orderBy('s', 'asc')
-        //     ->where('is_credited', 1)
-        //     ->where('assigned_to', Auth::user()->id);
-        // }
 
+        if(Auth::user()->is_admin()){
+            $files = $this->getAllFiles();
+        }
+        else{
+
+            if(get_engineers_permission(Auth::user()->id, 'show-all-files')){
+                $files = $this->getAllFiles();
+            }
+            else{
+
+                $files = File::select('*', 'id as row_id')
+                // ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
+                ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "processing" THEN 2 ELSE 3 END AS s'))
+                ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
+                ->orderBy('ss', 'asc')
+                ->orderBy('s', 'asc')
+                ->where('is_credited', 1)
+                // ->where('delayed', 0)
+                ->whereNull('original_file_id')
+                ->where('assigned_to', Auth::user()->id);
+                
+            }
+
+
+        }
+        
         return $files;
     }
 
+    public function getAllFiles(){
+
+            $files = File::select('*', 'id as row_id')
+                // ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
+                ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "processing" THEN 2 WHEN status = "ready_to_send" THEN 3 ELSE 4 END AS s'))
+                ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
+                ->orderBy('ss', 'asc')
+                ->orderBy('s', 'asc')
+                ->where('is_credited', 1)
+                // ->where('delayed', 0)
+                ->whereNull('original_file_id')
+                ->where(function ($query) {
+                $query->where('type', '=', 'master')
+                        ->orWhereNotNull('assigned_from')->where('type', '=', 'subdealer');
+            });
+
+            return $files;
+    }
+    
     public function columns()
     {
         return [
 
             NumberColumn::name('id')->label('Task ID'),
 
+            Column::callback(['id'], function($id){
+
+                $file = File::findOrFail($id);
+
+                if($file->delayed == 1){
+                    return '<span class="label label-danger text-white m-r-5">Late</span>';
+                }
+
+                $returnStr = "";
+
+                if($file->timer != NULL){
+
+                    $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+                    $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
+
+                    $openTimeLeft = (strtotime($file->timer)+($fodt*60)) - strtotime(now());
+
+                    if($file->support_status == 'open'){
+                        if($openTimeLeft > 0){
+                            $returnStr .='<lable class="label label-danger text-white m-r-5 open" id="o_'.$file->id.'" data-seconds="'.$openTimeLeft.'"></lable>';
+                        }
+                    }
+                    
+                    
+                }
+
+                if($file->submission_timer != NULL){
+
+                    $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+                    $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
+
+                    $submissionTimeLeft = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
+
+                    if($file->status == 'submitted'){
+                        if($submissionTimeLeft > 0){
+                            $returnStr .='<span class="label label-info text-white m-r-5 submission" id="s_'.$file->id.'" data-seconds="'.$submissionTimeLeft.'"></span>';
+                        }
+                    }
+                    
+                }
+
+                return $returnStr;
+
+            })
+            ->label('Submission Countdown / Reply Countdown'),
+            
             Column::callback(['front_end_id'], function($frontEndID){
                 if($frontEndID == 1){
                     return '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+                if($frontEndID == 3){
+                    return '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
                 }
                 else{
                     return '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
@@ -59,21 +139,21 @@ class FilesDatatable extends LivewireDatatable
             })->label('Front End')
             ->filterable(FrontEnd::get(['id', 'name']))
             ->searchable(),
-
             Column::name('username')->label('Customer')->searchable(),
 
-            Column::callback(['id', 'brand'], function ($id) {
+            
 
-                $file = File::findOrFail($id);
+            Column::name('brand')->label('Brand')->searchable(),
+            
+            Column::name('model')->label('Model')->searchable(),
 
-                return $file->brand.' '.$file->engine.' '.$file->vehicle()->TORQUE_standard;
+            Column::name('ecu')->label('ECU')->searchable(),
+
                 
-                
-            })->label('Vehicle'),
 
             Column::callback('support_status', function($supportStatus){
                 if($supportStatus == 'open'){
-                    return '<lable class="label bg-danger text-white">'.$supportStatus.'</lable>';
+                    return '<label class="label bg-danger text-white">'.$supportStatus.'</label>';
                 }
                 else{
                     return '<lable class="label bg-success text-black">'.$supportStatus.'</lable>';
@@ -88,7 +168,7 @@ class FilesDatatable extends LivewireDatatable
                     return '<lable class="label label-success text-white">'.$status.'</lable>';
                 }
                 else if($status == 'rejected'){
-                    return '<lable class="label label-danger text-white">'.$status.'</lable>';
+                    return '<lable class="label label-danger text-white">'.'canceled'.'</lable>';
                 }
                 else{
                     return '<lable class="label bg-blue-200 text-black">'.$status.'</lable>';
@@ -97,39 +177,65 @@ class FilesDatatable extends LivewireDatatable
             ->filterable(File::groupBy('status')->pluck('status')->toArray())
             ->label('Status')->searchable(),
 
-            Column::callback('stages', function($stages){
-               
-                if(\App\Models\Service::where('name', $stages)->first()){
-                    return '<img alt="{{$file->stages}}" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::where('name', $stages)->first()->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $stages)->first()->icon.'">
-                                        <span class="text-black" style="top: 2px; position:relative;">'.$stages.'</span>';
+            Column::callback(['id','stage'], function($id,$stage){
+
+                // return '<lable class="label label-success text-white">'.$stage.'</lable>';
+                $file = File::findOrFail($id);
+                
+                if($file->stage_services){
+                return '<img alt="{{$file->stage}}" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
+                                        <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
                 }
+            
             })
             ->filterable(Service::where('type', 'tunning')->pluck('name')->toArray())
             ->label('Stage')->searchable(),
 
-            Column::callback(['id','options'], function($id,$op){
+            Column::callback(['id', 'tool_id'], function($id){
                 $options = '';
                 $file = File::findOrFail($id);
-                foreach($file->options() as $option){
-                    if(\App\Models\Service::where('name', $option)->first() != null){
-                        $options .= '<img class="parent-adjusted" alt="'.$option.'" width="30" height="30" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon .'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
+                
+                foreach($file->options_services as $option){
+                    $service = \App\Models\Service::where('id',$option->service_id)->first();
+                    if($service != null){
+                        
+
+                            if($service){
+                                $options .= '<img class="parent-adjusted" alt="'.$service->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.$service->icon .'" data-src="'.url('icons').'/'.$service->icon .'" src="'.url('icons').'/'.$service->icon.'">';
+                            }
+                            else{
+                                $options.= "<span>Service Deleted.</span>";
+                            }
                         }
                     }
-                    return $options;
+                
+                return $options;
             })
             ->label('Options'),
 
-            Column::callback('credits', function($credits){
-                return '<lable class="label bg-danger text-white">'.$credits.'</lable>';
+            Column::callback(['id', 'credits'], function($id){
+                $file = File::findOrFail($id);
+                
+                if($file->assigned_from)
+                    return '<lable class="label bg-danger text-white">'.$file->subdealer_credits.'</lable>';
+                else
+                    return '<lable class="label bg-danger text-white">'.$file->credits.'</lable>';
+
             }) ->label('Credits'),
 
             DatetimeColumn::name('created_at')
                 ->label('Upload Date')->sortable()->format('d/m/Y h:i A')->filterable(),
 
             Column::callback(['assigned_to'], function($assigned_to){
-                return User::findOrFail($assigned_to)->name;
+                
+                if(User::where('id',$assigned_to)->first()){
+                    return User::findOrFail($assigned_to)->name;
+                }
+                else{
+                    return "NONE";
+                }
             })->label('Assigned to')
-            ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))
+            // ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))
             ->searchable(),
     
             DateColumn::callback('response_time', function($rt){
@@ -145,10 +251,19 @@ class FilesDatatable extends LivewireDatatable
     }
 
     public function rowClasses($row, $loop)
-    {   if($row->checked_by == 'customer'){
-            return 'bg-gray-500 hover:bg-gray-300 divide-x divide-gray-100 text-sm text-white redirect-click-file '.$row->id;
+    {  
+        // if($row->delayed == 1){
+        //     return 'bg-red-200 hover:bg-red-200 divide-x divide-red-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
+        // }
+
+        if($row->red == 1){
+            return 'bg-red-200 hover:bg-red-200 divide-x divide-red-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
         }
 
-            return 'hover:bg-gray-300 divide-x divide-gray-100 text-sm text-gray-900 ' . ($loop->even ? 'bg-gray-100' : 'bg-gray-50').' redirect-click-file '.$row->id;
+        if($row->checked_by == 'customer'){
+            return 'bg-gray-500 hover:bg-gray-300 divide-x divide-gray-100 text-sm text-white '.$row->row_id.' redirect-click-file '.$row->row_id;
+        }
+
+            return 'hover:bg-gray-300 divide-x divide-gray-100 text-sm text-gray-900 ' . ($loop->even ? 'bg-gray-100' : 'bg-gray-50').' '.$row->row_id.' redirect-click-file '.$row->row_id;
     }
 }

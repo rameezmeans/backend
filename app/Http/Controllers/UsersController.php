@@ -6,6 +6,8 @@ use App\Models\ChMessage;
 use App\Models\Credit;
 use App\Models\FrontEnd;
 use App\Models\Group;
+use App\Models\Role;
+use App\Models\RoleUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -26,7 +28,7 @@ class UsersController extends Controller
         //         'to_id' => $request['id'],
         //         'body' 
         
-        $customers = User::where('is_customer', 1)->OrderBy('created_at', 'desc')->get();
+        $customers = get_customers();
         
         // foreach($customers as $customer){
         //     $id = mt_rand(9, 999999999) + time();
@@ -60,6 +62,8 @@ class UsersController extends Controller
             'password' => ['required', 'string', 'min:8'],
         ]);
 
+        $customerID = Role::where('name', 'customer')->first()->id;
+
         $customer = new User();
         $customer->name = $request->name;
 
@@ -76,13 +80,11 @@ class UsersController extends Controller
         $customer->company_name = $request->company_name;
         $customer->company_id = $request->company_id;
         $customer->group_id = $request->group_id;
-        $customer->is_customer = 1;
         $customer->front_end_id = $request->front_end_id;
+        $customer->role_id = $customerID;
 
         $customer->save();
-
-        $this->addCredits($customer->group->bonus_credits, $customer);
-
+        
        return redirect()->route('customers')->with(['success' => 'Customer added, successfully.']);
     }
 
@@ -179,8 +181,10 @@ class UsersController extends Controller
         $engineer->status ="doesnot_matter";
         $engineer->company_name = "doesnot_matter";
         $engineer->company_id = "doesnot_matter";
-        $engineer->is_customer = 0;
-        $engineer->is_engineer = 1;
+
+        $engineerID = Role::where('name', 'engineer')->first()->id;
+        $engineer->role_id = $engineerID;
+
         $engineer->save();
 
        return redirect()->route('engineers')->with(['success' => 'Engineer added, successfully.']);
@@ -243,7 +247,7 @@ class UsersController extends Controller
     }
 
     public function Engineers(){
-        $engineers = User::where('is_engineer', 1)->get();
+        $engineers = get_engineers();
         return view('engineers.engineers', ['engineers' => $engineers]);
     } 
 

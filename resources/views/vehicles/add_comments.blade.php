@@ -112,8 +112,15 @@
                                         @foreach($downloadComments as $comment)
                                             @if($ecu == $comment->ecu)
                                                 <div class="p-t-10">
-                                                    <img alt="{{$comment->option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}">
-                                                    {{$comment->option}}
+                                                    
+                                                    @if(\App\Models\Service::findOrFail( $comment->service_id ) )
+                                                    <img alt="{{\App\Models\Service::findOrFail( $comment->service_id )->name}}" 
+                                                    width="40" height="40" 
+                                                    data-src-retina="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}" 
+                                                    data-src="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}" 
+                                                    src="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}">
+                                                    @endif
+                                                    {{ \App\Models\Service::findOrFail( $comment->service_id )->name}} <span style="font-size: 8px;">({{\App\Models\Service::findOrFail( $comment->service_id )->vehicle_type}})</span>
                                                     <span class="m-l-20">
                                                       <i class="fa fa-pencil-square text-success btn-edit" data-id={{$comment->id}} data-comment="{{$comment->comments}}" data-greek-comment="@if($comment->translation){{$comment->translation->greek}}@endif"></i>
                                                       <i class="pg-trash text-danger btn-delete" data-id="{{$comment->id}}"></i>
@@ -137,11 +144,13 @@
                                       <input type="hidden" name="id" value="{{$vehicle->id}}">
                                       <input type="hidden" name="comment_type" value="download">
                                       <div class="form-group form-group-default required ">
+                                        
                                         <label>Option</label>
-                                        <select class="full-width" data-init-plugin="select2" name="option">
+                                        <select class="full-width" data-init-plugin="select2" name="service_id">
+                                          
                                           @foreach($options as $option)
-                                            @if(!in_array($option->name, $includedOptionsForDownload[$ecu]))
-                                            <option value="{{$option->name}}">{{$option->name}}</option>
+                                            @if(!in_array($option->id, $includedOptionsForDownload[$ecu]))
+                                            <option value="{{$option->id}}">{{$option->name}} <span style="font-size: 8px;">({{$option->vehicle_type}})</span></option>
                                             @endif
                                           @endforeach
                                         </select>
@@ -176,8 +185,13 @@
                                         @foreach($uploadComments as $comment)
                                             @if($ecu == $comment->ecu)
                                                 <div class="p-t-10">
-                                                    <img alt="{{$comment->option}}" width="40" height="40" data-src-retina="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" data-src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}" src="{{ url('icons').'/'.\App\Models\Service::where('name', $comment->option)->first()->icon }}">
-                                                    {{$comment->option}}
+                                                   
+                                                    <img alt="{{\App\Models\Service::findOrFail( $comment->service_id )->name}}" 
+                                                    width="40" height="40" 
+                                                    data-src-retina="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}" 
+                                                    data-src="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}" 
+                                                    src="{{ url('icons').'/'.\App\Models\Service::findOrFail( $comment->service_id )->icon }}">
+                                                    {{ \App\Models\Service::findOrFail( $comment->service_id )->name}} <span style="font-size: 8px;">({{\App\Models\Service::findOrFail( $comment->service_id )->vehicle_type}})</span>
                                                     <span class="m-l-20">
                                                       <i class="fa fa-pencil-square text-success btn-edit" data-id={{$comment->id}} data-comment="{{$comment->comments}}" data-greek-comment="@if($comment->translation){{$comment->translation->greek}}@endif"></i>
                                                       <i class="pg-trash text-danger btn-delete" data-id="{{$comment->id}}"></i>
@@ -202,10 +216,10 @@
                                       <input type="hidden" name="comment_type" value="upload">
                                       <div class="form-group form-group-default required ">
                                         <label>Option</label>
-                                        <select class="full-width" data-init-plugin="select2" name="option">
+                                        <select class="full-width" data-init-plugin="select2" name="service_id">
                                           @foreach($options as $option)
-                                            @if(!in_array($option->name, $includedOptionsForUpload[$ecu]))
-                                            <option value="{{$option->name}}">{{$option->name}}</option>
+                                            @if(!in_array($option->id, $includedOptionsForUpload[$ecu]))
+                                            <option value="{{$option->id}}">{{$option->name}} <span style="font-size: 8px;">({{$option->vehicle_type}})</span></option>
                                             @endif
                                           @endforeach
                                         </select>
@@ -278,50 +292,6 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
-
-{{-- <div class="modal fade fill-in" id="editModal" tabindex="-1" role="dialog" aria-hidden="false">
-  <div class="modal-dialog">
-    <div class="modal-content-wrapper">
-      <div class="modal-content">
-        <div class="modal-header clearfix text-left">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form role="form" action="{{route('edit-option-comment')}}" method="POST">
-            @csrf
-            <input type="hidden" id="edit-modal-id" name="id" value="">
-            <input type="hidden" name="vehicle_id" value="{{$vehicle->id}}">
-            
-            <div class="form-group-attached ">
-              <div class="row">
-                <div class="col-md-12">
-                  
-                  <div class="form-group form-group-default required">
-                    <label>English Comment</label>
-                    <textarea id="edit-modal-comments" name="comments" required style="height: 10px;" class="form-control"></textarea>
-                  </div>
-                  <div class="form-group form-group-default required">
-                    <label>Greek Comment</label>
-                    <textarea id="edit-modal-greek-comments" name="greek_comments" required style="height: 10px;" class="form-control"></textarea>
-                  </div>
-                </div>
-              </div>
-             
-                <div class="col-md-4 m-t-10 sm-m-t-10 text-center">
-                  <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
-                </div>
-              
-            </div>
-         
-          
-        </form>
-        </div>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-</div> --}}
 
 @endsection
 

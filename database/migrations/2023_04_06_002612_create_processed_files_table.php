@@ -13,8 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            // $table->boolean('is_head')->default(0);
+        Schema::create('processed_files', function (Blueprint $table) {
+            $table->id();
+            $table->string('type');
+            $table->string('name');
+            $table->string('extension')->nullable();
+            $table->foreignId('file_id')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('processed_files');
     }
 };

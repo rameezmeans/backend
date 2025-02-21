@@ -42,18 +42,18 @@ class FileEngineerTable extends LivewireDatatable
             })
             ->label('Vehicle'),
 
-            Column::callback('id,stages,options', function($id,$stages, $op){
+            Column::callback('[id]', function($id){
                 $all = "";
                 $file = File::findOrFail($id);
 
-                if(\App\Models\Service::where('name', $stages)->first()){
-                    $all .= '<img alt="{{$file->stages}}" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::where('name', $stages)->first()->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $stages)->first()->icon.'">
-                                        <span class="text-black" style="top: 2px; position:relative;">'.$stages.'</span>';
+                if($file->stage_services){
+                    $all .= '<img alt="{{$file->stages}}" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
+                    <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
                 }
                 
-                foreach($file->options() as $option){
-                    if(\App\Models\Service::where('name', $option)->first() != null){
-                        $all .= '<img alt="'.$option.'" width="20" height="20" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon .'" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">'.$option.'<br>';
+                foreach($file->options_services as $option){
+                    if(\App\Models\Service::findOrFail($option->service_id) != null){
+                        $all .= '<img class="parent-adjusted" alt="'.\App\Models\Service::findOrFail($option->service_id)->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon .'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($option->service_id)->icon.'">';
                         }
                     }
                 return $all;
@@ -87,8 +87,8 @@ class FileEngineerTable extends LivewireDatatable
 
             Column::callback(['assigned_to'], function($id){
                 return User::findOrFail($id)->name;
-            })->label('Assigned to')
-            ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))->searchable(),
+            })->label('Assigned to'),
+            // ->filterable(User::where('is_engineer', 1)->get(['id', 'name']))->searchable(),
 
             DateColumn::name('created_at')
                 ->label('Upload Date')->sortable()->filterable(),

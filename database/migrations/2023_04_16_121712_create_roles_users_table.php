@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('alientech_files', function (Blueprint $table) {
+        Schema::create('roles_users', function (Blueprint $table) {
             $table->id();
-            $table->string('guid');
-            $table->string('slot_id');
-            $table->string('type');
-            $table->string('purpose');
-            $table->boolean('processed')->default(0);
-            $table->text('desc');
-            $table->foreignId('file_id')->default(0);
-            $table->foreignId('temporary_file_id')->default(0);
+            $table->unsignedBigInteger('user_id'); 
+            $table->foreign('user_id')
+            ->references('id')->on('users')
+            ->onDelete('cascade');
+            $table->unsignedBigInteger('role_id');
+            $table->foreign('role_id')
+            ->references('id')->on('roles')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('roles_users');
     }
 };

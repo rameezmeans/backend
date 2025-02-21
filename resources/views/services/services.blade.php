@@ -43,6 +43,7 @@
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 42px;">Type</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Activities: activate to sort column ascending" style="width: 342px;">Description</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Credits</th>
+                                        <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 42px;">Vehicle Type</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Date Created</th>
                                         <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Active</th>
                                     </tr>
@@ -61,6 +62,9 @@
                                             </td>
                                             <td class="v-align-middle">
                                                 <p>{{$service->credits}}</p>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                <p>{{$service->vehicle_type}}</p>
                                             </td>
                                             <td class="v-align-middle">
                                                 <p>{{$service->created_at->diffForHumans()}}</p>

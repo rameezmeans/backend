@@ -17,9 +17,31 @@ use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Controllers\ReminderManagerController;
+use App\Models\ACMFile;
 use App\Models\AlientechFile;
+use App\Models\AutotunerEncrypted;
+use App\Models\Credit;
+use App\Models\EngineerAssignmentLog;
+use App\Models\EngineerOptionsOffer;
+use App\Models\FileFeedback;
+use App\Models\FileInternalEvent;
+use App\Models\FileMessage;
+use App\Models\FileReplySoftwareService;
+use App\Models\FileService;
+use App\Models\FilesStatusLog;
+use App\Models\FileUrl;
 use App\Models\Key;
 use App\Models\Log;
+use App\Models\MagicEncryptedFile;
+use App\Models\NewRequestComment;
+use App\Models\OptionComment;
+use App\Models\ProcessedFile;
+use App\Models\ProcessingSoftware;
+use App\Models\RoleUser;
+use App\Models\Service;
+use App\Models\Tool;
+use App\Models\UploadLater;
+use Exception;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
@@ -36,12 +58,19 @@ use Svg\Tag\Rect;
 use Twilio\Rest\Client;
 use Yajra\DataTables\DataTables;
 
+use Stichoza\GoogleTranslate\GoogleTranslate;
+
 use PDO;
 use stdClass;
+use Symfony\Component\Mailer\Exception\TransportException;
+use Twilio\Serialize;
 
 class FilesController extends Controller
 {
     private $manager;
+    private $alientechObj;
+    private $magicObj;
+    private $autotunerObj;
     /**
      * Create a new controller instance.
      *
@@ -49,188 +78,1657 @@ class FilesController extends Controller
      */
     public function __construct()
     {
+        $this->alientechObj = new AlientechController();
+        $this->magicObj = new MagicController();
+        $this->autotunerObj = new AutotunerController();
         $reminderManager = new ReminderManagerController();
-        $this->manager = $reminderManager->getManager();
+        $this->manager = $reminderManager->getAllManager();
         $this->middleware('auth',['except' => ['recordFeedback']]);
     }
 
-    public function getAccessToken(){
+    public function makeAlientechLogEntry( $fileID, $type, $message, $call, $response, $tempFileID = 0 ){
 
-        $apiURL = 'https://encodingapi.alientech.to/api/access-tokens/request';
-        $postInput = [
-            'clientApplicationGUID' => 'f8b0f518-8de7-4528-b8db-3995e1b787e9',
-            'secretKey' => "#5!/ThmmM*?;D\\jvjQ6%9/",
-        ];
-  
-        $headers = [
-            'Content-Type' => 'application/json'
-        ];
-  
-        $response = Http::withHeaders($headers)->post($apiURL, $postInput);
-  
-        $statusCode = $response->status();
-        $responseBody = json_decode($response->getBody(), true);
-     
-        if(isset($responseBody['accessToken'])){
-            $key = new Key();
-            $key->key = 'alientech_access_token';
-            $key->value = $responseBody['accessToken'];
-            $key->save();
-            return $responseBody['accessToken'];
+        $log = new Log();
+        $log->type = $type;
+        $log->request_type = 'alientech';
+        $log->message = $message;
+        $log->file_id = $fileID;
+        $log->temporary_file_id = $tempFileID;
+
+        if(is_array($call) || is_object($call)){
+            $log->call = json_encode($call);
+        }
+        else if(is_string($call)){
+            $log->call = $call;
+        }
+        if(is_array($response) || is_object($response)){
+            $log->response = json_encode($response);
+        }
+        else if(is_string($response)){
+            $log->response = $response;
         }
 
-        return null;
+        $log->save();
+
+    }
+	
+	public function assignedToMe(Request $request){
+        $file = File::findOrFail($request->file_id);
+        $file->assigned_to = Auth::user()->id;
+        $file->assignment_time = Carbon::now();
+        $file->save();
+
+        $assign = new EngineerAssignmentLog();
+        $assign->assigned_from = "No One";
+        $assign->assigned_to = Auth::user()->name;
+        $assign->assigned_by = Auth::user()->name;
+        $assign->file_id = $file->id;
+        $assign->save();
+
+        return Redirect::back()->withErrors(['success' => 'Comments added']);
     }
 
-    public function callbackKess3(Request $request){
-        \Log::info($request->all());
+	public function setFileOnHold(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+        $file->status = 'on_hold';
+
+        $this->changeStatusLog($file, 'on_hold', 'status', 'File is set on hold by engineer or admin.');
+
+        $file->updated_at = Carbon::now();
+        $file->save();
+
+        return Redirect::back()->withErrors(['success' => 'Files is on Hold']);
+    }
+
+	public function translateMessage(Request $request){
+        $record = EngineerFileNote::findOrFail($request->id);
+		
+        $text = $record->egnineers_internal_notes;
+        $tr = new GoogleTranslate();
+        $tr->setTarget('en');
+        $translation = $tr->translate($text);
+		
+        return response($translation, 200);
+    }
+    
+    public function getSearchResults(Request $request){
+        $keyword = $request->keyword;
+
+        if($keyword != ''){
+            $results = EngineerFileNote::where('egnineers_internal_notes', 'like', '%'.$keyword.'%')->paginate(10);
+        }   
+        else{
+            $results = NULL;
+        }
+
+        return view('files.search_messages', ['results' => $results, 'request' => $request]);
+    }
+
+    public function messageSearch(){
+        return view('files.search_messages');
+    }
+
+    public function setNewRequestComment(Request $request){
+
+        $existingRecord = NewRequestComment::where('new_request_id', $request->new_request_id)->first();
+
+        if($request->comment != NULL){
+            
+            if($existingRecord == NULL){
+                $newRecord = new NewRequestComment();
+                $newRecord->comment = $request->comment;
+                $newRecord->new_request_id = $request->new_request_id;
+                $newRecord->save();
+            }
+            else{
+                $existingRecord->comment = $request->comment;
+                $existingRecord->new_request_id = $request->new_request_id;
+                $existingRecord->save();
+            }
+        }
+        else{
+            $existingRecord->comment = $request->comment;
+            $existingRecord->new_request_id = $request->new_request_id;
+            $existingRecord->save();
+        }
+
+        return Redirect::back()->withErrors(['success' => 'Comments added']);
+
+    }
+
+    public function deleteACMFile(Request $request){
+        $file = ACMFile::findOrFail($request->acm_file_id);
+        $file->delete();
+    }
+
+    public function showFiles($id){
+        return view('files.show_all_users_files', ['id' => $id]);
+    }
+
+    public function addLaterMessage(Request $request){
+        $new = new FileMessage();
+        $new->file_id = $request->file_id;
+        $new->message = $request->message;
+        $new->save();
+
+        $file = File::findOrFail($request->file_id);
+        $this->changeStatusLog($file, 'ready_to_send', 'status', 'Engineer uploaded the file but for showing it later to customer.');
+        $file->status = 'ready_to_send';
+        $file->save();
+
+        return redirect()->back()->with(['success' => 'Message added to send later!']);
+    }
+
+    public function sendCustomerFile(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+        $requestFile = RequestFile::findOrFail($request->request_file_id);
+
+        // $message = FileMessage::where('request_file_id', $request->request_file_id)->first();
+
+        $requestFile->show_later = 0;
+        $requestFile->save();
+
+        $file->reupload_time = Carbon::now();
+        $file->save();
+
+        $file->status = 'completed';
+
+        $file->response_time = $this->getResponseTime($file);
+        $file->save();
+
+        // $reply = new EngineerFileNote();
+
+        // $message = str_replace(PHP_EOL,"<br>",$message->message);
+
+        // $reply->egnineers_internal_notes = $message;
+
+        // $reply->engineer = true;
+        // $reply->file_id = $file->id;
+        // $reply->user_id = Auth::user()->id;
+        // $reply->request_file_id = $requestFile->id;
+        
+        // $reply->save();
+
+        // FileMessage::where('request_file_id', $request->request_file_id)->delete();
+        UploadLater::where('request_file_id', $request->request_file_id)->delete();
+
+        $customer = User::findOrFail($file->user_id);
+        $admin = get_admin();
+    
+        // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
+        $template = EmailTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
+
+        $html1 = $template->html;
+
+        $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+        $html1 = str_replace("#customer_name", $customer->name ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
+        
+        $tunningType = $this->emailStagesAndOption($file);
+        
+        $html1 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html1);
+        $html1 = str_replace("#tuning_type", $tunningType,$html1);
+        $html1 = str_replace("#status", $file->status,$html1);
+        $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+        $html2 = $template->html;
+
+        $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+        $html2 = str_replace("#customer_name", $file->name ,$html2);
+        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
+        
+        $tunningType = $this->emailStagesAndOption($file);
+
+        $html2 = str_replace("#tuning_type", $tunningType,$html2);
+        $html2 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html2);
+        $html2 = str_replace("#status", $file->status,$html2);
+
+        if($file->front_end_id == 1){
+            $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+        }
+        else if($file->front_end_id == 3){
+            $html2 = str_replace("#file_url",  'http://portal.e-tuningfiles.com/'."file/".$file->id,$html2);
+        }
+        else{
+            $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+        }
+
+        $optionsMessage = "";
+        if($file->options){
+            foreach($file->options() as $option) {
+                $optionsMessage .= ",".$option." ";
+            }
+        }
+
+        // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
+        $messageTemplate = MessageTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
+
+        $message = $messageTemplate->text;
+
+        $message1 = str_replace("#customer", $customer->name ,$message);
+        $message2 = str_replace("#customer", $file->name ,$message);
+        
+        if($file->front_end_id == 1){
+            $subject = "ECU Tech: Engineer uploaded a file in reply.";
+        }
+        else if($file->front_end_id == 3){
+            $subject = "E-files: Engineer uploaded a file in reply.";
+        }
+        else if($file->front_end_id == 2){
+            $subject = "TuningX: Engineer uploaded a file in reply.";
+        }
+
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getAllManager();
+
+        
+
+            if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
+
+                try{
+                    \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
+                    
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                }
+
+            }
+            if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
+
+                try{
+                    \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
+
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                    $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
+                }
+            }
+            
+            if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
+                $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
+            }
+
+            if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsappforEng($admin->name,$admin->phone, 'eng_file_upload', $file);
+            }
+
+            if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
+                $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
+            }
+
+            if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
+            }
+            
+            return redirect()->back()->with(['success' => 'File sent to customer!']);
+
+    }
+
+    public function sendMessageToCustomer(Request $request){
+
+        $noteItself = $request->message;
+        
+        $file = File::findOrFail($request->file_id);
+
+        $reply = new EngineerFileNote();
+
+        $message = str_replace(PHP_EOL,"<br>",$request->message);
+
+        $reply->egnineers_internal_notes = $message;
+        $reply->engineer = true;
+        $reply->file_id = $request->file_id;
+        $reply->user_id = Auth::user()->id;
+
+        $latest = RequestFile::where('file_id', $request->file_id)->where('show_later', 0)->latest()->first();
+        
+        if($latest != NULL){
+            $reply->request_file_id = $latest->id;
+        }
+        else{
+            $reply->request_file_id = NULL;
+        }
+
+        $reply->save();
+
+        FileMessage::where('file_id', $request->file_id)->delete();
+
+        if($file->original_file_id != NULL){
+            $ofile = File::findOrFail($file->original_file_id);
+            $this->changeStatusLog($ofile, 'closed', 'support_status', 'Chat reply was sent from engineer on request file.');
+            $this->changeStatusLog($ofile, 'submitted', 'status', 'Chat reply was sent from engineer on request file.');
+            $ofile->support_status = "closed";
+            $ofile->status = "submitted";
+            $ofile->save();
+        }
+        $this->changeStatusLog($file, 'closed', 'support_status', 'Chat reply was sent from engineer.');
+        $this->changeStatusLog($file, 'submitted', 'status', 'Chat reply was sent from engineer on request file.');
+        $file->support_status = "closed";
+        $file->status = "submitted";
+        $file->save();
+        $customer = User::findOrFail($file->user_id);
+        $admin = get_admin();
+    
+        // $template = EmailTemplate::where('name', 'Message To Client')->first();
+        $template = EmailTemplate::where('slug', 'mess-to-client')->where('front_end_id', $file->front_end_id)->first();
+
+        $html1 = $template->html;
+
+        $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+        $html1 = str_replace("#customer_name", $customer->name ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
+        
+        $tunningType = $this->emailStagesAndOption($file);
+
+        $html1 = str_replace("#tuning_type", $tunningType,$html1);
+        $html1 = str_replace("#status", $file->status,$html1);
+        $html1 = str_replace("#note", $request->egnineers_internal_notes,$html1);
+        $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+        $html2 = $template->html;
+
+        $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+        $html2 = str_replace("#customer_name", $file->name ,$html2);
+        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
+        
+
+        $tunningType = $this->emailStagesAndOption($file);
+        
+        $html2 = str_replace("#tuning_type", $tunningType,$html2);
+        $html2 = str_replace("#status", $file->status,$html2);
+        $html2 = str_replace("#note", $request->egnineers_internal_notes,$html2);
+
+        if($file->front_end_id == 1){
+            $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+        }
+        else if($file->front_end_id == 3){
+            $html2 = str_replace("#file_url",  'http://portal.e-tuningfiles.com/'."file/".$file->id,$html2);
+        }
+        else{
+            $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+        }
+
+        $optionsMessage = "";
+        if($file->options){
+            foreach($file->options() as $option) {
+                $optionsMessage .= ",".$option." ";
+            }
+        }
+
+        // $messageTemplate = MessageTemplate::where('name', 'Message To Client')->first();
+        $messageTemplate = MessageTemplate::where('slug', 'mess-to-client')->where('front_end_id', $file->front_end_id)->first();
+
+        $message = $messageTemplate->text;
+
+        $message1 = str_replace("#customer", $customer->name ,$message);
+        $message2 = str_replace("#customer", $file->name ,$message);
+
+        // $message1 = "Hi, Status changed for a file by Customer: " .$customer->name;
+        // $message2 = "Hi, Status changed for a file by Customer: " .$file->name;
+
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getAllManager();
+
+        if($file->front_end_id == 1){
+            $subject = "ECU Tech: Engineer replied to your support message!";
+        }
+        else if($file->front_end_id == 3){
+            $subject = "E-files: Engineer replied to your support message!";
+        }
+        else{
+            $subject = "Tuningx: Engineer replied to your support message!";
+        }
+
+
+        if($this->manager['msg_eng_cus_email'.$file->front_end_id]){
+
+            try{
+                \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$customer->email.$e->getMessage(), 'email', $file->id);
+            }
+        }
+        if($this->manager['msg_eng_admin_email'.$file->front_end_id]){
+
+            try{
+                \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
+
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
+            }
+        }
+        
+        if($this->manager['msg_eng_admin_sms'.$file->front_end_id]){
+            
+            $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
+        }
+
+        if($this->manager['msg_eng_admin_whatsapp'.$file->front_end_id]){
+            
+            $this->sendWhatsappforEng($admin->name, $admin->phone, 'support_message_from_engineer', $file, $noteItself);
+        }
+
+        if($this->manager['msg_eng_cus_sms'.$file->front_end_id]){
+            $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
+        }
+
+        if($this->manager['msg_eng_cus_whatsapp'.$file->front_end_id]){
+            
+            $this->sendWhatsapp($customer->name, $customer->phone, 'support_message_from_engineer', $file, $noteItself);
+        }
+
+        $old = File::findOrFail($request->file_id);
+        $old->checked_by = 'engineer';
+        $old->save();
+
+        return redirect()->back()
+        ->with('success', 'Engineer message successfully Added!')
+        ->with('tab','chat');
+        
+    }
+
+    public function getCustomerMessage(Request $request){
+        $message = FileMessage::where('file_id', $request->file_id)->first()->message;
+        return  response()->json( ['message' => $message]);
+    }
+
+    public function editCustomerMessage(Request $request){
+        $message = FileMessage::where('request_file_id', $request->request_file_id)->first();
+        $message->message = str_replace(PHP_EOL,"<br>",$request->message);
+        $message->save();
+
+        return redirect()->back()->with(['success' => 'Message edited!']);
+    }
+
+    public function showRejectedFiles($id){
+        return view('files.show_rejected_users_files', ['id' => $id]);
+    }
+
+    public function uploadACMReply(Request $request){
+        
+        $attachment = $request->file('acm_file');
+        $fileName = $attachment->getClientOriginalName();
+
+        $file = File::findOrFail($request->file_id);
+
+        $middleName = $file->id;
+        $middleName .= date("dmy");
+        
+        foreach($file->softwares as $s){
+            if($s->service_id != 1){
+                // if($s->reply_id == $engineerFile->id){
+                    $middleName .= $s->service_id.$s->software_id;
+                // }
+            }
+        }
+        
+        $newFileName = $file->brand.'_'.$file->model.'_'.$middleName.'_acm_v'.$file->files->count();
+        
+        $newFileName = str_replace('/', '', $newFileName);
+        $newFileName = str_replace('\\', '', $newFileName);
+        $newFileName = str_replace('#', '', $newFileName);
+        $newFileName = str_replace(' ', '_', $newFileName);
+
+        $acmFile = new ACMFile();
+        $acmFile->acm_file = $newFileName;
+        $acmFile->request_file_id = $request->request_file_id;
+        $acmFile->save();
+        
+        if($file->front_end_id == 1){
+            
+            if($file->on_dev == 1){
+                $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+            }
+            else{
+                $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+            }
+
+        }
+
+        else if($file->front_end_id == 3){
+            
+            if($file->on_dev == 1){
+                $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+            }
+            else{
+
+                
+                $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
+            }
+
+        }
+
+        else{
+
+            if($file->on_dev == 1){
+                $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
+            }
+            else{
+                $attachment->move(public_path('/../../tuningX/public'.$file->file_path),$newFileName);
+            }
+        }
+        
+        return redirect()->back()->with(['success' => 'Engineers ACM file is uploaded successfully!']);
+
+    }
+
+    public function removeNullSoftwares(Request $request){
+        $allNulls = FileReplySoftwareService::where('file_id', $request->file_id)
+        ->whereNull('reply_id')->delete();
+
+        return  response()->json( ['msg' => 'records deleted.', 'file_id' => $request->file_id] );
+    }
+
+    public function addUploadLaterRecord(Request $request){
+
+        $newMessage = new UploadLater();
+        $newMessage->file_id = $request->file_id; 
+        $newMessage->save();
+
+        return  response()->json( ['msg' => 'upload later record added.']);
+
+    }
+
+    public function removeNullMessages(Request $request){
+        $allNulls = FileMessage::where('file_id', $request->file_id)
+        ->whereNull('request_file_id')->delete();
+
+        return  response()->json( ['msg' => 'records deleted.', 'file_id' => $request->file_id] );
+    }
+
+    public function removeNullUploadLaterRecords(Request $request){
+        $allNulls = UploadLater::where('file_id', $request->file_id)
+        ->whereNull('request_file_id')->delete();
+
+        return  response()->json( ['msg' => 'records deleted.', 'file_id' => $request->file_id] );
+    }
+
+    public function addSoftwares(Request $request){
+
+        $data = json_decode($request->form_data);
+
+        $fileID = NULL;
+        $finalArray = [];
+        $exclude = [];
+
+        foreach($data as $d) {
+
+            if($d->name == 'exclude_service[]'){
+                $exclude []= $d->value;
+            }
+            
+            if($d->name == 'file_id'){
+                $fileID = $d->value;
+            }
+
+            if($d->name == 'service_id'){
+                
+                $nowService = $d->value;
+
+                foreach($data as $in){
+
+                    if($in->name == 'processing-software-'.$nowService){
+
+                        $finalArray[$nowService] = $in->value;
+                    }
+    
+                }
+            }
+
+        }
+
+        foreach($finalArray as $key => $value){
+
+            if (!in_array($key, $exclude)){
+
+                $latest = FileReplySoftwareService::where('file_id', $fileID)
+                ->where('service_id', $key)
+                ->latest('created_at')->first();
+
+                if($latest){
+                    $latest->revised = 1;
+                    $latest->save();
+                }
+
+                $newRecord = new FileReplySoftwareService();
+                $newRecord->file_id = $fileID;
+                $newRecord->service_id = $key;
+                $newRecord->software_id = $value;
+                $newRecord->save();
+
+            }
+
+        }
+
+        return  response()->json( ['msg' => 'records added.', 'file_id' => $fileID] );
+
+    }
+
+    public function enableDownload(Request $request){
+
+        $file = File::findOrFail($request->id);
+
+        // $aFile = AlientechFile::where('file_id', $file->id);
+        // $aFile->delete();
+
+        $file->disable_customers_download = 0;
+        $file->status = 'completed';
+        $this->changeStatusLog($file, 'completed', 'status', 'File is enabled to download.');
+        $file->red = 0;
+        $file->submission_timer = NULL;
+        $file->timer = NULL;
+        
+        $file->support_status = "closed";
+        $this->changeStatusLog($file, 'closed', 'support_status', 'File is enabled to download.');
+        $file->checked_by = 'engineer';
+        
+        $file->reupload_time = Carbon::now();
+        $file->updated_at = Carbon::now();
+        
+        $file->response_time = $this->getResponseTime($file);
+        $file->save();
+
+        $customer = User::findOrFail($file->user_id);
+        $admin = get_admin();
+    
+        // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
+        $template = EmailTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
+
+        $html1 = $template->html;
+
+        $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+        $html1 = str_replace("#customer_name", $customer->name ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
+        
+        $tunningType = $this->emailStagesAndOption($file);
+        
+        $html1 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html1);
+        $html1 = str_replace("#tuning_type", $tunningType,$html1);
+        $html1 = str_replace("#status", $file->status,$html1);
+        $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+        $html2 = $template->html;
+
+        $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+        $html2 = str_replace("#customer_name", $file->name ,$html2);
+        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
+        
+        $tunningType = $this->emailStagesAndOption($file);
+
+        $html2 = str_replace("#tuning_type", $tunningType,$html2);
+        $html2 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html2);
+        $html2 = str_replace("#status", $file->status,$html2);
+
+        if($file->front_end_id == 1){
+            $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+        }
+        else if($file->front_end_id == 3){
+            $html2 = str_replace("#file_url",  "http://portal.e-tuningfiles.com/"."file/".$file->id,$html2);
+        }
+        else{
+            $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+        }
+
+        $optionsMessage = "";
+        if($file->options){
+            foreach($file->options() as $option) {
+                $optionsMessage .= ",".$option." ";
+            }
+        }
+
+        // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
+        $messageTemplate = MessageTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
+
+        $message = $messageTemplate->text;
+
+        $message1 = str_replace("#customer", $customer->name ,$message);
+        $message2 = str_replace("#customer", $file->name ,$message);
+        
+        if($file->front_end_id == 1){
+            $subject = "ECU Tech: Engineer uploaded a file in reply.";
+        }
+        else if($file->front_end_id == 3){
+            $subject = "E-files: Engineer uploaded a file in reply.";
+        }
+        else{
+            $subject = "TuningX: Engineer uploaded a file in reply.";
+        }
+
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getAllManager();
+
+        
+
+        if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
+
+            try{
+                \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$customer->email.$e->getMessage(), 'email', $file->id);
+            }
+
+        }
+        if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
+
+            try{
+                \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
+
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
+            }
+        }
+        
+        if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
+            $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
+        }
+
+        if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
+            $this->sendWhatsappforEng($admin->name,$admin->phone, 'eng_file_upload', $file);
+        }
+
+        if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
+            $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
+        }
+
+        if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
+            $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
+        }
+
+    
+        
+        return redirect()->back()->with(['success' => 'Now Engineers can download files which are in revision section!']);
+    }
+
+    public function flipShowComments(Request $request){
+
+        $file = RequestFile::findOrFail($request->id);
+        $file->show_comments = ($request->showCommentsOnFile == 'false') ? 0 : 1;
+        $file->save();
+        return response('comments flipped', 200);
+
+    }
+
+    public function declineShowFile(Request $request){
+
+        $reqfile = RequestFile::findOrFail($request->id);
+        $reqfile->show_file_denied = 1;
+        $reqfile->save();
+        return response('file declined', 200);
+    }
+
+    public function fillProcessingSoftware(Request $request){
+
+        $processingSoftwares = ProcessingSoftware::all();
+
+        $psArray = [];
+        foreach($processingSoftwares as $ps){
+            $psArray [$ps->id]= $ps->name;
+        }
+
+        $allNulls = FileReplySoftwareService::where('file_id', $request->file_id)
+        ->whereNull('reply_id')->delete();
+
+        $fileSoftwares = FileReplySoftwareService::where('file_id', $request->file_id)
+        ->where('reply_id', $request->new_request_id)
+        ->get();
+
+        $count = 1;
+        $strStage = '';
+        $opArr = [];
+
+        foreach($fileSoftwares as $fs){
+
+            if($count == 1){
+
+                $service = Service::findOrFail($fs->service_id);
+                
+                if($service->type == 'tunning'){
+
+                    foreach($psArray as $k=>$ps){
+
+                        if($fs->software_id == $k){
+                            $strStage .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
+                        }
+                        else{
+                            $strStage .= '<option value="'.$k.'">'.$ps.'</option>';
+                        }
+                    }
+                }
+                else{
+
+                    $temp = '';
+
+                foreach($psArray as $k=>$ps){
+
+                    if($fs->software_id == $k){
+                        $temp .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
+                        
+                    }
+                    else{
+                        $temp .= '<option value="'.$k.'">'.$ps.'</option>';
+                    }
+
+                    $opArr [$fs->service_id]= $temp;
+                }
+
+
+                }
+
+            }
+            else{
+
+                $temp = '';
+
+                foreach($psArray as $k=>$ps){
+
+                    if($fs->software_id == $k){
+                        $temp .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
+                        
+                    }
+                    else{
+                        $temp .= '<option value="'.$k.'">'.$ps.'</option>';
+                    }
+
+                    $opArr [$fs->service_id]= $temp;
+                }
+
+            }
+
+            $count++;
+
+        }
+
+        return response(['strStage' => $strStage, 'opArr' => $opArr], 200);
+        
+    }
+
+    public function updateProcessingSoftware(Request $request){
+
+        $delete = FileReplySoftwareService::where('file_id', $request->file_id)
+        ->where('reply_id', $request->reply_id)->delete();
+
+        if($request->service_id != NULL){
+
+            $new = new FileReplySoftwareService();
+            $new->file_id = $request->file_id;
+            $new->reply_id = $request->reply_id;
+            $new->service_id = $request->service_id;
+            $new->software_id = $request->stage_software;
+            $new->save();
+        }
+
+        if($request->option_id != NULL){
+
+            for( $i=0; $i < count($request->option_id); $i++ ){
+
+                $new = new FileReplySoftwareService();
+                $new->file_id = $request->file_id;
+                $new->reply_id = $request->reply_id;
+                $new->service_id = $request->option_id[$i];
+                $new->software_id = $request->option_softwares[$i];
+                $new->save();
+
+            }
+        }
+
+        return redirect()->back()->with(['success' => 'Options and Servies are updated!']);
+
+    }
+
+    public function declineComments(Request $request){
+
+        $reqfile = RequestFile::findOrFail($request->id);
+        $reqfile->comments_denied = 1;
+        $reqfile->save();
+        return response('comments declined', 200);
+
+    }
+
+    public function flipShowFile(Request $request){
+        
+        $reqfile = RequestFile::findOrFail($request->id);
+        $reqfile->is_kess3_slave = ($request->showFile == 'false') ? 1 : 0;
+        $reqfile->show_file_denied = 0;
+        $reqfile->save();
+
+        if($reqfile->is_kess3_slave == 0){
+
+            $file = File::findOrFail($reqfile->file_id);
+
+            $file->status = 'completed';
+            $this->changeStatusLog($file, 'completed', 'status', 'File is shown to customer to download.');
+            $file->red = 0;
+            $file->submission_timer = NULL;
+            $file->updated_at = Carbon::now();
+            $file->reupload_time = Carbon::now();
+            $file->response_time = $this->getResponseTime($file);
+
+            $file->save();
+            
+            $customer = User::findOrFail($file->user_id);
+            $admin = get_admin();
+        
+            // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
+            $template = EmailTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
+
+            $html1 = $template->html;
+
+            $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+            $html1 = str_replace("#customer_name", $customer->name ,$html1);
+            $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
+            
+            $tunningType = $this->emailStagesAndOption($file);
+            
+            $html1 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html1);
+            $html1 = str_replace("#tuning_type", $tunningType,$html1);
+            $html1 = str_replace("#status", $file->status,$html1);
+            $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+
+            $html2 = $template->html;
+
+            $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+            $html2 = str_replace("#customer_name", $file->name ,$html2);
+            $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
+            
+            $tunningType = $this->emailStagesAndOption($file);
+
+            $html2 = str_replace("#tuning_type", $tunningType,$html2);
+            $html2 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html2);
+            $html2 = str_replace("#status", $file->status,$html2);
+
+            if($file->front_end_id == 1){
+                $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+            }
+            else if($file->front_end_id == 3){
+                $html2 = str_replace("#file_url",  "http://portal.e-tuningfiles.com/"."file/".$file->id,$html2);
+            }
+            else{
+                $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+            }
+
+            $optionsMessage = "";
+            if($file->options){
+                foreach($file->options() as $option) {
+                    $optionsMessage .= ",".$option." ";
+                }
+            }
+
+            // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
+            $messageTemplate = MessageTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
+
+            $message = $messageTemplate->text;
+
+            $message1 = str_replace("#customer", $customer->name ,$message);
+            $message2 = str_replace("#customer", $file->name ,$message);
+            
+            if($file->front_end_id == 1){
+                $subject = "ECU Tech: Engineer uploaded a file in reply.";
+            }
+            else if($file->front_end_id == 3){
+                $subject = "E-files: Engineer uploaded a file in reply.";
+            }
+            else{
+                $subject = "TuningX: Engineer uploaded a file in reply.";
+            }
+
+            $reminderManager = new ReminderManagerController();
+            $this->manager = $reminderManager->getAllManager();
+
+        
+
+            if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
+
+                try{
+                    \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                    $this->makeLogEntry('error', 'email not sent to:'.$customer->email.$e->getMessage(), 'email', $file->id);
+                }
+
+            }
+            if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
+
+                try{
+                    \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
+
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                    $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
+                }
+            }
+            
+            if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
+                $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
+            }
+
+            if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsappforEng($admin->name,$admin->phone, 'eng_file_upload', $file);
+            }
+
+            if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
+                $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
+            }
+
+            if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
+            }
+
+        }
+        
+        return response('file flipped', 200);
+
+    }
+
+    public function deleteFiles(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
+        $ids = $request->ids;
+        $files = File::whereIn('id', $ids)->get();
+        
+        foreach($files as $file){
+
+            FileService::where('file_id', $file->id)->delete();
+            ProcessedFile::where('file_id', $file->id)->delete();
+            RequestFile::where('file_id', $file->id)->delete();
+            FileInternalEvent::where('file_id', $file->id)->delete();
+            FileFeedback::where('file_id', $file->id)->delete();
+            AlientechFile::where('file_id', $file->id)->delete();
+            EngineerFileNote::where('file_id', $file->id)->delete();
+            FilesStatusLog::where('file_id', $file->id)->delete();
+            FileUrl::where('file_id', $file->id)->delete();
+            Log::where('file_id', $file->id)->delete();
+            FileReplySoftwareService::where('file_id', $file->id)->delete();
+            
+            $file->delete();
+        }
+
+
+    }
+
+    public function forceOptionsOffer(Request $request){
+        
+        $fileID = $request->file_id;
+        $forceProposedOptions = $request->force_proposed_options;
+
+        $file = File::findOrFail($fileID);
+
+        foreach($file->options as $service){
+            $service->delete();
+        }
+
+        $proposedCredits = 0;
+
+        if($file->front_end_id == 1){
+            $proposedCredits += Service::findOrFail($file->stage_services->service_id)->credits;
+        }
+        else if($file->front_end_id == 2){
+            if($file->tool_type == 'master'){
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->tuningx_credits;
+
+            }
+            else{
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->tuningx_slave_credits;
+            }
+        }
+        else if($file->front_end_id == 3){
+
+            if($file->tool_type == 'master'){
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->efiles_credits;
+
+            }
+            else{
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->efiles_slave_credits;
+            }
+
+        }
+
+        if($forceProposedOptions){
+
+            foreach($forceProposedOptions as $offer){
+
+                    $option = new FileService();
+                    $option->service_id = $offer; 
+                    $option->type = 'option'; 
+
+                    if($file->front_end_id == 1){
+
+                        $proposedCredits += Service::findOrFail($offer)->credits;
+                        $option->credits = Service::findOrFail($offer)->credits;
+
+                    }
+                    else if($file->front_end_id == 2){
+
+                        $service = Service::findOrFail($offer);
+
+                        if($file->tool_type == 'master'){
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+        
+                        }
+                        else{
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                        }
+
+                    }
+                    else if($file->front_end_id == 3){
+                        
+                        $service = Service::findOrFail($offer);
+
+                        // code is same because we have different service IDs for different frontends when it comes to options
+
+                        if($file->tool_type == 'master'){
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+        
+                        }
+                        else{
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                        }
+                    }
+
+                    $option->file_id = $fileID;
+                    $option->save();
+            }
+        }
+
+        $differece = $file->credits - $proposedCredits;
+
+        $user = User::findOrfail($file->user_id);
+
+        if( $differece > 0 ){
+
+            $credit = new Credit();
+            $credit->credits = $differece;
+            $credit->user_id = $user->id;
+            $credit->front_end_id = $user->front_end_id;
+            $credit->country = code_to_country( $user->country );
+            $credit->file_id = $file->id;
+            $credit->stripe_id = NULL;
+
+            if($user->test == 1){
+                $credit->test = 1;
+            }
+
+            $credit->gifted = 1;
+            $credit->price_payed = 0;
+            
+            $credit->message_to_credit = 'File options accepted and credits returned!';
+            
+            $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
+            $credit->save();
+        }
+
+        $file->credits = $proposedCredits;
+        
+        $file->save();
+
+        return redirect()->back()->with(['success' => 'options adjusted and credits returned!']);
+    }
+
+    public function multiDelete(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
+        $files = File::orderBy('created_at', 'desc')->get();
+
+        return view('files.multi_delete', [ 'files' => $files ]);
+    }
+
+    public function addOptionsOffer(Request $request){
+
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
+
+        $forceProposedOptions = $request->proposed_options;
+
+        $fileID = $request->file_id;
+
+        $file = File::findOrFail($fileID);
+
+        foreach($file->options as $service){
+            $service->delete();
+        }
+
+        $proposedCredits = 0;
+
+        if($file->front_end_id == 1){
+            $proposedCredits += Service::findOrFail($file->stage_services->service_id)->credits;
+        }
+        else if($file->front_end_id == 2){
+            if($file->tool_type == 'master'){
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->tuningx_credits;
+
+            }
+            else{
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->tuningx_slave_credits;
+            }
+        }
+        else if($file->front_end_id == 3){
+
+            if($file->tool_type == 'master'){
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->efiles_credits;
+
+            }
+            else{
+
+                $proposedCredits += Service::findOrFail($file->stage_services->service_id)->efiles_slave_credits;
+            }
+
+        }
+
+        if($forceProposedOptions){
+
+            foreach($forceProposedOptions as $offer){
+
+                    $option = new FileService();
+                    $option->service_id = $offer; 
+                    $option->type = 'option'; 
+
+                    if($file->front_end_id == 1){
+
+                        $proposedCredits += Service::findOrFail($offer)->credits;
+                        $option->credits = Service::findOrFail($offer)->credits;
+
+                    }
+                    else if($file->front_end_id == 2){
+
+                        $service = Service::findOrFail($offer);
+
+                        if($file->tool_type == 'master'){
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+        
+                        }
+                        else{
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                        }
+
+                    }
+                    else if($file->front_end_id == 3){
+                        
+                        $service = Service::findOrFail($offer);
+
+                        // code is same because we have different service IDs for different frontends when it comes to options
+
+                        if($file->tool_type == 'master'){
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
+        
+                        }
+                        else{
+
+                            $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                            $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->slave_credits;
+                        }
+                    }
+
+                    $option->file_id = $fileID;
+                    $option->save();
+            }
+        }
+
+        $differece = $file->credits - $proposedCredits;
+
+            $user = User::findOrfail($file->user_id);
+
+            if( $differece > 0 ){
+
+                $credit = new Credit();
+                $credit->credits = $differece;
+                $credit->user_id = $user->id;
+                $credit->front_end_id = $user->front_end_id;
+                $credit->country = code_to_country( $user->country );
+                $credit->file_id = $file->id;
+                $credit->stripe_id = NULL;
+
+                if($user->test == 1){
+                    $credit->test = 1;
+                }
+
+                $credit->gifted = 1;
+                $credit->price_payed = 0;
+                
+                $credit->message_to_credit = 'File options updated and credits returned!';
+                
+                $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
+                $credit->save();
+            
+
+            $file->credits = $proposedCredits;
+            
+            $file->save();
+
+            return redirect()->back()->with(['success' => 'Options updated!']);
+
+        }
+        else{
+
+            $file = File::findOrFail($request->file_id);
+            
+            $proposed = new EngineerOptionsOffer();
+            $proposed->file_id = $request->file_id;
+            $proposed->type = 'stage';
+            $proposed->service_id = $request->proposed_stage;
+            $proposed->save();
+
+            $proposedOptions = $request->proposed_options;
+            
+            if($proposedOptions){
+                foreach($proposedOptions as $o){
+                    $proposed = new EngineerOptionsOffer();
+                    $proposed->file_id = $request->file_id;
+                    $proposed->type = 'option';
+                    $proposed->service_id = $o;
+                    $proposed->save();
+                }
+            }
+
+            $file->status = 'on_hold';
+            $this->changeStatusLog($file, 'on_hold', 'status', 'File is set on hold after offering options to customer.');
+            $file->updated_at = Carbon::now();
+            $file->save();
+        
+            return redirect()->back()->with(['success' => 'New stages and options proposed!']);
+        }
+    }
+
+    public function flipDecodedMode(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
+        $file = File::findOrFail($request->file_id);
+
+        if($file->decoded_mode == 1){
+            
+            $file->file_attached = $file->file_attached_backup;
+            $file->file_attached_backup = null;
+            $file->decoded_mode = 0;
+            $file->save();
+
+        }
+
+        else if ($file->decoded_mode == 0){
+
+            $file->file_attached_backup = $file->file_attached;
+            $file->file_attached = $file->final_decoded_file();
+            $file->decoded_mode = 1;
+            $file->save();
+
+        }
+
+        return redirect()->back()
+        ->with('success', 'File Decoded mode is updated!');
+    }
+    public function support($id){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
+        $requestFile = RequestFile::findOrFail($id);
+        $file = File::findOrFail($requestFile->file_id);
+
+        foreach($file->engineer_file_notes as $f){
+            $f->sent_by = NULL;
+            $f->save();
+        }
+
+        if(($file->front_end_id == 1 && $file->subdealer_group_id == NULL)){
+            abort(404);
+        }
+
+        return view('files.support', ['requestFile' => $requestFile, 'file' => $file]);
+    }
+
+    public function changeCheckingStatus(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
+        $file = File::findOrFail($request->file_id);
+
+        if($file->checking_status == 'unchecked'){
+            $file->checking_status = 'fail';
+            $file->save();
+            return  response()->json( ['msg' => 'File was not found.', 'fail' => 1, 'file_id' => $file->id] );
+        }
+        if($file->checking_status == 'completed'){
+            return response()->json( ['msg' => 'File found.', 'fail' => 2, 'file_id' => $file->id] );
+        }
+        return response()->json( ['msg' => 'File Status does not change.', 'fail' => 0, 'file_id' => $file->id] );
+    }
+
+    public function search(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
+        $file = File::findOrFail($request->file_id);
+        
+        if($request->download_directly == 'download' && $request->custom_stage ){
+            
+            $file->custom_stage = $request->custom_stage;
+            $file->save();
+        }
+        else{
+            $file->custom_stage = NULL;
+            $file->save();
+        }
+        
+        if($request->download_directly == 'download' && $request->custom_options ){
+            
+            $file->custom_options = implode(',', $request->custom_options);
+            $file->save();
+        }
+        else{
+            $file->custom_options = '';
+            $file->save();
+        }
+        
+        if($request->file('decrypted_file')){
+
+            $attachment = $request->file('decrypted_file');
+            $fileName = $attachment->getClientOriginalName();
+
+            // $file->file_attached = $fileName;
+            
+            $file->save();
+
+            if($file->front_end_id == 1){
+
+                // $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../EcuTechV2/public/'.$file->file_path),$fileName);
+                }
+                else{
+                    $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+                }
+
+            }
+            else if($file->front_end_id == 3){
+
+                // $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../EcuTechV2/public/'.$file->file_path),$fileName);
+                }
+                else{
+                    $attachment->move(public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path),$fileName);
+                }
+
+            }
+            else{
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
+                }
+                else{
+                    $attachment->move(public_path('/../../tuningX/public/'.$file->file_path),$fileName);
+                }
+            }
+            
+        }
+
+        $processFile = new ProcessedFile();
+        $processFile->file_id = $file->id;
+        $processFile->type = 'decoded';
+        $processFile->name = explode(".", $fileName)[0];
+
+        $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+
+        if($ext != ""){
+            $processFile->extension = $ext;
+        }
+
+        $processFile->save();
+
+        $file->checking_status = 'unchecked';
+        $file->checking_status_versions = 0;
+        $file->inner_search = 1;
+        $file->save();
+
+        return view('files.search', ['file' => $file]);
+
+    }
+    
+    public function delete(Request $request){
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'delete-file')) {
+            
+            $file = File::findOrFail($request->id);
+
+            FileService::where('file_id', $file->id)->delete();
+            ProcessedFile::where('file_id', $file->id)->delete();
+            RequestFile::where('file_id', $file->id)->delete();
+            FileInternalEvent::where('file_id', $file->id)->delete();
+            FileFeedback::where('file_id', $file->id)->delete();
+            AlientechFile::where('file_id', $file->id)->delete();
+            EngineerFileNote::where('file_id', $file->id)->delete();
+            FilesStatusLog::where('file_id', $file->id)->delete();
+            FileUrl::where('file_id', $file->id)->delete();
+            Log::where('file_id', $file->id)->delete();
+            FileReplySoftwareService::where('file_id', $file->id)->delete();
+            
+            $file->delete();
+
+            return response()->json( 'deleted' );
+        }
+        else{
+            return abort(404);
+        }
+
+    }
+
+    // public function getAccessToken(){
+
+    //     $apiURL = 'https://encodingapi.alientech.to/api/access-tokens/request';
+    //     $postInput = [
+    //         'clientApplicationGUID' => 'f8b0f518-8de7-4528-b8db-3995e1b787e9',
+    //         'secretKey' => "#5!/ThmmM*?;D\\jvjQ6%9/",
+    //     ];
+  
+    //     $headers = [
+    //         'Content-Type' => 'application/json'
+    //     ];
+  
+    //     $response = Http::withHeaders($headers)->post($apiURL, $postInput);
+  
+    //     $statusCode = $response->status();
+    //     $responseBody = json_decode($response->getBody(), true);
+     
+    //     if(isset($responseBody['accessToken'])){
+    //         $key = new Key();
+    //         $key->key = 'alientech_access_token';
+    //         $key->value = $responseBody['accessToken'];
+    //         $key->save();
+    //         return $responseBody['accessToken'];
+    //     }
+
+    //     return null;
+    // }
+
+    public function callbackKess3(Response $response){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
+        \Log::info($response);
     }
 
     public function decodeFile(){
 
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $token = Key::where('key', 'alientech_access_token')->first()->value;
 
-        // $client = new GuzzleHttpClient();
-
-        // $response = $client->request('POST', 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3', [
-        //     'headers' => [
-        //         'Content-Type' => 'multipart/form-data',
-        //         'X-Alientech-ReCodAPI-LLC' => $token,
-        //     ],
-        //     'json' => [
-        //         'readFile' => public_path('Test_File1'),
-        //     ],
-        // ]);
-
-        // if ($response->getStatusCode() == 200) {
-        //     // Request was successful
-        //     $userData = json_decode($response->getBody()->getContents(), true);
-
-        //     dd($userData);
-        // } else {
-        //     // Request failed
-
-           
-        //     $errorMessage = json_decode($response->getBody()->getContents(), true)['error'];
-        //     dd($errorMessage);
-        // }
-
-        // $postInput = [
-        //     'readFile' => public_path('Test_File1'),
-        // ];
-        
-        // $postHeaders = [
-        //     'Content-Type' => 'multipart/form-data',
-        //     'X-Alientech-ReCodAPI-LLC' => $token,
-        // ];
-
-        // // dd($postInput);
-
-        // $response = Http::withHeaders([
-        //     'Content-Type' => 'multipart/form-data',
-        //     'X-Alientech-ReCodAPI-LLC' => $token,
-        // ])->post('https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3', [
-        //     'readFile' => public_path('Test_File1')
-        // ]);
-
-        // $apiURL = 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3';
-        // dd(($apiURL));
-        // $postInput = [
-        //     'readFile' => public_path('Test_File1'),
-        // ];
-        
-        // $postHeaders = [
-        //     'Content-Type' => 'multipart/form-data',
-        //     'X-Alientech-ReCodAPI-LLC' => $token,
-        // ];
-
-        // $response = Http::withHeaders($postHeaders)->post($apiURL, [
-        //     'readFile' => public_path('Test_File1'),
-        // ]);
-
-        // dd($response->status());
-        // $responseBody = json_decode($response->getBody(), true);
-
-        // dd($responseBody);
-
-        // $postInput = [
-        //     'readFile' => public_path('obd1'),
-        // ];
-
-
-        // $response = Http::withHeaders($headers)->post($apiURL, $postInput);
-
-        // $postInput = [
-        //     'readFile' => public_path('obd1'),
-        // ];
-
-        // Set the URL and data for the POST request
-        // $url = 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3';
-        // $data = array('readFile' => public_path('Test_File1'));
-
-        // // Initialize cURL
-        // $ch = curl_init();
-
-        // // Set the cURL options
-        // curl_setopt($ch, CURLOPT_URL, $url);
-        // curl_setopt($ch, CURLOPT_POST, 1);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        //     'Content-Type' => 'multipart/form-data',
-        //     'X-Alientech-ReCodAPI-LLC' => $token,
-        // ));
-
-        // // Execute the cURL request
-        // $response = curl_exec($ch);
-
-        // // Close cURL
-        // curl_close($ch);
-
-        // // Do something with the response
-        // dd( $response );
-
-
-        //close all code
-
-        // $url = "https://encodingapi.alientech.to/api/kess3/file-slots/d824a6a4-16eb-42eb-a824-65965358cafb/close";
-        // $url = "https://encodingapi.alientech.to/api/kess3/file-slots/4c91a0d6-712a-4cd3-a5c2-74270f539c65/close";
-
-        //     $headers = [
-        //         // 'Content-Type' => 'multipart/form-data',
-        //         'X-Alientech-ReCodAPI-LLC' => $token,
-        //     ];
-  
-        //     $response = Http::withHeaders($headers)->post($url, []);
-
-        //     dd($response->getBody());
-
-        //     exit;
-
-//        $url = "https://encodingapi.alientech.to/api/kess3/file-slots?ownerCustomerCode=user1";
-        
         $url = "https://encodingapi.alientech.to/api/kess3/file-slots";
 
         $headers = [
-            // 'Content-Type' => 'multipart/form-data',
             'X-Alientech-ReCodAPI-LLC' => $token,
         ];
   
         $response = Http::withHeaders($headers)->get($url);
         $responseBody = json_decode($response->getBody(), true);
 
-        dd($responseBody);
-
         foreach($responseBody as $row){
 
-            // dd($row['guid']);
-            
             if($row['isClosed'] == false){
 
                 $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$row['guid']."/close";
 
                 $headers = [
-                // 'Content-Type' => 'multipart/form-data',
                 'X-Alientech-ReCodAPI-LLC' => $token,
                 ];
 
@@ -241,105 +1739,181 @@ class FilesController extends Controller
 
         dd('all_closed');
         exit;
+    }
+    
+    public function deactivateAllExceptThisFeed($ThatFeed) {
+        
+        $allOtherFeed = NewsFeed::where('id', '!=', $ThatFeed->id)->get();
 
-        ///
-
-        // $url = "https://encodingapi.alientech.to/api/kess3/file-slots/8ae30e82-0263-4ba2-bb50-2d88b5d8a4b7/files/?fileType=OBDDecoded";
-
-        // $headers = [
-        //     // 'Content-Type' => 'multipart/form-data',
-        //     'X-Alientech-ReCodAPI-LLC' => $token,
-        // ];
-  
-        // $response = Http::withHeaders($headers)->get($url);
-        // $responseBody = json_decode($response->getBody(), true);
-
-        // $base64_string = $responseBody['data'];
-
-        // // specify the path and filename for the downloaded file
-        // $filepath = public_path('').'/'.$responseBody['name'];
-
-        // // save the decoded string to a file
-        // $flag = file_put_contents($filepath, $base64_string);
-
-        // dd($flag);
-
-        // $statusCode = $response->status();
-
-        // try {
-        //     $response->throw();
-        // }
-        // catch(RequestException $e){
-
-        //     dd($e->response);
-        // }
-
-       
-
-        // dd($responseBody);
-
-       
-        // // set the content type and headers for downloading the file
-        // header('Content-Type: application/octet-stream');
-        // header('Content-Disposition: attachment; filename="'.$responseBody['name'].'"');
-
-        // download the file to the user's browser
-        // readfile($filepath);
-
+        foreach($allOtherFeed as $feed){
+            if($feed->active == 1){
+                // \Log::info("deactivating feed inner:".$feed->title);
+                $feed->active = 0;
+                $feed->save();
+            }
+        }
     }
 
-    // public function fileCopyAndPath(){
+    public function feedadjustment(){
 
-    //     $files = File::all();
+        $feeds = NewsFeed::all();
 
-    //     foreach($files as $file){
-        
-    //         $toPath = public_path('/../../portal/public/uploads/'.$file->file_attached);
+        $dateCheck = date('l');
+        $timeCheck = date('H:i');
 
-    //         $inPath = public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/');
-            
-    //         if (!file_exists($inPath )) {
-    //             mkdir($inPath , 0777, true);
-    //         }
+        $deactiveAll = false;
 
-    //         $flag = copy( $toPath, $inPath.$file->file_attached);
+        $thatFeed = '';
 
-    //         $file->file_path = '/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/';
-    //         $file->save();
+        foreach($feeds as $feed) {
 
-    //         $engineerFiles = RequestFile::where('file_id', $file->id)->get();
+            // \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
+            // \Log::info("Feed Activation Day: ".strtotime(date('d-m-y h:i:s')));
+            // \Log::info("activation date time: ".$feed->activate_at);
+            // \Log::info("activation date time: ".strtotime($feed->activate_at));
 
-    //         foreach($engineerFiles as $f){
-    //             $flag = copy( $toPath, $inPath.$f->request_file);
-    //         }
+            if($feed->activation_weekday == null &&  $feed->deactivation_weekday == null){
 
-            
-    //     }
-    // }
+                if( strtotime(now()) >= strtotime($feed->activate_at) && strtotime(now()) <= strtotime($feed->deactivate_at)){
+                    // if($feed->active == 0){
+                            // \Log::info("activating feed:".$feed->title);
+                            $feed->active = 1;
+                            $feed->save();
+    
+                            $deactiveAll = true;
+                            $thatFeed = $feed;
+                        // }
+                    }
+                    else {
+                        if($feed->active == 1){
+                            // \Log::info("deactivating feed:".$feed->title);
+                            $feed->active = 0;
+                            $feed->save();
+                        }
+                    }
+                }
 
+            if(!$deactiveAll) {
+
+                if($feed->activate_at == null &&  $feed->deactivate_at == null) {
+
+                    if($this->getDayNumber($dateCheck) >= $this->getDayNumber($feed->activation_weekday) && $this->getDayNumber($dateCheck) <= $this->getDayNumber($feed->deactivation_weekday) ) {
+                        
+                        if ( strtotime($timeCheck) > strtotime($feed->daily_activation_time) && strtotime($timeCheck) < strtotime($feed->daily_deactivation_time) ) {
+
+                            if($feed->active == 0){
+                                
+                                // \Log::info("activating feed at:".date('l').$feed->title);
+                                $feed->active = 1;
+                                $feed->save();
+                            }
+                        }
+
+                        else {
+                            
+                            if($feed->active == 1){
+                                
+                                // \Log::info("deactivating feed at:".date('l').$feed->title);
+                                $feed->active = 0;
+                                $feed->save();
+                            }
+                        }
+                    }
+
+                    else{
+
+                            if($feed->active == 1){
+
+                                // \Log::info("deactivating feed:".date('l').$feed->title);
+                                $feed->active = 0;
+                                $feed->save();
+                            }
+                        
+                        }
+                    }
+                }
+                if($deactiveAll){
+                    $this->deactivateAllExceptThisFeed($thatFeed);
+                }
+        }
+    }
+
+    function recursiveChmod($path, $filePerm=0777, $dirPerm=0777) {
+        // Check if the path exists
+        if (!file_exists($path)) {
+            return(false);
+        }
+ 
+        // See whether this is a file
+        if (is_file($path)) {
+            // Chmod the file with our given filepermissions
+            chmod($path, $filePerm);
+ 
+        // If this is a directory...
+        } elseif (is_dir($path)) {
+            // Then get an array of the contents
+            $foldersAndFiles = scandir($path);
+ 
+            // Remove "." and ".." from the list
+            $entries = array_slice($foldersAndFiles, 2);
+ 
+            // Parse every result...
+            foreach ($entries as $entry) {
+                // And call this function again recursively, with the same permissions
+                $this->recursiveChmod($path."/".$entry, $filePerm, $dirPerm);
+            }
+ 
+            // When we are done with the contents of the directory, we chmod the directory itself
+            chmod($path, $dirPerm);
+        }
+ 
+        // Everything seemed to work out well, return true
+        return(true);
+    }
+
+    public function getDayNumber($day) {
+
+        $days = [
+            0 => 'Monday',
+            1 => 'Tuesday',
+            2 => 'Wednesday',
+            3 => 'Thursday',
+            4 => 'Friday',
+            5 => 'Saturday',
+            6 => 'Sunday'
+        ];
+
+        foreach($days as $key => $row){
+            if($row == $day)
+            return $key;
+        }
+
+    }
+    
     public function liveFiles(){
 
-        // $files = File::all();
-        // foreach($files as $file){
-        //     $file->username = User::findOrFail($file->user_id)->name;
-        //     $file->save();
-        // }
+        $this->feedadjustment();
 
-        return view('files.live_files');    
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
+            
+            return view('files.live_files');    
+        }
+        else{
+            return abort(404);
+        }
     }
     
     public function updateFileVehicle(Request $request) {
+
+    if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-file')){
         
         $this->validate($request, [
-            // 'brand' => 'required',
-            // 'model' => 'required',
             'engine' => 'required',
             'version' => 'required'
         ]);
 
         $file = File::findOrFail($request->id);
-        // $file->brand = $request->brand;
-        // $file->model = $request->model;
+
         $file->version = $request->version;
         $file->engine = $request->engine;
         $file->ecu = $request->ecu;
@@ -350,6 +1924,12 @@ class FilesController extends Controller
 
     }
 
+    else{
+        return abort(404);
+        }
+
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -357,6 +1937,11 @@ class FilesController extends Controller
      */
     public function getModels(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $brand = $request->brand;
         
         $models = Vehicle::OrderBy('model', 'asc')->select('model')->whereNotNull('model')->distinct()->where('make', '=', $brand)->get();
@@ -371,6 +1956,11 @@ class FilesController extends Controller
      */
     public function getVersions(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $model = $request->model;
         $brand = $request->brand;
 
@@ -389,6 +1979,11 @@ class FilesController extends Controller
      */
     public function getEngines(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $model = $request->model;
         $brand = $request->brand;
         $version = $request->version;
@@ -409,6 +2004,11 @@ class FilesController extends Controller
      */
     public function getECUs(Request $request)
     {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         $model = $request->model;
         $brand = $request->brand;
         $version = $request->version;
@@ -434,74 +2034,85 @@ class FilesController extends Controller
     }
 
     public function editFile($id) {
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-file')){
         
-        $file = File::findOrFail($id);
+            $file = File::findOrFail($id);
 
-        $brandsObjects = Vehicle::OrderBy('make', 'asc')->select('make')->distinct()->get();
+            $brandsObjects = Vehicle::OrderBy('make', 'asc')->select('make')->distinct()->get();
 
-        $brands = [];
-        foreach($brandsObjects as $b){
-            if($b->make != '')
-            $brands []= $b->make;
+            $brands = [];
+            foreach($brandsObjects as $b){
+                if($b->make != '')
+                $brands []= $b->make;
+            }
+
+            $modelsObjects = Vehicle::OrderBy('model', 'asc')->select('model')->whereNotNull('model')->distinct()->where('make', '=', $file->brand)->get();
+
+            $models = [];
+            foreach($modelsObjects as $m){
+                if($m->model != '')
+                $models []= $m->model;
+            }
+
+            $versionsObjects = Vehicle::OrderBy('generation', 'asc')->whereNotNull('generation')->select('generation')->distinct()
+            ->where('Make', '=', $file->brand)
+            ->where('Model', '=', $file->model)
+            ->get();
+
+            $versions = [];
+            foreach($versionsObjects as $v){
+                if($v->generation != '')
+                $versions []= $v->generation;   
+            }        
+
+            $enginesObjects = Vehicle::OrderBy('engine', 'asc')->whereNotNull('engine')->select('engine')->distinct()
+            ->where('Make', '=', $file->brand)
+            ->where('Model', '=', $file->model)
+            ->where('Generation', '=', $file->version)
+            ->get();
+
+            $engines = [];
+            foreach($enginesObjects as $e){
+                if($e->engine != '')
+                $engines []= $e->engine;   
+            }   
+
+            $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->whereNotNull('Engine_ECU')->select('Engine_ECU')->distinct()
+            ->where('Make', '=', $file->brand)
+            ->where('Model', '=', $file->model)
+            ->where('Generation', '=', $file->version)
+            ->where('Engine', '=', $file->engine)
+            ->get();
+
+            $ecusArray = [];
+
+            foreach($ecus as $e){
+                $temp = explode(' / ', $e->Engine_ECU);
+                $ecusArray = array_merge($ecusArray,$temp);
+            }
+
+            $ecusArray = array_values(array_unique($ecusArray));
+
+                return view('files.edit', [ 'file' => $file, 
+                'brands' => $brands, 
+                'models' => $models, 
+                'versions' => $versions,
+                'engines' => $engines,
+                'ecus' => $ecusArray
+            ]);
         }
+        else{
 
-        $modelsObjects = Vehicle::OrderBy('model', 'asc')->select('model')->whereNotNull('model')->distinct()->where('make', '=', $file->brand)->get();
-
-        $models = [];
-        foreach($modelsObjects as $m){
-            if($m->model != '')
-            $models []= $m->model;
+            return abort(404);
         }
-
-        $versionsObjects = Vehicle::OrderBy('generation', 'asc')->whereNotNull('generation')->select('generation')->distinct()
-        ->where('Make', '=', $file->brand)
-        ->where('Model', '=', $file->model)
-        ->get();
-
-        $versions = [];
-        foreach($versionsObjects as $v){
-            if($v->generation != '')
-            $versions []= $v->generation;   
-        }        
-
-        $enginesObjects = Vehicle::OrderBy('engine', 'asc')->whereNotNull('engine')->select('engine')->distinct()
-        ->where('Make', '=', $file->brand)
-        ->where('Model', '=', $file->model)
-        ->where('Generation', '=', $file->version)
-        ->get();
-
-        $engines = [];
-        foreach($enginesObjects as $e){
-            if($e->engine != '')
-            $engines []= $e->engine;   
-        }   
-
-        $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->whereNotNull('Engine_ECU')->select('Engine_ECU')->distinct()
-        ->where('Make', '=', $file->brand)
-        ->where('Model', '=', $file->model)
-        ->where('Generation', '=', $file->version)
-        ->where('Engine', '=', $file->engine)
-        ->get();
-
-        $ecusArray = [];
-
-        foreach($ecus as $e){
-            $temp = explode(' / ', $e->Engine_ECU);
-            $ecusArray = array_merge($ecusArray,$temp);
-        }
-
-        $ecusArray = array_values(array_unique($ecusArray));
-
-            return view('files.edit', [ 'file' => $file, 
-            'brands' => $brands, 
-            'models' => $models, 
-            'versions' => $versions,
-            'engines' => $engines,
-            'ecus' => $ecusArray
-        ]);
     }
 
     public function saveFeedbackEmailSchedual(Request $request) {
+
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
 
         $this->validate($request, [
             'days' => 'required|min:1',
@@ -561,6 +2172,11 @@ class FilesController extends Controller
     }
 
     public function feedbackEmails() {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         //email template
         $feebdackTemplate = EmailTemplate::findOrFail(9);
         $schedual = Schedualer::take(1)->first();
@@ -568,6 +2184,10 @@ class FilesController extends Controller
     }
 
     public function saveFeedbackEmailTemplate(Request $request) {
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
 
         $feebdackTemplate = EmailTemplate::findOrFail(9);
         $feebdackTemplate->html = $request->new_template;
@@ -579,6 +2199,10 @@ class FilesController extends Controller
 
     public function editMessage( Request $request ) {
 
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
+
         $message = EngineerFileNote::findOrFail($request->id);
         $message->egnineers_internal_notes = $request->message;
         $message->save();
@@ -587,269 +2211,330 @@ class FilesController extends Controller
         ->with('success', 'Engineer note successfully Edited!')
         ->with('tab','chat');
     }
+    
+    public function downloadAutotuner( $id,$requestFileID ) {
 
-    // public function generateFeedbackEmail( $fileID, $requestFileID, $userID ) {
+        $file = File::findOrFail($id); 
 
-    //     $file = File::findOrFail($fileID); // this is a file on local
-    //     // $file = File::findOrFail(203); // this is a file on live
-    //     $feebdackTemplate = EmailTemplate::findOrFail(9); // email template must always be 9
-    //     $html = $feebdackTemplate->html;
-    //     $fileName = $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard;
+        $autoTunerEncryptedFile = AutotunerEncrypted::where('file_id', $id)
+        ->where('request_file_id', $requestFileID)
+        ->first();
 
-    //     $html = str_replace('#file_name', $fileName, $html);
-    //     $html = str_replace('#angry_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/angry', $html);
-    //     $html = str_replace('#sad_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/sad', $html);
-    //     $html = str_replace('#ok_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/ok', $html);
-    //     $html = str_replace('#good_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/good', $html);
-    //     $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
-    //     $html = str_replace('#happy_link', env('PORTAL_URL').'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
-    //     $html = str_replace('#file_url', env('PORTAL_URL').'file/'.$fileID, $html);
-
-    //     $subject = "ECU Tech: Feedback Request";
-    //     \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
-
-    // }
-
-    // public function testFeedbackEmail() {
-    //     // $file = File::findOrFail(42); // this is a file on local
-    //     $file = File::findOrFail(231); // this is a file on live
-    //     $requestFileID = 118;
-    //     $userID = 50;
-
-    //     $this->generateFeedbackEmail($file->id, $requestFileID, $userID);
-
-    //     // $feebdackTemplate = EmailTemplate::findOrFail(9);
-    //     // $html = $feebdackTemplate->html;
-
-    //     // // dd($html);
-
-    //     // $subject = "ECU Tech: Feedback Request";
-    //     // \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject]));
-
-    // }
+        // dd($autoTunerEncryptedFile);
 
 
+        if($file->front_end_id == 1){
 
-    // public function recordFeedback($fileID, $userID, $feedback){
-        
-    // }
+            // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
 
-    public function downloadDecoded($id,$file_name) {
+            if($file->on_dev == 1){
 
-        $token = Key::where('key', 'alientech_access_token')->first()->value;
-
-        $file = File::findOrFail($id);
-
-        $alientechGUID = AlientechFile::where('key', 'guid')->where('file_id', $id)->first()->value;
-        
-        $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechGUID;
-
-        $headers = [
-            'X-Alientech-ReCodAPI-LLC' => $token,
-        ];
-  
-        $response = Http::withHeaders($headers)->get($getsyncOpURL);
-        $responseBody = json_decode($response->getBody(), true);
-
-        // dd($responseBody);
-
-        $slotGuid = $responseBody['slotGUID'];
-        
-        $result = $responseBody['result'];
-
-        if($result['kess3Mode'] == 'OBD'){
-
-            if( isset($result['obdDecodedFileURL']) ){
-            
-                $url = $result['obdDecodedFileURL'];
-
-                $headers = [
-                    'X-Alientech-ReCodAPI-LLC' => $token,
-                ];
-        
-                $response = Http::withHeaders($headers)->get($url);
-                $responseBody = json_decode($response->getBody(), true);
-
-                $base64_string = $responseBody['data'];
-
-                // dd($responseBody);
-                // specify the path and filename for the downloaded file
-                $filepath = $responseBody['name'];
-
-                // save the decoded string to a file
-                $flag = file_put_contents($filepath, $base64_string);
-
-                $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
-
-                $headers = [
-                // 'Content-Type' => 'multipart/form-data',
-                'X-Alientech-ReCodAPI-LLC' => $token,
-                ];
-
-                $response = Http::withHeaders($headers)->post($url, []);
-
-                // // set the content type and headers for downloading the file
-                // header('Content-Type: application/octet-stream');
-                // header('Content-Disposition: attachment; filename="'.$responseBody['name'].'"');
-                
-                // // download the file to the user's browser
-                // readfile($filepath);
-
-                // $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
-                
-                // $path = public_path('/../../portal/public'.$file->file_path);
-                // $file_path = $path.$file->file_attached.'.'.$extension;
-                // return response()->download($file_path);
-                
-                // $path = public_path('/../../portal/public'.$file->file_path);
-                // $file_path = $path.$file_name;
-                // return response()->download($file_path);
+                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$autoTunerEncryptedFile->name;
 
             }
+            else{
+
+                $file_path = public_path('/../../portal/public/'.$file->file_path).$autoTunerEncryptedFile->name;
+            }
+
         }
-        else if($result['kess3Mode'] == 'BootBench'){
-            foreach($result['bootBenchComponents'] as $row){
+        else if($file->front_end_id == 3){
 
-                $url = $row['decodedFileURL'];
+            // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
 
-                $headers = [
-                    'X-Alientech-ReCodAPI-LLC' => $token,
-                ];
-        
-                $response = Http::withHeaders($headers)->get($url);
-                $responseBody = json_decode($response->getBody(), true);
+            if($file->on_dev == 1){
 
-                $base64_string = $responseBody['data'];
-
-                // specify the path and filename for the downloaded file
-                $filepath = $responseBody['name'];
-
-                // save the decoded string to a file
-                $flag = file_put_contents($filepath, $base64_string);
-
-                $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
-
-                $headers = [
-                    'X-Alientech-ReCodAPI-LLC' => $token,
-                ];
-
-                $response = Http::withHeaders($headers)->post($url, []);
+                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$autoTunerEncryptedFile->name;
 
             }
+            else{
+
+                $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$autoTunerEncryptedFile->name;
+            }
+
         }
+        else{
+
+            if($file->on_dev == 1){
+
+                $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$autoTunerEncryptedFile->name;
+
+            }
+            else{
+
+                $file_path = public_path('/../../tuningX/public/'.$file->file_path).$autoTunerEncryptedFile->name;
+            }
+        }
+        
+        return response()->download($file_path);
+
     }
 
-    public function download($id,$file_name) {
-        $file = File::findOrFail($id);
-        $path = public_path('/../../portal/public'.$file->file_path);
-        $file_path = $path.$file_name;
+    public function downloadMagic( $id,$requestFileID ) {
+
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
+
+        $file = File::findOrFail($id); 
+
+        $magicEncryptedFile = MagicEncryptedFile::where('file_id', $id)
+        ->where('request_file_id', $requestFileID)
+        ->where('downloadable', 1)
+        ->first();
+
+
+        if($file->front_end_id == 1){
+
+            // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+
+            if($file->on_dev == 1){
+
+                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile->name;
+
+            }
+            else{
+
+                $file_path = public_path('/../../portal/public/'.$file->file_path).$magicEncryptedFile->name;
+            }
+
+        }
+        else if($file->front_end_id == 3){
+
+            // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+
+            if($file->on_dev == 1){
+
+                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile->name;
+
+            }
+            else{
+
+                $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$magicEncryptedFile->name;
+            }
+
+        }
+        else{
+
+            if($file->on_dev == 1){
+
+                $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$magicEncryptedFile->name;
+
+            }
+            else{
+
+                $file_path = public_path('/../../tuningX/public/'.$file->file_path).$magicEncryptedFile->name;
+            }
+        }
+        
         return response()->download($file_path);
     }
 
-    // /**
-    //  * Show the files table.
-    //  *
-    //  * @return \Illuminate\Contracts\Support\Renderable
-    //  */
-    // public function index()
-    // {
+    public function downloadEncrypted( $id,$fileName ) {
 
-    //     // File::where('is_credited', 0)->delete();
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
 
-    //     // if(Auth::user()->is_admin || Auth::user()->is_head){
-    //         // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('is_credited', 1)->get();
-    //         // $files = File::select('*')
-    //         // ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
-    //         // ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
-    //         // ->orderBy('ss', 'asc')
-    //         // ->orderBy('s', 'asc')
-    //         // ->orderBy('created_at', 'desc')
-    //         // ->where('is_credited', 1)
-    //         // ->get();
+        $file = File::findOrFail($id); 
+
+        $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
+        
+        if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id){
+
+            $notProcessedAlientechFile = AlientechFile::where('file_id', $file->id)
+            ->where('purpose', 'decoded')
+            ->where('type', 'download')
+            ->where('processed', 0)
+            ->first();
+
+            if($notProcessedAlientechFile){
+               
+                $fileNameEncoded = $this->alientechObj->downloadEncodedFile($id, $notProcessedAlientechFile, $fileName);
+                $notProcessedAlientechFile->processed = 1;
+                $notProcessedAlientechFile->save();
+
+                if($file->front_end_id == 1){
+
+                    // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+
+                    if($file->on_dev == 1){
+
+                        $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$fileNameEncoded;
+
+                    }
+                    else{
+
+                        $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+                    }
+
+                }
+                else if($file->front_end_id == 3){
+
+                    // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+
+                    if($file->on_dev == 1){
+
+                        $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$fileNameEncoded;
+
+                    }
+                    else{
+
+                        $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$fileNameEncoded;
+                    }
+
+                }
+                else{
+
+                    if($file->on_dev == 1){
+
+                        $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$fileNameEncoded;
+
+                    }
+                    else{
+
+                        $file_path = public_path('/../../tuningX/public/'.$file->file_path).$fileNameEncoded;
+                    }
+                }
+                
+                
+                return response()->download($file_path);
+            }
+            else{
+                $encodedFileNameToBe = $fileName.'_encoded_api';
+                $processedFile = ProcessedFile::where('name', $encodedFileNameToBe)->first();
+
+                if($processedFile){
+
+                if($processedFile->extension != ''){
+                    $finalFileName = $processedFile->name;
+                    // $finalFileName = $processedFile->name.'.'.$processedFile->extension;
+                    
+
+                }
+                else{
+                    $finalFileName = $processedFile->name;
+                }
+            }else{
+                $finalFileName = $fileName;
+            }
+
+            if($file->front_end_id == 1){
+
+                // $file_path = public_path('/../../portal/public/'.$file->file_path).$finalFileName;
+
+                if($file->on_dev == 1){
+
+                    $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$finalFileName;
+
+                }
+                else{
+
+                    $file_path = public_path('/../../portal/public/'.$file->file_path).$finalFileName;
+                }
+
+            }
+            else if($file->front_end_id == 3){
+
+                // $file_path = public_path('/../../portal/public/'.$file->file_path).$finalFileName;
+
+                if($file->on_dev == 1){
+
+                    $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$finalFileName;
+
+                }
+                else{
+
+                    $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$finalFileName;
+                }
+
+            }
+            else{
+
+                if($file->on_dev == 1){
+
+                    $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$finalFileName;
+
+                }
+                else{
+
+                    $file_path = public_path('/../../tuningX/public/'.$file->file_path).$finalFileName;
+                }
+            }
+                return response()->download($file_path);
+
+            }
+
+        }
+        else{
+            $file_path = public_path('/../../portal/public/'.$file->file_path).$fileName;
+            return response()->download($file_path);
+        }
+    }
+
+    public function download($id,$file_name, $deleteFile = false) {
+
+        $file = File::findOrFail($id);
+
+        if($file->front_end_id == 1){
+            if($file->subdealer_group_id){
+                $path = public_path('/../../subportal/public'.$file->file_path);
+            }
+            else{
+
+                if($file->on_dev == 1){
+                    $path = public_path('/../../EcuTechV2/public'.$file->file_path);
+                
+                }
+                else{
+                    $path = public_path('/../../portal/public'.$file->file_path);
+                }
+            }
+        }
+        else if($file->front_end_id == 3){
+            if($file->subdealer_group_id){
+                $path = public_path('/../../subportal/public'.$file->file_path);
+            }
+            else{
+
+                if($file->on_dev == 1){
+                    $path = public_path('/../../EcuTechV2/public'.$file->file_path);
+                
+                }
+                else{
+                    $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path);
+                }
+            }
+        }
+        else{
+
+            if($file->on_dev == 1){
+                $path = public_path('/../../TuningXV2/public'.$file->file_path);
             
-    //     // }
-    //     // else if(Auth::user()->is_engineer){
-    //     //     // $files = File::orderBy('support_status', 'desc')->orderBy('status', 'desc')->orderBy('created_at', 'desc')->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->get();
-    //     //     $files = File::select('*')
-    //     //     ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "on_hold" THEN 2 WHEN status = "processing" THEN 3 ELSE 4 END AS s'))
-    //     //     ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
-    //     //     ->orderBy('ss', 'asc')
-    //     //     ->orderBy('s', 'asc')
-    //     //     ->orderBy('created_at', 'desc')
-    //     //     ->where('is_credited', 1)
-    //     //     // ->where('assigned_to', Auth::user()->id)
-    //     //     ->get();
-    //     // }
+            }
+            else{
+                $path = public_path('/../../tuningX/public'.$file->file_path);
+            }
+        }
 
-    //     // foreach($files as $file){
-    //     //     if($file->reupload_time){
-    //     //         $file->response_time = $this->getResponseTime($file);
-    //     //         $file->save();
-    //     //     }
-    //     // }
+        $file_path = $path.$file_name;
 
-    //     // $reminders = EmailReminder::all();
+        if($deleteFile){
+            return response()->download($file_path)->deleteFileAfterSend(true);
+        }
+        else{
+            return response()->download($file_path);
+        }
 
-    //     // $dateCheck = date('Y-m-d');
-
-    //     // // dd($dateCheck);
-    //     // // dd($dateCheck);
-    //     // // $dateCheck = '2023-02-01';
-
-    //     // $current = Carbon::parse(Carbon::createFromTimestamp(strtotime($dateCheck))->format('Y-m-d'));
-        
-    //     // // dd($current);
-        
-    //     // // dd($current);
-    //     // // dd(Carbon::now());
-
-    //     // $schedualer = Schedualer::take(1)->first();
-
-    //     // $days = $schedualer->days;
-    //     // $time = $schedualer->time_of_day;
-
-    //     // foreach($reminders as $reminder){
-
-    //     //     // dd($reminder->set_time);
-
-    //     //     $reminderSetDate = Carbon::parse(Carbon::createFromTimestamp(strtotime($reminder->set_time))->format('Y-m-d'));
-            
-    //     //     // dd($reminderSetDate);
-
-    //     //     $emailTime = $reminderSetDate->addDays($days);
-
-    //     //     // dd($emailTime);
-
-    //     //     $result = $emailTime->eq($current);
-
-    //     //     // dd($result);
-
-    //     //     if($result){
-    //     //             // dd(Carbon::parse($time));
-    //     //             // $timeGreater = now()->greaterThan(Carbon::parse($time));
-    //     //             $timeGreater = true;
-    //     //             // $timeGreater = now()->greaterThan(Carbon::parse());
-
-    //     //        if($timeGreater){
-    //     //             //    $this->generateFeedbackEmail($reminder->file_id, $reminder->request_file_id, $reminder->user_id);
-    //     //             $reminder->cycle = $reminder->cycle - 1;
-
-    //     //             if($reminder->cycle == 0){
-    //     //                 $reminder->delete();
-    //     //             }
-    //     //             else{
-    //     //                 $reminder->set_time = Carbon::now();
-    //     //                 $reminder->save();
-    //     //             }
-    //     //        }
-    //     //     }
-    //     // }
-        
-    //     return view('files.files', ['files' => $files]);
-    // }
+    }
 
     public function deleteMessage(Request $request)
     {
+
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
+        
         $note = EngineerFileNote::findOrFail($request->note_id);
         $note->delete();
         return response('Note deleted', 200);
@@ -857,73 +2542,156 @@ class FilesController extends Controller
 
     public function deleteUploadedFile(Request $request)
     {
+
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
+
         $file = RequestFile::findOrFail($request->request_file_id);
         $file->delete();
+
+        $softwareRecords = FileReplySoftwareService::where('reply_id', $request->request_file_id)->delete();
+		$messagesRecords = EngineerFileNote::where('request_file_id', $request->request_file_id)->delete();
+		$messagesRecords = EngineerFileNote::where('request_file_id', $request->request_file_id)->delete();
+		$messagesRecords = FileMessage::where('request_file_id', $request->request_file_id)->delete();
+		$messagesRecords = UploadLater::where('request_file_id', $request->request_file_id)->delete();
+
         return response('File deleted', 200);
     }
 
-    // public function testMessage(){
-    //     $this->sendMessage('+923218612198', 'test message again');
-    //     dd('sms test');
-    // }
-
-    // public function testEmail(){
-    //     $html = "<p>testing</p>";
-    //     \Mail::to('xrkalix@gmail.com')->send(new \App\Mail\AllMails(['engineer' => NULL, 'html' => $html, 'subject' => 'testing']));
-    //     dd('email test');
-    // }
-
-    public function sendMessage($receiver, $message)
+    public function sendTestMessage()
     {
+
+        // dd('message');
         try {
-            $accountSid = env("TWILIO_SID");
-            $authToken = env("TWILIO_AUTH_TOKEN");
-            $twilioNumber = env("TWILIO_NUMBER"); 
+
+            // dd('message');
+            
+            $accountSid = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_sid')->first()->value;
+
+            $authToken = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_token')->first()->value;
+
+            $twilioNumber = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_number')->first()->value;
+
+
             $client = new Client($accountSid, $authToken);
 
+            
             $message = $client->messages
-                  ->create($receiver, // to
-                           ["body" => $message, "from" => "ecutech"]
+                ->create('+923218612198', // to
+                        ["body" => 'Test Message', "from" => "E-TuningFiles"]
             );
+            
 
-            \Log::info('message sent to:'.$receiver);
+            \Log::info('message sent to:'.'+923218612198');
 
         } catch (\Exception $e) {
+            dd($e->getMessage());
             \Log::info($e->getMessage());
         }
     }
 
-    public function assignEngineer(Request $request){
-    
-       $file = File::findOrFail($request->file_id);
-       $file->assigned_to = $request->assigned_to;
-       $file->assignment_time = Carbon::now();
-       $file->save();
+    public function sendMessage($receiver, $message, $frontendID, $fileID)
+    {
+        try {
+            
+            $accountSid = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_sid')->first()->value;
 
-       $engineer = User::findOrFail($request->assigned_to);
-       $customer = User::findOrFail($file->user_id);
-    
-    //    $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
-       $template = EmailTemplate::findOrFail(1);
+            $authToken = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_token')->first()->value;
 
-       $html = $template->html;
+            $twilioNumber = Key::whereNull('subdealer_group_id')
+            ->where('key', 'twilio_number')->first()->value;
 
-       $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
-       $html = str_replace("#customer_name", $customer->name ,$html);
-       $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
-       
-       $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
-       $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
-       
-        if($file->options){
 
-            foreach($file->options() as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-                $tunningType .=  $option;  
-                $tunningType .= '</div>';
+            $client = new Client($accountSid, $authToken);
+
+            if($frontendID == 2)
+            {
+                $message = $client->messages
+                    ->create($receiver, // to
+                            ["body" => $message, "from" => "TuningX"]
+                );
             }
-        }
 
+            else if($frontendID == 3)
+            {
+                $message = $client->messages
+                    ->create($receiver, // to
+                            ["body" => $message, "from" => "E-TuningFiles"]
+                );
+            }
+
+            else{
+
+                $message = $client->messages
+                    ->create($receiver, // to
+                            ["body" => $message, "from" => "ECUTech"]
+                );
+
+            }
+
+            \Log::info('message sent to:'.$receiver);
+            $this->makeLogEntry('success', 'message sent to:'.$receiver, 'sms', $fileID);
+
+        } catch (\Exception $e) {
+            \Log::info($e->getMessage());
+            $this->makeLogEntry('error', $e->getMessage(), 'sms', $fileID);
+        }
+    }
+
+    public function makeLogEntry( $type, $message, $requestType, $fileID = 0 ){
+
+        $log = new Log();
+        // $log->temporary_file_id = $temporaryFileID;
+        $log->file_id = $fileID;
+        $log->type = $type;
+        $log->request_type = $requestType;
+        $log->message = $message;
+        $log->save();
+
+    }
+
+    public function assignEngineer(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+    
+        $file = File::findOrFail($request->file_id);
+
+        $assign = new EngineerAssignmentLog();
+        $assign->assigned_from = User::findOrFail($file->assigned_to)->name;
+        $assign->assigned_to = User::findOrFail($request->assigned_to)->name;
+        $assign->assigned_by = Auth::user()->name;
+        $assign->file_id = $file->id;
+        $assign->save();
+
+        $file->assigned_to = $request->assigned_to;
+        $file->assignment_time = Carbon::now();
+        $file->save();
+
+        
+
+        $engineer = User::findOrFail($request->assigned_to);
+        $customer = User::findOrFail($file->user_id);
+        
+        //    $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
+        $template = EmailTemplate::where('slug', 'eng-assign')->where('front_end_id', $file->front_end_id)->first();
+
+        $html = $template->html;
+
+        $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
+        $html = str_replace("#customer_name", $customer->name ,$html);
+        $html = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html);
+       
+
+        $tunningType = $this->emailStagesAndOption($file);
+        
         $html = str_replace("#tuning_type", $tunningType,$html);
         $html = str_replace("#status", $file->status,$html);
         $html = str_replace("#file_url", route('file', $file->id),$html);
@@ -937,65 +2705,309 @@ class FilesController extends Controller
 
         // $messageTemplate = MessageTemplate::where('name', 'Engineer Assignment')->first();
 
-        $messageTemplate = MessageTemplate::findOrFail(1);
+        $messageTemplate = MessageTemplate::where('slug', 'eng-assign')->where('front_end_id', $file->front_end_id)->first();
 
         $message = $messageTemplate->text;
 
         $message = str_replace("#customer", $customer->name ,$message);
 
-        $subject = "ECU Tech: Task Assigned!";
-
-        if($this->manager['eng_assign_eng_email']){
-
-            \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject]));
+        if($file->front_end_id == 1){
+            $subject = "ECU Tech: Task Assigned!";
+        }
+        else if($file->front_end_id == 3){
+            $subject = "E-files: Task Assigned!";
+        }
+        else if($file->front_end_id == 2){
+            $subject = "TuningX: Task Assigned!";
         }
 
-        if($this->manager['eng_assign_eng_sms']){
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getAllManager();
+
+        if($this->manager['eng_assign_eng_email'.$file->front_end_id]){
+
+            try{
+
+                \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$engineer->email, 'email', $file->id);
+            
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$engineer->email.$e->getMessage(), 'email', $file->id);
+                
+            }
+        }
+
+        if($this->manager['eng_assign_eng_sms'.$file->front_end_id]){
         
-            $this->sendMessage($engineer->phone, $message);
+            $this->sendMessage($engineer->phone, $message, $file->front_end_id, $file->id);
+        }
+
+        if($this->manager['eng_assign_eng_whatsapp'.$file->front_end_id]){
+        
+            $this->sendWhatsappforEng($engineer->name,$engineer->phone, 'admin_assign', $file);
         }
         
         return Redirect::back()->with(['success' => 'Engineer Assigned to File.']);
 
     }
 
+    public function sendWhatsappforEng($name, $number, $template, $file, $supportMessage = null){
+
+        $accessToken = config('whatsApp.access_token');
+        $fromPhoneNumberId = config('whatsApp.from_phone_number_id');
+
+        $optionsMessage = $file->stage;
+
+        if($file->options){
+            foreach($file->options()->get() as $option) {
+                $optionName = Service::findOrFail($option->service_id)->name;
+                $optionsMessage .= ", ".$optionName."";
+            }
+        }
+
+        $customer = User::findOrFail($file->user_id)->name;
+
+        if($file->front_end_id == 1){
+            $frontEnd = "ECUTech";
+        }
+        else if($file->front_end_id == 3){
+            $frontEnd = "E-files";
+        }
+        else{
+            $frontEnd = "Tuning-X";
+        }
+
+        if($supportMessage){
+            $components  = 
+            [
+                [
+                    "type" => "header",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> $frontEnd),
+                    )
+                ],
+                [
+                    "type" => "body",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> "dear ".$name),
+                        array("type"=> "text","text"=> "Mr. ".$customer),
+                        array("type"=> "text","text"=> $file->brand." ".$file->engine),
+                        array("type"=> "text","text"=> $optionsMessage),
+                        array("type"=> "text","text"=> $supportMessage),
+                    )
+                ]
+            ];
+        }
+        else{
+            $components  = 
+            [
+                [
+                    "type" => "header",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> $frontEnd),
+                    )
+                ],
+                [
+                    "type" => "body",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> "dear ".$name),
+                        array("type"=> "text","text"=> "Mr. ".$customer),
+                        array("type"=> "text","text"=> $file->brand." ".$file->engine),
+                        array("type"=> "text","text"=> $optionsMessage),
+                    )
+                ]
+            ];
+        }
+
+        $whatappObj = new WhatsappController();
+
+        try {
+            $response = $whatappObj->sendTemplateMessage($number,$template, 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'messages');
+            
+        }
+        catch(Exception $e){
+            \Log::info($e->getMessage());
+        }
+
+    }
+
+    public function sendWhatsapp($name, $number, $template, $file, $supportMessage = null){
+
+        $accessToken = config('whatsApp.access_token');
+        $fromPhoneNumberId = config('whatsApp.from_phone_number_id');
+
+        $optionsMessage = $file->stage;
+
+        if($file->options){
+            foreach($file->options()->get() as $option) {
+                $optionName = Service::findOrFail($option->service_id)->name;
+                $optionsMessage .= ", ".$optionName."";
+            }
+        }
+
+        $customer = 'Task Customer';
+
+        if($file->name){
+            $customer = $file->name; 
+        }
+
+        if($file->front_end_id == 1){
+            $frontEnd = "ECUTech";
+        }
+        else if($file->front_end_id == 3){
+            $frontEnd = "E-files";
+        }
+        else{
+            $frontEnd = "Tuning-X";
+        }
+
+        if($supportMessage){
+            $components  = 
+            [
+                [
+                    "type" => "header",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> $frontEnd),
+                    )
+                ],
+                [
+                    "type" => "body",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> "dear ".$name),
+                        array("type"=> "text","text"=> "Mr. ".$customer),
+                        array("type"=> "text","text"=> $file->brand." ".$file->engine),
+                        array("type"=> "text","text"=> $optionsMessage),
+                        array("type"=> "text","text"=> $supportMessage),
+                    )
+                ]
+            ];
+        }
+        else{
+            $components  = 
+            [
+                [
+                    "type" => "header",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> $frontEnd),
+                    )
+                ],
+                [
+                    "type" => "body",
+                    "parameters" => array(
+                        array("type"=> "text","text"=> "dear ".$name),
+                        array("type"=> "text","text"=> "Mr. ".$customer),
+                        array("type"=> "text","text"=> $file->brand." ".$file->engine),
+                        array("type"=> "text","text"=> $optionsMessage),
+                    )
+                ]
+            ];
+        }
+
+        $whatappObj = new WhatsappController();
+
+        try {
+            $response = $whatappObj->sendTemplateMessage($number,$template, 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'messages');
+            
+        }
+        catch(Exception $e){
+            \Log::info($e->getMessage());
+        }
+
+        
+    }
+
     public function changSupportStatus(Request $request){
 
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
+
         $file = File::findOrFail($request->file_id);
+        $this->changeStatusLog($file, $request->support_status, 'support_status', 'File support status changed by engineer from panel.');
         $file->support_status = $request->support_status;
+        if($file->support_status == 'closed'){
+            if($file->red == 1){
+                $file->red = 0;
+                $file->timer = NULL;
+            }
+        }
+
         $file->save();
 
         return Redirect::back()->with(['success' => 'File Support status changed.']);
     }
 
     public function changeStatus(Request $request){
+
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
         
         $file = File::findOrFail($request->file_id);
+        // dd($file);
+        $this->changeStatusLog($file, $request->status, 'status', 'File status changed by engineer from Admin Task panel.');
+
         $file->status = $request->status;
+        
+        $file->updated_at = Carbon::now();
+        
+        $customer = User::findOrFail($file->user_id);
+
+        if($file->status == 'completed'){
+            if($file->red == 1){
+                $file->red = 0;
+                $file->submission_timer = NULL;
+            }
+        }
+
+        if($request->status == 'rejected'){
+
+            $credit = new Credit();
+            $credit->credits = $file->credits;
+            $credit->user_id = $customer->id;
+            $credit->file_id = $file->id;
+            $credit->country = code_to_country( $customer->country );
+            $credit->front_end_id = $customer->front_end_id;
+            $credit->stripe_id = NULL;
+
+            if($customer->test == 1){
+                $credit->test = 1;
+            }
+
+            $credit->gifted = 1;
+            $credit->price_payed = 0;
+
+            if($request->reason_to_reject){
+                $credit->message_to_credit = $request->reason_to_reject;
+                $file->reason_to_reject = $request->reason_to_reject;
+            }
+            else{
+                $credit->message_to_credit = 'File Canceled!';
+                $file->reason_to_reject = 'File Canceled!';
+            }
+
+            $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
+            $credit->save();
+
+        }
+        
         $file->save();
 
-        $customer = User::findOrFail($file->user_id);
-        $admin = User::where('is_admin', 1)->first();
+        $admin = get_admin();
     
         // $template = EmailTemplate::where('name', 'Status Change')->first();
-        $template = EmailTemplate::findOrFail(8);
+        $template = EmailTemplate::where('slug', 'sta-cha')->where('front_end_id', $file->front_end_id)->first();
 
         $html1 = $template->html;
 
         $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
         $html1 = str_replace("#customer_name", $customer->name ,$html1);
-        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
         
-        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
-        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
-        
-        if($file->options){
-            foreach($file->options() as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-                $tunningType .=  $option;  
-                $tunningType .= '</div>';
-            }
-        }
+
+        $tunningType = $this->emailStagesAndOption($file);
         
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
@@ -1005,22 +3017,23 @@ class FilesController extends Controller
 
         $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
         $html2 = str_replace("#customer_name", $file->name ,$html2);
-        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
+        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
         
-        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
-        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
-        
-        if($file->options){
-            foreach($file->options() as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-                $tunningType .=  $option;  
-                $tunningType .= '</div>';
-            }
-        }
 
+        $tunningType = $this->emailStagesAndOption($file);
+        
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html2);
-        $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+
+        if($file->front_end_id == 1){
+            $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+        }
+        else if($file->front_end_id == 3){
+            $html2 = str_replace("#file_url",  'http://portal.e-tuningfiles.com/'."file/".$file->id,$html2);
+        }
+        else{
+            $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+        }
 
         $optionsMessage = "";
         if($file->options){
@@ -1030,7 +3043,7 @@ class FilesController extends Controller
         }
 
         // $messageTemplate = MessageTemplate::where('name', 'Status Change')->first();
-        $messageTemplate = MessageTemplate::findOrFail(6);
+        $messageTemplate = MessageTemplate::where('slug', 'sta-cha')->where('front_end_id', $file->front_end_id)->first();
 
         $message = $messageTemplate->text;
 
@@ -1040,70 +3053,162 @@ class FilesController extends Controller
         $message2 = str_replace("#customer", $file->name ,$message);
         $message2 = str_replace("#status", $file->status ,$message2);
         
-        $subject = "ECU Tech: File Status Changed!";
-
-        if($this->manager['status_change_cus_email']){
-            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+        if($file->front_end_id == 1){
+            $subject = "ECU Tech: File Status Changed!";
+        }
+        else if($file->front_end_id == 3){
+            $subject = "E-files: File Status Changed!";
+        }
+        else{
+            $subject = "TuningX: File Status Changed!";
         }
 
-        if($this->manager['status_change_admin_email']){
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getAllManager();
+
+        if($this->manager['status_change_cus_email'.$file->front_end_id]){
+
+            try{
+                
+                \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
+
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$customer->email.$e->getMessage(), 'email', $file->id);
+            }
         }
 
-        if($this->manager['status_change_admin_sms']){
-            $this->sendMessage($admin->phone, $message1);
+        if($this->manager['status_change_admin_email'.$file->front_end_id]){
+
+            try{
+                \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
+
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
+            }
         }
-        if($this->manager['status_change_cus_sms']){
-            $this->sendMessage($customer->phone, $message2);
+
+        if($this->manager['status_change_admin_sms'.$file->front_end_id]){
+            $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
+        }
+
+        if($this->manager['status_change_admin_whatsapp'.$file->front_end_id]){
+        
+            $this->sendWhatsappforEng($admin->name,$admin->phone, 'status_change', $file);
+        }
+
+        if($this->manager['status_change_cus_sms'.$file->front_end_id]){
+            $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
+        }
+
+        if($this->manager['status_change_cus_whatsapp'.$file->front_end_id]){
+        
+            $this->sendWhatsapp($customer->name,$customer->phone, 'admin_assign', $file);
         }
 
         return Redirect::back()->with(['success' => 'File status changed.']);
     }
 
     public function fileEngineersNotes(Request $request)
-    {
-
+    {   
+        $noteItself = $request->egnineers_internal_notes;
+        
         $file = File::findOrFail($request->file_id);
 
         $reply = new EngineerFileNote();
-        $reply->egnineers_internal_notes = $request->egnineers_internal_notes;
+
+        $message = str_replace(PHP_EOL,"<br>",$request->egnineers_internal_notes);
+
+        $reply->egnineers_internal_notes = $message;
 
         if($request->file('engineers_attachement')){
 
             $attachment = $request->file('engineers_attachement');
             $fileName = $attachment->getClientOriginalName();
-            $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$fileName);
+            $model = str_replace('/', '', $file->model );
+
+            $fileName = str_replace('/', '', $fileName);
+            $fileName = str_replace('\\', '', $fileName);
+            $fileName = str_replace('#', '', $fileName);
+            $fileName = str_replace(' ', '_', $fileName);
+
+            if($file->front_end_id == 1){
+                
+                if($file->subdealer_group_id){
+                    $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName);
+                }
+                else{
+
+                    $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+                }
+            }
+            else if($file->front_end_id == 3){
+                
+                if($file->subdealer_group_id){
+                    $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName);
+                }
+                else{
+
+                    $attachment->move(public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path),$fileName);
+                }
+            }
+            else{
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
+                }
+                
+                else{
+                    $attachment->move(public_path('/../../tuningX/public/'.$file->file_path),$fileName);
+                }
+
+            }
+
             $reply->engineers_attachement = $fileName;
         }
 
         $reply->engineer = true;
         $reply->file_id = $request->file_id;
-        $reply->save();
+        $reply->user_id = Auth::user()->id;
+
+        $latest = RequestFile::where('file_id', $request->file_id)->where('show_later', 0)->latest()->first();
         
+        if($latest != NULL){
+            $reply->request_file_id = $latest->id;
+        }
+        else{
+            $reply->request_file_id = NULL;
+        }
+
+        $reply->save();
+
+        if($file->original_file_id != NULL){
+            $ofile = File::findOrFail($file->original_file_id);
+            $this->changeStatusLog($ofile, 'closed', 'support_status', 'Chat reply was sent from engineer on request file.');
+            $ofile->support_status = "closed";
+            $ofile->save();
+        }
+        $this->changeStatusLog($file, 'closed', 'support_status', 'Chat reply was sent from engineer.');
         $file->support_status = "closed";
         $file->save();
         $customer = User::findOrFail($file->user_id);
-        $admin = User::where('is_admin', 1)->first();
+        $admin = get_admin();
     
         // $template = EmailTemplate::where('name', 'Message To Client')->first();
-        $template = EmailTemplate::findOrFail(7);
+        $template = EmailTemplate::where('slug', 'mess-to-client')->where('front_end_id', $file->front_end_id)->first();
 
         $html1 = $template->html;
 
         $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
         $html1 = str_replace("#customer_name", $customer->name ,$html1);
-        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine,$html1);
         
-        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
-        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
-        
-        if($file->options){
-            foreach($file->options() as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-                $tunningType .=  $option;  
-                $tunningType .= '</div>';
-            }
-        }
+        $tunningType = $this->emailStagesAndOption($file);
 
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
@@ -1114,23 +3219,24 @@ class FilesController extends Controller
 
         $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
         $html2 = str_replace("#customer_name", $file->name ,$html2);
-        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
+        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine,$html2);
         
-        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
-        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
-        
-        if($file->options){
-            foreach($file->options() as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-                $tunningType .=  $option;  
-                $tunningType .= '</div>';
-            }
-        }
 
+        $tunningType = $this->emailStagesAndOption($file);
+        
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html2);
         $html2 = str_replace("#note", $request->egnineers_internal_notes,$html2);
-        $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+
+        if($file->front_end_id == 1){
+            $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+        }
+        else if($file->front_end_id == 3){
+            $html2 = str_replace("#file_url",  'http://portal.e-tuningfiles.com/'."file/".$file->id,$html2);
+        }
+        else{
+            $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+        }
 
         $optionsMessage = "";
         if($file->options){
@@ -1140,7 +3246,7 @@ class FilesController extends Controller
         }
 
         // $messageTemplate = MessageTemplate::where('name', 'Message To Client')->first();
-        $messageTemplate = MessageTemplate::findOrFail(4);
+        $messageTemplate = MessageTemplate::where('slug', 'mess-to-client')->where('front_end_id', $file->front_end_id)->first();
 
         $message = $messageTemplate->text;
 
@@ -1149,20 +3255,62 @@ class FilesController extends Controller
 
         // $message1 = "Hi, Status changed for a file by Customer: " .$customer->name;
         // $message2 = "Hi, Status changed for a file by Customer: " .$file->name;
-       
-        $subject = "ECU Tech: Engineer replied to your support message!";
-        if($this->manager['msg_eng_cus_email']){
-            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getAllManager();
+
+        if($file->front_end_id == 1){
+            $subject = "ECU Tech: Engineer replied to your support message!";
         }
-        if($this->manager['msg_eng_admin_email']){
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
+        else if($file->front_end_id == 3){
+            $subject = "E-files: Engineer replied to your support message!";
+        }
+        else{
+            $subject = "Tuningx: Engineer replied to your support message!";
+        }
+
+
+        if($this->manager['msg_eng_cus_email'.$file->front_end_id]){
+
+            try{
+                \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$customer->email.$e->getMessage(), 'email', $file->id);
+            }
+        }
+        if($this->manager['msg_eng_admin_email'.$file->front_end_id]){
+
+            try{
+                \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
+
+            }
+            catch(TransportException $e){
+                \Log::info($e->getMessage());
+                $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
+            }
         }
         
-        if($this->manager['msg_eng_admin_sms']){
-            $this->sendMessage($admin->phone, $message1);
+        if($this->manager['msg_eng_admin_sms'.$file->front_end_id]){
+            
+            $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
         }
-        if($this->manager['msg_eng_cus_sms']){
-            $this->sendMessage($customer->phone, $message2);
+
+        if($this->manager['msg_eng_admin_whatsapp'.$file->front_end_id]){
+            
+            $this->sendWhatsappforEng($admin->name, $admin->phone, 'support_message_from_engineer', $file, $noteItself);
+        }
+
+        if($this->manager['msg_eng_cus_sms'.$file->front_end_id]){
+            $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
+        }
+
+        if($this->manager['msg_eng_cus_whatsapp'.$file->front_end_id]){
+            
+            $this->sendWhatsapp($customer->name, $customer->phone, 'support_message_from_engineer', $file, $noteItself);
         }
 
         $old = File::findOrFail($request->file_id);
@@ -1175,158 +3323,382 @@ class FilesController extends Controller
 
     }
 
-    public function uploadFileFromEngineerAndEncode(Request $request){
+    // public function makeLogEntry($fileID, $type, $message){
 
-        $attachment = $request->file('file');
+    //     if(!Auth::user()->is_admin()){
+    //         return abort(404);
+    //     }
 
-        $file = File::findOrFail($request->file_id);
+    //     $log = new Log();
+    //     $log->file_id = $fileID;
+    //     $log->type = $type;
+    //     $log->message = $message;
+    //     $log->save();
 
-        $fileName = $attachment->getClientOriginalName();
-        
-        $newFileName = str_replace('#', '_', $fileName);
-        $newFileName = str_replace(' ', '_', $fileName);
-
-        $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$newFileName);
-
-        $path = public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/').$newFileName;
-        $slotID = AlientechFile::where('key', 'slotGUID')->where('file_id', $file->id)->first()->value;
-        $token = Key::where('key', 'alientech_access_token')->first()->value;
-
-        $encodingType = $request->encoding_type;
-        $response = $this->uploadFileToEncode($token, $path, $slotID, $encodingType);
-
-        if( isset($response->guid) ){
-
-            if($encodingType == 'dec'){
-                $url = "https://encodingapi.alientech.to/api/kess3/encode-obd-file";
-            }
-            else if($encodingType == 'micro'){
-                $url = "https://encodingapi.alientech.to/api/kess3/encode-boot-bench-file";
-            }
-
-            $headers = [
-            'X-Alientech-ReCodAPI-LLC' => $token,
-            ];
-            
-            if($encodingType == 'dec'){
-                $postInput = [
-                    'userCustomerCode' => 'user1',
-                    'kess3FileSlotGUID' => $slotID,
-                    'modifiedFileGUID' => $response->guid,
-                    // 'WillCorrectCVN' => true,
-                ];
-            }
-            else if($encodingType == 'micro'){
-                $postInput = [
-                    'userCustomerCode' => 'user1',
-                    'kess3FileSlotGUID' => $slotID,
-                    'modifiedFileGUID' => $response->guid,
-                    // 'WillCorrectCVN' => true,
-                ];
-            }
-
-            $syncResponse = Http::withHeaders($headers)->post($url, $postInput);                
-            $syncResponseBody = json_decode($syncResponse->getBody(), true);
-
-            if(!AlientechFile::where('file_id', $file->id)->where('purpose', 'download_encoded')->first()){
-
-                $obj = new AlientechFile();
-                $obj->key = 'guid';
-                $obj->value = $syncResponseBody['guid'];
-                $obj->purpose = "download_encoded";
-                $obj->file_id = $file->id;
-                $obj->save();
-            }
-
-            return response('file will be ready after few seconds. please refresh the page.', 200);
-
-        }
-        else{
-
-            $this->makeLogEntry($file->id, 'error', 'File Upload error. Line: 1236.');
-            return response('Uploaded file is not Compatible', 500);
-        }
-    }
-
-    public function makeLogEntry($fileID, $type, $message){
-
-        $log = new Log();
-        $log->file_id = $fileID;
-        $log->type = $type;
-        $log->message = $message;
-        $log->save();
-
-    }
-
-    public function uploadFileToEncode($token, $path, $slotID, $encodingType){
-
-        $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotID."/reopen";
-
-        $headers = [
-        // 'Content-Type' => 'multipart/form-data',
-        'X-Alientech-ReCodAPI-LLC' => $token,
-        ];
-
-        $response = Http::withHeaders($headers)->post($url, []);
-        
-        if($encodingType == 'dec'){
-            $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/OBDModified';
-        }
-        else if($encodingType == 'micro'){
-            $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/BootBenchModifiedMicro';
-        }
-
-        // $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/BootBenchModifiedEEPROM';
-    
-        if (function_exists('curl_file_create')) { // php 5.5+
-            $cFile = curl_file_create($path);
-            // $cFile = curl_file_create(public_path('Test_File1'));
-          } else { // 
-            // $cFile = '@' . realpath(public_path('Test_File1'));
-            $cFile = '@' . realpath($path);
-          }
-    
-          $post = array('file'=> $cFile);
-          $ch = curl_init();
-          curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-type: multipart/form-data',
-            'X-Alientech-ReCodAPI-LLC:'.$token
-        ]);
-          curl_setopt($ch, CURLOPT_URL,$target_url);
-          curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
-          curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-          $result=curl_exec ($ch);
-          curl_close ($ch);
-          return json_decode($result);
-        }
+    // }
 
     public function callbackKess3Complete(Request $request){
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
         \Log::info( $request->all() );
     }
+    
+    public function uploadFileFromEngineer(Request $request) {
 
-    public function uploadFileFromEngineer(Request $request)
-    {
         $attachment = $request->file('file');
-
-        $file = File::findOrFail($request->file_id);
-
-        $fileName = $attachment->getClientOriginalName();
-
-        $newFileName = str_replace('#', '', $fileName);
-        $newFileName = str_replace(' ', '_', $newFileName);
+        $oldName = $attachment->getClientOriginalName();
+        $encode = (boolean) $request->encode;
+        $magic = (boolean) $request->magic;
         
-        $attachment->move(public_path('/../../portal/public/uploads/'.$file->brand.'/'.$file->model.'/'.$file->id.'/'),$newFileName);
+        $file = File::findOrFail($request->file_id);
         
         $engineerFile = new RequestFile();
-        $engineerFile->request_file = $newFileName;
+        $engineerFile->request_file = $oldName;
+        $engineerFile->old_name = $oldName;
         $engineerFile->file_type = 'engineer_file';
         $engineerFile->tool_type = 'not_relevant';
         $engineerFile->master_tools = 'not_relevant';
         $engineerFile->file_id = $request->file_id;
+        $engineerFile->user_id = Auth::user()->id;
         $engineerFile->engineer = true;
+
         $engineerFile->save();
 
+        $allSoftwareRecrods = FileReplySoftwareService::where('file_id', $engineerFile->file_id)
+        ->whereNull('reply_id')->get();
+
+        foreach($allSoftwareRecrods as $record){
+            $record->reply_id = $engineerFile->id;
+            $record->save();
+        }
+
+        $allMessagesRecrods = FileMessage::where('file_id', $engineerFile->file_id)
+        ->whereNull('request_file_id')->get();
+
+        foreach($allMessagesRecrods as $message){
+            $message->request_file_id = $engineerFile->id;
+            $message->save();
+        }
+
+        $allUploadLaterRecrods = UploadLater::where('file_id', $engineerFile->file_id)
+        ->whereNull('request_file_id')->get();
+
+        foreach($allUploadLaterRecrods as $later){
+            $later->request_file_id = $engineerFile->id;
+            $later->save();
+        }
+
+        // if($file->front_end_id == 2){
+            $engineerFile->show_comments = 0;
+        // }
+
+        $middleName = $file->id;
+        $middleName .= date("dmy");
+        
+        foreach($file->softwares as $s){
+            if($s->service_id != 1){
+                if($s->reply_id == $engineerFile->id){
+                    $middleName .= $s->service_id.$s->software_id;
+                }
+            }
+        }
+        
+        $newFileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count();
+        
+        $newFileName = str_replace('/', '', $newFileName);
+        $newFileName = str_replace('\\', '', $newFileName);
+        $newFileName = str_replace('#', '', $newFileName);
+        $newFileName = str_replace(' ', '_', $newFileName);
+
+        $engineerFile->request_file = $newFileName;
+        $engineerFile->save();
+
+        if($encode == 0){
+
+        if($file->subdealer_group_id){
+            $attachment->move(public_path('/../../subportal/public'.$file->file_path),$newFileName);
+
+        }
+        
+        else{
+
+            if($file->front_end_id == 1){
+                // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+                }
+                else{
+                    $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+                }
+
+            }
+            else if($file->front_end_id == 3){
+                // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+
+                // if($file->on_dev == 1){
+                //     $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+                // }
+                // else{
+                    $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
+                // }
+
+            }
+            else if($file->front_end_id == 2){
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
+                }
+                else{
+                    $attachment->move(public_path('/../../tuningX/public'.$file->file_path),$newFileName);
+                }
+            }
+        }
+
+        }
+        
+        else if($encode == 1){
+
+            if($file->subdealer_group_id){
+                $attachment->move(public_path('/../../subportal/public'.$file->file_path),$newFileName);
+    
+            }
+            
+            else{
+    
+                if($file->front_end_id == 1){
+                    // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+    
+                    if($file->on_dev == 1){
+                        $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+                    }
+                    else{
+                        $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+                    }
+    
+                }
+                else if($file->front_end_id == 3){
+                    // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+    
+                    // if($file->on_dev == 1){
+                    //     $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+                    // }
+                    // else{
+                        $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
+                    // }
+    
+                }
+                else if($file->front_end_id == 2){
+    
+                    if($file->on_dev == 1){
+                        $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
+                    }
+                    else{
+                        $attachment->move(public_path('/../../tuningX/public'.$file->file_path),$newFileName);
+                    }
+                }
+            }
+
+            if($file->subdealer_group_id){
+
+                $path = public_path('/../../subportal/public'.$file->file_path).$newFileName;
+            }
+            else{
+                if($file->front_end_id == 1){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+
+                        $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    }
+
+                }
+                else if($file->front_end_id == 3){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path).$newFileName;
+                    }
+
+                }
+                else if($file->front_end_id == 2){
+
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../tuningX/public'.$file->file_path).$newFileName;
+                    }
+                }
+            }
+            $encodingType = $request->encoding_type;
+
+            if($file->alientech_file){ // if slot id is assigned
+                $slotID = $file->alientech_file->slot_id;
+                $this->alientechObj->saveGUIDandSlotIDToDownloadLaterForEncoding( $file, $path, $slotID, $encodingType, $engineerFile );
+            }
+        }
+
+        if($magic == 1){
+
+            // if($file->subdealer_group_id){
+            //     $attachment->move(public_path('/../../subportal/public'.$file->file_path),$newFileName);
+    
+            // }
+            
+            // else{
+    
+            //     if($file->front_end_id == 1){
+            //         // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+    
+            //         if($file->on_dev == 1){
+            //             $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+            //         }
+            //         else{
+            //             $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+            //         }
+    
+            //     }
+            //     else if($file->front_end_id == 3){
+            //         // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+    
+            //         // if($file->on_dev == 1){
+            //         //     $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+            //         // }
+            //         // else{
+            //             $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
+            //         // }
+    
+            //     }
+            //     else if($file->front_end_id == 2){
+    
+            //         if($file->on_dev == 1){
+            //             $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
+            //         }
+            //         else{
+            //             $attachment->move(public_path('/../../tuningX/public'.$file->file_path),$newFileName);
+            //         }
+            //     }
+            // }
+
+            $magicEncryptionType = $request->magic_encryption_type;
+
+            if($file->subdealer_group_id){
+
+                $path = public_path('/../../subportal/public'.$file->file_path).$newFileName;
+            }
+            else{
+                if($file->front_end_id == 1){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    }
+
+                }
+                else if($file->front_end_id == 3){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path).$newFileName;
+                    }
+
+                }
+                else{
+
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../tuningX/public'.$file->file_path).$newFileName;
+                    }
+                }
+            }
+
+            $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
+
+            if($file->tool_type == 'slave' && $file->tool_id == $flexLabel->id){
+                $this->magicObj->magicEncrypt( $path, $file, $newFileName, $engineerFile, $magicEncryptionType );
+            }
+
+        }
+
+        $autotunerLabel = Tool::where('label', 'Autotuner')->where('type', 'slave')->first();
+
+        if($file->tool_type == 'slave' && $file->tool_id == $autotunerLabel->id){
+
+            if($file->subdealer_group_id){
+
+                $path = public_path('/../../subportal/public'.$file->file_path).$newFileName;
+            }
+            else{
+                if($file->front_end_id == 1){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    }
+
+                }
+                else if($file->front_end_id == 3){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path).$newFileName;
+                    }
+
+                }
+                else{
+
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../tuningX/public'.$file->file_path).$newFileName;
+                    }
+                }
+            }
+
+
+            $this->autotunerObj->encrypt( $path, $file, $newFileName, $engineerFile);
+        }
+        
         $allEearlierReminders = EmailReminder::where('user_id', $file->user_id)
         ->where('file_id', $file->id)->get();
 
@@ -1345,55 +3717,94 @@ class FilesController extends Controller
 
         $reminder->save();
 
-        if($file->status == 'submitted'){
-            $file->status = 'completed';
-            $file->save();
-        }
-        
-        if(!$file->response_time){
+        $haltEmailAndStatus = false;
 
-            $file->reupload_time = Carbon::now();
-            $file->save();
-
-            $file->response_time = $this->getResponseTime($file);
-            $file->save();
-
+        if( $engineerFile->is_kess3_slave == 1 and $engineerFile->uploaded_successfully == 0 ){
+            $haltEmailAndStatus = true;
         }
 
-        if($file->original_file_id){
-            $old = File::findOrFail($file->original_file_id);
-            $old->checked_by = 'engineer';
-            $file->support_status = "closed";
-            $old->save();
+        if(!$haltEmailAndStatus){
+
+            if($file->upload_later){
+                $this->changeStatusLog($file, 'ready_to_send', 'status', 'Engineer uploaded the file but for showing it later to customer.');
+                $file->status = 'ready_to_send';
+
+                $engineerFile->show_later = 1;
+                $engineerFile->save();
+            }
+
+            if($file->status == 'submitted'){
+
+                if(!$file->upload_later){
+                    $this->changeStatusLog($file, 'completed', 'status', 'Engineer uploaded the file.');
+                    $file->status = 'completed';
+                }
+                
+                $file->red = 0;
+                $file->submission_timer = NULL;
+                $file->updated_at = Carbon::now();
+                $file->save();
+            }
+            
+            if(!$file->response_time){
+
+                $file->reupload_time = Carbon::now();
+                $file->save();
+
+                $file->response_time = $this->getResponseTime($file);
+                $file->save();
+
+            }
+
+            if($file->original_file_id){
+                $old = File::findOrFail($file->original_file_id);
+                $old->checked_by = 'engineer';
+
+                if($old->support_status == 'open'){
+                    $this->changeStatusLog($old, 'closed', 'support_status', 'Engineer uploaded the file.');
+                }
+
+                $old->support_status = "closed";
+                
+                $old->red = 0;
+                $old->timer = NULL;
+                $old->save();
+            }
+
+            // if($file->no_longer_auto == 0){
+
+                if($file->support_status == 'open'){
+                    $this->changeStatusLog($file, 'closed', 'support_status', 'Engineer uploaded the file.');
+                }
+                $file->support_status = "closed";
+                
+                $file->red = 0;
+                $file->timer = NULL;
+                $file->checked_by = 'engineer';
+                $file->save();
+            // }
+
+                $file->revisions = $file->files->count()+1;
+                $file->save();
         }
 
-            $file->support_status = "closed";
-            $file->checked_by = 'engineer';
-            $file->save();
+        if(!$file->upload_later){
 
         $customer = User::findOrFail($file->user_id);
-        $admin = User::where('is_admin', 1)->first();
+        $admin = get_admin();
     
         // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
-        $template = EmailTemplate::findOrFail(6);
+        $template = EmailTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
 
         $html1 = $template->html;
 
         $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
         $html1 = str_replace("#customer_name", $customer->name ,$html1);
-        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
         
-        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
-        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
+        $tunningType = $this->emailStagesAndOption($file);
         
-        if($file->options){
-            foreach($file->options() as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-                $tunningType .=  $option;  
-                $tunningType .= '</div>';
-            }
-        }
-
+        $html1 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html1);
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
         $html1 = str_replace("#file_url", route('file', $file->id),$html1);
@@ -1402,22 +3813,23 @@ class FilesController extends Controller
 
         $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
         $html2 = str_replace("#customer_name", $file->name ,$html2);
-        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
+        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
         
-        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
-        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
-        
-        if($file->options){
-            foreach($file->options() as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-                $tunningType .=  $option;  
-                $tunningType .= '</div>';
-            }
-        }
+        $tunningType = $this->emailStagesAndOption($file);
 
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
+        $html2 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html2);
         $html2 = str_replace("#status", $file->status,$html2);
-        $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+
+        if($file->front_end_id == 1){
+            $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+        }
+        else if($file->front_end_id == 3){
+            $html2 = str_replace("#file_url",  'http://portal.e-tuningfiles.com/'."file/".$file->id,$html2);
+        }
+        else{
+            $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+        }
 
         $optionsMessage = "";
         if($file->options){
@@ -1427,51 +3839,152 @@ class FilesController extends Controller
         }
 
         // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
-        $messageTemplate = MessageTemplate::findOrFail(7);
+        $messageTemplate = MessageTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
 
         $message = $messageTemplate->text;
 
         $message1 = str_replace("#customer", $customer->name ,$message);
         $message2 = str_replace("#customer", $file->name ,$message);
         
-        $subject = "ECU Tech: Engineer uploaded a file in reply.";
+        if($file->front_end_id == 1){
+            $subject = "ECU Tech: Engineer uploaded a file in reply.";
+        }
+        else if($file->front_end_id == 3){
+            $subject = "E-files: Engineer uploaded a file in reply.";
+        }
+        else if($file->front_end_id == 2){
+            $subject = "TuningX: Engineer uploaded a file in reply.";
+        }
 
-        if($this->manager['eng_file_upload_cus_email']){
-            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getAllManager();
+
+        if( $haltEmailAndStatus == 0 ){
+
+            if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
+
+                try{
+                    \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
+                    
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                }
+
+            }
+            if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
+
+                try{
+                    \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
+
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                    $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
+                }
+            }
+            
+            if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
+                $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
+            }
+
+            if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsappforEng($admin->name,$admin->phone, 'eng_file_upload', $file);
+            }
+
+            if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
+                $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
+            }
+
+            if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
+            }
+
         }
-        if($this->manager['eng_file_upload_admin_email']){
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
-        }
-        
-        if($this->manager['eng_file_upload_admin_sms']){
-            $this->sendMessage($admin->phone, $message1);
-        }
-        if($this->manager['eng_file_upload_cus_sms']){
-            $this->sendMessage($customer->phone, $message2);
-        }
+    }
         
         return response('file uploaded', 200);
     }
 
     public function feedbackReports(){
-        $engineers = User::where('is_engineer', 1)->get();
+
+        if(!Auth::user()->is_admin()){
+            return abort(404);
+        }
+
+        $engineers = get_engineers();
         return view('files.feedback_reports', ['engineers' => $engineers]);
     }
 
     public function feedbackReportsLive(){
-        
-        return view('files.feedback_reports_live');
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'feedback-report')){
+
+            return view('files.feedback_reports_live');
+
+        }
+        else{
+            return abort(404);
+        }
     }
 
     public function reports(){
-        $engineers = User::where('is_engineer', 1)->get();
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'engineers-report')){
+
+        $engineers = get_engineers();
         return view('files.reports', ['engineers' => $engineers]);
+        }
+        else{
+            abort(404);
+        }
     }
 
     public function reportsEngineerLive(){
-        return view('files.report-engineers-live');
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'engineers-report')){
+
+            return view('files.report-engineers-live');
+        }
+
+        else{
+            abort(404);
+        }
+
     }
 
+    public function getFileName($path, $file, $type){
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+
+        if($type == 'decoded'){
+            $middle = '_decoded_api';
+        }
+        else if($type == 'encoded'){
+            $middle = '_encoded_api';
+        }
+
+        if($extension != ''){
+            $fileName = $file->file_attached.$middle.'.'.$extension;
+        }
+        else{
+            $fileName = $file->file_attached.$middle;
+        }
+
+        if($type == 'decoded'){
+            $file->file_attached = $fileName;
+            $file->save();
+        }
+
+        $savingPath = public_path('/../../portal/public'.$file->file_path.$fileName);
+
+        return array(
+            'path' => $savingPath,
+            'name' => $fileName,
+        );
+    }
+    
     public function getFeedbackReport(Request $request){
 
         $files = $this->getReportFilesWithFeedback($request->engineer, $request->feedback);
@@ -1554,7 +4067,7 @@ class FilesController extends Controller
 
             $html .= '<tr class="redirect-click" data-redirect="'.route('file', $file->id).'" role="row">';
             $html .= '<td>'. $count .'</td>';
-            $html .= '<td>'.$file->brand .$file->engine .' '. $file->vehicle()->TORQUE_standard .' '.'</td>';
+            $html .= '<td>'.$file->brand .$file->engine  .'</td>';
             $html .= '<td>'.$assigned.'</td>';    
             $html .= '<td><img class="p-r-5" alt="'.$file->stages.'" width="33" height="33" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'">'.$file->stages
             
@@ -1631,31 +4144,46 @@ class FilesController extends Controller
 
     public function getComments($file){
 
-        $commentObj = Comment::where('engine', $file->engine);
-
-        if($file->brand){
-            $commentObj->where('make', $file->brand);
+        if($file->automatic){
+            return null;
         }
+        // $commentObj = Comment::where('engine', $file->engine);
+        $commentObj = Comment::where('make', $file->brand);
 
-        if($file->Model){
-            $commentObj->where('model', $file->model);
-        }
+        // if($file->brand){
+        //     $commentObj->where('make', $file->brand);
+        // }
 
+        // if($file->Model){
+        //     $commentObj->where('model', $file->model);
+        // }
 
         if($file->ecu){
             $commentObj->where('ecu', $file->ecu);
         }
 
-        if($file->generation){
-            $commentObj->where('generation', $file->generation);
-        }
+        // if($file->generation){
+        //     $commentObj->where('generation', $file->generation);
+        // }
 
+        $commentObj->whereNull('subdealer_group_id');
+        
         return $commentObj->get();
+    }
+
+    public function getResponseTimeAuto($file){
+        
+        $fileAssignmentDateTime = Carbon::parse($file->assignment_time);
+        $carbonUploadDateTime = Carbon::parse($file->reupload_time);
+
+        $responseTime = $carbonUploadDateTime->diffInSeconds( $fileAssignmentDateTime );
+
+        return $responseTime;
     }
 
     public function getResponseTime($file){
         
-        $fileAssignmentDateTime = Carbon::parse($file->assignment_time);
+        $fileAssignmentDateTime = Carbon::parse($file->created_at);
         $carbonUploadDateTime = Carbon::parse($file->reupload_time);
 
         $feed = NewsFeed::findOrFail(1);
@@ -1679,9 +4207,9 @@ class FilesController extends Controller
         $fileUploadDayWorkHourStart = Carbon::parse( $fileUploadDay.' '.$feed->daily_activation_time );
         $fileUploadDayWorkHourEnd = Carbon::parse( $fileUploadDay.' '.$feed->daily_deactivation_time );
 
-        $fileAssignmentDateAndTime = Carbon::parse($file->assignment_time);
+        $fileAssignmentDateAndTime = Carbon::parse($file->created_at);
 
-        $fileAssignmentDateTime = Carbon::parse($file->assignment_time);
+        $fileAssignmentDateTime = Carbon::parse($file->created_at);
         $carbonUploadDateTime = Carbon::parse($file->reupload_time);
 
         $totalTimeWihoutSubtraction = ($timeDiff * $daysDiff);
@@ -1731,101 +4259,134 @@ class FilesController extends Controller
      */
     public function show($id)
     {
-        if(Auth::user()->is_admin){
-            $file = File::where('id', $id)->where('is_credited', 1)->first();
+
+        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
+
+        if(Auth::user()->is_admin()){
+
+            $file = File::where('id',$id)->where(function($q){
+
+                $q->where('type', 'master');
+                
+
+            })->where('is_credited', 1)
+            ->whereNull('original_file_id')
+            ->orWhere(function($q){
+                
+                $q->where('type', 'subdealer');
+                $q->whereNotNull('assigned_from');
+                
+            })->where('id',$id)
+            ->where('is_credited', 1)
+            ->whereNull('original_file_id')
+            ->first();
+
+            
         }
-        else if(Auth::user()->is_engineer){
-            $file = File::where('id',$id)->where('is_credited', 1)->first();
-            // $file = File::where('id',$id)->where('assigned_to', Auth::user()->id)->where('is_credited', 1)->first();
+        else{
+
+            if(get_engineers_permission(Auth::user()->id, 'show-all-files')){
+
+                $file = File::where('id',$id)->where(function($q){
+
+                    $q->where('type', 'master');
+                    
+    
+                })->where('is_credited', 1)
+                ->whereNull('original_file_id')
+                ->orWhere(function($q){
+                    
+                    $q->where('type', 'subdealer');
+                    $q->whereNotNull('assigned_from');
+                    
+                })->where('id',$id)
+                ->whereNull('original_file_id')
+                ->where('is_credited', 1)->first();
+
+            }
+            else{
+
+                $file = File::where('id',$id)->where(function($q){
+
+                    $q->where('type', 'master');
+                    
+    
+                })
+                ->where('id',$id)
+                ->where('is_credited', 1)
+                ->whereNull('original_file_id')
+                ->where('assigned_to', Auth::user()->id)->first();
+
+            }
+
         }
 
-        // $file->reupload_time = Carbon::now();
-        
         if(!$file){
             abort(404);
         }
-
-        $decodedAvailable = false;
-
-        $encodingType = 'micro';
-
-        $setEncodingType = AlientechFile::where('purpose','download')->where('file_id', $file->id)->first();
-
-        if($setEncodingType){
-            if($setEncodingType->key == 'dec'){
-                $encodingType = 'dec';
-            }
-        }
-
-        if(AlientechFile::where('file_id', $file->id)->first()){
-
-            $decodedAvailable = true;
-            
-            if($file->alientech_files->isEmpty()){
-                $this->saveFiles($file->id);
-            }
-        }
-
-        $aboutToDownload = AlientechFile::where('purpose', 'download_encoded')->where('file_id', $file->id)->get();
-        
-        if($aboutToDownload){
-            foreach($aboutToDownload as $f){
-                $this->saveMoreFiles($file->id, $f->id);
-                $f->purpose = "download_encoded_done";
-                $f->save();
-            }
-        }
-        
-        $alientechFiles = $file->alientech_files;
-
-        // $file->response_time = $this->getResponseTime($file);
-        // $file->save();
         
         if($file->checked_by == 'customer'){
             $file->checked_by = 'seen';
             $file->save();
         }
-
+        
+        foreach($file->new_requests as $new){
+            if($new->checked_by == 'customer'){
+                $new->checked_by = 'seen';
+                $new->save();
+            }
+        }
+        
         $vehicle = Vehicle::where('Make', $file->brand)
         ->where('Model', $file->model)
         ->where('Generation', $file->version)
         ->where('Engine', $file->engine)
         ->first();
         
-        $engineers = User::where('is_engineer', 1)->get();
-        $withoutTypeArray = $file->files->toArray();
-        $unsortedTimelineObjects = [];
+        $engineers = get_engineers();
 
-        foreach($withoutTypeArray as $r) {
-            $fileReq = RequestFile::findOrFail($r['id']);
-            if($fileReq->file_feedback){
-                $r['type'] = $fileReq->file_feedback->type;
-            }
-            $unsortedTimelineObjects []= $r;
-        } 
+        $activeFeed = NewsFeed::where('active', 1)->where('front_end_id', $file->front_end_id)->first();
+
+        if($activeFeed){
+            $activeFeedType = $activeFeed->type;
+        }
+        else{
+            $activeFeedType = 'danger';
+        }
         
-        $createdTimes = [];
+        // $withoutTypeArray = $file->files->toArray();
+        // $unsortedTimelineObjects = [];
 
-        foreach($file->files->toArray() as $t) {
-            $createdTimes []= $t['created_at'];
-        } 
+        // foreach($withoutTypeArray as $r) {
+        //     $fileReq = RequestFile::findOrFail($r['id']);
+        //     if($fileReq->file_feedback){
+        //         $r['type'] = $fileReq->file_feedback->type;
+        //     }
+        //     $unsortedTimelineObjects []= $r;
+        // } 
+        
+        // $createdTimes = [];
+
+        // foreach($file->files->toArray() as $t) {
+        //     $createdTimes []= $t['created_at'];
+        // } 
     
-        foreach($file->engineer_file_notes->toArray() as $a) {
-            $unsortedTimelineObjects []= $a;
-            $createdTimes []= $a['created_at'];
-        }   
+        // foreach($file->engineer_file_notes->toArray() as $a) {
+        //     $unsortedTimelineObjects []= $a;
+        //     $createdTimes []= $a['created_at'];
+        // }   
 
-        foreach($file->file_internel_events->toArray() as $b) {
-            $unsortedTimelineObjects []= $b;
-            $createdTimes []= $b['created_at'];
-        } 
+        // foreach($file->file_internel_events->toArray() as $b) {
+        //     $unsortedTimelineObjects []= $b;
+        //     $createdTimes []= $b['created_at'];
+        // } 
 
-        foreach($file->file_urls->toArray() as $b) {
-            $unsortedTimelineObjects []= $b;
-            $createdTimes []= $b['created_at'];
-        } 
+        // foreach($file->file_urls->toArray() as $b) {
+        //     $unsortedTimelineObjects []= $b;
+        //     $createdTimes []= $b['created_at'];
+        // } 
 
-        array_multisort($createdTimes, SORT_ASC, $unsortedTimelineObjects);
+        // array_multisort($createdTimes, SORT_ASC, $unsortedTimelineObjects);
 
         if($file->ecu){
             $comments = $this->getComments($file);
@@ -1834,10 +4395,78 @@ class FilesController extends Controller
             $comments = null;
         }
         
-        return view('files.show', ['encodingType' => $encodingType, 'alientechFiles' => $alientechFiles, 'decodedAvailable' => $decodedAvailable, 'vehicle' => $vehicle,'file' => $file, 'messages' => $unsortedTimelineObjects, 'engineers' => $engineers, 'comments' => $comments ]);
+        $showComments = false;
+
+        $selectedStageOptionsLabels = [];
+
+        $stageO = $file->stage_services;
+
+        $stage = Service::findOrFail($stageO->service_id);
+
+        $selectedStageOptionsLabels []= $stage->label;
+
+        foreach($file->options_services as $op){
+            $o = Service::findOrFail($op->service_id);
+            $selectedStageOptionsLabels []= $o->label;
+        }
+
+        $optionsCommentsRecords = OptionComment::whereIn('service_label', $selectedStageOptionsLabels)
+        ->where('brand', $file->brand)
+        ->where('ecu', $file->ecu)
+        ->get();
+
+        $selectedOptions = [];
+        foreach($file->options_services as $selected){
+            $selectedOptions []= $selected->service_id;
+        }
+
+        if($comments != NULL){
+            foreach($comments as $comment){
+                // dd($comment->service_id);
+                // dd($selectedOptions);
+                if( in_array( $comment->service_id, $selectedOptions) ){
+                    $showComments = true;
+                    break;
+                }
+            }
+        }
+
+        // dd($showComments);
+
+        $options = Service::where('type', 'option')
+        ->whereNull('subdealer_group_id')
+        ->where('active', 1)
+        ->orWhere('tuningx_active', 1)->whereNull('subdealer_group_id')->where('type', 'option')->get();
+
+        $stages = Service::where('type', 'tunning')
+        ->whereNull('subdealer_group_id')
+        ->where('active', 1)
+        ->orWhere('tuningx_active', 1)->whereNull('subdealer_group_id')->where('type', 'tunning')->get();
+        
+        $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
+        $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
+        $autotunerLabel = Tool::where('label', 'Autotuner')->where('type', 'slave')->first();
+
+        $prossingSoftwares = ProcessingSoftware::orderBy('name', 'asc')->get();
+
+        if(env('APP_ENV') == 'live'){
+            return view('files.show', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+        }
+        else{
+            return view('files.show_backup', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares, 'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+        }
+
+        }
+        else{
+            abort(404);
+        }
+    
     }
 
     public function saveMoreFiles($id, $alientechFileID){
+
+        $reminderManager = new ReminderManagerController();
+        $this->manager = $reminderManager->getAllManager();
 
         $token = Key::where('key', 'alientech_access_token')->first()->value;
 
@@ -1855,27 +4484,18 @@ class FilesController extends Controller
         $response = Http::withHeaders($headers)->get($getsyncOpURL);
         $responseBody = json_decode($response->getBody(), true);
 
-       
-
         if(!isset($responseBody['result']['name'])){
-            $this->makeLogEntry($file->id, 'error', 'line 1998; file is not uploaded successfully.');
+            $this->makeAlientechLogEntry( $file->id, 'error', 'line 3653; file is not uploaded successfully.', $alientechObj, $response->getBody());
         }
         else{
 
-        $var = $responseBody['result']['name'];
+            $this->makeAlientechLogEntry( $file->id, 'success', 'file uploaded successfully.', $alientechObj, $responseBody['result']['name']);
+            $var = $responseBody['result']['name'];
 
         $fileName = substr($var, strrpos($var, '/') + 1);
         $fileName = str_replace('#', '', $fileName);
         $fileName = $fileName.'_'.$file->id;
-
-        // $fileName = str_replace(' ', '_', $fileName);
-        // $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechGUID;
-        // $headers = [
-        //     'X-Alientech-ReCodAPI-LLC' => $token,
-        // ];
-        // $response = Http::withHeaders($headers)->get($getsyncOpURL);
-        // $responseBody = json_decode($response->getBody(), true);
-
+        
         $slotGuid = $responseBody['slotGUID'];
         
         $result = $responseBody['result'];
@@ -1891,17 +4511,17 @@ class FilesController extends Controller
             $response = Http::withHeaders($headers)->get($url);
             $responseBody = json_decode($response->getBody(), true);
 
-            $base64_string = $responseBody['data'];
+            // $base64_string = $responseBody['data'];
+            $base64Data = $responseBody['data'];
+            $contents   = base64_decode($base64Data);
 
             // specify the path and filename for the downloaded file
             $filepath = $responseBody['name'];
 
-            // dd($filepath);
-
-            $filepath = str_replace('#', '', $filepath);
-
+            $pathAndNameArrayEncoded = $this->getFileName($filepath, $file, 'encoded');
+            
             // save the decoded string to a file
-            $flag = file_put_contents($filepath, $base64_string);
+            $flag = file_put_contents($pathAndNameArrayEncoded['path'], $contents);
 
             $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
 
@@ -1912,259 +4532,226 @@ class FilesController extends Controller
             $response = Http::withHeaders($headers)->post($url, []);
 
             $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
-
-            $fileWithExtenion = $fileName;
-
+            
             $obj = new AlientechFile();
             $obj->key = $extension;
-            $obj->value = $fileWithExtenion;
+            $obj->value = $pathAndNameArrayEncoded['name'];
             $obj->purpose = "encoded";
             $obj->file_id = $file->id;
             $obj->save();
         
             //// this is repetitive code.
 
-        $engineerFile = new RequestFile();
-        $engineerFile->request_file = $fileWithExtenion;
-        $engineerFile->file_type = 'engineer_file';
-        $engineerFile->tool_type = 'not_relevant';
-        $engineerFile->master_tools = 'not_relevant';
-        $engineerFile->file_id = $file->id;
-        $engineerFile->engineer = true;
-        $engineerFile->save();
+            $engineerFile = new RequestFile();
+            $engineerFile->request_file = $pathAndNameArrayEncoded['name'];
+            $engineerFile->file_type = 'engineer_file';
+            $engineerFile->tool_type = 'not_relevant';
+            $engineerFile->master_tools = 'not_relevant';
+            $engineerFile->file_id = $file->id;
+            $engineerFile->engineer = true;
+            $engineerFile->save();
 
-        $allEearlierReminders = EmailReminder::where('user_id', $file->user_id)
-        ->where('file_id', $file->id)->get();
+            $allEearlierReminders = EmailReminder::where('user_id', $file->user_id)
+            ->where('file_id', $file->id)->get();
 
-        foreach($allEearlierReminders as $reminderToBeDeleted){
-            $reminderToBeDeleted->delete();
-        }
-
-        $schedual = Schedualer::take(1)->first();
-
-        $reminder = new EmailReminder();
-        $reminder->user_id = $file->user_id;
-        $reminder->file_id = $file->id;
-        $reminder->request_file_id = $engineerFile->id;
-        $reminder->set_time = Carbon::now();
-        $reminder->cycle = $schedual->cycle;
-
-        $reminder->save();
-
-        if($file->status == 'submitted'){
-            $file->status = 'completed';
-            $file->save();
-        }
-        
-        if(!$file->response_time){
-
-            $file->reupload_time = Carbon::now();
-            $file->save();
-
-            $file->response_time = $this->getResponseTime($file);
-            $file->save();
-
-        }
-
-        if($file->original_file_id){
-            $old = File::findOrFail($file->original_file_id);
-            $old->checked_by = 'engineer';
-            $file->support_status = "closed";
-            $old->save();
-        }
-
-            $file->support_status = "closed";
-            $file->checked_by = 'engineer';
-            $file->save();
-
-        $customer = User::findOrFail($file->user_id);
-        $admin = User::where('is_admin', 1)->first();
-    
-        // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
-        $template = EmailTemplate::findOrFail(6);
-
-        $html1 = $template->html;
-
-        $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
-        $html1 = str_replace("#customer_name", $customer->name ,$html1);
-        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
-        
-        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
-        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
-        
-        if($file->options){
-            foreach($file->options() as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-                $tunningType .=  $option;  
-                $tunningType .= '</div>';
+            foreach($allEearlierReminders as $reminderToBeDeleted){
+                $reminderToBeDeleted->delete();
             }
-        }
 
-        $html1 = str_replace("#tuning_type", $tunningType,$html1);
-        $html1 = str_replace("#status", $file->status,$html1);
-        $html1 = str_replace("#file_url", route('file', $file->id),$html1);
+            $schedual = Schedualer::take(1)->first();
 
-        $html2 = $template->html;
+            $reminder = new EmailReminder();
+            $reminder->user_id = $file->user_id;
+            $reminder->file_id = $file->id;
+            $reminder->request_file_id = $engineerFile->id;
+            $reminder->set_time = Carbon::now();
+            $reminder->cycle = $schedual->cycle;
 
-        $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
-        $html2 = str_replace("#customer_name", $file->name ,$html2);
-        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
-        
-        $tunningType = '<img alt=".'.$file->stages.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon .'">';
-        $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.$file->stages.'</span>';
-        
-        if($file->options){
-            foreach($file->options() as $option) {
-                $tunningType .= '<div class="p-l-20"><img alt="'.$option.'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::where('name', $option)->first()->icon.'">';
-                $tunningType .=  $option;  
-                $tunningType .= '</div>';
+            $reminder->save();
+
+            if($file->status == 'submitted'){
+                $this->changeStatusLog($file, 'completed', 'status', 'File is enabled to download.');
+                $file->status = 'completed';
+                $file->red = 0;
+                $file->submission_timer = NULL;
+                $file->updated_at = Carbon::now();
+                $file->save();
             }
-        }
-
-        $html2 = str_replace("#tuning_type", $tunningType,$html2);
-        $html2 = str_replace("#status", $file->status,$html2);
-        $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
-
-        $optionsMessage = "";
-        if($file->options){
-            foreach($file->options() as $option) {
-                $optionsMessage .= ",".$option." ";
-            }
-        }
-
-        // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
-        $messageTemplate = MessageTemplate::findOrFail(7);
-
-        $message = $messageTemplate->text;
-
-        $message1 = str_replace("#customer", $customer->name ,$message);
-        $message2 = str_replace("#customer", $file->name ,$message);
-        
-        $subject = "ECU Tech: Engineer uploaded a file in reply.";
-
-        if($this->manager['eng_file_upload_cus_email']){
-            \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject]));
-        }
-        if($this->manager['eng_file_upload_admin_email']){
-            \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject]));
-        }
-        
-        if($this->manager['eng_file_upload_admin_sms']){
-            $this->sendMessage($admin->phone, $message1);
-        }
-        if($this->manager['eng_file_upload_cus_sms']){
-            $this->sendMessage($customer->phone, $message2);
-        }
-        
-        // return response('file uploaded', 200);
-
-        }
-    }
-
-        
-    }
-
-    public function saveFiles($id){
-
-        $token = Key::where('key', 'alientech_access_token')->first()->value;
-
-        $file = File::findOrFail($id);
-
-        $alientechGUID = AlientechFile::where('key', 'guid')->where('file_id', $id)->first()->value;
-        
-        $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechGUID;
-
-        $headers = [
-            'X-Alientech-ReCodAPI-LLC' => $token,
-        ];
-  
-        $response = Http::withHeaders($headers)->get($getsyncOpURL);
-        $responseBody = json_decode($response->getBody(), true);
-
-        $slotGuid = $responseBody['slotGUID'];
-        
-        $result = $responseBody['result'];
-
-        if($result['kess3Mode'] == 'OBD'){
-
-            if( isset($result['obdDecodedFileURL']) ){
             
-                $url = $result['obdDecodedFileURL'];
+            if(!$file->response_time){
 
-                $headers = [
-                    'X-Alientech-ReCodAPI-LLC' => $token,
-                ];
-        
-                $response = Http::withHeaders($headers)->get($url);
-                $responseBody = json_decode($response->getBody(), true);
+                $file->reupload_time = Carbon::now();
+                $file->save();
 
-                $base64_string = $responseBody['data'];
-
-                // specify the path and filename for the downloaded file
-                $filepath = $responseBody['name'];
-
-                // save the decoded string to a file
-                $flag = file_put_contents($filepath, $base64_string);
-
-                $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
-
-                $headers = [
-                // 'Content-Type' => 'multipart/form-data',
-                'X-Alientech-ReCodAPI-LLC' => $token,
-                ];
-
-                $response = Http::withHeaders($headers)->post($url, []);
-
-                $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
-
-                $obj = new AlientechFile();
-                $obj->key = $extension;
-                $obj->value = $file->file_attached.'.'.$extension;
-                $obj->purpose = "download";
-                $obj->file_id = $file->id;
-                $obj->save();
+                $file->response_time = $this->getResponseTime($file);
+                $file->save();
 
             }
-        }
-        else if($result['kess3Mode'] == 'BootBench'){
-            foreach($result['bootBenchComponents'] as $row){
 
-                $url = $row['decodedFileURL'];
+            if($file->original_file_id){
+                $old = File::findOrFail($file->original_file_id);
+                $old->checked_by = 'engineer';
+                $this->changeStatusLog($old, 'closed', 'support_status', 'Engineer uploaded the file.');
+                $old->support_status = "closed";
+                
+                $old->red = 0;
+                $old->timer = NULL;
+                $old->save();
+            }
 
-                $headers = [
-                    'X-Alientech-ReCodAPI-LLC' => $token,
-                ];
+            $this->changeStatusLog($file, 'closed', 'support_status', 'Engineer uploaded the file.');
+                $file->support_status = "closed";
+                
+                $file->red = 0;
+                $file->timer = NULL;
+                $file->checked_by = 'engineer';
+                $file->save();
+
+            $customer = User::findOrFail($file->user_id);
+            $admin = get_admin();
         
-                $response = Http::withHeaders($headers)->get($url);
-                $responseBody = json_decode($response->getBody(), true);
+            // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
+            $template = EmailTemplate::where('slug', 'file-up-from-eng')
+            ->where('front_end_id', $file->front_end_id)
+            ->first();
 
-                $base64_string = $responseBody['data'];
+            $html1 = $template->html;
 
-                // specify the path and filename for the downloaded file
-                $filepath = $responseBody['name'];
+            $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
+            $html1 = str_replace("#customer_name", $customer->name ,$html1);
+            $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
+            
+            $tunningType = $this->emailStagesAndOption($file);
+            
+            $html1 = str_replace("#tuning_type", $tunningType,$html1);
+            $html1 = str_replace("#status", $file->status,$html1);
+            $html1 = str_replace("#file_url", route('file', $file->id),$html1);
 
-                // save the decoded string to a file
-                $flag = file_put_contents($filepath, $base64_string);
+            $html2 = $template->html;
 
-                $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$slotGuid."/close";
+            $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
+            $html2 = str_replace("#customer_name", $file->name ,$html2);
+            $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
+            
+            $tunningType = $this->emailStagesAndOption($file);
 
-                $headers = [
-                // 'Content-Type' => 'multipart/form-data',
-                'X-Alientech-ReCodAPI-LLC' => $token,
-                ];
+            $html2 = str_replace("#tuning_type", $tunningType,$html2);
+            $html2 = str_replace("#status", $file->status,$html2);
 
-                $response = Http::withHeaders($headers)->post($url, []);
+            if($file->front_end_id == 1){
+                $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
+            }
+            else if($file->front_end_id == 3){
+                $html2 = str_replace("#file_url",  'http://portal.e-tuningfiles.com/'."file/".$file->id,$html2);
+            }
+            else{
+                $html2 = str_replace("#file_url",  'http://portal.tuning-x.com/'."file/".$file->id,$html2);
+            }
 
-                $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
+            $optionsMessage = "";
+            if($file->options){
+                foreach($file->options() as $option) {
+                    $optionsMessage .= ",".$option." ";
+                }
+            }
 
-                $obj = new AlientechFile();
-                $obj->key = $extension;
-                $obj->value = $file->file_attached.'.'.$extension;
-                $obj->purpose = "download";
-                $obj->file_id = $file->id;
-                $obj->save();
+            // $messageTemplate = MessageTemplate::where('name', 'File Uploaded from Engineer')->first();
+            $messageTemplate = MessageTemplate::where('slug', 'file-up-from-eng')
+            ->where('front_end_id', $file->front_end_id)->first();
+
+            $message = $messageTemplate->text;
+
+            $message1 = str_replace("#customer", $customer->name ,$message);
+            $message2 = str_replace("#customer", $file->name ,$message);
+            
+            if($file->front_end_id == 1){
+                $subject = "ECU Tech: Engineer uploaded a file in reply.";
+            }
+            else if($file->front_end_id == 3){
+                $subject = "E-files: Engineer uploaded a file in reply.";
+            }
+            else{
+                $subject = "TuningX: Engineer uploaded a file in reply.";
+            }
+
+            if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
+
+                try{
+                    \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                }
+            }
+            if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
+                
+                try{
+                    \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
+                    $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
+
+                }
+                catch(TransportException $e){
+                    \Log::info($e->getMessage());
+                    $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
+                }
+            }
+            
+            if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
+                $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
+            }
+
+            if($this->manager['eng_file_upload_admin_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsappforEng($admin->name,$admin->phone, 'eng_file_upload', $file);
+            }
+
+            if($this->manager['eng_file_upload_cus_sms'.$file->front_end_id]){
+                $this->sendMessage($customer->phone, $message2, $file->front_end_id, $file->id);
+            }
+
+            if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
+                $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
+            }
 
             }
+        } 
+    }
+
+    public function changeStatusLog($file, $to, $type, $desc){
+
+        $new = new FilesStatusLog();
+        $new->type = $type;
+
+        if($type == 'status'){
+            $new->from = $file->status;
         }
+        else if($type == 'support_status'){
+            $new->from = $file->support_status;
+        }
+
+        $new->to = $to;
+        $new->desc = $desc;
+        $new->file_id = $file->id;
+        $new->changed_by = Auth::user()->id;
+        $new->save();
+    }
+
+    public function emailStagesAndOption($file){
+
+        if( \App\Models\Service::FindOrFail( $file->stage_services->service_id ) ){
+            $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
+            $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
+        }
+        
+        if($file->options_services){
+
+            foreach($file->options_services as $option) {
+                $tunningType .= '<div class="p-l-20"><img alt="'.\App\Models\Service::FindOrFail( $option->service_id )->name .'" width="40" height="40" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $option->service_id )->icon.'">';
+                $tunningType .=  \App\Models\Service::FindOrFail( $option->service_id )->name;
+                $tunningType .= '</div>';
+            }
+        }
+
+        return $tunningType;
     }
 }

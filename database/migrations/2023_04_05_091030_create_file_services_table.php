@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('alientech_files', function (Blueprint $table) {
+        Schema::create('file_services', function (Blueprint $table) {
             $table->id();
-            $table->string('guid');
-            $table->string('slot_id');
             $table->string('type');
-            $table->string('purpose');
-            $table->boolean('processed')->default(0);
-            $table->text('desc');
+            $table->integer('credits');
+            $table->foreignId('service_id')->default(0);
             $table->foreignId('file_id')->default(0);
             $table->foreignId('temporary_file_id')->default(0);
             $table->timestamps();
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('file_services');
     }
 };

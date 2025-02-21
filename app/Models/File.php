@@ -18,7 +18,7 @@ class File extends Model
     }
 
     public function tunned_files(){
-        return $this->hasMany(TunnedFile::class); 
+        return $this->hasOne(TunnedFile::class); 
     }
 
     public function alientech_files(){
@@ -81,11 +81,28 @@ class File extends Model
         return $vehicle->getComment($this->ecu);
     }
 
-    public function stages(){
-        return $this->stages;
+    public function stage_services(){
+        return $this->hasOne(FileService::class, 'file_id', 'id')->where('type', 'stage');
     }
 
-    public function options(){
-        return explode(',',$this->options);
+    public function alientech_file(){
+        return $this->hasOne(AlientechFile::class, 'file_id', 'id');
     }
+
+    public function decoded_files(){
+        return $this->hasMany(ProcessedFile::class, 'file_id', 'id')->where('type', 'decoded');
+    }
+
+    public function decoded_file(){
+        return $this->hasOne(ProcessedFile::class, 'file_id', 'id')->where('type', 'decoded');
+    }
+
+    public function reading_tool($type){
+        return $this->hasOne(Tool::class, 'file_id', 'id')->where('type', $type);
+    }
+
+    public function options_services(){
+        return $this->hasMany(FileService::class, 'file_id', 'id')->where('type', 'option');
+    }
+    
 }

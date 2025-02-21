@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            // $table->boolean('is_head')->default(0);
+        Schema::table('logs', function (Blueprint $table) {
+            $table->foreignId('temporary_file_id')->default(0);
         });
     }
 
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('logs', function (Blueprint $table) {
             //
         });
     }

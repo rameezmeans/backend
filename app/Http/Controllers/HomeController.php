@@ -6,6 +6,7 @@ use App\Models\Credit;
 use App\Models\EngineerFileNote;
 use App\Models\File;
 use App\Models\FrontEnd;
+use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
@@ -31,9 +32,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $engineers = User::where('is_engineer', 1)->get();
-        $customers = User::where('is_customer', 1)->where('front_end_id', 1)->get();
-        $engineersCount = User::where('is_engineer', 1)->count();
+        $engineers = get_engineers();
+        $customers = get_customers(1);
+        $engineersCount = sizeof($engineers);
 
         $frontends = FrontEnd::all();
 
@@ -49,12 +50,114 @@ class HomeController extends Controller
 
     public function getFrontendData(Request $request){
 
-        $customerCount = User::where('is_customer', 1)
-        ->where('front_end_id', $request->frontend_id)
+        $customerCount = sizeof(get_customers($request->frontend_id));
+
+        // today
+
+        $totalFileCountToday = File::where('front_end_id', $request->frontend_id)
+        ->whereRaw('date(created_at) = curdate()')
         ->count();
 
-        $topCountriesObj = User::where('is_customer', 1)
+        $autotunedFileCountToday = File::where('checking_status', 'completed')
         ->where('front_end_id', $request->frontend_id)
+        ->whereRaw('date(created_at) = curdate()')
+        ->count();
+
+        $AvgRTToday = 0;
+
+        $totalTime = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->whereRaw('date(created_at) = curdate()')
+        ->sum('response_time');
+
+        if($totalTime != 0){
+            $AvgRTToday = round( $totalTime / $autotunedFileCountToday , 2)." sec" ;
+        }
+
+        //// 7 days
+
+        $date = Carbon::now()->subDays(7);
+
+        $totalsevenDaysCount = File::where('front_end_id', $request->frontend_id)
+        ->where('created_at', '>=', $date)
+        ->count();
+        
+        $autotunedFileCountSevendays = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->where('created_at', '>=', $date)
+        ->count();
+
+        $AvgRTSevendays = 0;
+
+        $totalTimeSevendays = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->whereRaw('date(created_at) = curdate()')
+        ->sum('response_time');
+
+        if($totalTimeSevendays != 0){
+            $AvgRTSevendays = round( $totalTimeSevendays / $autotunedFileCountSevendays , 2)." sec" ;
+        }
+
+        // 30 days 
+
+        $date = Carbon::now()->subDays(30);
+
+        $total30DaysCount = File::where('front_end_id', $request->frontend_id)
+        ->where('created_at', '>=', $date)
+        ->count();
+
+        $autotunedFileCount30days = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->where('created_at', '>=', $date)
+        ->count();
+
+        $AvgRT30days = 0;
+
+        $totalTime30days = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->whereRaw('date(created_at) = curdate()')
+        ->sum('response_time');
+
+        if($totalTime30days != 0){
+            $AvgRT30days = round( $totalTime30days / $autotunedFileCount30days , 2)." sec" ;
+        }
+
+        // 365 days 
+        
+        $date = Carbon::now()->subDays(365);
+
+        $total365DaysCount = File::where('front_end_id', $request->frontend_id)
+        ->where('created_at', '>=', $date)
+        ->count();
+
+        $autotunedFileCount365days = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->where('created_at', '>=', $date)
+        ->count();
+
+        $AvgRT365days = 0;
+
+        $totalTime365days = File::where('checking_status', 'completed')
+        ->where('front_end_id', $request->frontend_id)
+        ->whereRaw('date(created_at) = curdate()')
+        ->sum('response_time');
+
+        if($totalTime365days != 0){
+            $AvgRT365days = round( $totalTime365days / $autotunedFileCount365days , 2)." sec" ;
+        }
+
+        $customerID = Role::where('name', 'customer')->first()->id;
+
+        // $topCountriesObj = User::where('is_customer', 1)
+        // ->where('front_end_id', $request->frontend_id)
+        // ->groupBy('country')
+        // ->selectRaw('count(*) as count,country')
+        // ->get();
+
+        $customerRole = Role::where('name','customer')->first();
+
+        $topCountriesObj = User::where('role_id', $customerRole->id)
+        ->where('front_end_id', 1)
         ->groupBy('country')
         ->selectRaw('count(*) as count,country')
         ->get();
@@ -116,7 +219,7 @@ class HomeController extends Controller
 
         $customerOptions = '<option value="all_customers">All Customers</option>';
 
-        $customers = User::where('is_customer', 1)->where('front_end_id', $request->frontend_id)->get();
+        $customers = get_customers($request->frontend_id);
 
         foreach($customers as $customer){
             $customerOptions .= '<option value="'.$customer->id.'">'.$customer->name.'</option>';
@@ -124,6 +227,18 @@ class HomeController extends Controller
 
         return response()->json([
             'customerCount' => $customerCount,
+            'AvgRTToday' => $AvgRTToday,
+            'autotunedFileCountToday' => $autotunedFileCountToday,
+            'totalFileCountToday' => $totalFileCountToday,
+            'AvgRTSevendays' => $AvgRTSevendays,
+            'autotunedFileCountSevendays' => $autotunedFileCountSevendays,
+            'totalsevenDaysCount' => $totalsevenDaysCount,
+            'AvgRT30days' => $AvgRT30days,
+            'autotunedFileCount30days' => $autotunedFileCount30days,
+            'total30DaysCount' => $total30DaysCount,
+            'AvgRT365days' => $AvgRT365days,
+            'autotunedFileCount365days' => $autotunedFileCount365days,
+            'total365DaysCount' => $total365DaysCount,
             'countryTable' => $countryTable,
             'brandsTable' => $brandsTable,
             'customerOptions' => $customerOptions,
@@ -149,7 +264,7 @@ class HomeController extends Controller
         $average = 0;
 
         if($request->reponse_engineer == 'all_engineers'){
-            $engineers = User::where('is_engineer', 1)->get();
+            $engineers = get_engineers();
 
             foreach($engineers as $engineer){
 
@@ -274,7 +389,7 @@ class HomeController extends Controller
             }
         }
 
-        $totalEngineers = User::where('is_engineer', 1)->count();
+        $totalEngineers = sizeof(get_engineers());
 
         $avgTotal = EngineerFileNote::count() / $totalEngineers;
 
@@ -375,8 +490,7 @@ class HomeController extends Controller
         $grandTotal = Credit::where('credits', '>', 0)
         ->sum('credits');
 
-        $customers = User::where('is_customer', 1)
-        ->count();
+        $customers = sizeof(get_customers());
 
         $avgTotal = $grandTotal / $customers;
 
@@ -467,7 +581,7 @@ class HomeController extends Controller
             }
         }
 
-        $totalEngineers = User::where('is_engineer', 1)->count();
+        $totalEngineers = sizeof(get_engineers());
 
         if($request->engineer_files == "all_engineers"){
             $files = File::whereBetween('created_at', array($start, $end))->where('front_end_id', $request->frontend_id)->where('is_credited', 1)->get();
@@ -486,6 +600,71 @@ class HomeController extends Controller
         $graph['y_axis']= $weekCount ;
         $graph['total_files']= $totalFiles;
         $graph['avg_files']= round($avgFiles, 2);
+        $graph['label']= 'Files';
+        
+        return response()->json(['graph' => $graph]);
+    }
+
+    public function getAutotunnedFilesChart(Request $request){
+        
+        $graph = [];
+
+        if(!$request->start){
+            $min = DB::table('files')->
+            select('created_at')
+            ->orderBy('created_at', 'asc')->first();
+            $start = $min->created_at;
+        }
+        else{
+            $start = $request->start;
+            $date = str_replace('/', '-', $start);
+            $start = date('Y-m-d', strtotime($date));
+        }
+
+        if(!$request->end){
+            $max = DB::table('files')->select('created_at')->orderBy('created_at', 'desc')->first();
+            $end = $max->created_at;
+        }
+        else{
+            $end = $request->end;
+            $date = str_replace('/', '-', $end);
+            $end = date('Y-m-d', strtotime($date));
+        }
+
+        $weekRange = $this->createDateRangeArray($start, $end);
+
+        $weekCount = [];
+        foreach($weekRange as $r){
+            $date = DateTime::createFromFormat('d/m/Y', $r);
+            $day = $date->format('d');
+            $month = $date->format('m');
+            $weekCount []= File::whereMonth('created_at',$month)
+            ->where('front_end_id', $request->frontend_id)
+            ->where('checking_status', 'completed')
+            ->whereDay('created_at',$day)->count();
+            
+        }
+        
+        $totalAutoTunedFiles = File::whereBetween('created_at', array($start, $end))
+        ->where('front_end_id', $request->frontend_id)
+        ->where('checking_status', 'completed')
+        ->where('is_credited', 1)->count();
+
+        $totalFiles = File::whereBetween('created_at', array($start, $end))
+        ->where('front_end_id', $request->frontend_id)
+        ->where('is_credited', 1)->count();
+
+        $totalFilesManual = File::whereBetween('created_at', array($start, $end))
+        ->where('front_end_id', $request->frontend_id)
+        ->whereNot('checking_status', 'completed')
+        ->where('is_credited', 1)->count();
+        
+        $graph = [];
+        $graph['x_axis']= $weekRange;
+        $graph['y_axis']= $weekCount ;
+        $graph['total_autotuned_files']= $totalAutoTunedFiles;
+        $graph['total_manual_files']= $totalFilesManual;
+        $graph['total_files']= $totalFiles;
         $graph['label']= 'Files';
         
         return response()->json(['graph' => $graph]);

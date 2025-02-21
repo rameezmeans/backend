@@ -59,7 +59,8 @@ class VehiclesController extends Controller
         $comment->ecu = $request->ecu;
         $comment->generation = $request->generation;
         $comment->model = $request->model;
-        $comment->option = $request->option;
+        $comment->option = "discarded";
+        $comment->service_id = $request->service_id;
         $comment->comments = $request->comments;
         $comment->comment_type = $request->comment_type;
         $comment->save();
@@ -86,6 +87,7 @@ class VehiclesController extends Controller
 
         $options = Service::where('type', 'option')->get();
         $downloadComments = $this->getComments($vehicle, 'download');
+    
         $uploadComments = $this->getComments($vehicle, 'upload');
 
         if($vehicle->Engine_ECU){
@@ -108,6 +110,8 @@ class VehiclesController extends Controller
         else{
             abort('404');
         }
+
+        // dd($includedOptionsForDownload);
         
         return view('vehicles.add_comments', 
         [
@@ -181,7 +185,7 @@ class VehiclesController extends Controller
 
         $options = [];
         foreach($comments as $comment){
-            $options []= $comment->option;
+            $options []= $comment->service_id;
         }
 
         return $options;
@@ -197,7 +201,7 @@ class VehiclesController extends Controller
         ]);
 
     }
-
+    
     public function getComments($vehicle, $type){
 
         $commentObj = Comment::where('comment_type', $type)->where('engine', $vehicle->Engine);

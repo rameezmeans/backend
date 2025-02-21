@@ -1,10 +1,19 @@
 <?php
 
+use App\Http\Controllers\AlientechTestController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\SubdealerGroupsController;
+use App\Models\Comment;
+use App\Models\File;
+use App\Models\Role;
+use App\Models\RoleUser;
+use App\Models\Service;
+use App\Models\Tool;
 use App\Models\User;
+use App\Models\UserTool;
 use Illuminate\Support\Facades\Hash;
 
 /*
@@ -22,12 +31,167 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+ Route::get('/tasks', function () {
+
+    $topCountriesObj = User::join('roles_users', 'roles_users.user_id', '=', 'users.id')
+        ->where('roles_users.role_id', 4)
+        ->where('front_end_id', 1)
+        ->groupBy('country')
+        ->selectRaw('count(*) as count,country')
+        ->get();
+
+        // dd($topCountriesObj);
+
+    // $engineerRole = Role::where('name', 'engineer')->first();
+
+    // $userRoles = RoleUser::where('role_id', $engineerRole->id)->get();
+
+    // $engineers = User::where('is_engineer', 1)->get();
+
+    // $engineers = [];
+    // foreach($userRoles as $user){
+            
+    //         $engineers []=  User::findOrFail($user->user_id);
+    // }
+
+//    dd($engineers);
+    
+    // dd(Auth::user()->is_admin());
+
+    // $admin = get_admin();
+
+    // dd($admin);
+
+    // $users = User::all();
+
+    // foreach($users as $user){
+        
+    //     RoleUser::where('user_id', $user->id)->delete();
+
+    //     if($user->is_admin){
+    //         $new = new RoleUser();
+    //         $new->user_id = $user->id;
+    //         $new->role_id = 1;
+    //         $new->save();
+    //     }
+
+    //     if($user->is_head){
+    //         $new = new RoleUser();
+    //         $new->user_id = $user->id;
+    //         $new->role_id = 2;
+    //         $new->save();
+    //     }
+
+    //     if($user->is_engineer){
+    //         $new = new RoleUser();
+    //         $new->user_id = $user->id;
+    //         $new->role_id = 3;
+    //         $new->save();
+    //     }
+
+    //     if($user->is_customer){
+    //         $new = new RoleUser();
+    //         $new->user_id = $user->id;
+    //         $new->role_id = 4;
+    //         $new->save();
+    //     }
+    // } 
+
+    // $comments = Comment::all();
+
+    // foreach($comments as $comment){
+    //     $service = Service::where('name', $comment->option)->first();
+
+    //     if($service){
+    //         $comment->service_id = $service->id;
+    //         $comment->save();
+    //     }
+    //     else{
+    //         \Log::info('service missing: '.$comment->option);
+    //     }
+    // }
+     
+    // $files = File::all();
+
+    // foreach($files as $file){
+
+    //     $tool = $tool = Tool::where('label', $file->tool)->first();
+        
+    //     if($tool){
+    //         $file->tool_id = $tool->id;
+    //         $file->save();
+    //     }
+    //     else{
+    //         \Log::info('tool missing in File: '.$file->id.' Tool: '.$file->tool);
+    //     }
+    // }
+
+    // dd($files);
+
+//     foreach(User::where('is_customer', 1)->get() as $user){
+
+//     $slaveTools = explode(',', $user->slave_tools);
+//     $masterTools = explode(',', $user->master_tools);
+
+//     UserTool::where('user_id', $user->id)->where('type', 'master')->delete();
+
+//     foreach($masterTools as $m){
+
+//     $tool = Tool::where('label', $m)->where('type', 'master')->first();
+
+//         if($tool){
+//             $record = new UserTool();
+//             $record->type = 'master';
+//             $record->user_id = $user->id;
+//             $record->tool_id = $tool->id;
+//             $record->save();
+//         }
+//         else{
+//         \Log::info('missing: '.$m);
+//         }
+//     }
+
+//     UserTool::where('user_id', $user->id)->where('type', 'slave')->delete();
+
+//     foreach($slaveTools as $s){
+
+//     $tool = Tool::where('label', $s)->where('type', 'slave')->first();
+//         if($tool){
+//             $record = new UserTool();
+//             $record->type = 'slave';
+//             $record->user_id = $user->id;
+//             $record->tool_id = $tool->id;
+//             $record->save();
+//         }
+//         else{
+//         \Log::info('missing: '.$s);
+//         }
+//     }
+
+//     echo "---------------------------------------------------------------------------<br>";
+//     echo 'user: "'.$user->name. '" id: '.$user->id.'<br><br>';
+
+//     foreach($user->tools_slave as $sl){
+//     echo Tool::findOrFail($sl->tool_id)->label.'(slave)<br>';
+//     }
+
+//     foreach($user->tools_master as $ms){
+//     echo Tool::findOrFail($ms->tool_id)->label.'(master)<br>';
+//     }
+//     echo "---------------------------------------------------------------------------<br>";
+//     echo "<br><br>";
+
+//  }
+
+ });
+
 Route::post('/change_status', [App\Http\Controllers\ServicesController::class, 'changeStatus'])->name('change-status');
 
 Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/get_files_chart', [App\Http\Controllers\HomeController::class, 'getFilesChart'])->name('get-files-chart');
+Route::post('/get_autotunned_files_chart', [App\Http\Controllers\HomeController::class, 'getAutotunnedFilesChart'])->name('get-autotunned-files-chart');
 Route::post('/get_frontend_data', [App\Http\Controllers\HomeController::class, 'getFrontendData'])->name('get-frontend-data');
 // Route::post('/get_files_chart', [App\Http\Controllers\HomeController::class, 'getFilesChart'])->name('get-files-chart');
 Route::post('/get_credits_chart', [App\Http\Controllers\HomeController::class, 'getCreditsChart'])->name('get-credits-chart');
@@ -46,6 +210,7 @@ Route::post('/sort_services', [App\Http\Controllers\ServicesController::class, '
 // Route::get('/files', [App\Http\Controllers\FilesController::class, 'index'])->name('files');
 Route::get('/files', [App\Http\Controllers\FilesController::class, 'liveFiles'])->name('files');
 Route::get('/file/{id}', [App\Http\Controllers\FilesController::class, 'show'])->name('file');
+Route::post('/get_download_button', [App\Http\Controllers\FilesController::class, 'getDownloadButton'])->name('get-download-button');
 
 Route::get('/download/{id}/{file}', [App\Http\Controllers\FilesController::class,'download'])->name('download');
 Route::get('/download_decoded/{id}/{file}', [App\Http\Controllers\FilesController::class,'downloadDecoded'])->name('download-decoded');
@@ -53,12 +218,12 @@ Route::get('/get_access_token', [App\Http\Controllers\FilesController::class,'ge
 Route::get('/decode_file', [App\Http\Controllers\FilesController::class,'decodeFile'])->name('decode-file');
 Route::post('/callback/kess3', [App\Http\Controllers\FilesController::class,' callbackKess3'])->name('callback-kess3');
 Route::post('/callback/kess3/complete', [App\Http\Controllers\FilesController::class,' callbackKess3Complete'])->name('callback-kess3-complete');
-// Route::get('/file_copy_path', [App\Http\Controllers\FilesController::class,'fileCopyAndPath'])->name('file-copy-path');
+Route::get('/file_copy_path', [App\Http\Controllers\FilesController::class,'fileCopyAndPath'])->name('file-copy-path');
 Route::post('/file-engineers-notes', [App\Http\Controllers\FilesController::class,'fileEngineersNotes'])->name('file-engineers-notes');
 Route::get('/edit_file/{id}', [App\Http\Controllers\FilesController::class,'editFile'])->name('edit-file');
 Route::post('/update-file-vehicle', [App\Http\Controllers\FilesController::class,'updateFileVehicle'])->name('update-file-vehicle');
 Route::post('/request-file-upload', [App\Http\Controllers\FilesController::class,'uploadFileFromEngineer'])->name('request-file-upload');
-Route::post('/encoded-file-upload', [App\Http\Controllers\FilesController::class,'uploadFileFromEngineerAndEncode'])->name('encoded-file-upload');
+Route::post('/encoded-file-upload', [App\Http\Controllers\FilesController::class,'uploadFileFromEngineer'])->name('encoded-file-upload');
 Route::post('/delete-request-file', [App\Http\Controllers\FilesController::class,'deleteUploadedFile'])->name('delete-request-file');
 Route::post('/delete-message', [App\Http\Controllers\FilesController::class,'deleteMessage'])->name('delete-message');
 Route::post('/assign-engineer', [App\Http\Controllers\FilesController::class,'assignEngineer'])->name('assign-engineer');
@@ -72,6 +237,7 @@ Route::post('/get_models', [App\Http\Controllers\FilesController::class, 'getMod
 Route::post('/get_versions', [App\Http\Controllers\FilesController::class, 'getVersions'])->name('get-versions');
 Route::post('/get_engines', [App\Http\Controllers\FilesController::class, 'getEngines'])->name('get-engines');
 Route::post('/get_ecus', [App\Http\Controllers\FilesController::class, 'getECUs'])->name('get-ecus');
+Route::post('/delete_file', [App\Http\Controllers\FilesController::class, 'delete'])->name('delete-file');
 
 // Route::get('/feedback_reports', [App\Http\Controllers\FilesController::class,'feedbackReports'])->name('feedback-reports');
 Route::get('/feedback_reports', [App\Http\Controllers\FilesController::class,'feedbackReportsLive'])->name('feedback-reports');
@@ -285,21 +451,38 @@ Route::get('myspace', function(){
     dd(User::get(['id', 'name'])->pluck('name','id')->toArray());
 });
 
-/*
-* [Group] view by id
-*/
-// Route::get('/group/{id}', [MessagesController::class,'index'])->name('group');
+// alientech testing ... 
 
-/*
-* user view by id.
-* Note : If you added routes after the [User] which is the below one,
-* it will considered as user id.
-*
-* e.g. - The commented routes below :
-*/
-// Route::get('/route', function(){ return 'Munaf'; }); // works as a route
-// Route::get('chatify/{id}', function(){
-//     abort('404');
-// })->name('user');
+Route::get('upload_customer_file/{folder_path}/{file_name}', [AlientechTestController::class, 'uploadCustomersFileAndSaveGUID'])->name('upload-customer-file');
+Route::get('upload_engineers_file/{folder_path}/{file_name}', [AlientechTestController::class, 'uploadEngineersFileAndSaveGUID'])->name('upload-engineers-file');
+Route::get('download_encoded_file/{folder_id}', [AlientechTestController::class, 'downloadEncodedFile'])->name('download-encoded-file');
+Route::get('close_all', [AlientechTestController::class, 'closeAllSlots'])->name('close-all');
+Route::get('show_all', [AlientechTestController::class, 'showAllSlots'])->name('show-all');
 
-// Route::get('/route', function(){ return 'Munaf'; }); // works as a user id
+Route::get('subdealer_groups', [SubdealerGroupsController::class, 'index'])->name('subdealer-groups');
+Route::get('create_subdealer_group', [SubdealerGroupsController::class, 'create'])->name('create-subdealer-group');
+Route::post('delete_subdealer_group', [SubdealerGroupsController::class, 'delete'])->name('delete-subdealer-group');
+Route::post('add_subdealer_group', [SubdealerGroupsController::class, 'add'])->name('add-subdealer-group');
+Route::post('update_subdealer_group', [SubdealerGroupsController::class, 'update'])->name('update-subdealer-group');
+Route::get('edit_subdealer_group/{id}', [SubdealerGroupsController::class, 'edit'])->name('edit-subdealer-group');
+
+Route::get('create_subdealer_customer/{id}', [SubdealerGroupsController::class, 'createCustomer'])->name('create-subdealer-customer');
+Route::post('add_subdealer_customer', [SubdealerGroupsController::class, 'addCustomer'])->name('add-subdealer-customer');
+Route::get('edit_subdealer_customer/{id}', [SubdealerGroupsController::class, 'editCustomer'])->name('edit-subdealer-customer');
+Route::post('update_subdealer_customer', [SubdealerGroupsController::class, 'updateCustomer'])->name('update-subdealer-customer');
+Route::post('delete_subdealer_customer', [SubdealerGroupsController::class, 'deleteUser'])->name('delete-subdealer-customer');
+
+Route::get('create_subdealer_engineer/{id}', [SubdealerGroupsController::class, 'createEngineer'])->name('create-subdealer-engineer');
+Route::post('add_subdealer_engineer', [SubdealerGroupsController::class, 'addEngineer'])->name('add-subdealer-engineer');
+Route::get('edit_subdealer_engineer/{id}', [SubdealerGroupsController::class, 'editEngineer'])->name('edit-subdealer-engineer');
+Route::post('update_subdealer_engineer', [SubdealerGroupsController::class, 'updateEngineer'])->name('update-subdealer-engineer');
+Route::post('delete_subdealer_engineer', [SubdealerGroupsController::class, 'deleteUser'])->name('delete-subdealer-engineer');
+
+Route::get('create_subdealer/{id}', [SubdealerGroupsController::class, 'createSubdealer'])->name('create-subdealer');
+Route::post('add_subdealer', [SubdealerGroupsController::class, 'addSubdealer'])->name('add-subdealer');
+Route::get('edit_subdealer/{id}', [SubdealerGroupsController::class, 'editSubdealer'])->name('edit-subdealer');
+Route::post('update_subdealer', [SubdealerGroupsController::class, 'updateSubdealer'])->name('update-subdealer');
+Route::post('delete_subdealer', [SubdealerGroupsController::class, 'deleteUser'])->name('delete-subdealer');
+
+Route::get('create_subdealer_egnineer/{id}', [SubdealerGroupsController::class, 'createEngineer'])->name('create-subdealer-engineer');
+Route::get('create_subdealer_subdealer/{id}', [SubdealerGroupsController::class, 'createSubdealer'])->name('create-subdealer');

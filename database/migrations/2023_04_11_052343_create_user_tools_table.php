@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            // $table->boolean('is_head')->default(0);
+        Schema::create('user_tools', function (Blueprint $table) {
+            $table->id();
+            $table->string('type');
+            $table->foreignId('tool_id')->onDelete('cascade');
+            $table->foreignId('user_id')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('user_tools');
     }
 };

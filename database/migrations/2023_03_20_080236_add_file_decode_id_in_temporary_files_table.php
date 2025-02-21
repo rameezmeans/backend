@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('temporary_files', function (Blueprint $table) {
-            $table->string('encode_async_key')->nullable();
-        });
+        // Schema::table('temporary_files', function (Blueprint $table) {
+        //     $table->string('encode_async_key')->nullable();
+        // });
     }
 
     /**
