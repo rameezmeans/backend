@@ -349,7 +349,14 @@ class FilesAPIController extends Controller
 
     public function tools(Request $request){
 
-        $tools = UserTool::where('user_id', $request->user_id)->get();
+        $toolUsers = UserTool::where('user_id', $request->user_id)->get();
+        
+        $tools = [];
+
+        foreach($toolUsers as $t){
+            $tools []= Tool::findOrFail($t->tool_id);
+        }
+
         return response()->json($tools);
     }
 
