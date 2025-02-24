@@ -24,6 +24,9 @@ Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'use
 Route::post('get_stages', [App\Http\Controllers\ServicesController::class, 'getStages']);
 Route::post('get_options', [App\Http\Controllers\ServicesController::class, 'getOptions']);
 
+Route::post('/search_bosch_number', [App\Http\Controllers\DTCLookupController::class, 'searchBoschAPI'])->name('search-bosch-number');
+Route::post('/search_dtc_record', [App\Http\Controllers\DTCLookupController::class, 'searchDTCAPI'])->name('search-dtc-record');
+
 Route::post('get_brands', [App\Http\Controllers\FilesAPIController::class, 'brands']);
 Route::post('get_models', [App\Http\Controllers\FilesAPIController::class, 'models']);
 Route::post('get_versions', [App\Http\Controllers\FilesAPIController::class, 'versions']);

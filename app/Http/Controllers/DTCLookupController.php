@@ -78,6 +78,30 @@ class DTCLookupController extends Controller
         return view('dtc_lookup.index', ['record' => $record, 'dtclookupRecords' => $dtclookupRecords]);
     }
 
+    public function searchBoschAPI(Request $request){
+
+        $boschNumbers = BoschNumber::paginate(10);
+        $record = BoschNumber::where('manufacturer_number', $request->manufacturer_number)->first();
+        
+        if($record == NULL){
+            $record = 'Record Not Found!';
+        }
+
+        return response()->json($record);
+    }
+
+    public function searchDTCAPI(Request $request){
+
+        $dtclookupRecords = DTCLookup::paginate(10);
+        $record = DTCLookup::where('code', $request->code)->first();
+        
+        if($record == NULL){
+            $record = 'Record Not Found!';
+        }
+
+        return response()->json($record);
+    }
+
     public function addDTC(Request $request){
 
         $add = new DTCLookup();
