@@ -335,16 +335,24 @@ class FilesAPIController extends Controller
     }
 
     public function usersFiles(Request $request){
+
         $files = File::where('user_id', $request->user_id)
         ->where('is_credited', 1)
         ->get();
+        
         return response()->json($files);
     }
 
     public function usersCredits(Request $request){
-        // $subdlear = get_subdealer_user($request->subdealer_group_id);
+        
         $credits = Credit::where('user_id', $request->user_id)->sum('credits');
         return response()->json($credits);
+    }
+
+    public function usersInvoices(Request $request){
+        
+        $invoices = Credit::where('user_id', $request->user_id)->get();
+        return response()->json($invoices);
     }
 
     public function tools(Request $request){
