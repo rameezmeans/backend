@@ -349,6 +349,11 @@ class FilesAPIController extends Controller
         return response()->json($credits);
     }
 
+    public function getUser(Request $request){
+        $account = Credit::where('user_id', $request->user_id)->first();
+        return response()->json($account);
+    }
+
     public function usersInvoices(Request $request){
         
         $invoices = Credit::where('user_id', $request->user_id)->orderBy('created_at', 'desc')->where('price_payed', '>', 0)->get();
