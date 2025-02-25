@@ -350,7 +350,7 @@ class FilesAPIController extends Controller
     }
 
     public function getUser(Request $request){
-        $account = Credit::where('user_id', $request->user_id)->first();
+        $account = User::where('user_id', $request->user_id)->first();
         return response()->json($account);
     }
 
