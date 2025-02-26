@@ -19,7 +19,7 @@ class PaymentControllerAPI extends Controller
         $type = $request->type;
 
         $invoice = $newPaymentObj->addCredits($user, $sessionID, $credits, $type);
-        $newZohoObj->createZohobooksInvoice($user, $invoice, false, $type, 0);
+        // $newZohoObj->createZohobooksInvoice($user, $invoice, false, $type, 0);
 
         return response()->json([
             'message' => 'New payment happened successfully.',
