@@ -88,7 +88,7 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
 
-        $request->validate($validationArray);
+        $validated = $request->validate($validationArray);
 
         $data = $request->all();
 
@@ -105,7 +105,11 @@ class AuthController extends Controller
 
         $this->VATCheckPolicy($user);
 
-        return response()->json($user);
+        return response()->json([
+            'message' => 'User registered successfully.',
+            'user' => $user,
+        ], 201);
+        
     }
 
     public function addTools($user, $data){
