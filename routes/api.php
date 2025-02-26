@@ -30,8 +30,8 @@ Route::post('get_invoices', [App\Http\Controllers\FilesAPIController::class, 'us
 Route::post('get_stages', [App\Http\Controllers\ServicesController::class, 'getStages']);
 Route::post('get_options', [App\Http\Controllers\ServicesController::class, 'getOptions']);
 
-Route::post('/search_bosch_number', [App\Http\Controllers\DTCLookupController::class, 'searchBoschAPI'])->name('search-bosch-number');
-Route::post('/search_dtc_record', [App\Http\Controllers\DTCLookupController::class, 'searchDTCAPI'])->name('search-dtc-record');
+Route::post('/search_bosch_number', [App\Http\Controllers\DTCLookupController::class, 'searchBoschAPI']);
+Route::post('/search_dtc_record', [App\Http\Controllers\DTCLookupController::class, 'searchDTCAPI']);
 
 Route::post('get_brands', [App\Http\Controllers\FilesAPIController::class, 'brands']);
 Route::post('get_models', [App\Http\Controllers\FilesAPIController::class, 'models']);

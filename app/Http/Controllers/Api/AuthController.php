@@ -119,15 +119,7 @@ class AuthController extends Controller
                 'message' => 'password does not match'
             ], 400);
         }
-
-        // Attempt to log in the user
-        // if (!Auth::attempt($request->only('email', 'password'))) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'Invalid credentials',
-        //     ], 401);
-        // }
-
+        
         // Generate token for the user
         
         $token = $user->createToken('authToken')->plainTextToken;
@@ -146,10 +138,6 @@ class AuthController extends Controller
      */
     public function registerUser(RegisterationRequest $request): JsonResponse
     {
-    // public function registerUser(Request $request){
-
-        // dd($request->all());
-
         $data = $request;
         
         $frontEndID = $request->front_end_id;
