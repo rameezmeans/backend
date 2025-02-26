@@ -18,7 +18,7 @@ use Laravel\Sanctum\Sanctum;
 Route::post('register_user', [App\Http\Controllers\Api\AuthController::class, 'registerUser']);
 Route::post('login_user', [App\Http\Controllers\Api\AuthController::class, 'loginUser']);
 
-Route::post('get_account', [App\Http\Controllers\FilesAPIController::class, 'getUser'])->middleware(auth:sanctum);
+Route::post('get_account', [App\Http\Controllers\FilesAPIController::class, 'getUser'])->middleware('auth:sanctum');
 
 Route::post('get_tools', [App\Http\Controllers\FilesAPIController::class, 'tools']);
 Route::post('get_files', [App\Http\Controllers\FilesAPIController::class, 'usersFiles']);
