@@ -751,7 +751,7 @@ class PaymentAPIController{
 
         $addCredits = false;
         
-        $price = $this->getPrice()->value;
+        $price = $this->getPrice($user)->value;
 
         if($type == 'stripe'){
 
@@ -939,8 +939,7 @@ class PaymentAPIController{
 
     }
 
-    public function getPrice(){
-        $user = Auth::user();
+    public function getPrice($user){
         return Price::where('label', 'credit_price')->whereNull('subdealer_group_id')
         ->where('front_end_id', $user->front_end_id)
         ->first();
