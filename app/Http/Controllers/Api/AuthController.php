@@ -22,28 +22,28 @@ class AuthController extends Controller
 
     public function createAccount($data, $frontEndID){
 
-        $slaveToolsFlag = 0;
+        // $slaveToolsFlag = 0;
 
-        if(isset( $data['slave_tools_flag'])){
-            $slaveToolsFlag = $data['slave_tools_flag'];
-        }
+        // if(isset( $data['slave_tools_flag'])){
+        //     $slaveToolsFlag = $data['slave_tools_flag'];
+        // }
         
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'language' => $data['language'],
-            'address' => $data['address'],
-            'zip' => $data['zip'],
-            'city' => $data['city'],
-            'country' => $data['country'],
+            'name' => $data->name,
+            'email' => $data->email,
+            'phone' => $data->phone,
+            'language' => $data->language,
+            'address' => $data->address,
+            'zip' => $data->zip,
+            'city' => $data->city,
+            'country' => $data->country,
             'status' => 1,
-            'company_name' => $data['company_name'],
-            'company_id' => $data['company_id'],
+            'company_name' => $data->company_name,
+            'company_id' => $data->company_id,
             'front_end_id' => $frontEndID,
-            'evc_customer_id' => $data['evc_customer_id'],
-            'slave_tools_flag' => $slaveToolsFlag,
-            'password' => Hash::make($data['password']),
+            'evc_customer_id' => $data->evc_customer_id,
+            'slave_tools_flag' => 0,
+            'password' => Hash::make($data->password),
         ]);
 
        
@@ -71,7 +71,7 @@ class AuthController extends Controller
 
         // dd($request->all());
 
-        $data = $request->all();
+        $data = $request;
         
         $frontEndID = $request->front_end_id;
         $this->setFeed($frontEndID);
