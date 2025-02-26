@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "34b1e3f3ff3da8a8a1ff840fef668974",
+    "content-hash": "a542e33e8e5ce4d887742bf9a847e611",
     "packages": [
         {
             "name": "asad/oauth2-zoho",

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Sanctum\Sanctum;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::post('register_user', [App\Http\Controllers\Api\AuthController::class, 'registerUser']);
 Route::post('login_user', [App\Http\Controllers\Api\AuthController::class, 'loginUser']);
 
+Route::post('get_account', [App\Http\Controllers\FilesAPIController::class, 'getUser'])->middleware(auth:sanctum);
+
 Route::post('get_tools', [App\Http\Controllers\FilesAPIController::class, 'tools']);
 Route::post('get_files', [App\Http\Controllers\FilesAPIController::class, 'usersFiles']);
 Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'usersCredits']);
 Route::post('get_invoices', [App\Http\Controllers\FilesAPIController::class, 'usersInvoices']);
-Route::post('get_account', [App\Http\Controllers\FilesAPIController::class, 'getUser']);
+
 
 Route::post('get_stages', [App\Http\Controllers\ServicesController::class, 'getStages']);
 Route::post('get_options', [App\Http\Controllers\ServicesController::class, 'getOptions']);
