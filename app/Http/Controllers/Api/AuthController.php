@@ -37,7 +37,7 @@ class AuthController extends Controller
             'zip' => $data['zip'],
             'city' => $data['city'],
             'country' => $data['country'],
-            'status' => $data['status'],
+            'status' => 1,
             'company_name' => $data['company_name'],
             'company_id' => $data['company_id'],
             'front_end_id' => $frontEndID,
