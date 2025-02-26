@@ -771,7 +771,7 @@ class PaymentAPIController{
                 // $stripeRecrod->credit_id = $record->id;
                 $stripeRecrod->save();
 
-            //     $addCredits = true;
+                $addCredits = true;
 
             //     if (!$session) {
             //         throw new NotFoundHttpException();
@@ -852,8 +852,6 @@ class PaymentAPIController{
             $addCredits = true;
         }
 
-        dd($addCredits);
-
         if($addCredits){
 
             $totalPrice = $credits * $price;
@@ -869,9 +867,7 @@ class PaymentAPIController{
             $pricePayed = $totalPrice + $tax;
 
             $credit = NULL;
-
-            dd($alreadyAdded);
-
+            
             if($alreadyAdded == null){
                 
                 $credit = new Credit();
