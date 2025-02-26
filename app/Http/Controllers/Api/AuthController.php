@@ -10,10 +10,10 @@ use App\Models\User;
 use App\Models\UserTool;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 use PH7\Eu\Vat\Validator as VATValidator;
@@ -73,15 +73,15 @@ class AuthController extends Controller
         }
 
         // Attempt to log in the user
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Invalid credentials',
-            ], 401);
-        }
+        // if (!Auth::attempt($request->only('email', 'password'))) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Invalid credentials',
+        //     ], 401);
+        // }
 
         // Generate token for the user
-        $user = Auth::user();
+        $user = User::where('email', $request->email)->first();
         // $token = $user->createToken('authToken')->plainTextToken;
 
         return response()->json([
