@@ -67,7 +67,30 @@ class AuthController extends Controller
     // public function registerUser(RegisterationRequest $request){
     public function registerUser(Request $request){
 
-        dd($request->all());
+        // dd($request->all());
+
+        $validationArray = [
+            'front_end_id' => ['required'],
+            'name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
+            'language' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
+            'zip' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
+            'status' => ['required', 'string', 'max:255'],
+            'company_name' => ['max:255'],
+            'company_id' => ['max:255'],
+            'slave_tools_flag' => ['string', 'max:255'],
+            'master_tools' => [],
+            'slave_tools' => [],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ];
+
+        $request->validate($validationArray);
+
+        $data = $request->all();
 
         $frontEndID = $request->front_end_id;
         $this->setFeed($frontEndID);
