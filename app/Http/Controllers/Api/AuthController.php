@@ -72,6 +72,15 @@ class AuthController extends Controller
             ], 422);
         }
 
+        $user = User::where('email', $request->email)->first();
+        
+        // Check if password matches the current password
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'message' => 'password does not match'
+            ], 400);
+        }
+
         // Attempt to log in the user
         // if (!Auth::attempt($request->only('email', 'password'))) {
         //     return response()->json([
@@ -81,7 +90,7 @@ class AuthController extends Controller
         // }
 
         // Generate token for the user
-        $user = User::where('email', $request->email)->first();
+        
         $token = $user->createToken('authToken')->plainTextToken;
 
         return response()->json([
