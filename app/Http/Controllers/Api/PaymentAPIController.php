@@ -1,6 +1,6 @@
 <?php
 
-namespace ECUApp\SharedCode\Controllers;
+namespace App\Http\Api\Controllers;
 
 use App\Models\Credit;
 use App\Models\IntegerMeta;
@@ -759,31 +759,31 @@ class PaymentAPIController{
 
             \Stripe\Stripe::setApiKey($user->stripe_payment_account()->secret);
 
-            try{
+            // try{
 
-                $session = \Stripe\Checkout\Session::retrieve($sessionID);
+            //     $session = \Stripe\Checkout\Session::retrieve($sessionID);
                 
                 $stripeRecrod = new StripeRecord();
-                $stripeRecrod->stripe_id = $session->id;
-                $stripeRecrod->amount = $session->amount_total/100;
+                $stripeRecrod->stripe_id = $sessionID;
+                $stripeRecrod->amount = 100;
                 $stripeRecrod->tax = 0;
-                $stripeRecrod->desc = $session->id;
+                $stripeRecrod->desc = $sessionID;
                 // $stripeRecrod->credit_id = $record->id;
                 $stripeRecrod->save();
 
-                $addCredits = true;
+            //     $addCredits = true;
 
-                if (!$session) {
-                    throw new NotFoundHttpException();
-                }
-            }
+            //     if (!$session) {
+            //         throw new NotFoundHttpException();
+            //     }
+            // }
 
-            catch(Exception $e){
-                abort(404);
-            }
+            // catch(Exception $e){
+            //     abort(404);
+            // }
 
             // $customerStripe = \Stripe\Customer::retrieve($session->customer);
-            $alreadyAdded = Credit::where('stripe_id', $session->id)->first();
+            $alreadyAdded = Credit::where('stripe_id', $sessionID)->first();
 
         }
         else if($type == 'paypal'){
@@ -887,7 +887,7 @@ class PaymentAPIController{
                 }
 
                 if($type == 'stripe'){
-                    $credit->stripe_id = $session->id;
+                    $credit->stripe_id = $sessionID;
                 }
                 else{
 
@@ -917,7 +917,7 @@ class PaymentAPIController{
                 $stripeRecrod->credit_id = $credit->id;
                 $stripeRecrod->save();
 
-                $this->makePaymentLogEntry( $credit->id, 'stripe', 'success', 'stripe payment worked', $stripeRecrod, $session );
+                $this->makePaymentLogEntry( $credit->id, 'stripe', 'success', 'stripe payment worked', $stripeRecrod, $sessionID );
             }
             if($type == 'paypal'){
 
