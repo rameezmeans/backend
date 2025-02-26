@@ -22,6 +22,8 @@ class AuthController extends Controller
 
     public function createAccount($data, $frontEndID){
 
+        dd($data);
+
         // $slaveToolsFlag = 0;
 
         // if(isset( $data['slave_tools_flag'])){
