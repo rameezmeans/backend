@@ -265,6 +265,10 @@ class CreditsController extends Controller
         return response()->json(['html' =>$html], 200);
     }
 
+    public function addCreditsAPI(Request $request) {
+        dd($request->all());
+    }
+
     public function updateCredits(Request $request) {
 
         // if(!Auth::user()->is_admin()){

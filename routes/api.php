@@ -21,11 +21,12 @@ Route::post('logout_user', [App\Http\Controllers\Api\AuthController::class, 'log
 
 Route::post('get_account', [App\Http\Controllers\FilesAPIController::class, 'getUser'])->middleware('auth:sanctum');
 
+Route::post('add_user_credits', [App\Http\Controllers\CreditsController::class, 'addCreditsAPI']);
+
 Route::post('get_tools', [App\Http\Controllers\FilesAPIController::class, 'tools']);
 Route::post('get_files', [App\Http\Controllers\FilesAPIController::class, 'usersFiles']);
 Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'usersCredits']);
 Route::post('get_invoices', [App\Http\Controllers\FilesAPIController::class, 'usersInvoices']);
-
 
 Route::post('get_stages', [App\Http\Controllers\ServicesController::class, 'getStages']);
 Route::post('get_options', [App\Http\Controllers\ServicesController::class, 'getOptions']);
