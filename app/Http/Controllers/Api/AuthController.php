@@ -82,6 +82,8 @@ class AuthController extends Controller
         }
 
         // delete token for the user
+
+        $user->tokens()->delete();
         
         // $user->currentAccessToken()->delete();
 
