@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('register', [App\Http\Controllers\Api\AuthController::class, 'register']);
+
 Route::post('get_tools', [App\Http\Controllers\FilesAPIController::class, 'tools']);
 Route::post('get_files', [App\Http\Controllers\FilesAPIController::class, 'usersFiles']);
 Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'usersCredits']);
