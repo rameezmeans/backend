@@ -64,7 +64,8 @@ class AuthController extends Controller
      * 
      * register new user
      */
-    public function registerUser(RegisterationRequest $request){
+    // public function registerUser(RegisterationRequest $request){
+    public function registerUser(Request $request){
 
         dd($request->all());
 
