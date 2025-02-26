@@ -852,6 +852,8 @@ class PaymentAPIController{
             $addCredits = true;
         }
 
+        dd($addCredits);
+
         if($addCredits){
 
             $totalPrice = $credits * $price;
