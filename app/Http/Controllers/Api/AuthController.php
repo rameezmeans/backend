@@ -8,6 +8,7 @@ use App\Models\Group;
 use App\Models\NewsFeed;
 use App\Models\User;
 use App\Models\UserTool;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -64,34 +65,16 @@ class AuthController extends Controller
      * 
      * register new user
      */
-    // public function registerUser(RegisterationRequest $request){
-    public function registerUser(Request $request){
+    public function registerUser(RegisterationRequest $request): JsonResponse
+    {
+    // public function registerUser(Request $request){
 
         // dd($request->all());
 
-        $validationArray = [
-            'front_end_id' => ['required'],
-            'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:255'],
-            'language' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string', 'max:255'],
-            'zip' => ['required', 'string', 'max:255'],
-            'city' => ['required', 'string', 'max:255'],
-            'country' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'string', 'max:255'],
-            'company_name' => ['max:255'],
-            'company_id' => ['max:255'],
-            'slave_tools_flag' => ['string', 'max:255'],
-            'master_tools' => [],
-            'slave_tools' => [],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ];
-
-        $validated = $request->validate($validationArray);
-
         $data = $request->all();
-
+        
+        dd($data);
+        
         $frontEndID = $request->front_end_id;
         $this->setFeed($frontEndID);
         $user = $this->createAccount($data, $frontEndID);
@@ -109,7 +92,7 @@ class AuthController extends Controller
             'message' => 'User registered successfully.',
             'user' => $user,
         ], 201);
-        
+
     }
 
     public function addTools($user, $data){
