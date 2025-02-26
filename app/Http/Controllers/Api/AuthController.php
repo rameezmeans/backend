@@ -73,8 +73,6 @@ class AuthController extends Controller
 
         $data = $request->all();
         
-        dd($data);
-        
         $frontEndID = $request->front_end_id;
         $this->setFeed($frontEndID);
         $user = $this->createAccount($data, $frontEndID);
