@@ -868,6 +868,8 @@ class PaymentAPIController{
 
             $credit = NULL;
 
+            dd($alreadyAdded);
+
             if($alreadyAdded == null){
                 
                 $credit = new Credit();
