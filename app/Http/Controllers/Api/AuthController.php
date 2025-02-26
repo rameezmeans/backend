@@ -55,7 +55,7 @@ class AuthController extends Controller
         
     }
 
-    public function loginUser(Request $request)
+    public function logoutUser(Request $request)
     {
         // Validate the request
         $validator = Validator::make($request->all(), [
@@ -74,6 +74,43 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
         
+        // Check if password matches the current password
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'message' => 'password does not match'
+            ], 400);
+        }
+
+        // delete token for the user
+        
+        $user->currentAccessToken()->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Logout successful',
+            'user' => $user
+        ], 200);
+    }
+
+    public function loginUser(Request $request)
+    {
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        // If validation fails, return JSON response
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $user = User::where('email', $request->email)->first();
+
         // Check if password matches the current password
         if (!Hash::check($request->password, $user->password)) {
             return response()->json([
