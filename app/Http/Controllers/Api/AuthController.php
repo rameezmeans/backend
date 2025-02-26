@@ -22,14 +22,6 @@ class AuthController extends Controller
 
     public function createAccount($data, $frontEndID){
 
-        dd($data);
-
-        // $slaveToolsFlag = 0;
-
-        // if(isset( $data['slave_tools_flag'])){
-        //     $slaveToolsFlag = $data['slave_tools_flag'];
-        // }
-        
         $user = User::create([
             'name' => $data->name,
             'email' => $data->email,
@@ -47,9 +39,7 @@ class AuthController extends Controller
             'slave_tools_flag' => 0,
             'password' => Hash::make($data->password),
         ]);
-
-       
-
+        return $user;
     }
 
     public function setFeed($frontEndID){
