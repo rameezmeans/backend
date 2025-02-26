@@ -64,7 +64,7 @@ class AuthController extends Controller
      * 
      * register new user
      */
-    public function register(RegisterationRequest $request){
+    public function registerUser(RegisterationRequest $request){
 
         dd($request->all());
 
@@ -72,7 +72,7 @@ class AuthController extends Controller
         $this->setFeed($frontEndID);
         $user = $this->createAccount($data, $frontEndID);
         $this->addTools($user, $data);
-        
+
         // $this->createZohoAccount($user);
 
         // if($frontEndID == 2){
