@@ -73,7 +73,7 @@ class AuthController extends Controller
         }
 
         $user = User::where('email', $request->email)->first();
-        
+
         // Check if password matches the current password
         if (!Hash::check($request->password, $user->password)) {
             return response()->json([
@@ -83,7 +83,7 @@ class AuthController extends Controller
 
         // delete token for the user
         
-        $user->currentAccessToken()->delete();
+        // $user->currentAccessToken()->delete();
 
         return response()->json([
             'success' => true,
