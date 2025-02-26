@@ -10,9 +10,11 @@ use App\Models\User;
 use App\Models\UserTool;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 use PH7\Eu\Vat\Validator as VATValidator;
 use PH7\Eu\Vat\Provider\Europa;
@@ -51,6 +53,43 @@ class AuthController extends Controller
         
         Session::put('feed', $feed);
         
+    }
+
+    public function loginUser(Request $request)
+    {
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        // If validation fails, return JSON response
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        // Attempt to log in the user
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid credentials',
+            ], 401);
+        }
+
+        // Generate token for the user
+        $user = Auth::user();
+        // $token = $user->createToken('authToken')->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Login successful',
+            'user' => $user,
+            // 'token' => $token,
+        ], 200);
     }
 
     /**
