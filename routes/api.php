@@ -19,6 +19,8 @@ Route::post('register_user', [App\Http\Controllers\Api\AuthController::class, 'r
 Route::post('login_user', [App\Http\Controllers\Api\AuthController::class, 'loginUser']);
 Route::post('logout_user', [App\Http\Controllers\Api\AuthController::class, 'logoutUser']);
 
+
+
 Route::post('get_account', [App\Http\Controllers\FilesAPIController::class, 'getUser'])->middleware('auth:sanctum');
 
 Route::post('add_user_credits', [App\Http\Controllers\PaymentControllerAPI::class, 'addCreditsAPI']);
