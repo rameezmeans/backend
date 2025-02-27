@@ -59,7 +59,10 @@ class FilesAPIController extends Controller
 
         $file->move(public_path('uploads'),$tempFile->file_attached);
 
-        return $tempFile;
+        return response()->json([
+            'message' => 'temporary file created.',
+            'tempFile' => $tempFile,
+        ], 201);
 
     }
 
