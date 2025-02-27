@@ -30,6 +30,59 @@ use Twilio\Rest\Client;
 class FilesAPIController extends Controller
 {
 
+    public function createTemporaryFile(Request $request) {
+
+        $user = User::findOrFail($request->user_id);
+        $file = $request->file;
+        $toolType = $request->tool_type;
+        $toolID = $request->tool_id;
+        $frontendID = $request->front_end_id;
+
+        $fileName = $file->getClientOriginalName();
+        // $extension = $file->getClientOriginalExtension();
+
+        $fileName = $this->getFilename($fileName);
+
+        // $path = $this->getPath($file);
+
+        $tempFile = new TemporaryFile();
+        $tempFile->tool_type = $toolType;
+        $tempFile->file_path = "";
+        $tempFile->user_id = $user->id;
+        $tempFile->front_end_id = $frontendID;
+        $tempFile->tool_id = $toolID;
+        $tempFile->file_attached = $fileName;
+        $tempFile->save();
+
+        $tempFile->file_attached = $tempFile->id.'___'.$tempFile->file_attached;
+        $tempFile->save();
+
+        $file->move(public_path('uploads'),$tempFile->file_attached);
+
+        return $tempFile;
+
+    }
+
+    public function getFilename($fileName){
+
+        $extension = pathinfo($fileName, PATHINFO_EXTENSION);
+        
+        $fileName = str_replace('#', '_', $fileName);
+        $fileName = str_replace('.', '_', $fileName);
+        $fileName = str_replace(' ', '_', $fileName);
+
+        $fileName = preg_replace('/[^a-z0-9_ ]/i', '', $fileName); 
+
+        $serialNumber = Carbon::now()->format('YmdHis');
+
+        if($extension != ''){
+            $fileName = $fileName.'___'.$serialNumber.'.'.$extension;
+        }
+
+        return $fileName;
+
+    }
+
     public function submitFile( Request $request ) {
 
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();

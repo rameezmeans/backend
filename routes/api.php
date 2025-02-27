@@ -27,6 +27,7 @@ Route::post('get_tools', [App\Http\Controllers\FilesAPIController::class, 'tools
 Route::post('get_files', [App\Http\Controllers\FilesAPIController::class, 'usersFiles']);
 Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'usersCredits']);
 Route::post('get_invoices', [App\Http\Controllers\FilesAPIController::class, 'usersInvoices']);
+Route::post('create_temporary_file', [App\Http\Controllers\FilesAPIController::class, 'createTemporaryFile']);
 
 Route::post('get_stages', [App\Http\Controllers\ServicesController::class, 'getStages']);
 Route::post('get_options', [App\Http\Controllers\ServicesController::class, 'getOptions']);
