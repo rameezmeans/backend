@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AlientechFile;
+use App\Models\Combination;
 use App\Models\Credit;
 use App\Models\DownloadLuaFile;
 use App\Models\EmailTemplate;
@@ -29,6 +30,166 @@ use Twilio\Rest\Client;
 
 class FilesAPIController extends Controller
 {
+
+    public function saveFileOptions(Request $request){
+
+        $file = TemporaryFile::findOrfail($request->temporary_file_id);
+        $stage = Service::findOrFail($request->stage);
+        $frontendID = $request->front_end_id;
+        $options = $request->options;
+
+        $servieCredits = 0;
+
+        $serviceIDs = [];
+        $serviceIDs []= $stage->id;
+
+        if( $options && sizeof($options) > 0 ){
+            foreach($options as $option){
+
+                FileService::where('service_id', $option)->where('temporary_file_id', $file->id)->delete();
+                $optionService = Service::FindOrFail($option);
+                $fileOption = new FileService();
+                $fileOption->type = 'option';
+
+                // $fileOption->credits = $optionService->credits;
+
+                $optionsRecord = $optionService->optios_stage($stage->id)->first();
+
+                if($frontendID == 1){
+
+                    $servieCredits += $optionService->credits;
+                    $fileOption->credits = $optionService->credits;
+                    
+                    $serviceIDs []= $optionService->id;
+                
+                }
+                else{
+
+                    if($file->tool_type == 'master'){
+                        $servieCredits += $optionsRecord->master_credits;
+                        $fileOption->credits = $optionsRecord->master_credits;
+                    }
+                    else{
+                        $servieCredits += $optionsRecord->slave_credits;
+                        $fileOption->credits = $optionsRecord->slave_credits;
+                    }
+
+                }
+
+                $fileOption->service_id = $optionService->id;
+                $fileOption->temporary_file_id = $file->id;
+                $fileOption->save();
+            } 
+        }
+
+        $combination = $this->getCombination($serviceIDs);
+
+        $discount = 0;
+
+        if($combination){
+
+            $discount = $combination->actual_credits - $combination->discounted_credits;
+        }
+
+        return $servieCredits-$discount;
+
+    }
+
+    public function getCombination($serviceIDs){
+
+        $combinations = Combination::all();
+        
+        $recordServiceIDs = [];
+
+        $found = false;
+        $combinationFound = null;
+
+        foreach($combinations as $combination){
+
+            $recordServiceIDs = [];
+
+            foreach($combination->services as $record){
+                $recordServiceIDs []= $record->service_id;
+            }
+
+            $serviceCount = count($recordServiceIDs);
+            $recordsCount = count($serviceIDs);
+
+            $count = 0;
+            
+            if($recordsCount == $serviceCount){
+            
+                foreach($recordServiceIDs as $id){
+
+                    if( !in_array($id, $serviceIDs) ){
+                        $found = false;
+                        break;
+                    }
+                    else{
+                        $count++;
+                    }
+
+                    if($count == $recordsCount){
+                        $found = true;
+                        $combinationFound = $combination;
+                        break;
+                    }
+                }
+            }
+        
+        }
+
+        return $combinationFound;
+    }
+
+    public function saveFileStages(Request $request){
+
+        $file = TemporaryFile::findOrfail($request->temporary_file_id);
+        $stage = Service::findOrFail($request->stage);
+        $frontendID = $request->front_end_id;
+
+        FileService::where('type', 'stage')->where('temporary_file_id', $file->id)->delete();
+
+        $servieCredits = 0;
+
+        $fileService = new FileService();
+        $fileService->type = 'stage';
+
+        if($frontendID == 1){
+            $servieCredits +=  $stage->credits;
+            $fileService->credits = $stage->credits;
+        }
+        else if($frontendID == 3){
+            if($file->tool_type == 'master'){
+                $servieCredits +=  $stage->efiles_credits;
+                $fileService->credits = $stage->efiles_credits;
+            }
+            else{
+                $servieCredits +=  $stage->efiles_slave_credits;
+                $fileService->credits = $stage->efiles_slave_credits;
+            }
+        }
+        else{
+            if($file->tool_type == 'master'){
+                $servieCredits +=  $stage->tuningx_credits;
+                $fileService->credits = $stage->tuningx_credits;
+            }
+            else{
+                $servieCredits +=  $stage->tuningx_slave_credits;
+                $fileService->credits = $stage->tuningx_slave_credits;
+            }
+        }
+        
+        $fileService->service_id = $stage->id;
+        $fileService->temporary_file_id = $file->id;
+        $fileService->save();
+
+        return response()->json([
+            'message' => 'stages are saved.',
+            'credits' => $servieCredits,
+        ], 201);
+
+    }
 
     public function addStep1InforIntoTempFile(Request $request){
 
