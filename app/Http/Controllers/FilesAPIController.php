@@ -39,6 +39,7 @@ class FilesAPIController extends Controller
         $data['model_year'] = $request->model_year;
         $data['file_type'] = $request->file_type;
         $data['license_plate'] = $request->license_plate;
+        $data['is_original'] = $request->is_original;
         $data['vin_number'] = $request->vin_number;
         $data['brand'] = $request->brand;
         $data['model'] = $request->model;
