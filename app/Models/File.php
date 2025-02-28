@@ -10,6 +10,10 @@ class File extends Model
 {
     use HasFactory;
 
+    public function stages_services(){
+        return $this->hasOne(FileService::class, 'file_id', 'id')->where('type', 'stage');
+    }
+
     protected $fillable = [
 
         'tool_id', 'tool_type', 'file_attached', 
