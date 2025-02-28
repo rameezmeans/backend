@@ -30,6 +30,59 @@ use Twilio\Rest\Client;
 class FilesAPIController extends Controller
 {
 
+    public function addStep1InforIntoTempFile(Request $request){
+
+        $data = $request->all();
+
+        $file = TemporaryFile::findOrFail($data['temporary_file_id']);
+
+        $file->name = $data['name'];
+        $file->email = $data['email'];
+        $file->phone = $data['phone'];
+        $file->model_year = $data['model_year'];
+        $file->file_type = $data['file_type'];
+        $file->license_plate = $data['license_plate'];
+        $file->vin_number = $data['vin_number'];
+        $file->brand = $data['brand'];
+        $file->model = $data['model'];
+        $file->engine = $data['engine'];
+        $file->version = $data['version'];
+
+        if(isset($data['ecu'])){
+            $file->ecu = $data['ecu'];
+            $file->gearbox_ecu = NULL;
+        }
+
+        if(isset($data['gearbox_ecu']) || $data['gearbox_ecu'] != ''){
+            $file->gearbox_ecu = $data['gearbox_ecu'];
+            $file->ecu = NULL;
+        }
+
+        $file->gear_box = $data['gear_box'];
+        $file->is_original = ($data['is_original'] == 'yes') ? '1' : '0';
+
+        if(isset($data['modification'])){
+            $file->modification = implode(', ',$data['modification']);
+        }
+
+        if(isset($data['mention_modification'])){
+            $file->mention_modification = $data['mention_modification'];
+        }
+
+        $file->additional_comments = $data['additional_comments'];
+        
+        $file['credits'] = 0;
+        
+        // if($fileUploaded){
+        //     $fileName = $fileUploaded->getClientOriginalName();
+        //     $fileName = $this->getFilename($fileName);
+        //     $fileUploaded->move(public_path('uploads'),$fileName);
+        //     $file->acm_file = $fileName;
+        // }
+
+        $file->save();
+    }
+
     public function createTemporaryFile(Request $request) {
 
         $user = User::findOrFail($request->user_id);
