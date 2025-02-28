@@ -2450,9 +2450,13 @@ class FilesController extends Controller
                         $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$finalFileName;
                     }
                     else if($file->api == 1){
-                        dd($file->api);
+                        
                         $file_path = public_path('/public/'.$file->file_path).$finalFileName;
+
+                        
                     }
+
+                    dd($file_path);
                 }
 
             }
