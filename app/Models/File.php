@@ -10,6 +10,20 @@ class File extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+
+        'tool_id', 'tool_type', 'file_attached', 
+        'file_type', 'name', 'email', 'username',
+        'phone', 'model_year', 'license_plate', 
+        'vin_number', 'brand', 'model','version', 
+        'gear_box', 'ecu', 'engine', 'credits', 'status', 'gearbox_ecu',
+        'is_credited',
+        'user_id','original_file_id', 
+        'modification', 'mention_modification',
+        'checked_by','assigned_to', 'dtc_off_comments',
+        'request_type', 'additional_comments', 'credit_id','vmax_off_comments','is_original', 'acm_file'
+    ];
+
     public function files(){
         return $this->hasMany(RequestFile::class); 
     }
