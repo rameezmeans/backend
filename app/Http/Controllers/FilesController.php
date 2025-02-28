@@ -2436,6 +2436,8 @@ class FilesController extends Controller
             }
             else if($file->front_end_id == 3){
 
+                dd($file->api);
+
                 // $file_path = public_path('/../../portal/public/'.$file->file_path).$finalFileName;
 
                 if($file->on_dev == 1){
