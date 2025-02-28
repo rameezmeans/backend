@@ -341,7 +341,10 @@ class FilesAPIController extends Controller
             $file->save();
         }
 
-        return $file;
+        return response()->json([
+            'message' => 'file is saved finally.',
+            'file' => $file,
+        ], 201);
     }
 
     public function saveFileStages(Request $request){
