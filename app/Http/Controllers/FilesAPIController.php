@@ -11,6 +11,7 @@ use App\Models\File;
 use App\Models\FileReplySoftwareService;
 use App\Models\FileService;
 use App\Models\Key;
+use App\Models\Log;
 use App\Models\MessageTemplate;
 use App\Models\Price;
 use App\Models\ReminderManager;
@@ -140,6 +141,207 @@ class FilesAPIController extends Controller
         }
 
         return $combinationFound;
+    }
+
+    public function saveFile(Request $request){
+        
+        $user = User::findOrFail($request->user_id);
+        $type = 'stripe';
+        $fileID = $request->file_id;
+        $creditsToFile = User::findOrFail($request->credits);
+        
+        if($type == 'stripe'){
+            $account = $user->stripe_payment_account();
+        }
+        else if($type == 'paypal'){
+            $account = $user->paypal_payment_account();
+        }
+        else{
+            $account = $user->viva_payment_account();
+        }
+
+        $head =  get_head();
+        // $creditsInAccount = $this->getUserCreditsInAccount($user);
+        $creditsInAccount = 17;
+        
+        if($creditsInAccount >= $creditsToFile){
+
+            $tempFileObj = TemporaryFile::findOrFail($fileID);
+            
+            $tempFile = TemporaryFile::findOrFail($fileID)->toArray();
+
+            // $credit = new Credit();
+
+            // $credit->credits = -1*$creditsToFile;
+            // $credit->price_payed = 0;
+            // $credit->front_end_id = $user->front_end_id;
+            // $credit->invoice_id = 'SPENT-'.$account->prefix.mt_rand(100,999);
+            // $credit->user_id = $user->id;
+            
+            // $credit->created_at = Carbon::now()->addSecond(2);
+            // $credit->updated_at = Carbon::now()->addSecond(2);
+            
+            // if($user->test == 1){
+            //     $credit->test = 1;
+            // }
+
+            // $credit->save();
+
+            $tempFile['credit_id'] = 0;
+            $tempFile['checked_by'] = "customer";
+            
+            $tempFile['user_id'] = $user->id;
+            $tempFile['username'] =  $user->name;
+
+            // $tempFile['assigned_to'] =  $head->id; // assigned to Nick
+
+            // if(File::where('credit_id', $credit->id)->first() === NULL){
+
+            $file = File::create($tempFile);
+
+            $file->credits = $creditsToFile;
+            $file->front_end_id = $user->front_end_id;
+            $file->temporary_file_id = $tempFileObj->id;
+
+            if($user->test == 1){
+                $file->test = 1;
+            }
+
+            if(env('APP_ENV') == 'live'){
+                $file->on_dev = 0;
+            }
+            else if(env('APP_ENV') == 'local'){
+                $file->on_dev = 0;
+            }
+            else{
+                $file->on_dev = 1;
+            }
+            
+            
+            $file->assignment_time = Carbon::now();
+            
+            $modelToAdd = str_replace( '/', '', $file->model );
+
+            if($file->original_file_id == NULL){
+                $directoryToMake = public_path('uploads/ETF'.'/'.$file->brand.'/'.$modelToAdd.'/'.$file->id.'/');
+            }
+            else{
+                $directoryToMake = public_path('uploads/ETF'.'/'.$file->brand.'/'.$modelToAdd.'/'.$file->original_file_id.'/');
+            }
+            
+            if($file->original_file_id == NULL){
+            
+                if (!file_exists($directoryToMake)) {
+                    $oldmask = umask(000);
+                    mkdir( $directoryToMake , 0777, true);
+                    umask($oldmask);        
+                }
+            }
+
+            if(file_exists(public_path('uploads').'/'.$file->file_attached)){
+                rename(public_path('uploads').'/'.$file->file_attached, $directoryToMake.$file->file_attached);
+                // unlink(public_path('uploads').'/'.$file->file_attached);
+            }
+            
+            if($file->acm_file){
+
+                if(file_exists(public_path('uploads').'/'.$file->acm_file)){
+                    rename(public_path('uploads').'/'.$file->acm_file, $directoryToMake.$file->acm_file);
+                    // unlink(public_path('uploads').'/'.$file->acm_file);
+                }
+            }
+
+            if($file->original_file_id){
+
+                $file->file_path = '/uploads/ETF/'.$file->brand.'/'.$modelToAdd.'/'.$file->original_file_id.'/';
+
+                $originalFile = File::findOrFail($file->original_file_id);
+                $originalFile->support_status = "open";
+                $originalFile->checked_by = "customer";
+                $originalFile->save();
+
+            }
+            else{
+                $file->file_path = '/uploads/ETF/'.$file->brand.'/'.$modelToAdd.'/'.$file->id.'/';
+            }
+
+            $file->save();
+
+            $logs = Log::where('temporary_file_id', $fileID)->update( ['file_id' => $file->id, 'temporary_file_id' => 0 ]);
+            $services = FileService::where('temporary_file_id', $fileID)->update( ['file_id' => $file->id, 'temporary_file_id' => 0 ]);
+            
+            $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
+
+            if($file->tool_type == 'slave' && $file->tool_id == $flexLabel->id){
+
+                (new MagicsportsMainController)->process($tempFile, $file, $directoryToMake);
+            }
+
+            $autoTurnerLabel = Tool::where('label', 'Autotuner')->where('type', 'slave')->first();
+
+            if($file->tool_type == 'slave' && $file->tool_id == $autoTurnerLabel->id){
+
+                (new AutotunerMainController)->process($tempFile, $file, $directoryToMake);
+            }
+            
+            $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
+            if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id){
+
+            $alientechFileFlag = AlientechFile::where('temporary_file_id', $fileID)->update( ['file_id' => $file->id, 'temporary_file_id' => 0 ]);
+
+                if( $alientechFileFlag ){
+                    
+                    $alientechFile = AlientechFile::where('file_id', $file->id)->first();
+                    $fileName = (new AlientechMainController)->process( $alientechFile->guid );
+                    if($fileName){
+                        $file->checking_status = 'unchecked';
+                    }
+                }
+            }
+
+            $tempComments = $tempFileObj->comments;
+
+            if($tempComments){
+                foreach($tempComments as $t){
+                    $t->file_id = $file->id;
+                    $t->save();
+
+                }
+            }
+            
+            $temporaryFileDelete = TemporaryFile::findOrFail($fileID)->delete();
+            
+            $credit = new Credit();
+
+            $credit->credits = -1*$creditsToFile;
+            $credit->price_payed = 0;
+            $credit->front_end_id = $user->front_end_id;
+            $credit->invoice_id = 'SPENT-'.$account->prefix.mt_rand(100,999);
+            $credit->user_id = $user->id;
+            
+            $credit->created_at = Carbon::now()->addSecond(2);
+            $credit->updated_at = Carbon::now()->addSecond(2);
+            
+            if($user->test == 1){
+                $credit->test = 1;
+            }
+            
+            $credit->file_id = $file->id;
+            $credit->save();
+                
+            // }
+            // else{
+            //     return view('505');   
+            // }
+
+            $file->credit_id = $credit->id;
+            $file->api = 1;
+            $file->stage = Service::findOrFail($file->stages_services->service_id)->name;
+            $file->is_credited = 1; // finally is_credited now ... 
+            $file->save();
+        }
+
+        return $file;
     }
 
     public function saveFileStages(Request $request){

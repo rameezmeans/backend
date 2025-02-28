@@ -32,6 +32,7 @@ Route::post('get_invoices', [App\Http\Controllers\FilesAPIController::class, 'us
 Route::post('create_temporary_file', [App\Http\Controllers\FilesAPIController::class, 'createTemporaryFile']);
 Route::post('add_information_in_temporary_file', [App\Http\Controllers\FilesAPIController::class, 'addStep1InforIntoTempFile']);
 Route::post('save_file_stages', [App\Http\Controllers\FilesAPIController::class, 'saveFileStages']);
+Route::post('save_file', [App\Http\Controllers\FilesAPIController::class, 'saveFile']);
 
 Route::post('get_stages', [App\Http\Controllers\ServicesController::class, 'getStages']);
 Route::post('get_options', [App\Http\Controllers\ServicesController::class, 'getOptions']);
