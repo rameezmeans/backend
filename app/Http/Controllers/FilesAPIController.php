@@ -81,6 +81,11 @@ class FilesAPIController extends Controller
         // }
 
         $file->save();
+
+        return response()->json([
+            'message' => 'temporary file information saved.',
+            'file' => $file,
+        ], 201);
     }
 
     public function createTemporaryFile(Request $request) {
