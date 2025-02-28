@@ -32,7 +32,25 @@ class FilesAPIController extends Controller
 
     public function addStep1InforIntoTempFile(Request $request){
 
-        $data = $request->all();
+        $data['temporary_file_id'] = $request->temporary_file_id;
+        $data['name'] = $request->name;
+        $data['email'] = $request->email;
+        $data['phone'] = $request->phone;
+        $data['model_year'] = $request->model_year;
+        $data['file_type'] = $request->file_type;
+        $data['license_plate'] = $request->license_plate;
+        $data['vin_number'] = $request->vin_number;
+        $data['brand'] = $request->brand;
+        $data['model'] = $request->model;
+        $data['engine'] = $request->engine;
+        $data['version'] = $request->version;
+        $data['engine'] = $request->engine;
+        $data['ecu'] = $request->ecu;
+        $data['gear_box'] = $request->gear_box;
+        $data['gearbox_ecu'] = $request->gearbox_ecu;
+        $data['modification'] = $request->modification;
+        $data['mention_modification'] = $request->mention_modification;
+        $data['additional_comments'] = $request->additional_comments;
 
         $file = TemporaryFile::findOrFail($data['temporary_file_id']);
 
