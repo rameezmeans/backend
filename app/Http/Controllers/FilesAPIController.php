@@ -148,7 +148,7 @@ class FilesAPIController extends Controller
         $user = User::findOrFail($request->user_id);
         $type = 'stripe';
         $fileID = $request->file_id;
-        $creditsToFile = User::findOrFail($request->credits);
+        $creditsToFile = $request->credits;
         
         if($type == 'stripe'){
             $account = $user->stripe_payment_account();
