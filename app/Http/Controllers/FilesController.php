@@ -2686,7 +2686,7 @@ class FilesController extends Controller
 
         $file->assigned_to = $request->assigned_to;
         $file->assignment_time = Carbon::now();
-        $file->checked_by == 'customer';
+        $file->checked_by = 'customer';
         $file->save();
 
         
