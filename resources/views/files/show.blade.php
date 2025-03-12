@@ -5919,7 +5919,7 @@ margin-bottom: 10px !important;
               <input type="hidden" name="file_id" id="force_proposed_file_id" value="">
               
               <div class="form-group-attached ">
-                <h5>Propose Options</h5>
+                <h5>Change Options</h5>
                 <div class="row">
                   
                   <div class="col-md-12">
