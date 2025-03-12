@@ -2671,9 +2671,9 @@ class FilesController extends Controller
 
     public function assignEngineer(Request $request){
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
     
         $file = File::findOrFail($request->file_id);
 
@@ -2686,6 +2686,7 @@ class FilesController extends Controller
 
         $file->assigned_to = $request->assigned_to;
         $file->assignment_time = Carbon::now();
+        $file->checked_by == 'customer';
         $file->save();
 
         
