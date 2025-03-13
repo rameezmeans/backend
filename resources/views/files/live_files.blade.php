@@ -81,6 +81,10 @@
           $('.submission').each(function() { ek.push($(this).attr('id')); });
           console.log(ek);
 
+          var sk=[];
+          $('.submission-stoped').each(function() { ek.push($(this).attr('id')); });
+          console.log(ek);
+
           var ik=[];
           $('.open').each(function() { ek.push($(this).attr('id')); });
           console.log(ik);
@@ -102,11 +106,44 @@
             }, 1000);
           }
 
+          function stopTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+
+                 minutes = parseInt(timer / 60, 10)
+                  seconds = parseInt(timer % 60, 10);
+
+                // minutes = minutes < 10 ? "0" + minutes : minutes;
+                // seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+            // setInterval(function () {
+            //     minutes = parseInt(timer / 60, 10)
+            //     seconds = parseInt(timer % 60, 10);
+
+            //     minutes = minutes < 10 ? "0" + minutes : minutes;
+            //     seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            //     display.textContent = minutes + ":" + seconds;
+
+            //     if (--timer < 0) {
+            //         timer = duration;
+            //     }
+            // }, 1000);
+          }
+
           $.each(ek , function(index, val) { 
             console.log(index, val);
             let display = document.querySelector('#'+val);
             let seconds = $('#'+val).data('seconds');
             startTimer(seconds, display);
+          });
+
+          $.each(sk , function(index, val) { 
+            console.log(index, val);
+            let display = document.querySelector('#'+val);
+            let seconds = $('#'+val).data('seconds');
+            stopTimer(seconds, display);
           });
 
 
