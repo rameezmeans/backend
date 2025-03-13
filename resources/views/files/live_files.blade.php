@@ -79,15 +79,15 @@
     
           var ek=[];
           $('.submission').each(function() { ek.push($(this).attr('id')); });
-          console.log(ek);
+          // console.log(ek);
 
           var sk=[];
-          $('.submission-stoped').each(function() { ek.push($(this).attr('id')); });
-          console.log(ek);
+          $('.submission-stoped').each(function() { sk.push($(this).attr('id')); });
+          console.log(sk);
 
           var ik=[];
           $('.open').each(function() { ek.push($(this).attr('id')); });
-          console.log(ik);
+          // console.log(ik);
 
           function startTimer(duration, display) {
             var timer = duration, minutes, seconds;
@@ -112,24 +112,11 @@
                  minutes = parseInt(timer / 60, 10)
                   seconds = parseInt(timer % 60, 10);
 
-                // minutes = minutes < 10 ? "0" + minutes : minutes;
-                // seconds = seconds < 10 ? "0" + seconds : seconds;
+                
 
                 display.textContent = minutes + ":" + seconds;
 
-            // setInterval(function () {
-            //     minutes = parseInt(timer / 60, 10)
-            //     seconds = parseInt(timer % 60, 10);
-
-            //     minutes = minutes < 10 ? "0" + minutes : minutes;
-            //     seconds = seconds < 10 ? "0" + seconds : seconds;
-
-            //     display.textContent = minutes + ":" + seconds;
-
-            //     if (--timer < 0) {
-            //         timer = duration;
-            //     }
-            // }, 1000);
+            
           }
 
           $.each(ek , function(index, val) { 
