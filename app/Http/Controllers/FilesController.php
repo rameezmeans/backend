@@ -4477,6 +4477,8 @@ class FilesController extends Controller
         else{
             abort(404);
         }
+
+        
     
     }
 
