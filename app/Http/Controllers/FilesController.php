@@ -4466,6 +4466,9 @@ class FilesController extends Controller
         if(env('APP_ENV') == 'live'){
             return view('files.show', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
+        else if(env('APP_ENV') == 'staging'){
+            return view('files.show', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+        }
         else{
             return view('files.show_backup', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares, 'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
