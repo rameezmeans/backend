@@ -140,6 +140,7 @@ class FilesDatatable extends LivewireDatatable
                 }
 
                 return $returnStr;
+                
 
             })
             ->label('Submission Countdown / Reply Countdown'),
