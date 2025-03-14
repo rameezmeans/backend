@@ -401,15 +401,15 @@ class FilesController extends Controller
         if($file->original_file_id != NULL){
             $ofile = File::findOrFail($file->original_file_id);
             $this->changeStatusLog($ofile, 'closed', 'support_status', 'Chat reply was sent from engineer on request file.');
-            $this->changeStatusLog($ofile, 'submitted', 'status', 'Chat reply was sent from engineer on request file.');
+            $this->changeStatusLog($ofile, 'completed', 'status', 'Chat reply was sent from engineer on request file.');
             $ofile->support_status = "closed";
-            $ofile->status = "submitted";
+            $ofile->status = "completed";
             $ofile->save();
         }
         $this->changeStatusLog($file, 'closed', 'support_status', 'Chat reply was sent from engineer.');
-        $this->changeStatusLog($file, 'submitted', 'status', 'Chat reply was sent from engineer on request file.');
+        $this->changeStatusLog($file, 'completed', 'status', 'Chat reply was sent from engineer on request file.');
         $file->support_status = "closed";
-        $file->status = "submitted";
+        $file->status = "completed";
         $file->save();
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
@@ -2671,9 +2671,9 @@ class FilesController extends Controller
 
     public function assignEngineer(Request $request){
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
+        // if(!Auth::user()->is_admin()){
+        //     return abort(404);
+        // }
     
         $file = File::findOrFail($request->file_id);
 
@@ -2686,6 +2686,7 @@ class FilesController extends Controller
 
         $file->assigned_to = $request->assigned_to;
         $file->assignment_time = Carbon::now();
+        $file->checked_by = 'customer';
         $file->save();
 
         
@@ -2762,7 +2763,7 @@ class FilesController extends Controller
             $this->sendWhatsappforEng($engineer->name,$engineer->phone, 'admin_assign', $file);
         }
         
-        return Redirect::back()->with(['success' => 'Engineer Assigned to File.']);
+        return Redirect::to('files')->with(['success' => 'Engineer Assigned to File.']);
 
     }
 
@@ -4463,6 +4464,9 @@ class FilesController extends Controller
         $prossingSoftwares = ProcessingSoftware::orderBy('name', 'asc')->get();
 
         if(env('APP_ENV') == 'live'){
+            return view('files.show', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+        }
+        else if(env('APP_ENV') == 'staging'){
             return view('files.show', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
         else{
