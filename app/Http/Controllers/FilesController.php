@@ -4338,6 +4338,8 @@ class FilesController extends Controller
         if(!$file){
             abort(404);
         }
+
+        dd($file);
         
         if($file->checked_by == 'customer'){
             $file->checked_by = 'seen';
