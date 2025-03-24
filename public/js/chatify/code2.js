@@ -737,7 +737,6 @@ clientListenChannel.bind("file-shared", function (data) {
     Push.create("ECU Tech customer File Shared!", {
         body: "File has been shared.",
         timeout: 5000,
-        link: "https://backend.ecutech.gr/files",
     });
 });
 

@@ -2514,16 +2514,17 @@ margin-bottom: 10px !important;
                             <div class="col-md-4">
                           
                           <?php 
-                            $servername = "localhost";
-                            $username = "admin_ecu_portal";
-                            $password = "cWY3MEbSqgb2sYYK";
-                            $dbname = "admin_ecu_portal_db";
+                            $servername = env('DB_HOST');
+                            $username = env('DB_USERNAME');
+                            $password = env('DB_PASSWORD');
+                            $dbname = env('DB_DATABASE');
+                            $socket = env('DB_SOCKET');
 
                             // $arrayversionlua = NULL;
                             
                             // Create a PDO instance
                             try {
-                                $conn = new PDO("mysql:host=$servername;unix_socket=/var/lib/mysql/mysql-master.sock;dbname=$dbname", $username, $password);
+                                $conn = new PDO("mysql:host=$servername;unix_socket=$socket;dbname=$dbname", $username, $password);
                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             
                                 // Query to get the latest version from the table 'lua_versions' where file_id = 1
@@ -5035,14 +5036,15 @@ margin-bottom: 10px !important;
                             </div>
                             <div class="col-md-4">
 <?php
-                            $servername = "127.0.0.1";
-                            $username = "admin_ecu_portal";
-                            $password = "e24BTBDTQMRBmC";
-                            $dbname = "admin_ecu_portal_db";
+                            $servername = env('DB_HOST');
+                            $username = env('DB_USERNAME');
+                            $password = env('DB_PASSWORD');
+                            $dbname = env('DB_DATABASE');
+                            $socket = env('DB_SOCKET');
                             
                             // Create a PDO instance
                             try {
-                                $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                                $conn = new PDO("mysql:host=$servername;unix_socket=$socket;dbname=$dbname", $username, $password);
                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             
                                 // Query to get the latest version from the table 'lua_versions' where file_id = 1
@@ -6382,7 +6384,7 @@ margin-bottom: 10px !important;
 
 <script>
     document.getElementById("getallversionsalldefault").addEventListener("click", function() {
-        var baseUrl = "https://backend.ecutech.gr/makelua"; // Replace with the base URL
+        var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
         var fileid = "<? echo  $file->id;?>"; // Replace with the ID you want to send
         var restart ="getallversionsalldefault"
         // Construct the URL with query parameters
@@ -6402,7 +6404,7 @@ margin-bottom: 10px !important;
 
 <script>
     document.getElementById("getallversionsalldefaultFDB").addEventListener("click", function() {
-        var baseUrl = "https://backend.ecutech.gr/makelua"; // Replace with the base URL
+        var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
         var fileid = "<? echo  $file->id;?>"; // Replace with the ID you want to send
         var restart ="getallversionsalldefaultFDB"
         // Construct the URL with query parameters
@@ -6425,7 +6427,7 @@ margin-bottom: 10px !important;
       
       
       
-          var baseUrl = "https://backend.ecutech.gr/makelua"; // Replace with the base URL
+          var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
           var fileid = "<? echo  $file->id;?>"; // Replace with the ID you want to send
           var restart ="versions2";
           // Construct the URL with query parameters
@@ -6447,7 +6449,7 @@ margin-bottom: 10px !important;
 
 <script>
     document.getElementById("copyaversiontoalloriginals").addEventListener("click", function() {
-        var baseUrl = "https://backend.ecutech.gr/makelua"; // Replace with the base URL
+        var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
 
         var action = "copytooriginals";
         
@@ -6488,7 +6490,7 @@ margin-bottom: 10px !important;
     document.addEventListener("click", function(event) {
         // Check if the clicked element has the "copy-button" class
         if (event.target.classList.contains("copy-button")) {
-            var baseUrl = "https://backend.ecutech.gr/makelua";
+            var baseUrl = env('BACKEND_URL')."makelua";
             var button = event.target;
 
             var winolsname = button.getAttribute("data-winolsname");
@@ -6529,7 +6531,7 @@ margin-bottom: 10px !important;
     // Attach a click event listener to a common ancestor of these buttons (like a parent container)
     document.addEventListener("click", function(event) {
         if (event.target.classList.contains("makeproject")) {
-            var baseUrl = "https://backend.ecutech.gr/makelua";
+            var baseUrl = env('BACKEND_URL')."makelua";
             var button = event.target;
             var moddedfile = button.getAttribute("data-moddedfile");
             var original = button.getAttribute("data-original");
@@ -6565,7 +6567,7 @@ margin-bottom: 10px !important;
 
 <script>
         document.getElementById("setvisible").addEventListener("click", function() {
-        var baseUrl = "https://backend.ecutech.gr/makelua"; // Replace with the base URL
+        var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
         var button = document.getElementById("setvisible");
         var setvisible ="yes"
 
@@ -6589,7 +6591,7 @@ margin-bottom: 10px !important;
 
 <script>
     document.getElementById("getallversions").addEventListener("click", function() {
-        var baseUrl = "https://backend.ecutech.gr/makelua"; // Replace with the base URL
+        var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
         var fileid = "<? echo  $file->id;?>"; // Replace with the ID you want to send
         var restart ="versions"
         // Construct the URL with query parameters
@@ -6609,7 +6611,7 @@ margin-bottom: 10px !important;
 
     <script>
     document.getElementById("restartall").addEventListener("click", function() {
-        var baseUrl = "https://backend.ecutech.gr/makelua"; // Replace with the base URL
+        var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
         var fileid = "<? echo  $file->id;?>"; // Replace with the ID you want to send
         var restart ="all"
         // Construct the URL with query parameters

@@ -1190,7 +1190,7 @@ if(!function_exists('get_dropdown_image')){
 
         $tool = Tool::findOrFail($id);
         if($tool){
-            return "http://backend.ecutech.gr/icons/".$tool->icon;
+            return env('BACKEND_URL')."icons/".$tool->icon;
         }
     }
 }
