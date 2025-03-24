@@ -2524,7 +2524,7 @@ margin-bottom: 10px !important;
                             
                             // Create a PDO instance
                             try {
-                                $conn = new PDO("mysql:host=$servername;unix_socket=$socket;dbname=$dbname", $username, $password);
+                                $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             
                                 // Query to get the latest version from the table 'lua_versions' where file_id = 1
@@ -5044,7 +5044,7 @@ margin-bottom: 10px !important;
                             
                             // Create a PDO instance
                             try {
-                                $conn = new PDO("mysql:host=$servername;unix_socket=$socket;dbname=$dbname", $username, $password);
+                                $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             
                                 // Query to get the latest version from the table 'lua_versions' where file_id = 1
