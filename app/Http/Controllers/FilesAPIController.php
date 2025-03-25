@@ -834,7 +834,7 @@ class FilesAPIController extends Controller
             if (Hash::check($request->current_password, $user->password)) {
 
                 if($request->new_password == $request->new_password_confirm){
-                    $user->password = Hash::make(trim($request->password));
+                    $user->password = Hash::make(trim($request->new_password));
                     $user->save();
 
                     return response()->json(['message' => 'password updated.'], 200);
