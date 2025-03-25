@@ -1886,6 +1886,15 @@ Route::post('change_password', [App\Http\Controllers\FilesAPIController::class, 
 
 */
 
+Route::post('credits_table', [App\Http\Controllers\FilesAPIController::class, 'creditsTable']);
+
+/*
+            request body 
+            $request->user_id
+            response on API
+
+*/
+
 // Route::post('submit_file', [App\Http\Controllers\FilesAPIController::class, 'submitFile']);
 
 // Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'subdealersCredits']);

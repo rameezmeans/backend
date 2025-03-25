@@ -816,6 +816,12 @@ class FilesAPIController extends Controller
         return response()->json($engines);
     }
 
+    public function creditsTable(Request $request){
+        $user = User::findOrFail($request->user_id);
+
+        dd($user);
+    }
+
     public function changePasswordAPI(Request $request){
 
         $user = User::findOrFail($request->user_id);
