@@ -815,7 +815,7 @@ class FilesAPIController extends Controller
     }
 
     public function changePasswordAPI(Request $request){
-        $user = User::findOrFial($request->user_id);
+        $user = User::findOrFail($request->user_id);
         dd($user);
     }
 
