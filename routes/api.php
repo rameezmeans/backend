@@ -1875,10 +1875,10 @@ Route::post('change_password', [App\Http\Controllers\FilesAPIController::class, 
 /*
             request body 
 
-            $request->brand)
-        $request->model)
-        $request->version)
-         $request->engine)
+            $request->current_password)
+            $request->new_password)
+            $request->new_password_confirm)
+            $request->user_id)
 
             response on API
 
