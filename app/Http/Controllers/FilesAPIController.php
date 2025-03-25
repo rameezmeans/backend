@@ -818,8 +818,8 @@ class FilesAPIController extends Controller
 
     public function creditsTable(Request $request){
         $user = User::findOrFail($request->user_id);
-
-        dd($user);
+        $credits = Credit::orderBy('created_at', 'desc')->where('is_evc', 0)->where('user_id', $user->id)->get();
+        dd($credits);
     }
 
     public function changePasswordAPI(Request $request){
