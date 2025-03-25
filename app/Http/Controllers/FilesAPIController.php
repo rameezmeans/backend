@@ -814,6 +814,10 @@ class FilesAPIController extends Controller
         return response()->json($engines);
     }
 
+    public function changePasswordAPI(Request $request){
+        dd($request->all());
+    }
+
     public function ecus(Request $request){
 
         $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->whereNotNull('Engine_ECU')->select('Engine_ECU')->distinct()

@@ -15,7 +15,7 @@ class GroupsController extends Controller
         $this->middleware('auth');
         // $this->middleware('adminOnly');
     }
-
+    
     public function index(){
 
         if( Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-groups') ){

@@ -1870,6 +1870,22 @@ Route::post('get_ecus', [App\Http\Controllers\FilesAPIController::class, 'ecus']
 
 */
 
+Route::post('change_password', [App\Http\Controllers\FilesAPIController::class, 'changePasswordAPI']);
+
+/*
+            request body 
+
+            $request->brand)
+        $request->model)
+        $request->version)
+         $request->engine)
+
+            response on API
+
+            
+
+*/
+
 // Route::post('submit_file', [App\Http\Controllers\FilesAPIController::class, 'submitFile']);
 
 // Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'subdealersCredits']);
