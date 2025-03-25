@@ -26,9 +26,9 @@ use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Chatify\Facades\ChatifyMessenger as Chatify;
-use Darryldecode\Cart\Validators\Validator;
 use Exception;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Twilio\Rest\Client;
 
 class FilesAPIController extends Controller
@@ -817,7 +817,7 @@ class FilesAPIController extends Controller
     }
 
     public function changePasswordAPI(Request $request){
-        
+
         $user = User::findOrFail($request->user_id);
         
         $validator = Validator::make($request->all(),[
