@@ -817,10 +817,52 @@ class FilesAPIController extends Controller
     }
 
     public function creditsTable(Request $request){
+
         $user = User::findOrFail($request->user_id);
         $credits = Credit::orderBy('created_at', 'desc')->where('is_evc', 0)->where('user_id', $user->id)->get();
-        dd($credits);
+        
+        $creditsArr = [];
+
+        foreach($credits as $credit){
+            $row = [];
+
+            $row []= date('Y - m - d', strtotime( $credit->created_at));
+            $row []= $credit->credits;
+            $row []= $credit->running_total($user);
+            
+            if(!$credit->file_id){
+                $row []= $credit->message_to_credit;
+            }
+            else{
+                $file = File::findOrFail($credit->file_id);
+
+                if(!$file){
+                    $row []= "File Deleted:".$credit->file_id;
+                }
+                else{
+                        if($file->vehicle()){
+                            $row []= $file->vehicle()->Name.$file->engine.$file->vehicle()->TORQUE_standard;
+                        }
+                        else {
+                            $row []= $file->engine;
+                        }
+                    }
+                }
+                
+                if($credit->credits > 0){
+                    $row []=  $credit->invoice_id;
+                }
+
+                if(!$credit->file_id){
+                    $row []=  $credit->price_payed."€";
+                }
+
+            $creditsArr []= $row;
+        }
+
+       return response()->json(['credits_log' => $creditsArr], 200);
     }
+    
 
     public function changePasswordAPI(Request $request){
 

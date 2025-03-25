@@ -25,6 +25,10 @@ class Credit extends Model
         return $this->hasOne(PaymentLog::class, 'payment_id', 'id');
     }
 
+    public function running_total($user){
+        return Credit::where('user_id', $user->id)->where('created_at','<=', $this->created_at)->sum('credits');
+    }
+
     public function payment(){
         
         $paypalRecord = $this->hasOne(PaypalRecord::class, 'credit_id', 'id');
