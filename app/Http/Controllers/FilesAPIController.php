@@ -821,9 +821,9 @@ class FilesAPIController extends Controller
         $user = User::findOrFail($request->user_id);
         
         $validator = Validator::make($request->all(),[
-            'current_password' => 'required',
-            'new_password' => 'required',
-            'new_password_confirm' => 'required'
+            'current_password' => 'required,min:8',
+            'new_password' => 'required,min:8',
+            'new_password_confirm' => 'required,min:8'
         ]);
 
         if ($validator->fails()) {
@@ -832,7 +832,18 @@ class FilesAPIController extends Controller
         else{
             
             if (Hash::check($request->current_password, $user->password)) {
-                return response()->json(['message' => 'Password matches'], 200);
+
+                if($request->new_password == $request->new_password_confirm){
+                    $user->password = Hash::make(trim($request->password));
+                    $user->save();
+
+                    return response()->json(['message' => 'password updated.'], 200);
+                }
+                else{
+                    return response()->json(['error' => 'new Password does not match'], 400);
+                }
+                
+
             } else {
                 return response()->json(['error' => 'Password does not match'], 400);
             }
