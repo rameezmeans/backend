@@ -819,7 +819,9 @@ class FilesAPIController extends Controller
         $user = User::findOrFail($request->user_id);
         
         $request->validate([
-            'password' => 'required'
+            'current_password' => 'required',
+            'new_password' => 'required',
+            'new_password_confirm' => 'required'
         ]);
     
         if (Hash::check($request->password, $user->password)) {
