@@ -824,7 +824,7 @@ class FilesAPIController extends Controller
             'new_password_confirm' => 'required'
         ]);
     
-        if (Hash::check($request->password, $user->password)) {
+        if (Hash::check($request->current_password, $user->password)) {
             return response()->json(['message' => 'Password matches'], 200);
         } else {
             return response()->json(['error' => 'Password does not match'], 400);
