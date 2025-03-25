@@ -821,9 +821,9 @@ class FilesAPIController extends Controller
         $user = User::findOrFail($request->user_id);
         
         $validator = Validator::make($request->all(),[
-            'current_password' => 'required,min:8',
-            'new_password' => 'required,min:8',
-            'new_password_confirm' => 'required,min:8'
+            'current_password' => 'required|min:8',
+            'new_password' => 'required|min:8',
+            'new_password_confirm' => 'required|min:8'
         ]);
 
         if ($validator->fails()) {
