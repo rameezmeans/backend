@@ -27,6 +27,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Chatify\Facades\ChatifyMessenger as Chatify;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 use Twilio\Rest\Client;
 
 class FilesAPIController extends Controller
@@ -816,7 +817,16 @@ class FilesAPIController extends Controller
 
     public function changePasswordAPI(Request $request){
         $user = User::findOrFail($request->user_id);
-        dd($user);
+        
+        $request->validate([
+            'password' => 'required'
+        ]);
+    
+        if (Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'Password matches'], 200);
+        } else {
+            return response()->json(['error' => 'Password does not match'], 400);
+        }
     }
 
     public function ecus(Request $request){
