@@ -834,7 +834,7 @@ class FilesAPIController extends Controller
                 $row []= $credit->message_to_credit;
             }
             else{
-                $file = File::findOrFail($credit->file_id);
+                $file = File::where('id', $credit->file_id)->first();
 
                 if(!$file){
                     $row []= "File Deleted:".$credit->file_id;
