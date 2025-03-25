@@ -26,6 +26,7 @@ use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Chatify\Facades\ChatifyMessenger as Chatify;
+use Darryldecode\Cart\Validators\Validator;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Twilio\Rest\Client;
@@ -816,18 +817,25 @@ class FilesAPIController extends Controller
     }
 
     public function changePasswordAPI(Request $request){
+        
         $user = User::findOrFail($request->user_id);
         
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'current_password' => 'required',
             'new_password' => 'required',
             'new_password_confirm' => 'required'
         ]);
-    
-        if (Hash::check($request->current_password, $user->password)) {
-            return response()->json(['message' => 'Password matches'], 200);
-        } else {
-            return response()->json(['error' => 'Password does not match'], 400);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        else{
+            
+            if (Hash::check($request->current_password, $user->password)) {
+                return response()->json(['message' => 'Password matches'], 200);
+            } else {
+                return response()->json(['error' => 'Password does not match'], 400);
+            }
         }
     }
 
