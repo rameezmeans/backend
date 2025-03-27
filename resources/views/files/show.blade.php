@@ -2519,6 +2519,7 @@ margin-bottom: 10px !important;
                             $password = env('DB_PASSWORD');
                             $dbname = env('DB_DATABASE');
                             $socket = env('DB_SOCKET');
+                            
 
                             // $arrayversionlua = NULL;
                             
