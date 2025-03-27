@@ -5043,6 +5043,8 @@ margin-bottom: 10px !important;
                             $password = env('DB_PASSWORD');
                             $dbname = env('DB_DATABASE');
                             $socket = env('DB_SOCKET');
+
+                            dd($socket);
                             
                             // Create a PDO instance
                             try {
