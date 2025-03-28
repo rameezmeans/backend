@@ -4476,31 +4476,31 @@ class FilesController extends Controller
 
         // dd($servername." ".$username." ".$password." ".$dbname." ".$socket);
 
-        try {
-            // $conn = new PDO("mysql:host=$servername;dbname=$dbname;unix_socket=$socket", $username, $password);
-            $conn = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        // try {
+        //     // $conn = new PDO("mysql:host=$servername;dbname=$dbname;unix_socket=$socket", $username, $password);
+        //     $conn = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
+        //     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            // dd($conn);
+        //     // dd($conn);
 
-            // Query to get the latest version from the table 'lua_versions' where file_id = 1
-            $query = "SELECT * FROM lua_versions WHERE File_Id = " . $file->id . " ORDER BY Id DESC LIMIT 1";
+        //     // Query to get the latest version from the table 'lua_versions' where file_id = 1
+        //     $query = "SELECT * FROM lua_versions WHERE File_Id = " . $file->id . " ORDER BY Id DESC LIMIT 1";
                             
-            // Execute the query
-            $result = $conn->query($query);
+        //     // Execute the query
+        //     $result = $conn->query($query);
         
-            // Fetch the result as an associative array
-            $latestVersion = $result->fetch(PDO::FETCH_ASSOC);
+        //     // Fetch the result as an associative array
+        //     $latestVersion = $result->fetch(PDO::FETCH_ASSOC);
 
-            dd($latestVersion);
+        //     dd($latestVersion);
 
-        }
-        catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
-        }
+        // }
+        // catch (PDOException $e) {
+        //     echo "Connection failed: " . $e->getMessage();
+        // }
         
-        // Close the connection
-        $conn = null;
+        // // Close the connection
+        // $conn = null;
 
         if(env('APP_ENV') == 'live'){
             return view('files.show', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
