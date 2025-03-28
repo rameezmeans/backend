@@ -4481,8 +4481,19 @@ class FilesController extends Controller
             $conn = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            dd($conn);
-            
+            // dd($conn);
+
+            // Query to get the latest version from the table 'lua_versions' where file_id = 1
+            $query = "SELECT * FROM lua_versions WHERE File_Id = " . $file->id . " ORDER BY Id DESC LIMIT 1";
+                            
+            // Execute the query
+            $result = $conn->query($query);
+        
+            // Fetch the result as an associative array
+            $latestVersion = $result->fetch(PDO::FETCH_ASSOC);
+
+            dd($latestVersion);
+
         }
         catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
