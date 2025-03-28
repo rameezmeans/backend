@@ -5046,7 +5046,7 @@ margin-bottom: 10px !important;
                             $dbname = env('DB_DATABASE');
                             $socket = env('DB_SOCKET');
 
-                            dd($socket);
+                            // dd($socket);
                             
                             // Create a PDO instance
                             try {

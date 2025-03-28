@@ -4467,6 +4467,14 @@ class FilesController extends Controller
 
         // dd($file);
 
+        $servername = env('DB_HOST');
+        $username = env('DB_USERNAME');
+        $password = env('DB_PASSWORD');
+        $dbname = env('DB_DATABASE');
+        $socket = env('DB_SOCKET');
+
+        dd($servername." ".$username." ".$password." ".$dbname." ".$socket);
+
         if(env('APP_ENV') == 'live'){
             return view('files.show', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
