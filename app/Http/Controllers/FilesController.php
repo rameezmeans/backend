@@ -61,6 +61,7 @@ use Yajra\DataTables\DataTables;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
 use PDO;
+use PDOException;
 use stdClass;
 use Symfony\Component\Mailer\Exception\TransportException;
 use Twilio\Serialize;
@@ -4473,7 +4474,22 @@ class FilesController extends Controller
         $dbname = env('DB_DATABASE');
         $socket = env('DB_SOCKET');
 
-        dd($servername." ".$username." ".$password." ".$dbname." ".$socket);
+        // dd($servername." ".$username." ".$password." ".$dbname." ".$socket);
+
+        try {
+            // $conn = new PDO("mysql:host=$servername;dbname=$dbname;unix_socket=$socket", $username, $password);
+            $conn = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            dd($conn);
+            
+        }
+        catch (PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
+        
+        // Close the connection
+        $conn = null;
 
         if(env('APP_ENV') == 'live'){
             return view('files.show', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
