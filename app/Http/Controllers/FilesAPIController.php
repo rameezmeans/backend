@@ -85,6 +85,15 @@ class FilesAPIController extends Controller
             }
         }
 
+        $datesMonth = [];
+        $datesMonthCount = [];
+
+        for($i = 1; $i <=  date('t'); $i++){
+            // add the date to the dates array
+            $datesMonth[] =  str_pad($i, 2, '0', STR_PAD_LEFT).'-'. date('M');
+            $datesMonthCount []= File::whereMonth('created_at',date('m'))->whereDay('created_at',$i)->where('user_id', $user->id)->count();
+        }
+
 
         return response()->json([
             'thisWeeksFilesCount' => $thisWeeksFilesCount,
@@ -93,6 +102,8 @@ class FilesAPIController extends Controller
             'invoices' => $records,
             'monthsOfYear' => $monthsOfYear,
             'countYear' => $countYear,
+            'datesMonth' => $datesMonth,
+            'datesMonthCount' => $datesMonthCount,
         ], 200);
 
     }
