@@ -997,7 +997,7 @@ class FilesAPIController extends Controller
             
             $user->evc_customer_id = $request->evc_customer_id;
             $user->save();
-            
+
             $files = File::where('user_id', $user->id)->get();
 
             foreach($files as $file){
@@ -1012,6 +1012,14 @@ class FilesAPIController extends Controller
         }
 
 
+    }
+
+    public function deleleAccount(Request $request){
+
+        $user = User::findOrFail($request->user_id);
+        $user->delete();
+        
+        return response()->json(['message' => 'user deleted.'], 201);
     }
 
     public function changePasswordAPI(Request $request){

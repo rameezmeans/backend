@@ -1918,6 +1918,15 @@ Route::post('edit_account', [App\Http\Controllers\FilesAPIController::class, 'ed
 
 */
 
+Route::post('delete_account', [App\Http\Controllers\FilesAPIController::class, 'deleleAccount']);
+
+/*
+            request body 
+            $request->user_id
+            response on API
+
+*/
+
 // Route::post('submit_file', [App\Http\Controllers\FilesAPIController::class, 'submitFile']);
 
 // Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'subdealersCredits']);
