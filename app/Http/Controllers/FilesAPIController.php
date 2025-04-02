@@ -34,6 +34,23 @@ use Twilio\Rest\Client;
 class FilesAPIController extends Controller
 {
 
+    public function homeInformation(Request $request){
+
+        $user = User::findOrFail($request->user_id);
+
+        $thisWeeksFilesCount = File::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->where('user_id', $user->id)->count();
+        $thisMonthsFilesCount = File::whereYear('created_at', Carbon::now()->year)->whereMonth('created_at',Carbon::now()->month)->where('user_id', $user->id)->count();
+
+        $thisYearsFilesCount = File::whereYear('created_at', Carbon::now()->year)->where('user_id', $user->id)->count();
+
+        return response()->json([
+            'thisWeeksFilesCount' => $thisWeeksFilesCount,
+            'thisMonthsFilesCount' => $thisMonthsFilesCount,
+            'thisYearsFilesCount' => $thisYearsFilesCount,
+        ], 200);
+
+    }
+
     public function saveFileOptions(Request $request){
 
         $file = TemporaryFile::findOrfail($request->temporary_file_id);

@@ -1895,6 +1895,15 @@ Route::post('credits_table', [App\Http\Controllers\FilesAPIController::class, 'c
 
 */
 
+Route::post('home_information', [App\Http\Controllers\FilesAPIController::class, 'homeInformation']);
+
+/*
+            request body 
+            $request->user_id
+            response on API
+
+*/
+
 // Route::post('submit_file', [App\Http\Controllers\FilesAPIController::class, 'submitFile']);
 
 // Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'subdealersCredits']);
