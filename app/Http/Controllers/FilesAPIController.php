@@ -997,9 +997,7 @@ class FilesAPIController extends Controller
             
             $user->evc_customer_id = $request->evc_customer_id;
             $user->save();
-
-            // dd($user);
-
+            
             $files = File::where('user_id', $user->id)->get();
 
             foreach($files as $file){
@@ -1009,7 +1007,7 @@ class FilesAPIController extends Controller
                 $file->save();
             }
 
-            return response()->json(['message' => 'account updated.'], 201);
+            return response()->json(['message' => 'account updated.', 'user' => $user], 201);
 
         }
 
