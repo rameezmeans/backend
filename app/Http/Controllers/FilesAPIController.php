@@ -57,6 +57,33 @@ class FilesAPIController extends Controller
             $records []= $temp;
         }
 
+        $monthsOfYear = ['January','Fabrury','March','April','May',
+        'June','July','August','September','October', 'November', 'December'];
+
+        $items = File::select('id', 'created_at')->where('user_id', $user->id)
+        ->get()
+        ->groupBy(function($date) {
+
+            if(Carbon::parse($date->created_at)->format('Y') == date('Y')){
+                //return Carbon::parse($date->created_at)->format('Y'); // grouping by years
+                return Carbon::parse($date->created_at)->format('m'); // grouping by months
+            }
+        });
+
+        $count = [];
+        $countYear = [];
+        
+        foreach ($items as $key => $value) {
+            $count[(int)$key] = count($value);
+        }
+        
+        for($i = 1; $i <= 12; $i++){
+            if(!empty($count[$i])){
+                $countYear[$i] = $count[$i];    
+            }else{
+                $countYear[$i] = 0;    
+            }
+        }
 
 
         return response()->json([
@@ -64,6 +91,8 @@ class FilesAPIController extends Controller
             'thisMonthsFilesCount' => $thisMonthsFilesCount,
             'thisYearsFilesCount' => $thisYearsFilesCount,
             'invoices' => $records,
+            'monthsOfYear' => $monthsOfYear,
+            'countYear' => $countYear,
         ], 200);
 
     }
