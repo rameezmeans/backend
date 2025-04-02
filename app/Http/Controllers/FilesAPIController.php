@@ -43,10 +43,27 @@ class FilesAPIController extends Controller
 
         $thisYearsFilesCount = File::whereYear('created_at', Carbon::now()->year)->where('user_id', $user->id)->count();
 
+        $invoices = Credit::orderBy('created_at', 'desc')->where('credits','!=', 0)->where('user_id', $user->id)->get();
+
+        $records = [];
+        foreach($invoices as $invoice){
+            $temp = [];
+
+            $temp['date'] = date('Y - m - d', strtotime( $invoice->created_at));
+            $temp['credits'] = $invoice->credits;
+            $temp['message'] = $invoice->message_to_credit;
+            $temp['price'] = $invoice->price_payed;
+
+            $records []= $temp;
+        }
+
+
+
         return response()->json([
             'thisWeeksFilesCount' => $thisWeeksFilesCount,
             'thisMonthsFilesCount' => $thisMonthsFilesCount,
             'thisYearsFilesCount' => $thisYearsFilesCount,
+            'invoices' => $records,
         ], 200);
 
     }
