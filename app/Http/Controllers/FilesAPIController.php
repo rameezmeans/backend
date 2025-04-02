@@ -26,6 +26,7 @@ use App\Models\Vehicle;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Chatify\Facades\ChatifyMessenger as Chatify;
+use DateTime;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -94,6 +95,19 @@ class FilesAPIController extends Controller
             $datesMonthCount []= File::whereMonth('created_at',date('m'))->whereDay('created_at',$i)->where('user_id', $user->id)->count();
         }
 
+        $thisWeekStart = Carbon::now()->startOfWeek();
+        $thisWeekEnd = Carbon::now()->endOfWeek();
+
+        $weekRange = $this->createDateRangeArray($thisWeekStart, $thisWeekEnd);
+
+        $weekCount = [];
+        foreach($weekRange as $r) {
+            $date = DateTime::createFromFormat('d/m/Y', $r);
+            $day = $date->format('d');
+            $month = $date->format('m');
+            $weekCount []= File::whereMonth('created_at',$month)->whereDay('created_at',$day)->where('user_id', $user->id)->count();
+        }
+
 
         return response()->json([
             'thisWeeksFilesCount' => $thisWeeksFilesCount,
@@ -104,8 +118,32 @@ class FilesAPIController extends Controller
             'countYear' => $countYear,
             'datesMonth' => $datesMonth,
             'datesMonthCount' => $datesMonthCount,
+            'weekRange' => $weekRange,
+            'weekCount' => $weekCount,
         ], 200);
 
+    }
+
+    public function createDateRangeArray($strDateFrom,$strDateTo){
+        // takes two dates formatted as YYYY-MM-DD and creates an
+        // inclusive array of the dates between the from and to dates.
+    
+        // could test validity of dates here but I'm already doing
+        // that in the main script
+    
+        $aryRange = [];
+    
+        $iDateFrom = mktime(1, 0, 0, substr($strDateFrom, 5, 2), substr($strDateFrom, 8, 2), substr($strDateFrom, 0, 4));
+        $iDateTo = mktime(1, 0, 0, substr($strDateTo, 5, 2), substr($strDateTo, 8, 2), substr($strDateTo, 0, 4));
+    
+        if ($iDateTo >= $iDateFrom) {
+            array_push($aryRange, date('d/m/y', $iDateFrom)); // first entry
+            while ($iDateFrom<$iDateTo) {
+                $iDateFrom += 86400; // add 24 hours
+                array_push($aryRange, date('d/m/y', $iDateFrom));
+            }
+        }
+        return $aryRange;
     }
 
     public function saveFileOptions(Request $request){
