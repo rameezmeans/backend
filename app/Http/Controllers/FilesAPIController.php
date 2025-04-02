@@ -928,6 +928,28 @@ class FilesAPIController extends Controller
         return response()->json($engines);
     }
 
+    public function evcCreditsTable(Request $request){
+
+        $user = User::findOrFail($request->user_id);
+        $evcCredits = Credit::orderBy('created_at', 'desc')->where('is_evc', 1)->where('user_id', $user->id)->get();
+        
+        $creditsArr = [];
+
+        foreach($evcCredits as $credit){
+            $row = [];
+
+            $row []= date('Y - m - d', strtotime( $credit->created_at));
+            $row []= $credit->credits;
+            $row [] = $credit->message_to_credit;
+            $row [] = $credit->invoice_id;
+            $row [] = $credit->price_payed.'€';
+
+            $creditsArr []= $row;
+        }
+
+
+        return response()->json(['evc_credits_log' => $creditsArr], 200);
+    }
     public function creditsTable(Request $request){
 
         $user = User::findOrFail($request->user_id);

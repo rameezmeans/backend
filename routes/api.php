@@ -1895,6 +1895,15 @@ Route::post('credits_table', [App\Http\Controllers\FilesAPIController::class, 'c
 
 */
 
+Route::post('evc_credits_table', [App\Http\Controllers\FilesAPIController::class, 'evcCreditsTable']);
+
+/*
+            request body 
+            $request->user_id
+            response on API
+
+*/
+
 Route::post('home_information', [App\Http\Controllers\FilesAPIController::class, 'homeInformation']);
 
 /*
