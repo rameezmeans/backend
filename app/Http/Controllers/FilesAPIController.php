@@ -998,7 +998,7 @@ class FilesAPIController extends Controller
             $user->evc_customer_id = $request->evc_customer_id;
             $user->save();
 
-            dd($user);
+            // dd($user);
 
             $files = File::where('user_id', $user->id)->get();
 
