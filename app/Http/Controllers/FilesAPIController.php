@@ -976,6 +976,44 @@ class FilesAPIController extends Controller
     }
     
 
+    public function editAccount(Request $request){
+
+        $user = User::findOrFail($request->user_id);
+        
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|max:255',
+            'phone' => 'required|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        else{
+
+            $user->company_name = $request->company_name;
+            $user->company_id = $request->company_id;
+            $user->name = $request->name;
+            $user->phone = $request->phone;
+            
+            $user->evc_customer_id = $request->evc_customer_id;
+            $user->save();
+
+            $files = File::where('user_id', $user->id)->get();
+
+            foreach($files as $file){
+                $file->name = $user->name;
+                $file->phone = $user->phone;
+                $file->email = $user->email;
+                $file->save();
+            }
+
+            return response()->json(['message' => 'account updated.'], 201);
+
+        }
+
+
+    }
+
     public function changePasswordAPI(Request $request){
 
         $user = User::findOrFail($request->user_id);

@@ -1904,6 +1904,20 @@ Route::post('home_information', [App\Http\Controllers\FilesAPIController::class,
 
 */
 
+Route::post('edit_account', [App\Http\Controllers\FilesAPIController::class, 'editAccount']);
+
+/*
+            request body 
+            $request->user_id
+            $request->company_name
+            $request->company_id
+            $request->name
+            $request->phone
+            $request->evc_customer_id
+            response on API
+
+*/
+
 // Route::post('submit_file', [App\Http\Controllers\FilesAPIController::class, 'submitFile']);
 
 // Route::post('get_credits', [App\Http\Controllers\FilesAPIController::class, 'subdealersCredits']);
