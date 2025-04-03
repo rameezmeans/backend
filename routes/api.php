@@ -1948,6 +1948,7 @@ Route::get('lua/filesversions', [App\Http\Controllers\FilesAPIController::class,
 
 Route::post('lua/file/set_checking_status', [App\Http\Controllers\FilesAPIController::class, 'setCheckingStatus'])->name('api-set-checking-status');
 Route::post('lua/file/set_status_and_email', [App\Http\Controllers\FilesAPIController::class, 'setStatusAndEmail'])->name('set-status-and-email');
+// Route::post('python/file_search', [App\Http\Controllers\FilesAPIController::class, 'pythonFileSearch']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
