@@ -346,6 +346,14 @@ class ActiveFeedCron extends Command
                                     $file->save();
                                 } 
                             }
+
+                            if($file->status == 'on_hold') {
+                                
+                                if( (strtotime($file->submission_timer)+($fsat*60))  > strtotime(now())){
+                                    $file->delayed = 1;
+                                    $file->save();
+                                }  
+                            }
                         }
 
                         if($file->delay == 0){
@@ -356,6 +364,14 @@ class ActiveFeedCron extends Command
                                     $file->delayed = 1;
                                     $file->save();
                                 }   
+                            }
+
+                            if($file->status == 'on_hold') {
+                                
+                                if( (strtotime($file->submission_timer)+($fsat*60))  > strtotime(now())){
+                                    $file->delayed = 1;
+                                    $file->save();
+                                } 
                             }
 
                             if($file->status == 'submitted') {
