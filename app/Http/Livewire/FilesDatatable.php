@@ -132,7 +132,7 @@ class FilesDatatable extends LivewireDatatable
                         }
                         else if($file->status == 'on_hold'){
                             if($submissionTimeLeft > 0){
-                                $returnStr .='<span class="label label-info text-white m-r-5 submission-stoped" id="s_'.$file->id.'" data-seconds="'.$file->submission_timer.'"></span>';
+                                $returnStr .='<span class="label label-info text-white m-r-5 submission-stoped" id="s_'.$file->id.'" data-seconds="'.strtotime($file->submission_timer).'"></span>';
                             }
                         }
                     }
