@@ -12,6 +12,8 @@ use App\Models\PaymentLog;
 use App\Models\Schedualer;
 use App\Models\User;
 use Carbon\Carbon;
+use DateInterval;
+use DateTime;
 use Illuminate\Console\Command;
 
 class ActiveFeedCron extends Command
@@ -347,13 +349,16 @@ class ActiveFeedCron extends Command
                                 } 
                             }
 
-                            // if($file->status == 'on_hold') {
-                                
-                            //     if( (strtotime($file->submission_timer)+($fsat*60))  > strtotime(now())){
-                            //         $file->delayed = 1;
-                            //         $file->save();
-                            //     }  
-                            // }
+                            if($file->status == 'on_hold') {
+
+                                $minutes_to_add = 1;
+
+                                $time = new DateTime($file->submission_timer);
+                                $time->add(new DateInterval('PT' . $minutes_to_add . 'M'));
+
+                                $file->submission_timer = $time->format('Y-m-d H:i:s');
+                                $file->save();
+                            }
                         }
 
                         if($file->delay == 0){
@@ -374,14 +379,17 @@ class ActiveFeedCron extends Command
                                 } 
                             }
 
-                            // if($file->status == 'submitted') {
+                            if($file->status == 'on_hold') {
 
-                            //     if( (strtotime($file->submission_timer)+($fsdt*60))  <= strtotime(now())){
-                            //         $file->delayed = 1;
-                            //         $file->save();
-                            //     } 
+                                $minutes_to_add = 1;
 
-                            // }
+                                $time = new DateTime($file->submission_timer);
+                                $time->add(new DateInterval('PT' . $minutes_to_add . 'M'));
+
+                                $file->submission_timer = $time->format('Y-m-d H:i:s');
+                                $file->save();
+                            }
+                            
                         }
 
                     }
