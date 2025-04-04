@@ -385,9 +385,10 @@ class ActiveFeedCron extends Command
                                 $file->submission_timer = date('Y-m-d H:i:s', $newtimestamp);
                                 $file->save();
 
-                                \Log::info("new submission time: ".$file->submission_timer);
-                                \Log::info("new submission time: ".$file->submission_timer);
-                                \Log::info("new submission time: ".$file->submission_timer);
+                                \Log::info("new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                                \Log::info("new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                                \Log::info("new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                                
                             }
 
                         }
