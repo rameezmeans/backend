@@ -388,8 +388,12 @@ class ActiveFeedCron extends Command
 
                                 $file->submission_timer = $time->format('Y-m-d H:i:s');
                                 $file->save();
+
+                                \Log::info("new submission time: ".$file->submission_timer);
+                                \Log::info("new submission time: ".$file->submission_timer);
+                                \Log::info("new submission time: ".$file->submission_timer);
                             }
-                            
+
                         }
 
                     }
