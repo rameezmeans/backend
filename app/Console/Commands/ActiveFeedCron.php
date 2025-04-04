@@ -341,7 +341,9 @@ class ActiveFeedCron extends Command
                         
                     }
 
-                    if($file->timer != NULL || $file->submission_timer != NULL){
+                    
+
+                    if($file->timer != NULL){
 
                         if($file->red == 0){
 
