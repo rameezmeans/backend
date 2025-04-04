@@ -386,7 +386,7 @@ class ActiveFeedCron extends Command
                                 $time = new DateTime($file->submission_timer);
                                 $time->add(new DateInterval('PT' . $minutes_to_add . 'M'));
 
-                                $file->submission_timer = $time->format('Y-m-d H:i:s');
+                                $file->submission_timer = $time->format('d-m-Y H:i:s');
                                 $file->save();
 
                                 \Log::info("new submission time: ".$file->submission_timer);
