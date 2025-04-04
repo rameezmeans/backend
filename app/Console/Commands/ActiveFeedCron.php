@@ -328,7 +328,7 @@ class ActiveFeedCron extends Command
                         $file->submission_timer = Carbon::now();
                         $file->save();
                     }
-                    
+
                     if($file->timer != NULL){
 
                         if($file->status == 'on_hold') {
@@ -337,9 +337,9 @@ class ActiveFeedCron extends Command
                             $file->submission_timer = date('Y-m-d H:i:s', $newtimestamp);
                             $file->save();
     
-                            \Log::info("new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
-                            \Log::info("new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
-                            \Log::info("new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                            \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                            \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                            \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
                             
                         }
 
