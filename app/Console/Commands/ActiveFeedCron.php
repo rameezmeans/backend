@@ -381,12 +381,8 @@ class ActiveFeedCron extends Command
 
                             if($file->status == 'on_hold') {
 
-                                $minutes_to_add = 1;
-
-                                $time = new DateTime($file->submission_timer);
-                                $time->add(new DateInterval('PT' . $minutes_to_add . 'M'));
-
-                                $file->submission_timer = $time->format('Y-m-d H:i:s');
+                                $newtimestamp = strtotime($file->submission_timer.'+ 1 minute');
+                                $file->submission_timer = date('Y-m-d H:i:s', $newtimestamp);
                                 $file->save();
 
                                 \Log::info("new submission time: ".$file->submission_timer);
