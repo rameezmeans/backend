@@ -120,9 +120,11 @@ class FilesDatatable extends LivewireDatatable
                         $submissionTimeLeft = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
                     }
                     else if($file->status == 'on_hold'){
-                        $onHoldTime =  strtotime($file->submission_timer)+($fsdt*60) - strtotime(now());
-                        $file->on_hold_time = $onHoldTime;
-                        $file->save();
+                        if(!$file->on_hold_time){
+                            $onHoldTime =  strtotime($file->submission_timer)+($fsdt*60) - strtotime(now());
+                            $file->on_hold_time = $onHoldTime;
+                            $file->save();
+                        }
                     }
 
                     if($file->status == 'submitted' ||  $file->status == 'on_hold'){
