@@ -360,8 +360,6 @@ class ActiveFeedCron extends Command
                                     $file->save();
                                 } 
                             }
-
-                            
                         }
 
                         if($file->delay == 0){
@@ -375,15 +373,13 @@ class ActiveFeedCron extends Command
                             }
 
                             if($file->status == 'submitted') {
-                                
-                                if( (strtotime($file->submission_timer)+($fsat*60))  > strtotime(now())){
+
+                                if( (strtotime($file->submission_timer)+($fsdt*60))  <= strtotime(now())){
                                     $file->delayed = 1;
                                     $file->save();
                                 } 
+
                             }
-
-                            
-
                         }
 
                     }
