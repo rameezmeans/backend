@@ -281,23 +281,23 @@ class ActiveFeedCron extends Command
         $feeds3 = NewsFeed::where('front_end_id', 3)->get();
         $this->feedManage($feeds3);
 
-        $submittedFiles1 = File::where('status', 'submitted')->where('front_end_id', 1)->get();
+        $submittedFiles1 = File::where('front_end_id', 1)->get();
         $this->manageFiles($submittedFiles1, 1);
 
-        $submittedFiles2 = File::where('status', 'submitted')->where('front_end_id', 2)->get();
+        $submittedFiles2 = File::where('front_end_id', 2)->get();
         $this->manageFiles($submittedFiles2, 2);
 
-        $submittedFiles3 = File::where('status', 'submitted')->where('front_end_id', 3)->get();
+        $submittedFiles3 = File::where('front_end_id', 3)->get();
         $this->manageFiles($submittedFiles3, 3);
 
-        $openFiles1 = File::where('support_status', 'open')->where('front_end_id', 1)->get();
-        $this->manageFiles($openFiles1, 1);
+        // $openFiles1 = File::where('support_status', 'open')->where('front_end_id', 1)->get();
+        // $this->manageFiles($openFiles1, 1);
 
-        $openFiles2 = File::where('support_status', 'open')->where('front_end_id', 2)->get();
-        $this->manageFiles($openFiles2, 2);
+        // $openFiles2 = File::where('support_status', 'open')->where('front_end_id', 2)->get();
+        // $this->manageFiles($openFiles2, 2);
 
-        $openFiles3 = File::where('support_status', 'open')->where('front_end_id', 3)->get();
-        $this->manageFiles($openFiles3, 3);
+        // $openFiles3 = File::where('support_status', 'open')->where('front_end_id', 3)->get();
+        // $this->manageFiles($openFiles3, 3);
 
         return Command::SUCCESS;
     }
@@ -329,19 +329,19 @@ class ActiveFeedCron extends Command
                         $file->save();
                     }
 
+                    if($file->status == 'on_hold') {
+
+                        $newtimestamp = strtotime($file->submission_timer.'+ 1 minute');
+                        $file->submission_timer = date('Y-m-d H:i:s', $newtimestamp);
+                        $file->save();
+
+                        \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                        \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                        \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                        
+                    }
+
                     if($file->timer != NULL){
-
-                        if($file->status == 'on_hold') {
-
-                            $newtimestamp = strtotime($file->submission_timer.'+ 1 minute');
-                            $file->submission_timer = date('Y-m-d H:i:s', $newtimestamp);
-                            $file->save();
-    
-                            \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
-                            \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
-                            \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
-                            
-                        }
 
                         if($file->red == 0){
 
@@ -374,7 +374,7 @@ class ActiveFeedCron extends Command
                                 }   
                             }
 
-                            if($file->status == 'on_hold') {
+                            if($file->status == 'submitted') {
                                 
                                 if( (strtotime($file->submission_timer)+($fsat*60))  > strtotime(now())){
                                     $file->delayed = 1;

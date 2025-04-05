@@ -4267,6 +4267,97 @@ class FilesController extends Controller
         return $responseTime;
     }
 
+    function manageFiles($files, $frontendID){
+
+        $activeFeed = NewsFeed::where('active', 1)->where('front_end_id', $frontendID)->first();
+
+        $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+        $fsat = Key::where('key', 'file_submitted_alert_time')->first()->value;
+        $foat = Key::where('key', 'file_open_alert_time')->first()->value;
+        $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
+
+        if($activeFeed != NULL){
+
+            if($activeFeed->type == 'good_news'){
+
+                foreach($files as $file){
+
+                    if($file->timer == NULL){
+
+                        $file->timer = Carbon::now();
+                        $file->save();
+                    }
+
+                    if($file->submission_timer == NULL){
+
+                        $file->submission_timer = Carbon::now();
+                        $file->save();
+                    }
+
+                    if($file->status == 'on_hold') {
+
+                        $newtimestamp = strtotime($file->submission_timer.'+ 1 minute');
+                        $file->submission_timer = date('Y-m-d H:i:s', $newtimestamp);
+                        $file->save();
+
+                        \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                        \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                        \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                        
+                    }
+
+                    if($file->timer != NULL){
+
+                        if($file->red == 0){
+
+                            if($file->support_status == 'open') {
+
+                                if( (strtotime($file->timer)+($foat*60))  <= strtotime(now())){
+                                    $file->red = 1;
+                                    $file->save();
+                                }   
+                            }
+                            
+                            if($file->status == 'submitted') {
+                                
+                                if( (strtotime($file->submission_timer)+($fsat*60))  <= strtotime(now())){
+                                    $file->red = 1;
+                                    $file->save();
+                                } 
+                            }
+
+                            
+                        }
+
+                        if($file->delay == 0){
+
+                            if($file->support_status == 'open') {
+
+                                if( (strtotime($file->timer)+($fodt*60))  <= strtotime(now())){
+                                    $file->delayed = 1;
+                                    $file->save();
+                                }   
+                            }
+
+                            if($file->status == 'on_hold') {
+                                
+                                if( (strtotime($file->submission_timer)+($fsat*60))  > strtotime(now())){
+                                    $file->delayed = 1;
+                                    $file->save();
+                                } 
+                            }
+
+                            
+
+                        }
+
+                    }
+                }
+            }
+        }
+
+    }
+
      /**
      * Show the file.
      *
