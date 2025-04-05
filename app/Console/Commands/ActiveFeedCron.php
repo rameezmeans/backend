@@ -329,19 +329,19 @@ class ActiveFeedCron extends Command
                         $file->save();
                     }
 
-                    if($file->status == 'on_hold') {
-
-                        $newtimestamp = strtotime($file->submission_timer.'+ 1 minute');
-                        $file->submission_timer = date('Y-m-d H:i:s', $newtimestamp);
-                        $file->save();
-
-                        \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
-                        \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
-                        \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
-                        
-                    }
-
                     if($file->timer != NULL){
+
+                        if($file->status == 'on_hold') {
+
+                            $newtimestamp = strtotime($file->submission_timer.'+ 1 minute');
+                            $file->submission_timer = date('Y-m-d H:i:s', $newtimestamp);
+                            $file->save();
+    
+                            \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                            \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                            \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
+                            
+                        }
 
                         if($file->red == 0){
 
