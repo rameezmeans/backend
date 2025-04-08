@@ -2999,33 +2999,36 @@ class FilesController extends Controller
         }
 
         if($request->status == 'rejected'){
+            
+            if($file->reason_to_reject == NULL){
 
-            $credit = new Credit();
-            $credit->credits = $file->credits;
-            $credit->user_id = $customer->id;
-            $credit->file_id = $file->id;
-            $credit->country = code_to_country( $customer->country );
-            $credit->front_end_id = $customer->front_end_id;
-            $credit->stripe_id = NULL;
+                $credit = new Credit();
+                $credit->credits = $file->credits;
+                $credit->user_id = $customer->id;
+                $credit->file_id = $file->id;
+                $credit->country = code_to_country( $customer->country );
+                $credit->front_end_id = $customer->front_end_id;
+                $credit->stripe_id = NULL;
 
-            if($customer->test == 1){
-                $credit->test = 1;
+                if($customer->test == 1){
+                    $credit->test = 1;
+                }
+
+                $credit->gifted = 1;
+                $credit->price_payed = 0;
+
+                if($request->reason_to_reject){
+                    $credit->message_to_credit = $request->reason_to_reject;
+                    $file->reason_to_reject = $request->reason_to_reject;
+                }
+                else{
+                    $credit->message_to_credit = 'File Canceled!';
+                    $file->reason_to_reject = 'File Canceled!';
+                }
+
+                $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
+                $credit->save();
             }
-
-            $credit->gifted = 1;
-            $credit->price_payed = 0;
-
-            if($request->reason_to_reject){
-                $credit->message_to_credit = $request->reason_to_reject;
-                $file->reason_to_reject = $request->reason_to_reject;
-            }
-            else{
-                $credit->message_to_credit = 'File Canceled!';
-                $file->reason_to_reject = 'File Canceled!';
-            }
-
-            $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
-            $credit->save();
 
         }
         
