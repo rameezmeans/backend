@@ -2956,6 +2956,10 @@ class FilesController extends Controller
             }
         }
 
+        if($file->support_status == 'open'){
+            $file->assigned_to = NULL;
+        }
+
         $file->save();
 
         return Redirect::back()->with(['success' => 'File Support status changed.']);
