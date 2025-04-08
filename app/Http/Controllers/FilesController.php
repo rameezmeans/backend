@@ -133,7 +133,14 @@ class FilesController extends Controller
 
         $file = File::findOrFail($request->file_id);
         $file->status = 'on_hold';
-
+        
+        $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+        $onHoldTime = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
+        if($onHoldTime > 0){
+            $file->on_hold_time = $onHoldTime;
+            $file->save();
+        }
+        
         $this->changeStatusLog($file, 'on_hold', 'status', 'File is set on hold by engineer or admin.');
 
         $file->updated_at = Carbon::now();
@@ -4723,6 +4730,17 @@ class FilesController extends Controller
                 $file->submission_timer = NULL;
                 $file->updated_at = Carbon::now();
                 $file->save();
+            }
+
+            if($file->status == 'on_hold') {
+
+                $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+                $onHoldTime = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
+                if($onHoldTime > 0){
+                    $file->on_hold_time = $onHoldTime;
+                    $file->save();
+                }
+                
             }
             
             if(!$file->response_time){
