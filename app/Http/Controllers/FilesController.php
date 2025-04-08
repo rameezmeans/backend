@@ -133,7 +133,7 @@ class FilesController extends Controller
 
         $file = File::findOrFail($request->file_id);
         $file->status = 'on_hold';
-        
+
         $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
         $onHoldTime = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
         if($onHoldTime > 0){
@@ -2984,6 +2984,16 @@ class FilesController extends Controller
             }
         }
 
+        if($file->status == 'on_hold'){
+
+            $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+            $onHoldTime = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
+            if($onHoldTime > 0){
+                $file->on_hold_time = $onHoldTime;
+                $file->save();
+            }
+        }
+
         if($request->status == 'rejected'){
 
             $credit = new Credit();
@@ -4732,17 +4742,6 @@ class FilesController extends Controller
                 $file->save();
             }
 
-            if($file->status == 'on_hold') {
-
-                $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
-                $onHoldTime = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
-                if($onHoldTime > 0){
-                    $file->on_hold_time = $onHoldTime;
-                    $file->save();
-                }
-                
-            }
-            
             if(!$file->response_time){
 
                 $file->reupload_time = Carbon::now();
