@@ -2679,7 +2679,7 @@ class FilesController extends Controller
 
     public function assignEngineer(Request $request){
 
-        dd($request->all());
+        // dd($request->all());
 
         // if(!Auth::user()->is_admin()){
         //     return abort(404);
@@ -2706,7 +2706,7 @@ class FilesController extends Controller
         $engineer = User::findOrFail($request->assigned_to);
 
         dd($engineer);
-        
+
         $customer = User::findOrFail($file->user_id);
         
         //    $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
