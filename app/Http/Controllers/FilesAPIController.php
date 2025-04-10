@@ -819,7 +819,7 @@ class FilesAPIController extends Controller
 
             $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
             $html1 = str_replace("#customer_name", $customer->name ,$html1);
-            $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
+            $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
             
             $tunningType = $this->emailStagesAndOption($file);
             
@@ -849,7 +849,7 @@ class FilesAPIController extends Controller
 
             $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
             $html = str_replace("#customer_name", $uploader->name ,$html);
-            $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html);
+            $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." " ,$html);
             
             $tunningType = $this->emailStagesAndOption($file);
             
@@ -1752,7 +1752,7 @@ class FilesAPIController extends Controller
 
         $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
         $html1 = str_replace("#customer_name", $customer->name ,$html1);
-        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html1);
+        $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." " ,$html1);
         
         $tunningType = $this->emailStagesAndOption($file);
         
@@ -1764,7 +1764,7 @@ class FilesAPIController extends Controller
 
         $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
         $html2 = str_replace("#customer_name", $file->name ,$html2);
-        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard ,$html2);
+        $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." " ,$html2);
         
         $tunningType = $this->emailStagesAndOption($file);
 
@@ -1884,7 +1884,7 @@ class FilesAPIController extends Controller
                     "parameters" => array(
                         array("type"=> "text","text"=> "dear ".$name),
                         array("type"=> "text","text"=> "Mr. ".$customer),
-                        array("type"=> "text","text"=> $file->brand." ".$file->engine." ".$file->vehicle()->TORQUE_standard),
+                        array("type"=> "text","text"=> $file->brand." ".$file->engine." "),
                         array("type"=> "text","text"=> $optionsMessage),
                         array("type"=> "text","text"=> $supportMessage),
                     )
