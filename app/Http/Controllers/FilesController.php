@@ -4589,7 +4589,7 @@ class FilesController extends Controller
         $dbname = env('DB_DATABASE');
         $socket = env('DB_SOCKET');
 
-        // dd($servername." ".$username." ".$password." ".$dbname." ".$socket);
+        dd($servername." ".$username." ".$password." ".$dbname." ".$socket);
 
         // try {
         //     // $conn = new PDO("mysql:host=$servername;dbname=$dbname;unix_socket=$socket", $username, $password);
