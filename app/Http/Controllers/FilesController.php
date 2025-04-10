@@ -2679,13 +2679,15 @@ class FilesController extends Controller
 
     public function assignEngineer(Request $request){
 
+        dd($request->all());
+
         // if(!Auth::user()->is_admin()){
         //     return abort(404);
         // }
     
         $file = File::findOrFail($request->file_id);
 
-        dd($file);
+        // dd($file);
 
         $assign = new EngineerAssignmentLog();
         $assign->assigned_from = User::findOrFail($file->assigned_to)->name;
