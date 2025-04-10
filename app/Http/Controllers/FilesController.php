@@ -2685,6 +2685,8 @@ class FilesController extends Controller
     
         $file = File::findOrFail($request->file_id);
 
+        dd($file);
+
         $assign = new EngineerAssignmentLog();
         $assign->assigned_from = User::findOrFail($file->assigned_to)->name;
         $assign->assigned_to = User::findOrFail($request->assigned_to)->name;
