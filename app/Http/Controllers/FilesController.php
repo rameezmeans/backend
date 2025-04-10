@@ -2690,7 +2690,13 @@ class FilesController extends Controller
         // dd($file);
 
         $assign = new EngineerAssignmentLog();
-        $assign->assigned_from = User::findOrFail($file->assigned_to)->name;
+        if($file->assigned_to){
+            $assign->assigned_from = User::findOrFail($file->assigned_to)->name;
+        }
+        else{
+            $assign->assigned_from = "None";
+        }
+        
         $assign->assigned_to = User::findOrFail($request->assigned_to)->name;
         $assign->assigned_by = Auth::user()->name;
         $assign->file_id = $file->id;
@@ -2705,7 +2711,7 @@ class FilesController extends Controller
 
         $engineer = User::findOrFail($request->assigned_to);
 
-        dd($engineer);
+        // dd($engineer);
 
         $customer = User::findOrFail($file->user_id);
         
