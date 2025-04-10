@@ -2704,6 +2704,9 @@ class FilesController extends Controller
         
 
         $engineer = User::findOrFail($request->assigned_to);
+
+        dd($engineer);
+        
         $customer = User::findOrFail($file->user_id);
         
         //    $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
