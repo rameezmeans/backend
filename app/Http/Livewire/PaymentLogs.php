@@ -21,8 +21,12 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 
 class PaymentLogs extends DataTableComponent
 {
+    protected $model = Credit::class;
 
-    protected $model = Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0);
+    public function builder(): Builder
+    {
+        return Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0);
+    }
 
     public function configure(): void
     {
