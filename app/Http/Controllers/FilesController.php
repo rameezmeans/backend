@@ -415,9 +415,18 @@ class FilesController extends Controller
             $ofile->save();
         }
         $this->changeStatusLog($file, 'closed', 'support_status', 'Chat reply was sent from engineer.');
-        $this->changeStatusLog($file, 'completed', 'status', 'Chat reply was sent from engineer on request file.');
+        
         $file->support_status = "closed";
-        $file->status = "completed";
+
+        if($file->rejected){
+            $file->rejected = 1;
+            $this->changeStatusLog($file, 'rejected', 'status', 'Chat reply was sent from engineer on request file.');
+        }
+        else{
+            $file->status = "completed";
+            $this->changeStatusLog($file, 'completed', 'status', 'Chat reply was sent from engineer on request file.');
+        }
+
         $file->save();
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
