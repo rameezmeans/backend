@@ -145,7 +145,7 @@ class LogsController extends Controller
     public function elorusLogs(){   
 
         $elorusLogs = ModelLog::orderBy('created_at', 'desc')
-        ->where('request_type', 'elorus')->get();
+        ->where('request_type', 'elorus')->limit(2000)->get();
         
         return view('logs.elorus_logs', [
             'elorusLogs' => $elorusLogs,
