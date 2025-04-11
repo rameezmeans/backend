@@ -127,9 +127,20 @@ Route::get('/autotuner', function () {
 
 Route::get('/tasks', function () {
 
-    $credits = Credit::whereDate('created_at', '2025-01-17')->where('credits', '>', 0)->toSql();
+    $files = File::all();
 
-    dd($credits);
+    foreach($files as $file){
+        if($file->status == 'rejected'){
+            $file->rejected = 1;
+            $file->save();
+        }
+    }
+
+    dd('done');
+
+    // $credits = Credit::whereDate('created_at', '2025-01-17')->where('credits', '>', 0)->toSql();
+
+    // dd($credits);
     
 
     dd('report');
