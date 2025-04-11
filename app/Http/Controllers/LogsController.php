@@ -29,6 +29,8 @@ class LogsController extends Controller
         $alientechLogs = ModelLog::orderBy('created_at', 'desc')
         ->where('request_type', 'alientech')->limit(1000);
 
+        dd($alientechLogs);
+
         return view('logs.alientech_logs', [
             'alientechLogs' => $alientechLogs,
             
