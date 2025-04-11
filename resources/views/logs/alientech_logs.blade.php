@@ -57,7 +57,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $alientechLogs->links() }}
+                        {{-- {{ $alientechLogs->links() }} --}}
                     </div>
                 </div>
             </div>

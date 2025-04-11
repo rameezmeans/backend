@@ -27,7 +27,7 @@ class LogsController extends Controller
 	 public function alientechLogs(){   
 
         $alientechLogs = ModelLog::orderBy('created_at', 'desc')
-        ->where('request_type', 'alientech')->paginate(10);
+        ->where('request_type', 'alientech')->limit(1000);
 
         return view('logs.alientech_logs', [
             'alientechLogs' => $alientechLogs,
