@@ -49,10 +49,16 @@ class PaymentLogs extends LivewireDatatable
             ->searchable(),
 
             Column::callback(['user_id', 'front_end_id'], function($userId,$frontEndID){
-               
-                    return code_to_country(User::findOrFail($userId)->country);
-                
-            })->label('Country'),
+                if($frontEndID == 1){
+                    return '<span class="label bg-primary text-white">'.code_to_country(User::findOrFail($userId)->country).'</span>';
+                }
+                else if($frontEndID == 3){
+                    return '<span class="label bg-info text-white">'.code_to_country(User::findOrFail($userId)->country).'</span>';
+                }
+                else if($frontEndID == 2){
+                    return '<span class="label bg-warning">'.code_to_country(User::findOrFail($userId)->country).'</span>';
+                }
+            })->label('Country')->sortable(),
 
             Column::callback(['type'], function($type){
                 if($type != ''){
