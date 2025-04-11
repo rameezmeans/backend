@@ -169,7 +169,7 @@ class LogsController extends Controller
     public function smsLogs(){   
 
         $smsLogs = ModelLog::orderBy('created_at', 'desc')
-        ->where('request_type', 'sms')->get();
+        ->where('request_type', 'sms')->limit(2000)->get();
         
         return view('logs.sms_logs', [
             'smsLogs' => $smsLogs,
@@ -181,7 +181,7 @@ class LogsController extends Controller
     public function emailLogs(){   
 
         $emailLogs = ModelLog::orderBy('created_at', 'desc')
-        ->where('request_type', 'email')->get();
+        ->where('request_type', 'email')->limit(2000)->get();
         
         return view('logs.email_logs', [
             'emailLogs' => $emailLogs,
