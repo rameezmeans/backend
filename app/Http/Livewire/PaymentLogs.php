@@ -15,25 +15,33 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\DateColumn;
-use Mediconesystems\LivewireDatatables\NumberColumn;
+use Rappasoft\LaravelLivewireTables\DataTableComponent;
+use Rappasoft\LaravelLivewireTables\Views\Column;
+// use Rappasoft\LaravelLivewireTables\Views\NumberColumn;
 
-class PaymentLogs extends LivewireDatatable
+class PaymentLogs extends DataTableComponent
 {
-    public function builder()
-    {
-        $allPayments = Credit::where('credits', '>', 0)->where('price_payed', '>', 0);
 
-        return $allPayments;
+    protected $model = Credit::where('credits', '>', 0)->where('price_payed', '>', 0);
+
+    public function configure(): void
+    {
+        $this->setPrimaryKey('id');
     }
 
-    public function columns()
+    // public function builder()
+    // {
+    //     $allPayments = Credit::where('credits', '>', 0)->where('price_payed', '>', 0);
+
+    //     return $allPayments;
+    // }
+
+    public function columns() : array
     {
         return [
 
-            NumberColumn::name('id')->label('Payment ID'),
-            Column::name('invoice_id')->label('Invoice ID')->searchable(),
+            Column::make('id')->label('Payment ID'),
+            Column::make('invoice_id')->label('Invoice ID')->searchable(),
             Column::callback(['front_end_id'], function($frontEndID){
                 if($frontEndID == 1){
                     return '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
@@ -71,14 +79,14 @@ class PaymentLogs extends LivewireDatatable
                     
             })->label('Type'),
 
-            DatetimeColumn::name('created_at')
+            DatetimeColumn::make('created_at')
                 ->label('Payment Date')->sortable()->format('d/m/Y h:i A')->filterable(),
             
             
-            Column::name('customer')->label('Customer')->searchable(),
-            Column::name('email')->label('Email')->searchable(),
-            Column::name('group')->label('Group')->searchable(),
-            Column::name('credits')->label('Credits'),
+            Column::make('customer')->label('Customer')->searchable(),
+            Column::make('email')->label('Email')->searchable(),
+            Column::make('group')->label('Group')->searchable(),
+            Column::make('credits')->label('Credits'),
             Column::callback(['price_payed'], function($pricePayed){
                 
                 return '$'.$pricePayed;
