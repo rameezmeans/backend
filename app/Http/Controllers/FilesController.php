@@ -420,6 +420,7 @@ class FilesController extends Controller
 
         if($file->rejected){
             $file->rejected = 1;
+            $file->status = "rejected";
             $this->changeStatusLog($file, 'rejected', 'status', 'Chat reply was sent from engineer on request file.');
         }
         else{
