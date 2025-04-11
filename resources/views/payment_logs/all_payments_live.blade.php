@@ -18,9 +18,6 @@
     display: none;
 }
 
-.hidden {
-    display: flex !important;
-}
   
 </style>
 @endsection
