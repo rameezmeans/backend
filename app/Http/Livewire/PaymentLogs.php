@@ -128,19 +128,19 @@ class PaymentLogs extends DataTableComponent
     public function filters(): array
     {
         return [
-            SelectFilter::make('Frontend')
-                ->options([
+            // SelectFilter::make('Frontend')
+            //     ->options([
     
-                    Frontend::query()
+            //         Frontend::query()
                         
-                        ->get()
+            //             ->get()
                         
-                        ->map(fn ($frontend) => $frontend->pluck('name', 'id')->filter())
-                        ->toArray(),
-                ])
-                ->filter(function(Builder $builder, string $value) {
-                    $builder->where('frontend.id', $value);
-                }),
+            //             ->map(fn ($frontend) => $frontend->pluck('name', 'id')->filter())
+            //             ->toArray(),
+            //     ])
+            //     ->filter(function(Builder $builder, string $value) {
+            //         $builder->where('frontend.id', $value);
+            //     }),
         ];
     }
 }
