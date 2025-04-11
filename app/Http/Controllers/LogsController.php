@@ -191,7 +191,7 @@ class LogsController extends Controller
     }
 
     public function index(){   
-        $logs = ModelLog::orderBy('created_at', 'desc')->get();
+        $logs = ModelLog::orderBy('created_at', 'desc')->limit(2000)->get();
         return view('logs.logs', ['logs' => $logs]);
        
     }
