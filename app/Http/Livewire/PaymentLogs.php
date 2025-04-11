@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Http;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\DateColumn;
+use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
+
 // use Rappasoft\LaravelLivewireTables\Views\NumberColumn;
 
 class PaymentLogs extends DataTableComponent
@@ -50,17 +52,27 @@ class PaymentLogs extends DataTableComponent
 
             Column::make('Payment ID', 'id'),
             Column::make('Invoice ID', 'invoice_id'),
-            Column::callback(['front_end_id'], function($frontEndID){
-                if($frontEndID == 1){
-                    return '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
-                }
-                if($frontEndID == 3){
-                    return '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
-                }
-                else{
-                    return '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
-                }
-            }),
+
+            MultiSelectFilter::make('Tags')
+                ->options(
+                    FrontEnd::query()
+                        ->orderBy('name')
+                        ->get()
+                        ->keyBy('id')
+                        ->map(fn($frontend) => $frontend->name)
+                        ->toArray()
+                )
+            // Column::callback(['front_end_id'], function($frontEndID){
+            //     if($frontEndID == 1){
+            //         return '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+            //     }
+            //     if($frontEndID == 3){
+            //         return '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+            //     }
+            //     else{
+            //         return '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+            //     }
+            // }),
             
 
             // Column::callback(['user_id', 'front_end_id'], function($userId,$frontEndID){
