@@ -54,7 +54,7 @@ class PaymentLogs extends DataTableComponent
             Column::make('Payment ID', 'id'),
             Column::make('Invoice ID', 'invoice_id'),
 
-            Column::make('Frontend', 'frontend'),
+            Column::make('Frontend', 'front_end_id'),
                 
             // Column::callback(['front_end_id'], function($frontEndID){
             //     if($frontEndID == 1){
