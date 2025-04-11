@@ -18,6 +18,9 @@
     display: none;
 }
 
+.text-white {
+  color: black !important;
+}
   
 </style>
 @endsection
