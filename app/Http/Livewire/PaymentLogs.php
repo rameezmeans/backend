@@ -22,6 +22,7 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\DateColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\MultiSelectFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 // use Rappasoft\LaravelLivewireTables\Views\NumberColumn;
 
@@ -53,15 +54,8 @@ class PaymentLogs extends DataTableComponent
             Column::make('Payment ID', 'id'),
             Column::make('Invoice ID', 'invoice_id'),
 
-            MultiSelectFilter::make('Frontend')
-                ->options(
-                    FrontEnd::query()
-                        ->orderBy('name')
-                        ->get()
-                        ->keyBy('id')
-                        ->map(fn($frontend) => $frontend->name)
-                        ->toArray()
-                )
+            Column::make('Frontend', 'frontend'),
+                
             // Column::callback(['front_end_id'], function($frontEndID){
             //     if($frontEndID == 1){
             //         return '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
@@ -128,6 +122,25 @@ class PaymentLogs extends DataTableComponent
             //     }
                     
             // })->label('Zohobooks'),
+        ];
+    }
+
+    public function filters(): array
+    {
+        return [
+            SelectFilter::make('Frontend')
+                ->options([
+    
+                    Frontend::query()
+                        
+                        ->get()
+                        
+                        ->map(fn ($frontend) => $frontend->pluck('name', 'id')->filter())
+                        ->toArray(),
+                ])
+                ->filter(function(Builder $builder, string $value) {
+                    $builder->where('frontend.id', $value);
+                }),
         ];
     }
 }
