@@ -139,7 +139,7 @@ class PaymentLogs extends DataTableComponent
                         ->toArray(),
                 ])
                 ->filter(function(Builder $builder, string $value) {
-                    $builder->where('frontend.id', $value);
+                    $builder->where('front_end_id', $value);
                 }),
         ];
     }
