@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Rappasoft\LaravelLivewireTables\Views\DateColumn;
 // use Rappasoft\LaravelLivewireTables\Views\NumberColumn;
 
 class PaymentLogs extends DataTableComponent
@@ -47,76 +48,75 @@ class PaymentLogs extends DataTableComponent
     {
         return [
 
-            Column::make('id')->label('Payment ID'),
-            Column::make('invoice_id')->label('Invoice ID')->searchable(),
-            Column::callback(['front_end_id'], function($frontEndID){
-                if($frontEndID == 1){
-                    return '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
-                }
-                if($frontEndID == 3){
-                    return '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
-                }
-                else{
-                    return '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
-                }
-            })->label('Front End')
-            ->filterable(FrontEnd::get(['id', 'name']))
-            ->searchable(),
+            Column::make('Payment ID', 'id'),
+            Column::make('Invoice ID', 'invoice_id'),
+            // Column::callback(['front_end_id'], function($frontEndID){
+            //     if($frontEndID == 1){
+            //         return '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+            //     }
+            //     if($frontEndID == 3){
+            //         return '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+            //     }
+            //     else{
+            //         return '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+            //     }
+            // })->label('Front End')
+            // ->filterable(FrontEnd::get(['id', 'name']))
+            // ->searchable(),
 
-            Column::callback(['user_id', 'front_end_id'], function($userId,$frontEndID){
-                // if($frontEndID == 1){
-                    // return '<span class="label bg-primary text-white">'.code_to_country(User::findOrFail($userId)->country).'</span>';
-                    return code_to_country(User::findOrFail($userId)->country);
-                // }
-                // else if($frontEndID == 3){
-                //     return '<span class="label bg-info text-white">'.code_to_country(User::findOrFail($userId)->country).'</span>';
-                // }
-                // else if($frontEndID == 2){
-                //     return '<span class="label bg-warning">'.code_to_country(User::findOrFail($userId)->country).'</span>';
-                // }
-            })->label('Country')->sortable(),
+            // Column::callback(['user_id', 'front_end_id'], function($userId,$frontEndID){
+            //     // if($frontEndID == 1){
+            //         // return '<span class="label bg-primary text-white">'.code_to_country(User::findOrFail($userId)->country).'</span>';
+            //         return code_to_country(User::findOrFail($userId)->country);
+            //     // }
+            //     // else if($frontEndID == 3){
+            //     //     return '<span class="label bg-info text-white">'.code_to_country(User::findOrFail($userId)->country).'</span>';
+            //     // }
+            //     // else if($frontEndID == 2){
+            //     //     return '<span class="label bg-warning">'.code_to_country(User::findOrFail($userId)->country).'</span>';
+            //     // }
+            // })->label('Country')->sortable(),
 
-            Column::callback(['type'], function($type){
-                if($type != ''){
-                    return ucfirst($type);
-                }
-                else{
-                    return "Admin";
-                }
+            // Column::callback(['type'], function($type){
+            //     if($type != ''){
+            //         return ucfirst($type);
+            //     }
+            //     else{
+            //         return "Admin";
+            //     }
                     
-            })->label('Type'),
+            // })->label('Type'),
 
-            DatetimeColumn::make('created_at')
-                ->label('Payment Date')->sortable()->format('d/m/Y h:i A')->filterable(),
+            // DateColumn::make('Payment Date', 'created_at'),
             
             
-            Column::make('customer')->label('Customer')->searchable(),
-            Column::make('email')->label('Email')->searchable(),
-            Column::make('group')->label('Group')->searchable(),
-            Column::make('credits')->label('Credits'),
-            Column::callback(['price_payed'], function($pricePayed){
+            // Column::make('customer')->label('Customer')->searchable(),
+            // Column::make('email')->label('Email')->searchable(),
+            // Column::make('group')->label('Group')->searchable(),
+            // Column::make('credits')->label('Credits'),
+            // Column::callback(['price_payed'], function($pricePayed){
                 
-                return '$'.$pricePayed;
+            //     return '$'.$pricePayed;
                     
-            })->label('Price'),
+            // })->label('Price'),
 
-            Column::callback(['id','group'], function($id){
+            // Column::callback(['id','group'], function($id){
                 
-                return '<a class="btn btn-warning text-black" target="_blank" href="'.route("payment-details", $id).'">Payment Details</a>';
+            //     return '<a class="btn btn-warning text-black" target="_blank" href="'.route("payment-details", $id).'">Payment Details</a>';
                     
-            })->label('Details'),
-            Column::callback(['elorus_permalink'], function($elorusPermalink){
-                if($elorusPermalink){
-                    return '<a class="btn btn-warning text-black" target="_blank" href="'.$elorusPermalink.'">Go To Elorus</a>';
-                }
+            // })->label('Details'),
+            // Column::callback(['elorus_permalink'], function($elorusPermalink){
+            //     if($elorusPermalink){
+            //         return '<a class="btn btn-warning text-black" target="_blank" href="'.$elorusPermalink.'">Go To Elorus</a>';
+            //     }
                     
-            })->label('Elorus'),
-            Column::callback(['zohobooks_id'], function($zohobooksID){
-                if($zohobooksID){
-                    return '<a class="btn btn-warning text-black" target="_blank" href="'.'https://books.zoho.com/app/8745725#/invoices/'.$zohobooksID.'">Go To Zohobooks</a>';
-                }
+            // })->label('Elorus'),
+            // Column::callback(['zohobooks_id'], function($zohobooksID){
+            //     if($zohobooksID){
+            //         return '<a class="btn btn-warning text-black" target="_blank" href="'.'https://books.zoho.com/app/8745725#/invoices/'.$zohobooksID.'">Go To Zohobooks</a>';
+            //     }
                     
-            })->label('Zohobooks'),
+            // })->label('Zohobooks'),
         ];
     }
 }
