@@ -3013,7 +3013,7 @@ class FilesController extends Controller
 
         if($request->status == 'rejected'){
             
-            if($file->reason_to_reject == NULL){
+            if($file->rejected == 0){
 
                 $credit = new Credit();
                 $credit->credits = $file->credits;
@@ -3038,6 +3038,8 @@ class FilesController extends Controller
                     $credit->message_to_credit = 'File Canceled!';
                     $file->reason_to_reject = 'File Canceled!';
                 }
+
+                $file->rejected = 1;
 
                 $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
                 $credit->save();
