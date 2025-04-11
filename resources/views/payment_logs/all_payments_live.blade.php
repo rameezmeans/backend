@@ -18,7 +18,7 @@
     display: none;
 }
 
-.text-white {
+dark:text-white {
   color: black !important;
 }
   
