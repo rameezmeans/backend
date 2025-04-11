@@ -18,7 +18,7 @@
     display: none;
 }
 
-dark:text-white {
+.dark\:text-white  {
   color: black !important;
 }
   
