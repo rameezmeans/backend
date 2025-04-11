@@ -53,7 +53,7 @@ class PaymentLogs extends DataTableComponent
             Column::make('Payment ID', 'id'),
             Column::make('Invoice ID', 'invoice_id'),
 
-            MultiSelectFilter::make('Tags')
+            MultiSelectFilter::make('Frontend')
                 ->options(
                     FrontEnd::query()
                         ->orderBy('name')

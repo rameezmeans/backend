@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('pagespecificstyles')
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+{{-- <script src="https://cdn.tailwindcss.com"></script> --}}
+{{-- <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script> --}}
 <style>
   
   .flex {
@@ -23,7 +23,6 @@
 }
   
 </style>
-@endsection
 
 <!-- Adds the Core Table Styles -->
 @rappasoftTableStyles
@@ -36,6 +35,10 @@
  
 <!-- Adds any relevant Third-Party Scripts (e.g. Flatpickr) -->
 @rappasoftTableThirdPartyScripts
+
+@endsection
+
+
 
 @section('content')
 <div class="page-content-wrapper ">
