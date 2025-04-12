@@ -106,6 +106,7 @@
           columns: [
 
               {data: 'id', name: 'Payment ID'},
+              {data: 'invoice_id', name: 'Invoice ID'},
 
           ]
 
