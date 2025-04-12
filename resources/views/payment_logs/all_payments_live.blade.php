@@ -25,9 +25,9 @@
 </style>
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
-    @livewireScripts
-    @stack('scripts')
+@livewireStyles
+@livewireScripts
+@stack('scripts')
 
 @endsection
 
@@ -58,9 +58,7 @@
             </div>
             <div class="card-body">
 
-                <livewire:payment-logs 
-                    
-                />
+              {{ $this->table }}
 
             </div>
           </div>
