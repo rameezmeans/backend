@@ -108,9 +108,11 @@
 
           serverSide: true,
 
+          order: [[1,'desc']],
+
           ajax: {
               url: "{{ route('payment-table') }}",
-              type: 'GET'
+              type: 'POST'
           },
 
           
