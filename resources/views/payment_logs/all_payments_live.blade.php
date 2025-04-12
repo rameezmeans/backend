@@ -105,21 +105,14 @@
       var table = $('.data-table').DataTable({
 
           processing: true,
-
           serverSide: true,
-
+          order: [[0,'desc']],
           ajax: {
               url: "{{ route('payment-table') }}",
               type: 'POST'
           },
-
-          
-
           columns: [
-
               {data: 'id', name: 'id'},
-              
-
           ]
 
       });
