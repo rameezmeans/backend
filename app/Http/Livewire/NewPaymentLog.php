@@ -9,14 +9,14 @@ use Illuminate\Database\Eloquent\Builder;
 
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 
 class NewPaymentLog extends Component
 {
-
-    use Tables\Concerns\InteractsWithTable;
-
+    use InteractsWithTable;
+    
     public function render()
     {
         return view('livewire.new-payment-log');
@@ -32,7 +32,7 @@ class NewPaymentLog extends Component
         return $table
         ->query(Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0))
         ->columns([
-           
+            TextColumn::make('id'),
         ]);
     }
 }
