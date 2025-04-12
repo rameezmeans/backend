@@ -116,7 +116,7 @@
               {data: 'invoice_id', name: 'invoice_id'},
               {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
               {data: 'country', name: 'country'},
-              {data: 'type', name: 'type', orderable: false, searchable: false},
+              {data: 'type', name: 'type'},
               {
                 data: 'created_at',
                 type: 'num',
