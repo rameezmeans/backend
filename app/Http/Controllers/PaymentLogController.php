@@ -115,7 +115,7 @@ class PaymentLogController extends Controller
 
         })
 
-        ->rawColumns(['frontend'])
+        
         ->addColumn('country', function($row){
 
             $frontEndID = $row->front_end_id;
@@ -135,7 +135,7 @@ class PaymentLogController extends Controller
 
     })
 
-    ->rawColumns(['country'])
+    ->rawColumns(['frontend','country'])
         ->make(true);
     }
 
