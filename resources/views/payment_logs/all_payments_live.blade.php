@@ -58,9 +58,7 @@
             </div>
             <div class="card-body">
 
-                {{-- <livewire:payment-logs 
-                    
-                /> --}}
+                
 
             </div>
           </div>
