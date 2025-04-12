@@ -100,8 +100,11 @@
           processing: true,
 
           serverSide: true,
-
-          ajax: "{{ route('payment-table') }}",
+          
+          ajax: {
+              url: "{{ route('payment-table') }}",
+              type: 'POST'
+          },
 
           columns: [
 
