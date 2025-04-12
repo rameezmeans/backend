@@ -110,7 +110,7 @@
 
           ajax: {
               url: "{{ route('payment-table') }}",
-              type: 'POST'
+              type: 'GET'
           },
 
           
