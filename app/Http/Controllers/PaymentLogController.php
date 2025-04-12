@@ -92,7 +92,7 @@ class PaymentLogController extends Controller
 
     public function paymentsTable(Request $request){
             
-            $data = Credit::where('credits', '>', 0)->where('price_payed', '>', 0);
+            $data = Credit::where('credits', '>', 0)->where('price_payed', '>', 0)->get();
             
             return DataTables::of($data)
             ->addIndexColumn()->make(true);
