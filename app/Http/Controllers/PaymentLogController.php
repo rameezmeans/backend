@@ -116,6 +116,26 @@ class PaymentLogController extends Controller
         })
 
         ->rawColumns(['frontend'])
+        ->addColumn('country', function($row){
+
+            $frontEndID = $row->front_end_id;
+            $userId = $row->user_id;
+
+            if($frontEndID == 1){
+                $btn = '<span class="label bg-primary text-white">'.code_to_country(User::findOrFail($userId)->country).'</span>';
+            }
+            else if($frontEndID == 2){
+                $btn = '<span class="label bg-warning">'.code_to_country(User::findOrFail($userId)->country).'</span>';
+            }
+            else if($frontEndID == 3){
+                $btn = '<span class="label bg-info text-white">'.code_to_country(User::findOrFail($userId)->country).'</span>';
+            }
+
+            return $btn;
+
+    })
+
+    ->rawColumns(['country'])
         ->make(true);
     }
 
