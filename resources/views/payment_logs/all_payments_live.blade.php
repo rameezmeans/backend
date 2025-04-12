@@ -58,7 +58,9 @@
             </div>
             <div class="card-body">
 
-              {{ $this->table }}
+                <livewire:payment-logs 
+                    
+                />
 
             </div>
           </div>
