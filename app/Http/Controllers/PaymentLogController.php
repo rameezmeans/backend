@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Credit;
+use App\Models\FrontEnd;
 use App\Models\PaymentLog;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -95,7 +96,27 @@ class PaymentLogController extends Controller
             $data = Credit::select('*')->where('credits', '>', 0)->where('price_payed', '>', 0);
             
             return DataTables::of($data)
-            ->addIndexColumn()->make(true);
+            ->addIndexColumn()
+            ->addColumn('frontend', function($row){
+
+                $frontEndID = $row->front_end_id;
+
+                if($frontEndID == 1){
+                    $btn = '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+                else if($frontEndID == 2){
+                    $btn = '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+                else if($frontEndID == 3){
+                    $btn = '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+                
+                return $btn;
+
+        })
+
+        ->rawColumns(['frontend'])
+            ->make(true);
     }
 
     public function allPayments(){

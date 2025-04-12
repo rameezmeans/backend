@@ -66,7 +66,8 @@
         
                         <th>Payment ID</th>
                         <th>Invoice ID</th>
-                        
+                        <th>Frontend</th>
+
                     </tr>
         
                 </thead>
@@ -110,6 +111,7 @@
           columns: [
               {data: 'id', name: 'id'},
               {data: 'invoice_id', name: 'invoice_id'},
+              {data: 'frontend', name: 'frontend'},
           ]
 
       });
