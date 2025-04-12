@@ -68,6 +68,7 @@
                         <th>Invoice ID</th>
                         <th>Frontend</th>
                         <th>Country</th>
+                        <th>Payment Date</th>
 
                     </tr>
         
@@ -114,6 +115,14 @@
               {data: 'invoice_id', name: 'invoice_id'},
               {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
               {data: 'country', name: 'country'},
+              {
+                data: 'created_at',
+                type: 'num',
+                render: {
+                    _: 'display',
+                    sort: 'timestamp'
+                }
+              },
           ]
 
       });

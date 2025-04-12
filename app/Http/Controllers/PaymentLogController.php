@@ -135,9 +135,25 @@ class PaymentLogController extends Controller
 
             return $btn;
 
-    })
+        })
 
-    ->rawColumns(['frontend','country'])
+        ->addColumn('type', function($row){
+
+            $type = ucfirst($row->type);
+            return $type;
+
+        })
+        ->editColumn('created_at', function ($user) {
+            return [
+                'display' => e($user->created_at->format('d-m-Y')),
+                'timestamp' => $user->created_at->timestamp
+            ];
+        })
+        ->filterColumn('created_at', function ($query, $keyword) {
+            $query->whereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') LIKE ?", ["%$keyword%"]);
+        })
+
+        ->rawColumns(['frontend','country','type'])
         ->make(true);
     }
 
