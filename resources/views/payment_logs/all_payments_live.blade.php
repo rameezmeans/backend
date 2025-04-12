@@ -108,7 +108,7 @@
 
           serverSide: true,
 
-          order: [[1,'desc']],
+          order: [[0,'desc']],
 
           ajax: {
               url: "{{ route('payment-table') }}",
