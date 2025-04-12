@@ -64,7 +64,7 @@
         
                     <tr>
         
-                        <th>Payment ID</th>
+                        <th>id</th>
         
                        
         
@@ -117,7 +117,7 @@
 
           columns: [
 
-              {data: 'id', name: 'Payment ID'},
+              {data: 'id', name: 'id'},
               
 
           ]
