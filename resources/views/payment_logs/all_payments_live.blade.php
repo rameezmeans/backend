@@ -66,7 +66,7 @@
         
                         <th>Payment ID</th>
         
-                        <th>Invoice IC</th>
+                        <th>Invoice ID</th>
         
                         
         
