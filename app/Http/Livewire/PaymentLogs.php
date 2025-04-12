@@ -27,6 +27,8 @@ use Illuminate\Support\Facades\Http;
 // use Rappasoft\LaravelLivewireTables\Views\NumberColumn;
 
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
@@ -43,6 +45,15 @@ class PaymentLogs extends Component implements Tables\Contracts\HasTable
     public function render(): View
     {
         return view('payment_logs.all_payments_live');
+    }
+
+    public function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('id'),
+                
+            ]);
     }
 
     // protected $model = Credit::class;
