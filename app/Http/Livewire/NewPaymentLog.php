@@ -23,17 +23,15 @@ class NewPaymentLog extends Component implements HasTable
         return view('livewire.new-payment-log');
     }
 
-    // protected function getTableQuery(): Builder
-    // {
-    //     return Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0);
-    // }
-
-    public function table(Table $table): Table
+    protected function getTableQuery(): Builder
     {
-        return $table
-        ->query(Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0))
-        ->columns([
-            
-        ]);
+        return Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0);
+    }
+
+    protected function getTableColumns(): array
+    {
+        return [
+            Tables\Columns\TextColumn::make('id'),
+        ];
     }
 }
