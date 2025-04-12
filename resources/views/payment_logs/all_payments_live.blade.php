@@ -64,7 +64,7 @@
         
                     <tr>
         
-                        <th>id</th>
+                        <th>Payment ID</th>
         
                        
         
