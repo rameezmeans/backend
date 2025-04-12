@@ -113,7 +113,7 @@
               {data: 'id', name: 'id'},
               {data: 'invoice_id', name: 'invoice_id'},
               {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
-              {data: 'country', name: 'country', orderable: false, searchable: false},
+              {data: 'country', name: 'country'},
           ]
 
       });
