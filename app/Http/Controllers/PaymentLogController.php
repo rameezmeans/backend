@@ -136,13 +136,7 @@ class PaymentLogController extends Controller
             return $btn;
 
         })
-
-        ->addColumn('type', function($row){
-
-            $type = ucfirst($row->type);
-            return $type;
-
-        })
+        
         ->editColumn('created_at', function ($user) {
             return [
                 'display' => e($user->created_at->format('d-m-Y')),
