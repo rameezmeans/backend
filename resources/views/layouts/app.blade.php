@@ -305,5 +305,5 @@
    <!-- END PAGE LEVEL JS -->
    @yield('pagespecificscripts')
  </body>
- @livewireScripts
+ {{-- @livewireScripts --}}
 </html>
