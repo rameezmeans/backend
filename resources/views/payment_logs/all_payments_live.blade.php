@@ -108,8 +108,6 @@
 
           serverSide: true,
 
-          order: [[0,'asc']],
-
           ajax: {
               url: "{{ route('payment-table') }}",
               type: 'POST'
