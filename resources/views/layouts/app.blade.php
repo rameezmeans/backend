@@ -44,17 +44,9 @@
     {{-- <link class="main-stylesheet" href="{{ url('pages/css/style.css') }}" rel="stylesheet" type="text/css" /> --}}
     {{-- @vite('resources/js/push.js', 'node_modules/push.js/bin/push.min.js') --}}
     <script type="text/javascript" src="{{ url('assets/plugins/pushjs/push.min.js') }}"></script>
-    @livewireStyles
-    <style>
-       [x-cloak] {
-          display: none;
-      }
-      h3 {
-        font-size: 27px !important
-      }
-    </style>
     
-    <style>[x-cloak] { display: none !important; }</style>
+    
+    
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles

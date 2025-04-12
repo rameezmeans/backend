@@ -24,6 +24,8 @@
   
 </style>
 
+<style>[x-cloak] { display: none !important; }</style>
+
 @endsection
 
 
