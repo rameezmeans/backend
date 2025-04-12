@@ -51,7 +51,7 @@ class PaymentLogs extends Component implements Tables\Contracts\HasTable
     {
         return $table
             ->columns([
-                TextColumn::make('id'),
+                TextColumn::make('id')->label('Payment ID')->sortable(),
                 
             ]);
     }

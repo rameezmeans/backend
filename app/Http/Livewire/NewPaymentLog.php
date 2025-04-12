@@ -25,13 +25,14 @@ class NewPaymentLog extends Component implements HasTable
 
     protected function getTableQuery(): Builder
     {
-        return Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0);
+        return Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0)->orderBy('created_at', 'asc');
     }
 
     protected function getTableColumns(): array
     {
         return [
-            Tables\Columns\TextColumn::make('id'),
+            Tables\Columns\TextColumn::make('id')->label('Payment ID')->sortable(),
+            Tables\Columns\TextColumn::make('invoice_id')->label('Invoice ID')->sortable(),,
         ];
     }
 }
