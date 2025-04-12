@@ -11,6 +11,7 @@ use App\Http\Controllers\PaymentAccountsController;
 use App\Http\Controllers\ReminderManagerController;
 use App\Http\Controllers\SubdealerGroupsController;
 use App\Http\Controllers\WhatsappController;
+use App\Http\Livewire\NewPaymentLog;
 use App\Models\Comment;
 use App\Models\CommentFileService;
 use App\Models\Credit;
@@ -895,7 +896,8 @@ Route::get('/payment_logs/{id}', [App\Http\Controllers\PaymentLogController::cla
 Route::get('/payments/{id}', [App\Http\Controllers\PaymentLogController::class, 'payments'])->name('payments');
 Route::get('/all_payment_logs', [App\Http\Controllers\PaymentLogController::class, 'allPaymentLogs'])->name('all-payment-logs');
 Route::get('/all_payments_admin', [App\Http\Controllers\PaymentLogController::class, 'allPaymentsAdmin'])->name('all-payments-admin');
-Route::get('/all_payments', [App\Http\Controllers\PaymentLogController::class, 'allPayments'])->name('all-payments');
+// Route::get('/all_payments', [App\Http\Controllers\PaymentLogController::class, 'allPayments'])->name('all-payments');
+Route::get('/all_payments', NewPaymentLog::class)->name('all-payments');
 Route::get('/payment_details/{id}', [App\Http\Controllers\PaymentLogController::class, 'paymentDetails'])->name('payment-details');
 
 Route::get('/processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'index'])->name('processing-softwares');
