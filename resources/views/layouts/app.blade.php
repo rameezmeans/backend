@@ -58,8 +58,8 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    
-    @stack('scripts')
+    {{-- @livewireScripts --}}
+   
     
     @yield('pagespecificstyles')
   </head>
@@ -305,5 +305,6 @@
    <!-- END PAGE LEVEL JS -->
    @yield('pagespecificscripts')
  </body>
- {{-- @livewireScripts --}}
+ @livewireScripts
+ @stack('scripts')
 </html>

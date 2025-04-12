@@ -71,7 +71,7 @@
 
 @section('pagespecificscripts')
 
-@livewireScripts
+{{-- @livewireScripts --}}
 
 <script type="text/javascript">
 
