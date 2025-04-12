@@ -65,12 +65,8 @@
                     <tr>
         
                         <th>Payment ID</th>
-        
-                       
-        
+                        <th>Invoice ID</th>
                         
-        
-        
                     </tr>
         
                 </thead>
@@ -113,6 +109,7 @@
           },
           columns: [
               {data: 'id', name: 'id'},
+              {data: 'invoice_id', name: 'invoice_id'},
           ]
 
       });
