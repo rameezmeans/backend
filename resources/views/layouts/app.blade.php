@@ -53,7 +53,7 @@
         font-size: 27px !important
       }
     </style>
-    <style>[x-cloak] { display: none !important; }</style>
+    
     
     @yield('pagespecificstyles')
   </head>
