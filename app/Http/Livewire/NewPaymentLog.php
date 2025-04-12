@@ -32,7 +32,7 @@ class NewPaymentLog extends Component
         return $table
         ->query(Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0))
         ->columns([
-            TextColumn::make('id'),
+           
         ]);
     }
 }
