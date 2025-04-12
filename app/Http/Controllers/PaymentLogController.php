@@ -6,6 +6,7 @@ use App\Models\Credit;
 use App\Models\PaymentLog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PaymentLogController extends Controller
 {
@@ -87,6 +88,14 @@ class PaymentLogController extends Controller
             
         ]);   
 
+    }
+
+    public function paymentsTable(Request $request){
+            
+            $data = Credit::where('credits', '>', 0)->where('price_payed', '>', 0);
+            
+            return DataTables::of($data)
+            ->addIndexColumn()->make(true);
     }
 
     public function allPayments(){

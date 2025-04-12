@@ -58,7 +58,28 @@
             </div>
             <div class="card-body">
 
-                
+              <table class="table table-bordered data-table" >
+
+                <thead>
+        
+                    <tr>
+        
+                        <th>Payment ID</th>
+        
+                        <th>Invoice IC</th>
+        
+                        
+        
+        
+                    </tr>
+        
+                </thead>
+        
+                <tbody>
+        
+                </tbody>
+        
+            </table>
 
             </div>
           </div>
@@ -72,9 +93,24 @@
 
 <script type="text/javascript">
 
-    $( document ).ready(function(event) {
-        
-       
+    $(function () {
+
+      var table = $('.data-table').DataTable({
+
+          processing: true,
+
+          serverSide: true,
+
+          ajax: "{{ route('payment-table') }}",
+
+          columns: [
+
+              {data: 'id', name: 'Payment ID'},
+
+          ]
+
+      });
+
     });
 
 </script>
