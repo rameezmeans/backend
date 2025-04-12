@@ -16,7 +16,7 @@ use Illuminate\Contracts\View\View;
 class NewPaymentLog extends Component
 {
     use InteractsWithTable;
-    
+
     public function render()
     {
         return view('livewire.new-payment-log');
@@ -32,7 +32,7 @@ class NewPaymentLog extends Component
         return $table
         ->query(Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0))
         ->columns([
-            TextColumn::make('id'),
+            
         ]);
     }
 }
