@@ -105,18 +105,18 @@ class PaymentLogController extends Controller
                     $btn = '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
                 }
                 else if($frontEndID == 2){
-                    $btn = '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
-                }
-                else if($frontEndID == 3){
                     $btn = '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
                 }
-                
+                else if($frontEndID == 3){
+                    $btn = '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+
                 return $btn;
 
         })
 
         ->rawColumns(['frontend'])
-            ->make(true);
+        ->make(true);
     }
 
     public function allPayments(){
