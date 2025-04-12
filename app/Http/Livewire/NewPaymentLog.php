@@ -25,7 +25,7 @@ class NewPaymentLog extends Component implements HasTable
 
     protected function getTableQuery(): Builder
     {
-        return Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0)->orderBy('created_at', 'asc');
+        return Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0)->orderBy('created_at', 'desc');
     }
 
     protected function getTableColumns(): array
