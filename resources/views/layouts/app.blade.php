@@ -46,11 +46,11 @@
     <script type="text/javascript" src="{{ url('assets/plugins/pushjs/push.min.js') }}"></script>
     
     
-    
+    <style>[x-cloak] { display: none !important; }</style>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    
+    @livewireScripts
     @stack('scripts')
     
     @yield('pagespecificstyles')
@@ -297,5 +297,5 @@
    <!-- END PAGE LEVEL JS -->
    @yield('pagespecificscripts')
  </body>
- @livewireScripts
+ {{-- @livewireScripts --}}
 </html>
