@@ -40,10 +40,10 @@ class PaymentLogs extends Component implements Tables\Contracts\HasTable
         return Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0);
     }
 
-    public function render(): View
-    {
-        return view('all_payments_live');
-    }
+    // public function render(): View
+    // {
+    //     return view('all_payments_live');
+    // }
 
     // protected $model = Credit::class;
 
