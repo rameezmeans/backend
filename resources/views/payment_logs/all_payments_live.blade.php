@@ -68,6 +68,7 @@
                         <th>Invoice ID</th>
                         <th>Frontend</th>
                         <th>Country</th>
+                        <th>Type</th>
                         <th>Payment Date</th>
 
                     </tr>
@@ -115,6 +116,7 @@
               {data: 'invoice_id', name: 'invoice_id'},
               {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
               {data: 'country', name: 'country'},
+              {data: 'type', name: 'type', orderable: false, searchable: false},
               {
                 data: 'created_at',
                 type: 'num',
