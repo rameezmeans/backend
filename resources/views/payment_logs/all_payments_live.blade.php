@@ -95,6 +95,13 @@
 
     $(function () {
 
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+
       var table = $('.data-table').DataTable({
 
           processing: true,
@@ -106,10 +113,7 @@
               type: 'POST'
           },
 
-          'data': function (d) {
-                d._token = $("input[name=_token]").val();
-
-            },
+          
 
           columns: [
 
