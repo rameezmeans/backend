@@ -100,11 +100,16 @@
           processing: true,
 
           serverSide: true,
-          
+
           ajax: {
               url: "{{ route('payment-table') }}",
               type: 'POST'
           },
+
+          'data': function (d) {
+                d._token = $("input[name=_token]").val();
+
+            },
 
           columns: [
 
