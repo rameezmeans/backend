@@ -14,24 +14,25 @@ use Illuminate\Contracts\View\View;
 
 class NewPaymentLog extends Component
 {
+
+    use Tables\Concerns\InteractsWithTable;
+
     public function render()
     {
         return view('livewire.new-payment-log');
     }
 
-    use Tables\Concerns\InteractsWithTable;
-
-    protected function getTableQuery(): Builder
-    {
-        return Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0);
-    }
+    // protected function getTableQuery(): Builder
+    // {
+    //     return Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0);
+    // }
 
     public function table(Table $table): Table
     {
         return $table
-            ->columns([
-                TextColumn::make('id'),
-                
-            ]);
+        ->query(Credit::query()->where('credits', '>', 0)->where('price_payed', '>', 0))
+        ->columns([
+            TextColumn::make('id'),
+        ]);
     }
 }
