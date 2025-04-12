@@ -67,6 +67,7 @@
                         <th>Payment ID</th>
                         <th>Invoice ID</th>
                         <th>Frontend</th>
+                        <th>Country</th>
 
                     </tr>
         
