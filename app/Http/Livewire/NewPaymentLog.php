@@ -35,4 +35,14 @@ class NewPaymentLog extends Component implements HasTable
             Tables\Columns\TextColumn::make('invoice_id')->label('Invoice ID')->sortable(),
         ];
     }
+
+    protected function getDefaultTableSortColumn(): ?string
+    {
+        return 'id';
+    }
+
+    protected function getDefaultTableSortDirection(): ?string
+    {
+        return 'desc';
+    }
 }
