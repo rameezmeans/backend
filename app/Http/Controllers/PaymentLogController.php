@@ -93,8 +93,8 @@ class PaymentLogController extends Controller
 
     public function paymentsTable(Request $request){
             
-            dd($request->all());
-            
+            print($request->all());
+
             $data = Credit::select('*')->where('credits', '>', 0)->where('price_payed', '>', 0);
             
             return DataTables::of($data)
