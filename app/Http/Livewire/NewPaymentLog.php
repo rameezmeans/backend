@@ -32,7 +32,7 @@ class NewPaymentLog extends Component implements HasTable
     {
         return [
             Tables\Columns\TextColumn::make('id')->label('Payment ID')->sortable(),
-            Tables\Columns\TextColumn::make('invoice_id')->label('Invoice ID')->sortable(),,
+            Tables\Columns\TextColumn::make('invoice_id')->label('Invoice ID')->sortable(),
         ];
     }
 }
