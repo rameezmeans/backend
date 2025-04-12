@@ -64,9 +64,9 @@
         
                     <tr>
         
-                        <th>Payment ID</th>
+                        <th>id</th>
         
-                        <th>Invoice ID</th>
+                       
         
                         
         
@@ -105,8 +105,8 @@
 
           columns: [
 
-              {data: 'id', name: 'Payment ID'},
-              {data: 'invoice_id', name: 'Invoice ID'},
+              {data: 'id', name: 'id'},
+              
 
           ]
 
