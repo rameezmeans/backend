@@ -44,6 +44,15 @@
             <div class="card-header ">
                 <div class="card-title">
                     <h3>All Payments</h3>
+                    <div style="margin: 20px 0px;">
+
+                      <strong>Payment Date Filter:</strong>
+              
+                      <input type="text" name="daterange" value="" />
+              
+                      <button class="btn btn-success filter">Filter</button>
+              
+                  </div>
                 </div>
                 <div class="pull-right">
                     <div class="col-xs-12">
