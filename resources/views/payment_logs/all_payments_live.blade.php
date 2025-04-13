@@ -70,6 +70,11 @@
                         <th>Country</th>
                         <th>Type</th>
                         <th>Payment Date</th>
+                        <th>Customer</th>
+                        <th>Email</th>
+                        <th>Group</th>
+                        <th>Credits</th>
+                        <th>Price Payed (€)</th>
 
                     </tr>
         
@@ -125,6 +130,11 @@
                     sort: 'timestamp'
                 }
               },
+              {data: 'customer', name: 'customer'},
+              {data: 'email', name: 'email'},
+              {data: 'group', name: 'group'},
+              {data: 'credits', name: 'credits'},
+              {data: 'price_payed', name: 'price_payed'},
           ]
 
       });
