@@ -93,8 +93,6 @@ class PaymentLogController extends Controller
 
     public function paymentsTable(Request $request){
             
-            
-
             $data = Credit::select('*')->where('credits', '>', 0)->where('price_payed', '>', 0);
 
             if ($request->filled('from_date') && $request->filled('to_date')) {

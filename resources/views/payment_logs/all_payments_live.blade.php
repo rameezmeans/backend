@@ -121,8 +121,8 @@
     $(function () {
 
       $('input[name="daterange"]').daterangepicker({
-        startDate: moment().subtract(1, 'M'),
-        endDate: moment()
+        // startDate: moment().subtract(1, 'M'),
+        // endDate: moment()
       });
 
       $.ajaxSetup({
