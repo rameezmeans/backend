@@ -26,10 +26,6 @@
     display: none;
 }
 
-.daterangepicker {
-  left: 0px !important;
-}
-
 .dark\:text-white  {
   color: black !important;
 }
@@ -125,11 +121,8 @@
     $(function () {
 
       $('input[name="daterange"]').daterangepicker({
-
-      startDate: moment().subtract(1, 'M'),
-
-      endDate: moment()
-
+        startDate: moment().subtract(1, 'M'),
+        endDate: moment()
       });
 
       $.ajaxSetup({
@@ -146,7 +139,13 @@
           order: [[0,'desc']],
           ajax: {
               url: "{{ route('payment-table') }}",
-              type: 'POST'
+              type: 'POST',
+              data:function (d) {
+
+                d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
+
+              }
           },
           columns: [
               {data: 'id', name: 'id'},
@@ -173,6 +172,10 @@
               
           ]
 
+      });
+
+      $(".filter").click(function(){
+        table.draw();
       });
 
     });
