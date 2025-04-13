@@ -121,7 +121,7 @@
     $(function () {
 
       $('input[name="daterange"]').daterangepicker({
-        startDate: moment().subtract(4, 'Y'),
+        startDate: moment().subtract(36, 'M'),
         endDate: moment()
       });
 
