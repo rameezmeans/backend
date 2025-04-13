@@ -121,8 +121,10 @@
     $(function () {
 
       $('input[name="daterange"]').daterangepicker({
-        startDate: "",
-        endDate: ""
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
       });
 
       $.ajaxSetup({
