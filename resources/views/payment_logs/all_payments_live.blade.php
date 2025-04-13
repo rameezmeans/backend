@@ -38,7 +38,7 @@
     <!-- START PAGE CONTENT -->
     <div class="content sm-gutter">
       <!-- START CONTAINER FLUID -->
-        <div class=" container-fluid bg-white">
+        <div class=" container-fluid bg-white" style="width: 200%;">
 
           <div class="card card-transparent m-t-40">
             <div class="card-header ">
@@ -75,6 +75,9 @@
                         <th>Group</th>
                         <th>Credits</th>
                         <th>Price Payed (€)</th>
+                        <th>Details</th>
+                        <th>Elorus</th>
+                        <th>Zohobooks</th>
 
                     </tr>
         
@@ -135,6 +138,10 @@
               {data: 'group', name: 'group'},
               {data: 'credits', name: 'credits'},
               {data: 'price_payed', name: 'price_payed'},
+              {data: 'details', name: 'details', orderable: false, searchable: false},
+              {data: 'elorus', name: 'elorus', orderable: false, searchable: false},
+              {data: 'zohobooks', name: 'zohobooks', orderable: false, searchable: false},
+              
           ]
 
       });

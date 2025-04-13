@@ -136,7 +136,7 @@ class PaymentLogController extends Controller
             return $btn;
 
         })
-        
+
         ->editColumn('created_at', function ($user) {
             return [
                 'display' => e($user->created_at->format('d-m-Y')),
@@ -147,7 +147,21 @@ class PaymentLogController extends Controller
             $query->whereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') LIKE ?", ["%$keyword%"]);
         })
 
-        ->rawColumns(['frontend','country','type'])
+        ->addColumn('details', function($row){
+            return '<a class="btn btn-warning text-black" target="_blank" href="'.route("payment-details", $row->id).'">Payment Details</a>';
+        })
+        ->addColumn('elorus', function($row){
+            if($row->elorus_permalink){
+                return '<a class="btn btn-warning text-black" target="_blank" href="'.$row->elorus_permalink.'">Go To Elorus</a>';
+            }
+        })
+        ->addColumn('zohobooks', function($row){
+            if($row->zohobooks_id){
+                return '<a class="btn btn-warning text-black" target="_blank" href="'.'https://books.zoho.com/app/8745725#/invoices/'.$row->zohobooks_id.'">Go To Zohobooks</a>';
+            }
+        })
+
+        ->rawColumns(['frontend','country','type','details','elorus','zohobooks'])
         ->make(true);
     }
 
