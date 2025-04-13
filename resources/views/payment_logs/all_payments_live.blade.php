@@ -26,6 +26,10 @@
     display: none;
 }
 
+.daterangepicker {
+  left: 0px !important;
+}
+
 .dark\:text-white  {
   color: black !important;
 }
