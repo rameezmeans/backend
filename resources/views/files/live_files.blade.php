@@ -153,9 +153,9 @@
 
               },
 
-            //   "success": function () {
-            //     // table.draw();
-            // }  
+              complete: function (data) {
+                        console.log(data['responseJSON']);
+                    },
 
               
           },
