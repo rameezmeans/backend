@@ -1931,6 +1931,74 @@ class FilesController extends Controller
         return Datatables::of($data)
 
             ->addIndexColumn()
+            ->addColumn('timers', function($row){
+
+                $file = File::findOrFail($row->row_id);
+
+                if($file->delayed == 1){
+                    return '<span class="label label-danger text-white m-r-5">Late</span>';
+                }
+
+                $returnStr = "";
+
+                if($file->timer != NULL){
+
+                    $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+                    $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
+
+                    if($file->support_status == 'open'){
+
+                        $openTimeLeft = (strtotime($file->timer)+($fodt*60)) - strtotime(now());
+
+                    }
+
+                    if($file->support_status == 'open'){
+                        if($openTimeLeft > 0){
+                            $returnStr .='<lable class="label label-danger text-white m-r-5 open" id="o_'.$file->id.'" data-seconds="'.$openTimeLeft.'"></lable>';
+                        }
+                    }
+                    
+                    
+                }
+
+                if($file->submission_timer != NULL){
+
+                    $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+                    $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
+                    
+
+                    if($file->status == 'submitted'){
+                        $submissionTimeLeft = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
+                    }
+                    // else if($file->status == 'on_hold'){
+                    //     if($file->on_hold_time == NULL){
+                    //         $onHoldTime = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
+                    //         if($onHoldTime > 0){
+                    //             $file->on_hold_time = $onHoldTime;
+                    //             $file->save();
+                    //         }
+                    //     }
+                    // }
+
+                    if($file->status == 'submitted' ||  $file->status == 'on_hold'){
+
+                        if($file->status == 'submitted'){
+                            if($submissionTimeLeft > 0){
+                                $returnStr .='<span class="label label-info text-white m-r-5 submission" id="s_'.$file->id.'" data-seconds="'.$submissionTimeLeft.'"></span>';
+                            }
+                        }
+                        else if($file->status == 'on_hold'){
+                            if($file->on_hold_time != NULL){
+                                $returnStr .='<span class="label label-info text-white m-r-5 submission-stoped" id="s_'.$file->id.'" data-seconds="'.$file->on_hold_time.'"></span>';
+                            }
+                        }
+                    }
+                    
+                }
+
+                return $returnStr;
+
+            })
             ->editColumn('created_at', function ($credit) {
                 return [
                     'display' => e($credit->created_at->format('d-m-Y')),
@@ -1944,7 +2012,7 @@ class FilesController extends Controller
             ->addColumn('created_time', function ($credit) {
                     return $credit->created_at->format('h:i A');
             })
-            ->rawColumns([])
+            ->rawColumns(['timers'])
 
             ->make(true);
     }
