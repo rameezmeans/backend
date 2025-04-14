@@ -77,12 +77,15 @@
                           <th>Task ID</th>
                           <th>Submission Countdown / Reply Countdown</th>
                           <th>Frontend</th>
+                          <th>Submission Date</th>
+                          <th>Submission Time</th>
                           <th>Customer</th>
                           <th>Brand</th>
                           <th>Model</th>
                           <th>ECU</th>
-                          <th>Submission Date</th>
-                          <th>Submission Time</th>
+                          <th>Stage</th>
+                          <th>Options</th>
+                          
                           
                       </tr>
           
@@ -148,6 +151,8 @@
               {data: 'brand', name: 'brand'},
               {data: 'model', name: 'model'},
               {data: 'ecu', name: 'ecu'},
+              {data: 'stage', name: 'stage'},
+              {data: 'options', name: 'options'},
               
           ]
 
