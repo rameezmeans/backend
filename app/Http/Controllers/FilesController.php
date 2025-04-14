@@ -2122,6 +2122,8 @@ class FilesController extends Controller
                 }
 
                 $classes .= $row->row_id.' redirect-click-file '.$row->row_id;
+
+                return $classes;
             })
             ->make(true);
     }
