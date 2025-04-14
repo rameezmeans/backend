@@ -2125,9 +2125,9 @@ class FilesController extends Controller
 
                 return $classes;
             })
-            ->setRowData([
+            ->setRowAttr([
                 'data-redirect' => function($row) {
-                    return $row->id;
+                    return route('file', $row->id);
                 },
                 
             ])
