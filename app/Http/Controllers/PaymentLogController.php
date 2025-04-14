@@ -108,13 +108,13 @@ class PaymentLogController extends Controller
                 $frontEndID = $row->front_end_id;
 
                 if($frontEndID == 1){
-                    $btn = '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                    $btn = FrontEnd::findOrFail($frontEndID)->name;
                 }
                 else if($frontEndID == 2){
-                    $btn = '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                    $btn = FrontEnd::findOrFail($frontEndID)->name;
                 }
                 else if($frontEndID == 3){
-                    $btn = '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                    $btn = FrontEnd::findOrFail($frontEndID)->name;
                 }
 
                 return $btn;

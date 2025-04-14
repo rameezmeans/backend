@@ -2004,54 +2004,27 @@ class FilesController extends Controller
             ->addColumn('frontend', function($row){
 
                 $frontEndID = $row->front_end_id;
-
-                if($frontEndID == 1){
-                    $btn = '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
-                }
-                else if($frontEndID == 2){
-                    $btn = '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
-                }
-                else if($frontEndID == 3){
-                    $btn = '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
-                }
-
+                $btn = FrontEnd::findOrFail($frontEndID)->name;
                 return $btn;
 
             })
             ->addColumn('support_status', function($row){
 
                 $supportStatus = $row->support_status;
-
-                if($supportStatus == 'open'){
-                    return '<label class="label bg-danger text-white">'.$supportStatus.'</label>';
-                }
-                else{
-                    return '<lable class="label bg-success text-black">'.$supportStatus.'</lable>';
-                }
-
+                return $supportStatus;
+                
             })
             ->addColumn('status', function($row){
 
                 $status = $row->status;
-
-                if($status == 'completed'){
-                    return '<lable class="label label-success text-white">'.$status.'</lable>';
-                }
-                else if($status == 'rejected'){
-                    return '<lable class="label label-danger text-white">'.'canceled'.'</lable>';
-                }
-                else{
-                    return '<lable class="label bg-blue-200 text-black">'.$status.'</lable>';
-                }
-
+                return $status;
             })
             ->addColumn('stage', function($row){
 
                 $file = File::findOrFail($row->id);
                 
                 if($file->stage_services){
-                return '<img alt="{{$file->stage}}" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
-                                        <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
+                    return \App\Models\Service::findOrFail($file->stage_services->service_id)->name;
                 }
 
             })
@@ -2067,10 +2040,10 @@ class FilesController extends Controller
                         
 
                             if($service){
-                                $options .= '<img class="parent-adjusted" alt="'.$service->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.$service->icon .'" data-src="'.url('icons').'/'.$service->icon .'" src="'.url('icons').'/'.$service->icon.'">';
+                                $options .= $service->name.',';
                             }
                             else{
-                                $options.= "<span>Service Deleted.</span>";
+                                $options.= "Service Deleted";
                             }
                         }
                     }

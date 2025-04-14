@@ -229,7 +229,7 @@
           columns: [
               {data: 'id', name: 'id'},
               {data: 'timers', name: 'timers', orderable: false, searchable: false},
-              {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
+              {data: 'frontend', name: 'frontend'},
               {
                 data: 'created_at',
                 type: 'num',
@@ -243,10 +243,10 @@
               {data: 'brand', name: 'brand'},
               {data: 'model', name: 'model'},
               {data: 'ecu', name: 'ecu'},
-              {data: 'support_status', name: 'support_status', orderable: false, searchable: false},
-              {data: 'status', name: 'status', orderable: false, searchable: false},
-              {data: 'stage', name: 'stage', orderable: false, searchable: false},
-              {data: 'options', name: 'options', orderable: false, searchable: false},
+              {data: 'support_status', name: 'support_status'},
+              {data: 'status', name: 'status'},
+              {data: 'stage', name: 'stage'},
+              {data: 'options', name: 'options'},
               {data: 'credits', name: 'credits'},
               {data: 'assigned_to', name: 'assigned_to'},
               {data: 'response_time', name: 'response_time', orderable: false, searchable: false},
