@@ -133,7 +133,7 @@
 
       var table = $('.data-table').DataTable({
 
-          // stripeClasses: [],
+          stripeClasses: [],
           processing: true,
           serverSide: true,
           order: [[0,'desc']],
