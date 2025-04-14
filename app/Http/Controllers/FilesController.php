@@ -2119,7 +2119,7 @@ class FilesController extends Controller
                 }
 
                 if($row->checked_by == 'customer'){
-                    $classes .= 'bg-grey';
+                    $classes .= 'bg-grey text-white';
                 }
 
                 $classes .= ' redirect-click ';
