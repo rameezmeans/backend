@@ -151,7 +151,13 @@
                 d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
                 d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
 
-              }
+              },
+
+              "dataSrc": function ( json ) {
+                //Make your callback here.
+                alert("table loaded!");
+                
+            }   
           },
           columns: [
               {data: 'id', name: 'id'},
