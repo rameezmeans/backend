@@ -2114,11 +2114,11 @@ class FilesController extends Controller
                 $classes = "";
 
                 if($row->red == 1){
-                    $classes .= 'bg-red-200 hover:bg-red-200';
+                    $classes .= 'bg-red-200';
                 }
 
                 if($row->checked_by == 'customer'){
-                    $classes .= 'bg-grey bg-gray-500 hover:bg-gray-300';
+                    $classes .= 'bg-grey';
                 }
 
                 $classes .= ' '.$row->row_id.' redirect-click-file '.$row->row_id.' ';
