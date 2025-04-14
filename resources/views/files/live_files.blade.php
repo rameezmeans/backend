@@ -35,7 +35,7 @@
     <!-- START PAGE CONTENT -->
     <div class="content sm-gutter">
       <!-- START CONTAINER FLUID -->
-        <div class="container-fluid bg-white" style="width: 200%;">
+        <div class="container-fluid bg-white">
           @if (Session::get('success'))
                 <div class="pgn-wrapper" data-position="top" style="top: 59px;">
                     <div class="pgn push-on-sidebar-open pgn-bar">
