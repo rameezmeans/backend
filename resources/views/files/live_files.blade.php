@@ -158,7 +158,7 @@
               {data: 'options', name: 'options'},
               {data: 'credits', name: 'credits'},
               {data: 'assigned_to', name: 'assigned_to'},
-              {data: 'response_time', name: 'response_time'},
+              {data: 'response_time', name: 'response_time', orderable: false, searchable: false},
               
           ]
 

@@ -2109,7 +2109,7 @@ class FilesController extends Controller
                     return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
                 }
             })
-            ->rawColumns(['timers','frontend','support_status','status','stage','options','assigned_to'])
+            ->rawColumns(['timers','frontend','support_status','status','stage','options','assigned_to','response_time'])
 
             ->make(true);
     }
