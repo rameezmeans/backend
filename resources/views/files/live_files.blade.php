@@ -18,7 +18,7 @@
     background-color: transparent !important;
   }
 
-  .bg-gray-500 {
+  .bg-gray {
     --tw-bg-opacity: 1;
     background-color: rgb(107 114 128 / var(--tw-bg-opacity, 1)) !important;
 }
