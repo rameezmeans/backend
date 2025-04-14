@@ -161,6 +161,7 @@
                     sort: 'timestamp'
                 }
               },
+              {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
               {data: 'customer', name: 'customer'},
               {data: 'email', name: 'email'},
               {data: 'group', name: 'group'},

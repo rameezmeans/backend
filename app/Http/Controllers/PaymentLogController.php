@@ -124,14 +124,18 @@ class PaymentLogController extends Controller
         
         
 
-        ->editColumn('created_at', function ($user) {
+        ->editColumn('created_at', function ($credit) {
             return [
-                'display' => e($user->created_at->format('d-m-Y')),
-                'timestamp' => $user->created_at->timestamp
+                'display' => e($credit->created_at->format('d-m-Y')),
+                'timestamp' => $credit->created_at->timestamp
             ];
         })
         ->filterColumn('created_at', function ($query, $keyword) {
             $query->whereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') LIKE ?", ["%$keyword%"]);
+        })
+
+        ->addColumn('created_time', function ($credit) {
+                return $credit->created_at->format('h:i A');
         })
 
         ->addColumn('details', function($row){
@@ -148,7 +152,7 @@ class PaymentLogController extends Controller
             }
         })
 
-        ->rawColumns(['frontend','type','details','elorus','zohobooks'])
+        ->rawColumns(['frontend','type','details','elorus','zohobooks','created_time'])
         ->make(true);
     }
 
