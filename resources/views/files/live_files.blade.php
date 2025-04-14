@@ -186,14 +186,8 @@
         table.draw();
       });
 
-      });
-
-
-
-      $( document ).ready(function(event) {
-
-
-
+      
+        
         $('.parent-adjusted').parent().addClass('flex');
 
         $(document).on('click','.redirect-click-file',function(e) {
