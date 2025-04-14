@@ -122,24 +122,7 @@ class PaymentLogController extends Controller
         })
 
         
-        ->addColumn('country', function($row){
-
-            $frontEndID = $row->front_end_id;
-            $userId = $row->user_id;
-
-            if($frontEndID == 1){
-                $btn = code_to_country(User::findOrFail($userId)->country);
-            }
-            else if($frontEndID == 2){
-                $btn = code_to_country(User::findOrFail($userId)->country);
-            }
-            else if($frontEndID == 3){
-                $btn = code_to_country(User::findOrFail($userId)->country);
-            }
-
-            return $btn;
-
-        })
+        
 
         ->editColumn('created_at', function ($user) {
             return [
@@ -165,7 +148,7 @@ class PaymentLogController extends Controller
             }
         })
 
-        ->rawColumns(['frontend','country','type','details','elorus','zohobooks'])
+        ->rawColumns(['frontend','type','details','elorus','zohobooks'])
         ->make(true);
     }
 
