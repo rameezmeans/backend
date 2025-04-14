@@ -2030,7 +2030,7 @@ class FilesController extends Controller
             ->addColumn('created_time', function ($credit) {
                     return $credit->created_at->format('h:i A');
             })
-            ->rawColumns(['timers'])
+            ->rawColumns(['timers','frontend'])
 
             ->make(true);
     }
