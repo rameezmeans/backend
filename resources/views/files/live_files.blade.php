@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('pagespecificstyles')
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+{{-- <script src="https://cdn.tailwindcss.com"></script> --}}
+{{-- <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script> --}}
 <style>
   
   .flex {
@@ -13,6 +13,11 @@
   .redirect-click-file{
     cursor: pointer;
   }
+
+  .bg-gray-500 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(107 114 128 / var(--tw-bg-opacity, 1)) !important;
+}
 
 </style>
 @endsection

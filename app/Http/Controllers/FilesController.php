@@ -2111,7 +2111,17 @@ class FilesController extends Controller
             })
             ->rawColumns(['timers','frontend','support_status','status','stage','options','assigned_to','response_time'])
             ->setRowClass(function ($row) {
-                return 'bg-grey bg-gray-500 hover:bg-gray-300';
+                $classes = "";
+
+                if($row->red == 1){
+                    $classes .= 'bg-red-200 hover:bg-red-200';
+                }
+
+                if($row->checked_by == 'customer'){
+                    $classes .= 'bg-grey bg-gray-500 hover:bg-gray-300';
+                }
+
+                $classes .= $row->row_id.' redirect-click-file '.$row->row_id;
             })
             ->make(true);
     }
