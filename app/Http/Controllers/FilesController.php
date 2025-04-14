@@ -2110,7 +2110,9 @@ class FilesController extends Controller
                 }
             })
             ->rawColumns(['timers','frontend','support_status','status','stage','options','assigned_to','response_time'])
-
+            ->setRowClass(function ($row) {
+                return 'bg-grey bg-gray-500 hover:bg-gray-300';
+            })
             ->make(true);
     }
 
