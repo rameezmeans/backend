@@ -206,7 +206,7 @@
     
           var ek=[];
           $('.submission').each(function() { ek.push($(this).attr('id')); });
-          // console.log(ek);
+          console.log(ek);
 
           var sk=[];
           $('.submission-stoped').each(function() { sk.push($(this).attr('id')); });
