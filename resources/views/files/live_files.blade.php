@@ -123,7 +123,7 @@
 @section('pagespecificscripts')
     <script type="text/javascript">
 
-      $(function () {
+  $( document ).ready(function(event) {
 
       $('input[name="daterange"]').daterangepicker({
         startDate: moment().subtract(36, 'M'),
@@ -185,6 +185,10 @@
       $(".filter").click(function(){
         table.draw();
       });
+
+     
+
+
 
       
         
