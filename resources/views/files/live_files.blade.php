@@ -153,9 +153,9 @@
 
               },
 
-              "success": function () {
-                // table.draw();
-            }  
+            //   "success": function () {
+            //     // table.draw();
+            // }  
 
               
           },
