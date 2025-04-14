@@ -108,19 +108,19 @@ class PaymentLogController extends Controller
                 $frontEndID = $row->front_end_id;
 
                 if($frontEndID == 1){
-                    $btn = FrontEnd::findOrFail($frontEndID)->name;
+                    $btn = '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
                 }
                 else if($frontEndID == 2){
-                    $btn = FrontEnd::findOrFail($frontEndID)->name;
+                    $btn = '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
                 }
                 else if($frontEndID == 3){
-                    $btn = FrontEnd::findOrFail($frontEndID)->name;
+                    $btn = '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
                 }
 
                 return $btn;
 
         })
-        
+
         ->editColumn('created_at', function ($credit) {
             return [
                 'display' => e($credit->created_at->format('d-m-Y')),

@@ -151,7 +151,7 @@
           columns: [
               {data: 'id', name: 'id'},
               {data: 'invoice_id', name: 'invoice_id'},
-              {data: 'frontend', name: 'frontend'},
+              {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
               {data: 'country', name: 'country'},
               {data: 'type', name: 'type'},
               {
