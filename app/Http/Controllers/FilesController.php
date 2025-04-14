@@ -1908,17 +1908,58 @@ class FilesController extends Controller
 
     }
     
+    public function ajaxFiles(Request $request){
+
+        $data = $files = File::select('*', 'id as row_id')
+        ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "processing" THEN 2 WHEN status = "ready_to_send" THEN 3 ELSE 4 END AS s'))
+        ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
+        ->orderBy('ss', 'asc')
+        ->orderBy('s', 'asc')
+        ->where('is_credited', 1)
+        ->whereNull('original_file_id')
+        ->where(function ($query) {
+        $query->where('type', '=', 'master')
+                ->orWhereNotNull('assigned_from')->where('type', '=', 'subdealer');
+        });
+
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+
+            $data = $data->whereBetween('created_at', [$request->from_date, $request->to_date]);
+
+        }
+
+        return Datatables::of($data)
+
+            ->addIndexColumn()
+            ->editColumn('created_at', function ($credit) {
+                return [
+                    'display' => e($credit->created_at->format('d-m-Y')),
+                    'timestamp' => $credit->created_at->timestamp
+                ];
+            })
+            ->filterColumn('created_at', function ($query, $keyword) {
+                $query->whereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') LIKE ?", ["%$keyword%"]);
+            })
+    
+            ->addColumn('created_time', function ($credit) {
+                    return $credit->created_at->format('h:i A');
+            })
+            ->rawColumns([])
+
+            ->make(true);
+    }
+
     public function liveFiles(){
 
         $this->feedadjustment();
 
-        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
+        // if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
             
             return view('files.live_files');    
-        }
-        else{
-            return abort(404);
-        }
+        // }
+        // else{
+        //     return abort(404);
+        // }
     }
     
     public function updateFileVehicle(Request $request) {

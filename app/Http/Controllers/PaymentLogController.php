@@ -120,10 +120,7 @@ class PaymentLogController extends Controller
                 return $btn;
 
         })
-
         
-        
-
         ->editColumn('created_at', function ($credit) {
             return [
                 'display' => e($credit->created_at->format('d-m-Y')),

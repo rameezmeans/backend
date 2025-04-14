@@ -954,7 +954,10 @@ Route::post('/set-credit-prices', [App\Http\Controllers\ServicesController::clas
 Route::post('/set-customers-comments', [App\Http\Controllers\ServicesController::class, 'setCustomersComments'])->name('set-customers-comments');
 
 // Route::get('/files', [App\Http\Controllers\FilesController::class, 'index'])->name('files');
+
+Route::post('/ajax_files', [App\Http\Controllers\FilesController::class, 'ajaxFiles'])->name('ajax-files');
 Route::get('/files', [App\Http\Controllers\FilesController::class, 'liveFiles'])->name('files');
+
 Route::get('/file/{id}', [App\Http\Controllers\FilesController::class, 'show'])->name('file');
 Route::post('/get_download_button', [App\Http\Controllers\FilesController::class, 'getDownloadButton'])->name('get-download-button');
 Route::post('/search', [App\Http\Controllers\FilesController::class, 'search'])->name('search');

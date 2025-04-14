@@ -40,6 +40,15 @@
               <div class="card-header ">
                   <div class="card-title">
                     <h3>Files</h3>
+                    <div style="margin: 20px 0px;">
+
+                      <strong>Submission Date Filter:</strong>
+              
+                      <input type="text" name="daterange" value="" />
+              
+                      <button class="btn btn-success filter">Filter</button>
+              
+                  </div>
                   </div>
                   <div class="pull-right">
                     <div class="col-xs-12">
@@ -52,9 +61,34 @@
                   <div class="clearfix"></div>
               </div>
               <div class="card-body">
-                <livewire:files-datatable 
+
+                
+
+                {{-- <livewire:files-datatable 
                   searchable="id,username,brand,model,ecu"
-                />
+                /> --}}
+
+                <table class="table table-bordered data-table" >
+
+                  <thead>
+          
+                      <tr>
+          
+                          <th>Task ID</th>
+                         
+                          <th>Submission Date</th>
+                          <th>Submission Time</th>
+                          
+  
+                      </tr>
+          
+                  </thead>
+          
+                  <tbody>
+          
+                  </tbody>
+          
+              </table>
               </div>
             </div>
         </div>
@@ -63,7 +97,64 @@
 @endsection
 @section('pagespecificscripts')
     <script type="text/javascript">
+
+      $(function () {
+
+      $('input[name="daterange"]').daterangepicker({
+        startDate: moment().subtract(36, 'M'),
+        endDate: moment()
+      });
+
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+
+      var table = $('.data-table').DataTable({
+
+          processing: true,
+          serverSide: true,
+          order: [[0,'desc']],
+          ajax: {
+              url: "{{ route('ajax-files') }}",
+              type: 'POST',
+              data:function (d) {
+
+                d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
+
+              }
+          },
+          columns: [
+              {data: 'id', name: 'id'},
+              {
+                data: 'created_at',
+                type: 'num',
+                render: {
+                    _: 'display',
+                    sort: 'timestamp'
+                }
+              },
+              {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
+              
+              
+          ]
+
+      });
+
+      $(".filter").click(function(){
+        table.draw();
+      });
+
+      });
+
+
+
       $( document ).ready(function(event) {
+
+
 
         $('.parent-adjusted').parent().addClass('flex');
 
