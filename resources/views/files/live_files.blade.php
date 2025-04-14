@@ -96,6 +96,8 @@
                           <th>Brand</th>
                           <th>Model</th>
                           <th>ECU</th>
+                          <th>Support Status</th>
+                          <th>Status</th>
                           <th>Stage</th>
                           <th>Options</th>
                           <th>Credits</th>
@@ -168,6 +170,8 @@
               {data: 'brand', name: 'brand'},
               {data: 'model', name: 'model'},
               {data: 'ecu', name: 'ecu'},
+              {data: 'support_status', name: 'support_status'},
+              {data: 'status', name: 'status'},
               {data: 'stage', name: 'stage'},
               {data: 'options', name: 'options'},
               {data: 'credits', name: 'credits'},
