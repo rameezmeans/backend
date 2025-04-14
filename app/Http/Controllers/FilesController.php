@@ -2121,10 +2121,16 @@ class FilesController extends Controller
                     $classes .= 'bg-grey';
                 }
 
-                $classes .= ' '.$row->row_id.' redirect-click-file '.$row->row_id.' ';
+                $classes .= ' redirect-click ';
 
                 return $classes;
             })
+            ->setRowData([
+                'data-redirect' => function($row) {
+                    return route('file',$row->id);
+                },
+                
+            ])
             ->make(true);
     }
 
