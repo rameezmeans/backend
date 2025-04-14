@@ -19,6 +19,10 @@
     background-color: rgb(107 114 128 / var(--tw-bg-opacity, 1)) !important;
 }
 
+.bg-red-200 {
+    background-color: rgb(254 202 202) !important;
+}
+
 </style>
 @endsection
 
@@ -129,6 +133,7 @@
 
       var table = $('.data-table').DataTable({
 
+          stripeClasses: [],
           processing: true,
           serverSide: true,
           order: [[0,'desc']],

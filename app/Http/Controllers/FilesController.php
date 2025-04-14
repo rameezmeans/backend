@@ -2121,7 +2121,7 @@ class FilesController extends Controller
                     $classes .= 'bg-grey bg-gray-500 hover:bg-gray-300';
                 }
 
-                $classes .= $row->row_id.' redirect-click-file '.$row->row_id;
+                $classes .= ' '.$row->row_id.' redirect-click-file '.$row->row_id;
 
                 return $classes;
             })
