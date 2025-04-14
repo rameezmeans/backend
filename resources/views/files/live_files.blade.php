@@ -153,9 +153,13 @@
 
               },
 
-              "dataSrc": function ( json ) {
+              "initComplete":function( settings, json){
+
+                console.log(json);
+                // call your function here
+                
                 //Make your callback here.
-                return json.data;
+                
 
                 var ek=[];
           $('.submission').each(function() { ek.push($(this).attr('id')); });
