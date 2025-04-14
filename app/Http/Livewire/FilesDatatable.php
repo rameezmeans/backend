@@ -82,70 +82,70 @@ class FilesDatatable extends LivewireDatatable
 
             Column::callback(['id'], function($id){
 
-                $file = File::findOrFail($id);
+                    $file = File::findOrFail($id);
 
-                if($file->delayed == 1){
-                    return '<span class="label label-danger text-white m-r-5">Late</span>';
-                }
-
-                $returnStr = "";
-
-                if($file->timer != NULL){
-
-                    $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
-                    $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
-
-                    if($file->support_status == 'open'){
-
-                        $openTimeLeft = (strtotime($file->timer)+($fodt*60)) - strtotime(now());
-
+                    if($file->delayed == 1){
+                        return '<span class="label label-danger text-white m-r-5">Late</span>';
                     }
 
-                    if($file->support_status == 'open'){
-                        if($openTimeLeft > 0){
-                            $returnStr .='<lable class="label label-danger text-white m-r-5 open" id="o_'.$file->id.'" data-seconds="'.$openTimeLeft.'"></lable>';
+                    $returnStr = "";
+
+                    if($file->timer != NULL){
+
+                        $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+                        $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
+
+                        if($file->support_status == 'open'){
+
+                            $openTimeLeft = (strtotime($file->timer)+($fodt*60)) - strtotime(now());
+
                         }
+
+                        if($file->support_status == 'open'){
+                            if($openTimeLeft > 0){
+                                $returnStr .='<lable class="label label-danger text-white m-r-5 open" id="o_'.$file->id.'" data-seconds="'.$openTimeLeft.'"></lable>';
+                            }
+                        }
+                        
+                        
                     }
-                    
-                    
-                }
 
-                if($file->submission_timer != NULL){
+                    if($file->submission_timer != NULL){
 
-                    $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
-                    $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
-                    
-
-                    if($file->status == 'submitted'){
-                        $submissionTimeLeft = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
-                    }
-                    // else if($file->status == 'on_hold'){
-                    //     if($file->on_hold_time == NULL){
-                    //         $onHoldTime = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
-                    //         if($onHoldTime > 0){
-                    //             $file->on_hold_time = $onHoldTime;
-                    //             $file->save();
-                    //         }
-                    //     }
-                    // }
-
-                    if($file->status == 'submitted' ||  $file->status == 'on_hold'){
+                        $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+                        $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
+                        
 
                         if($file->status == 'submitted'){
-                            if($submissionTimeLeft > 0){
-                                $returnStr .='<span class="label label-info text-white m-r-5 submission" id="s_'.$file->id.'" data-seconds="'.$submissionTimeLeft.'"></span>';
-                            }
+                            $submissionTimeLeft = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
                         }
-                        else if($file->status == 'on_hold'){
-                            if($file->on_hold_time != NULL){
-                                $returnStr .='<span class="label label-info text-white m-r-5 submission-stoped" id="s_'.$file->id.'" data-seconds="'.$file->on_hold_time.'"></span>';
-                            }
-                        }
-                    }
-                    
-                }
+                        // else if($file->status == 'on_hold'){
+                        //     if($file->on_hold_time == NULL){
+                        //         $onHoldTime = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
+                        //         if($onHoldTime > 0){
+                        //             $file->on_hold_time = $onHoldTime;
+                        //             $file->save();
+                        //         }
+                        //     }
+                        // }
 
-                return $returnStr;
+                        if($file->status == 'submitted' ||  $file->status == 'on_hold'){
+
+                            if($file->status == 'submitted'){
+                                if($submissionTimeLeft > 0){
+                                    $returnStr .='<span class="label label-info text-white m-r-5 submission" id="s_'.$file->id.'" data-seconds="'.$submissionTimeLeft.'"></span>';
+                                }
+                            }
+                            else if($file->status == 'on_hold'){
+                                if($file->on_hold_time != NULL){
+                                    $returnStr .='<span class="label label-info text-white m-r-5 submission-stoped" id="s_'.$file->id.'" data-seconds="'.$file->on_hold_time.'"></span>';
+                                }
+                            }
+                        }
+                        
+                    }
+
+                    return $returnStr;
 
             })
             ->label('Submission Countdown / Reply Countdown'),

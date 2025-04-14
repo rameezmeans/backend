@@ -77,6 +77,10 @@
                           <th>Task ID</th>
                           <th>Submission Countdown / Reply Countdown</th>
                           <th>Frontend</th>
+                          <th>Customer</th>
+                          <th>Brand</th>
+                          <th>Model</th>
+                          <th>ECU</th>
                           <th>Submission Date</th>
                           <th>Submission Time</th>
                           
@@ -140,7 +144,10 @@
                 }
               },
               {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
-              
+              {data: 'username', name: 'username'},
+              {data: 'brand', name: 'brand'},
+              {data: 'model', name: 'model'},
+              {data: 'ecu', name: 'ecu'},
               
           ]
 
