@@ -128,6 +128,18 @@ Route::get('/autotuner', function () {
 
 Route::get('/tasks', function () {
 
+    $credits = Credit::all();
+
+    foreach($credits as $credit){
+        $country = User::findOrFail($credit->user_id)->country;
+        if($country != NULL){
+            $credit->country = code_to_country($country);
+            $credit->save();
+        }
+    }
+
+    dd("countries save");
+    
     $files = File::all();
 
     foreach($files as $file){
