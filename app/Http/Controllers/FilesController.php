@@ -2091,7 +2091,25 @@ class FilesController extends Controller
             ->addColumn('created_time', function ($credit) {
                     return $credit->created_at->format('h:i A');
             })
-            ->rawColumns(['timers','frontend','support_status','status','stage','options'])
+            ->addColumn('assigned_to', function ($row) {
+                if(User::where('id',$row->assigned_to)->first()){
+                    return User::findOrFail($row->assigned_to)->name;
+                }
+                else{
+                    return "NONE";
+                }
+            })
+            ->addColumn('response_time', function ($row) {
+                $rt = $row->response_time;
+                if($rt == null ){
+                    return '<label class="label label-success">Not Responsed<label>';
+                }
+                else{
+                    
+                    return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
+                }
+            })
+            ->rawColumns(['timers','frontend','support_status','status','stage','options','assigned_to'])
 
             ->make(true);
     }

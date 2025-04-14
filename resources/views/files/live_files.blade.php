@@ -85,6 +85,9 @@
                           <th>ECU</th>
                           <th>Stage</th>
                           <th>Options</th>
+                          <th>Credits</th>
+                          <th>Assigned To</th>
+                          <th>Response Time</th>
                           
                           
                       </tr>
@@ -153,6 +156,9 @@
               {data: 'ecu', name: 'ecu'},
               {data: 'stage', name: 'stage'},
               {data: 'options', name: 'options'},
+              {data: 'credits', name: 'credits'},
+              {data: 'assigned_to', name: 'assigned_to'},
+              {data: 'response_time', name: 'response_time'},
               
           ]
 
