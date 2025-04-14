@@ -87,6 +87,7 @@
                         <th>Country</th>
                         <th>Type</th>
                         <th>Payment Date</th>
+                        <th>Payment Time</th>
                         <th>Customer</th>
                         <th>Email</th>
                         <th>Group</th>
