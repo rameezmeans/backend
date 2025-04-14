@@ -154,80 +154,78 @@
               },
 
               complete: function (data) {
-                        console.log(data['responseJSON']);
 
-                        var ek=[];
-          $('.submission').each(function() { ek.push($(this).attr('id')); });
-          console.log(ek);
+                console.log(data['responseJSON']);
+                var ek=[];
+                $('.submission').each(function() { ek.push($(this).attr('id')); });
+                console.log(ek);
 
-          var sk=[];
-          $('.submission-stoped').each(function() { sk.push($(this).attr('id')); });
-          console.log(sk);
+                var sk=[];
+                $('.submission-stoped').each(function() { sk.push($(this).attr('id')); });
+                console.log(sk);
 
-          var ik=[];
-          $('.open').each(function() { ek.push($(this).attr('id')); });
-          // console.log(ik);
+                var ik=[];
+                $('.open').each(function() { ek.push($(this).attr('id')); });
+                // console.log(ik);
 
-          function startTimer(duration, display) {
-            var timer = duration, minutes, seconds;
-            setInterval(function () {
-                minutes = parseInt(timer / 60, 10)
-                seconds = parseInt(timer % 60, 10);
+                function startTimer(duration, display) {
+                  var timer = duration, minutes, seconds;
+                  setInterval(function () {
+                    minutes = parseInt(timer / 60, 10)
+                    seconds = parseInt(timer % 60, 10);
 
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
 
-                console.log('seconds:'+seconds);
+                    console.log('seconds:'+seconds);
 
-                display.textContent = minutes + ":" + seconds;
+                    display.textContent = minutes + ":" + seconds;
 
-                if (--timer < 0) {
-                    timer = duration;
+                    if (--timer < 0) {
+                        timer = duration;
+                    }
+                  }, 1000);
                 }
-            }, 1000);
-          }
 
-          function stopTimer(duration, display) {
-            var timer = duration, minutes, seconds;
+                function stopTimer(duration, display) {
 
-                 minutes = parseInt(timer / 60, 10)
+                  var timer = duration, minutes, seconds;
+                  minutes = parseInt(timer / 60, 10)
                   seconds = parseInt(timer % 60, 10);
+                  display.textContent = minutes + ":" + seconds;
 
-                
+                  
+                }
 
-                display.textContent = minutes + ":" + seconds;
+                $.each(ek , function(index, val) { 
+                  console.log(index, val);
+                  let display = document.querySelector('#'+val);
+                  let seconds = $('#'+val).data('seconds');
+                  startTimer(seconds, display);
+                });
 
-            
-          }
-
-          $.each(ek , function(index, val) { 
-            console.log(index, val);
-            let display = document.querySelector('#'+val);
-            let seconds = $('#'+val).data('seconds');
-            startTimer(seconds, display);
-          });
-
-          $.each(sk , function(index, val) { 
-            console.log(index, val);
-            let display = document.querySelector('#'+val);
-            let seconds = $('#'+val).data('seconds');
-            stopTimer(seconds, display);
-          });
+                $.each(sk , function(index, val) { 
+                  console.log(index, val);
+                  let display = document.querySelector('#'+val);
+                  let seconds = $('#'+val).data('seconds');
+                  stopTimer(seconds, display);
+                });
 
 
 
-          $.each(ik , function(index, val) { 
-            console.log(index, val);
-            let display = document.querySelector('#'+val);
-            let seconds = $('#'+val).data('seconds');
-            startTimer(seconds, display);
-          });
+                $.each(ik , function(index, val) { 
+                  console.log(index, val);
+                  let display = document.querySelector('#'+val);
+                  let seconds = $('#'+val).data('seconds');
+                  startTimer(seconds, display);
+                });
 
 
-                    },
+              },
 
               
           },
+
           columns: [
               {data: 'id', name: 'id'},
               {data: 'timers', name: 'timers', orderable: false, searchable: false},
@@ -273,75 +271,6 @@
             
           });
     
-          var ek=[];
-          $('.submission').each(function() { ek.push($(this).attr('id')); });
-          console.log(ek);
-
-          var sk=[];
-          $('.submission-stoped').each(function() { sk.push($(this).attr('id')); });
-          console.log(sk);
-
-          var ik=[];
-          $('.open').each(function() { ek.push($(this).attr('id')); });
-          // console.log(ik);
-
-          function startTimer(duration, display) {
-            var timer = duration, minutes, seconds;
-            setInterval(function () {
-                minutes = parseInt(timer / 60, 10)
-                seconds = parseInt(timer % 60, 10);
-
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                console.log('seconds:'+seconds);
-
-                display.textContent = minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    timer = duration;
-                }
-            }, 1000);
-          }
-
-          function stopTimer(duration, display) {
-            var timer = duration, minutes, seconds;
-
-                 minutes = parseInt(timer / 60, 10)
-                  seconds = parseInt(timer % 60, 10);
-
-                
-
-                display.textContent = minutes + ":" + seconds;
-
-            
-          }
-
-          $.each(ek , function(index, val) { 
-            console.log(index, val);
-            let display = document.querySelector('#'+val);
-            let seconds = $('#'+val).data('seconds');
-            startTimer(seconds, display);
-          });
-
-          $.each(sk , function(index, val) { 
-            console.log(index, val);
-            let display = document.querySelector('#'+val);
-            let seconds = $('#'+val).data('seconds');
-            stopTimer(seconds, display);
-          });
-
-
-
-          $.each(ik , function(index, val) { 
-            console.log(index, val);
-            let display = document.querySelector('#'+val);
-            let seconds = $('#'+val).data('seconds');
-            startTimer(seconds, display);
-          });
-
-          
-
         });
     </script>
 @endsection
