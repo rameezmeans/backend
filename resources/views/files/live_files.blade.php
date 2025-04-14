@@ -154,63 +154,8 @@
               },
 
               "dataSrc": function ( json ) {
-                //Make your callback here.
-                alert("table loaded!");
                 
-            }   
-          },
-          columns: [
-              {data: 'id', name: 'id'},
-              {data: 'timers', name: 'timers', orderable: false, searchable: false},
-              {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
-              {
-                data: 'created_at',
-                type: 'num',
-                render: {
-                    _: 'display',
-                    sort: 'timestamp'
-                }
-              },
-              {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
-              {data: 'username', name: 'username'},
-              {data: 'brand', name: 'brand'},
-              {data: 'model', name: 'model'},
-              {data: 'ecu', name: 'ecu'},
-              {data: 'support_status', name: 'support_status', orderable: false, searchable: false},
-              {data: 'status', name: 'status', orderable: false, searchable: false},
-              {data: 'stage', name: 'stage', orderable: false, searchable: false},
-              {data: 'options', name: 'options', orderable: false, searchable: false},
-              {data: 'credits', name: 'credits'},
-              {data: 'assigned_to', name: 'assigned_to'},
-              {data: 'response_time', name: 'response_time', orderable: false, searchable: false},
-              
-          ]
-
-      });
-
-      $(".filter").click(function(){
-        table.draw();
-      });
-
-     
-
-
-
-      
-        
-        $('.parent-adjusted').parent().addClass('flex');
-
-        $(document).on('click','.redirect-click-file',function(e) {
-          console.log('clicked');
-            var lastClass = $(this).attr('class').split(' ').pop();
-            console.log(lastClass);
-            // console.log("http://backend.test/file/"+lastClass);
-
-            window.location.href = "/file/"+lastClass;
-            
-          });
-    
-          var ek=[];
+                var ek=[];
           $('.submission').each(function() { ek.push($(this).attr('id')); });
           console.log(ek);
 
@@ -276,6 +221,61 @@
             let seconds = $('#'+val).data('seconds');
             startTimer(seconds, display);
           });
+                
+            }   
+          },
+          columns: [
+              {data: 'id', name: 'id'},
+              {data: 'timers', name: 'timers', orderable: false, searchable: false},
+              {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
+              {
+                data: 'created_at',
+                type: 'num',
+                render: {
+                    _: 'display',
+                    sort: 'timestamp'
+                }
+              },
+              {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
+              {data: 'username', name: 'username'},
+              {data: 'brand', name: 'brand'},
+              {data: 'model', name: 'model'},
+              {data: 'ecu', name: 'ecu'},
+              {data: 'support_status', name: 'support_status', orderable: false, searchable: false},
+              {data: 'status', name: 'status', orderable: false, searchable: false},
+              {data: 'stage', name: 'stage', orderable: false, searchable: false},
+              {data: 'options', name: 'options', orderable: false, searchable: false},
+              {data: 'credits', name: 'credits'},
+              {data: 'assigned_to', name: 'assigned_to'},
+              {data: 'response_time', name: 'response_time', orderable: false, searchable: false},
+              
+          ]
+
+      });
+
+      $(".filter").click(function(){
+        table.draw();
+      });
+
+     
+
+
+
+      
+        
+        $('.parent-adjusted').parent().addClass('flex');
+
+        $(document).on('click','.redirect-click-file',function(e) {
+          console.log('clicked');
+            var lastClass = $(this).attr('class').split(' ').pop();
+            console.log(lastClass);
+            // console.log("http://backend.test/file/"+lastClass);
+
+            window.location.href = "/file/"+lastClass;
+            
+          });
+    
+          
 
           
 
