@@ -154,7 +154,7 @@
               },
 
               "success": function () {
-                alert("Done!");
+                table.draw();
             }  
 
               
