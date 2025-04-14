@@ -76,11 +76,10 @@
           
                           <th>Task ID</th>
                           <th>Submission Countdown / Reply Countdown</th>
-                         
+                          <th>Frontend</th>
                           <th>Submission Date</th>
                           <th>Submission Time</th>
                           
-  
                       </tr>
           
                   </thead>
@@ -131,6 +130,7 @@
           columns: [
               {data: 'id', name: 'id'},
               {data: 'timers', name: 'timers', orderable: false, searchable: false},
+              {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
               {
                 data: 'created_at',
                 type: 'num',

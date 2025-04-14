@@ -30,6 +30,7 @@ use App\Models\FileReplySoftwareService;
 use App\Models\FileService;
 use App\Models\FilesStatusLog;
 use App\Models\FileUrl;
+use App\Models\FrontEnd;
 use App\Models\Key;
 use App\Models\Log;
 use App\Models\MagicEncryptedFile;
@@ -1997,6 +1998,23 @@ class FilesController extends Controller
                 }
 
                 return $returnStr;
+
+            })
+            ->addColumn('frontend', function($row){
+
+                $frontEndID = $row->front_end_id;
+
+                if($frontEndID == 1){
+                    $btn = '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+                else if($frontEndID == 2){
+                    $btn = '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+                else if($frontEndID == 3){
+                    $btn = '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+
+                return $btn;
 
             })
             ->editColumn('created_at', function ($credit) {
