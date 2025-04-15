@@ -108,7 +108,7 @@
                 }
             },
             columns: [
-                {data: 'db_id', name: 'db_id'},
+                {data: 'id', name: 'id'},
                 // {data: 'invoice_id', name: 'invoice_id'},
                 // {
                 //     data: 'created_at',
