@@ -1911,7 +1911,7 @@ class FilesController extends Controller
     
     public function ajaxFiles(Request $request){
 
-        $data = File::select('*', 'files.id as row_id')
+        $data = File::select('files.created_at as created_at, username, brand, model, ecu, support_status, status, stage, credits, assigned_to, response_time', 'files.id as row_id')
         ->join('file_services', 'file_services.file_id', '=', 'files.id')
         ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "processing" THEN 2 WHEN status = "ready_to_send" THEN 3 ELSE 4 END AS s'))
         ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
@@ -1926,8 +1926,8 @@ class FilesController extends Controller
 
         if ($request->filled('from_date') && $request->filled('to_date')) {
 
-            $data = $data->whereDate('files.created_at', '>=', $request->from_date)
-            ->whereDate('files.created_at', '<=', $request->to_date);
+            $data = $data->whereDate('created_at', '>=', $request->from_date)
+            ->whereDate('created_at', '<=', $request->to_date);
 
         }
 
