@@ -219,7 +219,6 @@
           stripeClasses: [],
           processing: true,
           serverSide: true,
-          order: [[0,'desc']],
           ajax: {
               url: "{{ route('ajax-files') }}",
               type: 'POST',
