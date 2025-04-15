@@ -90,7 +90,22 @@
 
                     </div>
                   </div>
-                  
+
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default-select2">
+
+                      <label>Frontend Filter:</label>
+              
+                      <select class="form-control" id="frontend">
+                        <option value="all">ALL</option>
+                        <option value="1">ECUTech</option>
+                        <option value="2">TuningX</option>
+                        <option value="3">Efiles</option>
+                      </select>
+
+                    </div>
+                  </div>
+
               </div>
               <div class="card-body">
 
@@ -167,6 +182,7 @@
                 d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
                 d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
                 d.late = $('#late').val();
+                d.frontend = $('#frontend').val();
 
               },
 
@@ -277,6 +293,10 @@
       });
 
       $('#late').change(function(){
+        table.draw();
+      });
+
+      $('#frontend').change(function(){
         table.draw();
       });
         

@@ -1936,6 +1936,12 @@ class FilesController extends Controller
             }
         }
 
+        if ($request->filled('frontend')) {
+            if($request->frontend != 'all'){
+                $data = $data->where('front_end_id', '=', $request->frontend);
+            }
+        }
+
         return Datatables::of($data)
 
             ->addIndexColumn()
