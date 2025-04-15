@@ -53,6 +53,10 @@
               <div class="card-header ">
                   <div class="card-title">
                     <h3>Files</h3>
+
+                    <div class="row">
+                      <div class="col-md-6">
+
                     <div class="form-group" style="margin: 20px 0px;">
 
                       <strong>Submission Date Filter:</strong>
@@ -68,11 +72,16 @@
               
                       <select class="form-control" id="late">
                         <option value="all">ALL</option>
-                        <option value="late">late</option>
+                        <option value="late">Late</option>
                       </select>
 
                     </div>
+
+
+
                   </div>
+                  </div>
+                  
                   <div class="pull-right">
                     <div class="col-xs-12">
                       @if(Auth::user()->is_admin())
