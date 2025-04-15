@@ -53,7 +53,16 @@
               <div class="card-header ">
                   <div class="card-title">
                     <h3>Files</h3>
-
+                    <div class="pull-right">
+                      <div class="col-xs-12">
+                        @if(Auth::user()->is_admin())
+                          <button data-redirect="{{route('multi-delete')}}" class="btn btn-success redirect-click"><i class="pg-plus_circle"></i> <span class="bold">Multi Delete</span>
+                          </button>
+                        @endif
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
                     <div class="row">
                       <div class="col-md-6">
 
@@ -66,7 +75,7 @@
                       <button class="btn btn-success filter m-t-10">Filter</button>
               
                     </div>
-                    <div class="form-group form-group-default-select2" style="margin: 10px 0px;">
+                    <d  iv class="form-group form-group-default-select2" style="margin: 10px 0px;">
 
                       <strong>Late Filter:</strong>
               
@@ -80,17 +89,10 @@
 
 
                   </div>
-                  </div>
                   
-                  <div class="pull-right">
-                    <div class="col-xs-12">
-                      @if(Auth::user()->is_admin())
-                        <button data-redirect="{{route('multi-delete')}}" class="btn btn-success redirect-click"><i class="pg-plus_circle"></i> <span class="bold">Multi Delete</span>
-                        </button>
-                      @endif
-                    </div>
-                  </div>
-                  <div class="clearfix"></div>
+                  
+                  
+
               </div>
               <div class="card-body">
 
