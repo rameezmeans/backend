@@ -53,20 +53,20 @@
               <div class="card-header ">
                   <div class="card-title">
                     <h3>Files</h3>
-                    <div style="margin: 20px 0px;">
+                    <div class="form-group form-group-default" style="margin: 20px 0px;">
 
                       <strong>Submission Date Filter:</strong>
               
-                      <input type="text" name="daterange" value="" />
+                      <input class="form-control" type="text" name="daterange" value="" />
               
                       <button class="btn btn-success filter">Filter</button>
               
                     </div>
-                    <div style="margin: 10px 0px;">
+                    <div class="form-group form-group-default form-group-default-select2" style="margin: 10px 0px;">
 
                       <strong>Late Filter:</strong>
               
-                      <select id="late">
+                      <select class="form-control" id="late">
                         <option value="all">ALL</option>
                         <option value="late">late</option>
                       </select>
