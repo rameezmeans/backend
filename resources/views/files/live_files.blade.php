@@ -154,6 +154,38 @@
                     </div>
                   </div>
 
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default-select2">
+
+                      <label>Options Filter:</label>
+              
+                      <select class="form-control" id="options">
+                          
+                          @foreach ($options as $option)
+                            <option value="{{$option->id}}">{{$option->name}}</option>
+                          @endforeach
+                      
+                      </select>
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default-select2">
+
+                      <label>Assigned To Filter:</label>
+              
+                      <select class="form-control" id="stage">
+                          <option value="all">ALL</option>
+                          @foreach ($engineers as $engineer)
+                            <option value="{{$engineer->id}}">{{$engineer->name}}</option>
+                          @endforeach
+                      
+                      </select>
+
+                    </div>
+                  </div>
+
               </div>
               <div class="card-body">
 
@@ -321,7 +353,7 @@
                     sort: 'timestamp'
                 }, orderable: false
               },
-              {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
+              {data: 'created_time', name: 'created_time', orderable: false},
               {data: 'username', name: 'username', orderable: false},
               {data: 'brand', name: 'brand', orderable: false},
               {data: 'model', name: 'model', orderable: false},
