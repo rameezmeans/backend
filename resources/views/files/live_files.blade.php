@@ -70,10 +70,7 @@
                         <option value="all">ALL</option>
                         <option value="late">late</option>
                       </select>
-
-              
-                      <button class="btn btn-success filter">Filter</button>
-              
+                      
                     </div>
                   </div>
                   <div class="pull-right">
@@ -272,7 +269,7 @@
         table.draw();
       });
 
-      $('#late').change({
+      $('#late').change(function(){
         table.draw();
       });
         
