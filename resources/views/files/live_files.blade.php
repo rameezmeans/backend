@@ -154,7 +154,7 @@
                     </div>
                   </div>
 
-                  <div class="col-md-6">
+                  {{-- <div class="col-md-6">
                     <div class="form-group form-group-default-select2">
 
                       <label>Options Filter:</label>
@@ -168,7 +168,7 @@
                       </select>
 
                     </div>
-                  </div>
+                  </div> --}}
 
                   <div class="col-md-6">
                     <div class="form-group form-group-default-select2">
@@ -265,7 +265,7 @@
                 d.support_status = $('#support_status').val();
                 d.status = $('#status').val();
                 d.stage = $('#stage').val();
-                d.options = $('#options').val();
+                // d.options = $('#options').val();
                 d.engineer = $('#engineer').val();
 
               },
@@ -396,9 +396,9 @@
         table.draw();
       });
 
-      $('#options').change(function(){
-        table.draw();
-      });
+      // $('#options').change(function(){
+      //   table.draw();
+      // });
 
       $('#engineer').change(function(){
         table.draw();
