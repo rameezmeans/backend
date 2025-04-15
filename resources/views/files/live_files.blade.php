@@ -53,7 +53,7 @@
               <div class="card-header ">
                   <div class="card-title">
                     <h3>Files</h3>
-                    <div class="form-group form-group-default" style="margin: 20px 0px;">
+                    <div class="form-group" style="margin: 20px 0px;">
 
                       <strong>Submission Date Filter:</strong>
               
@@ -62,7 +62,7 @@
                       <button class="btn btn-success filter">Filter</button>
               
                     </div>
-                    <div class="form-group form-group-default form-group-default-select2" style="margin: 10px 0px;">
+                    <div class="form-group form-group-default-select2" style="margin: 10px 0px;">
 
                       <strong>Late Filter:</strong>
               
