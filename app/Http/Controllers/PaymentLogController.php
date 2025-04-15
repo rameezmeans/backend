@@ -100,6 +100,12 @@ class PaymentLogController extends Controller
                 $data = $data->whereBetween('created_at', [$request->from_date, $request->to_date]);
 
             }
+
+            if ($request->filled('frontend')) {
+                if($request->frontend != 'all'){
+                    $data = $data->where('front_end_id', '=', $request->frontend);
+                }
+            }
             
             return DataTables::of($data)
             ->addIndexColumn()
