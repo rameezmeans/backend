@@ -175,7 +175,7 @@
 
                       <label>Assigned To Filter:</label>
               
-                      <select class="form-control" id="stage">
+                      <select class="form-control" id="engineer">
                           <option value="all">ALL</option>
                           @foreach ($engineers as $engineer)
                             <option value="{{$engineer->id}}">{{$engineer->name}}</option>
@@ -265,6 +265,8 @@
                 d.support_status = $('#support_status').val();
                 d.status = $('#status').val();
                 d.stage = $('#stage').val();
+                d.options = $('#options').val();
+                d.engineer = $('#engineer').val();
 
               },
 
