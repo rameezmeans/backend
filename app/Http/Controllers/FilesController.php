@@ -2171,7 +2171,7 @@ class FilesController extends Controller
 
         $stages = Service::where('type', 'tunning')->get();
         $options = Service::where('type', 'options')->get();
-        $engineers = User::where('role_id', 4)->where('id', 3)->get();
+        $engineers = User::where('role_id', 4)->orWhere('id', 3)->get();
 
         // if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
             
