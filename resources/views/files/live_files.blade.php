@@ -66,9 +66,9 @@
                     <div class="row">
                       <div class="col-md-6">
 
-                    <div class="form-group" style="margin: 20px 0px;">
+                    <div class="form-group m-t-20 m-b-20">
 
-                      <strong>Submission Date Filter:</strong>
+                      <label>Submission Date Filter:</label>
               
                       <input class="form-control" type="text" name="daterange" value="" />
               
@@ -77,7 +77,7 @@
                     </div>
                     <d  iv class="form-group form-group-default-select2" style="margin: 10px 0px;">
 
-                      <strong>Late Filter:</strong>
+                      <label>Late Filter:</label>
               
                       <select class="form-control" id="late">
                         <option value="all">ALL</option>
