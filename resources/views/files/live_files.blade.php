@@ -149,11 +149,6 @@
         }
       });
 
-      $('#late').change({
-        table.draw();
-      });
-
-
       var table = $('.data-table').DataTable({
 
           stripeClasses: [],
@@ -274,6 +269,10 @@
       });
 
       $(".filter").click(function(){
+        table.draw();
+      });
+
+      $('#late').change({
         table.draw();
       });
         
