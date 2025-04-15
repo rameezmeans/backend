@@ -67,7 +67,7 @@
                     <div class="row m-t-20 m-b-20">
                       <div class="col-md-6">
 
-                    <div class="form-group" style="display: inline-flex;">
+                    <div class="form-group" style="display: inline-flex;margin-top:20px;">
 
                       <label>Submission Date Filter:</label>
               
@@ -77,6 +77,7 @@
               
                     </div>
                   </div>
+
                   <div class="col-md-6">
                     <div class="form-group form-group-default-select2">
 
@@ -89,6 +90,7 @@
 
                     </div>
                   </div>
+                  
               </div>
               <div class="card-body">
 
