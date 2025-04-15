@@ -53,20 +53,21 @@
               <div class="card-header ">
                   <div class="card-title">
                     <h3>Files</h3>
-                    <div class="pull-right">
-                      <div class="col-xs-12">
-                        @if(Auth::user()->is_admin())
-                          <button data-redirect="{{route('multi-delete')}}" class="btn btn-success redirect-click"><i class="pg-plus_circle"></i> <span class="bold">Multi Delete</span>
-                          </button>
-                        @endif
-                      </div>
-                    </div>
+                    
                     <div class="clearfix"></div>
                   </div>
-                    <div class="row">
+                  <div class="pull-right">
+                    <div class="col-xs-12">
+                      @if(Auth::user()->is_admin())
+                        <button data-redirect="{{route('multi-delete')}}" class="btn btn-success redirect-click"><i class="pg-plus_circle"></i> <span class="bold">Multi Delete</span>
+                        </button>
+                      @endif
+                    </div>
+                  </div>
+                    <div class="row m-t-20 m-b-20">
                       <div class="col-md-6">
 
-                    <div class="form-group m-t-20 m-b-20">
+                    <div class="form-group">
 
                       <label>Submission Date Filter:</label>
               
