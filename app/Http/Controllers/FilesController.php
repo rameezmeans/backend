@@ -2116,7 +2116,7 @@ class FilesController extends Controller
             ->addColumn('created_time', function ($credit) {
                     return $credit->created_at->format('h:i A');
             })
-            ->addColumn('assigned_to', function ($row) {
+            ->addColumn('engineer', function ($row) {
                 if(User::where('id',$row->assigned_to)->first()){
                     return User::findOrFail($row->assigned_to)->name;
                 }
@@ -2134,7 +2134,7 @@ class FilesController extends Controller
                     return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
                 }
             })
-            ->rawColumns(['timers','frontend','support_status','status','stage','options','assigned_to','response_time'])
+            ->rawColumns(['timers','frontend','support_status','status','stage','options','engineer','response_time'])
             ->setRowClass(function ($row) {
                 $classes = "";
 

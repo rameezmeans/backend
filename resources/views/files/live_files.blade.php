@@ -138,6 +138,20 @@
                     </div>
                   </div>
 
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default-select2">
+
+                      <label>Stages Filter:</label>
+              
+                      <select class="form-control" id="stage">
+                        <option value="all">ALL</option>
+                        
+                      
+                      </select>
+
+                    </div>
+                  </div>
+
               </div>
               <div class="card-body">
 
@@ -315,7 +329,7 @@
               {data: 'stage', name: 'stage', orderable: false, searchable: false},
               {data: 'options', name: 'options', orderable: false, searchable: false},
               {data: 'credits', name: 'credits'},
-              {data: 'assigned_to', name: 'assigned_to'},
+              {data: 'engineer', name: 'engineer'},
               {data: 'response_time', name: 'response_time', orderable: false, searchable: false},
               
           ]
