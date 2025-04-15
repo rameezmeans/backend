@@ -57,8 +57,8 @@
                                 <tr>
                     
                                     <th>DB ID</th>
-                                    {{-- <th>Invoice ID</th> --}}
-                                    {{-- <th>Date</th>
+                                    <th>Invoice ID</th> 
+                                    <th>Date</th>
                                     <th>Customer</th>
                                     <th>Email</th>
                                     <th>Customer Group</th>
@@ -67,7 +67,7 @@
                                     <th>Price Payed (€)</th>
                                     <th>Elorus</th>
                                     <th>Zohobooks</th>
-                                    <th>Trouble Email Sent</th> --}}
+                                    <th>Trouble Email Sent</th>
             
                                 </tr>
                     
@@ -115,24 +115,24 @@
             },
             columns: [
                 {data: 'id', name: 'id'},
-                // {data: 'invoice_id', name: 'invoice_id'},
-                // {
-                //     data: 'created_at',
-                //     type: 'num',
-                //     render: {
-                //         _: 'display',
-                //         sort: 'timestamp'
-                //     }
-                // },
-                // {data: 'customer', name: 'customer'},
-                // {data: 'email', name: 'email'},
-                // {data: 'group', name: 'group'},
-                // {data: 'elorus_invoice_id', name: 'elorus_invoice_id'},
-                // {data: 'credits', name: 'credits'},
-                // {data: 'price_payed', name: 'price_payed'},
-                // {data: 'elorus', name: 'elorus'},
-                // {data: 'zohobooks', name: 'zohobooks'},
-                // {data: 'email_sent', name: 'email_sent'},
+                {data: 'invoice_id', name: 'invoice_id'},
+                {
+                    data: 'created_at',
+                    type: 'num',
+                    render: {
+                        _: 'display',
+                        sort: 'timestamp'
+                    }
+                },
+                {data: 'customer', name: 'customer'},
+                {data: 'email', name: 'email'},
+                {data: 'group', name: 'group'},
+                {data: 'elorus_invoice_id', name: 'elorus_invoice_id'},
+                {data: 'credits', name: 'credits'},
+                {data: 'price_payed', name: 'price_payed'},
+                {data: 'elorus', name: 'elorus'},
+                {data: 'zohobooks', name: 'zohobooks'},
+                {data: 'email_sent', name: 'email_sent'},
                 
                 
             ]
