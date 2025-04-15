@@ -146,7 +146,7 @@
                       <select class="form-control" id="stage">
                           <option value="all">ALL</option>
                           @foreach ($stages as $stage)
-                            <option value="{{$stage->id}}">{{$stage->name}}</option>
+                            <option value="{{$stage->name}}">{{$stage->name}}</option>
                           @endforeach
                       
                       </select>
