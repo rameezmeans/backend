@@ -1942,6 +1942,18 @@ class FilesController extends Controller
             }
         }
 
+        if ($request->filled('support_status')) {
+            if($request->support_status != 'all'){
+                $data = $data->where('support_status', '=', $request->support_status);
+            }
+        }
+
+        if ($request->filled('status')) {
+            if($request->status != 'all'){
+                $data = $data->where('status', '=', $request->status);
+            }
+        }
+
         return Datatables::of($data)
 
             ->addIndexColumn()

@@ -106,6 +106,38 @@
                     </div>
                   </div>
 
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default-select2">
+
+                      <label>Support Status Filter:</label>
+              
+                      <select class="form-control" id="support_status">
+                        <option value="all">ALL</option>
+                        <option value="open">Open</option>
+                        <option value="close">Close</option>
+                      </select>
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default-select2">
+
+                      <label>Status Filter:</label>
+              
+                      <select class="form-control" id="status">
+                        <option value="all">ALL</option>
+                        <option value="completed">Completed</option>
+                        <option value="rejected">Canceled</option>
+                        <option value="on_hold">On Hold</option>
+                        <option value="submitted">Submitted</option>
+                        <option value="processing">Processing</option>
+                      
+                      </select>
+
+                    </div>
+                  </div>
+
               </div>
               <div class="card-body">
 
@@ -183,6 +215,8 @@
                 d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
                 d.late = $('#late').val();
                 d.frontend = $('#frontend').val();
+                d.support_status = $('#support_status').val();
+                d.status = $('#status').val();
 
               },
 
@@ -297,6 +331,14 @@
       });
 
       $('#frontend').change(function(){
+        table.draw();
+      });
+
+      $('#support_status').change(function(){
+        table.draw();
+      });
+
+      $('#status').change(function(){
         table.draw();
       });
         
