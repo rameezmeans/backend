@@ -1954,6 +1954,12 @@ class FilesController extends Controller
             }
         }
 
+        if ($request->filled('stage')) {
+            if($request->stage != 'all'){
+                $data = $data->where('stage', '=', $request->stage);
+            }
+        }
+
         return Datatables::of($data)
 
             ->addIndexColumn()
@@ -2163,9 +2169,12 @@ class FilesController extends Controller
 
         $this->feedadjustment();
 
+        $stages = Service::where('type', 'tunning')->get();
+        $options = Service::where('type', 'options')->get();
+
         // if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
             
-            return view('files.live_files');    
+            return view('files.live_files', ['stages' => $stages, 'options' => $options]);    
         // }
         // else{
         //     return abort(404);

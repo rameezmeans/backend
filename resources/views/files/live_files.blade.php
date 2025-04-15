@@ -144,8 +144,10 @@
                       <label>Stages Filter:</label>
               
                       <select class="form-control" id="stage">
-                        <option value="all">ALL</option>
-                        
+                          <option value="all">ALL</option>
+                          @foreach ($stages as $stage)
+                            <option value="{{$stage->id}}">{{$stage->name}}</option>
+                          @endforeach
                       
                       </select>
 
@@ -230,6 +232,7 @@
                 d.frontend = $('#frontend').val();
                 d.support_status = $('#support_status').val();
                 d.status = $('#status').val();
+                d.stage = $('#stage').val();
 
               },
 
@@ -352,6 +355,10 @@
       });
 
       $('#status').change(function(){
+        table.draw();
+      });
+
+      $('#stage').change(function(){
         table.draw();
       });
         
