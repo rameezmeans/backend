@@ -1911,7 +1911,7 @@ class FilesController extends Controller
     
     public function ajaxFiles(Request $request){
 
-        $data = File::select('front_end_id','files.created_at as created_at','username','brand','model','ecu','support_status','status','stage','files.credits as credits','assigned_to','response_time', 'files.id as row_id')
+        $data = File::select('*', 'files.id as row_id')
         ->join('file_services', 'file_services.file_id', '=', 'files.id')
         ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "processing" THEN 2 WHEN status = "ready_to_send" THEN 3 ELSE 4 END AS s'))
         ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
@@ -2090,7 +2090,7 @@ class FilesController extends Controller
             })
             ->addColumn('stage', function($row){
 
-                $file = File::findOrFail($row->row_id);
+                $file = File::findOrFail($row->id);
                 
                 if($file->stage_services){
                 return '<img alt="'.$file->stage.'" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
@@ -2102,7 +2102,7 @@ class FilesController extends Controller
             ->addColumn('options', function($row){
 
                 $options = '';
-                $file = File::findOrFail($row->row_id);
+                $file = File::findOrFail($row->id);
                 
                 foreach($file->options_services as $option){
                     $service = \App\Models\Service::where('id',$option->service_id)->first();
@@ -2171,7 +2171,7 @@ class FilesController extends Controller
             })
             ->setRowAttr([
                 'data-redirect' => function($row) {
-                    return route('file', $row->row_id);
+                    return route('file', $row->id);
                 },
                 
             ])
