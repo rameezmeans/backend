@@ -59,7 +59,7 @@
               
                       <input class="form-control" type="text" name="daterange" value="" />
               
-                      <button class="btn btn-success filter">Filter</button>
+                      <button class="btn btn-success filter m-t-10">Filter</button>
               
                     </div>
                     <div class="form-group form-group-default-select2" style="margin: 10px 0px;">
