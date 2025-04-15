@@ -66,11 +66,11 @@
 
                       <strong>Late Filter:</strong>
               
-                      <select id="late" >
+                      <select id="late">
                         <option value="all">ALL</option>
                         <option value="late">late</option>
                       </select>
-                      
+
                     </div>
                   </div>
                   <div class="pull-right">
@@ -159,7 +159,7 @@
 
                 d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
                 d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
-                d.late = $('#late').val;
+                d.late = $('#late').val();
 
               },
 
