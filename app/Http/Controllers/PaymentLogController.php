@@ -182,7 +182,7 @@ class PaymentLogController extends Controller
 
     public function paymentLogsTable(Request $request){
 
-        $data = PaymentLog::orderBy('created_at', 'desc');
+        $data = PaymentLog::select('*')->orderBy('created_at', 'desc');
 
         return DataTables::of($data)
         ->addIndexColumn()
