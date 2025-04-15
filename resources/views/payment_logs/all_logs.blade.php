@@ -94,6 +94,12 @@
 <script type="text/javascript">
 
     $( document ).ready(function(event) {
+
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
         
         var table = $('.data-table').DataTable({
 
