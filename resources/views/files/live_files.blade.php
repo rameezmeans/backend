@@ -308,7 +308,7 @@
           },
 
           columns: [
-              {data: 'id', name: 'id'},
+              {data: 'id', name: 'id', orderable: false, searchable: false},
               {data: 'timers', name: 'timers', orderable: false, searchable: false},
               {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
               {
@@ -317,19 +317,19 @@
                 render: {
                     _: 'display',
                     sort: 'timestamp'
-                }
+                }, orderable: false, searchable: false
               },
               {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
-              {data: 'username', name: 'username'},
-              {data: 'brand', name: 'brand'},
-              {data: 'model', name: 'model'},
-              {data: 'ecu', name: 'ecu'},
+              {data: 'username', name: 'username', orderable: false, searchable: false},
+              {data: 'brand', name: 'brand', orderable: false, searchable: false},
+              {data: 'model', name: 'model', orderable: false, searchable: false},
+              {data: 'ecu', name: 'ecu', orderable: false, searchable: false},
               {data: 'support_status', name: 'support_status', orderable: false, searchable: false},
               {data: 'status', name: 'status', orderable: false, searchable: false},
               {data: 'stage', name: 'stage', orderable: false, searchable: false},
               {data: 'options', name: 'options', orderable: false, searchable: false},
-              {data: 'credits', name: 'credits'},
-              {data: 'engineer', name: 'engineer'},
+              {data: 'credits', name: 'credits', orderable: false, searchable: false},
+              {data: 'engineer', name: 'engineer', orderable: false, searchable: false},
               {data: 'response_time', name: 'response_time', orderable: false, searchable: false},
               
           ]
