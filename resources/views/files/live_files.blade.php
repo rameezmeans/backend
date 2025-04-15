@@ -193,7 +193,7 @@
                   searchable="id,username,brand,model,ecu"
                 /> --}}
 
-                <table class="table table-bordered data-table" >
+                <table class="table table-hover demo-table-search table-responsive-block data-table no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info" >
 
                   <thead>
           
