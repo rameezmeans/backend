@@ -67,18 +67,18 @@
                     <div class="row m-t-20 m-b-20">
                       <div class="col-md-6">
 
-                    <div class="form-group">
+                    <div class="form-group" style="display: inline-flex;">
 
                       <label>Submission Date Filter:</label>
               
                       <input class="form-control" type="text" name="daterange" value="" />
               
-                      <button class="btn btn-success filter m-t-10">Filter</button>
+                      <button class="btn btn-success filter m-l-5">Filter</button>
               
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="form-group form-group-default-select2" style="margin: 10px 0px;">
+                    <div class="form-group form-group-default-select2">
 
                       <label>Late Filter:</label>
               
@@ -91,7 +91,7 @@
                   </div>
               </div>
               <div class="card-body">
-                
+
                 {{-- <livewire:files-datatable 
                   searchable="id,username,brand,model,ecu"
                 /> --}}
