@@ -76,7 +76,9 @@
                       <button class="btn btn-success filter m-t-10">Filter</button>
               
                     </div>
-                    <d  iv class="form-group form-group-default-select2" style="margin: 10px 0px;">
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default-select2" style="margin: 10px 0px;">
 
                       <label>Late Filter:</label>
               
@@ -86,19 +88,10 @@
                       </select>
 
                     </div>
-
-
-
                   </div>
-                  
-                  
-                  
-
               </div>
               <div class="card-body">
-
                 
-
                 {{-- <livewire:files-datatable 
                   searchable="id,username,brand,model,ecu"
                 /> --}}
