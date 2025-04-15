@@ -52,15 +52,7 @@
             <div class="card-header ">
                 <div class="card-title">
                     <h3>All Payments</h3>
-                    <div style="margin: 20px 0px;">
-
-                      <strong>Payment Date Filter:</strong>
-              
-                      <input type="text" name="daterange" value="" />
-              
-                      <button class="btn btn-success filter">Filter</button>
-              
-                  </div>
+                </div>
                 </div>
                 <div class="pull-right">
                     <div class="col-xs-12">
@@ -72,6 +64,39 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
+
+                <div class="row m-t-20 m-b-20">
+                  <div class="col-md-6">
+
+                <div class="form-group" style="display: inline-flex;margin-top:20px;">
+
+                  <label>Submission Date Filter:</label>
+          
+                  <input class="form-control" type="text" name="daterange" value="" />
+          
+                  <button class="btn btn-success filter m-l-5">Filter</button>
+          
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-group-default-select2">
+
+                  <label>Frontend Filter:</label>
+              
+                      <select class="form-control" id="frontend">
+                        <option value="all">ALL</option>
+                        <option value="1">ECUTech</option>
+                        <option value="2">TuningX</option>
+                        <option value="3">Efiles</option>
+                      </select>
+
+                </div>
+              </div>
+
+              </div>
+
+
             </div>
             <div class="card-body">
 
