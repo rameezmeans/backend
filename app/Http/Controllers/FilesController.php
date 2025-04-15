@@ -1920,14 +1920,14 @@ class FilesController extends Controller
         ->where('is_credited', 1)
         ->whereNull('original_file_id')
         ->where(function ($query) {
-        $query->where('type', '=', 'master')
-                ->orWhereNotNull('assigned_from')->where('type', '=', 'subdealer');
+        $query->where('files.type', '=', 'master')
+                ->orWhereNotNull('assigned_from')->where('files.type', '=', 'subdealer');
         });
 
         if ($request->filled('from_date') && $request->filled('to_date')) {
 
-            $data = $data->whereDate('created_at', '>=', $request->from_date)
-            ->whereDate('created_at', '<=', $request->to_date);
+            $data = $data->whereDate('files.created_at', '>=', $request->from_date)
+            ->whereDate('files.created_at', '<=', $request->to_date);
 
         }
 
