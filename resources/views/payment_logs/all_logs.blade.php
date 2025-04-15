@@ -25,7 +25,7 @@
             <div class="card-body">
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                     <div>
-                        <table class="table table-hover demo-table-search table-responsive-block data-table no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                        {{-- <table class="table table-hover demo-table-search table-responsive-block data-table no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                             <thead>
                                 <tr>
                                     
@@ -41,13 +41,42 @@
                                     <th>Price Payed (€)</th>
                                     <th>Elorus</th>
                                     <th>Zohobooks</th>
-                                    <th>Trouble Email Sent</th> --}}
+                                    <th>Trouble Email Sent</th> 
                                     
                                 </tr>
                             </thead>
                             <tbody>
                                 
                             </tbody>
+                        </table> --}}
+
+                        <table class="table table-hover demo-table-search table-responsive-block data-table no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info" >
+
+                            <thead>
+                    
+                                <tr>
+                    
+                                    <th>DB ID</th>
+                                    {{-- <th>Invoice ID</th> --}}
+                                    {{-- <th>Date</th>
+                                    <th>Customer</th>
+                                    <th>Email</th>
+                                    <th>Customer Group</th>
+                                    <th>Elorus Invoice Number</th>
+                                    <th>Credits</th>
+                                    <th>Price Payed (€)</th>
+                                    <th>Elorus</th>
+                                    <th>Zohobooks</th>
+                                    <th>Trouble Email Sent</th> --}}
+            
+                                </tr>
+                    
+                            </thead>
+                    
+                            <tbody>
+                    
+                            </tbody>
+                    
                         </table>
 
                     </div>
