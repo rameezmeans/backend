@@ -70,7 +70,7 @@
 
                 <div class="form-group" style="display: inline-flex;margin-top:20px;">
 
-                  <label>Submission Date Filter:</label>
+                  <label>Payment Date Filter:</label>
           
                   <input class="form-control" type="text" name="daterange" value="" />
           
@@ -170,6 +170,7 @@
 
                 d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
                 d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
+                d.frontend = $('#frontend').val();
 
               }
           },
@@ -202,6 +203,10 @@
       });
 
       $(".filter").click(function(){
+        table.draw();
+      });
+
+      $('#frontend').change(function(){
         table.draw();
       });
 
