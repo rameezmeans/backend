@@ -114,7 +114,7 @@
                       <select class="form-control" id="support_status">
                         <option value="all">ALL</option>
                         <option value="open">Open</option>
-                        <option value="close">Close</option>
+                        <option value="closed">Closed</option>
                       </select>
 
                     </div>
