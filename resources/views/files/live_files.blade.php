@@ -351,7 +351,7 @@
           },
 
           columns: [
-              {data: 'row_id', name: 'row_id', orderable: false},
+              {data: 'id', name: 'id', orderable: false},
               {data: 'timers', name: 'timers', orderable: false, searchable: false},
               {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
               {

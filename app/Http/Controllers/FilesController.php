@@ -1925,8 +1925,8 @@ class FilesController extends Controller
 
         if ($request->filled('from_date') && $request->filled('to_date')) {
 
-            $data = $data->whereDate('files.created_at', '>=', $request->from_date)
-            ->whereDate('files.created_at', '<=', $request->to_date);
+            $data = $data->whereDate('created_at', '>=', $request->from_date)
+            ->whereDate('created_at', '<=', $request->to_date);
 
         }
 
@@ -1960,11 +1960,11 @@ class FilesController extends Controller
             }
         }
 
-        if ($request->filled('options')) {
+        // if ($request->filled('options')) {
             
-            $data = $data->whereIn('file_services.service_id', [$request->options]);
+        //     $data = $data->whereIn('file_services.service_id', [$request->options]);
             
-        }
+        // }
 
         if ($request->filled('engineer')) {
             if($request->engineer != 'all'){
