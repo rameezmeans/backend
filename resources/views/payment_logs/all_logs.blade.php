@@ -31,7 +31,7 @@
                                     
 
                                     <th>DB ID</th>
-                                    <th>Invoice ID</th>
+                                    {{-- <th>Invoice ID</th> --}}
                                     {{-- <th>Date</th>
                                     <th>Customer</th>
                                     <th>Email</th>
@@ -80,7 +80,7 @@
             },
             columns: [
                 {data: 'db_id', name: 'db_id'},
-                {data: 'invoice_id', name: 'invoice_id'},
+                // {data: 'invoice_id', name: 'invoice_id'},
                 // {
                 //     data: 'created_at',
                 //     type: 'num',
