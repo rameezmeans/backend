@@ -395,6 +395,14 @@
       $('#stage').change(function(){
         table.draw();
       });
+
+      $('#options').change(function(){
+        table.draw();
+      });
+
+      $('#engineer').change(function(){
+        table.draw();
+      });
         
         $('.parent-adjusted').parent().addClass('flex');
 

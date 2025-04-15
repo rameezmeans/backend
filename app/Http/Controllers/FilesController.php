@@ -1960,6 +1960,12 @@ class FilesController extends Controller
             }
         }
 
+        if ($request->filled('engineer')) {
+            if($request->engineer != 'all'){
+                $data = $data->where('assigned_to', '=', $request->engineer);
+            }
+        }
+
         return Datatables::of($data)
 
             ->addIndexColumn()
