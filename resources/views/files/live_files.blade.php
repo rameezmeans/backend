@@ -61,7 +61,20 @@
               
                       <button class="btn btn-success filter">Filter</button>
               
-                  </div>
+                    </div>
+                    <div style="margin: 10px 0px;">
+
+                      <strong>Late Filter:</strong>
+              
+                      <select id="late" >
+                        <option value="all">ALL</option>
+                        <option value="late">late</option>
+                      </select>
+
+              
+                      <button class="btn btn-success filter">Filter</button>
+              
+                    </div>
                   </div>
                   <div class="pull-right">
                     <div class="col-xs-12">
@@ -136,6 +149,10 @@
         }
       });
 
+      $('#late').change({
+        table.draw();
+      });
+
 
       var table = $('.data-table').DataTable({
 
@@ -150,6 +167,7 @@
 
                 d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
                 d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
+                d.late = $('#late').val;
 
               },
 

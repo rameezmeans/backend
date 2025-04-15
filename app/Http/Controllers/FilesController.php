@@ -1930,6 +1930,12 @@ class FilesController extends Controller
 
         }
 
+        if ($request->filled('late')) {
+            if($request->late == 'late'){
+                $data = $data->where('delay', '=', 1);
+            }
+        }
+
         return Datatables::of($data)
 
             ->addIndexColumn()
