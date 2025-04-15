@@ -45,7 +45,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if($allPaymentLogs)
+                                {{-- @if($allPaymentLogs)
                                     @foreach ($allPaymentLogs as $l)
 
                                         @if(\App\Models\Credit::where('id', $l->payment_id)->first())
@@ -117,7 +117,7 @@
                                         </tr>
                                         @endif
                                     @endforeach
-                                @endif
+                                @endif --}}
                             </tbody>
                         </table>
                     </div>
