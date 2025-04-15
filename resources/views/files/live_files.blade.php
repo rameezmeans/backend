@@ -159,7 +159,7 @@
 
                       <label>Options Filter:</label>
               
-                      <select class="form-control" id="options">
+                      <select class="form-control" id="options" multiple>
                           
                           @foreach ($options as $option)
                             <option value="{{$option->id}}">{{$option->name}}</option>
