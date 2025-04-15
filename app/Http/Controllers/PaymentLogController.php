@@ -7,6 +7,7 @@ use App\Models\FrontEnd;
 use App\Models\PaymentLog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Svg\Tag\Rect;
 use Yajra\DataTables\Facades\DataTables;
 
 class PaymentLogController extends Controller
@@ -177,6 +178,108 @@ class PaymentLogController extends Controller
             'allPayments' => $allPayments,
             
         ]);
+    }
+
+    public function paymentLogsTable(Request $request){
+
+        $data = PaymentLog::orderBy('created_at', 'desc');
+
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->addColumn('db_id', function($row){
+
+            return \App\Models\Credit::findOrFail($row->payment_id)->id;
+
+        })
+        ->addColumn('invoice_id', function($row){
+
+            return \App\Models\Credit::findOrFail($row->payment_id)->invoice_id;
+
+        })
+
+        ->editColumn('created_at', function ($row) {
+            return [
+                'display' => e($row->created_at->format('d-m-Y')),
+                'timestamp' => $row->created_at->timestamp
+            ];
+        })
+        ->filterColumn('created_at', function ($query, $keyword) {
+            $query->whereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') LIKE ?", ["%$keyword%"]);
+        })
+
+        ->addColumn('customer', function($row){
+
+            return \App\Models\User::findOrFail($row->user_id)->name;
+
+        })
+
+        ->addColumn('email', function($row){
+
+            return \App\Models\User::findOrFail($row->user_id)->email;
+
+        })
+
+        ->addColumn('group', function($row){
+
+            if(\App\Models\User::findOrFail($row->user_id)->group != NULL){
+                return \App\Models\User::findOrFail($row->user_id)->group->name;
+            }
+            else{
+                return 'No Group';
+            }
+            
+
+        })
+
+        ->addColumn('credits', function($row){
+
+            return \App\Models\Credit::findOrFail($row->payment_id)->credits;
+
+        })
+
+        ->addColumn('price_payed', function($row){
+
+            return \App\Models\Credit::findOrFail($row->payment_id)->price_payed;
+
+        })
+
+        ->addColumn('elorus', function($row){
+
+            if($row->elorus_id){
+                return '<a class="btn btn-warning text-black" target="_blank" href="'.\App\Models\Credit::findOrFail($row->payment_id)->elorus_permalink.'">To Elorus</a>';
+            }
+            else {
+                return 'No Elorus';
+            }
+
+        })
+
+        ->addColumn('zohobooks', function($row){
+
+            if($row->elorus_id){
+                return '<a class="btn btn-warning text-black" target="_blank" href="https://books.zoho.com/app/8745725#/invoices/'.$row->zohobooks_id.'">To Zohobooks</a>';
+            }
+            else {
+                return 'No Zohobooks';
+            }
+
+        })
+
+        ->addColumn('email_sent', function($row){
+
+            if($row->email_sent){
+                return 'Yes';
+            }
+            else{
+                return 'No';
+            }
+
+        })
+
+        
+        ->rawColumns(['db_id','invoice_id', 'email_sent', 'zohobooks', 'elorus', 'price_payed', 'credits', 'group', 'email', 'customer'])
+        ->make(true);
+
     }
 
     public function allPaymentLogs()

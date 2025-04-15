@@ -34,10 +34,10 @@
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Customer</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Email</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Customer Group</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Invoice Number</th>
+                                    {{-- <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Invoice Number</th> --}}
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus Invoice Number</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Credits</th>
-                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Price</th>
+                                    <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Price (€)</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Zohobooks</th>
                                     <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Trouble Email Sent</th>
@@ -111,9 +111,7 @@
                                                 
                                             </td>
 
-                                            {{-- <td class="v-align-middle semi-bold sorting_1">
-                                                
-                                            </td> 
+                                            
                                         </tr>
                                         @endif
                                     @endforeach
@@ -136,7 +134,43 @@
 
     $( document ).ready(function(event) {
         
-       
+        var table = $('.data-table').DataTable({
+
+            processing: true,
+            serverSide: true,
+            order: [[0,'desc']],
+            ajax: {
+                url: "{{ route('payment-logs-table') }}",
+                type: 'POST',
+                data:function (d) {
+
+                }
+            },
+            columns: [
+                {data: 'db_id', name: 'db_id'},
+                {data: 'invoice_id', name: 'invoice_id'},
+                {
+                    data: 'created_at',
+                    type: 'num',
+                    render: {
+                        _: 'display',
+                        sort: 'timestamp'
+                    }
+                },
+                {data: 'customer', name: 'customer'},
+                {data: 'email', name: 'email'},
+                {data: 'group', name: 'group'},
+                {data: 'elorus_invoice_id', name: 'elorus_invoice_id'},
+                {data: 'credits', name: 'credits'},
+                {data: 'price_payed', name: 'price_payed'},
+                {data: 'elorus', name: 'elorus'},
+                {data: 'zohobooks', name: 'zohobooks'},
+                {data: 'email_sent', name: 'email_sent'},
+                
+                
+            ]
+
+        });
     });
 
 </script>
