@@ -159,7 +159,7 @@
 
                       <label>Options Filter:</label>
               
-                      <select class="form-control" id="options" multiple>
+                      <select class="form-control" id="options" data-init-plugin="select2" multiple>
                           
                           @foreach ($options as $option)
                             <option value="{{$option->id}}">{{$option->name}}</option>
