@@ -113,7 +113,7 @@
 
                                             {{-- <td class="v-align-middle semi-bold sorting_1">
                                                 
-                                            </td> --}}
+                                            </td> 
                                         </tr>
                                         @endif
                                     @endforeach
