@@ -2179,27 +2179,101 @@ class FilesController extends Controller
 
     public function engineersReportsTable(Request $request){
 
-        $data = User::select('*');
+        $data = File::select('*');
 
-            return Datatables::of($data)
+        if ($request->filled('from_date') && $request->filled('to_date')) {
 
-                    ->addIndexColumn()
+            $data = $data->whereBetween('created_at', [$request->from_date, $request->to_date]);
 
-                    // ->addColumn('index', function($row){
+        }
 
+        if ($request->filled('frontend')) {
+            if($request->frontend != 'all'){
+                $data = $data->where('front_end_id', '=', $request->frontend);
+            }
+        }
 
+        return Datatables::of($data)
 
-                    //        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+        ->addIndexColumn()
 
+        ->addColumn('frontend', function($row){
+
+                $frontEndID = $row->front_end_id;
+
+                if($frontEndID == 1){
+                    $btn = FrontEnd::findOrFail($frontEndID)->name;
+                }
+                else if($frontEndID == 2){
+                    $btn = FrontEnd::findOrFail($frontEndID)->name;
+                }
+                else if($frontEndID == 3){
+                    $btn = FrontEnd::findOrFail($frontEndID)->name;
+                }
+
+                return $btn;
+
+            })
     
+            ->editColumn('created_at', function ($credit) {
+                return [
+                    'display' => e($credit->created_at->format('d-m-Y')),
+                    'timestamp' => $credit->created_at->timestamp
+                ];
+            })
+            ->filterColumn('created_at', function ($query, $keyword) {
+                $query->whereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') LIKE ?", ["%$keyword%"]);
+            })
 
-                    //         return $btn;
+            ->addColumn('vehicle', function($row){
 
-                    // })
+                $file = File::findOrFail($row->id);
+                return $file->brand.' '.$file->engine.' '.$file->vehicle()->TORQUE_standard;
 
-                    ->rawColumns(['index'])
+            })
 
-                    ->make(true);
+            ->addColumn('options', function($row){
+
+                $file = File::findOrFail($row->id);
+
+                $all = "";
+                        
+                foreach($file->options() as $option){
+                    if(\App\Models\Service::where('name', $option)->first() != null){
+                        $all .= $option;    
+                    }
+                }
+
+                return $all;
+
+            })
+
+            ->addColumn('engineer', function($row){
+
+                $user = User::findOrFail($row->assigned_to);
+
+                return $user->name;
+
+            })
+
+            ->addColumn('response_time', function($row){
+
+                $rt = $row->response_time;
+
+                if($rt == null ){
+                    return 'Not Responded';
+                }
+                else{
+                    return \Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans();
+                }
+            
+            
+
+            })
+
+            ->rawColumns(['frontend','vehicle','options', 'engineer','response_time'])
+
+            ->make(true);
 
     }
 

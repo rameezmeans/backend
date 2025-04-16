@@ -36,6 +36,38 @@
                     </div>
                 </div> --}}
                 <div class="clearfix"></div>
+
+                <div class="row m-t-20 m-b-20">
+                  <div class="col-md-6">
+
+                <div class="form-group" style="display: inline-flex;margin-top:20px;">
+
+                  <label>Payment Date Filter:</label>
+          
+                  <input class="form-control" type="text" name="daterange" value="" />
+          
+                  <button class="btn btn-success filter m-l-5">Filter</button>
+          
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-group-default-select2">
+
+                  <label>Frontend Filter:</label>
+              
+                      <select class="form-control" id="frontend">
+                        <option value="all">ALL</option>
+                        <option value="1">ECUTech</option>
+                        <option value="2">TuningX</option>
+                        <option value="3">Efiles</option>
+                      </select>
+
+                </div>
+              </div>
+
+              </div>
+
             </div>
             <div class="card-body">
                 {{-- <div class="row">
@@ -86,14 +118,14 @@
                           <tr>
               
                               <th>Index</th>
-                              {{-- <th>Frontend</th> 
+                              <th>Frontend</th> 
                               <th>Vehicle</th>
                               <th>Stage</th>
                               <th>Options</th>
                               <th>Credits</th>
                               <th>Assigned to</th>
                               <th>Upload Date</th>
-                              <th>Resposne Time</th> --}}
+                              <th>Resposne Time</th>
       
                           </tr>
               
@@ -141,35 +173,29 @@
               type: 'POST',
               data:function (d) {
 
-                // d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
-                // d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
-                // d.frontend = $('#frontend').val();
+                d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
+                d.frontend = $('#frontend').val();
 
               }
           },
           columns: [
-            { data: 'DT_Row_Index', name: 'DT_Row_Index' , orderable: false, searchable: false},
-              // {data: 'invoice_id', name: 'invoice_id'},
-              // {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
-              // {data: 'country', name: 'country'},
-              // {data: 'type', name: 'type'},
-              // {
-              //   data: 'created_at',
-              //   type: 'num',
-              //   render: {
-              //       _: 'display',
-              //       sort: 'timestamp'
-              //   }
-              // },
-              // {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
-              // {data: 'customer', name: 'customer'},
-              // {data: 'email', name: 'email'},
-              // {data: 'group', name: 'group'},
-              // {data: 'credits', name: 'credits'},
-              // {data: 'price_payed', name: 'price_payed'},
-              // {data: 'details', name: 'details', orderable: false, searchable: false},
-              // {data: 'elorus', name: 'elorus', orderable: false, searchable: false},
-              // {data: 'zohobooks', name: 'zohobooks', orderable: false, searchable: false},
+            {data: 'id', name: 'id' , orderable: false, searchable: false},
+            {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
+            {data: 'vehicle', name: 'vechile'},
+            {data: 'stage', name: 'stage'},
+            {data: 'options', name: 'options'},
+            {data: 'credits', name: 'credits'},
+            {data: 'engineer', name: 'engineer'},
+            {
+              data: 'created_at',
+              type: 'num',
+              render: {
+                  _: 'display',
+                  sort: 'timestamp'
+              }
+            },
+            {data: 'response_time', name: 'response_time', orderable: false, searchable: false},
               
           ]
 
