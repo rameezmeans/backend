@@ -2179,7 +2179,8 @@ class FilesController extends Controller
 
     public function engineersReportsTable(Request $request){
 
-        $data = File::select('*');
+        $data = File::select('*')->where('is_credited', 1)
+        ->whereNull('original_file_id');
 
         if ($request->filled('from_date') && $request->filled('to_date')) {
 
