@@ -2185,17 +2185,17 @@ class FilesController extends Controller
 
                     ->addIndexColumn()
 
-                    ->addColumn('index', function($row){
+                    // ->addColumn('index', function($row){
 
-     
 
-                           $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+
+                    //        $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
 
     
 
-                            return $btn;
+                    //         return $btn;
 
-                    })
+                    // })
 
                     ->rawColumns(['index'])
 
