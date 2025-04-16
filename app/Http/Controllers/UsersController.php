@@ -407,7 +407,7 @@ class UsersController extends Controller
 
         })
 
-        ->rawColumns(['elorus', 'group', 'frontend', 'edit', 'created_time'])
+        ->rawColumns(['elorus', 'group', 'frontend', 'edit', 'created_time', 'created_at'])
         ->make(true);
 
     }
