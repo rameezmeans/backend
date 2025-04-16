@@ -2177,6 +2177,19 @@ class FilesController extends Controller
             ->make(true);
     }
 
+    public function engineersReportsTable(Request $request){
+
+        $data = User::select('*');
+
+            return Datatables::of($data)
+
+                    ->addIndexColumn()
+                    ->rawColumns([''])
+
+                    ->make(true);
+
+    }
+
     public function liveFiles(){
 
         $this->feedadjustment();
