@@ -2228,7 +2228,7 @@ class FilesController extends Controller
             ->addColumn('vehicle', function($row){
 
                 $file = File::findOrFail($row->id);
-                return $file->brand.' '.$file->engine.' '.$file->vehicle()->TORQUE_standard;
+                return $file->brand.' '.$file->engine;
 
             })
 
