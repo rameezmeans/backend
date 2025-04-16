@@ -4405,7 +4405,7 @@ class FilesController extends Controller
         
             $engineers = User::whereIn('role_id', [2,3])->orWhere('id', 3)->get();
 
-            return view('files.report-engineers-live', ['engineers' => $engineers, 'engineers' => $engineers]);
+            return view('files.report-engineers-live', ['stages' => $stages, 'engineers' => $engineers]);
         }
 
         else{
