@@ -2250,9 +2250,14 @@ class FilesController extends Controller
 
             ->addColumn('engineer', function($row){
 
-                $user = User::findOrFail($row->assigned_to);
+                if($row->assigned_to){
 
-                return $user->name;
+                    $user = User::findOrFail($row->assigned_to);
+                    return $user->name;
+                }
+                else{
+                    return "Not assigned";
+                }
 
             })
 
