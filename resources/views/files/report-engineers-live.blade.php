@@ -148,7 +148,7 @@
               }
           },
           columns: [
-            { data: 'DT_Row_Index', name: 'DT_Row_Index' , orderable: false, searchable: false},
+            { data: 'index', name: 'index' , orderable: false, searchable: false},
               // {data: 'invoice_id', name: 'invoice_id'},
               // {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
               // {data: 'country', name: 'country'},
