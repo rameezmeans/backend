@@ -1045,7 +1045,8 @@ Route::post('/add_upload_later_record', [App\Http\Controllers\FilesController::c
 Route::get('/feedback_reports', [App\Http\Controllers\FilesController::class,'feedbackReportsLive'])->name('feedback-reports');
 // Route::get('/engineers_reports', [App\Http\Controllers\FilesController::class,'reports'])->name('reports');
 Route::get('/engineers_reports', [App\Http\Controllers\FilesController::class,'reportsEngineerLive'])->name('reports');
-Route::post('/get_engineers_files', [App\Http\Controllers\FilesController::class,'getEngineersFiles'])->name('get-engineers-files');
+Route::get('/engineers_reports_table', [App\Http\Controllers\FilesController::class,'reportsEngineerTable'])->name('reports');
+Route::post('/get_engineers_files', [App\Http\Controllers\FilesController::class,'getEngineersFiles'])->name('engineers-reports-table');
 Route::post('/get_engineers_report', [App\Http\Controllers\FilesController::class,'getEngineersReport'])->name('get-engineers-report');
 Route::post('/get_feedback_report', [App\Http\Controllers\FilesController::class,'getFeedbackReport'])->name('get-feedback-report');
 

@@ -75,9 +75,36 @@
                 </div> --}}
                
                 <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
-                    <livewire:file-engineer-table
+                    {{-- <livewire:file-engineer-table
                         searchable="name"
-                    />
+                    /> --}}
+
+                    <table class="table table-hover demo-table-search table-responsive-block data-table no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info" >
+
+                      <thead>
+              
+                          <tr>
+              
+                              <th>Index</th>
+                              {{-- <th>Frontend</th> 
+                              <th>Vehicle</th>
+                              <th>Stage</th>
+                              <th>Options</th>
+                              <th>Credits</th>
+                              <th>Assigned to</th>
+                              <th>Upload Date</th>
+                              <th>Resposne Time</th> --}}
+      
+                          </tr>
+              
+                      </thead>
+              
+                      <tbody>
+              
+                      </tbody>
+              
+                  </table>
+
                 </div>
             </div>
           </div>
@@ -90,9 +117,73 @@
 @section('pagespecificscripts')
 
 <script type="text/javascript">
-    $( document ).ready(function(event) {
+    $(function () {
 
-    });
+      $('input[name="daterange"]').daterangepicker({
+        startDate: moment().subtract(36, 'M'),
+        endDate: moment()
+      });
+
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+
+      var table = $('.data-table').DataTable({
+
+          processing: true,
+          serverSide: true,
+          order: [[0,'desc']],
+          ajax: {
+              url: "{{ route('engineers-reports-table') }}",
+              type: 'POST',
+              data:function (d) {
+
+                d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
+                d.frontend = $('#frontend').val();
+
+              }
+          },
+          columns: [
+              {data: 'index', name: 'index'},
+              // {data: 'invoice_id', name: 'invoice_id'},
+              // {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
+              // {data: 'country', name: 'country'},
+              // {data: 'type', name: 'type'},
+              // {
+              //   data: 'created_at',
+              //   type: 'num',
+              //   render: {
+              //       _: 'display',
+              //       sort: 'timestamp'
+              //   }
+              // },
+              // {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
+              // {data: 'customer', name: 'customer'},
+              // {data: 'email', name: 'email'},
+              // {data: 'group', name: 'group'},
+              // {data: 'credits', name: 'credits'},
+              // {data: 'price_payed', name: 'price_payed'},
+              // {data: 'details', name: 'details', orderable: false, searchable: false},
+              // {data: 'elorus', name: 'elorus', orderable: false, searchable: false},
+              // {data: 'zohobooks', name: 'zohobooks', orderable: false, searchable: false},
+              
+          ]
+
+      });
+
+      $(".filter").click(function(){
+        table.draw();
+      });
+
+      $('#frontend').change(function(){
+        table.draw();
+      });
+
+});
 </script>
 
 @endsection
