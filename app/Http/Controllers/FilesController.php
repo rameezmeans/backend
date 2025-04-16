@@ -2179,7 +2179,7 @@ class FilesController extends Controller
 
     public function engineersReportsTable(Request $request){
 
-        $data = File::orderBy('created_at', 'desc');
+        $data = File::select('*');
 
         if ($request->filled('from_date') && $request->filled('to_date')) {
 
