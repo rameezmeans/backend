@@ -78,13 +78,13 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Frontend</th>
-                                <th>Group</th>
+                                {{-- <th>Group</th>
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Country</th>
                                 <th>Created At</th>
                                 <th>Elorus Account</th>
-                                <th>Edit</th>
+                                <th>Edit</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -136,22 +136,22 @@
               {data: 'id', name: 'id'},
               {data: 'name', name: 'name'},
               {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
-              {data: 'group', name: 'group'},
-              {data: 'email', name: 'email'},
-              {data: 'phone', name: 'phone'},
-              {data: 'country', name: 'country'},
+              // {data: 'group', name: 'group'},
+              // {data: 'email', name: 'email'},
+              // {data: 'phone', name: 'phone'},
+              // {data: 'country', name: 'country'},
               
-              {
-                data: 'created_at',
-                type: 'num',
-                render: {
-                    _: 'display',
-                    sort: 'timestamp'
-                }
-              },
-              {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
-              {data: 'elorus', name: 'elorus'},
-              {data: 'edit', name: 'edit'},
+              // {
+              //   data: 'created_at',
+              //   type: 'num',
+              //   render: {
+              //       _: 'display',
+              //       sort: 'timestamp'
+              //   }
+              // },
+              // {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
+              // {data: 'elorus', name: 'elorus'},
+              // {data: 'edit', name: 'edit'},
               
               
           ]
