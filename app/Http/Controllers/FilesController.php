@@ -2199,7 +2199,7 @@ class FilesController extends Controller
                 $data = $data->where('stage', '=', $request->stage);
             }
         }
-        
+
         if ($request->filled('engineer')) {
             if($request->engineer != 'all'){
                 $data = $data->where('assigned_to', '=', $request->engineer);
@@ -4401,7 +4401,11 @@ class FilesController extends Controller
 
         if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'engineers-report')){
 
-            return view('files.report-engineers-live');
+            $stages = Service::where('type', 'tunning')->get();
+        
+            $engineers = User::whereIn('role_id', [2,3])->orWhere('id', 3)->get();
+
+            return view('files.report-engineers-live', ['engineers' => $engineers, 'engineers' => $engineers]);
         }
 
         else{
