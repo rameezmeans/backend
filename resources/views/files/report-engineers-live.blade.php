@@ -231,9 +231,12 @@
             },
             {data: 'response_time', name: 'response_time', orderable: false, searchable: false},
               
-          ]
+          ],
 
-      });
+          "buttons": ["csv", "excel"]
+          }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+                });
 
       $(".filter").click(function(){
         table.draw();
