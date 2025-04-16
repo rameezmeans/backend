@@ -180,7 +180,7 @@
               }
           },
           columns: [
-            {data: 'id', name: 'id' , orderable: false, searchable: false},
+            {data: 'id', name: 'id'},
             {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
             {data: 'vehicle', name: 'vechile'},
             {data: 'stage', name: 'stage'},
