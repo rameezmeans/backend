@@ -66,6 +66,38 @@
                 </div>
               </div>
 
+              <div class="col-md-6">
+                <div class="form-group form-group-default-select2">
+
+                  <label>Stages Filter:</label>
+          
+                  <select class="form-control" id="stage">
+                      <option value="all">ALL</option>
+                      @foreach ($stages as $stage)
+                        <option value="{{$stage->name}}">{{$stage->name}}</option>
+                      @endforeach
+                  
+                  </select>
+
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-group-default-select2">
+
+                  <label>Assigned To Filter:</label>
+          
+                  <select class="form-control" id="engineer">
+                      <option value="all">ALL</option>
+                      @foreach ($engineers as $engineer)
+                        <option value="{{$engineer->id}}">{{$engineer->name}}</option>
+                      @endforeach
+                  
+                  </select>
+
+                </div>
+              </div>
+
               </div>
 
             </div>
@@ -206,6 +238,14 @@
       });
 
       $('#frontend').change(function(){
+        table.draw();
+      });
+
+      $('#stage').change(function(){
+        table.draw();
+      });
+
+      $('#engineer').change(function(){
         table.draw();
       });
 

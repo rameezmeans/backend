@@ -2194,6 +2194,18 @@ class FilesController extends Controller
             }
         }
 
+        if ($request->filled('stage')) {
+            if($request->stage != 'all'){
+                $data = $data->where('stage', '=', $request->stage);
+            }
+        }
+        
+        if ($request->filled('engineer')) {
+            if($request->engineer != 'all'){
+                $data = $data->where('assigned_to', '=', $request->engineer);
+            }
+        }
+
         return Datatables::of($data)
 
         ->addIndexColumn()
