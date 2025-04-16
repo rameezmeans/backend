@@ -75,47 +75,19 @@
                     <table class="table table-hover demo-table-search table-responsive-block data-table no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                         <thead>
                             <tr role="row">
-                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
-                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Portal</th>
-                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Group</th>
-                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Email</th>
-                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Phone</th>
-                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Country</th>
-                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
-                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus Account</th>
-                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Edit</th>
+                                <th>Name</th>
+                                <th>Frontend</th>
+                                <th>Group</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Country</th>
+                                <th>Created At</th>
+                                <th>Elorus Account</th>
+                                <th>Edit</th>
                             </tr>
                         </thead>
                         <tbody>
-                          {{-- @foreach ($customers as $customer)
-                            <tr role="row" class="@if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-customers')) redirect-click @endif" @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-customers')) data-redirect="{{ route('edit-customer', $customer->id) }}" @endif>
-                                <td class="v-align-middle semi-bold sorting_1">
-                                    <p>{{$customer->name}}</p>
-                                </td>
-
-                                <td class="v-align-middle semi-bold sorting_1">
-                                  <p>@if($customer->elorus_id)<a href="{{'https://ecutech.elorus.com/contacts/'.$customer->elorus_id}}" target="_blank">Go To Elorus Account</a>@else No Elorus @endif</p>
-                                  
-                                </td>
-                                
-                                <td class="v-align-middle semi-bold sorting_1">
-                                  <p><label class="label @if($customer->frontend->id == 1) text-white bg-primary @elseif($customer->frontend->id == 3) text-white bg-info @else text-black bg-warning @endif">{{$customer->frontend->name}}</label></p>
-                                </td>
-                                
-                                <td class="v-align-middle semi-bold sorting_1">
-                                  <p>{{$customer->email}}</p>
-                                </td>
-                                <td class="v-align-middle semi-bold sorting_1">
-                                  <p>{{$customer->phone}}</p>
-                                </td>
-                                <td class="v-align-middle semi-bold sorting_1">
-                                  <p>{{code_to_country($customer->country)}}</p>
-                                </td>
-                                <td class="v-align-middle semi-bold sorting_1">
-                                  <p>{{ date('d/m/Y', strtotime($customer->created_at))}}</p>
-                              </td>
-                            </tr>
-                          @endforeach --}}
+                          
                         </tbody>
                     </table>
                 </div>
@@ -142,8 +114,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
-
-
+      
       var table = $('.data-table').DataTable({
 
           processing: true,
