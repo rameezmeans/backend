@@ -208,6 +208,8 @@
                 d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
                 d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
                 d.frontend = $('#frontend').val();
+                d.stage = $('#stage').val();
+                d.engineer = $('#engineer').val();
 
               }
           },
