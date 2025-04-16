@@ -2238,7 +2238,7 @@ class FilesController extends Controller
 
                 $all = "";
                         
-                foreach($file->options() as $option){
+                foreach($file->options_services as $option){
                     if(\App\Models\Service::where('name', $option)->first() != null){
                         $all .= $option;    
                     }
