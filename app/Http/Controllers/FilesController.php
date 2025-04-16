@@ -2240,7 +2240,7 @@ class FilesController extends Controller
                         
                 foreach($file->options_services as $option){
                     if(\App\Models\Service::where('id', $option->service_id)->first() != null){
-                        $all .= \App\Models\Service::where('id', $option->service_id)->name.',';    
+                        $all .= \App\Models\Service::where('id', $option->service_id)->first()->name.',';    
                     }
                 }
 
