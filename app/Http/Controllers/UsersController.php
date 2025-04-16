@@ -343,7 +343,7 @@ class UsersController extends Controller
 
     public function customersTable(Request $request){
 
-        $data = User::select('*')->orderBy('created_at', 'desc');
+        $data = User::select('*');
 
         return DataTables::of($data)
         ->addIndexColumn()
@@ -402,12 +402,12 @@ class UsersController extends Controller
 
         ->addColumn('edit', function($row){
 
-            $btn = '<a href="'.route('edit-customer', $row->id).'" class="edit btn btn-primary btn-sm">View</a>';
+            $btn = '<a href="'.route('edit-customer', $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>';
             return $btn;
 
         })
 
-        ->rawColumns(['elorus', 'group', 'frontend', 'edit', 'created_time', 'created_at'])
+        ->rawColumns(['elorus', 'group', 'frontend', 'edit', 'created_time'])
         ->make(true);
 
     }

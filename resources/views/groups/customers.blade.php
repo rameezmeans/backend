@@ -72,9 +72,10 @@
             <div class="card-body">
               <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                 <div>
-                    <table class="table table-hover demo-table-search table-responsive-block data-table no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                    <table class="table table-hover data-table no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                         <thead>
                             <tr role="row">
+                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Frontend</th>
                                 <th>Group</th>
@@ -114,7 +115,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
-      
+
       var table = $('.data-table').DataTable({
 
           processing: true,
@@ -133,6 +134,7 @@
           },
           columns: [
               {data: 'id', name: 'id'},
+              {data: 'name', name: 'name'},
               {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
               {data: 'group', name: 'group'},
               {data: 'email', name: 'email'},
