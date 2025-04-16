@@ -202,7 +202,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
         Yajra\DataTables\DataTablesServiceProvider::class,
-        Yajra\DataTables\ButtonsServiceProvider::class,
+        // Yajra\DataTables\ButtonsServiceProvider::class,
     ],
 
     /*
