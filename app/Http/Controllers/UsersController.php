@@ -379,6 +379,10 @@ class UsersController extends Controller
             return $credit->created_at->format('h:i A');
         })
 
+        ->addColumn('country_value', function ($user) {
+            return code_to_country($user->country);
+        })
+
         ->addColumn('group', function($row){
 
             if(\App\Models\User::findOrFail($row->id)->group != NULL){
@@ -407,7 +411,7 @@ class UsersController extends Controller
 
         })
 
-        ->rawColumns(['elorus', 'group', 'frontend', 'edit', 'created_time'])
+        ->rawColumns(['elorus', 'group', 'frontend', 'edit', 'created_time', 'country_value'])
         ->make(true);
 
     }

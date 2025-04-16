@@ -140,7 +140,7 @@
               {data: 'group', name: 'group'},
               {data: 'email', name: 'email'},
               {data: 'phone', name: 'phone'},
-              {data: 'country', name: 'country'},
+              {data: 'country_value', name: 'country_value'},
               
               {
                 data: 'created_at',
