@@ -182,7 +182,7 @@
           columns: [
             {data: 'id', name: 'id'},
             {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
-            {data: 'vehicle', name: 'vechile'},
+            {data: 'vehicle', name: 'vehicle'},
             {data: 'stage', name: 'stage'},
             {data: 'options', name: 'options'},
             {data: 'credits', name: 'credits'},
