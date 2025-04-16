@@ -48,6 +48,7 @@
         "twilio/sdk": "^6.44",
         "ultramsg/whatsapp-php-sdk": "^2.0",
         "webleit/zohobooksapi": "^5.5",
+        "yajra/laravel-datatables-buttons": "^9.1",
         "yajra/laravel-datatables-oracle": "^10.11"
     },
     "require-dev": {
