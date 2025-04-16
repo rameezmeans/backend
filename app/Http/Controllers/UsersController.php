@@ -343,7 +343,7 @@ class UsersController extends Controller
 
     public function customersTable(Request $request){
 
-        $data = User::select('*');
+        $data = User::where('role_id', 4);
 
         return DataTables::of($data)
         ->addIndexColumn()
