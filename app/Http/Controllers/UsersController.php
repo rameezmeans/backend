@@ -345,6 +345,18 @@ class UsersController extends Controller
 
         $data = User::where('role_id', 4);
 
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+
+            $data = $data->whereBetween('created_at', [$request->from_date, $request->to_date]);
+
+        }
+
+        if ($request->filled('frontend')) {
+            if($request->frontend != 'all'){
+                $data = $data->where('front_end_id', '=', $request->frontend);
+            }
+        }
+
         return DataTables::of($data)
         ->addIndexColumn()
         ->addColumn('frontend', function($row){
