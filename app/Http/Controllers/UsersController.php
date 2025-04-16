@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Laravel\Ui\Presets\React;
+use Yajra\DataTables\Facades\DataTables;
 
 class UsersController extends Controller
 {
@@ -338,6 +339,77 @@ class UsersController extends Controller
         $frontends = FrontEnd::all();
         $countries = User::select('country')->groupby('country')->get();
         return view('groups.countries', ['countries' => $countries, 'frontends' => $frontends]);
+    }
+
+    public function customersTable(Request $request){
+
+        $data = User::select('*')->orderBy('created_at', 'desc');
+
+        return DataTables::of($data)
+        ->addIndexColumn()
+        ->addColumn('frontend', function($row){
+
+            $frontEndID = $row->front_end_id;
+
+            if($frontEndID == 1){
+                $btn = '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+            }
+            else if($frontEndID == 2){
+                $btn = '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+            }
+            else if($frontEndID == 3){
+                $btn = '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+            }
+
+            return $btn;
+
+        })
+        
+        ->editColumn('created_at', function ($row) {
+            return [
+                'display' => e($row->created_at->format('d-m-Y')),
+                'timestamp' => $row->created_at->timestamp
+            ];
+        })
+        ->filterColumn('created_at', function ($query, $keyword) {
+            $query->whereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') LIKE ?", ["%$keyword%"]);
+        })
+
+        ->addColumn('created_time', function ($credit) {
+            return $credit->created_at->format('h:i A');
+        })
+
+        ->addColumn('group', function($row){
+
+            if(\App\Models\User::findOrFail($row->id)->group != NULL){
+                return \App\Models\User::findOrFail($row->id)->group->name;
+            }
+            else{
+                return 'No Group';
+            }
+        })
+
+        ->addColumn('elorus', function($row){
+
+            if($row->elorus_id){
+                return '<a href="{{"https://ecutech.elorus.com/contacts/"'.$row->elorus_id.'" target="_blank">Go To Elorus Account</a>';
+            }
+            else { 
+                return "No Elorus"; 
+            }
+
+        })
+
+        ->addColumn('edit', function($row){
+
+            $btn = '<a href="'.route('edit-customer', $row->id).'" class="edit btn btn-primary btn-sm">View</a>';
+            return $btn;
+
+        })
+
+        ->rawColumns(['elorus', 'group', 'frontend', 'edit', 'created_time'])
+        ->make(true);
+
     }
 
     public function Customers(){

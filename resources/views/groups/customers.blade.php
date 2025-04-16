@@ -44,16 +44,18 @@
                         <thead>
                             <tr role="row">
                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Name</th>
-                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus Account</th>
                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Portal</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Group</th>
                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Email</th>
                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Phone</th>
                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Country</th>
                                 <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Created At</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Elorus Account</th>
+                                <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Edit</th>
                             </tr>
                         </thead>
                         <tbody>
-                          @foreach ($customers as $customer)
+                          {{-- @foreach ($customers as $customer)
                             <tr role="row" class="@if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-customers')) redirect-click @endif" @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-customers')) data-redirect="{{ route('edit-customer', $customer->id) }}" @endif>
                                 <td class="v-align-middle semi-bold sorting_1">
                                     <p>{{$customer->name}}</p>
@@ -81,7 +83,7 @@
                                   <p>{{ date('d/m/Y', strtotime($customer->created_at))}}</p>
                               </td>
                             </tr>
-                          @endforeach
+                          @endforeach --}}
                         </tbody>
                     </table>
                 </div>
@@ -90,4 +92,77 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('pagespecificscripts')
+
+<script type="text/javascript">
+
+    $(function () {
+
+      $('input[name="daterange"]').daterangepicker({
+        startDate: moment().subtract(36, 'M'),
+        endDate: moment()
+      });
+
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+
+      var table = $('.data-table').DataTable({
+
+          processing: true,
+          serverSide: true,
+          order: [[0,'desc']],
+          ajax: {
+              url: "{{ route('customers-table') }}",
+              type: 'POST',
+              data:function (d) {
+
+                d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
+                d.frontend = $('#frontend').val();
+
+              }
+          },
+          columns: [
+              {data: 'id', name: 'id'},
+              {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
+              {data: 'group', name: 'group'},
+              {data: 'email', name: 'email'},
+              {data: 'phone', name: 'phone'},
+              {data: 'country', name: 'country'},
+              
+              {
+                data: 'created_at',
+                type: 'num',
+                render: {
+                    _: 'display',
+                    sort: 'timestamp'
+                }
+              },
+              {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
+              {data: 'elorus', name: 'elorus'},
+              {data: 'edit', name: 'edit'},
+              
+              
+          ]
+
+      });
+
+      $(".filter").click(function(){
+        table.draw();
+      });
+
+      $('#frontend').change(function(){
+        table.draw();
+      });
+
+    });
+
+</script>
+
 @endsection

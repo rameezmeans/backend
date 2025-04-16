@@ -1086,6 +1086,7 @@ Route::post('/update-group', [App\Http\Controllers\GroupsController::class,'upda
 // Route::post('/delete_group', [App\Http\Controllers\GroupsController::class,'delete'])->name('delete-group');
 
 Route::get('/customers', [App\Http\Controllers\UsersController::class,'Customers'])->name('customers');
+Route::post('/customers_table', [App\Http\Controllers\UsersController::class,'customersTable'])->name('customers-table');
 Route::get('/create_customer', [App\Http\Controllers\UsersController::class,'createCustomer'])->name('create-customer');
 Route::get('/edit_customer/{id}', [App\Http\Controllers\UsersController::class,'editCustomer'])->name('edit-customer');
 Route::get('/user_init/{id}', [App\Http\Controllers\UsersController::class,'userInit'])->name('user-init');
