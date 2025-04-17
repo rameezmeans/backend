@@ -1916,6 +1916,7 @@ class FilesController extends Controller
         ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
         ->orderBy('ss', 'asc')
         ->orderBy('s', 'asc')
+        ->orderBy('created_at', 'desc')
         ->where('is_credited', 1)
         ->whereNull('original_file_id')
         ->where(function ($query) {
