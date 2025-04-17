@@ -137,7 +137,7 @@
 
                       <label>Status Filter:</label>
               
-                      <select class="form-control" id="status" data-init-plugin="select2" multiple>
+                      <select class="form-control full-width" id="status" data-init-plugin="select2" multiple>
                         
                         <option value="completed">Completed</option>
                         <option value="rejected">Canceled</option>
@@ -155,7 +155,7 @@
 
                       <label>Stages Filter:</label>
               
-                      <select class="form-control" id="stage" data-init-plugin="select2" multiple>
+                      <select class="form-control full-width" id="stage" data-init-plugin="select2" multiple>
                           
                           @foreach ($stages as $stage)
                             <option value="{{$stage->name}}">{{$stage->name}}</option>
