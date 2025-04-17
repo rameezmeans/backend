@@ -138,7 +138,7 @@
                       <label>Status Filter:</label>
               
                       <select class="form-control" id="status" data-init-plugin="select2" multiple>
-                        <option value="all">ALL</option>
+                        
                         <option value="completed">Completed</option>
                         <option value="rejected">Canceled</option>
                         <option value="on_hold">On Hold</option>
@@ -156,7 +156,7 @@
                       <label>Stages Filter:</label>
               
                       <select class="form-control" id="stage" data-init-plugin="select2" multiple>
-                          <option value="all">ALL</option>
+                          
                           @foreach ($stages as $stage)
                             <option value="{{$stage->name}}">{{$stage->name}}</option>
                           @endforeach
@@ -187,8 +187,8 @@
 
                       <label>Assigned To Filter:</label>
               
-                      <select class="form-control" id="engineer" data-init-plugin="select2" multiple>
-                          <option value="all">ALL</option>
+                      <select class="form-control full-width" id="engineer" data-init-plugin="select2" multiple>
+                          
                           @foreach ($engineers as $engineer)
                             <option value="{{$engineer->id}}">{{$engineer->name}}</option>
                           @endforeach
