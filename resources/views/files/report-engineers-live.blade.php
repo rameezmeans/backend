@@ -37,86 +37,68 @@
                 </div> --}}
                 <div class="clearfix"></div>
 
-                <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
-                  <div class="card card-default m-b-0">
-                    <div class="card-header " role="tab" id="headingOne">
-                      <h4 class="card-title">
-                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                           Data Filters
-                          </a>
-                        </h4>
-                    </div>
-                    <div id="collapseOne" class="collapse show" role="tabcard" aria-labelledby="headingOne">
-                      <div class="card-body">
-                        <div class="row m-t-20 m-b-20">
-                          <div class="col-md-6">
-        
-                        <div class="form-group" style="display: inline-flex;margin-top:20px;">
-        
-                          <label>Payment Date Filter:</label>
-                  
-                          <input class="form-control" type="text" name="daterange" value="" />
-                  
-                          <button class="btn btn-success filter m-l-5">Filter</button>
-                  
-                        </div>
-                      </div>
-        
-                      <div class="col-md-6">
-                        <div class="form-group form-group-default-select2">
-        
-                          <label>Frontend Filter:</label>
-                      
-                              <select class="form-control" id="frontend">
-                                <option value="all">ALL</option>
-                                <option value="1">ECUTech</option>
-                                <option value="2">TuningX</option>
-                                <option value="3">Efiles</option>
-                              </select>
-        
-                        </div>
-                      </div>
-        
-                      <div class="col-md-6">
-                        <div class="form-group form-group-default-select2">
-        
-                          <label>Stages Filter:</label>
-                  
-                          <select class="form-control" id="stage">
-                              <option value="all">ALL</option>
-                              @foreach ($stages as $stage)
-                                <option value="{{$stage->name}}">{{$stage->name}}</option>
-                              @endforeach
-                          
-                          </select>
-        
-                        </div>
-                      </div>
-        
-                      <div class="col-md-6">
-                        <div class="form-group form-group-default-select2">
-        
-                          <label>Assigned To Filter:</label>
-                  
-                          <select class="form-control" id="engineer">
-                              <option value="all">ALL</option>
-                              @foreach ($engineers as $engineer)
-                                <option value="{{$engineer->id}}">{{$engineer->name}}</option>
-                              @endforeach
-                          
-                          </select>
-        
-                        </div>
-                      </div>
-        
-                      </div>
-                      
-                      </div>
-                    </div>
-                  </div>
-                  
-                  
+                <div class="row m-t-20 m-b-20">
+                  <div class="col-md-6">
+
+                <div class="form-group" style="display: inline-flex;margin-top:20px;">
+
+                  <label>Payment Date Filter:</label>
+          
+                  <input class="form-control" type="text" name="daterange" value="" />
+          
+                  <button class="btn btn-success filter m-l-5">Filter</button>
+          
                 </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-group-default-select2">
+
+                  <label>Frontend Filter:</label>
+              
+                      <select class="form-control" id="frontend">
+                        <option value="all">ALL</option>
+                        <option value="1">ECUTech</option>
+                        <option value="2">TuningX</option>
+                        <option value="3">Efiles</option>
+                      </select>
+
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-group-default-select2">
+
+                  <label>Stages Filter:</label>
+          
+                  <select class="form-control" id="stage">
+                      <option value="all">ALL</option>
+                      @foreach ($stages as $stage)
+                        <option value="{{$stage->name}}">{{$stage->name}}</option>
+                      @endforeach
+                  
+                  </select>
+
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-group-default-select2">
+
+                  <label>Assigned To Filter:</label>
+          
+                  <select class="form-control" id="engineer">
+                      <option value="all">ALL</option>
+                      @foreach ($engineers as $engineer)
+                        <option value="{{$engineer->id}}">{{$engineer->name}}</option>
+                      @endforeach
+                  
+                  </select>
+
+                </div>
+              </div>
+
+              </div>
 
                 
 
