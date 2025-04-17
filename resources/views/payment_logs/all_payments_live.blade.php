@@ -53,7 +53,7 @@
                 <div class="card-title">
                     <h3>All Payments</h3>
                 </div>
-                </div>
+                
                 <div class="pull-right">
                     <div class="col-xs-12">
                         <button data-redirect="{{ route('payment-and-customers') }}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Payments And Customers</span>
@@ -76,7 +76,36 @@
                     </div>
                     <div id="collapseOne" class="collapse show" role="tabcard" aria-labelledby="headingOne">
                       <div class="card-body">
-                          here we are. 
+                        <div class="row m-t-20 m-b-20">
+                          <div class="col-md-6">
+        
+                        <div class="form-group" style="display: inline-flex;margin-top:20px;">
+        
+                          <label>Payment Date Filter:</label>
+                  
+                          <input class="form-control" type="text" name="daterange" value="" />
+                  
+                          <button class="btn btn-success filter m-l-5">Filter</button>
+                  
+                        </div>
+                      </div>
+        
+                      <div class="col-md-6">
+                        <div class="form-group form-group-default-select2">
+        
+                          <label>Frontend Filter:</label>
+                      
+                              <select class="form-control" id="frontend">
+                                <option value="all">ALL</option>
+                                <option value="1">ECUTech</option>
+                                <option value="2">TuningX</option>
+                                <option value="3">Efiles</option>
+                              </select>
+        
+                        </div>
+                      </div>
+        
+                      </div>
                       </div>
                     </div>
                   </div>
@@ -84,39 +113,12 @@
                   
                 </div>
 
-                <div class="row m-t-20 m-b-20">
-                  <div class="col-md-6">
-
-                <div class="form-group" style="display: inline-flex;margin-top:20px;">
-
-                  <label>Payment Date Filter:</label>
-          
-                  <input class="form-control" type="text" name="daterange" value="" />
-          
-                  <button class="btn btn-success filter m-l-5">Filter</button>
-          
-                </div>
               </div>
 
-              <div class="col-md-6">
-                <div class="form-group form-group-default-select2">
-
-                  <label>Frontend Filter:</label>
-              
-                      <select class="form-control" id="frontend">
-                        <option value="all">ALL</option>
-                        <option value="1">ECUTech</option>
-                        <option value="2">TuningX</option>
-                        <option value="3">Efiles</option>
-                      </select>
-
-                </div>
-              </div>
-
-              </div>
+                
 
 
-            </div>
+            
             <div class="card-body">
 
               <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer">
