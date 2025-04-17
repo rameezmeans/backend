@@ -1950,13 +1950,13 @@ class FilesController extends Controller
 
         if ($request->filled('status')) {
             if($request->status != 'all'){
-                $data = $data->where('status', '=', $request->status);
+                $data = $data->whereIn('status', $request->status);
             }
         }
 
         if ($request->filled('stage')) {
             if($request->stage != 'all'){
-                $data = $data->where('stage', '=', $request->stage);
+                $data = $data->whereIn('stage', $request->stage);
             }
         }
 
@@ -1968,7 +1968,7 @@ class FilesController extends Controller
 
         if ($request->filled('engineer')) {
             if($request->engineer != 'all'){
-                $data = $data->where('assigned_to', '=', $request->engineer);
+                $data = $data->whereIn('assigned_to', $request->engineer);
             }
         }
 
