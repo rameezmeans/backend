@@ -76,129 +76,129 @@
                       </div>
                       <div id="collapseOne" class="collapse" role="tabcard" aria-labelledby="headingOne">
                         <div class="card-body">
-                          <div class="row m-t-20 m-b-20">
-                            <div class="col-md-6">
-      
-                          <div class="form-group" style="display: inline-flex;margin-top:20px;">
-      
-                            <label>Submission Date Filter:</label>
-                    
-                            <input class="form-control" type="text" name="daterange" value="" />
-                    
-                            <button class="btn btn-success filter m-l-5">Filter</button>
-                    
-                          </div>
-                        </div>
-      
-                        <div class="col-md-6">
-                          <div class="form-group form-group-default-select2">
-      
-                            <label>Late Filter:</label>
-                    
-                            <select class="form-control" id="late">
-                              <option value="all">ALL</option>
-                              <option value="late">Late</option>
-                            </select>
-      
-                          </div>
-                        </div>
-      
-                        <div class="col-md-6">
-                          <div class="form-group form-group-default-select2">
-      
-                            <label>Frontend Filter:</label>
-                    
-                            <select class="form-control" id="frontend">
-                              <option value="all">ALL</option>
-                              <option value="1">ECUTech</option>
-                              <option value="2">TuningX</option>
-                              <option value="3">Efiles</option>
-                            </select>
-      
-                          </div>
-                        </div>
-      
-                        <div class="col-md-6">
-                          <div class="form-group form-group-default-select2">
-      
-                            <label>Support Status Filter:</label>
-                    
-                            <select class="form-control" id="support_status">
-                              <option value="all">ALL</option>
-                              <option value="open">Open</option>
-                              <option value="closed">Closed</option>
-                            </select>
-      
-                          </div>
-                        </div>
-      
-                        <div class="col-md-6">
-                          <div class="form-group form-group-default-select2">
-      
-                            <label>Status Filter:</label>
-                    
-                            <select class="form-control" id="status">
-                              <option value="all">ALL</option>
-                              <option value="completed">Completed</option>
-                              <option value="rejected">Canceled</option>
-                              <option value="on_hold">On Hold</option>
-                              <option value="submitted">Submitted</option>
-                              <option value="processing">Processing</option>
-                            
-                            </select>
-      
-                          </div>
-                        </div>
-      
-                        <div class="col-md-6">
-                          <div class="form-group form-group-default-select2">
-      
-                            <label>Stages Filter:</label>
-                    
-                            <select class="form-control" id="stage">
-                                <option value="all">ALL</option>
-                                @foreach ($stages as $stage)
-                                  <option value="{{$stage->name}}">{{$stage->name}}</option>
-                                @endforeach
-                            
-                            </select>
-      
-                          </div>
-                        </div>
-      
-                        {{-- <div class="col-md-6">
-                          <div class="form-group form-group-default-select2">
-      
-                            <label>Options Filter:</label>
-                    
-                            <select class="form-control" id="options" data-init-plugin="select2" multiple>
-                                
-                                @foreach ($options as $option)
-                                  <option value="{{$option->id}}">{{$option->name}}</option>
-                                @endforeach
-                            
-                            </select>
-      
-                          </div>
-                        </div> --}}
-      
-                        <div class="col-md-6">
-                          <div class="form-group form-group-default-select2">
-      
-                            <label>Assigned To Filter:</label>
-                    
-                            <select class="form-control" id="engineer">
-                                <option value="all">ALL</option>
-                                @foreach ($engineers as $engineer)
-                                  <option value="{{$engineer->id}}">{{$engineer->name}}</option>
-                                @endforeach
-                            
-                            </select>
-      
-                          </div>
-                        </div>
-      
+                            <div class="row m-t-20 m-b-20">
+                      <div class="col-md-6">
+
+                    <div class="form-group" style="display: inline-flex;margin-top:20px;">
+
+                      <label>Submission Date Filter:</label>
+              
+                      <input class="form-control" type="text" name="daterange" value="" />
+              
+                      <button class="btn btn-success filter m-l-5">Filter</button>
+              
                     </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default-select2">
+
+                      <label>Late Filter:</label>
+              
+                      <select class="form-control" id="late">
+                        <option value="all">ALL</option>
+                        <option value="late">Late</option>
+                      </select>
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default-select2">
+
+                      <label>Frontend Filter:</label>
+              
+                      <select class="form-control" id="frontend">
+                        <option value="all">ALL</option>
+                        <option value="1">ECUTech</option>
+                        <option value="2">TuningX</option>
+                        <option value="3">Efiles</option>
+                      </select>
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default-select2">
+
+                      <label>Support Status Filter:</label>
+              
+                      <select class="form-control" id="support_status">
+                        <option value="all">ALL</option>
+                        <option value="open">Open</option>
+                        <option value="closed">Closed</option>
+                      </select>
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default-select2">
+
+                      <label>Status Filter:</label>
+              
+                      <select class="form-control" id="status">
+                        <option value="all">ALL</option>
+                        <option value="completed">Completed</option>
+                        <option value="rejected">Canceled</option>
+                        <option value="on_hold">On Hold</option>
+                        <option value="submitted">Submitted</option>
+                        <option value="processing">Processing</option>
+                      
+                      </select>
+
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default-select2">
+
+                      <label>Stages Filter:</label>
+              
+                      <select class="form-control" id="stage">
+                          <option value="all">ALL</option>
+                          @foreach ($stages as $stage)
+                            <option value="{{$stage->name}}">{{$stage->name}}</option>
+                          @endforeach
+                      
+                      </select>
+
+                    </div>
+                  </div>
+
+                  {{-- <div class="col-md-6">
+                    <div class="form-group form-group-default-select2">
+
+                      <label>Options Filter:</label>
+              
+                      <select class="form-control" id="options" data-init-plugin="select2" multiple>
+                          
+                          @foreach ($options as $option)
+                            <option value="{{$option->id}}">{{$option->name}}</option>
+                          @endforeach
+                      
+                      </select>
+
+                    </div>
+                  </div> --}}
+
+                  <div class="col-md-6">
+                    <div class="form-group form-group-default-select2">
+
+                      <label>Assigned To Filter:</label>
+              
+                      <select class="form-control" id="engineer">
+                          <option value="all">ALL</option>
+                          @foreach ($engineers as $engineer)
+                            <option value="{{$engineer->id}}">{{$engineer->name}}</option>
+                          @endforeach
+                      
+                      </select>
+
+                    </div>
+                  </div>
+
+              </div>
                         </div>
                       </div>
                     </div>

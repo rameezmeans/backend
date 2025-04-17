@@ -37,6 +37,25 @@
                 </div> --}}
                 <div class="clearfix"></div>
 
+                <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
+                  <div class="card card-default m-b-0">
+                    <div class="card-header " role="tab" id="headingOne">
+                      <h4 class="card-title">
+                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                           Data Filters
+                          </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="collapse show" role="tabcard" aria-labelledby="headingOne">
+                      <div class="card-body">
+                          
+                      </div>
+                    </div>
+                  </div>
+                  
+                  
+                </div>
+
                 <div class="row m-t-20 m-b-20">
                   <div class="col-md-6">
 
