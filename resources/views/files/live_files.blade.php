@@ -74,7 +74,7 @@
                             </a>
                           </h4>
                       </div>
-                      <div id="collapseOne" class="collapse show" role="tabcard" aria-labelledby="headingOne">
+                      <div id="collapseOne" class="collapse" role="tabcard" aria-labelledby="headingOne">
                         <div class="card-body">
                           <div class="row m-t-20 m-b-20">
                             <div class="col-md-6">
