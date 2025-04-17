@@ -76,36 +76,7 @@
                     </div>
                     <div id="collapseOne" class="collapse show" role="tabcard" aria-labelledby="headingOne">
                       <div class="card-body">
-                        <div class="row m-t-20 m-b-20">
-                          <div class="col-md-6">
-        
-                        <div class="form-group" style="display: inline-flex;margin-top:20px;">
-        
-                          <label>Payment Date Filter:</label>
-                  
-                          <input class="form-control" type="text" name="daterange" value="" />
-                  
-                          <button class="btn btn-success filter m-l-5">Filter</button>
-                  
-                        </div>
-                      </div>
-        
-                      <div class="col-md-6">
-                        <div class="form-group form-group-default-select2">
-        
-                          <label>Frontend Filter:</label>
-                      
-                              <select class="form-control" id="frontend">
-                                <option value="all">ALL</option>
-                                <option value="1">ECUTech</option>
-                                <option value="2">TuningX</option>
-                                <option value="3">Efiles</option>
-                              </select>
-        
-                        </div>
-                      </div>
-        
-                      </div>
+                          here we are. 
                       </div>
                     </div>
                   </div>
@@ -113,7 +84,36 @@
                   
                 </div>
 
-                
+                <div class="row m-t-20 m-b-20">
+                  <div class="col-md-6">
+
+                <div class="form-group" style="display: inline-flex;margin-top:20px;">
+
+                  <label>Payment Date Filter:</label>
+          
+                  <input class="form-control" type="text" name="daterange" value="" />
+          
+                  <button class="btn btn-success filter m-l-5">Filter</button>
+          
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group form-group-default-select2">
+
+                  <label>Frontend Filter:</label>
+              
+                      <select class="form-control" id="frontend">
+                        <option value="all">ALL</option>
+                        <option value="1">ECUTech</option>
+                        <option value="2">TuningX</option>
+                        <option value="3">Efiles</option>
+                      </select>
+
+                </div>
+              </div>
+
+              </div>
 
 
             </div>
