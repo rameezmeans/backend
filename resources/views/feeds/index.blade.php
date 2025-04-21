@@ -52,6 +52,7 @@
                 <div class="tab-content">
                     <div class="tab-pane slide-left active" id="slide1">
                         <p>ECUTech Online File Search Status: <input data-frontend_id="1" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($ecutechOnlineStatus) checked="checked" @endif/></p>
+                        <p>ECUTech Maintenance Mode: <input data-frontend_id="1" class="maintenance_mode_active" type="checkbox" data-init-plugin="switchery" @if($ecutechMaintenanceMode) checked="checked" @endif/></p>
                 
                         <form class="form" role="form" method="POST" action="{{route('add-resellers-text')}}">
                             @csrf
@@ -144,6 +145,7 @@
                     <div class="tab-pane slide-left" id="slide2">
 
                         <p>TuningX Online File Search Status:<input data-frontend_id="2" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($tuningXOnlineStatus) checked="checked" @endif/></p>
+                        <p>TuningX Maintenance Mode: <input data-frontend_id="2" class="maintenance_mode_active" type="checkbox" data-init-plugin="switchery" @if($tuningxMaintenanceMode) checked="checked" @endif/></p>
 
                         <form class="form" role="form" method="POST" action="{{route('add-resellers-text')}}">
                             @csrf
@@ -241,6 +243,7 @@
                     <div class="tab-pane slide-left" id="slide3">
 
                         <p>ETF Online File Search Status:<input data-frontend_id="3" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($etfOnlineStatus) checked="checked" @endif/></p>
+                        <p>ETF Maintenance Mode: <input data-frontend_id="3" class="maintenance_mode_active" type="checkbox" data-init-plugin="switchery" @if($etfMaintenanceMode) checked="checked" @endif/></p>
 
                         <form class="form" role="form" method="POST" action="{{route('add-resellers-text')}}">
                             @csrf
@@ -367,6 +370,36 @@
 
             $.ajax({
                 url: "/change_online_search_status",
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "frontend_id": frontend_id,
+                    "status": status,
+                },
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+
+        });
+
+        $(document).on('change', '.maintenance_mode_active', function(e) {
+
+            let frontend_id = $(this).data('frontend_id');
+            console.log(frontend_id);
+
+            if ($(this).is(':checked')) {
+                status = $(this).is(':checked');
+                console.log(status);
+            }
+            else {
+                status = $(this).is(':checked');
+                console.log(status);
+            }
+
+            $.ajax({
+                url: "/change_maintenance_mode",
                 type: "POST",
                 data: {
                     "_token": "{{ csrf_token() }}",

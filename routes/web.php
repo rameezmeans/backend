@@ -1053,6 +1053,7 @@ Route::post('/get_feedback_report', [App\Http\Controllers\FilesController::class
 Route::get('/credits_reports', [App\Http\Controllers\CreditsController::class,'creditsReports'])->name('credits-reports');
 Route::post('/get_credits_report', [App\Http\Controllers\CreditsController::class,'getCreditsReport'])->name('get-credits-report');
 Route::post('/change_online_search_status', [App\Http\Controllers\CreditsController::class,'changeOnlineStatus'])->name('change-online-search-status');
+Route::post('/change_maintenance_mode', [App\Http\Controllers\CreditsController::class,'changeMaintenanceMode'])->name('change-maintenance-mode');
 
 // Route::get('/vehicles', [ App\Http\Controllers\VehiclesController::class,'index'])->name('vehicles');
 Route::get('/vehicles', [ App\Http\Controllers\VehiclesController::class,'liveVehicles'])->name('vehicles');

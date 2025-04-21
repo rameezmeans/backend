@@ -32,6 +32,29 @@ class CreditsController extends Controller
         // $this->middleware('adminOnly');
     }
 
+    public function changeMaintenanceMode(Request $request) {
+        if($request->frontend_id == 1){
+            $OnlineStatus = IntegerMeta::where('key', 'ecutech_maintenance_mode')->first();
+        }
+        else if($request->frontend_id == 2){
+            $OnlineStatus = IntegerMeta::where('key', 'tuningx_maintenance_mode')->first();
+        }
+        else if($request->frontend_id == 3){
+            $OnlineStatus = IntegerMeta::where('key', 'etf_maintenance_mode')->first();
+        }
+
+        if($request->status == 'true'){
+            $OnlineStatus->value = 1;
+        }
+        else if($request->status == 'false'){
+            $OnlineStatus->value = 0;
+        }
+
+        $OnlineStatus->save();
+
+        return response()->json(['status' => $OnlineStatus->value], 200);
+    }
+
     public function changeOnlineStatus(Request $request) {
 
         if($request->frontend_id == 1){
