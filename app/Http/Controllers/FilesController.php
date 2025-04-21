@@ -2140,7 +2140,12 @@ class FilesController extends Controller
                     return User::findOrFail($row->assigned_to)->name;
                 }
                 else{
-                    return "NONE";
+                    if($row->automatic == 1){
+                        return "Automatic";
+                    }
+                    else{
+                        return "NONE";
+                    }
                 }
             })
             ->addColumn('response_time', function ($row) {

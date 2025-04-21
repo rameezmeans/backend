@@ -631,6 +631,12 @@ class FilesAPIController extends Controller
 
     }
 
+    public function getPythonFiles($fileAttached){
+        $path = public_path('uploads').'/'.$fileAttached;
+
+        
+    }
+
     public function getFilename($fileName){
 
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
