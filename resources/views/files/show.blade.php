@@ -447,6 +447,15 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
 
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Tool</p>
+                          <div class="pull-right">
+                              <img alt="{{$file->tool_id}}" width="50" height="" data-src-retina="{{ get_dropdown_image($file->tool_id) }}" data-src="{{ get_dropdown_image($file->tool_id) }}" src="{{ get_dropdown_image($file->tool_id) }}">
+                              <span class="" style="top: 2px; position:relative;">{{ \App\Models\Tool::findOrFail( $file->tool_id )->name }}({{$file->tool_type}})</span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
                         
 
                         @endif
@@ -704,7 +713,7 @@ margin-bottom: 10px !important;
                         @endif
 
 
-                        <h5 class="m-t-40">Reading Tool</h5>
+                        {{-- <h5 class="m-t-40">Reading Tool</h5>
         
                             
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -714,7 +723,7 @@ margin-bottom: 10px !important;
                               <span class="" style="top: 2px; position:relative;">{{ \App\Models\Tool::findOrFail( $file->tool_id )->name }}({{$file->tool_type}})</span>
                           </div>
                           <div class="clearfix"></div>
-                        </div>
+                        </div> --}}
                      
         
                       <h5 class="m-t-40">Options And Credits</h5>
@@ -3216,6 +3225,15 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
 
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Tool</p>
+                          <div class="pull-right">
+                              <img alt="{{$file->tool_id}}" width="50" height="" data-src-retina="{{ get_dropdown_image($file->tool_id) }}" data-src="{{ get_dropdown_image($file->tool_id) }}" src="{{ get_dropdown_image($file->tool_id) }}">
+                              <span class="" style="top: 2px; position:relative;">{{ \App\Models\Tool::findOrFail( $file->tool_id )->name }}({{$file->tool_type}})</span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+
                         
 
                         @endif
@@ -3411,7 +3429,7 @@ margin-bottom: 10px !important;
                       </div>
         
                       <div class="col-lg-6">
-                        <h5 class="m-t-40">Reading Tool</h5>
+                        {{-- <h5 class="m-t-40">Reading Tool</h5>
         
                             
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -3421,7 +3439,7 @@ margin-bottom: 10px !important;
                               <span class="" style="top: 2px; position:relative;">{{ \App\Models\Tool::findOrFail( $file->tool_id )->name }}({{$file->tool_type}})</span>
                           </div>
                           <div class="clearfix"></div>
-                        </div>
+                        </div> --}}
                      
         
                       <h5 class="m-t-40">Options And Credits</h5>
