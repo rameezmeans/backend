@@ -447,7 +447,7 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
 
-                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Tool</p>
                           <div class="pull-right">
                               <img alt="{{$file->tool_id}}" width="50" height="" data-src-retina="{{ get_dropdown_image($file->tool_id) }}" data-src="{{ get_dropdown_image($file->tool_id) }}" src="{{ get_dropdown_image($file->tool_id) }}">
@@ -3225,7 +3225,7 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
 
-                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Tool</p>
                           <div class="pull-right">
                               <img alt="{{$file->tool_id}}" width="50" height="" data-src-retina="{{ get_dropdown_image($file->tool_id) }}" data-src="{{ get_dropdown_image($file->tool_id) }}" src="{{ get_dropdown_image($file->tool_id) }}">
