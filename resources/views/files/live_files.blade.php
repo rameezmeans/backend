@@ -303,6 +303,7 @@
                 d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
                 d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
                 d.late = $('#late').val();
+                d.automatic = $('#automatic').val();
                 d.frontend = $('#frontend').val();
                 d.support_status = $('#support_status').val();
                 d.status = $('#status').val();
