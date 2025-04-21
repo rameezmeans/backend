@@ -1941,10 +1941,10 @@ class FilesController extends Controller
         }
 
         if ($request->filled('automatic')) {
-            if($request->late == 'automatic'){
+            if($request->automatic == 'automatic'){
                 $data = $data->where('automatic', '=', 1);
             }
-            else if($request->late == 'not_automatic'){
+            else if($request->automatic == 'not_automatic'){
                 $data = $data->where('automatic', '=', 0);
             }
         }
