@@ -56,7 +56,7 @@ class NewsFeedsController extends Controller
         $ecutechMaintenanceMode = IntegerMeta::where('key', 'ecutech_maintenance_mode')->first()->value;
         
         $tuningXOnlineStatus = IntegerMeta::where('key', 'tuningx_online_status')->first()->value;
-        $tuningXMaintenanceMode = IntegerMeta::where('key', 'tuningx_maintenance_mode')->first()->value;
+        $tuningxMaintenanceMode = IntegerMeta::where('key', 'tuningx_maintenance_mode')->first()->value;
 
         $etfOnlineStatus     = IntegerMeta::where('key', 'etf_online_status')->first()->value;
         $etfMaintenanceMode = IntegerMeta::where('key', 'etf_maintenance_mode')->first()->value;
@@ -72,7 +72,7 @@ class NewsFeedsController extends Controller
             'etfOnlineStatus' => $etfOnlineStatus, 
 
             'ecutechMaintenanceMode' => $ecutechMaintenanceMode, 
-            'tuningXMaintenanceMode' => $tuningXMaintenanceMode, 
+            'tuningxMaintenanceMode' => $tuningxMaintenanceMode, 
             'etfMaintenanceMode' => $etfMaintenanceMode, 
 
             'newsFeedsECUTech' => $newsFeedsECUTech, 
