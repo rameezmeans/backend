@@ -1935,6 +1935,18 @@ class FilesController extends Controller
             if($request->late == 'late'){
                 $data = $data->where('delayed', '=', 1);
             }
+            else if($request->late == 'not_late'){
+                $data = $data->where('delayed', '=', 0);
+            }
+        }
+
+        if ($request->filled('automatic')) {
+            if($request->late == 'automatic'){
+                $data = $data->where('automatic', '=', 1);
+            }
+            else if($request->late == 'not_automatic'){
+                $data = $data->where('automatic', '=', 0);
+            }
         }
 
         if ($request->filled('frontend')) {
@@ -1969,12 +1981,12 @@ class FilesController extends Controller
 
         if ($request->filled('engineer')) {
             if($request->engineer != 'all'){
-                if($request->engineer == 'automatic'){
-                    $data = $data->whereIn('assigned_to', $request->engineer)->orWhere('automatic','=', 1);
-                }
-                else{
+                // if($request->engineer == 'automatic'){
+                //     $data = $data->whereIn('assigned_to', $request->engineer)->orWhere('automatic','=', 1);
+                // }
+                // else{
                     $data = $data->whereIn('assigned_to', $request->engineer);
-                }
+                // }
             }
         }
 

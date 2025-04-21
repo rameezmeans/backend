@@ -98,6 +98,7 @@
                       <select class="form-control" id="late">
                         <option value="all">ALL</option>
                         <option value="late">Late</option>
+                        <option value="not_late">Not Late</option>
                       </select>
 
                     </div>
@@ -193,11 +194,23 @@
                             <option value="{{$engineer->id}}">{{$engineer->name}}</option>
                           @endforeach
 
-                          <option value="automatic">Automatic</option>
+                          {{-- <option value="automatic">Automatic</option> --}}
                       
                       </select>
 
                     </div>
+                  </div>
+
+                  <div class="form-group form-group-default-select2">
+
+                    <label>Automatic Filter:</label>
+            
+                    <select class="form-control" id="automatic">
+                      <option value="all">ALL</option>
+                      <option value="automatic">Automatic</option>
+                      <option value="not_automatic">Not Automatic</option>
+                    </select>
+
                   </div>
 
               </div>
@@ -406,6 +419,10 @@
       });
 
       $('#late').change(function(){
+        table.draw();
+      });
+
+      $('#automatic').change(function(){
         table.draw();
       });
 
