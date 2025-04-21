@@ -1969,7 +1969,12 @@ class FilesController extends Controller
 
         if ($request->filled('engineer')) {
             if($request->engineer != 'all'){
-                $data = $data->whereIn('assigned_to', $request->engineer);
+                if($request->engineer == 'automatic'){
+                    $data = $data->whereIn('assigned_to', $request->engineer)->orWhere('automatic','=', 1);
+                }
+                else{
+                    $data = $data->whereIn('assigned_to', $request->engineer);
+                }
             }
         }
 

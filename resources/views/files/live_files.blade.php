@@ -192,6 +192,8 @@
                           @foreach ($engineers as $engineer)
                             <option value="{{$engineer->id}}">{{$engineer->name}}</option>
                           @endforeach
+
+                          <option value="automatic">Automatic</option>
                       
                       </select>
 
