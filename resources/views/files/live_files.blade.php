@@ -201,6 +201,7 @@
                     </div>
                   </div>
 
+                  <div class="col-md-6">
                   <div class="form-group form-group-default-select2">
 
                     <label>Automatic Filter:</label>
@@ -211,6 +212,7 @@
                       <option value="not_automatic">Not Automatic</option>
                     </select>
 
+                  </div>
                   </div>
 
               </div>
