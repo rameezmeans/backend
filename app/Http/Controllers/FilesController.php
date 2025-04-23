@@ -5062,7 +5062,7 @@ class FilesController extends Controller
         // // Close the connection
         // $conn = null;
 
-        dd(env('APP_ENV'));
+        // dd(env('APP_ENV'));
 
         if(env('APP_ENV') == 'live'){
             return view('files.show', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
