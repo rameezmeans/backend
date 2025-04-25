@@ -1948,7 +1948,91 @@ Route::get('lua/filesversions', [App\Http\Controllers\FilesAPIController::class,
 
 Route::post('lua/file/set_checking_status', [App\Http\Controllers\FilesAPIController::class, 'setCheckingStatus'])->name('api-set-checking-status');
 Route::post('lua/file/set_status_and_email', [App\Http\Controllers\FilesAPIController::class, 'setStatusAndEmail'])->name('set-status-and-email');
-// Route::post('python/file_search', [App\Http\Controllers\FilesAPIController::class, 'pythonFileSearch']);
+
+Route::post('python/file_search', [App\Http\Controllers\FilesAPIController::class, 'pythonFileSearch']);
+
+/*
+            request body 
+
+            $request->temp_file // when we upload the file to the server at first step we return the whole tempFile after saving it to database, you need to pass it in here as it is
+            $request->threshold
+            $request->timeout
+            $request->file_size_filter
+            
+            response on API
+
+            [
+                "STATUS": "SUCCESS",
+                {
+                "id": "12345",
+                "OUTPUT_FILE_URL": "https://server.com/matching_file_1.ori",
+                “Vehicle Producer”: “SomeInfo”,
+                “Vehicle Series”: “SomeInfo”,
+                “Vehicle Model”: “SomeInfo”,
+                “Engine Name”: “SomeInfo”,
+                “Engine Displacement”: “SomeInfo”,
+                “Vehicle Model Year”: “SomeInfo”,
+                “ECU Producer”: “SomeInfo”,
+                “ECU Build”: “SomeInfo”
+                },
+                {
+                "id": "67890",
+                "OUTPUT_FILE_URL": "https://server.com/matching_file_2.ori",
+                “Vehicle Producer”: “SomeInfo”,
+                “Vehicle Series”: “SomeInfo”,
+                “Vehicle Model”: “SomeInfo”,
+                “Engine Name”: “SomeInfo”,
+                “Engine Displacement”: “SomeInfo”,
+                “Vehicle Model Year”: “SomeInfo”,
+                “ECU Producer”: “SomeInfo”,
+                “ECU Build”: “SomeInfo”
+                },
+                {
+                "id": "54321",
+                "OUTPUT_FILE_URL": "https://server.com/matching_file_3.ori",
+                “Vehicle Producer”: “SomeInfo”,
+                “Vehicle Series”: “SomeInfo”,
+                “Vehicle Model”: “SomeInfo”,
+                “Engine Name”: “SomeInfo”,
+                “Engine Displacement”: “SomeInfo”,
+                “Vehicle Model Year”: “SomeInfo”,
+                “ECU Producer”: “SomeInfo”,
+                “ECU Build”: “SomeInfo”
+                }
+            ]
+
+            or
+            {
+                "STATUS": "FILE_NOT_FOUND"
+            }
+
+*/
+
+
+Route::post('python/apply_modifications', [App\Http\Controllers\FilesAPIController::class, 'pythonApplyModifications']);
+
+/*
+            request body 
+
+            $request->file_id
+            $request->mod
+            $request->timeout
+            $request->enable_max_diff_area
+            $request->max_diff_area
+            $request->enable_max_diff_bytes
+            $request->max_diff_bytes
+            $request->min_similarity_diff_threshold
+            $request->loop
+            
+            response on API
+
+            {
+                "STATUS": "SUCCESS",
+                "OUTPUT_FILE_URL": "https://server.com/output_file.bin"
+            }
+
+*/
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

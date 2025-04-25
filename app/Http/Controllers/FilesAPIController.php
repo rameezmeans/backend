@@ -29,19 +29,94 @@ use Chatify\Facades\ChatifyMessenger as Chatify;
 use DateTime;
 use Exception;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log as FacadesLog;
 use Illuminate\Support\Facades\Validator;
 use Twilio\Rest\Client;
 
 class FilesAPIController extends Controller
 {
 
-    // public function pythonFileSearch(Request $request){
+    public function pythonApplyModifications(Request $request){
 
-    //     $request->file_location;
+        $fileID = $request->file_id;
+        $mod = $request->mod;
+        $timeout = $request->timeout;
+        $enableMaxDiffArea = $request->enable_max_diff_area;
+        $maxDiffArea = $request->max_diff_area;
+        $enableMaxDiffBytes = $request->enable_max_diff_bytes;
+        $maxDiffBytes = $request->max_diff_bytes;
+        $minSimilarityDiffThreshold = $request->min_similarity_diff_threshold;
+        $loop = $request->loop;
 
+        try {
+            $response = Http::timeout(10)->post('http://79.129.68.101:5000/apply_mods', [
+                'FILE_ID' => $fileID,
+                'MOD' => $mod,
+                'ENABLE_MAX_DIFF_AREA' => $enableMaxDiffArea,
+                'MAX_DIFF_AREA' => $maxDiffArea,
+                'ENABLE_MAX_DIFF_BYTES' => $enableMaxDiffBytes,
+                'MAX_DIFF_BYTES' => $maxDiffBytes,
+                'MIN_SIMILARITY_DIFF_THRESHOLD' => $minSimilarityDiffThreshold,
+                'TIMEOUT' => $timeout,
+                'LOOP' => $loop,
+            ]);
         
+            if ($response->successful()) {
+                // Success! Handle response
+                $data = $response->json();
+                return response()->json($data);
+            } elseif ($response->clientError()) {
+                // 4xx errors
+                FacadesLog::error('Client error', ['response' => $response->body()]);
+                return response()->json(['error' => 'Client Error'], 400);
+            } elseif ($response->serverError()) {
+                // 5xx errors
+                FacadesLog::error('Server error', ['response' => $response->body()]);
+                return response()->json(['error' => 'Server Error'], 500);
+            }
+        } catch (\Exception $e) {
+            FacadesLog::error('Request failed', ['message' => $e->getMessage()]);
+            return response()->json(['error' => 'Request failed: ' . $e->getMessage()], 500);
+        }
 
-    // }
+    }
+
+    public function pythonFileSearch(Request $request){
+
+        $tempFile = $request->temp_file;
+        $location = public_path('uploads').'/'.$tempFile->file_attached;
+        $threshold = $request->threshold;
+        $timeout = $request->timeout;
+        $fileSizeFilter = $request->file_size_filter;
+
+        try {
+            $response = Http::timeout(10)->post('http://79.129.68.101:5000/find_matches', [
+                'INPUT_FILE_URL' => $location,
+                'FILE_MATCHING' => $threshold,
+                'TIMEOUT' => $timeout,
+                'FILE_SIZE_FILTER' => $fileSizeFilter,
+            ]);
+        
+            if ($response->successful()) {
+                // Success! Handle response
+                $data = $response->json();
+                return response()->json($data);
+            } elseif ($response->clientError()) {
+                // 4xx errors
+                FacadesLog::error('Client error', ['response' => $response->body()]);
+                return response()->json(['error' => 'Client Error'], 400);
+            } elseif ($response->serverError()) {
+                // 5xx errors
+                FacadesLog::error('Server error', ['response' => $response->body()]);
+                return response()->json(['error' => 'Server Error'], 500);
+            }
+        } catch (\Exception $e) {
+            FacadesLog::error('Request failed', ['message' => $e->getMessage()]);
+            return response()->json(['error' => 'Request failed: ' . $e->getMessage()], 500);
+        }
+
+    }
 
     public function homeInformation(Request $request){
 
