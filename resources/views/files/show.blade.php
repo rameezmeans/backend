@@ -1017,7 +1017,7 @@ margin-bottom: 10px !important;
                               <span class="label label-success m-r-5">{{$totals}}</span>
                             </div>
                             @endif
-                          
+                          </div>
                           </div>
                           
 
