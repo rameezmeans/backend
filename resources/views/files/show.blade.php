@@ -6725,7 +6725,7 @@ margin-bottom: 10px !important;
 
     $(document).on('click', '#add-customer-comment', function(e) {
       console.log('here we are');
-    }):
+    });
 
     $("input:radio[name=notifyFile]").click(function() { 
 
