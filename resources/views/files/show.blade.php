@@ -937,12 +937,12 @@ margin-bottom: 10px !important;
                         <div class="card card-default m-b-0">
                           <div class="card-header " role="tab" id="headingOne">
                             <h4 class="card-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOneOptions" aria-expanded="true" aria-controls="collapseOne">
                                  Data Filters
                                 </a>
                               </h4>
                           </div>
-                          <div id="collapseOne" class="collapse show" role="tabcard" aria-labelledby="headingOne">
+                          <div id="collapseOneOptions" class="collapse" role="tabcard" aria-labelledby="headingOne">
                             <div class="card-body">
 
                       <div class="p-b-20">
