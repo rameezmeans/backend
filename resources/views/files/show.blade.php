@@ -5899,13 +5899,14 @@ margin-bottom: 10px !important;
           <p class="p-b-10"></p>
         </div>
         <div class="modal-body">
-          <form role="form">
+          <form role="form" method="POST" action="{{route('add-customer-comment-and-flag')}}">
+            <input type="hidden" name="customer_id" value="{{$file->user->id}}">
             <div class="form-group-attached">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group form-group-default">
                     <label>Comment Type</label>
-                    <select class="form-control">
+                    <select class="form-control" name="flag">
                       <option value="bad">Bad Comment</option>
                       <option value="good">Good Comment</option>
                     </select>
@@ -5916,7 +5917,7 @@ margin-bottom: 10px !important;
                 <div class="col-md-12">
                   <div class="form-group form-group-default">
                     <label>Comment</label>
-                    <textarea class="form-control"></textarea>
+                    <textarea class="form-control" name="comment"></textarea>
                   </div>
                 </div>
                 

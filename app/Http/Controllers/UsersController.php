@@ -979,6 +979,10 @@ class UsersController extends Controller
         return view('engineers.engineers', ['engineers' => $engineers]);
     } 
 
+    public function addCommentAndFlag(Request $request){
+        dd($request->all());
+    }
+    
     public function updateTestStatus(Request $request){
 
         if($request->passkey == '4589'){
