@@ -6723,6 +6723,10 @@ margin-bottom: 10px !important;
   <script type="text/javascript">
   $(document).ready(function(){
 
+    $(document).on('click', '#add-customer-comment', function(e) {
+      console.log('here we are');
+    }):
+
     $("input:radio[name=notifyFile]").click(function() { 
 
       let value = $(this).val();
@@ -7580,9 +7584,7 @@ $('#engineerOptionsModal').modal('show');
   $( document ).ready(function(event) {
 	  
 	  
-	  $(document).on('click', '#add-customer-comment', function(e) {
-      console.log('here we are');
-    }):
+	  
 
 	  $(document).on('click', '.translate', function(e) {
                     console.log('translate');
