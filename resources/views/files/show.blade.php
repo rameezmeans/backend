@@ -3667,6 +3667,18 @@ margin-bottom: 10px !important;
                         @endif
                       @endif
 
+                      <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="card card-default m-b-0">
+                          <div class="card-header " role="tab" id="headingOne">
+                            <h4 class="card-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOneOptions" aria-expanded="true" aria-controls="collapseOne">
+                                 Options Information
+                                </a>
+                              </h4>
+                          </div>
+                          <div id="collapseOneOptions" class="collapse" role="tabcard" aria-labelledby="headingOne">
+                            <div class="card-body">
+
                       <div class="p-b-20">
 
                       @if(!$file->options_services()->get()->isEmpty())
@@ -3810,6 +3822,13 @@ margin-bottom: 10px !important;
                       @endif
                       
                       </div>
+
+                    </div>
+                  </div>
+                </div>
+                
+                
+              </div>
                       
                       @if($file->dtc_off_comments)
                       <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
