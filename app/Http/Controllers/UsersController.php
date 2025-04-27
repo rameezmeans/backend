@@ -980,7 +980,13 @@ class UsersController extends Controller
     } 
 
     public function addCommentAndFlag(Request $request){
-        dd($request->all());
+
+        $user = User::findOrFail($request->customer_id);
+        $user->flag = $request->flag;
+        $user->comment = $request->comment;
+        $user->save();
+
+        return redirect()->back()->with(['success' => 'Customer Flag and comment added.']);
     }
     
     public function updateTestStatus(Request $request){

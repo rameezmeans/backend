@@ -5900,6 +5900,7 @@ margin-bottom: 10px !important;
         </div>
         <div class="modal-body">
           <form role="form" method="POST" action="{{route('add-customer-comment-and-flag')}}">
+            @csrf
             <input type="hidden" name="customer_id" value="{{$file->user->id}}">
             <div class="form-group-attached">
               <div class="row">
