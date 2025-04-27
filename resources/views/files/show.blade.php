@@ -5903,9 +5903,9 @@ margin-bottom: 10px !important;
             <div class="form-group-attached">
               <div class="row">
                 <div class="col-md-12">
-                  <div class="form-group form-group-default form-group-default-select2">
+                  <div class="form-group form-group-default">
                     <label>Comment Type</label>
-                    <select class=" full-width">
+                    <select class="form-control">
                       <option value="bad">Bad Comment</option>
                       <option value="good">Good Comment</option>
                     </select>
