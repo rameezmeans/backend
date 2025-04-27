@@ -6919,6 +6919,14 @@ margin-bottom: 10px !important;
   <script type="text/javascript">
   $(document).ready(function(){
 
+    $(document).on('click', '.show-replied', function(e) {
+      $('.replies').addClass('show');
+    });
+
+    $(document).on('click', '.hide-replied', function(e) {
+      $('.replies').removeClass('show');
+    });
+
     $(document).on('click', '#add-customer-comment', function(e) {
       console.log('here we are');
       $('#flagCustomerModal').modal('show');
