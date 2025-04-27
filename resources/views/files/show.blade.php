@@ -1344,6 +1344,8 @@ margin-bottom: 10px !important;
                               <label class="label bg-info text-white">{{$file->files->count()}}</label>
                           </div>
                           <div class="clearfix"></div>
+                          <button class="btn btn-sm btn-transparent show-replied">Show All</button>
+                          <button class="btn btn-sm btn-transparent hide-replied">Hide All</button>
                         </div>
                             @php $var = 0; @endphp
                             @foreach($file->files->toArray() as $message)
@@ -1357,7 +1359,7 @@ margin-bottom: 10px !important;
                                       </a>
                                     </h4>
                                 </div>
-                                <div id="collapseOne{{$message['id']}}" class="collapse @if($var == sizeof($file->files->toArray())) show @endif" role="tabcard" aria-labelledby="headingOne">
+                                <div id="collapseOne{{$message['id']}}" class="collapse replies @if($var == sizeof($file->files->toArray())) show @endif" role="tabcard" aria-labelledby="headingOne">
                                   <div class="card-body">
 
                             <div class="card">
@@ -3922,6 +3924,8 @@ margin-bottom: 10px !important;
                               <label class="label bg-info text-white">{{$file->files->count()}}</label>
                           </div>
                           <div class="clearfix"></div>
+                          <button class="btn btn-sm btn-transparent show-replied">Show All</button>
+                          <button class="btn btn-sm btn-transparent hide-replied">Hide All</button>
                         </div>
 
                             @php $var=0; @endphp
@@ -3937,7 +3941,7 @@ margin-bottom: 10px !important;
                                       </a>
                                     </h4>
                                 </div>
-                                <div id="collapseOne{{$message['id']}}" class="collapse @if($var == sizeof($file->files->toArray())) show @endif"" role="tabcard" aria-labelledby="headingOne">
+                                <div id="collapseOne{{$message['id']}}" class="collapse replied @if($var == sizeof($file->files->toArray())) show @endif"" role="tabcard" aria-labelledby="headingOne">
                                   <div class="card-body">
 
                             <div class="card">
