@@ -333,8 +333,13 @@ margin-bottom: 10px !important;
                           @if($file->user->flag == NULL)
                             <div><button id="add-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag"></i></button></div>
                           @else
-                            <div><i class="fa-solid fa-flag"></i></div>
-                          @endif
+                            @if($file->user->flag == 'bad')
+                              <div><button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag bg-danger"></i></button></div>
+                            @else
+                              <div><button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag bg-success"></i></button></div>
+                            @endif
+                          
+                            @endif
                         </div>
 
                         {{-- <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -5940,6 +5945,58 @@ margin-bottom: 10px !important;
 </div>
 <!-- /.modal-dialog -->
 
+<div id="editFlagCustomerModal" class="modal fade slide-up disable-scroll" id="modalSlideUp" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog ">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+          </button>
+          <h5>Customer <span class="semi-bold">Comments</span></h5>
+          <p class="p-b-10"></p>
+        </div>
+        <div class="modal-body">
+          <form role="form" method="POST" action="{{route('add-customer-comment-and-flag')}}">
+            @csrf
+            <input type="hidden" name="customer_id" value="{{$file->user->id}}">
+            <div class="form-group-attached">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-group-default">
+                    <label>Comment Type</label>
+                    <select class="form-control" name="flag">
+                      <option @if($file->user->flag == 'bad') @selected(true) @endif value="bad">Bad Comment</option>
+                      <option @if($file->user->flag == 'good') @selected(true) @endif value="good">Good Comment</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-group-default">
+                    <label>Comment</label>
+                    <textarea class="form-control" name="comment" value="{{$file->user->comment}}"></textarea>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          
+          <div class="row">
+            
+            <div class="col-md-4 m-t-10 sm-m-t-10">
+              <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
+<!-- /.modal-dialog -->
+
 
 @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'propose-options'))
 <div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="engineerOptionsModal" tabindex="-1" role="dialog" aria-hidden="false">
@@ -6780,6 +6837,12 @@ margin-bottom: 10px !important;
     $(document).on('click', '#add-customer-comment', function(e) {
       console.log('here we are');
       $('#flagCustomerModal').modal('show');
+
+    });
+
+    $(document).on('click', '#edit-customer-comment', function(e) {
+      console.log('here we are');
+      $('#editFlagCustomerModal').modal('show');
 
     });
 
