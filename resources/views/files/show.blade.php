@@ -3144,6 +3144,7 @@ margin-bottom: 10px !important;
                             <span class="label label-success">{{$file->user->name}}<span>
                           </div>
                           <div class="clearfix"></div>
+                          <div><i class="fa-solid fa-flag"></i></div>
                         </div>
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
