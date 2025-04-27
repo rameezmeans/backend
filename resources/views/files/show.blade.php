@@ -334,9 +334,9 @@ margin-bottom: 10px !important;
                             <div><button id="add-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag"></i></button></div>
                           @else
                             @if($file->user->flag == 'bad')
-                              <div><button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag bg-danger"></i></button></div>
+                              <div><button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" style="color: #f55753;"></i></button></div>
                             @else
-                              <div><button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag bg-success"></i></button></div>
+                              <div><button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" style="color: #10cfbd;"></i></button></div>
                             @endif
                           
                             @endif
