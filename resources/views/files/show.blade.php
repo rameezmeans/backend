@@ -7674,6 +7674,9 @@ $('#engineerOptionsModal').modal('show');
             });  
     }
 
+
+    @if($file->status == 'submitted' || $file->status == 'ready_to_send' || $file->status == 'completed')
+
 let engineerFileDrop= new Dropzone(".encoded-dropzone", {
   accept: function(file, done) {
             console.log(file);
@@ -7688,6 +7691,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         }
 });
 
+
     engineerFileDrop.on("success", function(file) {
 
     engineerFileDrop.removeFile(file);
@@ -7699,6 +7703,8 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
     }).on('error', function(e){
       
     });
+
+    @endif
 	  
 	  });
 	  
