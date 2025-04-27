@@ -1099,6 +1099,7 @@ Route::post('/update-customer', [App\Http\Controllers\UsersController::class,'up
 Route::post('/delete_customer', [App\Http\Controllers\UsersController::class,'deleteCustomer'])->name('delete-customer');
 Route::post('/update_test_status', [App\Http\Controllers\UsersController::class,'updateTestStatus'])->name('update-test-status');
 Route::post('/add_customer_comment_and_flag', [App\Http\Controllers\UsersController::class,'addCommentAndFlag'])->name('add-customer-comment-and-flag');
+Route::post('/edit_customer_comment_and_flag', [App\Http\Controllers\UsersController::class,'editCommentAndFlag'])->name('edit-customer-comment-and-flag');
 
 Route::get('/engineers', [App\Http\Controllers\UsersController::class,'Engineers'])->name('engineers');
 Route::get('/create_engineer', [App\Http\Controllers\UsersController::class,'createEngineer'])->name('create-engineer');

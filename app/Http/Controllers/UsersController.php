@@ -978,7 +978,17 @@ class UsersController extends Controller
         $engineers = get_engineers();
         return view('engineers.engineers', ['engineers' => $engineers]);
     } 
-    
+
+    public function editCommentAndFlag(Request $request){
+
+        $user = User::findOrFail($request->customer_id);
+        $user->flag = $request->flag;
+        $user->comment = $request->comment;
+        $user->save();
+
+        return redirect()->back()->with(['success' => 'Customer Flag and comment updated.']);
+    }
+
     public function addCommentAndFlag(Request $request){
 
         $user = User::findOrFail($request->customer_id);
