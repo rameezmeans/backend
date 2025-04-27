@@ -331,7 +331,7 @@ margin-bottom: 10px !important;
                           </div>
                           <div class="clearfix"></div>
                           @if($file->user->flag == NULL)
-                            <div><button class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" id="add-customer-comment"></i></button></div>
+                            <div><button id="add-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag"></i></button></div>
                           @else
                             <div><i class="fa-solid fa-flag"></i></div>
                           @endif
