@@ -933,8 +933,6 @@ margin-bottom: 10px !important;
                         @endif
                       @endif
 
-                      
-
                       <div class="p-b-20">
 
                       @if(!$file->options_services()->get()->isEmpty())
@@ -975,11 +973,6 @@ margin-bottom: 10px !important;
                                 
 
                             @endphp
-
-
-
-
-
                           
                           @foreach($records as $record)
 
@@ -989,9 +982,6 @@ margin-bottom: 10px !important;
                               $revised = all_files_with_this_ecu_brand_and_service_and_software_revisions($file->brand, $file->ecu, $optionInner->id, $record->software_id);
 
                           @endphp
-
-
-
 
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
@@ -1042,22 +1032,10 @@ margin-bottom: 10px !important;
                                     
                                     </div>
                                     <div class="p-l-20 p-b-10">Type: {{$comment->comment_type}}</div>
-
-
-                                  </div>
-                                </div>
-                              </div>
-                              
-                              
-                            </div>
-
                                   @endif
                               @endforeach
                             @endif
                         @endforeach
-
-                      
-
                       @else
                               
                         <div class="b  b-grey p-l-20 p-r-20 p-t-10">
@@ -1106,8 +1084,6 @@ margin-bottom: 10px !important;
                       @endif
                       
                       </div>
-
-                    
                       
                       {{-- @if($file->dtc_off_comments)
                       <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
