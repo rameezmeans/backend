@@ -977,17 +977,7 @@ margin-bottom: 10px !important;
                             @endphp
 
 
-<div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
-  <div class="card card-default m-b-0">
-    <div class="card-header " role="tab" id="headingOne">
-      <h4 class="card-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne{{$optionInner->id}}" aria-expanded="true" aria-controls="collapseOne">
-           Software Information
-          </a>
-        </h4>
-    </div>
-    <div id="collapseOne{{$optionInner->id}}" class="collapse" role="tabcard" aria-labelledby="headingOne">
-      <div class="card-body">
+
 
 
                           
@@ -1017,14 +1007,14 @@ margin-bottom: 10px !important;
                               <span class="label label-success m-r-5">{{$totals}}</span>
                             </div>
                             @endif
-                          </div>
+                          
                           </div>
                           
 
                           @endforeach
 
                                 
-                              
+                              </div>
                               @foreach($file->comments as $c)
                               @if($c->service_id == $option->service_id)
                                 <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -1066,12 +1056,7 @@ margin-bottom: 10px !important;
                             @endif
                         @endforeach
 
-                      </div>
-                    </div>
-                  </div>
-                  
-                  
-                </div>
+                      
 
                       @else
                               
