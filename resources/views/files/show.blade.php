@@ -3924,8 +3924,10 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
 
+                            @php $var=0; @endphp
                             @foreach($file->files->toArray() as $message)
 
+                            @php $var++; @endphp
                             <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
                               <div class="card card-default m-b-0">
                                 <div class="card-header " role="tab" id="headingOne">
@@ -3935,7 +3937,7 @@ margin-bottom: 10px !important;
                                       </a>
                                     </h4>
                                 </div>
-                                <div id="collapseOne{{$message['id']}}" class="collapse" role="tabcard" aria-labelledby="headingOne">
+                                <div id="collapseOne{{$message['id']}}" class="collapse @if($var == sizeof($file->files->toArray())) show @endif"" role="tabcard" aria-labelledby="headingOne">
                                   <div class="card-body">
 
                             <div class="card">
