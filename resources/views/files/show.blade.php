@@ -1357,7 +1357,7 @@ margin-bottom: 10px !important;
                                       </a>
                                     </h4>
                                 </div>
-                                <div id="collapseOne{{$message['id']}}" class="collapse show" role="tabcard" aria-labelledby="headingOne">
+                                <div id="collapseOne{{$message['id']}}" class="collapse" role="tabcard" aria-labelledby="headingOne">
                                   <div class="card-body">
 
                             <div class="card">
@@ -3935,7 +3935,7 @@ margin-bottom: 10px !important;
                                       </a>
                                     </h4>
                                 </div>
-                                <div id="collapseOne{{$message['id']}}" class="collapse show" role="tabcard" aria-labelledby="headingOne">
+                                <div id="collapseOne{{$message['id']}}" class="collapse" role="tabcard" aria-labelledby="headingOne">
                                   <div class="card-body">
 
                             <div class="card">
