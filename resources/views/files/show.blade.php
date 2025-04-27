@@ -975,15 +975,6 @@ margin-bottom: 10px !important;
                                 
 
                             @endphp
-                          
-                          @foreach($records as $record)
-
-                          @php
-
-                              $totals = all_files_with_this_ecu_brand_and_service_and_software($file->brand, $file->ecu, $optionInner->id, $record->software_id);
-                              $revised = all_files_with_this_ecu_brand_and_service_and_software_revisions($file->brand, $file->ecu, $optionInner->id, $record->software_id);
-
-                          @endphp
 
 
 <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
@@ -997,6 +988,20 @@ margin-bottom: 10px !important;
     </div>
     <div id="collapseOne" class="collapse" role="tabcard" aria-labelledby="headingOne">
       <div class="card-body">
+
+
+                          
+                          @foreach($records as $record)
+
+                          @php
+
+                              $totals = all_files_with_this_ecu_brand_and_service_and_software($file->brand, $file->ecu, $optionInner->id, $record->software_id);
+                              $revised = all_files_with_this_ecu_brand_and_service_and_software_revisions($file->brand, $file->ecu, $optionInner->id, $record->software_id);
+
+                          @endphp
+
+
+
 
                           <div style="display: flow-root;" class="b-b b-grey">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
@@ -1060,6 +1065,14 @@ margin-bottom: 10px !important;
                               @endforeach
                             @endif
                         @endforeach
+
+                      </div>
+                    </div>
+                  </div>
+                  
+                  
+                </div>
+
                       @else
                               
                         <div class="b  b-grey p-l-20 p-r-20 p-t-10">
