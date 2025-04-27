@@ -9,6 +9,10 @@ margin-bottom: 10px !important;
 
 }
 
+.btn-transparent{
+  background: transparent;
+}
+
 .bg-danger-light{
   background-color: #f77975 !important;
 }
@@ -327,7 +331,7 @@ margin-bottom: 10px !important;
                           </div>
                           <div class="clearfix"></div>
                           @if($file->user->flag == NULL)
-                            <div><i class="fa-solid fa-flag" id="add-customer-comment"></i></div>
+                            <div><button class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" id="add-customer-comment"></i></button></div>
                           @else
                             <div><i class="fa-solid fa-flag"></i></div>
                           @endif
