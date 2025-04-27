@@ -5952,7 +5952,7 @@ margin-bottom: 10px !important;
         <div class="modal-header clearfix text-left">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
           </button>
-          <h5>Customer <span class="semi-bold">Comments</span></h5>
+          <h5>Update Customer <span class="semi-bold">Comments</span></h5>
           <p class="p-b-10"></p>
         </div>
         <div class="modal-body">
@@ -5975,7 +5975,7 @@ margin-bottom: 10px !important;
                 <div class="col-md-12">
                   <div class="form-group form-group-default">
                     <label>Comment</label>
-                    <textarea class="form-control" name="comment" value="{{$file->user->comment}}"></textarea>
+                    <textarea class="form-control" name="comment">{{$file->user->comment}}</textarea>
                   </div>
                 </div>
                 
