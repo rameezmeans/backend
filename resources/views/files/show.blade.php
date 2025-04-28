@@ -1398,6 +1398,8 @@ margin-bottom: 10px !important;
                                     @endif
                                   {{-- @endif --}}
                                     <button style="float: right;" class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
+                                    <a style="float: right;" class="btn btn-success m-b-20" href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}">Edit Processiong Softwares</a>
+                                    <button style="float: right;" class="btn btn-success m-b-20 delete-uploaded-file" data-request_file_id="{{$message['id']}}">Delete</button>
                                 {{-- @endif --}}
 
                           @php
@@ -1621,8 +1623,8 @@ margin-bottom: 10px !important;
 
                                     @endif
 
-                                    <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
-                                    </a>
+                                    {{-- <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
+                                    </a> --}}
                                     
                                     <?
                                       if($message['visible'] == "0"){
@@ -1636,7 +1638,7 @@ margin-bottom: 10px !important;
                                       }
                                     ?>                                    
                                     
-                                    <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a>
+                                    {{-- <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a> --}}
                                 </div>
 
                                 <div class="clearfix"></div>
@@ -3978,6 +3980,8 @@ margin-bottom: 10px !important;
 
                                 {{-- @if($file->status == 'completed') --}}
                                     <button style="float: right;" class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
+                                    <a style="float: right;" class="btn btn-success m-b-20" href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}">Edit Processiong Softwares</a>
+                                    <button style="float: right;" class="btn btn-success m-b-20 delete-uploaded-file" data-request_file_id="{{$message['id']}}">Delete</button>
                                 {{-- @endif --}}
 
                               @if(isset($message['request_file']))
@@ -4135,8 +4139,8 @@ margin-bottom: 10px !important;
                                     </div>
                                     @endif
 
-                                    <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
-                                    </a>
+                                    {{-- <a href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}" class="btn-sm btn-success btn-cons m-b-10"> <span class="bold">Download</span>
+                                    </a> --}}
                                     
                                     <?
                                       if($message['visible'] == "0"){
@@ -4150,7 +4154,7 @@ margin-bottom: 10px !important;
                                       }
                                     ?>                                    
                                     
-                                    <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a>
+                                    {{-- <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a> --}}
                                 </div>
 
                                 <div class="clearfix"></div>
