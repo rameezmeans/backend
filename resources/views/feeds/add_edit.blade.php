@@ -97,7 +97,7 @@
                 <h5 class="m-t-40 m-b-30">
                   Activation Method
                 </h5>
-                <p class="text-danger">Whenever you want to set Offline status for any vacations please set them by date and time range. It will be preferred over Days of Week.</p>
+                <p class="text-danger">Whenever you want to set Offline status for any vacations please add new feed and set it by Date and Time range. It will be activated in a minute and It will be preferred over Days of Week.</p>
                 <div class="card card-transparent ">
                   <!-- Nav tabs -->
                   @if(!isset($feed))
