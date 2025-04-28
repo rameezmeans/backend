@@ -1414,6 +1414,60 @@ margin-bottom: 10px !important;
                             <div class="p-l-20 p-r-20 p-b-10 p-t-10">
                               <p class="pull-left">{{$message['request_file']." "}}</p>@if($message['old_name'])<br><p class="hint-text">({{$message['old_name']}})</p>@endif
                                 
+
+                              @if($file->softwares->isNotEmpty())
+
+                      <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 300px;">
+                      
+                        @if($file->softwares->isNotEmpty())
+
+                        <div class="card-body">
+                          <div class="table-responsive" style="
+                          
+                          overflow:hidden;
+    overflow-y: scroll;
+    height: 200px;
+
+                          ">
+ 
+                        <table class="table table-hover" id="basicTable">
+                         <thead>
+                           <tr>
+                             
+                             
+                             <th style="width:20%">Stage or Option</th>
+                             <th style="width:20%">Software</th>
+                             
+                           </tr>
+                         </thead>
+                         <tbody>
+                           @foreach($file->softwares as $software)
+                           @if($software->reply_id == $message['id'])
+
+                           <tr>
+                             
+                             <td class="v-align-middle ">
+                               @if(\App\Models\Service::where('id', $software->service_id)->first() != NULL)
+                                <p>{{ \App\Models\Service::findOrFail( $software->service_id )->name}}</p>
+                                @else
+                                  <p>Service is not available anymore.</p>
+                                @endif
+                             </td>
+                             <td class="v-align-middle">
+                               <p>{{\App\Models\ProcessingSoftware::findOrFail( $software->software_id )->name}}</p>
+                             </td>
+                           
+                           </tr>
+
+                           @endif
+                           @endforeach
+                         </tbody>
+                       </table>
+
+                          </div>
+                        </div>
+
+                        @endif
                                          
                               <?
                                 $madeproject = DB::table('lua_make_project')
@@ -3989,6 +4043,60 @@ margin-bottom: 10px !important;
                             <div class="p-l-20 p-r-20 p-b-10 p-t-10">
                               <p class="pull-left">{{$message['request_file']." "}}</p>@if($message['old_name'])<br><p class="hint-text">({{$message['old_name']}})</p>@endif
                                 
+
+                              @if($file->softwares->isNotEmpty())
+
+                      <div class="tab-pane slide-left" id="software_data_{{$message['id']}}" style="height: 300px;">
+                      
+                        @if($file->softwares->isNotEmpty())
+
+                        <div class="card-body">
+                          <div class="table-responsive" style="
+                          
+                          overflow:hidden;
+    overflow-y: scroll;
+    height: 200px;
+
+                          ">
+ 
+                        <table class="table table-hover" id="basicTable">
+                         <thead>
+                           <tr>
+                             
+                             
+                             <th style="width:20%">Stage or Option</th>
+                             <th style="width:20%">Software</th>
+                             
+                           </tr>
+                         </thead>
+                         <tbody>
+                           @foreach($file->softwares as $software)
+                           @if($software->reply_id == $message['id'])
+
+                           <tr>
+                             
+                             <td class="v-align-middle ">
+                               @if(\App\Models\Service::where('id', $software->service_id)->first() != NULL)
+                                <p>{{ \App\Models\Service::findOrFail( $software->service_id )->name}}</p>
+                                @else
+                                  <p>Service is not available anymore.</p>
+                                @endif
+                             </td>
+                             <td class="v-align-middle">
+                               <p>{{\App\Models\ProcessingSoftware::findOrFail( $software->software_id )->name}}</p>
+                             </td>
+                           
+                           </tr>
+
+                           @endif
+                           @endforeach
+                         </tbody>
+                       </table>
+
+                          </div>
+                        </div>
+
+                        @endif
                                          
                               <?php
 
