@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "barryvdh/laravel-dompdf": "^2.0",
+        "barryvdh/laravel-dompdf": "^3.1.1",
         "biscolab/laravel-recaptcha": "^6.0",
         "cache/array-adapter": "^1.2",
         "cba85/eu-vat-validation": "dev-master",
@@ -27,7 +27,6 @@
         "livewire/livewire": "^3.0",
         "maatwebsite/excel": "^3.1",
         "mailchimp/marketing": "^3.0",
-        "mediconesystems/livewire-datatables": "^0.10.3",
         "munafio/chatify": "^1.5",
         "nategood/httpful": "^0.3.2",
         "omnipay/paypal": "^3.0",
