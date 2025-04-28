@@ -1344,8 +1344,10 @@ margin-bottom: 10px !important;
                               <label class="label bg-info text-white">{{$file->files->count()}}</label>
                           </div>
                           <div class="clearfix"></div>
-                          <button class="btn btn-sm btn-transparent show-replied">Show All</button>
-                          <button class="btn btn-sm btn-transparent hide-replied">Hide All</button>
+                          @if($file->files->count() > 0)
+                            <button class="btn btn-sm btn-transparent show-replied">Show All</button>
+                            <button class="btn btn-sm btn-transparent hide-replied">Hide All</button>
+                          @endif
                         </div>
                             @php $var = 0; @endphp
                             @foreach($file->files->toArray() as $message)
@@ -1408,7 +1410,7 @@ margin-bottom: 10px !important;
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
                             <div class="p-l-20 p-r-20 p-b-10 p-t-10">
-                              <p class="pull-left">{{$message['request_file']." "}} @if($message['user_id']){{' (Uploaded by: '.App\Models\User::findOrFail($message['user_id'])->name.')'}}@endif </p>@if($message['old_name'])<br><p class="hint-text">({{$message['old_name']}})</p>@endif
+                              <p class="pull-left">{{$message['request_file']." "}}</p>@if($message['old_name'])<br><p class="hint-text">({{$message['old_name']}})</p>@endif
                                 
                                          
                               <?
@@ -1677,6 +1679,7 @@ margin-bottom: 10px !important;
                                   @endif
                                   
                                   <span class="btn-sm btn-cons btn-success m-t-50">{{ "Uploaded At:". date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>
+                                  @if($message['user_id'])<span class="btn-sm btn-cons btn-success m-t-50">{{ "Uploaded By:". App\Models\User::findOrFail($message['user_id'])->name}} </span> @endif
                                   @if($message['downloaded_at'])<span class="btn-sm btn-cons btn-danger m-t-50">{{  "Downloaded At:". date('H:i:s d/m/Y', strtotime($message['downloaded_at']))}} </span>@endif
                                   <div class="full-width">
 
@@ -3924,8 +3927,10 @@ margin-bottom: 10px !important;
                               <label class="label bg-info text-white">{{$file->files->count()}}</label>
                           </div>
                           <div class="clearfix"></div>
-                          <button class="btn btn-sm btn-transparent show-replied">Show All</button>
-                          <button class="btn btn-sm btn-transparent hide-replied">Hide All</button>
+                          @if($file->files->count() > 0)
+                            <button class="btn btn-sm btn-transparent show-replied">Show All</button>
+                            <button class="btn btn-sm btn-transparent hide-replied">Hide All</button>
+                          @endif
                         </div>
 
                             @php $var=0; @endphp
@@ -3978,7 +3983,7 @@ margin-bottom: 10px !important;
                               @if(isset($message['request_file']))
                                 @if($message['engineer'] == 1)
                             <div class="p-l-20 p-r-20 p-b-10 p-t-10">
-                              <p class="pull-left">{{$message['request_file']." "}}@if($message['user_id']){{' (Uploaded By: '.App\Models\User::findOrFail($message['user_id'])->name.')'}}@endif</p>@if($message['old_name'])<br><p class="hint-text">({{$message['old_name']}})</p>@endif
+                              <p class="pull-left">{{$message['request_file']." "}}</p>@if($message['old_name'])<br><p class="hint-text">({{$message['old_name']}})</p>@endif
                                 
                                          
                               <?php
@@ -4180,6 +4185,8 @@ margin-bottom: 10px !important;
                                   @endif
                                 <div class="clearfix"></div>
                                 <span class="btn-sm btn-cons btn-success m-t-50">{{ "Uploaded At:". date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>
+                                {{-- @if($message['user_id']){{' (Uploaded By: '.App\Models\User::findOrFail($message['user_id'])->name.')'}}@endif --}}
+                                @if($message['user_id'])<span class="btn-sm btn-cons btn-success m-t-50">{{ "Uploaded By:". App\Models\User::findOrFail($message['user_id'])->name}} </span> @endif
                                 @if($message['downloaded_at'])<span class="btn-sm btn-cons btn-danger m-t-50">{{ "Downloaded At:". date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>@endif
                                 
                                 <div class="full-width">
