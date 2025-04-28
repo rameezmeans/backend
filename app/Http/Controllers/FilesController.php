@@ -607,7 +607,7 @@ class FilesController extends Controller
         if($file->front_end_id == 1){
             
             if($file->on_dev == 1){
-                $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+                $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
             }
             else{
                 $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
@@ -618,7 +618,7 @@ class FilesController extends Controller
         else if($file->front_end_id == 3){
             
             if($file->on_dev == 1){
-                $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+                $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
             }
             else{
 
@@ -1606,7 +1606,7 @@ class FilesController extends Controller
                 // $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
 
                 if($file->on_dev == 1){
-                    $attachment->move(public_path('/../../EcuTechV2/public/'.$file->file_path),$fileName);
+                    $attachment->move(public_path('/../../stagingportalecutech/public/'.$file->file_path),$fileName);
                 }
                 else{
                     $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
@@ -1618,7 +1618,7 @@ class FilesController extends Controller
                 // $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
 
                 if($file->on_dev == 1){
-                    $attachment->move(public_path('/../../EcuTechV2/public/'.$file->file_path),$fileName);
+                    $attachment->move(public_path('/../../stagingportaletuningfiles/public/'.$file->file_path),$fileName);
                 }
                 else{
                     $attachment->move(public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path),$fileName);
@@ -2663,7 +2663,7 @@ class FilesController extends Controller
 
             if($file->on_dev == 1){
 
-                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$autoTunerEncryptedFile->name;
+                $file_path = public_path('/../../stagingportalecutech/public/'.$file->file_path).$autoTunerEncryptedFile->name;
 
             }
             else{
@@ -2678,7 +2678,7 @@ class FilesController extends Controller
 
             if($file->on_dev == 1){
 
-                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$autoTunerEncryptedFile->name;
+                $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$autoTunerEncryptedFile->name;
 
             }
             else{
@@ -2724,7 +2724,7 @@ class FilesController extends Controller
 
             if($file->on_dev == 1){
 
-                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile->name;
+                $file_path = public_path('/../../stagingportalecutech/public/'.$file->file_path).$magicEncryptedFile->name;
 
             }
             else{
@@ -2739,7 +2739,7 @@ class FilesController extends Controller
 
             if($file->on_dev == 1){
 
-                $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$magicEncryptedFile->name;
+                $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$magicEncryptedFile->name;
 
             }
             else{
@@ -2794,7 +2794,7 @@ class FilesController extends Controller
 
                     if($file->on_dev == 1){
 
-                        $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$fileNameEncoded;
+                        $file_path = public_path('/../../stagingportalecutech/public/'.$file->file_path).$fileNameEncoded;
 
                     }
                     else{
@@ -2809,7 +2809,7 @@ class FilesController extends Controller
 
                     if($file->on_dev == 1){
 
-                        $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$fileNameEncoded;
+                        $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$fileNameEncoded;
 
                     }
                     else{
@@ -2859,7 +2859,7 @@ class FilesController extends Controller
 
                 if($file->on_dev == 1){
 
-                    $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$finalFileName;
+                    $file_path = public_path('/../../stagingportalecutech/public/'.$file->file_path).$finalFileName;
 
                 }
                 else{
@@ -2876,7 +2876,7 @@ class FilesController extends Controller
 
                 if($file->on_dev == 1){
 
-                    $file_path = public_path('/../../EcuTechV2/public/'.$file->file_path).$finalFileName;
+                    $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$finalFileName;
 
                 }
                 else{
@@ -2930,7 +2930,7 @@ class FilesController extends Controller
             else{
 
                 if($file->on_dev == 1){
-                    $path = public_path('/../../EcuTechV2/public'.$file->file_path);
+                    $path = public_path('/../../stagingportalecutech/public'.$file->file_path);
                 
                 }
                 else{
@@ -2945,7 +2945,7 @@ class FilesController extends Controller
             else{
 
                 if($file->on_dev == 1){
-                    $path = public_path('/../../EcuTechV2/public'.$file->file_path);
+                    $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path);
                 
                 }
                 else{
@@ -3624,7 +3624,14 @@ class FilesController extends Controller
                 }
                 else{
 
-                    $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+                    if($file->on_dev == 1){
+                        $attachment->move(public_path('/../../stagingportalecutech/public/'.$file->file_path),$fileName);
+                    }
+                    else{
+                        $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+                    }
+
+                    
                 }
             }
             else if($file->front_end_id == 3){
@@ -3634,7 +3641,12 @@ class FilesController extends Controller
                 }
                 else{
 
-                    $attachment->move(public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path),$fileName);
+                    if($file->on_dev == 1){
+                        $attachment->move(public_path('/../../stagingportaletuningfiles/public/'.$file->file_path),$fileName);
+                    }
+                    else{
+                        $attachment->move(public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path),$fileName);
+                    }
                 }
             }
             else{
@@ -3909,7 +3921,7 @@ class FilesController extends Controller
                 // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
 
                 if($file->on_dev == 1){
-                    $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+                    $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
                 }
                 else{
                     $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
@@ -3919,12 +3931,12 @@ class FilesController extends Controller
             else if($file->front_end_id == 3){
                 // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
 
-                // if($file->on_dev == 1){
-                //     $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
-                // }
-                // else{
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
+                }
+                else{
                     $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
-                // }
+                }
 
             }
             else if($file->front_end_id == 2){
@@ -3953,7 +3965,7 @@ class FilesController extends Controller
                     // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
     
                     if($file->on_dev == 1){
-                        $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+                        $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
                     }
                     else{
                         $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
@@ -3961,14 +3973,14 @@ class FilesController extends Controller
     
                 }
                 else if($file->front_end_id == 3){
-                    // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+                    $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
     
-                    // if($file->on_dev == 1){
-                    //     $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
-                    // }
-                    // else{
+                    if($file->on_dev == 1){
+                        $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
+                    }
+                    else{
                         $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
-                    // }
+                    }
     
                 }
                 else if($file->front_end_id == 2){
@@ -3993,7 +4005,7 @@ class FilesController extends Controller
                     
                     if($file->on_dev == 1){
                         
-                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                        $path = public_path('/../../stagingportalecutech/public'.$file->file_path).$newFileName;
                     }
                     else{
 
@@ -4007,7 +4019,7 @@ class FilesController extends Controller
                     
                     if($file->on_dev == 1){
                         
-                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                        $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
                     }
                     else{
                         $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path).$newFileName;
@@ -4046,7 +4058,7 @@ class FilesController extends Controller
             //         // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
     
             //         if($file->on_dev == 1){
-            //             $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+            //             $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
             //         }
             //         else{
             //             $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
@@ -4057,7 +4069,7 @@ class FilesController extends Controller
             //         // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
     
             //         // if($file->on_dev == 1){
-            //         //     $attachment->move(public_path('/../../EcuTechV2/public'.$file->file_path),$newFileName);
+            //         //     $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
             //         // }
             //         // else{
             //             $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
@@ -4088,7 +4100,7 @@ class FilesController extends Controller
                     
                     if($file->on_dev == 1){
                         
-                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                        $path = public_path('/../../stagingportalecutech/public'.$file->file_path).$newFileName;
                     }
                     else{
                         $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
@@ -4101,7 +4113,7 @@ class FilesController extends Controller
                     
                     if($file->on_dev == 1){
                         
-                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                        $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
                     }
                     else{
                         $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path).$newFileName;
@@ -4143,7 +4155,7 @@ class FilesController extends Controller
                     
                     if($file->on_dev == 1){
                         
-                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                        $path = public_path('/../../stagingportalecutech/public'.$file->file_path).$newFileName;
                     }
                     else{
                         $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
@@ -4156,7 +4168,7 @@ class FilesController extends Controller
                     
                     if($file->on_dev == 1){
                         
-                        $path = public_path('/../../EcuTechV2/public'.$file->file_path).$newFileName;
+                        $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
                     }
                     else{
                         $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path).$newFileName;
