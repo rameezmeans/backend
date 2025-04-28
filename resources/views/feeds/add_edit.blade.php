@@ -97,16 +97,18 @@
                 <h5 class="m-t-40 m-b-30">
                   Activation Method
                 </h5>
+                <p class="text-danger">Whenever you want to set Offline status for any vacations please set them by date and time range. It will be preferred over Days of Week.</p>
                 <div class="card card-transparent ">
                   <!-- Nav tabs -->
                   @if(!isset($feed))
                   <ul class="nav nav-tabs nav-tabs-fillup d-none d-md-flex d-lg-flex d-xl-flex" data-init-reponsive-tabs="dropdownfx">
                     <li class="nav-item">
-                      <a href="#" class="active show" data-toggle="tab" data-target="#slide1"><span>Days of Week</span></a>
-                    </li>
-                    <li class="nav-item">
                       <a href="#" data-toggle="tab" data-target="#slide2" class=""><span>Date and Time</span></a>
                     </li>
+                    <li class="nav-item">
+                      <a href="#" class="active show" data-toggle="tab" data-target="#slide1"><span>Days of Week</span></a>
+                    </li>
+                    
                   </ul>
                   <div class="nav-tab-dropdown cs-wrapper full-width d-lg-none d-xl-none d-md-none"><div class="cs-select cs-skin-slide full-width" tabindex="0"><span class="cs-placeholder">Hello World</span><div class="cs-options"><ul><li data-option="" data-value="#slide1"><span>Home</span></li><li data-option="" data-value="#slide2"><span>Profile</span></li><li data-option="" data-value="#slide3"><span>Messages</span></li></ul></div><select class="cs-select cs-skin-slide full-width" data-init-plugin="cs-select"><option value="#slide1" selected="">Home</option><option value="#slide2">Profile</option><option value="#slide3">Messages</option></select><div class="cs-backdrop"></div></div></div>
                  
