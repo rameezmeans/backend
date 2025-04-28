@@ -4904,7 +4904,7 @@ class FilesController extends Controller
 
         // dd($file);
 
-        dd($file->options_services);
+        // dd($file->options_services);
         
         if($file->checked_by == 'customer'){
             $file->checked_by = 'seen';
