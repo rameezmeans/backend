@@ -4227,10 +4227,10 @@ class FilesController extends Controller
 
             if($file->status == 'submitted'){
 
-                // if(!$file->upload_later){
-                //     $this->changeStatusLog($file, 'completed', 'status', 'Engineer uploaded the file.');
-                //     $file->status = 'completed';
-                // }
+                if(!$file->upload_later){
+                    $this->changeStatusLog($file, 'completed', 'status', 'Engineer uploaded the file.');
+                    $file->status = 'completed';
+                }
                 
                 $file->red = 0;
                 $file->submission_timer = NULL;
