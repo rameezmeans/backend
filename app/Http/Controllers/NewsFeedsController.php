@@ -356,7 +356,7 @@ class NewsFeedsController extends Controller
             'feed' => 'required'
         ]);
 
-        dd($request->all());
+        // dd($request->all());
 
         $feed = new NewsFeed();
         $feed->title = $request->title;
