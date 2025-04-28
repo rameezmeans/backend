@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "barryvdh/laravel-dompdf": "^3.1.1",
         "biscolab/laravel-recaptcha": "^6.0",
         "cba85/eu-vat-validation": "dev-master",
@@ -17,7 +17,7 @@
         "drahosistvan/vatvalidation": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/cashier": "^15",
-        "laravel/framework": "^11.0",
+        "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.0",
