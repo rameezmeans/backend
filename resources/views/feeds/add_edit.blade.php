@@ -68,6 +68,20 @@
                 @enderror
 
                 <div class="form-group form-group-default required ">
+                  <label>Front End</label>
+                  <select class="full-width" data-init-plugin="select2" name="front_end_id">
+                    <option @if(isset($feed) && $feed->front_end_id == 1) selected @endif value="1">ECUTech</option>
+                    <option  @if(isset($feed) && $feed->front_end_id == 2) selected @endif value="2">TuningX</option>
+                    <option  @if(isset($feed) && $feed->front_end_id == 3) selected @endif value="3">ETF</option>
+                  </select>
+                </div>
+                @error('front_end_id')
+                  <span class="text-danger" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+
+                <div class="form-group form-group-default required ">
                   <label>Type</label>
                   <select class="full-width" data-init-plugin="select2" name="type">
                     <option @if(isset($feed) && $feed->type == 'danger') selected @endif value="danger">Danger</option>

@@ -380,6 +380,7 @@ class NewsFeedsController extends Controller
         }
         
         $feed->feed = $request->feed;
+        $feed->front_end_id = $request->front_end_id;
         $feed->type = $request->type;
         
         $feed->save();
@@ -387,7 +388,7 @@ class NewsFeedsController extends Controller
         $texts['english'] = $request->feed;;
         $texts['greek']   = $request->feed_in_greek;
 
-        $this->translationObj->store($request->id, 'Feed', $texts); 
+        // $this->translationObj->store($request->id, 'Feed', $texts); 
 
         return redirect()->route('feeds')->with(['success' => 'Feed added, successfully.']);
 
