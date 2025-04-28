@@ -356,6 +356,8 @@ class NewsFeedsController extends Controller
             'feed' => 'required'
         ]);
 
+        dd($request->all());
+
         $feed = new NewsFeed();
         $feed->title = $request->title;
 
@@ -385,7 +387,7 @@ class NewsFeedsController extends Controller
         
         $feed->save();
 
-        $texts['english'] = $request->feed;;
+        $texts['english'] = $request->feed;
         $texts['greek']   = $request->feed_in_greek;
 
         // $this->translationObj->store($request->id, 'Feed', $texts); 
