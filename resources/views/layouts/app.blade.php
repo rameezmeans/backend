@@ -44,7 +44,7 @@
     {{-- <link class="main-stylesheet" href="{{ url('pages/css/style.css') }}" rel="stylesheet" type="text/css" /> --}}
     {{-- @vite('resources/js/push.js', 'node_modules/push.js/bin/push.min.js') --}}
     <script type="text/javascript" src="{{ url('assets/plugins/pushjs/push.min.js') }}"></script>
-    @livewireStyles
+    {{-- @livewireStyles --}}
     <style>
        [x-cloak] {
           display: none;
@@ -305,6 +305,6 @@
    <!-- END PAGE LEVEL JS -->
    @yield('pagespecificscripts')
  </body>
- @livewireScripts
+ {{-- @livewireScripts --}}
  @stack('scripts')
 </html>
