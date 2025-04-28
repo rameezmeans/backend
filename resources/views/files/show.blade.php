@@ -1397,9 +1397,9 @@ margin-bottom: 10px !important;
                                       <button style="float: right;" class="btn btn-info m-b-2 btn-show-send-file-form m-l-10" data-file_id="{{$file->id}}" data-request_file_id="{{$message['id']}}">Send File To Customer</button>
                                     @endif
                                   {{-- @endif --}}
+                                    <button style="float: right;" class="btn btn-danger m-l-5 m-b-20 delete-uploaded-file" data-request_file_id="{{$message['id']}}">Delete</button>
+                                    <a style="float: right;" class="btn btn-success m-l-5 m-b-20" href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}">Download</a>
                                     <button style="float: right;" class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
-                                    <a style="float: right;" class="btn btn-success m-b-20" href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}">Edit Processiong Softwares</a>
-                                    <button style="float: right;" class="btn btn-success m-b-20 delete-uploaded-file" data-request_file_id="{{$message['id']}}">Delete</button>
                                 {{-- @endif --}}
 
                           @php
@@ -3979,9 +3979,9 @@ margin-bottom: 10px !important;
                                 @endif
 
                                 {{-- @if($file->status == 'completed') --}}
-                                    <button style="float: right;" class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
-                                    <a style="float: right;" class="btn btn-success m-b-20" href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}">Edit Processiong Softwares</a>
-                                    <button style="float: right;" class="btn btn-success m-b-20 delete-uploaded-file" data-request_file_id="{{$message['id']}}">Delete</button>
+                                  <button style="float: right;" class="btn btn-danger m-l-5 m-b-20 delete-uploaded-file" data-request_file_id="{{$message['id']}}">Delete</button>
+                                  <a style="float: right;" class="btn btn-success m-l-5 m-b-20" href="{{ route('download',[$message['file_id'], $message['request_file'], 0]) }}">Download</a>
+                                  <button style="float: right;" class="btn btn-success m-b-20 btn-show-software-edit-form" data-file_id="{{$file->id}}" data-new_request_id="{{$message['id']}}">Edit Processiong Softwares</button>
                                 {{-- @endif --}}
 
                               @if(isset($message['request_file']))
