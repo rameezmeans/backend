@@ -2949,7 +2949,7 @@ class FilesController extends Controller
                 
                 }
                 else{
-                    $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path);
+                    $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path);
                 }
             }
         }
