@@ -1381,9 +1381,9 @@ margin-bottom: 10px !important;
                               @endif
 
                               @if($file->softwares->isNotEmpty())
-                              <li class="nav-item">
+                              {{-- <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Software Information</span></a>
-                              </li>
+                              </li> --}}
                               @endif
                             </ul>
                             <!-- Tab panes -->
@@ -4013,9 +4013,9 @@ margin-bottom: 10px !important;
                               </li>
 								@endif
                               @if($file->softwares->isNotEmpty())
-                              <li class="nav-item">
+                              {{-- <li class="nav-item">
                                 <a href="#" data-toggle="tab" data-target="#software_data_{{$message['id']}}"><span>Software Information</span></a>
-                              </li>
+                              </li> --}}
                               @endif
                             </ul>
                             <!-- Tab panes -->
