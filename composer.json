@@ -38,7 +38,7 @@
         "spatie/laravel-ignition": "^2.9",
         "srmklive/paypal": "^3.0",
         "stichoza/google-translate-php": "^5.2",
-        "stripe/stripe-php": "^13.0",
+        "stripe/stripe-php": "^16.2",
         "symfony/http-client": "^6.2",
         "twilio/sdk": "^6.44",
         "ultramsg/whatsapp-php-sdk": "^2.0",
