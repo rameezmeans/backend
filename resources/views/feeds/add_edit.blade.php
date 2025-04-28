@@ -114,7 +114,7 @@
                  
                   <!-- Tab panes -->
                   <div class="tab-content">
-                    <div class="tab-pane slide-left active show" id="slide1">
+                    <div class="tab-pane slide-left" id="slide1">
                       <div class="row column-seperation">
                         <div class="col-lg-6">
                             <div class="form-group form-group-default ">
@@ -176,7 +176,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="tab-pane slide-left" id="slide2">
+                    <div class="tab-pane slide-left active show" id="slide2">
                       <div class="row">
                         <div class="col-lg-12">
                           <label>Activation Range</label>
