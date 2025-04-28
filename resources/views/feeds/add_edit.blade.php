@@ -103,10 +103,10 @@
                   @if(!isset($feed))
                   <ul class="nav nav-tabs nav-tabs-fillup d-none d-md-flex d-lg-flex d-xl-flex" data-init-reponsive-tabs="dropdownfx">
                     <li class="nav-item">
-                      <a href="#" data-toggle="tab" data-target="#slide2" class=""><span>Date and Time</span></a>
+                      <a href="#" data-toggle="tab" data-target="#slide2" class="active show"><span>Date and Time</span></a>
                     </li>
                     <li class="nav-item">
-                      <a href="#" class="active show" data-toggle="tab" data-target="#slide1"><span>Days of Week</span></a>
+                      <a href="#" class="" data-toggle="tab" data-target="#slide1"><span>Days of Week</span></a>
                     </li>
                     
                   </ul>
