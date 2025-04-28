@@ -221,15 +221,15 @@ margin-bottom: 10px !important;
                             </a>
                             @endif
 
-                            @php
+                            {{-- @php
                                 $modelToAdd = str_replace( '/', '', $file->model );
                                 $termsPath = public_path('uploads'.'/'.$file->brand.'/'.$modelToAdd.'/'.$file->id.'/'.'terms_'.$file->id.'.pdf');
-                            @endphp
+                            @endphp --}}
 
-                            @if(file_exists($termsPath))
+                            {{-- @if(file_exists($termsPath)) --}}
                               <a href="{{ route('download', [$file->id, 'terms_'.$file->id.'.pdf', 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's Terms File</span>
                               </a>
-                            @endif
+                            {{-- @endif --}}
 
                             {{-- @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id) --}}
                             @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id || $file->tool_id != $kess3Label->id)
