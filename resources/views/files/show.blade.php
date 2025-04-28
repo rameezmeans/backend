@@ -936,6 +936,7 @@ margin-bottom: 10px !important;
                         @endif
                       @endif
 
+                      @if($file->options_services->isEmpty())
                       <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="card card-default m-b-0">
                           <div class="card-header " role="tab" id="headingOne">
@@ -1107,6 +1108,8 @@ margin-bottom: 10px !important;
                 
                 
               </div>
+
+              @endif
                       
                       {{-- @if($file->dtc_off_comments)
                       <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -3747,6 +3750,7 @@ margin-bottom: 10px !important;
                         @endif
                       @endif
 
+                      @if($file->options_services->isEmpty())
                       <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="card card-default m-b-0">
                           <div class="card-header " role="tab" id="headingOne">
@@ -3909,6 +3913,8 @@ margin-bottom: 10px !important;
                 
                 
               </div>
+
+              @endif
                       
                       @if($file->dtc_off_comments)
                       <div class="b-grey p-l-20 p-r-20 p-b-10 p-t-10">
