@@ -4023,7 +4023,7 @@ margin-bottom: 10px !important;
                                       </a>
                                     </h4>
                                 </div>
-                                <div id="collapseOne{{$message['id']}}" class="collapse replied @if($var == sizeof($file->files->toArray())) show @endif"" role="tabcard" aria-labelledby="headingOne">
+                                <div id="collapseOne{{$message['id']}}" class="collapse replies @if($var == sizeof($file->files->toArray())) show @endif" role="tabcard" aria-labelledby="headingOne">
                                   <div class="card-body">
 
                             <div class="card">
