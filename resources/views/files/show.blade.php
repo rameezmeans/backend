@@ -3268,7 +3268,7 @@ margin-bottom: 10px !important;
                             <span class="label label-success 123">{{$file->user->name}}<span>
                           </div>
                           <div class="clearfix"></div>
-                          <div><i class="fa-solid fa-flag"></i></div>
+                          
                         </div>
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -3390,6 +3390,16 @@ margin-bottom: 10px !important;
                               <span class="label label-success">{{$file->name}}<span>
                             </div>
                             <div class="clearfix"></div>
+                            @if($file->user->flag == NULL)
+                            <div><button id="add-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag"></i></button></div>
+                          @else
+                            @if($file->user->flag == 'bad')
+                              <div><button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" style="color: #f55753;"></i></button></div>
+                            @else
+                              <div><button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" style="color: #10cfbd;"></i></button></div>
+                            @endif
+                          
+                            @endif
                           </div>
                         @endif
                         @if($file->phone)
