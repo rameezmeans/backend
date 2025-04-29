@@ -3175,6 +3175,10 @@ margin-bottom: 10px !important;
                               </a>
                               @endif
 
+
+                              <a href="{{ route('download', [$file->id, 'terms_'.$file->id.'.pdf', 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's Terms File</span>
+                              </a>
+
                               
 
                             {{-- @if($oriFile->tool_type == 'slave' && $oriFile->tool_id == $kess3Label->id) --}}
