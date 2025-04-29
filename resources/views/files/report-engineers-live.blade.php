@@ -151,7 +151,7 @@
               
                           <tr>
               
-                              <th>Index</th>
+                              <th>Task ID</th>
                               <th>Frontend</th> 
                               <th>Vehicle</th>
                               <th>Stage</th>
