@@ -1954,7 +1954,7 @@ Route::post('python/file_search', [App\Http\Controllers\FilesAPIController::clas
 /*
             request body 
 
-            $request->temp_file // when we upload the file to the server at first step we return the whole tempFile after saving it to database, you need to pass it in here as it is
+            $request->temp_file_id
             $request->threshold
             $request->timeout
             $request->file_size_filter
