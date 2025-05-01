@@ -28,7 +28,7 @@
                     @endif
                     <div class="form-group form-group-default required ">
                       <label>Stage Tasks Assigned to</label>
-                      <select class="form-control" id="stage_engineer">
+                      <select class="form-control" id="stage_engineer" name="stage_engineer">
                           
                         @foreach ($allEngineers as $engineer)
                           <option value="{{$engineer->id}}">{{$engineer->name}}</option>
@@ -39,7 +39,7 @@
 
                     <div class="form-group form-group-default required ">
                         <label>Options Tasks Assigned to</label>
-                        <select class="form-control" id="options_engineer">
+                        <select class="form-control" id="options_engineer" name="options_engineer">
                             
                           @foreach ($allEngineers as $engineer)
                             <option value="{{$engineer->id}}">{{$engineer->name}}</option>
@@ -50,7 +50,7 @@
 
                       <div class="form-group form-group-default required ">
                         <label>Stages and Options Tasks Assigned to</label>
-                        <select class="form-control" id="stages_options_engineer">
+                        <select class="form-control" id="stages_options_engineer" name="stages_options_engineer">
                             
                           @foreach ($allEngineers as $engineer)
                             <option value="{{$engineer->id}}">{{$engineer->name}}</option>
@@ -61,9 +61,7 @@
                     
                     <div class="text-center m-t-40">                    
                       <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($engineer)) Update @else Add @endif</span></button>
-                      @if(isset($engineer))
-                        <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$engineer->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button>
-                      @endif
+                      
                     </div>
                   </form>
                 
