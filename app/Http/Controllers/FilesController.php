@@ -2328,10 +2328,11 @@ class FilesController extends Controller
         $options = Service::where('type', 'option')->get();
         $engineers = User::whereIn('role_id', [2,3])->orWhere('id', 3)->get();
         $allEngineers = User::whereIn('role_id', [2,3])->whereNull('subdealer_group_id')->get();
+        $loggedInUser = Auth::user();
 
         // if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
             
-            return view('files.live_files', ['allEngineers' => $allEngineers, 'stages' => $stages, 'options' => $options, 'engineers' => $engineers]);    
+            return view('files.live_files', ['loggedInUser' => $loggedInUser, 'allEngineers' => $allEngineers, 'stages' => $stages, 'options' => $options, 'engineers' => $engineers]);    
         // }
         // else{
         //     return abort(404);
