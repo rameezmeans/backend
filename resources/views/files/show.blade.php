@@ -6216,7 +6216,7 @@ margin-bottom: 10px !important;
           <div class="row">
             
             <div class="col-md-4 m-t-10 sm-m-t-10">
-              <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
+              <button type="submit" class="btn btn-success btn-block m-t-5">Assign</button>
             </div>
           </div>
         </form>
