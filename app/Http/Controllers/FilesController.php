@@ -2611,6 +2611,12 @@ class FilesController extends Controller
 
     }
 
+    public function engineersAssignment(){
+
+        $allEngineers = User::whereIn('role_id', [2,3])->whereNull('subdealer_group_id')->get();
+        return view('files.engineers_assignment', ['allEngineers' => $allEngineers]); 
+    }
+
     public function flipEngineerStatus(Request $request){
 
         $engineer = User::findOrFail($request->id);
@@ -2633,7 +2639,7 @@ class FilesController extends Controller
 
         $stages = Service::where('type', 'tunning')->get();
         $options = Service::where('type', 'option')->get();
-        $engineers = User::whereIn('role_id', [2,3])->orWhere('id', 3)->get();
+        $engineers = User::whereIn('role_id', [2,3])->whereNull('subdealer_group_id')->orWhere('id', 3)->get();
         $allEngineers = User::whereIn('role_id', [2,3])->whereNull('subdealer_group_id')->get();
         $loggedInUser = Auth::user();
 

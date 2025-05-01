@@ -516,6 +516,10 @@
               <span class="icon-thumbnail">En</span>
             </li>
             <li class="">
+              <a href="{{ route('engineers-assignment') }}">Engineers Assignment Rules</a>
+              <span class="icon-thumbnail">Ea</span>
+            </li>
+            <li class="">
               <a href="{{ route('tools') }}">Tools</a>
               <span class="icon-thumbnail">To</span>
             </li>
