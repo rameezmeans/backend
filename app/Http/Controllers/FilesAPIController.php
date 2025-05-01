@@ -105,11 +105,11 @@ class FilesAPIController extends Controller
             } elseif ($response->clientError()) {
                 // 4xx errors
                 FacadesLog::error('Client error', ['response' => $response->body()]);
-                return response()->json(['error' => 'Client Error'], 400);
+                return response()->json(['error' => '400: Client Error', 'response' => $response->body()], 400);
             } elseif ($response->serverError()) {
                 // 5xx errors
                 FacadesLog::error('Server error', ['response' => $response->body()]);
-                return response()->json(['error' => 'Server Error'], 500);
+                return response()->json(['error' => '500: Server Error', 'response' => $response->body()], 500);
             }
         } catch (\Exception $e) {
             FacadesLog::error('Request failed', ['message' => $e->getMessage()]);
