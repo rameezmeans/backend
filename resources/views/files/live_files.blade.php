@@ -66,22 +66,22 @@
                   </div>
 
                   <div>
-                  <div class="card social-card share  col1" data-social="item" style="">
-                    <div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
-                    </div>
-                    <div class="card-header clearfix">
-                      <div class="user-pic">
-                        <img alt="Profile Image" width="33" height="33" data-src-retina="assets/img/profiles/4x.jpg" data-src="assets/img/profiles/4.jpg" src="assets/img/profiles/4x.jpg">
+                    @foreach($allEngineers as $engineer)
+                      <div class="card social-card share  col1" data-social="item" style="">
+                        <div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
+                        </div>
+                        <div class="card-header clearfix">
+                          <div class="user-pic">
+                            <img alt="Profile Image" width="33" height="33" data-src-retina="assets/img/profiles/4x.jpg" data-src="assets/img/profiles/4.jpg" src="assets/img/profiles/4x.jpg">
+                          </div>
+                          <h5>{{$engineer->name}}</h5>
+                          <h6>Status
+                            
+                          </h6>
+                        </div>
+                        
                       </div>
-                      <h5>Andy Young</h5>
-                    <h6>Updated his status
-                      <span class="location semi-bold"><i class="icon-map"></i> NYC, New York</span>
-                    </h6>
-                    </div>
-                    <div class="card-description">
-                      <p>What a lovely day! I think I should go and play outside.</p>
-                    </div>
-                  </div>
+                    @endforeach
                   </div>
 
                   <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
