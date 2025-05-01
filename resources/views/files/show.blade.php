@@ -6210,15 +6210,7 @@ margin-bottom: 10px !important;
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group form-group-default">
-                    <label>Comment</label>
-                    <textarea class="form-control" name="comment"></textarea>
-                  </div>
-                </div>
-                
-              </div>
+              
             </div>
           
           <div class="row">
