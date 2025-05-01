@@ -2612,9 +2612,9 @@ class FilesController extends Controller
     }
 
     public function assignToAnother(Request $request){
-        
+
         $file = File::findOrFail($request->file_id);
-        $file->assgined_to = $request->engineer;
+        $file->assigned_to = $request->engineer;
         $file->save();
 
         return redirect()->back()->with(['success' => 'assgin to another engineer']);
