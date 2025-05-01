@@ -5399,6 +5399,8 @@ class FilesController extends Controller
 
         $prossingSoftwares = ProcessingSoftware::orderBy('name', 'asc')->get();
 
+        $allEngineers = User::whereIn('role_id', [2,3])->whereNull('subdealer_group_id')->get();
+
         // dd($file);
 
         $servername = env('DB_HOST');
@@ -5438,13 +5440,13 @@ class FilesController extends Controller
         // dd(env('APP_ENV'));
 
         if(env('APP_ENV') == 'live'){
-            return view('files.show', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show', ['allEngineers' => $allEngineers, 'activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
         else if(env('APP_ENV') == 'staging'){
-            return view('files.show', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show', ['allEngineers' => $allEngineers,'activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
         else{
-            return view('files.show_backup', ['activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares, 'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show_backup', ['allEngineers' => $allEngineers,'activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares, 'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
 
         }
