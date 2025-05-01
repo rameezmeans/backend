@@ -6,6 +6,7 @@ use App\Models\ChMessage;
 use App\Models\Credit;
 use App\Models\EngineersPermission;
 use App\Models\File;
+use App\Models\FileLogger;
 use App\Models\FrontEnd;
 use App\Models\Group;
 use App\Models\Role;
@@ -625,6 +626,11 @@ class UsersController extends Controller
         $changes = UserChange::where('user_id', $id)->get();
         $userInit = User::findOrFail($id);
         return view('groups.customer_changes', ['changes' => $changes, 'userId' => $id, 'userInit' => $userInit]);
+    }
+
+    public function fileLogs($id){
+        $logs = FileLogger::where('user_id', $id)->get();
+        return view('groups.customer_file_logs', ['logs' => $logs]);
     }
 
     public function editCustomer($id){

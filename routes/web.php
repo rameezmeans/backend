@@ -1093,6 +1093,7 @@ Route::get('/create_customer', [App\Http\Controllers\UsersController::class,'cre
 Route::get('/edit_customer/{id}', [App\Http\Controllers\UsersController::class,'editCustomer'])->name('edit-customer');
 Route::get('/user_init/{id}', [App\Http\Controllers\UsersController::class,'userInit'])->name('user-init');
 Route::get('/changes/{id}', [App\Http\Controllers\UsersController::class,'changes'])->name('changes');
+Route::get('/file_logs/{id}', [App\Http\Controllers\UsersController::class,'fileLogs'])->name('file-logs');
 Route::get('/change/{id}', [App\Http\Controllers\UsersController::class,'change'])->name('change');
 Route::post('/add-customer', [App\Http\Controllers\UsersController::class,'addCustomer'])->name('add-customer');
 Route::post('/update-customer', [App\Http\Controllers\UsersController::class,'updateCustomer'])->name('update-customer');

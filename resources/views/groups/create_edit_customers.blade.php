@@ -42,6 +42,9 @@
                       </button>
                       <button data-redirect="{{route('changes', $customer->id)}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Logs</span>
                       </button>
+
+                      <button data-redirect="{{route('file-logs', $customer->id)}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">File Logs</span>
+                      </button>
                     @endif
 
                     <button data-redirect="{{route('customers')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">Customers</span>
