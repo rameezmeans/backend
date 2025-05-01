@@ -2320,6 +2320,22 @@ class FilesController extends Controller
 
     }
 
+    public function flipEngineerStatus(Request $request){
+
+        $engineer = User::findOrFail($request->id);
+
+        if($engineer->online){
+            $engineer->online = 0;
+        }
+        else{
+            $engineer->online = 1;
+        }
+
+        $engineer->save();
+
+        return response()->json( [ 'status flipped' ] );
+    }
+
     public function liveFiles(){
 
         $this->feedadjustment();

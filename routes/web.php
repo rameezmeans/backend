@@ -958,6 +958,7 @@ Route::post('/set-customers-comments', [App\Http\Controllers\ServicesController:
 
 Route::post('/ajax_files', [App\Http\Controllers\FilesController::class, 'ajaxFiles'])->name('ajax-files');
 Route::get('/files', [App\Http\Controllers\FilesController::class, 'liveFiles'])->name('files');
+Route::post('/flip_engineer_status', [App\Http\Controllers\FilesController::class, 'flipEngineerStatus'])->name('flip-engineer-status');
 
 Route::get('/file/{id}', [App\Http\Controllers\FilesController::class, 'show'])->name('file');
 Route::post('/get_download_button', [App\Http\Controllers\FilesController::class, 'getDownloadButton'])->name('get-download-button');
