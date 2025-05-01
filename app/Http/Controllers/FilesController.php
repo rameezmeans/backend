@@ -2613,8 +2613,19 @@ class FilesController extends Controller
 
     public function tasksRulesSet(Request $request){
 
-        dd($request->all());
+        $stageEngineer = Key::where('key','stage_engineer')->first();
+        $stageEngineer->value = $request->stage_engineer;
+        $stageEngineer->save();
 
+        $optionsEngineer = Key::where('key','options_engineer')->first();
+        $optionsEngineer->value = $request->options_engineer;
+        $optionsEngineer->save();
+
+        $stagesOptionsEngineer = Key::where('key','stages_options_engineer')->first();
+        $stagesOptionsEngineer->value = $request->stages_options_engineer;
+        $stagesOptionsEngineer->save();
+
+        return redirect()->back()->with(['success' => 'rules set']);
     }
 
     public function engineersAssignment(){
