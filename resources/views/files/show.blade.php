@@ -274,9 +274,9 @@ margin-bottom: 10px !important;
                           </form>
 
                           @else
-                            
+                            <div>
                               <button class="btn btn-success assigned-to-another" type="button">Assigned To Another</button>
-                              
+                            </div>
                           @endif
 
                         </div>
@@ -3214,9 +3214,9 @@ margin-bottom: 10px !important;
                               <button class="btn btn-danger" type="submit">Assigned To Me</button>
                             </form>
                             @else
-                            
+                            <div>
                               <button class="btn btn-success assigned-to-another" type="button">Assigned To Another</button>
-                            
+                            </div>
                           @endif
 
                         </div>
