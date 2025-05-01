@@ -65,6 +65,7 @@
                     </div>
                   </div>
 
+                  <div>
                   <div class="card social-card share  col1" data-social="item" style="">
                     <div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
                     </div>
@@ -80,6 +81,7 @@
                     <div class="card-description">
                       <p>What a lovely day! I think I should go and play outside.</p>
                     </div>
+                  </div>
                   </div>
 
                   <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
