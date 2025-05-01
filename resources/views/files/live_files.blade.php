@@ -477,6 +477,8 @@
 
         $(document).on('click','.flip-status',function(e) {
 
+          console.log('here we are');
+
           let id = $(this).data('id');
 
           console.log(id);
