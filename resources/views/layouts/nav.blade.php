@@ -56,6 +56,18 @@
         </li>
 
         @endif
+
+        @if(!Auth::user()->is_admin())
+
+        <li class="m-t-30 ">
+          <a href="{{ route('my-files') }}" class="detailed">
+            <span class="title" style="width: 80% !important;">My Files</span>
+              
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
+        </li>
+
+        @endif
         
         @if(Auth::user()->is_admin())
        

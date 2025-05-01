@@ -1909,6 +1909,297 @@ class FilesController extends Controller
 
     }
     
+    public function myAjaxFiles(Request $request){
+        $data = File::select('*', 'files.id as row_id')
+        ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "processing" THEN 2 WHEN status = "ready_to_send" THEN 3 ELSE 4 END AS s'))
+        ->addSelect(DB::raw('CASE WHEN support_status = "open" THEN 1 ELSE 2 END AS ss'))
+        ->orderBy('ss', 'asc')
+        ->orderBy('s', 'asc')
+        ->orderBy('created_at', 'desc')
+        ->where('is_credited', 1)
+        ->where('assigned_to', Auth::user()->id)
+        ->whereNull('original_file_id')
+        ->where(function ($query) {
+        $query->where('files.type', '=', 'master')
+                ->orWhereNotNull('assigned_from')->where('files.type', '=', 'subdealer');
+        });
+
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+
+            $data = $data->whereDate('created_at', '>=', $request->from_date)
+            ->whereDate('created_at', '<=', $request->to_date);
+
+        }
+
+        if ($request->filled('late')) {
+            if($request->late == 'late'){
+                $data = $data->where('delayed', '=', 1);
+            }
+            else if($request->late == 'not_late'){
+                $data = $data->where('delayed', '=', 0);
+            }
+        }
+
+        if ($request->filled('automatic')) {
+            if($request->automatic == 'automatic'){
+                $data = $data->where('automatic', '=', 1);
+            }
+            else if($request->automatic == 'not_automatic'){
+                $data = $data->where('automatic', '=', 0);
+            }
+        }
+
+        if ($request->filled('frontend')) {
+            if($request->frontend != 'all'){
+                $data = $data->where('front_end_id', '=', $request->frontend);
+            }
+        }
+
+        if ($request->filled('support_status')) {
+            if($request->support_status != 'all'){
+                $data = $data->where('support_status', '=', $request->support_status);
+            }
+        }
+
+        if ($request->filled('status')) {
+            if($request->status != 'all'){
+                $data = $data->whereIn('status', $request->status);
+            }
+        }
+
+        if ($request->filled('stage')) {
+            if($request->stage != 'all'){
+                $data = $data->whereIn('stage', $request->stage);
+            }
+        }
+
+        // if ($request->filled('options')) {
+            
+        //     $data = $data->whereIn('file_services.service_id', [$request->options]);
+            
+        // }
+
+        if ($request->filled('engineer')) {
+            if($request->engineer != 'all'){
+                // if($request->engineer == 'automatic'){
+                //     $data = $data->whereIn('assigned_to', $request->engineer)->orWhere('automatic','=', 1);
+                // }
+                // else{
+                    $data = $data->whereIn('assigned_to', $request->engineer);
+                // }
+            }
+        }
+
+        return Datatables::of($data)
+
+            ->addIndexColumn()
+            ->addColumn('timers', function($row){
+
+                $file = File::findOrFail($row->row_id);
+
+                if($file->delayed == 1){
+                    return '<span class="label label-danger text-white m-r-5">Late</span>';
+                }
+
+                $returnStr = "";
+
+                if($file->timer != NULL){
+
+                    $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+                    $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
+
+                    if($file->support_status == 'open'){
+
+                        $openTimeLeft = (strtotime($file->timer)+($fodt*60)) - strtotime(now());
+
+                    }
+
+                    if($file->support_status == 'open'){
+                        if($openTimeLeft > 0){
+                            $returnStr .='<lable class="label label-danger text-white m-r-5 open" id="o_'.$file->id.'" data-seconds="'.$openTimeLeft.'"></lable>';
+                        }
+                    }
+                    
+                    
+                }
+
+                if($file->submission_timer != NULL){
+
+                    $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
+                    $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
+                    
+
+                    if($file->status == 'submitted'){
+                        $submissionTimeLeft = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
+                    }
+                    // else if($file->status == 'on_hold'){
+                    //     if($file->on_hold_time == NULL){
+                    //         $onHoldTime = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
+                    //         if($onHoldTime > 0){
+                    //             $file->on_hold_time = $onHoldTime;
+                    //             $file->save();
+                    //         }
+                    //     }
+                    // }
+
+                    if($file->status == 'submitted' ||  $file->status == 'on_hold'){
+
+                        if($file->status == 'submitted'){
+                            if($submissionTimeLeft > 0){
+                                $returnStr .='<span class="label label-info text-white m-r-5 submission" id="s_'.$file->id.'" data-seconds="'.$submissionTimeLeft.'"></span>';
+                            }
+                        }
+                        else if($file->status == 'on_hold'){
+                            if($file->on_hold_time != NULL){
+                                $returnStr .='<span class="label label-info text-white m-r-5 submission-stoped" id="s_'.$file->id.'" data-seconds="'.$file->on_hold_time.'"></span>';
+                            }
+                        }
+                    }
+                    
+                }
+
+                return $returnStr;
+
+            })
+            ->addColumn('frontend', function($row){
+
+                $frontEndID = $row->front_end_id;
+
+                if($frontEndID == 1){
+                    $btn = '<span class="label bg-primary text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+                else if($frontEndID == 2){
+                    $btn = '<span class="label bg-warning">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+                else if($frontEndID == 3){
+                    $btn = '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+
+                return $btn;
+
+            })
+            ->addColumn('support_status', function($row){
+
+                $supportStatus = $row->support_status;
+
+                if($supportStatus == 'open'){
+                    return '<label class="label bg-danger text-white">'.$supportStatus.'</label>';
+                }
+                else{
+                    return '<lable class="label bg-success text-black">'.$supportStatus.'</lable>';
+                }
+
+            })
+            ->addColumn('status', function($row){
+
+                $status = $row->status;
+
+                if($status == 'completed'){
+                    return '<lable class="label label-success text-white">'.$status.'</lable>';
+                }
+                else if($status == 'rejected'){
+                    return '<lable class="label label-danger text-white">'.'canceled'.'</lable>';
+                }
+                else{
+                    return '<lable class="label bg-blue-200 text-black">'.$status.'</lable>';
+                }
+
+            })
+            ->addColumn('stage', function($row){
+
+                $file = File::findOrFail($row->id);
+                
+                if($file->stage_services){
+                return '<img alt="'.$file->stage.'" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
+                                        <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
+                }
+
+            })
+
+            ->addColumn('options', function($row){
+
+                $options = '';
+                $file = File::findOrFail($row->id);
+                
+                foreach($file->options_services as $option){
+                    $service = \App\Models\Service::where('id',$option->service_id)->first();
+                    if($service != null){
+                        
+
+                            if($service){
+                                $options .= '<img class="parent-adjusted" alt="'.$service->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.$service->icon .'" data-src="'.url('icons').'/'.$service->icon .'" src="'.url('icons').'/'.$service->icon.'">';
+                            }
+                            else{
+                                $options.= "<span>Service Deleted.</span>";
+                            }
+                        }
+                    }
+                
+                return $options;
+
+            })
+
+            ->editColumn('created_at', function ($credit) {
+                return [
+                    'display' => e($credit->created_at->format('d-m-Y')),
+                    'timestamp' => $credit->created_at->timestamp
+                ];
+            })
+            ->filterColumn('created_at', function ($query, $keyword) {
+                $query->whereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') LIKE ?", ["%$keyword%"]);
+            })
+    
+            ->addColumn('created_time', function ($credit) {
+                    return $credit->created_at->format('h:i A');
+            })
+            ->addColumn('engineer', function ($row) {
+                if(User::where('id',$row->assigned_to)->first()){
+                    return User::findOrFail($row->assigned_to)->name;
+                }
+                else{
+                    if($row->automatic == 1){
+                        return "Automatic";
+                    }
+                    else{
+                        return "NONE";
+                    }
+                }
+            })
+            ->addColumn('response_time', function ($row) {
+                $rt = $row->response_time;
+                if($rt == null ){
+                    return '<label class="label label-success">Not Responsed<label>';
+                }
+                else{
+                    
+                    return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
+                }
+            })
+            ->rawColumns(['timers','frontend','support_status','status','stage','options','engineer','response_time'])
+            ->setRowClass(function ($row) {
+                $classes = "";
+
+                if($row->red == 1){
+                    $classes .= 'bg-red-200';
+                }
+
+                if($row->checked_by == 'customer'){
+                    $classes .= 'bg-grey text-white';
+                }
+
+                $classes .= ' redirect-click ';
+
+                return $classes;
+            })
+            ->setRowAttr([
+                'data-redirect' => function($row) {
+                    return route('file', $row->id);
+                },
+                
+            ])
+            ->make(true);
+    }
+
     public function ajaxFiles(Request $request){
 
         $data = File::select('*', 'files.id as row_id')
@@ -2334,6 +2625,21 @@ class FilesController extends Controller
         $engineer->save();
 
         return response()->json( [ 'status flipped' ] );
+    }
+
+    public function myLiveFiles(){
+
+        $this->feedadjustment();
+
+        $stages = Service::where('type', 'tunning')->get();
+        $options = Service::where('type', 'option')->get();
+        $engineers = User::whereIn('role_id', [2,3])->orWhere('id', 3)->get();
+        $allEngineers = User::whereIn('role_id', [2,3])->whereNull('subdealer_group_id')->get();
+        $loggedInUser = Auth::user();
+
+        // if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
+            
+            return view('files.my_live_files', ['loggedInUser' => $loggedInUser, 'allEngineers' => $allEngineers, 'stages' => $stages, 'options' => $options, 'engineers' => $engineers]); 
     }
 
     public function liveFiles(){
