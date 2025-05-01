@@ -67,7 +67,7 @@
 
                   <div>
                     @foreach($allEngineers as $engineer)
-                      <div class="card social-card share col1 @if($loggedInUser->id !== 3 && $loggedInUser->id == $engineer->id) flip-status @endif" data-social="item" style="">
+                      <div class="card social-card share col1 @if($loggedInUser->id !== 3 && $loggedInUser->id == $engineer->id) flip-status @endif" data-social="item" style="" data-id="{{$engineer->id}}">
                         <div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
                         </div>
                         <div class="card-header clearfix">
@@ -476,6 +476,8 @@
         $('.parent-adjusted').parent().addClass('flex');
 
         $(document).on('click','.flip-status',function(e) {
+
+          let id = 
 
           $.ajax({
                 url: "/flip_engineer_status",
