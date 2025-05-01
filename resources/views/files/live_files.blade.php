@@ -477,7 +477,9 @@
 
         $(document).on('click','.flip-status',function(e) {
 
-          let id = 
+          let id = $(this).data('id');
+
+          console.log(id);
 
           $.ajax({
                 url: "/flip_engineer_status",
