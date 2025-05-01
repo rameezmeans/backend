@@ -494,7 +494,7 @@
                 },
                 success: function(items) {
                     console.log(items);
-                    window.location.href = "/files;
+                    window.location.href = "/files";
                 }
             });
 
