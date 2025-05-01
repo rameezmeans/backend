@@ -65,7 +65,7 @@
                     </div>
                   </div>
 
-                  <div class="card social-card share  col1" data-social="item" style="position: absolute; left: 320px; top: 500px;">
+                  <div class="card social-card share  col1" data-social="item" style="">
                     <div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
                     </div>
                     <div class="card-header clearfix">
