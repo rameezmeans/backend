@@ -483,20 +483,20 @@
 
           console.log(id);
 
-          $.ajax({
-                url: "/flip_engineer_status",
-                type: "POST",
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    'id': id,
-                },
-                success: function(items) {
-                    console.log(items);
-                    window.location.href = "/files;
-                }
-            });
+          // $.ajax({
+          //       url: "/flip_engineer_status",
+          //       type: "POST",
+          //       headers: {
+          //           'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+          //       },
+          //       data: {
+          //           'id': id,
+          //       },
+          //       success: function(items) {
+          //           console.log(items);
+          //           window.location.href = "/files;
+          //       }
+          //   });
 
         });
 
