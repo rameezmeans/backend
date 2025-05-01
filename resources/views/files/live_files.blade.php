@@ -75,9 +75,7 @@
                             <img alt="Profile Image" width="33" height="33" data-src-retina="assets/img/profiles/4x.jpg" data-src="assets/img/profiles/4.jpg" src="assets/img/profiles/4x.jpg">
                           </div>
                           <h5>{{$engineer->name}}</h5>
-                          <h6>Status
-                            
-                          </h6>
+                          <h5 class="text-succcess pull-left fs-12">Online <i class="fa fa-circle text-succcess fs-11"></i></h5>
                         </div>
                         
                       </div>
