@@ -2614,7 +2614,9 @@ class FilesController extends Controller
     public function assignToAnother(Request $request){
 
         $file = File::findOrFail($request->file_id);
+        $file->assigned_from = $file->assigned_to;
         $file->assigned_to = $request->engineer;
+        $file->assignment_time = Carbon::now();
         $file->save();
 
         return redirect()->back()->with(['success' => 'assgin to another engineer']);
