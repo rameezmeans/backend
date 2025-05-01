@@ -52,7 +52,7 @@
             <div class="card card-transparent m-t-40">
               <div class="card-header ">
                   <div class="card-title">
-                    <h3>Files</h3>
+                    <h3>My Files</h3>
                     
                     <div class="clearfix"></div>
                   </div>
