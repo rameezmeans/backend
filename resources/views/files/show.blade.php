@@ -272,6 +272,11 @@ margin-bottom: 10px !important;
                             <input type="hidden" name="file_id" value="{{$file->id}}">
                             <button class="btn btn-danger" type="submit">Assigned To Me</button>
                           </form>
+
+                          @else
+                            
+                              <button class="btn btn-success assigned-to-another" type="button">Assigned To Another</button>
+                              
                           @endif
 
                         </div>
@@ -3208,6 +3213,10 @@ margin-bottom: 10px !important;
                               <input type="hidden" name="file_id" value="{{$file->id}}">
                               <button class="btn btn-danger" type="submit">Assigned To Me</button>
                             </form>
+                            @else
+                            
+                              <button class="btn btn-success assigned-to-another" type="button">Assigned To Another</button>
+                            
                           @endif
 
                         </div>
