@@ -31,7 +31,7 @@
                       <select class="form-control" id="stage_engineer" name="stage_engineer">
                           
                         @foreach ($allEngineers as $engineer)
-                          <option value="{{$engineer->id}}">{{$engineer->name}}</option>
+                          <option @if($stageEngineer == $engineer->id) selected  @endif value="{{$engineer->id}}">{{$engineer->name}}</option>
                         @endforeach
 
                     </select>
@@ -42,7 +42,7 @@
                         <select class="form-control" id="options_engineer" name="options_engineer">
                             
                           @foreach ($allEngineers as $engineer)
-                            <option value="{{$engineer->id}}">{{$engineer->name}}</option>
+                            <option @if($optionsEngineer == $engineer->id) selected  @endif value="{{$engineer->id}}">{{$engineer->name}}</option>
                           @endforeach
   
                       </select>
@@ -53,7 +53,7 @@
                         <select class="form-control" id="stages_options_engineer" name="stages_options_engineer">
                             
                           @foreach ($allEngineers as $engineer)
-                            <option value="{{$engineer->id}}">{{$engineer->name}}</option>
+                            <option @if($stagesOptionsEngineer == $engineer->id) selected  @endif value="{{$engineer->id}}">{{$engineer->name}}</option>
                           @endforeach
   
                       </select>
