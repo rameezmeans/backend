@@ -275,7 +275,7 @@ margin-bottom: 10px !important;
 
                           @else
                             <div>
-                              <button class="btn btn-success assigned-to-another" type="button">Assigned To Another</button>
+                              <button data-file_id={{$file->id}} class="btn btn-success assigned-to-another" type="button">Assigned To Another</button>
                             </div>
                           @endif
 
@@ -3215,7 +3215,7 @@ margin-bottom: 10px !important;
                             </form>
                             @else
                             <div>
-                              <button class="btn btn-success assigned-to-another" type="button">Assigned To Another</button>
+                              <button data-file_id={{$file->id}} class="btn btn-success assigned-to-another" type="button">Assigned To Another</button>
                             </div>
                           @endif
 
@@ -7133,6 +7133,7 @@ margin-bottom: 10px !important;
 
     $(document).on('click', '.assigned-to-another', function(e) {
       console.log('here we are');
+      $('#file_id_to_assign').val($(this).data('file_id'));
       // $('#flagCustomerModal').modal('show');
       $('#assignEngineerModal').modal('show');
 
