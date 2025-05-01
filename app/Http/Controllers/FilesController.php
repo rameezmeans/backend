@@ -2611,6 +2611,12 @@ class FilesController extends Controller
 
     }
 
+    public function tasksRulesSet(Request $request){
+
+        dd($request->all());
+
+    }
+
     public function engineersAssignment(){
 
         $allEngineers = User::whereIn('role_id', [2,3])->whereNull('subdealer_group_id')->get();

@@ -961,6 +961,7 @@ Route::post('/ajax_files', [App\Http\Controllers\FilesController::class, 'ajaxFi
 Route::get('/files', [App\Http\Controllers\FilesController::class, 'liveFiles'])->name('files');
 Route::get('/my_files', [App\Http\Controllers\FilesController::class, 'myLiveFiles'])->name('my-files');
 Route::get('/engineers_assignment', [App\Http\Controllers\FilesController::class, 'engineersAssignment'])->name('engineers-assignment');
+Route::post('/tasks_rules_set', [App\Http\Controllers\FilesController::class, 'tasksRulesSet'])->name('tasks-rules-set');
 Route::post('/flip_engineer_status', [App\Http\Controllers\FilesController::class, 'flipEngineerStatus'])->name('flip-engineer-status');
 
 Route::get('/file/{id}', [App\Http\Controllers\FilesController::class, 'show'])->name('file');
