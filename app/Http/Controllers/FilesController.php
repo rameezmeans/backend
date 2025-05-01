@@ -2611,6 +2611,12 @@ class FilesController extends Controller
 
     }
 
+    public function assignToAnother(Request $request){
+        dd($request->all());
+
+        return redirect()->back()->with(['success' => 'assgin to another engineer']);
+    }
+
     public function tasksRulesSet(Request $request){
 
         $stageEngineer = Key::where('key','stage_engineer')->first();

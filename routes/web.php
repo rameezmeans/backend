@@ -962,6 +962,7 @@ Route::get('/files', [App\Http\Controllers\FilesController::class, 'liveFiles'])
 Route::get('/my_files', [App\Http\Controllers\FilesController::class, 'myLiveFiles'])->name('my-files');
 Route::get('/engineers_assignment', [App\Http\Controllers\FilesController::class, 'engineersAssignment'])->name('engineers-assignment');
 Route::post('/tasks_rules_set', [App\Http\Controllers\FilesController::class, 'tasksRulesSet'])->name('tasks-rules-set');
+Route::post('/assign_to_another', [App\Http\Controllers\FilesController::class, 'assignToAnother'])->name('assign-to-another');
 Route::post('/flip_engineer_status', [App\Http\Controllers\FilesController::class, 'flipEngineerStatus'])->name('flip-engineer-status');
 
 Route::get('/file/{id}', [App\Http\Controllers\FilesController::class, 'show'])->name('file');

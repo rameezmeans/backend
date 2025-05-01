@@ -6182,6 +6182,60 @@ margin-bottom: 10px !important;
 </div>
 <!-- /.modal-dialog -->
 
+<!-- Modal -->
+<div id="assignEngineerModal" class="modal fade slide-up disable-scroll" id="modalSlideUp" tabindex="-1" role="dialog" aria-hidden="false">
+  <div class="modal-dialog ">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="pg-close fs-14"></i>
+          </button>
+          <h5>Assgin To <span class="semi-bold">Another Engineer</span></h5>
+          <p class="p-b-10"></p>
+        </div>
+        <div class="modal-body">
+          <form role="form" method="POST" action="{{route('assign-to-another')}}">
+            @csrf
+            <input type="hidden" id="file_id_to_assign" name="file_id" value="">
+            <div class="form-group-attached">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-group-default">
+                    <label>Engineers</label>
+                    <select class="form-control" name="engineer">
+                      @foreach($allEngineers as $engineer)
+                        <option value="{{$engineer->id}}">{{$engineer->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-group-default">
+                    <label>Comment</label>
+                    <textarea class="form-control" name="comment"></textarea>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+          
+          <div class="row">
+            
+            <div class="col-md-4 m-t-10 sm-m-t-10">
+              <button type="submit" class="btn btn-success btn-block m-t-5">Add Comment</button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+</div>
+<!-- /.modal-dialog -->
+
 <div id="editFlagCustomerModal" class="modal fade slide-up disable-scroll" id="modalSlideUp" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog ">
     <div class="modal-content-wrapper">
@@ -7082,6 +7136,13 @@ margin-bottom: 10px !important;
     $(document).on('click', '#add-customer-comment', function(e) {
       console.log('here we are');
       $('#flagCustomerModal').modal('show');
+
+    });
+
+    $(document).on('click', '.assigned-to-another', function(e) {
+      console.log('here we are');
+      // $('#flagCustomerModal').modal('show');
+      $('#assignEngineerModal').modal('show');
 
     });
 
