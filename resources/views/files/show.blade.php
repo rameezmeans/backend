@@ -7117,7 +7117,7 @@ margin-bottom: 10px !important;
   <script type="text/javascript">
   $(document).ready(function(){
 
-    @if($file->status == 'processing')
+    @if($file->status != 'completed')
 
     const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
