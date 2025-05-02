@@ -636,12 +636,15 @@ Route::post('create_temporary_file', [App\Http\Controllers\FilesAPIController::c
             request body 
 
             $request->user_id;
-
             
             $request->file;
             $request->tool_type;
             $request->tool_id;
             $request->front_end_id;
+
+            $request->threshold;
+            $request->timeout;
+            $request->file_size_filter;
 
             response on API
 

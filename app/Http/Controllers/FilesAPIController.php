@@ -708,6 +708,48 @@ class FilesAPIController extends Controller
 
         $file->move(public_path('uploads'),$tempFile->file_attached);
 
+        $location = $file;
+        // $tempFile = TemporaryFile::where('id', $request->temp_file_id)->first();
+
+        // if($tempFile == NULL){
+        //     return response()->json(['error' => '400: Client Error', 'response' => "tempFile does not found."], 400);
+        // }
+
+        // $location = url('uploads').'/'.$tempFile->file_attached;
+        // $location = public_path('uploads').'/'.$tempFile->file_attached;
+
+        // dd($location);
+
+        $threshold = $request->threshold;
+        $timeout = $request->timeout;
+        $fileSizeFilter = $request->file_size_filter;
+
+        try {
+            $response = Http::timeout(10)->post('http://79.129.68.101:5000/api1', [
+                'INPUT_FILE_URL' => $location,
+                'FILE_MATCHING' => $threshold,
+                'TIMEOUT' => $timeout,
+                'FILE_SIZE_FILTER' => $fileSizeFilter,
+            ]);
+        
+            if ($response->successful()) {
+                // Success! Handle response
+                $data = $response->json();
+                return response()->json($data);
+            } elseif ($response->clientError()) {
+                // 4xx errors
+                FacadesLog::error('Client error', ['response' => $response->body()]);
+                return response()->json(['status' => 400 ,'error' => '400: Client Error', 'response' => $response->body()], 400);
+            } elseif ($response->serverError()) {
+                // 5xx errors
+                FacadesLog::error('Server error', ['response' => $response->body()]);
+                return response()->json(['status' => 500 ,'error' => '500: Server Error', 'response' => $response->body()], 500);
+            }
+        } catch (\Exception $e) {
+            FacadesLog::error('Request failed', ['message' => $e->getMessage()]);
+            return response()->json(['error' => 'Request failed: ' . $e->getMessage()], 500);
+        }
+
         return response()->json([
             'message' => 'temporary file created.',
             'tempFile' => $tempFile,
