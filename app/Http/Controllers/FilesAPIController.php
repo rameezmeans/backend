@@ -716,87 +716,78 @@ class FilesAPIController extends Controller
 
         $file->move(public_path('uploads'),$tempFile->file_attached);
 
-        // File to upload
-        $filePath = public_path('uploads').'/'.$tempFile->file_attached;
+        // // File to upload
+        // $filePath = public_path('uploads').'/'.$tempFile->file_attached;
+        // // /mnt/HC_Volume_102303063/stagingbackend/public/uploads/15909___15899___24585___ori_074906018c
+        
 
-        // dd($filePath);
+        // // Initialize cURL session
+        // $ch = curl_init();
 
-        // Initialize cURL session
-        $ch = curl_init();
+        // // Prepare file for upload
+        // $cfile = new CURLFile($filePath, mime_content_type($filePath), basename($filePath));
 
-        // Prepare file for upload
-        $cfile = new CURLFile($filePath, mime_content_type($filePath), basename($filePath));
+        // // Data to send
+        // $postData = [
+        //     'INPUT_FILE_URL' => $cfile,
+        //     // Include any other form fields if necessary
+        //     'FILE_MATCHING' => $request->threshold,
+        //     'TIMEOUT' => $request->timeout,
+        //     'TIMEOFILE_SIZE_FILTERUT' => $request->file_size_filter,
+        // ];
 
-        // Data to send
-        $postData = [
-            'INPUT_FILE_URL' => $cfile,
-            // Include any other form fields if necessary
-            'FILE_MATCHING' => $request->threshold,
-            'TIMEOUT' => $request->timeout,
-            'TIMEOFILE_SIZE_FILTERUT' => $request->file_size_filter,
-        ];
+        // // Set cURL options
+        // curl_setopt($ch, CURLOPT_URL, 'http://79.129.68.101:5000/api1');
+        // curl_setopt($ch, CURLOPT_POST, true);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        // Set cURL options
-        curl_setopt($ch, CURLOPT_URL, 'http://79.129.68.101:5000/api1');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // // Execute request
+        // $response = curl_exec($ch);
 
-        // Execute request
-        $response = curl_exec($ch);
-
-        // Check for errors
-        if (curl_errno($ch)) {
-            $apiResponse = 'Error:' . curl_error($ch);
-        } else {
-            dd($response);
-            $apiResponse = $response;
-        }
+        // // Check for errors
+        // if (curl_errno($ch)) {
+        //     $apiResponse = 'Error:' . curl_error($ch);
+        // } else {
+        //     dd($response);
+        //     $apiResponse = $response;
+        // }
 
         // Close cURL session
-        curl_close($ch);
+        // curl_close($ch);
 
-        // $location = $request->file;
-        // // $tempFile = TemporaryFile::where('id', $request->temp_file_id)->first();
+        $location = $request->file;
+        $threshold = $request->threshold;
+        $timeout = $request->timeout;
+        $fileSizeFilter = $request->file_size_filter;
 
-        // // if($tempFile == NULL){
-        // //     return response()->json(['error' => '400: Client Error', 'response' => "tempFile does not found."], 400);
-        // // }
-
-        // // $location = url('uploads').'/'.$tempFile->file_attached;
-        // // $location = public_path('uploads').'/'.$tempFile->file_attached;
-
-        // // dd($location);
-
-        // $threshold = $request->threshold;
-        // $timeout = $request->timeout;
-        // $fileSizeFilter = $request->file_size_filter;
-
-        // try {
-        //     $response = Http::timeout(10)->post('http://79.129.68.101:5000/api1', [
-        //         'INPUT_FILE_URL' => $location,
-        //         'FILE_MATCHING' => $threshold,
-        //         'TIMEOUT' => $timeout,
-        //         'FILE_SIZE_FILTER' => $fileSizeFilter,
-        //     ]);
+        try {
+            $response = Http::timeout(10)->post('http://79.129.68.101:5000/api1', [
+                'INPUT_FILE_URL' => $location,
+                'FILE_MATCHING' => $threshold,
+                'TIMEOUT' => $timeout,
+                'FILE_SIZE_FILTER' => $fileSizeFilter,
+            ]);
         
-        //     if ($response->successful()) {
-        //         // Success! Handle response
-        //         $data = $response->json();
-        //         $apiResponse = response()->json($data);
-        //     } elseif ($response->clientError()) {
-        //         // 4xx errors
-        //         FacadesLog::error('Client error', ['response' => $response->body()]);
-        //         $apiResponse = response()->json(['status' => 400 ,'error' => '400: Client Error', 'response' => $response->body()], 400);
-        //     } elseif ($response->serverError()) {
-        //         // 5xx errors
-        //         FacadesLog::error('Server error', ['response' => $response->body()]);
-        //         $apiResponse = response()->json(['status' => 500 ,'error' => '500: Server Error', 'response' => $response->body()], 500);
-        //     }
-        // } catch (\Exception $e) {
-        //     FacadesLog::error('Request failed', ['message' => $e->getMessage()]);
-        //     $apiResponse = response()->json(['error' => 'Request failed: ' . $e->getMessage()], 500);
-        // }
+            if ($response->successful()) {
+                // Success! Handle response
+                $data = $response->json();
+                $apiResponse = response()->json($data);
+            } elseif ($response->clientError()) {
+                // 4xx errors
+                FacadesLog::error('Client error', ['response' => $response->body()]);
+                $apiResponse = response()->json(['status' => 400 ,'error' => '400: Client Error', 'response' => $response->body()], 400);
+            } elseif ($response->serverError()) {
+                // 5xx errors
+                FacadesLog::error('Server error', ['response' => $response->body()]);
+                $apiResponse = response()->json(['status' => 500 ,'error' => '500: Server Error', 'response' => $response->body()], 500);
+            }
+        } catch (\Exception $e) {
+            FacadesLog::error('Request failed', ['message' => $e->getMessage()]);
+            $apiResponse = response()->json(['error' => 'Request failed: ' . $e->getMessage()], 500);
+        }
+
+        dd($apiResponse);
 
         return response()->json([
             'message' => 'temporary file created.',
