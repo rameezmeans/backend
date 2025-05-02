@@ -91,6 +91,9 @@ class FilesAPIController extends Controller
         }
 
         $location = url('uploads').'/'.$tempFile->file_attached;
+
+        dd($location);
+        
         $threshold = $request->threshold;
         $timeout = $request->timeout;
         $fileSizeFilter = $request->file_size_filter;
