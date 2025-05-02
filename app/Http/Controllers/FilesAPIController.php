@@ -787,7 +787,7 @@ class FilesAPIController extends Controller
             $apiResponse = response()->json(['error' => 'Request failed: ' . $e->getMessage()], 500);
         }
 
-        dd($apiResponse);
+        // dd($apiResponse);
 
         return response()->json([
             'message' => 'temporary file created.',
