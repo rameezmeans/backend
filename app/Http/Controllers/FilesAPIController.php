@@ -684,6 +684,7 @@ class FilesAPIController extends Controller
 
         $user = User::findOrFail($request->user_id);
         $file = $request->file;
+        dd($file);
         $toolType = $request->tool_type;
         $toolID = $request->tool_id;
         $frontendID = $request->front_end_id;
