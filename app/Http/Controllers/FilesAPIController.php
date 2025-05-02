@@ -727,6 +727,10 @@ class FilesAPIController extends Controller
         
         // Prepare the file for uploading
         $fileContents = file_get_contents($filePath);
+
+        $threshold = $request->threshold;
+        $timeout = $request->timeout;
+        $fileSizeFilter = $request->file_size_filter;
         
         // Prepare the POST data (Multipart)
         $boundary = uniqid('---', true);
@@ -741,15 +745,15 @@ class FilesAPIController extends Controller
         
         $postData .= $delimiter . $eol;
         $postData .= 'Content-Disposition: form-data; name="FILE_MATCHING_THRESHOLD"' . $eol . $eol;
-        $postData .= '0.85' . $eol;
+        $postData .= $threshold . $eol;
         
         $postData .= $delimiter . $eol;
         $postData .= 'Content-Disposition: form-data; name="TIMEOUT"' . $eol . $eol;
-        $postData .= '10' . $eol;
+        $postData .= $timeout . $eol;
         
         $postData .= $delimiter . $eol;
         $postData .= 'Content-Disposition: form-data; name="FILE_SIZE_FILTER"' . $eol . $eol;
-        $postData .= 'on' . $eol;
+        $postData .= $fileSizeFilter . $eol;
         
         $postData .= '--' . $boundary . '--' . $eol; // End boundary
         
@@ -775,7 +779,7 @@ class FilesAPIController extends Controller
         }
         
         // Output the response
-        dd($response);
+        $apiResponse = $response;
 
         // // File to upload
         // $filePath = public_path('uploads').'/'.$tempFile->file_attached;
