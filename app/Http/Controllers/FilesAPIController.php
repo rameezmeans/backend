@@ -742,6 +742,7 @@ class FilesAPIController extends Controller
         if (curl_errno($ch)) {
             $apiResponse = 'Error:' . curl_error($ch);
         } else {
+            dd($response);
             $apiResponse = $response;
         }
 
