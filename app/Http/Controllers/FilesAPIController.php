@@ -50,7 +50,7 @@ class FilesAPIController extends Controller
         $loop = $request->loop;
 
         try {
-            $response = Http::timeout(10)->post('http://79.129.68.101:5000/api2/apply_mods', [
+            $response = Http::timeout(10)->post('http://79.129.68.101:5000/api2', [
                 'FILE_ID' => $fileID,
                 'MOD' => $mod,
                 'ENABLE_MAX_DIFF_AREA' => $enableMaxDiffArea,
@@ -96,7 +96,7 @@ class FilesAPIController extends Controller
         $fileSizeFilter = $request->file_size_filter;
 
         try {
-            $response = Http::timeout(10)->post('http://79.129.68.101:5000/api1/find_matches', [
+            $response = Http::timeout(10)->post('http://79.129.68.101:5000/api1', [
                 'INPUT_FILE_URL' => $location,
                 'FILE_MATCHING' => $threshold,
                 'TIMEOUT' => $timeout,
