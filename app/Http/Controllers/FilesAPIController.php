@@ -775,7 +775,7 @@ class FilesAPIController extends Controller
         }
         
         // Output the response
-        echo $response;
+        dd($response);
 
         // // File to upload
         // $filePath = public_path('uploads').'/'.$tempFile->file_attached;
@@ -850,11 +850,11 @@ class FilesAPIController extends Controller
 
         // // dd($apiResponse);
 
-        return response()->json([
-            'message' => 'temporary file created.',
-            'tempFile' => $tempFile,
-            'python_response' => $apiResponse,
-        ], 201);
+        // return response()->json([
+        //     'message' => 'temporary file created.',
+        //     'tempFile' => $tempFile,
+        //     'python_response' => $apiResponse,
+        // ], 201);
 
     }
 
