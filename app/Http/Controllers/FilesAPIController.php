@@ -854,11 +854,11 @@ class FilesAPIController extends Controller
 
         // // dd($apiResponse);
 
-        // return response()->json([
-        //     'message' => 'temporary file created.',
-        //     'tempFile' => $tempFile,
-        //     'python_response' => $apiResponse,
-        // ], 201);
+        return response()->json([
+            'message' => 'temporary file created.',
+            'tempFile' => $tempFile,
+            'python_response' => $apiResponse,
+        ], 201);
 
     }
 
