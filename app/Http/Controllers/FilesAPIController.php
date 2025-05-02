@@ -84,7 +84,7 @@ class FilesAPIController extends Controller
 
     public function pythonFileSearch(Request $request){
 
-        $tempFile = TemporaryFile::findOrfail($request->temp_file_id);
+        $tempFile = TemporaryFile::where('id', $request->temp_file_id)->first();
         dd($tempFile);
         $location = public_path('uploads').'/'.$tempFile->file_attached;
         $threshold = $request->threshold;
