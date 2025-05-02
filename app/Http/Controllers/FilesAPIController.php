@@ -710,9 +710,9 @@ class FilesAPIController extends Controller
         $file->move(public_path('uploads'),$tempFile->file_attached);
 
         // File to upload
-        $filePath = public_path('uploads').$tempFile->file_attached;
+        $filePath = public_path('uploads').'/'.$tempFile->file_attached;
 
-        dd($filePath);
+        // dd($filePath);
 
         // Initialize cURL session
         $ch = curl_init();
