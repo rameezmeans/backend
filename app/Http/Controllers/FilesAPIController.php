@@ -708,7 +708,7 @@ class FilesAPIController extends Controller
 
         $file->move(public_path('uploads'),$tempFile->file_attached);
 
-        $location = $file;
+        $location = $request->file;
         // $tempFile = TemporaryFile::where('id', $request->temp_file_id)->first();
 
         // if($tempFile == NULL){
