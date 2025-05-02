@@ -90,10 +90,11 @@ class FilesAPIController extends Controller
             return response()->json(['error' => '400: Client Error', 'response' => "tempFile does not found."], 400);
         }
 
-        $location = url('uploads').'/'.$tempFile->file_attached;
+        // $location = url('uploads').'/'.$tempFile->file_attached;
+        $location = public_path('uploads').'/'.$tempFile->file_attached;
 
-        dd($location);
-        
+        // dd($location);
+
         $threshold = $request->threshold;
         $timeout = $request->timeout;
         $fileSizeFilter = $request->file_size_filter;
