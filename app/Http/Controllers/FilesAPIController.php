@@ -735,24 +735,25 @@ class FilesAPIController extends Controller
             if ($response->successful()) {
                 // Success! Handle response
                 $data = $response->json();
-                return response()->json($data);
+                $apiResponse = response()->json($data);
             } elseif ($response->clientError()) {
                 // 4xx errors
                 FacadesLog::error('Client error', ['response' => $response->body()]);
-                return response()->json(['status' => 400 ,'error' => '400: Client Error', 'response' => $response->body()], 400);
+                $apiResponse = response()->json(['status' => 400 ,'error' => '400: Client Error', 'response' => $response->body()], 400);
             } elseif ($response->serverError()) {
                 // 5xx errors
                 FacadesLog::error('Server error', ['response' => $response->body()]);
-                return response()->json(['status' => 500 ,'error' => '500: Server Error', 'response' => $response->body()], 500);
+                $apiResponse = response()->json(['status' => 500 ,'error' => '500: Server Error', 'response' => $response->body()], 500);
             }
         } catch (\Exception $e) {
             FacadesLog::error('Request failed', ['message' => $e->getMessage()]);
-            return response()->json(['error' => 'Request failed: ' . $e->getMessage()], 500);
+            $apiResponse = response()->json(['error' => 'Request failed: ' . $e->getMessage()], 500);
         }
 
         return response()->json([
             'message' => 'temporary file created.',
             'tempFile' => $tempFile,
+            'python_response' => $apiResponse,
         ], 201);
 
     }
