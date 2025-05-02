@@ -7117,7 +7117,7 @@ margin-bottom: 10px !important;
   <script type="text/javascript">
   $(document).ready(function(){
 
-    
+    @if($file->status == 'processing')
 
     const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
@@ -7130,7 +7130,7 @@ margin-bottom: 10px !important;
     title: 'Task In Progress',
     text: "This task is already in progress!",
     icon: 'warning',
-    showCancelButton: true,
+    showCancelButton: false,
     confirmButtonText: 'Okay!',
     
         reverseButtons: true
@@ -7146,6 +7146,8 @@ margin-bottom: 10px !important;
           
         }
       });
+
+      @endif
 
     $(document).on('click', '.show-replied', function(e) {
       $('.replies').addClass('show');
