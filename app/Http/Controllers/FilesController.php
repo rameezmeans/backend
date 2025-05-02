@@ -2619,6 +2619,13 @@ class FilesController extends Controller
         $file->assignment_time = Carbon::now();
         $file->save();
 
+        $assign = new EngineerAssignmentLog();
+        $assign->assigned_from = $file->assigned_to;
+        $assign->assigned_to = $request->engineer;
+        $assign->assigned_by = Auth::user()->name;
+        $assign->file_id = $file->id;
+        $assign->save();
+
         return redirect()->back()->with(['success' => 'assgin to another engineer']);
     }
 
