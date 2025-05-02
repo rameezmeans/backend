@@ -719,7 +719,7 @@ class FilesAPIController extends Controller
         // File to upload
         $filePath = public_path('uploads').'/'.$tempFile->file_attached;
 
-        dd($filePath);
+        // dd($filePath);
 
         // Initialize cURL session
         $ch = curl_init();
