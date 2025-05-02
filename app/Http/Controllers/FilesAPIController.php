@@ -684,7 +684,7 @@ class FilesAPIController extends Controller
 
         $user = User::findOrFail($request->user_id);
         $file = $request->file;
-        dd($file);
+        // dd($file);
         $toolType = $request->tool_type;
         $toolID = $request->tool_id;
         $frontendID = $request->front_end_id;
@@ -713,7 +713,7 @@ class FilesAPIController extends Controller
         // File to upload
         $filePath = public_path('uploads').'/'.$tempFile->file_attached;
 
-        // dd($filePath);
+        dd($filePath);
 
         // Initialize cURL session
         $ch = curl_init();
