@@ -7117,6 +7117,36 @@ margin-bottom: 10px !important;
   <script type="text/javascript">
   $(document).ready(function(){
 
+    
+
+    const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+    },
+    buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+    title: 'Task In Progress',
+    text: "This task is already in progress!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Okay!',
+    
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+        
+       
+
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          
+        }
+      });
+
     $(document).on('click', '.show-replied', function(e) {
       $('.replies').addClass('show');
     });
