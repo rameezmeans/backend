@@ -716,6 +716,67 @@ class FilesAPIController extends Controller
 
         $file->move(public_path('uploads'),$tempFile->file_attached);
 
+        // Path to the file you want to upload
+        // $filePath = '/Users/polybit/Downloads/24587';
+        $filePath = public_path('uploads').'/'.$tempFile->file_attached;
+        
+        // Ensure the file exists before proceeding
+        if (!file_exists($filePath)) {
+            die('File not found: ' . $filePath);
+        }
+        
+        // Prepare the file for uploading
+        $fileContents = file_get_contents($filePath);
+        
+        // Prepare the POST data (Multipart)
+        $boundary = uniqid('---', true);
+        $delimiter = '--' . $boundary;
+        $eol = "\r\n";
+        
+        $postData = "";
+        $postData .= $delimiter . $eol;
+        $postData .= 'Content-Disposition: form-data; name="input_file"; filename="24587"' . $eol;
+        $postData .= 'Content-Type: application/octet-stream' . $eol . $eol;
+        $postData .= $fileContents . $eol;
+        
+        $postData .= $delimiter . $eol;
+        $postData .= 'Content-Disposition: form-data; name="FILE_MATCHING_THRESHOLD"' . $eol . $eol;
+        $postData .= '0.85' . $eol;
+        
+        $postData .= $delimiter . $eol;
+        $postData .= 'Content-Disposition: form-data; name="TIMEOUT"' . $eol . $eol;
+        $postData .= '10' . $eol;
+        
+        $postData .= $delimiter . $eol;
+        $postData .= 'Content-Disposition: form-data; name="FILE_SIZE_FILTER"' . $eol . $eol;
+        $postData .= 'on' . $eol;
+        
+        $postData .= '--' . $boundary . '--' . $eol; // End boundary
+        
+        // Create a stream context
+        $options = [
+            'http' => [
+                'method'  => 'POST',
+                'header'  => 'Content-Type: multipart/form-data; boundary=' . $boundary . $eol .
+                            'Content-Length: ' . strlen($postData) . $eol,
+                'content' => $postData,
+                'timeout' => 10 // Timeout in seconds
+            ]
+        ];
+        
+        $context = stream_context_create($options);
+        
+        // Send the request and get the response
+        $response = file_get_contents('http://79.129.68.101:5000/api1', false, $context);
+        
+        // Check if the request was successful
+        if ($response === FALSE) {
+            die('Request failed');
+        }
+        
+        // Output the response
+        echo $response;
+
         // // File to upload
         // $filePath = public_path('uploads').'/'.$tempFile->file_attached;
         // // /mnt/HC_Volume_102303063/stagingbackend/public/uploads/15909___15899___24585___ori_074906018c
@@ -756,38 +817,38 @@ class FilesAPIController extends Controller
         // Close cURL session
         // curl_close($ch);
 
-        $location = $request->file;
-        $threshold = $request->threshold;
-        $timeout = $request->timeout;
-        $fileSizeFilter = $request->file_size_filter;
+        // $location = $request->file;
+        // $threshold = $request->threshold;
+        // $timeout = $request->timeout;
+        // $fileSizeFilter = $request->file_size_filter;
 
-        try {
-            $response = Http::timeout(10)->post('http://79.129.68.101:5000/api1', [
-                'INPUT_FILE_URL' => $location,
-                'FILE_MATCHING' => $threshold,
-                'TIMEOUT' => $timeout,
-                'FILE_SIZE_FILTER' => $fileSizeFilter,
-            ]);
+        // try {
+        //     $response = Http::timeout(10)->post('http://79.129.68.101:5000/api1', [
+        //         'INPUT_FILE_URL' => $location,
+        //         'FILE_MATCHING' => $threshold,
+        //         'TIMEOUT' => $timeout,
+        //         'FILE_SIZE_FILTER' => $fileSizeFilter,
+        //     ]);
         
-            if ($response->successful()) {
-                // Success! Handle response
-                $data = $response->json();
-                $apiResponse = response()->json($data);
-            } elseif ($response->clientError()) {
-                // 4xx errors
-                FacadesLog::error('Client error', ['response' => $response->body()]);
-                $apiResponse = response()->json(['status' => 400 ,'error' => '400: Client Error', 'response' => $response->body()], 400);
-            } elseif ($response->serverError()) {
-                // 5xx errors
-                FacadesLog::error('Server error', ['response' => $response->body()]);
-                $apiResponse = response()->json(['status' => 500 ,'error' => '500: Server Error', 'response' => $response->body()], 500);
-            }
-        } catch (\Exception $e) {
-            FacadesLog::error('Request failed', ['message' => $e->getMessage()]);
-            $apiResponse = response()->json(['error' => 'Request failed: ' . $e->getMessage()], 500);
-        }
+        //     if ($response->successful()) {
+        //         // Success! Handle response
+        //         $data = $response->json();
+        //         $apiResponse = response()->json($data);
+        //     } elseif ($response->clientError()) {
+        //         // 4xx errors
+        //         FacadesLog::error('Client error', ['response' => $response->body()]);
+        //         $apiResponse = response()->json(['status' => 400 ,'error' => '400: Client Error', 'response' => $response->body()], 400);
+        //     } elseif ($response->serverError()) {
+        //         // 5xx errors
+        //         FacadesLog::error('Server error', ['response' => $response->body()]);
+        //         $apiResponse = response()->json(['status' => 500 ,'error' => '500: Server Error', 'response' => $response->body()], 500);
+        //     }
+        // } catch (\Exception $e) {
+        //     FacadesLog::error('Request failed', ['message' => $e->getMessage()]);
+        //     $apiResponse = response()->json(['error' => 'Request failed: ' . $e->getMessage()], 500);
+        // }
 
-        // dd($apiResponse);
+        // // dd($apiResponse);
 
         return response()->json([
             'message' => 'temporary file created.',
