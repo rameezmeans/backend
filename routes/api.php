@@ -636,7 +636,7 @@ Route::post('create_temporary_file', [App\Http\Controllers\FilesAPIController::c
             request body 
 
             $request->user_id;
-            
+
             $request->file;
             $request->tool_type;
             $request->tool_id;
@@ -649,19 +649,36 @@ Route::post('create_temporary_file', [App\Http\Controllers\FilesAPIController::c
             response on API
 
             {
-                "message": "temporary file created.",
-                "tempFile": {
-                    "tool_type": "master",
-                    "file_path": "",
-                    "user_id": 3349,
-                    "front_end_id": "3",
-                    "tool_id": "4",
-                    "file_attached": "17837___13157_123_7_2_1_en_3_2_ext_20250122194446_ext___20250228122113.ext",
-                    "updated_at": "2025-02-28T10:21:13.000000Z",
-                    "created_at": "2025-02-28T10:21:13.000000Z",
-                    "id": 17837
-                }
+            "message": "temporary file created.",
+            "tempFile": {
+                "tool_type": "master",
+                "file_path": "",
+                "user_id": 1328,
+                "front_end_id": "3",
+                "tool_id": "4",
+                "file_attached": "15919___15899___24585___ori_074906018c",
+                "updated_at": "2025-05-03T07:32:21.000000Z",
+                "created_at": "2025-05-03T07:32:21.000000Z",
+                "id": 15919
+            },
+            "python_response": {
+                "FILES": [
+                    {
+                        "id": "1107241",
+                        "url": "C:/v1/Files\\1107241-Tuning_Group_KE.ols__VW_Transporter_2.5_TDI_ACV_2500_1999_Bosch_EDC15VM+__Original.bin"
+                    },
+                    {
+                        "id": "1107240",
+                        "url": "C:/v1/Files\\1107240-Tuning_Group_KE.ols__VW_Transporter_2.5_TDI_ACV_2500_1999_Bosch_EDC15VM+__Original.bin"
+                    },
+                    {
+                        "id": "1107242",
+                        "url": "C:/v1/Files\\1107242-Tuning_Group_KE.ols__VW_Transporter_2.5_TDI_ACV_2500_1999_Bosch_EDC15VM+__Original.bin"
+                    }
+                ],
+                "STATUS": "SUCCESS"
             }
+        }
 
 */
 
