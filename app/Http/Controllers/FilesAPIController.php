@@ -775,11 +775,11 @@ class FilesAPIController extends Controller
         
         // Check if the request was successful
         if ($response === FALSE) {
-            die('Request failed');
+            $apiResponse = json_encode('Request failed');
         }
         
         // Output the response
-        $apiResponse = $response;
+        $apiResponse = json_encode($response);
 
         // // File to upload
         // $filePath = public_path('uploads').'/'.$tempFile->file_attached;
