@@ -781,11 +781,16 @@ class FilesAPIController extends Controller
         // Output the response
         $apiResponse = json_decode($response);
 
-        dd($apiResponse);
-
         $vehicleInformation = [];
         $vehicleInformation['ecu_build'] = $apiResponse->FILES[0]->ecu_build;
-        $vehicleInformation['ecu_build'] = $apiResponse->FILES[0]->ecu_build;
+        $vehicleInformation['ecu_producer'] = $apiResponse->FILES[0]->ecu_producer;
+        $vehicleInformation['engine_displacement'] = $apiResponse->FILES[0]->engine_displacement;
+        $vehicleInformation['engine_name'] = $apiResponse->FILES[0]->engine_name;
+        $vehicleInformation['vehicle_model'] = $apiResponse->FILES[0]->vehicle_model;
+        $vehicleInformation['vehicle_modelyear'] = $apiResponse->FILES[0]->vehicle_modelyear;
+        $vehicleInformation['vehicle_producer'] = $apiResponse->FILES[0]->vehicle_producer;
+
+        $apiResponse->vehicle_information = $vehicleInformation;
 
         // // File to upload
         // $filePath = public_path('uploads').'/'.$tempFile->file_attached;
