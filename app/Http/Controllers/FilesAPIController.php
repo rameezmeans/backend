@@ -781,6 +781,8 @@ class FilesAPIController extends Controller
         // Output the response
         $apiResponse = json_decode($response);
 
+        dd($apiResponse);
+
         // // File to upload
         // $filePath = public_path('uploads').'/'.$tempFile->file_attached;
         // // /mnt/HC_Volume_102303063/stagingbackend/public/uploads/15909___15899___24585___ori_074906018c
