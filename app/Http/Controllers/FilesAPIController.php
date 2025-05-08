@@ -789,6 +789,7 @@ class FilesAPIController extends Controller
         $vehicleInformation['vehicle_model'] = $apiResponse->FILES[0]->vehicle_model;
         $vehicleInformation['vehicle_modelyear'] = $apiResponse->FILES[0]->vehicle_modelyear;
         $vehicleInformation['vehicle_producer'] = $apiResponse->FILES[0]->vehicle_producer;
+        $vehicleInformation['vehicle_series'] = $apiResponse->FILES[0]->vehicle_series;
 
         $apiResponse->vehicle_information = $vehicleInformation;
 
