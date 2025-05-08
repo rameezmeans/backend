@@ -781,7 +781,7 @@ class FilesAPIController extends Controller
         // Output the response
         $apiResponse = json_decode($response);
 
-        dd($apiResponse);
+        dd($apiResponse->FILES);
 
         // // File to upload
         // $filePath = public_path('uploads').'/'.$tempFile->file_attached;
