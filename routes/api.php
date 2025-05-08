@@ -649,36 +649,66 @@ Route::post('create_temporary_file', [App\Http\Controllers\FilesAPIController::c
             response on API
 
             {
-            "message": "temporary file created.",
-            "tempFile": {
-                "tool_type": "master",
-                "file_path": "",
-                "user_id": 1328,
-                "front_end_id": "3",
-                "tool_id": "4",
-                "file_attached": "15919___15899___24585___ori_074906018c",
-                "updated_at": "2025-05-03T07:32:21.000000Z",
-                "created_at": "2025-05-03T07:32:21.000000Z",
-                "id": 15919
+    "message": "temporary file created.",
+    "tempFile": {
+        "tool_type": "master",
+        "file_path": "",
+        "user_id": 1328,
+        "front_end_id": "3",
+        "tool_id": "4",
+        "file_attached": "15930___15899___24585___ori_074906018c",
+        "updated_at": "2025-05-08T07:31:18.000000Z",
+        "created_at": "2025-05-08T07:31:18.000000Z",
+        "id": 15930
+    },
+    "python_response": {
+        "FILES": [
+            {
+                "ecu_build": "Bosch",
+                "ecu_producer": "1999",
+                "engine_displacement": "ACV",
+                "engine_name": "TDI",
+                "id": "1107242",
+                "url": "C:/v1/Files\\1107242-Tuning_Group_KE.ols__VW_Transporter_2.5_TDI_ACV_2500_1999_Bosch_EDC15VM+__Original.bin",
+                "vehicle_model": "2.5",
+                "vehicle_modelyear": "2500",
+                "vehicle_producer": "VW"
             },
-            "python_response": {
-                "FILES": [
-                    {
-                        "id": "1107241",
-                        "url": "C:/v1/Files\\1107241-Tuning_Group_KE.ols__VW_Transporter_2.5_TDI_ACV_2500_1999_Bosch_EDC15VM+__Original.bin"
-                    },
-                    {
-                        "id": "1107240",
-                        "url": "C:/v1/Files\\1107240-Tuning_Group_KE.ols__VW_Transporter_2.5_TDI_ACV_2500_1999_Bosch_EDC15VM+__Original.bin"
-                    },
-                    {
-                        "id": "1107242",
-                        "url": "C:/v1/Files\\1107242-Tuning_Group_KE.ols__VW_Transporter_2.5_TDI_ACV_2500_1999_Bosch_EDC15VM+__Original.bin"
-                    }
-                ],
-                "STATUS": "SUCCESS"
+            {
+                "ecu_build": "Bosch",
+                "ecu_producer": "1999",
+                "engine_displacement": "ACV",
+                "engine_name": "TDI",
+                "id": "1107240",
+                "url": "C:/v1/Files\\1107240-Tuning_Group_KE.ols__VW_Transporter_2.5_TDI_ACV_2500_1999_Bosch_EDC15VM+__Original.bin",
+                "vehicle_model": "2.5",
+                "vehicle_modelyear": "2500",
+                "vehicle_producer": "VW"
+            },
+            {
+                "ecu_build": "Bosch",
+                "ecu_producer": "1999",
+                "engine_displacement": "ACV",
+                "engine_name": "TDI",
+                "id": "1107241",
+                "url": "C:/v1/Files\\1107241-Tuning_Group_KE.ols__VW_Transporter_2.5_TDI_ACV_2500_1999_Bosch_EDC15VM+__Original.bin",
+                "vehicle_model": "2.5",
+                "vehicle_modelyear": "2500",
+                "vehicle_producer": "VW"
             }
+        ],
+        "STATUS": "SUCCESS",
+        "vehicle_information": {
+            "ecu_build": "Bosch",
+            "ecu_producer": "1999",
+            "engine_displacement": "ACV",
+            "engine_name": "TDI",
+            "vehicle_model": "2.5",
+            "vehicle_modelyear": "2500",
+            "vehicle_producer": "VW"
         }
+    }
+}
 
 */
 
