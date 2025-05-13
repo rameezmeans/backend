@@ -269,6 +269,9 @@ class File extends Model
                     $temp ['file_name']= $name;
                     $sizeArray []= $temp;
                 }
+                else{
+                    return null;
+                }
 
             }
 
