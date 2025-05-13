@@ -1727,9 +1727,9 @@ margin-bottom: 10px !important;
                                     </div>
                                   @endif
                                   
-                                  <span class="btn-sm btn-cons btn-success m-t-50">{{ "Uploaded At:". date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>
-                                  @if($message['user_id'])<span class="btn-sm btn-cons btn-success m-t-50">{{ "Uploaded By:". App\Models\User::findOrFail($message['user_id'])->name}} </span> @endif
-                                  @if($message['downloaded_at'])<span class="btn-sm btn-cons btn-danger m-t-50">{{  "Downloaded At:". date('H:i:s d/m/Y', strtotime($message['downloaded_at']))}} </span>@endif
+                                  <span class="btn-sm btn-cons btn-success m-t-10">{{ "Uploaded At:". date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>
+                                  @if($message['user_id'])<span class="btn-sm btn-cons btn-success m-t-10">{{ "Uploaded By:". App\Models\User::findOrFail($message['user_id'])->name}} </span> @endif
+                                  @if($message['downloaded_at'])<span class="btn-sm btn-cons btn-danger m-t-10">{{  "Downloaded At:". date('H:i:s d/m/Y', strtotime($message['downloaded_at']))}} </span>@endif
                                   <div class="full-width">
 
                                     <form action="{{route('set-new-request-comment')}}" method="POST">
@@ -4288,10 +4288,10 @@ margin-bottom: 10px !important;
                                     </div>
                                   @endif
                                 <div class="clearfix"></div>
-                                <span class="btn-sm btn-cons btn-success m-t-50">{{ "Uploaded At:". date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>
+                                <span class="btn-sm btn-cons btn-success m-t-10">{{ "Uploaded At:". date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>
                                 {{-- @if($message['user_id']){{' (Uploaded By: '.App\Models\User::findOrFail($message['user_id'])->name.')'}}@endif --}}
-                                @if($message['user_id'])<span class="btn-sm btn-cons btn-success m-t-50">{{ "Uploaded By:". App\Models\User::findOrFail($message['user_id'])->name}} </span> @endif
-                                @if($message['downloaded_at'])<span class="btn-sm btn-cons btn-danger m-t-50">{{ "Downloaded At:". date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>@endif
+                                @if($message['user_id'])<span class="btn-sm btn-cons btn-success m-t-10">{{ "Uploaded By:". App\Models\User::findOrFail($message['user_id'])->name}} </span> @endif
+                                @if($message['downloaded_at'])<span class="btn-sm btn-cons btn-danger m-t-10">{{ "Downloaded At:". date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>@endif
                                 
                                 <div class="full-width">
 
