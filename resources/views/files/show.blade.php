@@ -339,7 +339,7 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
         
-                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10" style="height: 51px;">
                           <p class="pull-left">Customer Name
                             @if($file->user->flag == NULL)
                             <button id="add-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag"></i></button>
@@ -3255,8 +3255,8 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
         
-                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Customer Name 
+                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10" style="height: 51px;">
+                          <div class="pull-left">Customer Name 
                             @if($file->user->flag == NULL)
                             <button id="add-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag"></i></button>
                           @else
@@ -3267,7 +3267,7 @@ margin-bottom: 10px !important;
                             @endif
                           
                             @endif
-                          </p>
+                          </div>
                           <div class="pull-right">
                             <span class="label label-success 123">{{$file->user->name}}<span>
                           </div>
