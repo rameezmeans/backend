@@ -1579,7 +1579,7 @@ margin-bottom: 10px !important;
                                                     ?>
                                                        <p class="pull-left"><? echo $message['olsname'];?></p>
 
-                                                    <br/>
+                                                    
                                                     <?php
                                                 //           break;
                                                 //         }
@@ -1600,7 +1600,7 @@ margin-bottom: 10px !important;
                                                       ?>
                                                         {{-- <p class="pull-left"><? // echo $item['mod'] . ' => ' . $item['name'];?></p> --}}
 
-                                    <br/>
+                                    
                                                         <?
                                                       // }
                                                     // }
