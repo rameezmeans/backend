@@ -834,7 +834,7 @@ margin-bottom: 10px !important;
                           </div> --}}
 
                           
-                          <div style="display: flow-root;" class="b-b b-grey">
+                          <div style="display: flow-root;" class="">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
                             @if($totals != 0)
@@ -922,7 +922,7 @@ margin-bottom: 10px !important;
                           </div> --}}
 
                          
-                          <div style="display: flow-root;" class="b-b b-grey">
+                          <div style="display: flow-root;" class="">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
                           @if($totals != 0)
@@ -1001,7 +1001,7 @@ margin-bottom: 10px !important;
 
                           @endphp
 
-                          <div style="display: flow-root;" class="b-b b-grey">
+                          <div style="display: flow-root;" class="">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
                             @if($totals != 0)
@@ -3644,7 +3644,7 @@ margin-bottom: 10px !important;
                               </div>
                           </div> --}}
                           
-                          <div style="display: flow-root;" class="b-b b-grey">
+                          <div style="display: flow-root;" class="">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
                           @if($totals != 0)
@@ -3732,7 +3732,7 @@ margin-bottom: 10px !important;
                           </div> --}}
 
                          
-                          <div style="display: flow-root;" class="b-b b-grey">
+                          <div style="display: flow-root;" class="">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
                           @if($totals != 0)
@@ -3819,7 +3819,7 @@ margin-bottom: 10px !important;
                               </div>
                           </div> --}}
                           
-                          <div style="display: flow-root;" class="b-b b-grey">
+                          <div style="display: flow-root;" class="">
                           <div class=" pull-left">{{\App\Models\ProcessingSoftware::findOrFail($record->software_id)->name}}</div>
                           
                             @if($totals != 0)
