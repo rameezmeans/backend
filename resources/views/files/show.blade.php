@@ -4287,7 +4287,7 @@ margin-bottom: 10px !important;
                                       </a>
                                     </div>
                                   @endif
-                                <div class="clearfix"></div>
+                                
                                 <span class="btn-sm btn-cons btn-success m-t-10">{{ "Uploaded At:". date('H:i:s d/m/Y', strtotime($message['created_at']))}} </span>
                                 {{-- @if($message['user_id']){{' (Uploaded By: '.App\Models\User::findOrFail($message['user_id'])->name.')'}}@endif --}}
                                 @if($message['user_id'])<span class="btn-sm btn-cons btn-success m-t-10">{{ "Uploaded By:". App\Models\User::findOrFail($message['user_id'])->name}} </span> @endif
