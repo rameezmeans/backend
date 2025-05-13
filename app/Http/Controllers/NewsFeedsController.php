@@ -353,7 +353,6 @@ class NewsFeedsController extends Controller
 
         $validated = $request->validate([
             'title' => 'required|unique:news_feeds|max:255|min:3',
-            'feed' => 'required'
         ]);
 
         // dd($request->all());

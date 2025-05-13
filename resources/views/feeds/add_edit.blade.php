@@ -48,7 +48,7 @@
                       <strong>{{ $message }}</strong>
                   </span>
                 @enderror
-                <div class="form-group form-group-default required ">
+                {{-- <div class="form-group form-group-default required ">
                   <label>Feed</label>
                   <input value="@if(isset($feed)) {{ $feed->feed }} @else{{old('feed') }}@endif"  name="feed" type="text" class="form-control" required>
                 </div>
@@ -65,7 +65,7 @@
                   <span class="text-danger" role="alert">
                       <strong>{{ $message }}</strong>
                   </span>
-                @enderror
+                @enderror --}}
 
                 <div class="form-group form-group-default required ">
                   <label>Front End</label>
