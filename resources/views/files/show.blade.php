@@ -949,17 +949,7 @@ margin-bottom: 10px !important;
                       @endif
 
                       @if($file->options_services->isNotEmpty())
-                      <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="card card-default m-b-0">
-                          <div class="card-header " role="tab" id="headingOne">
-                            <h4 class="card-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOneOptions" aria-expanded="true" aria-controls="collapseOne">
-                                 Options Information
-                                </a>
-                              </h4>
-                          </div>
-                          <div id="collapseOneOptions" class="collapse" role="tabcard" aria-labelledby="headingOne">
-                            <div class="card-body">
+                      
 
                       <div class="p-b-20">
 
@@ -1112,14 +1102,6 @@ margin-bottom: 10px !important;
                       @endif
                       
                       </div>
-
-                      
-                    </div>
-                  </div>
-                </div>
-                
-                
-              </div>
 
               @endif
                       
@@ -3781,17 +3763,7 @@ margin-bottom: 10px !important;
                       @endif
 
                       @if($file->options_services->isNotEmpty())
-                      <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="card card-default m-b-0">
-                          <div class="card-header " role="tab" id="headingOne">
-                            <h4 class="card-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOneOptions" aria-expanded="true" aria-controls="collapseOne">
-                                 Options Information
-                                </a>
-                              </h4>
-                          </div>
-                          <div id="collapseOneOptions" class="collapse" role="tabcard" aria-labelledby="headingOne">
-                            <div class="card-body">
+                      
 
                       <div class="p-b-20">
 
@@ -3937,12 +3909,7 @@ margin-bottom: 10px !important;
                       
                       </div>
 
-                    </div>
-                  </div>
-                </div>
-                
-                
-              </div>
+                    
 
               @endif
                       
