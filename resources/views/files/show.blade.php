@@ -1419,9 +1419,7 @@ margin-bottom: 10px !important;
                         <div class="card-body">
                           <div class="table-responsive" style="
                           
-                          overflow:hidden;
-    overflow-y: scroll;
-    height: 200px;
+                          
 
                           ">
  
@@ -1810,9 +1808,7 @@ margin-bottom: 10px !important;
                         <div class="card-body">
                           <div class="table-responsive" style="
                           
-                          overflow:hidden;
-    overflow-y: scroll;
-    height: 200px;
+                          
 
                           ">
  
@@ -4050,9 +4046,7 @@ margin-bottom: 10px !important;
                         <div class="card-body">
                           <div class="table-responsive" style="
                           
-                          overflow:hidden;
-    overflow-y: scroll;
-    height: 200px;
+                          
 
                           ">
  
@@ -4387,9 +4381,7 @@ margin-bottom: 10px !important;
                         
                         style="
                           
-                          overflow:hidden;
-    overflow-y: scroll;
-    height: 200px;
+                          
 
                           "
 
