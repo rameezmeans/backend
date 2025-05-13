@@ -1688,7 +1688,7 @@ margin-bottom: 10px !important;
                                     {{-- <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a> --}}
                                 </div>
 
-                                <div class="clearfix"></div>
+                                
                                 
                                   @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
 
@@ -4257,7 +4257,7 @@ margin-bottom: 10px !important;
                                     {{-- <a href="#" class="btn-sm btn-cons btn-danger delete-uploaded-file" data-request_file_id="{{$message['id']}}"><i class="pg-trash text-white"></i></a> --}}
                                 </div>
 
-                                <div class="clearfix"></div>
+                                
                                 @if($file->no_longer_auto == 0)
                                   @if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id)
                                   <div>
