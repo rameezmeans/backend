@@ -340,12 +340,8 @@ margin-bottom: 10px !important;
                         </div>
         
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Customer Name</p>
-                          <div class="pull-right">
-                            <span class="label label-success">{{$file->user->name}}<span>
-                          </div>
-                          <div class="clearfix"></div>
-                          @if($file->user->flag == NULL)
+                          <p class="pull-left">Customer Name
+                            @if($file->user->flag == NULL)
                             <div><button id="add-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag"></i></button></div>
                           @else
                             @if($file->user->flag == 'bad')
@@ -355,6 +351,12 @@ margin-bottom: 10px !important;
                             @endif
                           
                             @endif
+                          </p>
+                          <div class="pull-right">
+                            <span class="label label-success">{{$file->user->name}}<span>
+                          </div>
+                          
+                          
                         </div>
 
                         {{-- <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -3254,12 +3256,8 @@ margin-bottom: 10px !important;
                         </div>
         
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
-                          <p class="pull-left">Customer Name</p>
-                          <div class="pull-right">
-                            <span class="label label-success 123">{{$file->user->name}}<span>
-                          </div>
-                          <div class="clearfix"></div>
-                          @if($file->user->flag == NULL)
+                          <p class="pull-left">Customer Name 
+                            @if($file->user->flag == NULL)
                             <div><button id="add-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag"></i></button></div>
                           @else
                             @if($file->user->flag == 'bad')
@@ -3269,6 +3267,12 @@ margin-bottom: 10px !important;
                             @endif
                           
                             @endif
+                          </p>
+                          <div class="pull-right">
+                            <span class="label label-success 123">{{$file->user->name}}<span>
+                          </div>
+                          
+                          
                         </div>
 
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
