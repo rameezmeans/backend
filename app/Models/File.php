@@ -264,9 +264,11 @@ class File extends Model
                     $path = public_path('/../../tuningX/public'.$this->file_path.$name);
                 }
                 
-                $temp ['size']= filesize($path);
-                $temp ['file_name']= $name;
-                $sizeArray []= $temp;
+                if (file_exists($path)) {
+                    $temp ['size']= filesize($path);
+                    $temp ['file_name']= $name;
+                    $sizeArray []= $temp;
+                }
 
             }
 
