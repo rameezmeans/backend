@@ -342,12 +342,12 @@ margin-bottom: 10px !important;
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Customer Name
                             @if($file->user->flag == NULL)
-                            <div><button id="add-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag"></i></button></div>
+                            <button id="add-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag"></i></button>
                           @else
                             @if($file->user->flag == 'bad')
-                              <div><button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" style="color: #f55753;"></i></button></div>
+                              <button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" style="color: #f55753;"></i></button>
                             @else
-                              <div><button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" style="color: #10cfbd;"></i></button></div>
+                              <button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" style="color: #10cfbd;"></i></button>
                             @endif
                           
                             @endif
@@ -3258,12 +3258,12 @@ margin-bottom: 10px !important;
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Customer Name 
                             @if($file->user->flag == NULL)
-                            <div><button id="add-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag"></i></button></div>
+                            <button id="add-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag"></i></button>
                           @else
                             @if($file->user->flag == 'bad')
-                              <div><button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" style="color: #f55753;"></i></button></div>
+                              <button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" style="color: #f55753;"></i></button>
                             @else
-                              <div><button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" style="color: #10cfbd;"></i></button></div>
+                              <button id="edit-customer-comment" class="btn btn-transparent btn-sm"><i class="fa-solid fa-flag" style="color: #10cfbd;"></i></button>
                             @endif
                           
                             @endif
