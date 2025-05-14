@@ -217,8 +217,8 @@ margin-bottom: 10px !important;
                             @endif
 
                             @if($file->acm_file)
-                            <a href="{{ route('download', [$file->id, $file->acm_file, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's ACM MCM/ECM File</span>
-                            </a>
+                              <a href="{{ route('download', [$file->id, $file->acm_file, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's ACM MCM/ECM File</span>
+                              </a>
                             @endif
 
                             {{-- @php
