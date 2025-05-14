@@ -215,6 +215,11 @@ class FilesController extends Controller
         return view('files.show_all_users_files', ['id' => $id]);
     }
 
+    public function downloadTerms(){
+        $files = File::where('is_credited', 1)->get();
+        return view('files.download_terms', ['files' => $files]);
+    }
+
     public function addLaterMessage(Request $request){
         $new = new FileMessage();
         $new->file_id = $request->file_id;

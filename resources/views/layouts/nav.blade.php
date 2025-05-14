@@ -258,6 +258,13 @@
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
         </li>
 
+        <li class="m-t-30 ">
+          <a href="{{ route('download-terms') }}" class="detailed">
+            <span class="title">Download Terms Docs</span>
+          </a>
+          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+        </li>
+
         @endif
         @endif
 
