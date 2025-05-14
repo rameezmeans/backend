@@ -97,15 +97,14 @@
             }
         },
         columns: [
-
-            {data: 'task_id', name: 'task_id'},
+            {data: 'id', name: 'id'},
             {
-            data: 'created_at',
-            type: 'num',
-            render: {
-                _: 'display',
-                sort: 'timestamp'
-            }
+                data: 'created_at',
+                type: 'num',
+                render: {
+                    _: 'display',
+                    sort: 'timestamp'
+                }
             },
             {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
             {data: 'download', name: 'download', orderable: false, searchable: false},

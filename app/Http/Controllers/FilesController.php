@@ -227,9 +227,7 @@ class FilesController extends Controller
 
         return DataTables::of($data)
             ->addIndexColumn()
-            ->addColumn('task_id', function($row){
-                return 'Task'.$row->id;
-            })
+            
             ->editColumn('created_at', function ($credit) {
                 return [
                     'display' => e($credit->created_at->format('d-m-Y')),
