@@ -241,7 +241,7 @@ class FilesController extends Controller
                 return $credit->created_at->format('h:i A');
             })
             ->addColumn('download', function($row){
-                return '<a class="btn btn-warning text-black" target="_blank" href="">Download</a>';
+                return '<a class="btn btn-warning text-black" target="_blank" href="'.route('download', [$row->id, 'terms_'.$row->id.'.pdf', 0]).'">Download</a>';
             })
             ->rawColumns(['task_id','created_time','download'])
             ->make(true);
