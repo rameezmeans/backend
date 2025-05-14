@@ -1038,6 +1038,7 @@ Route::post('/send_message_to_customer', [App\Http\Controllers\FilesController::
 Route::post('/send_customer_file', [App\Http\Controllers\FilesController::class, 'sendCustomerFile'])->name('send-customer-file');
 Route::post('/add_later_message', [App\Http\Controllers\FilesController::class, 'addLaterMessage'])->name('add-later-message');
 Route::get('/download_terms_docs', [App\Http\Controllers\FilesController::class, 'downloadTerms'])->name('download-terms');
+Route::post('/download_terms_table', [App\Http\Controllers\FilesController::class, 'downloadTermsTable'])->name('download-terms-table');
 
 Route::get('/message_search', [App\Http\Controllers\FilesController::class, 'messageSearch'])->name('message-search');
 Route::any('/get_search_results', [App\Http\Controllers\FilesController::class, 'getSearchResults'])->name('get-search-results');

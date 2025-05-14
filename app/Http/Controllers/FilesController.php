@@ -215,9 +215,43 @@ class FilesController extends Controller
         return view('files.show_all_users_files', ['id' => $id]);
     }
 
+    public function downloadTermsTable(Request $request){
+
+        $data = File::select('*')->where('is_credited', 1);
+
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+
+            $data = $data->whereBetween('created_at', [$request->from_date, $request->to_date]);
+
+        }
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('task_id', function($row){
+                return 'Task'.$row->id;
+            })
+            ->editColumn('created_at', function ($credit) {
+                return [
+                    'display' => e($credit->created_at->format('d-m-Y')),
+                    'timestamp' => $credit->created_at->timestamp
+                ];
+            })
+            ->filterColumn('created_at', function ($query, $keyword) {
+                $query->whereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') LIKE ?", ["%$keyword%"]);
+            })
+            ->addColumn('created_time', function ($credit) {
+                return $credit->created_at->format('h:i A');
+            })
+            ->addColumn('download', function($row){
+                return '<a class="btn btn-warning text-black" target="_blank" href="">Download</a>';
+            })
+            ->rawColumns(['task_id','created_time','download'])
+            ->make(true);
+    }
+
     public function downloadTerms(){
-        $files = File::where('is_credited', 1)->get();
-        return view('files.download_terms', ['files' => $files]);
+        
+        return view('files.download_terms');
     }
 
     public function addLaterMessage(Request $request){
