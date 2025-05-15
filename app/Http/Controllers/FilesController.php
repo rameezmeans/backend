@@ -218,11 +218,13 @@ class FilesController extends Controller
     public function downloadTermsTable(Request $request){
 
         $data = File::select('*')->where('is_credited', 1)->orderBy('created_at', 'desc');
-        dd($request->to_date);
-
+        
         if ($request->filled('from_date') && $request->filled('to_date')) {
 
-            $data = $data->whereBetween('created_at', [$request->from_date, $request->to_date]);
+            $data = $data->where('reservation_from', '>=', $request->from_date)
+                           ->where('reservation_from', '<=', $request->to_date);
+
+            // $data = $data->whereBetween('created_at', [$request->from_date, $request->to_date]);
 
         }
 
