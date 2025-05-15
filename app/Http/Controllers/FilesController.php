@@ -218,7 +218,7 @@ class FilesController extends Controller
     public function downloadTermsTable(Request $request){
 
         $data = File::select('*')->where('is_credited', 1)->orderBy('created_at', 'desc');
-        dd($request->filled('to_date'));
+        dd($request->to_date);
 
         if ($request->filled('from_date') && $request->filled('to_date')) {
 
