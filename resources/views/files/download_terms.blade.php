@@ -70,7 +70,7 @@
         
     $('input[name="daterange"]').daterangepicker({
         startDate: moment().subtract(36, 'M'),
-        endDate: moment()
+        endDate: moment().clone().add(1, 'day');
     });
 
     $.ajaxSetup({
