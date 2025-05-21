@@ -629,7 +629,7 @@ class UsersController extends Controller
     }
 
     public function fileLogs($id){
-        $logs = FileLogger::where('user_id', $id)->orderBy('created_at', 'asc')->get();
+        $logs = FileLogger::where('user_id', $id)->orderBy('created_at', 'desc')->get();
         return view('groups.customer_file_logs', ['logs' => $logs]);
     }
 
