@@ -42,7 +42,7 @@
                                             <p>{{$log->event}}</p>
                                         </td>
                                         <td class="v-align-middle semi-bold sorting_1">
-                                            <p>{{$log->disc}}</p>
+                                            <p>{!!$log->disc!!}</p>
                                         </td>
 
                                         <td class="v-align-middle semi-bold sorting_1">
