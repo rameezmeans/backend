@@ -3405,8 +3405,8 @@ class FilesController extends Controller
         $file->delete();
 
         $softwareRecords = FileReplySoftwareService::where('reply_id', $request->request_file_id)->delete();
-		$messagesRecords = EngineerFileNote::where('request_file_id', $request->request_file_id)->delete();
-		$messagesRecords = EngineerFileNote::where('request_file_id', $request->request_file_id)->delete();
+		// $messagesRecords = EngineerFileNote::where('request_file_id', $request->request_file_id)->delete();
+		// $messagesRecords = EngineerFileNote::where('request_file_id', $request->request_file_id)->delete();
 		$messagesRecords = FileMessage::where('request_file_id', $request->request_file_id)->delete();
 		$messagesRecords = UploadLater::where('request_file_id', $request->request_file_id)->delete();
 
