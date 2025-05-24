@@ -2060,7 +2060,7 @@ margin-bottom: 10px !important;
                                   {{-- @php
                                     dd($message['request_file_id']);
                                   @endphp --}}
-                                  <p class="" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::findOrFail($message['request_file_id'])->request_file }}@endif</p>
+                                  <p class="" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::where('id',$message['request_file_id'])->first()->request_file }}@endif</p>
                                   <br>  
                                   <p>{{ $message['egnineers_internal_notes'] }}</p><br>
                                     @if(isset($message['engineers_attachement']))
@@ -4765,7 +4765,7 @@ margin-bottom: 10px !important;
                                     echo 'one';
                                     dd($message['request_file_id']);
                                   @endphp --}}
-                                  <p class="" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::findOrFail($message['request_file_id'])->request_file }}@endif</p>
+                                  <p class="" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::where('id',$message['request_file_id'])->first()->request_file }}@endif</p>
                                   <br>  
                                   <p>{{ $message['egnineers_internal_notes'] }}</p><br>
                                     @if(isset($message['engineers_attachement']))
