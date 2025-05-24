@@ -1406,7 +1406,7 @@ margin-bottom: 10px !important;
 
                           @php
                             if(isset($message['request_file'])){
-                              $messageFile = \App\Models\RequestFile::findOrFail($message['id']);
+                              $messageFile = \App\Models\RequestFile::where('id',$message['id'])->first();
                             }
 
                           @endphp
@@ -2036,7 +2036,7 @@ margin-bottom: 10px !important;
                             <div class="message clearfix">
                               <div class="chat-bubble bg-primary from-me text-white">
                                
-                                <p class="" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::findOrFail($message['request_file_id'])->request_file }}@endif</p>
+                                <p class="" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::where('id',$message['request_file_id'])->first()->request_file }}@endif</p>
                                 <br>
                                 <p>{!! $message['egnineers_internal_notes'] !!} </p>
                                 
@@ -4225,7 +4225,7 @@ margin-bottom: 10px !important;
                                   @endisset
                                     @if(!($file->front_end_id == 1 && $file->subdealer_group_id == NULL))
                                       @php
-                                        $messageFile = \App\Models\RequestFile::findOrFail($message['id']);
+                                        $messageFile = \App\Models\RequestFile::where('id',$message['id'])->first();
 
                                         
                                       @endphp
@@ -4740,7 +4740,7 @@ margin-bottom: 10px !important;
                             <div class="message clearfix">
                               <div class="chat-bubble bg-primary from-me text-white">
                                 
-                                <p class="" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::findOrFail($message['request_file_id'])->request_file }}@endif</p>
+                                <p class="" style="font-size: 8px;float:left">@if($message['request_file_id'] != NULL){{ \App\Models\RequestFile::where('id',$message['request_file_id'])->first()->request_file }}@endif</p>
                                 <br>
                                 <p>{!! $message['egnineers_internal_notes'] !!} </p>
                                 
