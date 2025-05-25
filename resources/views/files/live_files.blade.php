@@ -65,7 +65,7 @@
                     </div>
                   </div>
 
-                  <div>
+                  {{-- <div>
                     @foreach($allEngineers as $engineer)
                       <div class="card social-card share col1 @if($loggedInUser->id == $engineer->id) flip-status @endif" data-social="item" style="" data-id="{{$engineer->id}}">
                         <div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
@@ -83,7 +83,7 @@
                         </div>
                       </div>
                     @endforeach
-                  </div>
+                  </div> --}}
 
                   <div class="card-group horizontal" id="accordion" role="tablist" aria-multiselectable="true">
                     <div class="card card-default m-b-0">

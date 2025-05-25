@@ -69,6 +69,31 @@
    <!-- START PAGE-CONTAINER -->
    <div class="page-container ">
        @include('layouts.header')
+
+      @php
+        $allEngineers = User::whereIn('role_id', [2,3])->where('test', 0)->whereNull('subdealer_group_id')->orWhere('id', 3)->get();
+      @endphp
+
+       <div>
+                    @foreach($allEngineers as $engineer)
+                      <div class="card social-card share col1 @if($loggedInUser->id == $engineer->id) flip-status @endif" data-social="item" style="" data-id="{{$engineer->id}}">
+                        <div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
+                        </div>
+                        <div class="card-header clearfix">
+                          <div class="user-pic">
+                            <img alt="Profile Image" width="33" height="33" data-src-retina="assets/img/profiles/4x.jpg" data-src="assets/img/profiles/4.jpg" src="assets/img/profiles/4x.jpg">
+                          </div>
+                          <h5>{{$engineer->name}}</h5>
+                            @if($engineer->online)
+                              <h5 class="text-success pull-left fs-12">Online <i class="fa fa-circle text-success fs-11"></i></h5>
+                            @else
+                              <h5 class="text-danger pull-left fs-12">Offline <i class="fa fa-circle text-danger fs-11"></i></h5>
+                            @endif
+                        </div>
+                      </div>
+                    @endforeach
+                  </div>
+
        @yield('content')
    </div>
    @include('chat.chatview')
