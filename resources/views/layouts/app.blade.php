@@ -71,6 +71,7 @@
        @include('layouts.header')
 
       @php
+        $loggedInUser = Auth::user();
         $allEngineers = App\Models\User::whereIn('role_id', [2,3])->where('test', 0)->whereNull('subdealer_group_id')->orWhere('id', 3)->get();
       @endphp
 
