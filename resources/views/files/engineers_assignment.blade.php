@@ -64,6 +64,7 @@
                         <select class="form-control" id="support_messages_engineer" name="support_messages_engineer">
                             
                           @foreach ($allEngineers as $engineer)
+                            <option @if($supportMessagesEngineer == -1) selected  @endif value="-1">Same Engineer who uploaded the last version</option>
                             <option @if($supportMessagesEngineer == $engineer->id) selected  @endif value="{{$engineer->id}}">{{$engineer->name}}</option>
                           @endforeach
   
