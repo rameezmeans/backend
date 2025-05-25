@@ -2695,7 +2695,7 @@ class FilesController extends Controller
         $stagesOptionsEngineer = Key::where('key','stages_options_engineer')->first()->value;
         
         $allEngineers = User::whereIn('role_id', [2,3])->whereNull('subdealer_group_id')->get();
-        return view('files.pengineers_assignment', ['allEngineers' => $allEngineers, 'stageEngineer' => $stageEngineer, 'optionsEngineer' => $optionsEngineer, 'stagesOptionsEngineer' => $stagesOptionsEngineer]); 
+        return view('files.engineers_assignment', ['allEngineers' => $allEngineers, 'stageEngineer' => $stageEngineer, 'optionsEngineer' => $optionsEngineer, 'stagesOptionsEngineer' => $stagesOptionsEngineer]); 
     }
 
     public function flipEngineerStatus(Request $request){
