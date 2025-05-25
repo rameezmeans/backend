@@ -2738,7 +2738,7 @@ class FilesController extends Controller
         $stages = Service::where('type', 'tunning')->get();
         $options = Service::where('type', 'option')->get();
         $engineers = User::whereIn('role_id', [2,3])->orWhere('id', 3)->get();
-        $allEngineers = User::whereIn('role_id', [2,3])->whereNull('subdealer_group_id')->get();
+        $allEngineers = User::whereIn('role_id', [2,3])->where('test', 0)->whereNull('subdealer_group_id')->orWhere('id', 3)->get();
         $loggedInUser = Auth::user();
 
         // if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
@@ -5456,7 +5456,7 @@ class FilesController extends Controller
         $prossingSoftwares = ProcessingSoftware::orderBy('name', 'asc')->get();
 
         $allEngineers = User::whereIn('role_id', [2,3])->where('test', 0)->whereNull('subdealer_group_id')->orWhere('id', 3)->get();
-        dd($allEngineers);
+        // dd($allEngineers);
         // dd($file);
 
         $servername = env('DB_HOST');
