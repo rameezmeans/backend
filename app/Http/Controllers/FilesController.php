@@ -5456,7 +5456,7 @@ class FilesController extends Controller
         $prossingSoftwares = ProcessingSoftware::orderBy('name', 'asc')->get();
 
         $allEngineers = User::whereIn('role_id', [2,3])->where('test', 0)->whereNull('subdealer_group_id')->orWhere('id', 3)->get();
-
+        dd($allEngineers);
         // dd($file);
 
         $servername = env('DB_HOST');
