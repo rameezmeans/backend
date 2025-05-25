@@ -87,7 +87,7 @@
                         </div>
                         <div class="card-header clearfix">
                           <div class="user-pic">
-                            <img alt="Profile Image" width="33" height="33" data-src-retina="assets/img/profiles/4x.jpg" data-src="assets/img/profiles/4.jpg" src="assets/img/profiles/4x.jpg">
+                            <img alt="Profile Image" width="33" height="33" data-src-retina="{{url('assets/img/profiles/4x.jpg')}}" data-src="{{url('assets/img/profiles/4.jpg')}}" src="{{url('assets/img/profiles/4x.jpg')}}">
                           </div>
                           <h5>{{$engineer->name}}</h5>
                             @if($engineer->online)
