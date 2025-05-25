@@ -457,30 +457,30 @@
         
         $('.parent-adjusted').parent().addClass('flex');
 
-        $(document).on('click','.flip-status',function(e) {
+        // $(document).on('click','.flip-status',function(e) {
 
-          console.log('here we are');
+        //   console.log('here we are');
 
-          let id = $(this).data('id');
+        //   let id = $(this).data('id');
 
-          console.log(id);
+        //   console.log(id);
 
-          $.ajax({
-                url: "/flip_engineer_status",
-                type: "POST",
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    'id': id,
-                },
-                success: function(items) {
-                    console.log(items);
-                    window.location.href = "/files";
-                }
-            });
+        //   $.ajax({
+        //         url: "/flip_engineer_status",
+        //         type: "POST",
+        //         headers: {
+        //             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        //         },
+        //         data: {
+        //             'id': id,
+        //         },
+        //         success: function(items) {
+        //             console.log(items);
+        //             window.location.href = "/files";
+        //         }
+        //     });
 
-        });
+        // });
 
         $(document).on('click','.redirect-click-file',function(e) {
           console.log('clicked');
