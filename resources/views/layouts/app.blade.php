@@ -74,6 +74,11 @@
         $allEngineers = App\Models\User::whereIn('role_id', [2,3])->where('test', 0)->whereNull('subdealer_group_id')->orWhere('id', 3)->get();
       @endphp
 
+<div class="page-content-wrapper ">
+    <!-- START PAGE CONTENT -->
+    <div class="content sm-gutter">
+      <!-- START CONTAINER FLUID -->
+        <div class="container-fluid bg-white">
        <div>
                     @foreach($allEngineers as $engineer)
                       <div class="card social-card share col1 @if($loggedInUser->id == $engineer->id) flip-status @endif" data-social="item" style="" data-id="{{$engineer->id}}">
@@ -93,6 +98,9 @@
                       </div>
                     @endforeach
                   </div>
+        </div>
+    </div>
+</div>
 
        @yield('content')
    </div>
