@@ -74,7 +74,7 @@
         $allEngineers = App\Models\User::whereIn('role_id', [2,3])->where('test', 0)->whereNull('subdealer_group_id')->orWhere('id', 3)->get();
       @endphp
 
-<div class="page-content-wrapper ">
+<div class="page-content-wrapper" style="min-height: 0% !important;">
     <!-- START PAGE CONTENT -->
     <div class="content sm-gutter">
       <!-- START CONTAINER FLUID -->
