@@ -2682,9 +2682,7 @@ class FilesController extends Controller
         $stagesOptionsEngineer->save();
         
         $supportMessagesEngineer = Key::where('key','support_messages_engineer')->first();
-        // dd($supportMessagesEngineer);
-        dd($request->all());
-        $supportMessagesEngineer->value = $request->stages_options_engineer;
+        $supportMessagesEngineer->value = $request->support_messages_engineer;
         $supportMessagesEngineer->save();
 
         return redirect()->back()->with(['success' => 'rules set']);
