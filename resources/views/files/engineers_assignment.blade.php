@@ -58,6 +58,17 @@
   
                       </select>
                       </div>
+
+                      <div class="form-group form-group-default required ">
+                        <label>Stages and Options Tasks Assigned to</label>
+                        <select class="form-control" id="support_messages_engineer" name="support_messages_engineer">
+                            
+                          @foreach ($allEngineers as $engineer)
+                            <option @if($stagesOptionsEngineer == $engineer->id) selected  @endif value="{{$engineer->id}}">{{$engineer->name}}</option>
+                          @endforeach
+  
+                      </select>
+                      </div>
                     
                     <div class="text-center m-t-40">                    
                       <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($engineer)) Update @else Add @endif</span></button>
