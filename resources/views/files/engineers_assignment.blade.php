@@ -64,7 +64,7 @@
                         <select class="form-control" id="support_messages_engineer" name="support_messages_engineer">
                             
                           @foreach ($allEngineers as $engineer)
-                            <option @if($stagesOptionsEngineer == $engineer->id) selected  @endif value="{{$engineer->id}}">{{$engineer->name}}</option>
+                            <option @if($supportMessagesEngineer == $engineer->id) selected  @endif value="{{$engineer->id}}">{{$engineer->name}}</option>
                           @endforeach
   
                       </select>
