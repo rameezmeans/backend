@@ -274,9 +274,18 @@ margin-bottom: 10px !important;
                           </form>
 
                           @else
+
+                          @if($file->assigned_to == Auth::user()->id)
                             <div>
                               <button data-file_id={{$file->id}} class="btn btn-success assigned-to-another" type="button">Assigned To Another</button>
                             </div>
+                            @else
+                               <form method="POST" action="{{route('assigned-to-me')}}">
+                            @csrf
+                            <input type="hidden" name="file_id" value="{{$file->id}}">
+                            <button class="btn btn-danger" type="submit">Assign To Me</button>
+                          </form>
+                            @endif
                           @endif
 
                         </div>
