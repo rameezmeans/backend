@@ -7080,7 +7080,7 @@ margin-bottom: 10px !important;
   <script type="text/javascript">
   $(document).ready(function(){
 
-    @if($file->assigned_to != Auth::user()->id)
+    @if($file->assigned_to != NULL && $file->assigned_to != Auth::user()->id)
 
     const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
