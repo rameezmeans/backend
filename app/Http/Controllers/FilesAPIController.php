@@ -781,7 +781,7 @@ class FilesAPIController extends Controller
         // Output the response
         $apiResponse = json_decode($response);
 
-        // dd($apiResponse);
+        dd($apiResponse);
 
         $vehicleInformation = [];
         $vehicleInformation['brand'] = $apiResponse->FILES[0]->brand;
