@@ -788,9 +788,7 @@ class FilesAPIController extends Controller
         $vehicleInformation['ecu_type'] = $apiResponse->FILES[0]->ecu_type;
         $vehicleInformation['engine'] = $apiResponse->FILES[0]->engine;
         $vehicleInformation['file_type'] = $apiResponse->FILES[0]->file_type;
-        $vehicleInformation['id'] = $apiResponse->FILES[0]->id;
         $vehicleInformation['is_100_matched'] = $apiResponse->FILES[0]->is_100_matched;
-        $vehicleInformation['url'] = $apiResponse->FILES[0]->url;
         $vehicleInformation['vehicle_model_year'] = $apiResponse->FILES[0]->vehicle_model_year;
         $vehicleInformation['version'] = $apiResponse->FILES[0]->version;
         
