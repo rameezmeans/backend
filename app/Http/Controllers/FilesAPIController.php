@@ -773,7 +773,7 @@ class FilesAPIController extends Controller
         // Send the request and get the response
         $response = file_get_contents('http://212.205.214.152:5000/external-api1', false, $context);
         
-        dd($response);
+        // dd($response);
         // Check if the request was successful
         if ($response === FALSE) {
             $apiResponse = json_decode('Request failed');
@@ -782,7 +782,7 @@ class FilesAPIController extends Controller
         // Output the response
         $apiResponse = json_decode($response);
 
-        // dd($apiResponse);
+        dd($apiResponse);
 
         $vehicleInformation = [];
         $vehicleInformation['brand'] = $apiResponse->FILES[0]->brand;
