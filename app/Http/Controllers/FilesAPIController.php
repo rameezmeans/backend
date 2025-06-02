@@ -781,17 +781,27 @@ class FilesAPIController extends Controller
         // Output the response
         $apiResponse = json_decode($response);
 
-        dd($apiResponse);
+        // dd($apiResponse);
 
         $vehicleInformation = [];
-        $vehicleInformation['ecu_build'] = $apiResponse->FILES[0]->ecu_build;
-        $vehicleInformation['ecu_producer'] = $apiResponse->FILES[0]->ecu_producer;
-        $vehicleInformation['engine_displacement'] = $apiResponse->FILES[0]->engine_displacement;
-        $vehicleInformation['engine_name'] = $apiResponse->FILES[0]->engine_name;
-        $vehicleInformation['vehicle_model'] = $apiResponse->FILES[0]->vehicle_model;
-        $vehicleInformation['vehicle_modelyear'] = $apiResponse->FILES[0]->vehicle_modelyear;
-        $vehicleInformation['vehicle_producer'] = $apiResponse->FILES[0]->vehicle_producer;
-        $vehicleInformation['vehicle_series'] = $apiResponse->FILES[0]->vehicle_series;
+        $vehicleInformation['brand'] = $apiResponse->FILES[0]->brand;
+        $vehicleInformation['ecu_type'] = $apiResponse->FILES[0]->ecu_type;
+        $vehicleInformation['engine'] = $apiResponse->FILES[0]->engine;
+        $vehicleInformation['file_type'] = $apiResponse->FILES[0]->file_type;
+        $vehicleInformation['id'] = $apiResponse->FILES[0]->id;
+        $vehicleInformation['is_100_matched'] = $apiResponse->FILES[0]->is_100_matched;
+        $vehicleInformation['url'] = $apiResponse->FILES[0]->url;
+        $vehicleInformation['vehicle_model_year'] = $apiResponse->FILES[0]->vehicle_model_year;
+        $vehicleInformation['version'] = $apiResponse->FILES[0]->version;
+        
+        // $vehicleInformation['ecu_build'] = $apiResponse->FILES[0]->ecu_build;
+        // $vehicleInformation['ecu_producer'] = $apiResponse->FILES[0]->ecu_producer;
+        // $vehicleInformation['engine_displacement'] = $apiResponse->FILES[0]->engine_displacement;
+        // $vehicleInformation['engine_name'] = $apiResponse->FILES[0]->engine_name;
+        // $vehicleInformation['vehicle_model'] = $apiResponse->FILES[0]->vehicle_model;
+        // $vehicleInformation['vehicle_modelyear'] = $apiResponse->FILES[0]->vehicle_modelyear;
+        // $vehicleInformation['vehicle_producer'] = $apiResponse->FILES[0]->vehicle_producer;
+        // $vehicleInformation['vehicle_series'] = $apiResponse->FILES[0]->vehicle_series;
 
         $apiResponse->vehicle_information = $vehicleInformation;
 
