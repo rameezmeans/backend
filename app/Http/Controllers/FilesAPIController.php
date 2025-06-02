@@ -782,16 +782,26 @@ class FilesAPIController extends Controller
         // Output the response
         $apiResponse = json_decode($response);
 
-        dd($apiResponse);
+        // dd($apiResponse);
 
-        $vehicleInformation = [];
-        $vehicleInformation['brand'] = $apiResponse->FILES[0]->brand;
-        $vehicleInformation['ecu_type'] = $apiResponse->FILES[0]->ecu_type;
-        $vehicleInformation['engine'] = $apiResponse->FILES[0]->engine;
-        $vehicleInformation['file_type'] = $apiResponse->FILES[0]->file_type;
-        $vehicleInformation['is_100_matched'] = $apiResponse->FILES[0]->is_100_matched;
-        $vehicleInformation['vehicle_model_year'] = $apiResponse->FILES[0]->vehicle_model_year;
-        $vehicleInformation['version'] = $apiResponse->FILES[0]->version;
+        if($apiResponse['STATUS'] != "FILE_NOT_FOUND"){
+
+            $vehicleInformation = [];
+            $vehicleInformation['brand'] = $apiResponse->FILES[0]->brand;
+            $vehicleInformation['ecu_type'] = $apiResponse->FILES[0]->ecu_type;
+            $vehicleInformation['engine'] = $apiResponse->FILES[0]->engine;
+            $vehicleInformation['file_type'] = $apiResponse->FILES[0]->file_type;
+            $vehicleInformation['is_100_matched'] = $apiResponse->FILES[0]->is_100_matched;
+            $vehicleInformation['vehicle_model_year'] = $apiResponse->FILES[0]->vehicle_model_year;
+            $vehicleInformation['version'] = $apiResponse->FILES[0]->version;
+        }
+        else{
+            return response()->json([
+            'message' => 'temporary file created.',
+            'tempFile' => $tempFile,
+            'python_response' => "file not found",
+        ], 201);
+        }
         
         // $vehicleInformation['ecu_build'] = $apiResponse->FILES[0]->ecu_build;
         // $vehicleInformation['ecu_producer'] = $apiResponse->FILES[0]->ecu_producer;
