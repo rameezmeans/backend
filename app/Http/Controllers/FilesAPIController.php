@@ -51,7 +51,7 @@ class FilesAPIController extends Controller
         $loop = $request->loop;
 
         try {
-            $response = Http::timeout(10)->post('http://79.129.68.101:5000/external-api2', [
+            $response = Http::timeout(10)->post('http://212.205.214.152:5000/external-api2', [
                 'FILE_ID' => $fileID,
                 'MOD' => $mod,
                 'ENABLE_MAX_DIFF_AREA' => $enableMaxDiffArea,
@@ -771,7 +771,7 @@ class FilesAPIController extends Controller
         $context = stream_context_create($options);
         
         // Send the request and get the response
-        $response = file_get_contents('http://79.129.68.101:5000/external-api1', false, $context);
+        $response = file_get_contents('http://212.205.214.152:5000/external-api1', false, $context);
         
         // Check if the request was successful
         if ($response === FALSE) {
