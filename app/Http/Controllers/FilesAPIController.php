@@ -784,7 +784,7 @@ class FilesAPIController extends Controller
 
         // dd($apiResponse);
 
-        if($apiResponse['STATUS'] != "FILE_NOT_FOUND"){
+        if($apiResponse->STATUS != "FILE_NOT_FOUND"){
 
             $vehicleInformation = [];
             $vehicleInformation['brand'] = $apiResponse->FILES[0]->brand;
