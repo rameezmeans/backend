@@ -49,7 +49,7 @@
                   
                     <!-- START Notification Item-->
                     @foreach($allEngineers as $engineer)
-                    <div class="notification-item clearfix @if($loggedInUser->id == $engineer->id) flip-status @endif" data-id="{{$engineer->id}}">
+                    <div class="notification-item clearfix">
                       <div class="card social-card share col1 @if($loggedInUser->id == $engineer->id) flip-status @endif" data-social="item" style="" data-id="{{$engineer->id}}">
                         <div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
                         </div>
