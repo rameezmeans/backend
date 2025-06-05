@@ -144,7 +144,7 @@
             <!-- END Notification Dropdown -->
           {{-- </div> --}}
         </li>
-        <li class="p-r-10 inline">
+        <li class="p-r-10 inline" style="margin-left: 290px;">
           @foreach($allEngineers as $engineer)
                     
                 <div class="card social-card share col1 @if($loggedInUser->id == $engineer->id) flip-status @endif" data-social="item" style="" data-id="{{$engineer->id}}">
