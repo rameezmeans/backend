@@ -53,6 +53,8 @@
         font-size: 27px !important
       }
     </style>
+
+    <script src="{{url('assets/plugins/jquery/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
     
     {{-- <style>[x-cloak] { display: none !important; }</style>
 
@@ -109,7 +111,7 @@
    <!-- BEGIN VENDOR JS -->
    <script type="text/javascript" src="{{ url('assets/plugins/toastify/toastify-js.js') }}"></script>
    <script src="{{ url('assets/plugins/pace/pace.min.js') }}" type="text/javascript"></script>
-   <script src="{{url('assets/plugins/jquery/jquery-3.2.1.min.js') }}" type="text/javascript"></script>
+   
    <script src="{{url('assets/plugins/modernizr.custom.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/jquery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
    <script src="{{url('assets/plugins/popper/umd/popper.min.js') }}" type="text/javascript"></script>
