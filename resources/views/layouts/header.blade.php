@@ -46,9 +46,10 @@
                 <!-- START Notification Body-->
                 <div class="notification-body scrollable">
                   <!-- START Notification Item-->
-                  <div class="notification-item clearfix">
+                  
                     <!-- START Notification Item-->
                     @foreach($allEngineers as $engineer)
+                    <div class="notification-item clearfix">
                       <div style="width: 40%;" class="card social-card share col1 @if($loggedInUser->id == $engineer->id) flip-status @endif" data-social="item" style="" data-id="{{$engineer->id}}">
                         <div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
                         </div>
@@ -64,14 +65,15 @@
                             @endif
                         </div>
                       </div>
+                    </div>
                     @endforeach
                     <!-- END Notification Item-->
                     <!-- START Notification Item Right Side-->
-                    <div class="option" data-toggle="tooltip" data-placement="left" title="mark as read">
+                    {{-- <div class="option" data-toggle="tooltip" data-placement="left" title="mark as read">
                       <a href="#" class="mark"></a>
-                    </div>
+                    </div> --}}
                     <!-- END Notification Item Right Side-->
-                  </div>
+                  {{-- </div> --}}
                   <!-- START Notification Body-->
                   <!-- START Notification Item-->
                   {{-- <div class="notification-item  clearfix">
@@ -129,12 +131,12 @@
                 </div>
                 <!-- END Notification Body-->
                 <!-- START Notification Footer-->
-                <div class="notification-footer text-center">
+                {{-- <div class="notification-footer text-center">
                   <a href="#" class="">Read all notifications</a>
                   <a data-toggle="refresh" class="portlet-refresh text-black pull-right" href="#">
                     <i class="pg-refresh_new"></i>
                   </a>
-                </div>
+                </div> --}}
                 <!-- START Notification Footer-->
               </div>
               <!-- END Notification -->
