@@ -46,33 +46,25 @@
                 <!-- START Notification Body-->
                 <div class="notification-body scrollable">
                   <!-- START Notification Item-->
-                  <div class="notification-item unread clearfix">
+                  <div class="notification-item clearfix">
                     <!-- START Notification Item-->
-                    <div class="heading open">
-                      <a href="#" class="text-complete pull-left">
-                        <i class="pg-map fs-16 m-r-10"></i>
-                        <span class="bold">Carrot Design</span>
-                        <span class="fs-12 m-l-10">David Nester</span>
-                      </a>
-                      <div class="pull-right">
-                        <div class="thumbnail-wrapper d16 circular inline m-t-15 m-r-10 toggle-more-details">
-                          <div><i class="fa fa-angle-left"></i>
+                    @foreach($allEngineers as $engineer)
+                      <div style="width: 40%;" class="card social-card share col1 @if($loggedInUser->id == $engineer->id) flip-status @endif" data-social="item" style="" data-id="{{$engineer->id}}">
+                        <div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
+                        </div>
+                        <div class="card-header clearfix">
+                          <div class="user-pic">
+                            <img alt="Profile Image" width="33" height="33" data-src-retina="{{url('assets/img/profiles/4x.jpg')}}" data-src="{{url('assets/img/profiles/4.jpg')}}" src="{{url('assets/img/profiles/4x.jpg')}}">
                           </div>
-                        </div>
-                        <span class=" time">few sec ago</span>
-                      </div>
-                      <div class="more-details">
-                        <div class="more-details-inner">
-                          <h5 class="semi-bold fs-16">“Apple’s Motivation - Innovation <br>
-                                                        distinguishes between <br>
-                                                        A leader and a follower.”</h5>
-                          <p class="small hint-text">
-                            Commented on john Smiths wall.
-                            <br> via pages framework.
-                          </p>
+                          <h5>{{$engineer->name}}</h5>
+                            @if($engineer->online)
+                              <h5 class="text-success pull-left fs-12">Online <i class="fa fa-circle text-success fs-11"></i></h5>
+                            @else
+                              <h5 class="text-danger pull-left fs-12">Offline <i class="fa fa-circle text-danger fs-11"></i></h5>
+                            @endif
                         </div>
                       </div>
-                    </div>
+                    @endforeach
                     <!-- END Notification Item-->
                     <!-- START Notification Item Right Side-->
                     <div class="option" data-toggle="tooltip" data-placement="left" title="mark as read">
@@ -82,7 +74,7 @@
                   </div>
                   <!-- START Notification Body-->
                   <!-- START Notification Item-->
-                  <div class="notification-item  clearfix">
+                  {{-- <div class="notification-item  clearfix">
                     <div class="heading">
                       <a href="#" class="text-danger pull-left">
                         <i class="fa fa-exclamation-triangle m-r-10"></i>
@@ -96,10 +88,10 @@
                       <a href="#" class="mark"></a>
                     </div>
                     <!-- END Notification Item Right Side-->
-                  </div>
+                  </div> --}}
                   <!-- END Notification Item-->
                   <!-- START Notification Item-->
-                  <div class="notification-item  clearfix">
+                  {{-- <div class="notification-item  clearfix">
                     <div class="heading">
                       <a href="#" class="text-warning-dark pull-left">
                         <i class="fa fa-exclamation-triangle m-r-10"></i>
@@ -113,10 +105,10 @@
                       <a href="#" class="mark"></a>
                     </div>
                     <!-- END Notification Item Right Side-->
-                  </div>
+                  </div> --}}
                   <!-- END Notification Item-->
                   <!-- START Notification Item-->
-                  <div class="notification-item unread clearfix">
+                  {{-- <div class="notification-item unread clearfix">
                     <div class="heading">
                       <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
                         <img width="30" height="30" data-src-retina="{{ url('assets/img/profiles/1x.jpg') }}" data-src="{{ url('assets/img/profiles/1.jpg') }}" alt="" src="{{ url('assets/img/profiles/1.jpg') }}">
@@ -132,7 +124,7 @@
                       <a href="#" class="mark"></a>
                     </div>
                     <!-- END Notification Item Right Side-->
-                  </div>
+                  </div> --}}
                   <!-- END Notification Item-->
                 </div>
                 <!-- END Notification Body-->
