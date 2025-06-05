@@ -147,7 +147,7 @@
         <li class="p-r-10 inline" style="margin-left: 290px;">
           @foreach($allEngineers as $engineer)
                     
-                <div style="width: 250px;" class="card social-card share col1 @if($loggedInUser->id == $engineer->id) flip-status @endif" data-social="item" style="" data-id="{{$engineer->id}}">
+                <div style="width: 250px; margin-top: 45px;" class="card social-card share col1 @if($loggedInUser->id == $engineer->id) flip-status @endif" data-social="item" style="" data-id="{{$engineer->id}}">
                   <div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
                   </div>
                   <div class="card-header clearfix">
