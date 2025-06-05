@@ -75,7 +75,7 @@
         $allEngineers = App\Models\User::whereIn('role_id', [2,3])->where('test', 0)->whereNull('subdealer_group_id')->orWhere('id', 3)->get();
       @endphp
 
-<div class="page-content-wrapper" style="min-height: 0% !important; margin-top: 50px;">
+{{-- <div class="page-content-wrapper" style="min-height: 0% !important; margin-top: 50px;">
     <!-- START PAGE CONTENT -->
     <div class="content sm-gutter">
       <!-- START CONTAINER FLUID -->
@@ -101,7 +101,7 @@
                   </div>
         </div>
     </div>
-</div>
+</div> --}}
 
        @yield('content')
    </div>
