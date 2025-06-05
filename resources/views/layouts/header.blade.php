@@ -16,7 +16,7 @@
           $loggedInUser = Auth::user();
           $allEngineers = App\Models\User::whereIn('role_id', [2,3])->where('test', 0)->whereNull('subdealer_group_id')->orWhere('id', 3)->get();
         @endphp
-        <div>
+        {{-- <div>
                     @foreach($allEngineers as $engineer)
                       <div style="width: 40%;" class="card social-card share col1 @if($loggedInUser->id == $engineer->id) flip-status @endif" data-social="item" style="" data-id="{{$engineer->id}}">
                         <div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
@@ -34,8 +34,8 @@
                         </div>
                       </div>
                     @endforeach
-                  </div>
-          {{-- <div class="dropdown">
+                  </div> --}}
+          <div class="dropdown">
             <a href="javascript:;" id="notification-center" class="header-icon pg pg-world" data-toggle="dropdown">
               <span class="bubble"></span>
             </a>
@@ -148,7 +148,7 @@
               <!-- END Notification -->
             </div>
             <!-- END Notification Dropdown -->
-          </div> --}}
+          </div>
         </li>
         <li class="p-r-10 inline">
           {{-- <a href="#" class="header-icon pg pg-link"></a> --}}
