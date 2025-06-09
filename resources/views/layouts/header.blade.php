@@ -3,7 +3,7 @@
 .cut-text { 
   text-overflow: ellipsis;
   overflow: hidden; 
-  width: 160px; 
+  width: 90px; 
   height: 1.2em; 
   white-space: nowrap;
 }
