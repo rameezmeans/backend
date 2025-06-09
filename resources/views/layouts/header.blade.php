@@ -1,3 +1,14 @@
+<style>
+
+.cut-text { 
+  text-overflow: ellipsis;
+  overflow: hidden; 
+  width: 160px; 
+  height: 1.2em; 
+  white-space: nowrap;
+}
+
+</style>
 <!-- START HEADER -->
 <div class="header ">
     <!-- START MOBILE SIDEBAR TOGGLE -->
@@ -154,7 +165,7 @@
                     <div class="user-pic">
                       <img alt="Profile Image" width="33" height="33" data-src-retina="{{url('assets/img/profiles/4x.jpg')}}" data-src="{{url('assets/img/profiles/4.jpg')}}" src="{{url('assets/img/profiles/4x.jpg')}}">
                     </div>
-                    <h5>{{$engineer->name}}</h5>
+                    <h5 class="cut-text">{{$engineer->name}}</h5>
                       @if($engineer->online)
                         <h5 class="text-success pull-left fs-12">Online <i class="fa fa-circle text-success fs-11"></i></h5>
                       @else
