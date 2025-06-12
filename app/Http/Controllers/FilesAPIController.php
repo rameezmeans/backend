@@ -771,7 +771,7 @@ class FilesAPIController extends Controller
         $context = stream_context_create($options);
         
         // Send the request and get the response
-        $response = file_get_contents('http://212.205.214.152:5000/external', false, $context);
+        $response = file_get_contents('http://212.205.214.152:5000/external-api1', false, $context);
         
         // dd($response);
         // Check if the request was successful
