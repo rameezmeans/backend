@@ -794,6 +794,7 @@ class FilesAPIController extends Controller
             $vehicleInformation['is_100_matched'] = $apiResponse->FILES[0]->is_100_matched;
             $vehicleInformation['vehicle_model_year'] = $apiResponse->FILES[0]->vehicle_model_year;
             $vehicleInformation['version'] = $apiResponse->FILES[0]->version;
+            $vehicleInformation['model'] = $apiResponse->FILES[0]->model;
         }
         else{
             return response()->json([
