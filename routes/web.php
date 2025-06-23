@@ -1043,6 +1043,8 @@ Route::post('/download_terms_table', [App\Http\Controllers\FilesController::clas
 Route::get('/message_search', [App\Http\Controllers\FilesController::class, 'messageSearch'])->name('message-search');
 Route::any('/get_search_results', [App\Http\Controllers\FilesController::class, 'getSearchResults'])->name('get-search-results');
 
+Route::get('/reasons_to_reject', [App\Http\Controllers\ReasonsController::class, 'reasonsToReject'])->name('reasons-to-reject');
+
 Route::post('/add_softwares_services', [App\Http\Controllers\FilesController::class, 'addSoftwares'])->name('add-softwares-services');
 Route::post('/remove_null_software_records', [App\Http\Controllers\FilesController::class, 'removeNullSoftwares'])->name('remove-null-software-records');
 Route::post('/remove_null_message_records', [App\Http\Controllers\FilesController::class, 'removeNullMessages'])->name('remove-null-message-records');

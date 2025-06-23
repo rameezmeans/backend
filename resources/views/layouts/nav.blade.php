@@ -539,6 +539,11 @@
               <a href="{{ route('message-search') }}">Message Search</a>
               <span class="icon-thumbnail">MS</span>
             </li>
+
+            <li class="">
+              <a href="{{ route('reasons-to-reject') }}">Reasons To Reject</a>
+              <span class="icon-thumbnail">RR</span>
+            </li>
             
             {{-- <li class="">
               <a href="{{ route('frontends') }}">Frontends</a>
