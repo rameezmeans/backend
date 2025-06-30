@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('auto_file_info', function (Blueprint $table) {
+        Schema::create('auto_file_info', function (Blueprint $table) {
             $table->id();
             $table->foreignId('temporary_file_id');
             $table->foreignId('auto_searched_file_id');
