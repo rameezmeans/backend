@@ -2083,6 +2083,30 @@ Route::post('python/apply_modifications', [App\Http\Controllers\FilesAPIControll
 
 */
 
+Route::post('add_auto_searched_file_info', [App\Http\Controllers\FilesAPIController::class, 'addAutoSearchedFileInfo']);
+
+/*
+            request body 
+
+            $request->temporary_file_id
+            $request->auto_searched_file_id
+            $request->brand
+            $request->model
+            $request->version
+            $request->engine
+            $request->is_modified
+            $request->modification
+            $request->gearbox
+            
+            response on API
+
+            {
+                "STATUS": "SUCCESS",
+                "OUTPUT_FILE_URL": "https://server.com/output_file.bin"
+            }
+
+*/
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AlientechFile;
+use App\Models\AutoFileInfo;
 use App\Models\Combination;
 use App\Models\Credit;
 use App\Models\DownloadLuaFile;
@@ -37,6 +38,26 @@ use Twilio\Rest\Client;
 
 class FilesAPIController extends Controller
 {
+
+    public function addAutoSearchedFileInfo(Request $request){
+
+        $record = new AutoFileInfo();
+        $record->temporary_file_id = $request->temporary_file_id;
+        $record->auto_searched_file_id = $request->auto_searched_file_id;
+        $record->brand = $request->brand;
+        $record->model = $request->model;
+        $record->version = $request->version;
+        $record->engine = $request->engine;
+        $record->is_modified = $request->is_modified;
+        $record->modification = $request->modification;
+        $record->gearbox = $request->gearbox;
+        $record->save();
+
+        return response()->json([
+            'file_info' => $record,
+            
+        ], 200);
+    }
 
     public function pythonApplyModifications(Request $request){
 
