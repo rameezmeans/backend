@@ -2101,9 +2101,21 @@ Route::post('add_auto_searched_file_info', [App\Http\Controllers\FilesAPIControl
             response on API
 
             {
-                "STATUS": "SUCCESS",
-                "OUTPUT_FILE_URL": "https://server.com/output_file.bin"
-            }
+    "file_info": {
+        "temporary_file_id": "1337",
+        "auto_searched_file_id": "1122",
+        "brand": "Acura",
+        "model": "model",
+        "version": "version",
+        "engine": "engine",
+        "is_modified": "1",
+        "modification": "23",
+        "gearbox": "gearbox",
+        "updated_at": "2025-06-30T23:37:25.000000Z",
+        "created_at": "2025-06-30T23:37:25.000000Z",
+        "id": 1
+    }
+}
 
 */
 
