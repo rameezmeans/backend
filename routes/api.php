@@ -1972,6 +1972,10 @@ Route::post('edit_account', [App\Http\Controllers\FilesAPIController::class, 'ed
             $request->company_id
             $request->name
             $request->phone
+            $request->address
+            $request->zip
+            $request->city
+            $request->country
             $request->evc_customer_id
             response on API
 
