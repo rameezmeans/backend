@@ -1316,6 +1316,10 @@ class FilesAPIController extends Controller
             $user->company_id = $request->company_id;
             $user->name = $request->name;
             $user->phone = $request->phone;
+            $user->address = $request->address;
+            $user->zip = $request->zip;
+            $user->city = $request->city;
+            $user->country = $request->country;
             
             $user->evc_customer_id = $request->evc_customer_id;
             $user->save();
