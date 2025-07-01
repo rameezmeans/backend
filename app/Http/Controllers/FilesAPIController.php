@@ -1434,7 +1434,12 @@ class FilesAPIController extends Controller
         $tools = [];
 
         foreach($toolUsers as $t){
-            $tools []= Tool::findOrFail($t->tool_id);
+            
+            $tool = Tool::findOrFail($t->tool_id);
+
+            if($tool->type == 'master'){
+                $tools []= $tool;
+            }
         }
 
         return response()->json($tools);
