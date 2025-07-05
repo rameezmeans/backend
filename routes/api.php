@@ -2123,7 +2123,7 @@ Route::post('add_auto_searched_file_info', [App\Http\Controllers\FilesAPIControl
 
 */
 
-Route::post('add_auto_searched_file_stage_options', [App\Http\Controllers\FilesAPIController::class, 'addAutoSearchedFileInfo']);
+Route::post('add_auto_searched_file_stage_options', [App\Http\Controllers\FilesAPIController::class, 'addAutoSearchedFileStageOptions']);
 
 /*
             request body 
