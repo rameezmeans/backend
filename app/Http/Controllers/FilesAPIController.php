@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AlientechFile;
 use App\Models\AutoFileInfo;
+use App\Models\AutoFileStageOptions;
 use App\Models\Combination;
 use App\Models\Credit;
 use App\Models\DownloadLuaFile;
@@ -39,6 +40,22 @@ use Twilio\Rest\Client;
 class FilesAPIController extends Controller
 {
 
+    public function addAutoSearchedFileStageOptions(Request $request){
+
+        $record = new AutoFileStageOptions();
+        $record->temporary_file_id = $request->temporary_file_id;
+        $record->auto_searched_file_id = $request->auto_searched_file_id;
+        $record->stage = $request->stage;
+        $record->options = $request->options;
+        $record->credits = $request->credits;
+        $record->save();
+
+        return response()->json([
+            'file_stage_options' => $record,
+            
+        ], 200);
+
+    }
     public function addAutoSearchedFileInfo(Request $request){
 
         $record = new AutoFileInfo();

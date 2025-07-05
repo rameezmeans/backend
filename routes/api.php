@@ -2123,6 +2123,39 @@ Route::post('add_auto_searched_file_info', [App\Http\Controllers\FilesAPIControl
 
 */
 
+Route::post('add_auto_searched_file_stage_options', [App\Http\Controllers\FilesAPIController::class, 'addAutoSearchedFileInfo']);
+
+/*
+            request body 
+
+            $request->temporary_file_id
+            $request->auto_searched_file_id
+            $request->stage
+            $request->options
+            $request->credits
+            
+            
+            response on API
+
+            {
+            "file_info": {
+                "temporary_file_id": "1337",
+                "auto_searched_file_id": "1122",
+                "brand": "Acura",
+                "model": "model",
+                "version": "version",
+                "engine": "engine",
+                "is_modified": "1",
+                "modification": "23",
+                "gearbox": "gearbox",
+                "updated_at": "2025-06-30T23:37:25.000000Z",
+                "created_at": "2025-06-30T23:37:25.000000Z",
+                "id": 1
+            }
+}
+
+*/
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
