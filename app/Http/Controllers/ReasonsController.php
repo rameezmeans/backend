@@ -17,7 +17,7 @@ class ReasonsController extends Controller
 
     public function reasonsToReject(){
         $reasonsToReject = ReasonsToReject::all();
-        return view('reasons_to_cancel.index', ['reasonToReject' => $reasonsToReject]);
+        return view('reasons_to_cancel.index', ['reasonsToReject' => $reasonsToReject]);
     }
 
     
