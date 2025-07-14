@@ -2138,21 +2138,18 @@ Route::post('add_auto_searched_file_stage_options', [App\Http\Controllers\FilesA
             response on API
 
             {
-            "file_info": {
+            "file_stage_options": {
                 "temporary_file_id": "1337",
                 "auto_searched_file_id": "1122",
-                "brand": "Acura",
-                "model": "model",
-                "version": "version",
-                "engine": "engine",
-                "is_modified": "1",
-                "modification": "23",
-                "gearbox": "gearbox",
-                "updated_at": "2025-06-30T23:37:25.000000Z",
-                "created_at": "2025-06-30T23:37:25.000000Z",
+                "stage": "1",
+                "options": "{20,34}",
+                "credits": "21",
+                "updated_at": "2025-07-05T16:36:44.000000Z",
+                "created_at": "2025-07-05T16:36:44.000000Z",
                 "id": 1
             }
-}
+
+
 
 */
 
