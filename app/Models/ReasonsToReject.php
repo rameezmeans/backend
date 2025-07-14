@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class ReasonsToReject extends Model
 {
     use HasFactory;
+    protected $table = "reason_to_cancel";
 }
