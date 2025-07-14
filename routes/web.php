@@ -1044,6 +1044,8 @@ Route::get('/message_search', [App\Http\Controllers\FilesController::class, 'mes
 Route::any('/get_search_results', [App\Http\Controllers\FilesController::class, 'getSearchResults'])->name('get-search-results');
 
 Route::get('/reasons_to_reject', [App\Http\Controllers\ReasonsController::class, 'reasonsToReject'])->name('reasons-to-reject');
+Route::get('/create_reason_to_cancel', [App\Http\Controllers\ReasonsController::class, 'create'])->name('create-reason-to-cancel');
+Route::get('/edit_reason_to_cancel/{id}', [App\Http\Controllers\ReasonsController::class, 'edit'])->name('edit-reason-to-cancel');
 
 Route::post('/add_softwares_services', [App\Http\Controllers\FilesController::class, 'addSoftwares'])->name('add-softwares-services');
 Route::post('/remove_null_software_records', [App\Http\Controllers\FilesController::class, 'removeNullSoftwares'])->name('remove-null-software-records');
