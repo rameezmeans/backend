@@ -9,4 +9,5 @@ class ReasonsToReject extends Model
 {
     use HasFactory;
     protected $table = "reason_to_cancel";
+    protected $fillable = ['reason_to_cancel'];
 }
