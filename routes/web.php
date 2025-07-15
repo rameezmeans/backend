@@ -1047,6 +1047,8 @@ Route::get('/reasons_to_reject', [App\Http\Controllers\ReasonsController::class,
 Route::get('/create_reason_to_cancel', [App\Http\Controllers\ReasonsController::class, 'create'])->name('create-reason-to-cancel');
 Route::post('/add_reason_to_cancel', [App\Http\Controllers\ReasonsController::class, 'add'])->name('add-reason-to-cancel');
 Route::get('/edit_reason_to_cancel/{id}', [App\Http\Controllers\ReasonsController::class, 'edit'])->name('edit-reason-to-cancel');
+Route::post('/update_reason_to_reject', [App\Http\Controllers\ReasonsController::class, 'update'])->name('update-reason-to-reject');
+Route::post('/delete_reason_to_reject', [App\Http\Controllers\ReasonsController::class, 'destroy'])->name('delete-reason-to-reject');
 
 Route::post('/add_softwares_services', [App\Http\Controllers\FilesController::class, 'addSoftwares'])->name('add-softwares-services');
 Route::post('/remove_null_software_records', [App\Http\Controllers\FilesController::class, 'removeNullSoftwares'])->name('remove-null-software-records');
