@@ -3870,6 +3870,8 @@ class FilesController extends Controller
                 $credit->gifted = 1;
                 $credit->price_payed = 0;
 
+                dd($request->all());
+
                 if($request->reason_to_reject){
                     $credit->message_to_credit = $request->reason_to_reject;
                     $file->reason_to_reject = $request->reason_to_reject;
