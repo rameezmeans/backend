@@ -26,6 +26,7 @@ use App\Models\EngineerOptionsOffer;
 use App\Models\FileFeedback;
 use App\Models\FileInternalEvent;
 use App\Models\FileMessage;
+use App\Models\FileReasonsToReject;
 use App\Models\FileReplySoftwareService;
 use App\Models\FileService;
 use App\Models\FilesStatusLog;
@@ -3870,7 +3871,13 @@ class FilesController extends Controller
                 $credit->gifted = 1;
                 $credit->price_payed = 0;
 
-                dd($request->all());
+                // dd($request->all());
+
+                $reasons = implode(', ',$request->reasons);
+                $new = new FileReasonsToReject();
+                $new->file_id = $file->id;
+                $new->reasons_to_cancel = $reasons;
+                $new->save();
 
                 if($request->reason_to_reject){
                     $credit->message_to_credit = $request->reason_to_reject;
