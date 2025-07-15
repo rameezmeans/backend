@@ -332,6 +332,15 @@ margin-bottom: 10px !important;
                           </div>
                           <div class="clearfix"></div>
                         </div>
+                        @if($file->reasons)
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Reasons</p>
+                          <div class="pull-right">
+                            <span class="label>{{$file->reasons->reasons_to_cancel}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        @endif
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Uploaded Time</p>
                           <div class="pull-right">
@@ -3252,6 +3261,15 @@ margin-bottom: 10px !important;
                           </div>
                           <div class="clearfix"></div>
                         </div>
+                        @if($file->reasons)
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Reasons</p>
+                          <div class="pull-right">
+                            <span class="label>{{$file->reasons->reasons_to_cancel}}<span>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        @endif
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Uploaded Time</p>
                           <div class="pull-right">

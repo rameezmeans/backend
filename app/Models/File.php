@@ -28,6 +28,10 @@ class File extends Model
         'request_type', 'additional_comments', 'credit_id','vmax_off_comments','is_original', 'acm_file'
     ];
 
+    public function reasons(){
+        return $this->hasMany(FileReasonsToReject::class); 
+    }
+
     public function files(){
         return $this->hasMany(RequestFile::class); 
     }
