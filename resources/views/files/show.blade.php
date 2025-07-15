@@ -336,7 +336,7 @@ margin-bottom: 10px !important;
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Reasons</p>
                           <div class="pull-right">
-                            <span class="label>{{$file->reasons->reasons_to_cancel}}<span>
+                            <span class="label">{{$file->reasons->reasons_to_cancel}}</span>
                           </div>
                           <div class="clearfix"></div>
                         </div>
@@ -3257,7 +3257,7 @@ margin-bottom: 10px !important;
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Status</p>
                           <div class="pull-right">
-                            <span class="label @if($file->status == 'sumbitted') label-success @else label-danger @endif">{{$file->status}}<span>
+                            <span class="label @if($file->status == 'sumbitted') label-success @else label-danger @endif">{{$file->status}}</span>
                           </div>
                           <div class="clearfix"></div>
                         </div>
@@ -3265,7 +3265,7 @@ margin-bottom: 10px !important;
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Reasons</p>
                           <div class="pull-right">
-                            <span class="label>{{$file->reasons->reasons_to_cancel}}<span>
+                            <span class="label">{{$file->reasons->reasons_to_cancel}}</span>
                           </div>
                           <div class="clearfix"></div>
                         </div>
