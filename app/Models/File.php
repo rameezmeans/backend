@@ -29,7 +29,7 @@ class File extends Model
     ];
 
     public function reasons(){
-        return $this->hasMany(FileReasonsToReject::class); 
+        return $this->hasOne(FileReasonsToReject::class); 
     }
 
     public function files(){
