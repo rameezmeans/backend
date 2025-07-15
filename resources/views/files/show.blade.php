@@ -2284,7 +2284,7 @@ margin-bottom: 10px !important;
                         </select>
                         <div class="form-group m-t-10 hide" id="reason_to_reject">
                           <label>Reasons To Reject</label>
-                          <select multiple class="full-width" data-init-plugin="select2" name="reasons[]" id="select_status">
+                          <select multiple class="full-width" data-init-plugin="select2" name="reasons[]" id="reasons">
                             @foreach($reasons as $reason)
                               <option value="{{$reason->reason_to_cancel}}">{{$reason->reason_to_cancel}}</option>
                             @endforeach
@@ -4938,7 +4938,7 @@ margin-bottom: 10px !important;
                         </select>
                         <div class="form-group m-t-10 hide" id="reason_to_reject">
                           <label>Reasons To Reject</label>
-                          <select multiple class="full-width" data-init-plugin="select2" name="reasons[]" id="select_status">
+                          <select multiple class="full-width" data-init-plugin="select2" name="reasons[]" id="reasons">
                             @foreach($reasons as $reason)
                               <option value="{{$reason->reason_to_cancel}}">{{$reason->reason_to_cancel}}</option>
                             @endforeach
