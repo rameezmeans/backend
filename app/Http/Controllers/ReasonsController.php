@@ -42,7 +42,7 @@ class ReasonsController extends Controller
     {
         $reason = ReasonsToReject::findOrFail($id);
 
-        return view('reasons-to-reject.create', compact('reason'));
+        return view('reasons_to_cancel.create', compact('reason'));
     }
     
 }
