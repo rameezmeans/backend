@@ -37,7 +37,7 @@
                 @endif
                 <div class="form-group form-group-default required ">
                   <label>Reason To Reject</label>
-                  <input value="@if(isset($reason)) {{ $reason->reason_to_cancel }} @else{{old('reason_to_cancel') }}@endif"  name="reason_to_cancel" type="text" class="form-control" required>
+                  <input value="@if(isset($reason)){{$reason->reason_to_cancel}}@else{{old('reason_to_cancel') }}@endif"  name="reason_to_cancel" type="text" class="form-control" required>
                 </div>
                 @error('reason_to_cancel')
                   <span class="text-danger" role="alert">
