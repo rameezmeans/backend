@@ -2283,8 +2283,12 @@ margin-bottom: 10px !important;
                             <option @if(isset($file) && $file->status == "on_hold") selected @endif value="on_hold">On Hold</option>
                         </select>
                         <div class="form-group m-t-10 hide" id="reason_to_reject">
-                          <label>Reason To Reject</label>
-                          <input type="text" class="form-control" name="reason_to_reject">
+                          <label>Reasons To Reject</label>
+                          <select multiple class="full-width" data-init-plugin="select2" name="reasons[]" id="select_status">
+                            @foreach($reasons as $reason)
+                              <option value="{{$reason->reason_to_cancel}}">{{$reason->reason_to_cancel}}</option>
+                            @endforeach
+                          </select>
                         </div>
                         <div class="text-center m-t-20">                    
                           <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Update</span></button>
@@ -4933,8 +4937,12 @@ margin-bottom: 10px !important;
                             <option @if(isset($file) && $file->status == "on_hold") selected @endif value="on_hold">On Hold</option>
                         </select>
                         <div class="form-group m-t-10 hide" id="reason_to_reject">
-                          <label>Reason To Reject</label>
-                          <input type="text" class="form-control" name="reason_to_reject">
+                          <label>Reasons To Reject</label>
+                          <select multiple class="full-width" data-init-plugin="select2" name="reasons[]" id="select_status">
+                            @foreach($reasons as $reason)
+                              <option value="{{$reason->reason_to_cancel}}">{{$reason->reason_to_cancel}}</option>
+                            @endforeach
+                          </select>
                         </div>
                         <div class="text-center m-t-20">                    
                           <button class="btn btn-success btn-cons m-b-10" type="submit"> <span class="bold">Update</span></button>
