@@ -5455,7 +5455,7 @@ class FilesController extends Controller
         $autotunerLabel = Tool::where('label', 'Autotuner')->where('type', 'slave')->first();
 
         $prossingSoftwares = ProcessingSoftware::orderBy('name', 'asc')->get();
-        $reasons = ReasonsToReject::orderBy('name', 'asc')->get();
+        $reasons = ReasonsToReject::orderBy('reason_to_cancel', 'asc')->get();
 
         $allEngineers = User::whereIn('role_id', [2,3])->where('test', 0)->whereNull('subdealer_group_id')->orWhere('id', 3)->get();
         // dd($allEngineers);
