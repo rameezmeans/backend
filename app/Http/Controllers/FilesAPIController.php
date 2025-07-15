@@ -1311,7 +1311,8 @@ class FilesAPIController extends Controller
             $creditsArr []= $row;
         }
 
-        $creditsObj = (object) $creditsArr;
+        $creditsObj = json_decode(json_encode($creditsArr));
+        // $creditsObj = (object) $creditsArr;
 
        return response()->json(['credits_log' => $creditsObj], 200);
     }
