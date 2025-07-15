@@ -46,7 +46,7 @@ class ReasonsController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         // Step 1: Validate the incoming request
         $validated = $request->validate([
@@ -54,7 +54,7 @@ class ReasonsController extends Controller
         ]);
 
         // Step 2: Find the existing record
-        $reason = \App\Models\ReasonsToReject::findOrFail($id);
+        $reason = \App\Models\ReasonsToReject::findOrFail($request->id);
 
         // Step 3: Update the model
         $reason->reason_to_cancel = $validated['reason_to_cancel'];
