@@ -92,7 +92,7 @@
                                 timer: 3000
                             });
 
-                            window.location.href = '/engineers';
+                            window.location.href = '/reasons_to_reject';
                         }
                     });            
                 }

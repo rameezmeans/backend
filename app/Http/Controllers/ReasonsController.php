@@ -24,7 +24,7 @@ class ReasonsController extends Controller
     public function create(){
         return view('reasons_to_cancel.create');
     }
-    
+
     public function add(Request $request)
     {
         $validated = $request->validate([
@@ -38,5 +38,11 @@ class ReasonsController extends Controller
         return redirect()->route('reasons-to-reject')->with('success', 'Reason added successfully.');
     }
 
+    public function edit($id)
+    {
+        $reason = ReasonsToReject::findOrFail($id);
+
+        return view('reasons-to-reject.create', compact('reason'));
+    }
     
 }
