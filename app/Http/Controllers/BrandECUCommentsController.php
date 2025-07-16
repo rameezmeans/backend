@@ -25,12 +25,12 @@ class BrandECUCommentsController extends Controller
     }
 
     public function getECUForComments($brandMake){
-        
-        $ecus = Vehicle::orderBy('ecu', 'asc')
-            ->select('ecu')
-            ->whereNotNull('ecu')
-            ->where('ecu', '=', $brandMake)
-            ->where('ecu', '!=', '')
+
+        $ecus = Vehicle::orderBy('Engine_ECU', 'asc')
+            ->select('Engine_ECU')
+            ->whereNotNull('Engine_ECU')
+            ->where('Make', '=', $brandMake)
+            ->where('Engine_ECU', '!=', '')
             ->distinct()
             ->get();
 
