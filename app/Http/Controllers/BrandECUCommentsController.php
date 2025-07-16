@@ -42,9 +42,7 @@ class BrandECUCommentsController extends Controller
         }
 
         $ecusArray = array_values(array_unique($ecusArray));
-
-        dd($ecusArray);
-
+        
         return response()->json($ecusArray);
     }
     
