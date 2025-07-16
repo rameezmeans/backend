@@ -85,6 +85,7 @@
                 $.ajax({
                     url: '/get_ecus_by_brand/' + brandMake,
                     type: 'GET',
+                    headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
                     success: function (data) {
                         $('#ecu-select').empty().append('<option value="">Select ECU</option>');
                         $.each(data, function (key, value) {
