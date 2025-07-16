@@ -544,6 +544,11 @@
               <a href="{{ route('reasons-to-reject') }}">Reasons To Reject</a>
               <span class="icon-thumbnail">RR</span>
             </li>
+
+            <li class="">
+              <a href="{{ route('brand-ecu-comments') }}">Reasons To Reject</a>
+              <span class="icon-thumbnail">RR</span>
+            </li>
             
             {{-- <li class="">
               <a href="{{ route('frontends') }}">Frontends</a>

@@ -1169,6 +1169,8 @@ Route::get('/timers', [App\Http\Controllers\NewsFeedsController::class, 'timers'
 
 Route::get('/send_test_message', [App\Http\Controllers\FilesController::class, 'sendTestMessage'])->name('send-test-message');
 
+Route::get('/brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsController::class, 'index'])->name('brand-ecu-comments');
+
 Route::get('/logs', [App\Http\Controllers\LogsController::class, 'index'])->name('logs');
 Route::get('/all_logs', [App\Http\Controllers\LogsController::class, 'all'])->name('all-logs');
 
