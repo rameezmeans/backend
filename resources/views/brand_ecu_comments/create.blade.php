@@ -25,39 +25,51 @@
                         @csrf
 
                         {{-- Brand Select --}}
-                        <div class="form-group form-group-default required form-group-default-select2">
-                            <label>Brand</label>
-                            <select class="full-width" data-init-plugin="select2" name="brand" id="brand-select" required>
-                                <option value="">Select a Brand</option>
-                                @foreach($brands as $brand)
-                                    <option value="{{ $brand->make }}">{{ $brand->make }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <div class="form-group form-group-default required form-group-default-select2 {{ $errors->has('brand') ? 'has-error' : '' }}">
+                                <label>Brand</label>
+                                <select class="full-width" data-init-plugin="select2" name="brand" id="brand-select" required>
+                                    <option value="">Select a Brand</option>
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand->make }}" {{ old('brand') == $brand->make ? 'selected' : '' }}>{{ $brand->make }}</option>
+                                    @endforeach
+                                </select>
+                                @error('brand')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
 
-                        {{-- ECU Select --}}
-                        <div class="form-group form-group-default required form-group-default-select2">
-                            <label>ECU</label>
-                            <select class="full-width" data-init-plugin="select2" name="ecu" id="ecu-select" required>
-                                <option value="">Select a Brand First</option>
-                            </select>
-                        </div>
+                            {{-- ECU Select --}}
+                            <div class="form-group form-group-default required form-group-default-select2 {{ $errors->has('ecu') ? 'has-error' : '' }}">
+                                <label>ECU</label>
+                                <select class="full-width" data-init-plugin="select2" name="ecu" id="ecu-select" required>
+                                    <option value="">Select a Brand First</option>
+                                </select>
+                                @error('ecu')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
 
-                        {{-- Type Select --}}
-                        <div class="form-group form-group-default required">
-                            <label>Type</label>
-                            <select class="form-control" name="type" required>
-                                <option value="">Select Type</option>
-                                <option value="download">Download</option>
-                                <option value="upload">Upload</option>
-                            </select>
-                        </div>
+                            {{-- Type Select --}}
+                            <div class="form-group form-group-default required {{ $errors->has('type') ? 'has-error' : '' }}">
+                                <label>Type</label>
+                                <select class="form-control" name="type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="download" {{ old('type') == 'download' ? 'selected' : '' }}>Download</option>
+                                    <option value="upload" {{ old('type') == 'upload' ? 'selected' : '' }}>Upload</option>
+                                </select>
+                                @error('type')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
 
-                        {{-- Comment Textarea --}}
-                        <div class="form-group form-group-default required">
-                            <label>Comment</label>
-                            <textarea class="form-control" name="comment" rows="4" required></textarea>
-                        </div>
+                            {{-- Comment Textarea --}}
+                            <div class="form-group form-group-default required {{ $errors->has('comment') ? 'has-error' : '' }}">
+                                <label>Comment</label>
+                                <textarea class="form-control" name="comment" rows="4" required>{{ old('comment') }}</textarea>
+                                @error('comment')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
 
                         <div class="text-center m-t-40">
                             <button class="btn btn-success btn-cons m-b-10" type="submit">
