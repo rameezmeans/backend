@@ -38,7 +38,7 @@
                         {{-- ECU Select --}}
                         <div class="form-group form-group-default required form-group-default-select2">
                             <label>ECU</label>
-                            <select class="full-width" data-init-plugin="select2" name="ecu_id" id="ecu-select" required>
+                            <select class="full-width" data-init-plugin="select2" name="ecu" id="ecu-select" required>
                                 <option value="">Select a Brand First</option>
                             </select>
                         </div>
