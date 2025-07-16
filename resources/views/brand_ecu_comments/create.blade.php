@@ -83,12 +83,12 @@
 
             if (brandMake) {
                 $.ajax({
-                    url: '/get-ecus-by-brand/' + brandMake,
+                    url: '/get_ecus_by_brand/' + brandMake,
                     type: 'GET',
                     success: function (data) {
                         $('#ecu-select').empty().append('<option value="">Select ECU</option>');
                         $.each(data, function (key, value) {
-                            $('#ecu-select').append('<option value="' + value.id + '">' + value.name + '</option>');
+                            $('#ecu-select').append('<option value="' + value.ecu + '">' + value.ecu + '</option>');
                         });
                     },
                     error: function () {

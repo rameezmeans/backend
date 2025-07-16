@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BrandECUComments;
 use App\Models\Vehicle;
+use Illuminate\Http\Request;
 
 class BrandECUCommentsController extends Controller
 {
@@ -23,9 +24,28 @@ class BrandECUCommentsController extends Controller
         return view('brand_ecu_comments.listings', ['brandEcuComments' => $brandEcuComments]);
     }
 
+    public function getECUForComments($brandMake){
+        
+        $ecus = Vehicle::orderBy('ecu', 'asc')
+            ->select('ecu')
+            ->whereNotNull('ecu')
+            ->where('ecu', '=', $brandMake)
+            ->where('ecu', '!=', '')
+            ->distinct()
+            ->get();
+
+        return response()->json($ecus);
+    }
+    
     public function create()
     {
-        $brands = Vehicle::OrderBy('make', 'asc')->select('make')->distinct()->get();
+        $brands = Vehicle::orderBy('make', 'asc')
+            ->select('make')
+            ->whereNotNull('make')
+            ->where('make', '!=', '')
+            ->distinct()
+            ->get();
+
         return view('brand_ecu_comments.create', compact('brands'));
     }
 }

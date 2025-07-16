@@ -1175,6 +1175,7 @@ Route::get('/edit_brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsCon
 Route::post('/add_brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsController::class, 'add'])->name('add-brand-ecu-comment');
 Route::post('/update_brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsController::class, 'update'])->name('update-brand-ecu-comment');
 Route::post('/delete_brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsController::class, 'delete'])->name('delete-brand-ecu-comment');
+Route::post('/get_ecus_by_brand/{brand}', [App\Http\Controllers\BrandECUCommentsController::class, 'getECUForComments'])->name('get-ecus-by-brand');
 
 Route::get('/logs', [App\Http\Controllers\LogsController::class, 'index'])->name('logs');
 Route::get('/all_logs', [App\Http\Controllers\LogsController::class, 'all'])->name('all-logs');
