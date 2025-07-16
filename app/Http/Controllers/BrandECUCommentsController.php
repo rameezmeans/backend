@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBrandECUCommentRequest;
 use App\Models\BrandECUComments;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
@@ -56,5 +57,17 @@ class BrandECUCommentsController extends Controller
             ->get();
 
         return view('brand_ecu_comments.create', compact('brands'));
+    }
+
+    public function add(StoreBrandECUCommentRequest $request)
+    {
+        $brandComment = new BrandECUComments();
+        $brandComment->brand = $request->brand;
+        $brandComment->ecu = $request->ecu;
+        $brandComment->type = $request->type;
+        $brandComment->comment = $request->comment;
+        $brandComment->save();
+
+        return redirect()->route('brand-ecu-comments')->with('success', 'Comment added successfully!');
     }
 }
