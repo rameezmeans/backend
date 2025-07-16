@@ -27,10 +27,10 @@
                         {{-- Brand Select --}}
                         <div class="form-group form-group-default required form-group-default-select2">
                             <label>Brand</label>
-                            <select class="full-width" data-init-plugin="select2" name="brand_id" id="brand-select" required>
+                            <select class="full-width" data-init-plugin="select2" name="brand" id="brand-select" required>
                                 <option value="">Select a Brand</option>
                                 @foreach($brands as $brand)
-                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    <option value="{{ $brand->make }}">{{ $brand->make }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -78,12 +78,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#brand-select').on('change', function () {
-            var brandId = $(this).val();
+            var brandMake = $(this).val();
             $('#ecu-select').html('<option>Loading...</option>');
 
-            if (brandId) {
+            if (brandMake) {
                 $.ajax({
-                    url: '/get-ecus-by-brand/' + brandId,
+                    url: '/get-ecus-by-brand/' + brandMake,
                     type: 'GET',
                     success: function (data) {
                         $('#ecu-select').empty().append('<option value="">Select ECU</option>');
