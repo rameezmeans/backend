@@ -89,7 +89,7 @@
                     success: function (data) {
                         $('#ecu-select').empty().append('<option value="">Select ECU</option>');
                         $.each(data, function (key, value) {
-                            $('#ecu-select').append('<option value="' + value.ecu + '">' + value.ecu + '</option>');
+                            $('#ecu-select').append('<option value="' + value.Engine_ECU + '">' + value.Engine_ECU + '</option>');
                         });
                     },
                     error: function () {
