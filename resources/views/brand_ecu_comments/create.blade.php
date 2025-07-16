@@ -48,8 +48,8 @@
                             <label>Type</label>
                             <select class="form-control" name="type" required>
                                 <option value="">Select Type</option>
-                                <option value="Download">Download</option>
-                                <option value="Upload">Upload</option>
+                                <option value="download">Download</option>
+                                <option value="upload">Upload</option>
                             </select>
                         </div>
 

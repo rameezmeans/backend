@@ -37,12 +37,12 @@ class BrandECUCommentsController extends Controller
             $ecusArray = [];
 
         foreach($ecus as $e){
-            $temp = explode(' / ', $e->Engine_ECU);
-            $ecusArray = array_merge($ecusArray,$temp);
+            $temp = preg_split('/[\/\\\\]/', $e->Engine_ECU); // split on / or \
+            $ecusArray = array_merge($ecusArray, $temp);
         }
 
         $ecusArray = array_values(array_unique($ecusArray));
-        
+
         return response()->json($ecusArray);
     }
     
