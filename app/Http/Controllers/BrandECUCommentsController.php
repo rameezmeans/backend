@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BrandECUComments;
+use App\Models\Vehicle;
 
 class BrandECUCommentsController extends Controller
 {
@@ -20,5 +21,11 @@ class BrandECUCommentsController extends Controller
     public function index() {
         $brandEcuComments = BrandECUComments::all();
         return view('brand_ecu_comments.listings', ['brandEcuComments' => $brandEcuComments]);
+    }
+
+    public function create()
+    {
+        $brands = Vehicle::OrderBy('make', 'asc')->select('make')->distinct()->get();
+        return view('brand_ecu_comments.create', compact('brands'));
     }
 }
