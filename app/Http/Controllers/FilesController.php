@@ -279,6 +279,8 @@ class FilesController extends Controller
         // $message = FileMessage::where('request_file_id', $request->request_file_id)->first();
 
         $requestFile->show_later = 0;
+        $requestFile->created_at = Carbon::now();
+        $requestFile->updated_at = Carbon::now();
         $requestFile->save();
 
         $file->reupload_time = Carbon::now();
