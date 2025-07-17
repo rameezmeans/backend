@@ -2535,8 +2535,8 @@ class FilesController extends Controller
 
     public function engineersReportsTable(Request $request){
 
-        $data = File::select('*')->where('is_credited', 1)
-        ->whereNull('original_file_id');
+        $data = File::select('*')->where('is_credited', 1);
+        // ->whereNull('original_file_id');
 
         if ($request->filled('from_date') && $request->filled('to_date')) {
 
@@ -5282,7 +5282,7 @@ class FilesController extends Controller
                 
 
             })->where('is_credited', 1)
-            ->whereNull('original_file_id')
+            // ->whereNull('original_file_id')
             ->orWhere(function($q){
                 
                 $q->where('type', 'subdealer');
@@ -5290,7 +5290,7 @@ class FilesController extends Controller
                 
             })->where('id',$id)
             ->where('is_credited', 1)
-            ->whereNull('original_file_id')
+            // ->whereNull('original_file_id')
             ->first();
 
             
@@ -5305,14 +5305,14 @@ class FilesController extends Controller
                     
     
                 })->where('is_credited', 1)
-                ->whereNull('original_file_id')
+                // ->whereNull('original_file_id')
                 ->orWhere(function($q){
                     
                     $q->where('type', 'subdealer');
                     $q->whereNotNull('assigned_from');
                     
                 })->where('id',$id)
-                ->whereNull('original_file_id')
+                // ->whereNull('original_file_id')
                 ->where('is_credited', 1)->first();
 
             }
@@ -5326,7 +5326,7 @@ class FilesController extends Controller
                 })
                 ->where('id',$id)
                 ->where('is_credited', 1)
-                ->whereNull('original_file_id')
+                // ->whereNull('original_file_id')
                 ->where('assigned_to', Auth::user()->id)->first();
 
             }
