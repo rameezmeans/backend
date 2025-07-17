@@ -1960,7 +1960,7 @@ class FilesController extends Controller
         ->orderBy('created_at', 'desc')
         ->where('is_credited', 1)
         ->where('assigned_to', Auth::user()->id)
-        ->whereNull('original_file_id')
+        // ->whereNull('original_file_id')
         ->where(function ($query) {
         $query->where('files.type', '=', 'master')
                 ->orWhereNotNull('assigned_from')->where('files.type', '=', 'subdealer');
@@ -2251,7 +2251,7 @@ class FilesController extends Controller
         ->orderBy('s', 'asc')
         ->orderBy('created_at', 'desc')
         ->where('is_credited', 1)
-        ->whereNull('original_file_id')
+        // ->whereNull('original_file_id')
         ->where(function ($query) {
         $query->where('files.type', '=', 'master')
                 ->orWhereNotNull('assigned_from')->where('files.type', '=', 'subdealer');
