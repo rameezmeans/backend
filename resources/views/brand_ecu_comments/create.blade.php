@@ -156,7 +156,7 @@
         var id = $(this).data('id');
         var url = $(this).data('url');
 
-        swal({
+        Swal.fire({
             title: "Are you sure?",
             text: "You won’t be able to recover this record!",
             type: "warning",
