@@ -150,21 +150,22 @@
                 $('#ecu-select').html('<option value="">Select a Brand First</option>');
             }
         });
-    });
+    
 
     $(document).on('click', '.delete-button', function () {
         var id = $(this).data('id');
         var url = $(this).data('url');
 
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won’t be able to recover this record!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete it!",
-            closeOnConfirm: false
-        }, function () {
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+            if (result.isConfirmed) {
             $.ajax({
                 url: url,
                 type: 'DELETE',
@@ -181,8 +182,14 @@
                     swal("Error!", "Something went wrong.", "error");
                 }
             });
-        });
+        }
     });
+
+    });
+
+    });
+
+    
 
 </script>
 @endsection
