@@ -42,7 +42,7 @@
                                                 <p>{{ $comment->ecu }}</p>
                                             </td>
                                             <td class="v-align-middle">
-                                                <p>{{ $comment->type }}</p>
+                                                <p>{{ ucfirst($comment->type) }}</p>
                                             </td>
                                         </tr>
                                     @endforeach

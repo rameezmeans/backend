@@ -23,9 +23,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ $editMode ?? false ? route('update-brand-ecu-comment') : route('add-brand-ecu-comment') }}" enctype="multipart/form-data">
                         @csrf
-
                         
-
                         @if($editMode ?? false)
                             <input type="hidden" name="id" value="{{ $commentEntry->id }}">
 
