@@ -21,9 +21,22 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('add-brand-ecu-comment') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ $editMode ?? false ? route('update-brand-ecu-comment') : route('add-brand-ecu-comment') }}" enctype="multipart/form-data">
                         @csrf
 
+                        
+
+                        @if($editMode ?? false)
+                            <input type="hidden" name="id" value="{{ $commentEntry->id }}">
+                            {{-- Comment Textarea --}}
+                            <div class="form-group form-group-default required {{ $errors->has('comment') ? 'has-error' : '' }}">
+                                <label>Comment</label>
+                                <textarea class="form-control" name="comment" rows="4" required>{{ old('comment', $commentEntry->comment ?? '') }}</textarea>
+                                @error('comment')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        @else
                         {{-- Brand Select --}}
                             <div class="form-group form-group-default required form-group-default-select2 {{ $errors->has('brand') ? 'has-error' : '' }}">
                                 <label>Brand</label>
@@ -70,10 +83,11 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                        @endif
 
                         <div class="text-center m-t-40">
                             <button class="btn btn-success btn-cons m-b-10" type="submit">
-                                <i class="pg-plus_circle"></i> <span class="bold">Add</span>
+                                <i class="pg-plus_circle"></i> <span class="bold">{{ $editMode ?? false ? 'Update' : 'Add' }}</span>
                             </button>
                         </div>
                     </form>

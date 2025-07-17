@@ -1171,7 +1171,7 @@ Route::get('/send_test_message', [App\Http\Controllers\FilesController::class, '
 
 Route::get('/brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsController::class, 'index'])->name('brand-ecu-comments');
 Route::get('/create_brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsController::class, 'create'])->name('create-brand-ecu-comment');
-Route::get('/edit_brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsController::class, 'edit'])->name('edit-brand-ecu-comment');
+Route::get('/edit_brand_ecu_comments/{id}', [App\Http\Controllers\BrandECUCommentsController::class, 'edit'])->name('edit-brand-ecu-comment');
 Route::post('/add_brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsController::class, 'add'])->name('add-brand-ecu-comment');
 Route::post('/update_brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsController::class, 'update'])->name('update-brand-ecu-comment');
 Route::post('/delete_brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsController::class, 'delete'])->name('delete-brand-ecu-comment');

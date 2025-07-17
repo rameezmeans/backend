@@ -59,6 +59,16 @@ class BrandECUCommentsController extends Controller
         return view('brand_ecu_comments.create', compact('brands'));
     }
 
+    public function edit($id)
+    {
+        $comment = BrandECUComments::findOrFail($id);
+
+        return view('brand_ecu_comments.create', [
+            'editMode' => true,
+            'commentEntry' => $comment
+        ]);
+    }
+
     public function add(StoreBrandECUCommentRequest $request)
     {
         $brandComment = new BrandECUComments();
