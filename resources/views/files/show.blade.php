@@ -3063,7 +3063,7 @@ margin-bottom: 10px !important;
 
     @foreach($file->new_requests as $file)
     
-    <div class="tab-pane slide-left @if($count == $newreqs) show active @endif" id="tab4FollowUs{{$file->id}}">
+    <div class="tab-pane slide-left" id="tab4FollowUs{{$file->id}}">
 
       @php 
         $count++;
