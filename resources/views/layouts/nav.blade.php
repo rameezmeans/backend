@@ -546,8 +546,8 @@
             </li>
 
             <li class="">
-              <a href="{{ route('brand-ecu-comments') }}">Reasons To Reject</a>
-              <span class="icon-thumbnail">RR</span>
+              <a href="{{ route('brand-ecu-comments') }}">Brand ECU Comments</a>
+              <span class="icon-thumbnail">BEC</span>
             </li>
             
             {{-- <li class="">
