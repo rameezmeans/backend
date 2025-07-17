@@ -330,13 +330,13 @@ margin-bottom: 10px !important;
                           <p class="pull-left">Related Tasks</p>
                           <div class="pull-right">
                             @foreach($file->new_requests as $f)
-                            <a href="{{route('file', $f->id)}}" class="label label-success">Task{{$f->id}}</a>
+                            <a target="_blank" href="{{route('file', $f->id)}}" class="label label-success">Task{{$f->id}}</a>
                             @endforeach
                           </div>
                           <div class="clearfix"></div>
                         </div>
 
-                        
+
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Status</p>
                           <div class="pull-right">
