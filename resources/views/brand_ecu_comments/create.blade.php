@@ -28,7 +28,26 @@
 
                         @if($editMode ?? false)
                             <input type="hidden" name="id" value="{{ $commentEntry->id }}">
-                            {{-- Comment Textarea --}}
+
+                            {{-- Brand Label --}}
+                            <div class="form-group form-group-default">
+                                <label>Brand</label>
+                                <p class="form-control-static">{{ $commentEntry->brand }}</p>
+                            </div>
+
+                            {{-- ECU Label --}}
+                            <div class="form-group form-group-default">
+                                <label>ECU</label>
+                                <p class="form-control-static">{{ $commentEntry->ecu }}</p>
+                            </div>
+
+                            {{-- Type Label --}}
+                            <div class="form-group form-group-default">
+                                <label>Type</label>
+                                <p class="form-control-static text-capitalize">{{ $commentEntry->type }}</p>
+                            </div>
+
+                            {{-- Editable Comment Textarea --}}
                             <div class="form-group form-group-default required {{ $errors->has('comment') ? 'has-error' : '' }}">
                                 <label>Comment</label>
                                 <textarea class="form-control" name="comment" rows="4" required>{{ old('comment', $commentEntry->comment ?? '') }}</textarea>
