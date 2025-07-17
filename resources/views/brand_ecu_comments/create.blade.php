@@ -173,13 +173,24 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function (response) {
-                    swal("Deleted!", "The record has been deleted.", "success");
-                    setTimeout(function () {
+                    
+                    Swal.fire({
+                                title: "Deleted!",
+                                text: "Record has been deleted.",
+                                type: "success",
+                                timer: 3000
+                            });
+
                         window.location.href = "{{ route('brand-ecu-comments') }}";
-                    }, 1000);
+                   
                 },
                 error: function (xhr) {
-                    swal("Error!", "Something went wrong.", "error");
+                    Swal.fire({
+                                title: "Deleted!",
+                                text: "Record has not been deleted.",
+                                type: "success",
+                                timer: 3000
+                            });
                 }
             });
         }
