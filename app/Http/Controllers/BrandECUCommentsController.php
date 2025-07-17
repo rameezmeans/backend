@@ -80,4 +80,21 @@ class BrandECUCommentsController extends Controller
 
         return redirect()->route('brand-ecu-comments')->with('success', 'Comment added successfully!');
     }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:brands_ecu_comments,id',
+            'comment' => 'required|string|max:255',
+        ], [
+            'comment.required' => 'Comment field is required.',
+            'comment.max' => 'Comment cannot exceed 255 characters.',
+        ]);
+
+        $commentEntry = BrandECUComments::findOrFail($request->id);
+        $commentEntry->comment = $request->comment;
+        $commentEntry->save();
+
+        return redirect()->route('brand-ecu-comments')->with('success', 'Brand ECU Comment updated successfully.');
+    }
 }
