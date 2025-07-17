@@ -30,6 +30,7 @@
                                         <th>Brand</th>
                                         <th>ECU</th>
                                         <th>Type</th>
+                                        <th>Created At</th> 
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -43,6 +44,9 @@
                                             </td>
                                             <td class="v-align-middle">
                                                 <p>{{ ucfirst($comment->type) }}</p>
+                                            </td>
+                                            <td class="v-align-middle">
+                                                <p>{{ \Carbon\Carbon::parse($comment->created_at)->format('m/d/Y') }}</p>
                                             </td>
                                         </tr>
                                     @endforeach
