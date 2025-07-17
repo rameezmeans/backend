@@ -338,6 +338,18 @@ margin-bottom: 10px !important;
                         </div>
                         @endif
 
+                        @if($file->original_file_id)
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                          <p class="pull-left">Related Tasks</p>
+                          <div class="pull-right">
+                            
+                            <a target="_blank" href="{{route('file', $file->original_file_id)}}" class="label label-success">Task{{$file->original_file_id}}</a>
+                            
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        @endif
+
 
                         <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Status</p>
