@@ -97,4 +97,12 @@ class BrandECUCommentsController extends Controller
 
         return redirect()->route('brand-ecu-comments')->with('success', 'Brand ECU Comment updated successfully.');
     }
+
+    public function destroy($id, Request $request)
+    {
+        $comment = BrandECUComments::findOrFail($id);
+        $comment->delete();
+
+        return response()->json(['success' => true, 'message' => 'Record deleted successfully.']);
+    }
 }

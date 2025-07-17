@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ $editMode ?? false ? route('update-brand-ecu-comment') : route('add-brand-ecu-comment') }}" enctype="multipart/form-data">
                         @csrf
-                        
+
                         @if($editMode ?? false)
                             <input type="hidden" name="id" value="{{ $commentEntry->id }}">
 
@@ -106,6 +106,13 @@
                             <button class="btn btn-success btn-cons m-b-10" type="submit">
                                 <i class="pg-plus_circle"></i> <span class="bold">{{ $editMode ?? false ? 'Update' : 'Add' }}</span>
                             </button>
+                            @if($editMode ?? false)
+                            <button type="button" class="btn btn-danger btn-cons m-b-10 delete-button"
+                                data-id="{{ $commentEntry->id }}"
+                                data-url="{{ route('delete-brand-ecu-comment', $commentEntry->id) }}">
+                                <i class="pg-trash"></i> <span class="bold">Delete</span>
+                            </button>
+                            @endif
                         </div>
                     </form>
                 </div>
@@ -144,5 +151,38 @@
             }
         });
     });
+
+    $(document).on('click', '.delete-button', function () {
+        var id = $(this).data('id');
+        var url = $(this).data('url');
+
+        swal({
+            title: "Are you sure?",
+            text: "You won’t be able to recover this record!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function () {
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    swal("Deleted!", "The record has been deleted.", "success");
+                    setTimeout(function () {
+                        window.location.href = "{{ route('brand-ecu-comments') }}";
+                    }, 1000);
+                },
+                error: function (xhr) {
+                    swal("Error!", "Something went wrong.", "error");
+                }
+            });
+        });
+    });
+
 </script>
 @endsection

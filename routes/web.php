@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AlientechTestController;
+use App\Http\Controllers\BrandECUCommentsController;
 use App\Http\Controllers\CombinationsController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Auth;
@@ -1174,7 +1175,8 @@ Route::get('/create_brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsC
 Route::get('/edit_brand_ecu_comments/{id}', [App\Http\Controllers\BrandECUCommentsController::class, 'edit'])->name('edit-brand-ecu-comment');
 Route::post('/add_brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsController::class, 'add'])->name('add-brand-ecu-comment');
 Route::post('/update_brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsController::class, 'update'])->name('update-brand-ecu-comment');
-Route::post('/delete_brand_ecu_comments', [App\Http\Controllers\BrandECUCommentsController::class, 'delete'])->name('delete-brand-ecu-comment');
+Route::delete('/brand-ecu-comments/delete/{id}', [BrandECUCommentsController::class, 'destroy'])
+    ->name('delete-brand-ecu-comment');
 Route::get('/get_ecus_by_brand/{brand}', [App\Http\Controllers\BrandECUCommentsController::class, 'getECUForComments'])->name('get-ecus-by-brand');
 
 Route::get('/logs', [App\Http\Controllers\LogsController::class, 'index'])->name('logs');
