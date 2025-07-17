@@ -85,10 +85,10 @@ margin-bottom: 10px !important;
       <div class="card card-transparent">
         <ul class="nav nav-tabs nav-tabs-simple nav-tabs-right bg-white" id="tab-4" role="tablist">
             <li class="nav-item">
-              <a href="#" data-toggle="tab" role="tab" data-target="#tab4hellowWorld" @if(sizeof($file->new_requests) == 0) class="active show" aria-selected="true" @endif>Task {{$file->id}}</a>
+              <a href="#" data-toggle="tab" role="tab" data-target="#tab4hellowWorld" class="active show" aria-selected="true">Task {{$file->id}}</a>
             </li>
 
-            @php 
+            {{-- @php 
               $newreqs = count($file->new_requests);
               $countn = 1;
             @endphp
@@ -102,7 +102,7 @@ margin-bottom: 10px !important;
               
               $countn++;
             @endphp
-          @endforeach
+          @endforeach --}}
           
         </ul>
         
