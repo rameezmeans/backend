@@ -121,6 +121,7 @@
                         <th>Payment Time</th>
                         <th>Customer</th>
                         <th>Email</th>
+                        <th>Paypal Email</th>
                         <th>Group</th>
                         <th>Credits</th>
                         <th>Price Payed (€)</th>
@@ -201,6 +202,7 @@
               {data: 'created_time', name: 'created_time', orderable: false, searchable: false},
               {data: 'customer', name: 'customer'},
               {data: 'email', name: 'email'},
+              {data: 'paypal_email', name: 'paypal_email'},
               {data: 'group', name: 'group'},
               {data: 'credits', name: 'credits'},
               {data: 'price_payed', name: 'price_payed'},

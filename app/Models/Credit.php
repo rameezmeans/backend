@@ -29,6 +29,10 @@ class Credit extends Model
         return Credit::where('user_id', $user->id)->where('created_at','<=', $this->created_at)->sum('credits');
     }
 
+    public function paypal(){
+        return $this->hasOne(PaypalRecord::class, 'credit_id', 'id');
+    }
+
     public function payment(){
         
         $paypalRecord = $this->hasOne(PaypalRecord::class, 'credit_id', 'id');

@@ -142,8 +142,13 @@ class PaymentLogController extends Controller
                 return $credit->created_at->format('h:i A');
         })
 
-        ->addColumn('email', function($row){
-            return $row->email;
+        ->addColumn('paypal_email', function($row){
+            if($row->type == 'paypal'){
+                return $row->paypal->email;
+            }
+            else{
+                return 'Not Paypal';
+            }
         })
 
         ->addColumn('details', function($row){
