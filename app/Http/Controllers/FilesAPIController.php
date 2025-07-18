@@ -1267,55 +1267,103 @@ class FilesAPIController extends Controller
 
         return response()->json(['evc_credits_log' => $creditsArr], 200);
     }
-    public function creditsTable(Request $request){
 
+    public function creditsTable(Request $request)
+    {
         $user = User::findOrFail($request->user_id);
         $credits = Credit::orderBy('created_at', 'desc')->where('is_evc', 0)->where('user_id', $user->id)->get();
-        
-        $creditsArr = [];
 
-        foreach($credits as $credit){
-            $row = [];
+        $creditsObj = new \stdClass();
+        $index = 0;
 
-            $row []= date('Y - m - d', strtotime( $credit->created_at));
-            $row []= $credit->credits;
-            $row []= $credit->running_total($user);
-            
-            if(!$credit->file_id){
-                $row []= $credit->message_to_credit;
-            }
-            else{
+        foreach ($credits as $credit) {
+            $row = new \stdClass();
+
+            $row->date = date('Y - m - d', strtotime($credit->created_at));
+            $row->credits = $credit->credits;
+            $row->running_total = $credit->running_total($user);
+
+            if (!$credit->file_id) {
+                $row->description = $credit->message_to_credit;
+            } else {
                 $file = File::where('id', $credit->file_id)->first();
 
-                if(!$file){
-                    $row []= "File Deleted:".$credit->file_id;
-                }
-                else{
-                        if($file->vehicle()){
-                            $row []= $file->vehicle()->Name.$file->engine.$file->vehicle()->TORQUE_standard;
-                        }
-                        else {
-                            $row []= $file->engine;
-                        }
+                if (!$file) {
+                    $row->description = "File Deleted:" . $credit->file_id;
+                } else {
+                    if ($file->vehicle()) {
+                        $row->description = $file->vehicle()->Name . $file->engine . $file->vehicle()->TORQUE_standard;
+                    } else {
+                        $row->description = $file->engine;
                     }
                 }
-                
-                if($credit->credits > 0){
-                    $row []=  $credit->invoice_id;
-                }
+            }
 
-                if(!$credit->file_id){
-                    $row []=  $credit->price_payed."€";
-                }
+            if ($credit->credits > 0) {
+                $row->invoice_id = $credit->invoice_id;
+            }
 
-            $creditsArr []= $row;
+            if (!$credit->file_id) {
+                $row->price_payed = $credit->price_payed . "€";
+            }
+
+            $creditsObj->{$index} = $row;
+            $index++;
         }
 
-        $creditsObj = json_decode(json_encode($creditsArr));
-        // $creditsObj = (object) $creditsArr;
-
-       return response()->json(['credits_log' => $creditsObj], 200);
+        return response()->json(['credits_log' => $creditsObj], 200);
     }
+
+
+    // public function creditsTable(Request $request){
+
+    //     $user = User::findOrFail($request->user_id);
+    //     $credits = Credit::orderBy('created_at', 'desc')->where('is_evc', 0)->where('user_id', $user->id)->get();
+        
+    //     $creditsArr = [];
+
+    //     foreach($credits as $credit){
+    //         $row = [];
+
+    //         $row []= date('Y - m - d', strtotime( $credit->created_at));
+    //         $row []= $credit->credits;
+    //         $row []= $credit->running_total($user);
+            
+    //         if(!$credit->file_id){
+    //             $row []= $credit->message_to_credit;
+    //         }
+    //         else{
+    //             $file = File::where('id', $credit->file_id)->first();
+
+    //             if(!$file){
+    //                 $row []= "File Deleted:".$credit->file_id;
+    //             }
+    //             else{
+    //                     if($file->vehicle()){
+    //                         $row []= $file->vehicle()->Name.$file->engine.$file->vehicle()->TORQUE_standard;
+    //                     }
+    //                     else {
+    //                         $row []= $file->engine;
+    //                     }
+    //                 }
+    //             }
+                
+    //             if($credit->credits > 0){
+    //                 $row []=  $credit->invoice_id;
+    //             }
+
+    //             if(!$credit->file_id){
+    //                 $row []=  $credit->price_payed."€";
+    //             }
+
+    //         $creditsArr []= $row;
+    //     }
+
+    //     $creditsObj = json_decode(json_encode($creditsArr));
+    //     // $creditsObj = (object) $creditsArr;
+
+    //    return response()->json(['credits_log' => $creditsObj], 200);
+    // }
     
 
     public function editAccount(Request $request){
