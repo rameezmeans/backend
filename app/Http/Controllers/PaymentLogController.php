@@ -142,6 +142,10 @@ class PaymentLogController extends Controller
                 return $credit->created_at->format('h:i A');
         })
 
+        ->addColumn('email', function($row){
+            return $row->email;
+        })
+
         ->addColumn('details', function($row){
             return '<a class="btn btn-warning text-black" target="_blank" href="'.route("payment-details", $row->id).'">Payment Details</a>';
         })
