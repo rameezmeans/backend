@@ -6104,7 +6104,7 @@ margin-bottom: 10px !important;
                 <div class="col-md-12">
                   <div class="form-group form-group-default required">
                     <label>Message</label>
-                    <textarea id="edit-modal" name="message" required style="height: 100px;" class="form-control"></textarea>
+                    <textarea id="message-later" name="message" required style="height: 100px;" class="form-control"></textarea>
                     <div id="sampleMessagesBoxEdit" class="bg-light border rounded mt-1 p-2 do-none"></div>
                   </div>
                 </div>
@@ -7151,7 +7151,7 @@ margin-bottom: 10px !important;
   <script type="text/javascript">
 
     $(document).ready(function () {
-    const editModal = $("#edit-modal");
+    const editModal = $("#message-later");
     const messagesBoxEdit = $("#sampleMessagesBoxEdit");
 
     editModal.on("keyup", function (e) {
