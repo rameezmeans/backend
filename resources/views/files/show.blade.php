@@ -3,9 +3,9 @@
 @section('pagespecificstyles')
   <style>
 
-    .do-none {[
+    .do-none {
       display: none !important;
-    ]}
+    }
 
 .swal2-confirm {
 
