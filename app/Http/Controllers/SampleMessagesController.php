@@ -56,10 +56,9 @@ class SampleMessagesController extends Controller
      */
     public function edit($id)
     {
-        $message = SampleMessage::findOrFail($id);
+        $sampleMessage = SampleMessage::findOrFail($id);
         return view('sample_messages.create', [
-            'editMode' => true,
-            'messageEntry' => $message
+            'sampleMessage' => $sampleMessage
         ]);
     }
 
