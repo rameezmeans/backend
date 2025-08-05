@@ -6105,6 +6105,7 @@ margin-bottom: 10px !important;
                   <div class="form-group form-group-default required">
                     <label>Message</label>
                     <textarea id="edit-modal" name="message" required style="height: 100px;" class="form-control"></textarea>
+                    <div id="sampleMessagesBoxEdit" class="bg-light border rounded mt-1 p-2 do-none"></div>
                   </div>
                 </div>
               </div>
@@ -7148,6 +7149,53 @@ margin-bottom: 10px !important;
 
 
   <script type="text/javascript">
+
+    $(document).ready(function () {
+    const editModal = $("#edit-modal");
+    const messagesBoxEdit = $("#sampleMessagesBoxEdit");
+
+    editModal.on("keyup", function (e) {
+        if (e.key === "/") {
+            $.ajax({
+                url: "/sample-messages/fetch",
+                method: "GET",
+                success: function (response) {
+                    messagesBoxEdit.empty().removeClass("do-none");
+
+                    if (response.length > 0) {
+                        response.forEach(function (item) {
+                            messagesBoxEdit.append(`
+                                <div class="sample-message-item-edit p-2 mb-1 border rounded bg-white" style="cursor:pointer;">
+                                    <strong>${item.title}</strong><br>
+                                    <small>${item.message}</small>
+                                </div>
+                            `);
+                        });
+
+                        // Click to insert message
+                        $(".sample-message-item-edit").on("click", function () {
+                            const message = $(this).find("small").text();
+                            editModal.val(message);
+                            messagesBoxEdit.addClass("do-none");
+                        });
+                    } else {
+                        messagesBoxEdit.html('<em>No sample messages found.</em>');
+                    }
+                },
+                error: function () {
+                    messagesBoxEdit.removeClass("do-none").html('<em>Error fetching sample messages.</em>');
+                }
+            });
+        }
+    });
+
+    // Optional: Hide on outside click
+    $(document).on("click", function (e) {
+        if (!$(e.target).closest("#sampleMessagesBoxEdit, #edit-modal").length) {
+            messagesBoxEdit.addClass("do-none");
+        }
+    });
+});
 
     $(document).ready(function () {
     const textarea = $("textarea[name='egnineers_internal_notes']");
