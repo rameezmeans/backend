@@ -6840,7 +6840,7 @@ margin-bottom: 10px !important;
 
 <script>
     document.getElementById("getallversionsalldefault").addEventListener("click", function() {
-        var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
+        var baseUrl = env('BACKEND_URL')+"makelua"; // Replace with the base URL
         var fileid = "<? echo  $file->id;?>"; // Replace with the ID you want to send
         var restart ="getallversionsalldefault"
         // Construct the URL with query parameters
@@ -6860,7 +6860,7 @@ margin-bottom: 10px !important;
 
 <script>
     document.getElementById("getallversionsalldefaultFDB").addEventListener("click", function() {
-        var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
+        var baseUrl = env('BACKEND_URL')+"makelua"; // Replace with the base URL
         var fileid = "<? echo  $file->id;?>"; // Replace with the ID you want to send
         var restart ="getallversionsalldefaultFDB"
         // Construct the URL with query parameters
@@ -6883,7 +6883,7 @@ margin-bottom: 10px !important;
       
       
       
-          var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
+          var baseUrl = env('BACKEND_URL')+"makelua"; // Replace with the base URL
           var fileid = "<? echo  $file->id;?>"; // Replace with the ID you want to send
           var restart ="versions2";
           // Construct the URL with query parameters
@@ -6905,7 +6905,7 @@ margin-bottom: 10px !important;
 
 <script>
     document.getElementById("copyaversiontoalloriginals").addEventListener("click", function() {
-        var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
+        var baseUrl = env('BACKEND_URL')+"makelua"; // Replace with the base URL
 
         var action = "copytooriginals";
         
@@ -6946,7 +6946,7 @@ margin-bottom: 10px !important;
     document.addEventListener("click", function(event) {
         // Check if the clicked element has the "copy-button" class
         if (event.target.classList.contains("copy-button")) {
-            var baseUrl = env('BACKEND_URL')."makelua";
+            var baseUrl = env('BACKEND_URL')+"makelua";
             var button = event.target;
 
             var winolsname = button.getAttribute("data-winolsname");
@@ -6987,7 +6987,7 @@ margin-bottom: 10px !important;
     // Attach a click event listener to a common ancestor of these buttons (like a parent container)
     document.addEventListener("click", function(event) {
         if (event.target.classList.contains("makeproject")) {
-            var baseUrl = env('BACKEND_URL')."makelua";
+            var baseUrl = env('BACKEND_URL')+"makelua";
             var button = event.target;
             var moddedfile = button.getAttribute("data-moddedfile");
             var original = button.getAttribute("data-original");
@@ -7023,7 +7023,7 @@ margin-bottom: 10px !important;
 
 <script>
         document.getElementById("setvisible").addEventListener("click", function() {
-        var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
+        var baseUrl = env('BACKEND_URL')+"makelua"; // Replace with the base URL
         var button = document.getElementById("setvisible");
         var setvisible ="yes"
 
@@ -7047,7 +7047,7 @@ margin-bottom: 10px !important;
 
 <script>
     document.getElementById("getallversions").addEventListener("click", function() {
-        var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
+        var baseUrl = env('BACKEND_URL')+"makelua"; // Replace with the base URL
         var fileid = "<? echo  $file->id;?>"; // Replace with the ID you want to send
         var restart ="versions"
         // Construct the URL with query parameters
@@ -7067,7 +7067,7 @@ margin-bottom: 10px !important;
 
     <script>
     document.getElementById("restartall").addEventListener("click", function() {
-        var baseUrl = env('BACKEND_URL')."makelua"; // Replace with the base URL
+        var baseUrl = env('BACKEND_URL')+"makelua"; // Replace with the base URL
         var fileid = "<? echo  $file->id;?>"; // Replace with the ID you want to send
         var restart ="all"
         // Construct the URL with query parameters
