@@ -2207,6 +2207,8 @@ margin-bottom: 10px !important;
                                               <strong>{{ $message }}</strong>
                                           </p>
                                   @enderror
+
+                                  <div id="sample-message-suggestions" class="bg-light border rounded mt-1 p-2 d-none" style="max-height: 200px; overflow-y: auto;"></div>
                                 
                                 </div>
                                 <div  class="col-4 padding-5"> 
@@ -7175,6 +7177,62 @@ margin-bottom: 10px !important;
       });
 
       @endif
+
+
+      let timer;
+        let lastValue = '';
+
+        $('#engineers_internal_notes').on('keyup', function(e) {
+            const val = $(this).val();
+
+            if (val.endsWith('/') && val !== lastValue) {
+                lastValue = val;
+
+                clearTimeout(timer);
+                timer = setTimeout(function() {
+                    fetchSampleMessages();
+                }, 300);
+            }
+        });
+
+        function fetchSampleMessages() {
+            $.ajax({
+                url: "{{ route('sample-messages.autocomplete') }}", // You'll define this route
+                method: "GET",
+                success: function(response) {
+                    if (response.length > 0) {
+                        let html = '';
+                        response.forEach(function(item) {
+                            html += `<div class="sample-message-item border-bottom py-1" data-message="${escapeHtml(item.message)}">
+                                <strong>${item.title}</strong><br>
+                                <small>${item.message}</small>
+                            </div>`;
+                        });
+
+                        $('#sample-message-suggestions').html(html).removeClass('d-none');
+                    } else {
+                        $('#sample-message-suggestions').html('').addClass('d-none');
+                    }
+                }
+            });
+        }
+
+        function escapeHtml(text) {
+            return $('<div>').text(text).html();
+        }
+
+        $(document).on('click', '.sample-message-item', function() {
+            const message = $(this).data('message');
+            $('#engineers_internal_notes').val(message);
+            $('#sample-message-suggestions').addClass('d-none');
+        });
+
+        // Hide suggestions if clicked outside
+        $(document).click(function(e) {
+            if (!$(e.target).closest('#sample-message-suggestions, #engineers_internal_notes').length) {
+                $('#sample-message-suggestions').addClass('d-none');
+            }
+        });
 
     $(document).on('click', '.show-replied', function(e) {
       $('.replies').addClass('show');

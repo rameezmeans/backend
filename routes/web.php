@@ -1442,3 +1442,5 @@ Route::post('sample-messages', [SampleMessagesController::class, 'store'])->name
 Route::get('sample-messages/{id}/edit', [SampleMessagesController::class, 'edit'])->name('sample-messages.edit');
 Route::put('sample-messages/{id}', [SampleMessagesController::class, 'update'])->name('sample-messages.update');
 Route::delete('sample-messages/{id}', [SampleMessagesController::class, 'destroy'])->name('sample-messages.destroy');
+
+Route::get('/sample-messages/autocomplete', [\App\Http\Controllers\SampleMessagesController::class, 'autocomplete'])->name('sample-messages.autocomplete');
