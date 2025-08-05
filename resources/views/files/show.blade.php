@@ -2209,7 +2209,7 @@ margin-bottom: 10px !important;
                                   @enderror
                                 
                                 </div>
-                                <div  class="col-4 no-padding m-l-10"> 
+                                <div  class="col-4 padding-5"> 
                                   <input class="m-t-10" type="file" name="engineers_attachement" style="float: :left;">
                                 </div>
                                 <div class="col-2 link text-master m-t-15 p-l-10 b-l b-grey col-top">
