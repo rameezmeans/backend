@@ -549,6 +549,11 @@
               <a href="{{ route('brand-ecu-comments') }}">Brand ECU Comments</a>
               <span class="icon-thumbnail">BEC</span>
             </li>
+
+            <li class="">
+              <a href="{{ route('sample-messages.index') }}">Sample Messages</a>
+              <span class="icon-thumbnail">SM</span>
+            </li>
             
             {{-- <li class="">
               <a href="{{ route('frontends') }}">Frontends</a>

@@ -10,6 +10,7 @@ use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PaymentAccountsController;
 use App\Http\Controllers\ReminderManagerController;
+use App\Http\Controllers\SampleMessageController;
 use App\Http\Controllers\SubdealerGroupsController;
 use App\Http\Controllers\WhatsappController;
 use App\Http\Livewire\NewPaymentLog;
@@ -1433,3 +1434,11 @@ Route::get('edit_payment_account/{id}', [PaymentAccountsController::class, 'edit
 Route::post('add_account', [PaymentAccountsController::class, 'store'])->name('add-account');
 Route::post('update_account', [PaymentAccountsController::class, 'update'])->name('update-account');
 Route::post('delete_payment_account', [PaymentAccountsController::class, 'destroy'])->name('delete-payment-account');
+
+
+Route::get('sample-messages', [SampleMessageController::class, 'index'])->name('sample-messages.index');
+Route::get('sample-messages/create', [SampleMessageController::class, 'create'])->name('sample-messages.create');
+Route::post('sample-messages', [SampleMessageController::class, 'store'])->name('sample-messages.store');
+Route::get('sample-messages/{id}/edit', [SampleMessageController::class, 'edit'])->name('sample-messages.edit');
+Route::put('sample-messages/{id}', [SampleMessageController::class, 'update'])->name('sample-messages.update');
+Route::delete('sample-messages/{id}', [SampleMessageController::class, 'destroy'])->name('sample-messages.destroy');
