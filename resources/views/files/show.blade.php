@@ -2202,6 +2202,7 @@ margin-bottom: 10px !important;
                             <div class="row">
                                 <div class="col-6 no-padding m-t-10">
                                   <textarea name="egnineers_internal_notes" class="form-control" placeholder="Reply to cusotmer." required></textarea>
+                                  <div id="sampleMessagesBox" class="bg-light border rounded mt-1 p-2 do-none"></div>
                                   @error('egnineers_internal_notes')
                                           <p class="text-danger" role="alert">
                                               <strong>{{ $message }}</strong>
@@ -4876,7 +4877,7 @@ margin-bottom: 10px !important;
                         <div class="row">
                             <div class="col-6 no-padding">
                               <textarea name="egnineers_internal_notes" class="form-control" placeholder="Reply to cusotmer." required></textarea>
-                              <div id="sampleMessagesBox" class="bg-light border rounded mt-1 p-2 do-none"></div>
+                              
                               @error('egnineers_internal_notes')
                                       <p class="text-danger" role="alert">
                                           <strong>{{ $message }}</strong>
