@@ -3,7 +3,7 @@
 @section('pagespecificstyles')
   <style>
 
-.d-none{
+.do-none{
   display: none !important;
 }
     
@@ -2213,7 +2213,7 @@ margin-bottom: 10px !important;
                                           </p>
                                   @enderror
 
-                                  <div id="sample-message-suggestions" class="bg-light border rounded mt-1 p-2 d-none" style="max-height: 200px; overflow-y: auto;"></div>
+                                  <div id="sample-message-suggestions" class="bg-light border rounded mt-1 p-2 do-none" style="max-height: 200px; overflow-y: auto;"></div>
                                 
                                 </div>
                                 <div  class="col-4 padding-5"> 
@@ -7181,9 +7181,9 @@ margin-bottom: 10px !important;
                             </div>`;
                         });
 
-                        $('#sample-message-suggestions').html(html).removeClass('d-none');
+                        $('#sample-message-suggestions').html(html).removeClass('do-none');
                     } else {
-                        $('#sample-message-suggestions').html('').addClass('d-none');
+                        $('#sample-message-suggestions').html('').addClass('do-none');
                     }
                 }
             });
@@ -7196,13 +7196,13 @@ margin-bottom: 10px !important;
         $(document).on('click', '.sample-message-item', function() {
             const message = $(this).data('message');
             $('#egnineers_internal_notes').val(message);
-            $('#sample-message-suggestions').addClass('d-none');
+            $('#sample-message-suggestions').addClass('do-none');
         });
 
         // Hide suggestions if clicked outside
         $(document).click(function(e) {
             if (!$(e.target).closest('#sample-message-suggestions, #egnineers_internal_notes').length) {
-                $('#sample-message-suggestions').addClass('d-none');
+                $('#sample-message-suggestions').addClass('do-none');
             }
         });
     });
