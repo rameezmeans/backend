@@ -3,6 +3,9 @@
 @section('pagespecificstyles')
   <style>
 
+.d-none{
+  display: none !important;
+}
     
 
 .swal2-confirm {
@@ -7146,45 +7149,12 @@ margin-bottom: 10px !important;
 
 
   <script type="text/javascript">
-  $(document).ready(function(){
 
-    @if($file->assigned_to != NULL && $file->assigned_to != Auth::user()->id)
-
-    const swalWithBootstrapButtons = Swal.mixin({
-    customClass: {
-      confirmButton: 'btn btn-success',
-    },
-    buttonsStyling: false
-    })
-
-    swalWithBootstrapButtons.fire({
-    title: 'Task In Progress',
-    text: "This task is already in progress and some engineer is working on it.!",
-    icon: 'warning',
-    showCancelButton: false,
-    confirmButtonText: 'Okay!',
-    
-        reverseButtons: true
-      }).then((result) => {
-        if (result.isConfirmed) {
-        
-       
-
-        } else if (
-          /* Read more about handling dismissals below */
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
-          
-        }
-      });
-
-      @endif
-
-
-      let timer;
+    $(document).ready(function() {
+        let timer;
         let lastValue = '';
 
-        $('#engineers_internal_notes').on('keyup', function(e) {
+        $('#egnineers_internal_notes').on('keyup', function(e) {
             const val = $(this).val();
 
             if (val.endsWith('/') && val !== lastValue) {
@@ -7225,16 +7195,52 @@ margin-bottom: 10px !important;
 
         $(document).on('click', '.sample-message-item', function() {
             const message = $(this).data('message');
-            $('#engineers_internal_notes').val(message);
+            $('#egnineers_internal_notes').val(message);
             $('#sample-message-suggestions').addClass('d-none');
         });
 
         // Hide suggestions if clicked outside
         $(document).click(function(e) {
-            if (!$(e.target).closest('#sample-message-suggestions, #engineers_internal_notes').length) {
+            if (!$(e.target).closest('#sample-message-suggestions, #egnineers_internal_notes').length) {
                 $('#sample-message-suggestions').addClass('d-none');
             }
         });
+    });
+
+
+  $(document).ready(function(){
+
+    @if($file->assigned_to != NULL && $file->assigned_to != Auth::user()->id)
+
+    const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+    },
+    buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+    title: 'Task In Progress',
+    text: "This task is already in progress and some engineer is working on it.!",
+    icon: 'warning',
+    showCancelButton: false,
+    confirmButtonText: 'Okay!',
+    
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+        
+       
+
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          
+        }
+      });
+
+      @endif
 
     $(document).on('click', '.show-replied', function(e) {
       $('.replies').addClass('show');
