@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SampleMessage;
 use Illuminate\Http\Request;
 
-class SampleMessageController extends Controller
+class SampleMessagesController extends Controller
 {
     /**
      * Ensure user is authenticated
