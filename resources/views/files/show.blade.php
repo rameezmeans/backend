@@ -3,11 +3,6 @@
 @section('pagespecificstyles')
   <style>
 
-.do-none{
-  display: none !important;
-}
-    
-
 .swal2-confirm {
 
 margin-bottom: 10px !important;
@@ -2212,8 +2207,6 @@ margin-bottom: 10px !important;
                                               <strong>{{ $message }}</strong>
                                           </p>
                                   @enderror
-
-                                  <div id="sample-message-suggestions" class="bg-light border rounded mt-1 p-2 do-none" style="max-height: 200px; overflow-y: auto;"></div>
                                 
                                 </div>
                                 <div  class="col-4 padding-5"> 
@@ -7149,65 +7142,6 @@ margin-bottom: 10px !important;
 
 
   <script type="text/javascript">
-
-    // $(document).ready(function() {
-    //     let timer;
-    //     let lastValue = '';
-
-    //     $('#egnineers_internal_notes').on('keyup', function(e) {
-    //         const val = $(this).val();
-
-    //         if (val.endsWith('/') && val !== lastValue) {
-    //             lastValue = val;
-
-    //             clearTimeout(timer);
-    //             timer = setTimeout(function() {
-    //                 fetchSampleMessages();
-    //             }, 300);
-    //         }
-    //     });
-
-    //     function fetchSampleMessages() {
-    //         $.ajax({
-    //             url: "{{ route('sample-messages.autocomplete') }}", // You'll define this route
-    //             method: "GET",
-    //             success: function(response) {
-    //                 if (response.length > 0) {
-    //                     let html = '';
-    //                     response.forEach(function(item) {
-    //                         html += `<div class="sample-message-item border-bottom py-1" data-message="${escapeHtml(item.message)}">
-    //                             <strong>${item.title}</strong><br>
-    //                             <small>${item.message}</small>
-    //                         </div>`;
-    //                     });
-
-    //                     $('#sample-message-suggestions').html(html).removeClass('do-none');
-    //                 } else {
-    //                     $('#sample-message-suggestions').html('').addClass('do-none');
-    //                 }
-    //             }
-    //         });
-    //     }
-
-    //     function escapeHtml(text) {
-    //         return $('<div>').text(text).html();
-    //     }
-
-    //     $(document).on('click', '.sample-message-item', function() {
-    //         const message = $(this).data('message');
-    //         $('#egnineers_internal_notes').val(message);
-    //         $('#sample-message-suggestions').addClass('do-none');
-    //     });
-
-    //     // Hide suggestions if clicked outside
-    //     $(document).click(function(e) {
-    //         if (!$(e.target).closest('#sample-message-suggestions, #egnineers_internal_notes').length) {
-    //             $('#sample-message-suggestions').addClass('do-none');
-    //         }
-    //     });
-    // });
-
-
   $(document).ready(function(){
 
     @if($file->assigned_to != NULL && $file->assigned_to != Auth::user()->id)
