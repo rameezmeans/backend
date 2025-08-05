@@ -3,29 +3,7 @@
 @section('pagespecificstyles')
   <style>
 
-    .bg-light {
-    background-color: #f8f9fa; /* light gray */
-}
-
-.border {
-    border: 1px solid #dee2e6; /* light border */
-}
-
-.rounded {
-    border-radius: 0.25rem; /* slight round */
-}
-
-.mt-1 {
-    margin-top: 0.25rem; /* ~4px */
-}
-
-.p-2 {
-    padding: 0.5rem; /* ~8px */
-}
-
-.d-none {
-    display: none !important;
-}
+    
 
 .swal2-confirm {
 
