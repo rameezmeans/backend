@@ -2200,7 +2200,7 @@ margin-bottom: 10px !important;
                           @csrf
                           <input type="hidden" value="{{$file->id}}" name="file_id">
                             <div class="row">
-                                <div class="col-6 no-padding">
+                                <div class="col-6 no-padding m-t-10">
                                   <textarea name="egnineers_internal_notes" class="form-control" placeholder="Reply to cusotmer." required></textarea>
                                   @error('egnineers_internal_notes')
                                           <p class="text-danger" role="alert">
@@ -2209,7 +2209,7 @@ margin-bottom: 10px !important;
                                   @enderror
                                 
                                 </div>
-                                <div  class="col-4 no-padding"> 
+                                <div  class="col-4 no-padding m-l-10"> 
                                   <input class="m-t-10" type="file" name="engineers_attachement" style="float: :left;">
                                 </div>
                                 <div class="col-2 link text-master m-t-15 p-l-10 b-l b-grey col-top">
