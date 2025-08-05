@@ -3,6 +3,10 @@
 @section('pagespecificstyles')
   <style>
 
+    .do-none {[
+      display: none !important;
+    ]}
+
 .swal2-confirm {
 
 margin-bottom: 10px !important;
