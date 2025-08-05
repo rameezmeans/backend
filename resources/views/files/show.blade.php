@@ -4876,6 +4876,7 @@ margin-bottom: 10px !important;
                         <div class="row">
                             <div class="col-6 no-padding">
                               <textarea name="egnineers_internal_notes" class="form-control" placeholder="Reply to cusotmer." required></textarea>
+                              <div id="sampleMessagesBox" class="bg-light border rounded mt-1 p-2 do-none"></div>
                               @error('egnineers_internal_notes')
                                       <p class="text-danger" role="alert">
                                           <strong>{{ $message }}</strong>
@@ -7142,6 +7143,55 @@ margin-bottom: 10px !important;
 
 
   <script type="text/javascript">
+
+    $(document).ready(function () {
+    const textarea = $("textarea[name='egnineers_internal_notes']");
+    const messagesBox = $("#sampleMessagesBox");
+
+    textarea.on("keyup", function (e) {
+        if (e.key === "/") {
+            $.ajax({
+                url: "/sample-messages/fetch", // Route must be defined in Laravel
+                method: "GET",
+                success: function (response) {
+                    messagesBox.empty().removeClass("do-none");
+
+                    if (response.length > 0) {
+                        response.forEach(function (item) {
+                            messagesBox.append(`
+                                <div class="sample-message-item p-2 mb-1 border rounded bg-white" style="cursor:pointer;">
+                                    <strong>${item.title}</strong><br>
+                                    <small>${item.message}</small>
+                                </div>
+                            `);
+                        });
+
+                        // Click to insert message
+                        $(".sample-message-item").on("click", function () {
+                            const message = $(this).find("small").text();
+                            textarea.val(message);
+                            messagesBox.addClass("do-none");
+                        });
+                    } else {
+                        messagesBox.html('<em>No sample messages found.</em>');
+                    }
+                },
+                error: function () {
+                    messagesBox.removeClass("do-none").html('<em>Error fetching sample messages.</em>');
+                }
+            });
+        }
+    });
+
+    // Optional: hide on outside click
+    $(document).on("click", function (e) {
+        if (!$(e.target).closest("#sampleMessagesBox, textarea[name='egnineers_internal_notes']").length) {
+            messagesBox.addClass("do-none");
+        }
+    });
+});
+
+
   $(document).ready(function(){
 
     @if($file->assigned_to != NULL && $file->assigned_to != Auth::user()->id)

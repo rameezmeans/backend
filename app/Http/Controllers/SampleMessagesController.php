@@ -91,10 +91,9 @@ class SampleMessagesController extends Controller
         return response()->json(['success' => true, 'message' => 'Message deleted successfully.']);
     }
 
-    public function autocomplete()
+    public function fetch()
     {
-        $messages = \App\Models\SampleMessage::select('title', 'message')->get();
-
+        $messages = SampleMessage::select('title', 'message')->get();
         return response()->json($messages);
     }
 }
