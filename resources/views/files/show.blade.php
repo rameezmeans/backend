@@ -3,7 +3,7 @@
 @section('pagespecificstyles')
   <style>
 
-    .sample-messages-popup {
+.sample-messages-popup {
     position: absolute;
     top: 20px;
     left: 50%;
@@ -11,11 +11,15 @@
     width: 600px;
     max-width: 90%;
     z-index: 9999;
-    background-color: #f8f9fa; /* Bootstrap light */
+    background-color: #f8f9fa;
     border: 1px solid #dee2e6;
     border-radius: 6px;
     padding: 10px;
     box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+
+    /* Scroll behavior */
+    max-height: 300px; /* adjust height as needed */
+    overflow-y: auto;
 }
 
 .sample-message-item {
