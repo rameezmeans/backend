@@ -31,6 +31,34 @@
     cursor: pointer;
 }
 
+.sample-messages-popup-edit {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    max-width: 90%;
+    z-index: 9999;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+
+    /* Scroll behavior */
+    max-height: 140px; /* adjust height as needed */
+    overflow-y: auto;
+}
+
+.sample-message-item-edit {
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
     .do-none {
       display: none !important;
     }
@@ -6133,7 +6161,7 @@ margin-bottom: 10px !important;
                   <div class="form-group form-group-default required">
                     <label>Message</label>
                     <textarea id="message-later" name="message" required style="height: 100px;" class="form-control"></textarea>
-                    <div id="sampleMessagesBoxEdit" class="bg-light border rounded mt-1 p-2 do-none"></div>
+                    <div id="sampleMessagesBoxEdit" class="sample-messages-popup-edit do-none"></div>
                   </div>
                 </div>
               </div>
