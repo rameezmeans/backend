@@ -6160,7 +6160,7 @@ margin-bottom: 10px !important;
                 <div class="col-md-12">
                   <div class="form-group form-group-default required">
                     <label>Message</label>
-                    <textarea id="message-later" name="message" required style="height: 100px;" class="form-control"></textarea>
+                    <textarea id="message-later" name="message" required style="height: 200px;" class="form-control"></textarea>
                     <div id="sampleMessagesBoxEdit" class="sample-messages-popup-edit do-none"></div>
                   </div>
                 </div>
