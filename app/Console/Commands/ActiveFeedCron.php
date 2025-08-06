@@ -110,12 +110,40 @@ class ActiveFeedCron extends Command
         \Mail::to($user->email)->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject, 'front_end_id' => $user->front_end_id]));
 
     }
+
+    function get_online()
+    {
+        // Check for the first online user with role_id 2 or 3
+        $onlineUser = User::whereIn('role_id', [2, 3])
+                        ->where('online', 1)
+                        ->first();
+
+        // If found, return them
+        if ($onlineUser) {
+            return $onlineUser;
+        }
+
+        // Otherwise, return the admin
+        return User::where('id', 1)->where('role_id', 1)->first();
+    }
     
     public function handle()
     {
+        \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
+        \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
 
-        \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
-        \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
+        $unassignedFiles = File::whereNull('assigned_to')
+        ->where('created_at', '<', Carbon::now()->subMinutes(5))
+        ->get();
+
+        // Step 2: Get one online user (or fallback to admin)
+        $onlineUser = $this->get_online(); // Make sure this function returns a User model
+
+        // Step 3: Assign each file to the online user
+        foreach ($unassignedFiles as $file) {
+            $file->assigned_to = $onlineUser->id;
+            $file->save();
+        }
 
         $reminders = EmailReminder::all();
 
@@ -218,12 +246,12 @@ class ActiveFeedCron extends Command
             }
         }
 
-        $creditsWithoutElorusID = Credit::whereNull('elorus_id')
-        ->where('credits','>', 0)
-        ->where('gifted', 0)
-        ->whereDate('created_at', Carbon::today())
-        ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
-        ->get();
+            $creditsWithoutElorusID = Credit::whereNull('elorus_id')
+            ->where('credits','>', 0)
+            ->where('gifted', 0)
+            ->whereDate('created_at', Carbon::today())
+            ->where('created_at', '<', Carbon::now()->subMinutes(5)->toDateTimeString())
+            ->get();
         
         foreach($creditsWithoutElorusID as $c){
             if($c->elorus_able()){
