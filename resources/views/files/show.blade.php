@@ -3,24 +3,28 @@
 @section('pagespecificstyles')
   <style>
 
-    .bg-light {
-    background-color: #f8f9fa; /* light gray */
+    .sample-messages-popup {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    max-width: 90%;
+    z-index: 9999;
+    background-color: #f8f9fa; /* Bootstrap light */
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-.border {
-    border: 1px solid #dee2e6; /* light border */
-}
-
-.rounded {
-    border-radius: 0.25rem; /* slight round */
-}
-
-.mt-1 {
-    margin-top: 0.25rem; /* ~4px */
-}
-
-.p-2 {
-    padding: 0.5rem; /* ~8px */
+.sample-message-item {
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
     .do-none {
@@ -2226,7 +2230,7 @@ margin-bottom: 10px !important;
                             <div class="row">
                                 <div class="col-6 no-padding m-t-10">
                                   <textarea name="egnineers_internal_notes" class="form-control" placeholder="Reply to cusotmer." required></textarea>
-                                  <div id="sampleMessagesBox" class="bg-light border rounded mt-1 p-2 do-none"></div>
+                                  <div id="sampleMessagesBox" class="sample-messages-popup do-none"></div>
                                   @error('egnineers_internal_notes')
                                           <p class="text-danger" role="alert">
                                               <strong>{{ $message }}</strong>
