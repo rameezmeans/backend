@@ -18,7 +18,7 @@
     box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
 
     /* Scroll behavior */
-    max-height: 300px; /* adjust height as needed */
+    max-height: 140px; /* adjust height as needed */
     overflow-y: auto;
 }
 
