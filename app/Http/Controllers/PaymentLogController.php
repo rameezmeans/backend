@@ -111,9 +111,9 @@ class PaymentLogController extends Controller
 
             $paymentIntent = \Stripe\PaymentIntent::retrieve($session->payment_intent);
 
-            // dd($paymentIntent);
+            dd($paymentIntent);
 
-            dd($paymentIntent->charges);
+            // dd($paymentIntent->charges->data);
 
             $chargeId = $paymentIntent->charges->data[0]->id ?? null;
 
