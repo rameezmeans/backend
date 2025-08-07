@@ -123,9 +123,9 @@ class PaymentLogController extends Controller
         }
     }
 
-    public function refund(Request $request){
+    public function refund($id){
 
-        $credit = Credit::findOrFail($request->credit_id);
+        $credit = Credit::findOrFail($id);
         return view('payment_logs.refund', [
             'credit' => $credit,
             

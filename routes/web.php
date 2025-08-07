@@ -913,7 +913,7 @@ Route::post('/payment_logs_table', [App\Http\Controllers\PaymentLogController::c
 Route::get('/all_payments_admin', [App\Http\Controllers\PaymentLogController::class, 'allPaymentsAdmin'])->name('all-payments-admin');
 Route::get('/all_payments', [App\Http\Controllers\PaymentLogController::class, 'allPayments'])->name('all-payments');
 Route::post('/payment_table', [App\Http\Controllers\PaymentLogController::class, 'paymentsTable'])->name('payment-table');
-Route::post('/refund', [App\Http\Controllers\PaymentLogController::class, 'refund'])->name('refund');
+Route::get('/refund/{id}', [App\Http\Controllers\PaymentLogController::class, 'refund'])->name('refund');
 Route::post('/refund_post', [App\Http\Controllers\PaymentLogController::class, 'refundPost'])->name('credit.refund');
 // Route::get('/all_payments', NewPaymentLog::class)->name('all-payments');
 Route::get('/payment_details/{id}', [App\Http\Controllers\PaymentLogController::class, 'paymentDetails'])->name('payment-details');

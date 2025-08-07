@@ -29,11 +29,8 @@
                 <div class="row">
 
                   <div class="card-title"><h5>User Details (Right now)</h5>
-                    <form method="POST" action="{{route('refund')}}">
-                      @csrf
-                      <input type="hidden" name="credit_id" value="{{$credit->id}}">
-                      <input class="btn btn-danger" type="submit" value="Refund">
-                    </form>
+                    <a class="btn btn-danger" href="{{route('refund', {{$credit->id}})}}">Refund</a>
+                      
                   </div>
 
                   <div class="col-lg-12">
