@@ -158,12 +158,17 @@ class PaymentLogController extends Controller
         if ($response->isSuccessful()) {
         // Refund successful
             $refundData = $response->getData(); // contains refund info
+            $credit->refund = 1;
+            $credit->save();
+
             return back()->with('success', 'PayPal refund successful.');
         } else {
             // Refund failed
             return back()->with('error', 'Refund failed: ' . $response->getMessage());
         }
     }
+
+    
 
 
     }
