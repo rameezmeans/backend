@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Credit;
 use App\Models\Key;
 use GuzzleHttp\Exception\ClientException;
 use App\Models\Log as ModelsLog;
@@ -1014,6 +1015,43 @@ class ZohoController extends Controller
         else{
 
             $this->makeZohoLogEntry($invoice->id, 'error', 'zoho invoice not created.', $invoiceDetails, $zohoInvoice->message);
+        }
+
+    }
+
+    public function refundZohoInvoice($credit){
+
+        $this->makeNewAccessToken();
+        $refreshToken = Key::where('key','zoho_access_token')->first()->value;
+
+        $client = new \GuzzleHttp\Client();
+
+        $creditNoteId = $credit->zohobooks_id; // get after credit note creation
+
+        $amount = ['amount' => $credit->zoho->amount+$credit->zoho->tax,
+                'date' => now()->toDateString(),
+                'refund_mode' => 'Bank Transfer',
+                'description' => 'Refund to customer'
+        ];
+
+        $response = $client->post("https://www.zohoapis.com/books/v3/creditnotes/{$creditNoteId}/refunds", [
+            'headers' => [
+                'Authorization' => 'Zoho-oauthtoken ' . $refreshToken,
+                'Content-Type'  => 'application/json',
+            ],
+            'query' => [
+                'organization_id' => '8745725'
+            ],
+            'json' => $amount
+            
+        ]);
+
+        $result = json_decode($response->getBody()->getContents());
+
+        if ($result->code == 0) {
+            $this->makeZohoLogEntry($credit->id, 'success', 'zoho invoice refunded.', $amount, $response->getBody()->getContents());
+        } else {
+             $this->makeZohoLogEntry($credit->id, 'error', 'zoho invoice not refunded.', $amount, $response->getBody()->getContents());
         }
 
     }

@@ -130,6 +130,8 @@ class PaymentLogController extends Controller
                 $credit->refund = 1;
                 $credit->save();
 
+                (new ZohoController)->refundZohoInvoice($credit);
+
                 return back()->with('success', 'Refund processed successfully.');
             }
 
@@ -161,6 +163,8 @@ class PaymentLogController extends Controller
             $credit->refund = 1;
             $credit->save();
 
+            (new ZohoController)->refundZohoInvoice($credit);
+
             return back()->with('success', 'PayPal refund successful.');
         } else {
             // Refund failed
@@ -168,8 +172,7 @@ class PaymentLogController extends Controller
         }
     }
 
-
-
+    
 
     }
 
