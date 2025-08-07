@@ -119,6 +119,8 @@ class PaymentLogController extends Controller
 
             $charge = $paymentIntent->charges->data[0] ?? null;
 
+            dd($charge);
+
             if ($charge->id) {
                 $refund = \Stripe\Refund::create([
                     'charge' => $charge->id,
