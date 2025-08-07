@@ -15,6 +15,7 @@
                 <div class="col-xs-12">
                     <button data-redirect="{{route('all-payments')}}" class="btn btn-success btn-cons m-b-10 redirect-click" type="button"><i class="pg-plus_circle"></i> <span class="bold">All Payments</span>
                     </button>
+                    
                 </div>
                 </div>
                 <div class="clearfix"></div>
@@ -28,6 +29,11 @@
                 <div class="row">
 
                   <div class="card-title"><h5>User Details (Right now)</h5>
+                    <form method="POST" action="{{route('refund')}}">
+                      @csrf
+                      <input type="hidden" name="credit_id" value="{{$credit->id}}">
+                      <input class="btn btn-danger" type="submit">
+                    </form>
                   </div>
 
                   <div class="col-lg-12">
