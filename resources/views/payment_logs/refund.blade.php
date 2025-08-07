@@ -13,7 +13,13 @@
                 </div>
                 <div class="pull-right">
                 <div class="col-xs-12">
-                    @if(isset($credit))
+                    
+                </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="card-body">
+                @if(isset($credit))
                         <hr>
                         <h5 class="m-t-30">Refund Credit</h5>
 
@@ -37,12 +43,6 @@
                         </div>
                     </form>
                     @endif
-                </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="card-body">
-                
             </div>
           </div>
         </div>
