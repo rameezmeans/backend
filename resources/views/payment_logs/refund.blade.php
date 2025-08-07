@@ -20,21 +20,18 @@
             </div>
             <div class="card-body">
 
-                @if (Session::get('success'))
-                <div class="pgn-wrapper" data-position="top" style="top: 59px;">
-                    <div class="pgn push-on-sidebar-open pgn-bar">
-                        <div class="alert alert-success">
-                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                            {{ Session::get('success') }}
-                        </div>
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
                     </div>
-                </div>
-            @endif
-            @php
-              Session::forget('success')
-            @endphp
-            <!-- START card -->
-            
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 @if(isset($credit))
                         <hr>
                         <h5 class="m-t-30">Refund Credit</h5>
