@@ -43,7 +43,8 @@
                         @endif
                         <div class="form-group form-group-default required ">
                         <label>Amount</label>
-                        <label>{{ $credit->price_payed }}</label>
+                        <label>€{{ $credit->price_payed }}</label>
+                        </div>
                         {{-- <input value="@if(isset($credit)) {{ $credit->price_payed }} @else{{old('price_payed') }}@endif"  name="amount" type="text" class="form-control" required>
                         </div>
                         @error('price_payed')
