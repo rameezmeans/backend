@@ -168,7 +168,7 @@ class PaymentLogController extends Controller
         }
     }
 
-    
+
 
 
     }
@@ -213,6 +213,10 @@ class PaymentLogController extends Controller
                 }
                 else if($frontEndID == 3){
                     $btn = '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+
+                if($row->refund){
+                    $btn = '<span class="label bg-danger text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
                 }
 
                 return $btn;
