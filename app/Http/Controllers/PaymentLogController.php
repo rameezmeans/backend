@@ -7,6 +7,7 @@ use App\Models\FrontEnd;
 use App\Models\PaymentLog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Omnipay\Omnipay;
 use Svg\Tag\Rect;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -137,6 +138,31 @@ class PaymentLogController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
+    }
+    else{
+        $gateway = Omnipay::create('PayPal_Rest');
+        $this->gateway->setClientId($user->paypal_payment_account()->key);
+        $this->gateway->setSecret($user->paypal_payment_account()->secret);
+
+        if($user->test){
+            $gateway->setTestMode(true); // or false in production
+        }
+        else{
+            $gateway->setTestMode(false); 
+        }
+
+        $response = $gateway->refund([
+            'transactionReference' => $credit->stripe_id,  // PayPal transaction ID
+        ])->send();
+
+        if ($response->isSuccessful()) {
+        // Refund successful
+            $refundData = $response->getData(); // contains refund info
+            return back()->with('success', 'PayPal refund successful.');
+        } else {
+            // Refund failed
+            return back()->with('error', 'Refund failed: ' . $response->getMessage());
+        }
     }
 
 
