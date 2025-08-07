@@ -1019,7 +1019,21 @@ class ZohoController extends Controller
 
     }
 
-    public function refundZohoInvoice($credit){
+    public function refundZohoInvoice($credit, $user){
+
+         if($credit->type == 'stripe'){
+            $account = $user->stripe_payment_account();
+            $accountID = $account->zohobooks_account_id;
+            
+        }
+        else if($credit == 'viva'){
+            $account = $user->viva_payment_account();
+            $accountID = $account->zohobooks_account_id;
+        }
+        else{
+            $account = $user->paypal_payment_account();
+            $accountID = $account->zohobooks_account_id;
+        }
 
         $this->makeNewAccessToken();
         $refreshToken = Key::where('key','zoho_access_token')->first()->value;
@@ -1031,7 +1045,8 @@ class ZohoController extends Controller
         $amount = ['amount' => $credit->zoho->amount+$credit->zoho->tax,
                 'date' => now()->toDateString(),
                 'refund_mode' => 'Bank Transfer',
-                'description' => 'Refund to customer'
+                'description' => 'Refund to customer',
+                "account_id" => $accountID
         ];
 
         $response = $client->post("https://www.zohoapis.com/books/v3/creditnotes/{$creditNoteId}/refunds", [

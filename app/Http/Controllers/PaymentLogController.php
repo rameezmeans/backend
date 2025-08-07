@@ -130,7 +130,7 @@ class PaymentLogController extends Controller
                 $credit->refund = 1;
                 $credit->save();
 
-                (new ZohoController)->refundZohoInvoice($credit);
+                (new ZohoController)->refundZohoInvoice($credit, $user);
 
                 return back()->with('success', 'Refund processed successfully.');
             }
