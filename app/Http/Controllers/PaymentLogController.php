@@ -105,21 +105,23 @@ class PaymentLogController extends Controller
         try {
             \Stripe\Stripe::setApiKey($user->stripe_payment_account()->secret);
 
-            $session = \Stripe\Checkout\Session::retrieve($credit->stripe_id);
+            $session = \Stripe\Checkout\Session::retrieve($credit->stripe_id, [
+                'expand' => ['payment_intent'],
+            ]);
 
-            
+            $paymentIntent = $session->payment_intent;
 
-            $paymentIntent = \Stripe\PaymentIntent::retrieve($session->payment_intent);
+            // Now expand the charges object
+            $paymentIntent = \Stripe\PaymentIntent::retrieve(
+                $paymentIntent->id,
+                ['expand' => ['charges']]
+            );
 
-            // dd($paymentIntent);
+            $charge = $paymentIntent->charges->data[0] ?? null;
 
-            dd($paymentIntent->charges->data);
-
-            $chargeId = $paymentIntent->charges->data[0]->id ?? null;
-
-            if ($chargeId) {
+            if ($charge->id) {
                 $refund = \Stripe\Refund::create([
-                    'charge' => $chargeId,
+                    'charge' => $charge->id,
                     'amount' => $request->amount * 100, // amount in cents
                 ]);
 
