@@ -17,7 +17,7 @@
                         <hr>
                         <h5 class="m-t-30">Refund Credit</h5>
 
-                        <form class="" role="form" method="POST" action="@if{{route('credit.refund')}}" enctype="multipart/form-data">
+                        <form class="" role="form" method="POST" action="{{route('credit.refund')}}" enctype="multipart/form-data">
                         @csrf
                         @if(isset($credit))
                         <input name="credit_id" type="hidden" value="{{ $credit->id }}">
