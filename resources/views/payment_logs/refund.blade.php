@@ -21,7 +21,7 @@
                             <input type="hidden" name="credit_id" value="{{ $credit->id }}">
                             <div class="form-group form-group-default required">
                                 <label>Amount to Refund</label>
-                                <input type="number" class="form-control" name="amount" required value="{{ $credit->price_payed }}" min="1">
+                                <input type="text" class="form-control" name="amount" required value="{{ $credit->price_payed }}">
                             </div>
                             <div class="text-center">
                                 <button class="btn btn-warning btn-cons m-b-10" type="submit">
