@@ -16,19 +16,26 @@
                     @if(isset($credit))
                         <hr>
                         <h5 class="m-t-30">Refund Credit</h5>
-                        <form method="POST" action="{{ route('credit.refund') }}">
-                            @csrf
-                            <input type="hidden" name="credit_id" value="{{ $credit->id }}">
-                            <div class="form-group form-group-default required">
-                                <label>Amount to Refund</label>
-                                <input type="text" class="form-control" name="amount" required value="{{ $credit->price_payed }}">
-                            </div>
-                            <div class="text-center">
-                                <button class="btn btn-warning btn-cons m-b-10" type="submit">
-                                    <i class="pg-refresh"></i> <span class="bold">Refund</span>
-                                </button>
-                            </div>
-                        </form>
+
+                        <form class="" role="form" method="POST" action="@if{{route('credit.refund')}}" enctype="multipart/form-data">
+                        @csrf
+                        @if(isset($credit))
+                        <input name="credit_id" type="hidden" value="{{ $credit->id }}">
+                        @endif
+                        <div class="form-group form-group-default required ">
+                        <label>Amount</label>
+                        <input value="@if(isset($credit)) {{ $credit->price_payed }} @else{{old('price_payed') }}@endif"  name="amount" type="text" class="form-control" required>
+                        </div>
+                        @error('price_payed')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                        <div class="text-center m-t-40">                    
+                        <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Refund</span></button>
+                        
+                        </div>
+                    </form>
                     @endif
                 </div>
                 </div>
