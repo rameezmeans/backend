@@ -105,7 +105,9 @@ class PaymentLogController extends Controller
         try {
             \Stripe\Stripe::setApiKey($user->stripe_payment_account()->secret);
 
-            $paymentIntent = \Stripe\PaymentIntent::retrieve($credit->payment_intent);
+            $session = \Stripe\Checkout\Session::retrieve($credit->stripe_id);
+
+            $paymentIntent = \Stripe\PaymentIntent::retrieve($session->payment_intent);
             $chargeId = $paymentIntent->charges->data[0]->id ?? null;
 
             if ($chargeId) {
