@@ -29,7 +29,11 @@
                 <div class="row">
 
                   <div class="card-title"><h5>User Details (Right now)</h5>
+                    @if($credit->refund)
+                    <label class="text text-danger">Refunded</label>
+                    @else
                     <a class="btn btn-danger" href="{{route('refund', $credit->id)}}">Refund</a>
+                    @endif
                       
                   </div>
 
