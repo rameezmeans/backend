@@ -96,11 +96,12 @@ class PaymentLogController extends Controller
 
         $request->validate([
             'credit_id' => 'required|exists:credits,id',
-            'amount' => 'required|numeric|min:1',
         ]);
 
         $credit = Credit::findOrFail($request->credit_id);
         $user = User::findOrFail($credit->user_id);
+
+        if($credit->type == 'stripe'){
 
         try {
             \Stripe\Stripe::setApiKey($user->stripe_payment_account()->secret);
@@ -117,17 +118,12 @@ class PaymentLogController extends Controller
                 ['expand' => ['charges']]
             );
 
-            // dd($paymentIntent);
-            // dd($paymentIntent->latest_charge);
-
             $charge = $paymentIntent->latest_charge ?? null;
-
             
-
             if ($charge) {
                 $refund = \Stripe\Refund::create([
                     'charge' => $charge,
-                    'amount' => $request->amount * 100, // amount in cents
+                    // 'amount' => $request->amount * 100, // amount in cents
                 ]);
 
                 return back()->with('success', 'Refund processed successfully.');
@@ -137,6 +133,10 @@ class PaymentLogController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
+
+    }
+
+
     }
 
     public function refund($id){

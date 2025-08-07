@@ -43,13 +43,14 @@
                         @endif
                         <div class="form-group form-group-default required ">
                         <label>Amount</label>
-                        <input value="@if(isset($credit)) {{ $credit->price_payed }} @else{{old('price_payed') }}@endif"  name="amount" type="text" class="form-control" required>
+                        <label>{{ $credit->price_payed }}</label>
+                        {{-- <input value="@if(isset($credit)) {{ $credit->price_payed }} @else{{old('price_payed') }}@endif"  name="amount" type="text" class="form-control" required>
                         </div>
                         @error('price_payed')
                         <span class="text-danger" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                        @enderror
+                        @enderror --}}
                         <div class="text-center m-t-40">                    
                         <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Refund</span></button>
                         
