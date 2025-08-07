@@ -107,9 +107,12 @@ class PaymentLogController extends Controller
 
             $session = \Stripe\Checkout\Session::retrieve($credit->stripe_id);
 
-            dd($session);
+            
 
             $paymentIntent = \Stripe\PaymentIntent::retrieve($session->payment_intent);
+
+            dd($paymentIntent);
+            
             $chargeId = $paymentIntent->charges->data[0]->id ?? null;
 
             if ($chargeId) {
