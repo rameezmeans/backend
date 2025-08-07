@@ -92,8 +92,44 @@ class PaymentLogController extends Controller
 
     }
 
-    public function refund(Request $request){
-        dd($request->all());
+    public function refundPost(Request $request){
+
+        $request->validate([
+            'credit_id' => 'required|exists:credits,id',
+            'amount' => 'required|numeric|min:1',
+        ]);
+
+        $credit = Credit::findOrFail($request->credit_id);
+        $user = User::findOrFail($credit->user_id);
+
+        try {
+            \Stripe\Stripe::setApiKey($user->stripe_payment_account()->secret);
+
+            $paymentIntent = \Stripe\PaymentIntent::retrieve($credit->payment_intent);
+            $chargeId = $paymentIntent->charges->data[0]->id ?? null;
+
+            if ($chargeId) {
+                $refund = \Stripe\Refund::create([
+                    'charge' => $chargeId,
+                    'amount' => $request->amount * 100, // amount in cents
+                ]);
+
+                return back()->with('success', 'Refund processed successfully.');
+            }
+
+            return back()->with('error', 'Charge not found for refund.');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function refund($id){
+
+        $credit = Credit::findOrFail($id);
+        return view('payment_logs.refund', [
+            'credit' => $credit,
+            
+        ]);
     }
 
     public function paymentsTable(Request $request){

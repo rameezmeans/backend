@@ -32,7 +32,7 @@
                     <form method="POST" action="{{route('refund')}}">
                       @csrf
                       <input type="hidden" name="credit_id" value="{{$credit->id}}">
-                      <input class="btn btn-danger" type="submit">
+                      <input class="btn btn-danger" type="submit" value="Refund">
                     </form>
                   </div>
 
