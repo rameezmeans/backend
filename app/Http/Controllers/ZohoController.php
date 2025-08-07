@@ -1045,8 +1045,8 @@ class ZohoController extends Controller
         $amount = ['amount' => $credit->zoho->amount+$credit->zoho->tax,
                 'date' => now()->toDateString(),
                 'refund_mode' => 'Bank Transfer',
-                'description' => 'Refund to customer',
-                "account_id" => $accountID
+                'account_id' => $accountID, // Must match the refund_mode
+                'description' => 'Refund to customer'
         ];
 
         $response = $client->post("https://www.zohoapis.com/books/v3/creditnotes/{$creditNoteId}/refunds", [
