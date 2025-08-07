@@ -118,15 +118,15 @@ class PaymentLogController extends Controller
             );
 
             // dd($paymentIntent);
-            dd($paymentIntent->latest_charge);
+            // dd($paymentIntent->latest_charge);
 
-            // $charge = $paymentIntent->charges->data[0] ?? null;
+            $charge = $paymentIntent->latest_charge ?? null;
 
             
 
-            if ($charge->id) {
+            if ($charge) {
                 $refund = \Stripe\Refund::create([
-                    'charge' => $charge->id,
+                    'charge' => $charge,
                     'amount' => $request->amount * 100, // amount in cents
                 ]);
 
