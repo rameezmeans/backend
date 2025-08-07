@@ -102,38 +102,26 @@ class PaymentLogController extends Controller
         $credit = Credit::findOrFail($request->credit_id);
         $user = User::findOrFail($credit->user_id);
 
-        try {
-            \Stripe\Stripe::setApiKey($user->stripe_payment_account()->secret);
+                try {
+                    \Stripe\Stripe::setApiKey($user->stripe_payment_account()->secret);
 
-            $session = \Stripe\Checkout\Session::retrieve($credit->stripe_id, [
-                'expand' => ['payment_intent'],
+                $session = \Stripe\Checkout\Session::retrieve($credit->stripe_id, [
+            'expand' => ['payment_intent'],
+        ]);
+
+        $paymentIntent = $session->payment_intent;
+
+        // Use the latest_charge ID to create the refund
+        $chargeId = $paymentIntent->latest_charge;
+        
+        if ($chargeId) {
+            $refund = \Stripe\Refund::create([
+                'charge' => $chargeId,
+                'amount' => $request->amount * 100, // amount in cents
             ]);
 
-            $paymentIntent = $session->payment_intent;
-
-            // dd($paymentIntent);
-
-            // Now expand the charges object
-            $paymentIntent = \Stripe\PaymentIntent::retrieve(
-                $paymentIntent,
-                ['expand' => ['charges']]
-            );
-
-            dd($paymentIntent);
-            // dd($paymentIntent->charges);
-
-            $charge = $paymentIntent->charges->data[0] ?? null;
-
-            
-
-            if ($charge->id) {
-                $refund = \Stripe\Refund::create([
-                    'charge' => $charge->id,
-                    'amount' => $request->amount * 100, // amount in cents
-                ]);
-
-                return back()->with('success', 'Refund processed successfully.');
-            }
+            return back()->with('success', 'Refund processed successfully.');
+        }
 
             return back()->with('error', 'Charge not found for refund.');
         } catch (\Exception $e) {
