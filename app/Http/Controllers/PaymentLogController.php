@@ -119,8 +119,8 @@ class PaymentLogController extends Controller
                 ['expand' => ['charges']]
             );
 
-            // dd($paymentIntent);
-            dd($paymentIntent->charges);
+            dd($paymentIntent);
+            // dd($paymentIntent->charges);
 
             $charge = $paymentIntent->charges->data[0] ?? null;
 
