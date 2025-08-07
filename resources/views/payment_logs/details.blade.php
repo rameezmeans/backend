@@ -29,7 +29,7 @@
                 <div class="row">
 
                   <div class="card-title"><h5>User Details (Right now)</h5>
-                    <a class="btn btn-danger" href="{{route('refund', {{$credit->id}})}}">Refund</a>
+                    <a class="btn btn-danger" href="{{route('refund', $credit->id)}}">Refund</a>
                       
                   </div>
 
