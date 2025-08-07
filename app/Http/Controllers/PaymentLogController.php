@@ -92,6 +92,10 @@ class PaymentLogController extends Controller
 
     }
 
+    public function refund(Request $request){
+        dd($request->all());
+    }
+
     public function paymentsTable(Request $request){
             
             $data = Credit::select('*')->where('credits', '>', 0)->where('price_payed', '>', 0);
