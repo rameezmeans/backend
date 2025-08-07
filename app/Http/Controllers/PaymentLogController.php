@@ -126,6 +126,9 @@ class PaymentLogController extends Controller
                     // 'amount' => $request->amount * 100, // amount in cents
                 ]);
 
+                $credit->refund = 1;
+                $credit->save();
+
                 return back()->with('success', 'Refund processed successfully.');
             }
 
