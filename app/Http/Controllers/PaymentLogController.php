@@ -141,8 +141,8 @@ class PaymentLogController extends Controller
     }
     else{
         $gateway = Omnipay::create('PayPal_Rest');
-        $this->gateway->setClientId($user->paypal_payment_account()->key);
-        $this->gateway->setSecret($user->paypal_payment_account()->secret);
+        $gateway->setClientId($user->paypal_payment_account()->key);
+        $gateway->setSecret($user->paypal_payment_account()->secret);
 
         if($user->test){
             $gateway->setTestMode(true); // or false in production
