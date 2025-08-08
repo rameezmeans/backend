@@ -1020,33 +1020,83 @@ class ZohoController extends Controller
     }
 
     public function refundZohoInvoice($credit, $user){
-
-         if($credit->type == 'stripe'){
+        
+        if($credit->type == 'stripe'){
             $account = $user->stripe_payment_account();
-            $accountID = $account->zohobooks_account_id;
+            $accountId = $account->zohobooks_account_id;
             
         }
         else if($credit == 'viva'){
             $account = $user->viva_payment_account();
-            $accountID = $account->zohobooks_account_id;
+            $accountId = $account->zohobooks_account_id;
         }
         else{
             $account = $user->paypal_payment_account();
-            $accountID = $account->zohobooks_account_id;
+            $accountId = $account->zohobooks_account_id;
         }
 
         $this->makeNewAccessToken();
         $refreshToken = Key::where('key','zoho_access_token')->first()->value;
 
-        $client = new \GuzzleHttp\Client();
+        $client = new Client();
 
-        $creditNoteId = $credit->zohobooks_id; // get after credit note creation
+        $invoiceId = $credit->zohobooks_id; // replace with your invoice ID
 
-        $amount = ['amount' => $credit->zoho->amount+$credit->zoho->tax,
-                'date' => now()->toDateString(),
-                'refund_mode' => 'Bank Transfer',
-                'account_id' => $accountID, // Must match the refund_mode
-                'description' => 'Refund to customer'
+        $response = $client->get("https://www.zohoapis.com/books/v3/invoices/{$invoiceId}", [
+            'headers' => [
+                'Authorization' => 'Zoho-oauthtoken ' . $refreshToken,
+                'Content-Type'  => 'application/json',
+            ],
+            'query' => [
+                'organization_id' => '8745725',
+            ],
+        ]);
+
+        $invoice = json_decode($response->getBody(), true)['invoice'];
+
+        // dd($invoice);
+
+        $lineItems = $invoice['line_items'];
+        $customerId = $invoice['customer_id'];
+
+        $organizationId = '8745725';
+        $accessToken = $refreshToken; // not refresh token
+        // $accountId = '261618000007456003'; // Your bank account ID
+
+        $creditNoteNumber = 'CN-'.$invoiceId;
+
+        // 1. Create a credit note
+        $creditNoteData = [
+            'creditnote_number' => $creditNoteNumber,
+            'customer_id' => $customerId,
+            // 'invoice_id' => $invoiceId,
+            'date' => now()->toDateString(),
+            'line_items' => $lineItems, // replicate invoice line items
+            // 'reference_number' => 'Refund-' . uniqid(),
+        ];
+
+        // dd($creditNoteData);
+
+        $response = $client->post("https://www.zohoapis.com/books/v3/creditnotes", [
+            'headers' => [
+                'Authorization' => 'Zoho-oauthtoken ' . $refreshToken,
+                'Content-Type'  => 'application/json',
+            ],
+            'query' => [
+                'organization_id' => '8745725',
+            ],
+            'json' => $creditNoteData,
+        ]);
+
+        $creditNote = json_decode($response->getBody(), true)['creditnote'];
+        $creditNoteId = $creditNote['creditnote_id'];
+
+        $payload = [
+            'amount' => (float) $credit->zoho->amount + $credit->zoho->tax, // Ensure this is float
+            'date' => now()->toDateString(),
+            'refund_mode' => 'Bank Transfer',
+            'account_id' => $accountId,
+            'description' => 'Refund issued to customer'
         ];
 
         $response = $client->post("https://www.zohoapis.com/books/v3/creditnotes/{$creditNoteId}/refunds", [
@@ -1057,16 +1107,17 @@ class ZohoController extends Controller
             'query' => [
                 'organization_id' => '8745725'
             ],
-            'json' => $amount
-            
+            'json' => $payload
         ]);
+
+        // dd(json_decode($response->getBody()->getContents(), true));
 
         $result = json_decode($response->getBody()->getContents());
 
         if ($result->code == 0) {
-            $this->makeZohoLogEntry($credit->id, 'success', 'zoho invoice refunded.', $amount, $response->getBody()->getContents());
+            $this->makeZohoLogEntry($credit->id, 'success', 'zoho invoice refunded.', $payload, $response->getBody()->getContents());
         } else {
-             $this->makeZohoLogEntry($credit->id, 'error', 'zoho invoice not refunded.', $amount, $response->getBody()->getContents());
+             $this->makeZohoLogEntry($credit->id, 'error', 'zoho invoice not refunded.', $payload, $response->getBody()->getContents());
         }
 
     }

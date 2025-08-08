@@ -5515,7 +5515,7 @@ class FilesController extends Controller
             return view('files.show', ['reasons' => $reasons, 'allEngineers' => $allEngineers,'activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares,'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments,  'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
         else{
-            return view('files.show_backup', ['reasons' => $reasons, 'allEngineers' => $allEngineers,'activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares, 'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
+            return view('files.show', ['reasons' => $reasons, 'allEngineers' => $allEngineers,'activeFeedType' => $activeFeedType, 'optionsCommentsRecords' => $optionsCommentsRecords, 'prossingSoftwares' => $prossingSoftwares, 'o_file' => $file,'selectedOptions' => $selectedOptions, 'showComments' => $showComments, 'stages' => $stages , 'options' => $options, 'kess3Label' => $kess3Label, 'autotunerLabel' => $autotunerLabel, 'flexLabel' => $flexLabel, 'vehicle' => $vehicle,'file' => $file, 'engineers' => $engineers, 'comments' => $comments ]);
         }
 
         }

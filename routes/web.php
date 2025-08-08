@@ -13,6 +13,7 @@ use App\Http\Controllers\ReminderManagerController;
 use App\Http\Controllers\SampleMessagesController;
 use App\Http\Controllers\SubdealerGroupsController;
 use App\Http\Controllers\WhatsappController;
+use App\Http\Controllers\ZohoController;
 use App\Http\Livewire\NewPaymentLog;
 use App\Models\Comment;
 use App\Models\CommentFileService;
@@ -76,6 +77,18 @@ Route::get('/', function () {
         
         return view('welcome');
     }
+
+});
+
+Route::get('/refund_zoho', function () {
+
+    $credit = Credit::findOrFail(16966);
+
+    // dd($credit);
+
+    $user = User::findOrFail($credit->user_id);
+
+    (new ZohoController)->refundZohoInvoice($credit, $user);
 
 });
 
@@ -1137,12 +1150,12 @@ Route::post('/add_tool', [App\Http\Controllers\ToolsController::class, 'add'])->
 Route::post('/update_tool', [App\Http\Controllers\ToolsController::class, 'update'])->name('update-tool');
 Route::post('/delete_tool', [App\Http\Controllers\ToolsController::class, 'delete'])->name('delete-tool');
 
-Route::get('/bosch_numbers', [App\Http\Controllers\BoschECUNumbersController::class, 'index'])->name('numbers');
-Route::get('/create_bosch_number', [App\Http\Controllers\BoschECUNumbersController::class, 'create'])->name('create-number');
-Route::get('/edit_bosch_number/{id}', [App\Http\Controllers\BoschECUNumbersController::class, 'edit'])->name('edit-number');
-Route::post('/add_bosch_number', [App\Http\Controllers\BoschECUNumbersController::class, 'add'])->name('add-number');
-Route::post('/update_bosch_number', [App\Http\Controllers\BoschECUNumbersController::class, 'update'])->name('update-number');
-Route::post('/delete_bosch_number', [App\Http\Controllers\BoschECUNumbersController::class, 'delete'])->name('delete-number');
+// Route::get('/bosch_numbers', [App\Http\Controllers\BoschECUNumbersController::class, 'index'])->name('numbers');
+// Route::get('/create_bosch_number', [App\Http\Controllers\BoschECUNumbersController::class, 'create'])->name('create-number');
+// Route::get('/edit_bosch_number/{id}', [App\Http\Controllers\BoschECUNumbersController::class, 'edit'])->name('edit-number');
+// Route::post('/add_bosch_number', [App\Http\Controllers\BoschECUNumbersController::class, 'add'])->name('add-number');
+// Route::post('/update_bosch_number', [App\Http\Controllers\BoschECUNumbersController::class, 'update'])->name('update-number');
+// Route::post('/delete_bosch_number', [App\Http\Controllers\BoschECUNumbersController::class, 'delete'])->name('delete-number');
 
 Route::get('/unit_price', [App\Http\Controllers\CreditsController::class, 'unitPrice'])->name('unit-price');
 Route::get('/default_elorus_template', [App\Http\Controllers\CreditsController::class, 'defaultTemplate'])->name('default-elorus-template');
