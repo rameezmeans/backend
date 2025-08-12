@@ -81,6 +81,10 @@ margin-bottom: 10px !important;
     background-color: #626c75 !important;
 }
 
+.bg-success-light {
+    background-color: #40d9ca !important;
+}
+
 #circle{
   display: inline-block;
   width: 16px;
@@ -244,7 +248,8 @@ margin-bottom: 10px !important;
               <div class="col-lg-12">
                 
                 <div class="widget-16 card no-border widget-loader-circle">
-                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @else bg-warning-light @endif">
+                  <div class="card-header 
+                  @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
 
                     @if($file->tool_type == 'slave')
                       @if(!$file->decoded_files->isEmpty())
@@ -514,7 +519,7 @@ margin-bottom: 10px !important;
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Frontend</p>
                           <div class="pull-right">
-                            <span class="label @if($file->frontend->id == 1) text-white bg-primary @elseif($file->frontend->id == 3) text-white bg-info @else text-black bg-warning @endif">{{$file->frontend->name}}<span>
+                            <span class="label @if($file->frontend->id == 1) text-white bg-primary @elseif($file->frontend->id == 3) @elseif($file->frontend->id == 4) bg-success-light text-white bg-info @else text-black bg-warning @endif">{{$file->frontend->name}}<span>
                           </div>
                           <div class="clearfix"></div>
                         </div>
@@ -2100,7 +2105,7 @@ margin-bottom: 10px !important;
             <div class="row">
               <div class="col-lg-12">
                 <div class="widget-16 card no-border widget-loader-circle">
-                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @else bg-warning-light @endif">
+                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
                     <div class="text-center">
                       <div class="card-title">
                           <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -2322,7 +2327,7 @@ margin-bottom: 10px !important;
           
           
           <div class="tab-pane slide-left" id="slide3">
-              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -2425,7 +2430,7 @@ margin-bottom: 10px !important;
             
             {{-- @endif --}}
             <div class="tab-pane slide-left" id="slide4">
-              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -2453,7 +2458,7 @@ margin-bottom: 10px !important;
             </div>
 
             <div class="tab-pane slide-left" id="slide23">
-              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -2504,7 +2509,7 @@ margin-bottom: 10px !important;
             </div>
 
             <div class="tab-pane slide-left" id="slide24">
-              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 4) bg-success-light @elseif($file->frontend->id == 3) bg-info-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -2621,7 +2626,7 @@ margin-bottom: 10px !important;
            
                        
                         <div class="tab-pane slide-left" id="slide6">
-                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 4) bg-success-light @elseif($file->frontend->id == 3) bg-info-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
                                   <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -2922,7 +2927,7 @@ margin-bottom: 10px !important;
                         </div>           
                        
                         <div class="tab-pane slide-left" id="slide7">
-                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 4) bg-success-light @elseif($file->frontend->id == 3) bg-info-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
                                   <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -2966,7 +2971,7 @@ margin-bottom: 10px !important;
                        
                        
                         <div class="tab-pane slide-left" id="slide8">
-                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 4) bg-success-light @elseif($file->frontend->id == 3) bg-info-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
                                   <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -3228,7 +3233,7 @@ margin-bottom: 10px !important;
               <div class="col-lg-12">
                 
                 <div class="widget-16 card no-border widget-loader-circle">
-                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @else bg-warning-light @endif">
+                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
 
                     @if($file->tool_type == 'slave')
                       @if(!$file->decoded_files->isEmpty())
@@ -3407,7 +3412,7 @@ margin-bottom: 10px !important;
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Frontend</p>
                           <div class="pull-right">
-                            <span class="label @if($file->frontend->id == 1) text-white bg-primary @elseif($file->frontend->id == 3) text-white bg-info @else text-black bg-warning @endif">{{$file->frontend->name}}<span>
+                            <span class="label @if($file->frontend->id == 1) text-white bg-primary @elseif($file->frontend->id == 3) text-white bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else text-black bg-warning @endif">{{$file->frontend->name}}<span>
                           </div>
                           <div class="clearfix"></div>
                         </div>
@@ -4826,7 +4831,7 @@ margin-bottom: 10px !important;
             <div class="row">
               <div class="col-lg-12">
                 <div class="widget-16 card no-border widget-loader-circle">
-                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @else bg-warning-light @endif">
+                  <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
                     <div class="text-center">
                       <div class="card-title">
                           <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -4993,7 +4998,7 @@ margin-bottom: 10px !important;
           @endif
           {{-- @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'admin-tasks')) --}}
           <div class="tab-pane slide-left" id="slide3{{$file->id}}">
-              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -5092,7 +5097,7 @@ margin-bottom: 10px !important;
             {{-- @endif --}}
            
             <div class="tab-pane slide-left" id="slide4{{$file->id}}">
-              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -5117,7 +5122,7 @@ margin-bottom: 10px !important;
             </div>
 
             <div class="tab-pane slide-left" id="slide24{{$file->id}}">
-              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light  @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -5164,7 +5169,7 @@ margin-bottom: 10px !important;
             </div>
 
             <div class="tab-pane slide-left" id="slide23{{$file->id}}">
-              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 4) bg-success-light @elseif($file->frontend->id == 3) bg-info-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -5280,7 +5285,7 @@ margin-bottom: 10px !important;
             {{-- @endif --}}
 
                         <div class="tab-pane slide-left" id="slide6{{$file->id}}">
-                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
                                   <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -5559,7 +5564,7 @@ margin-bottom: 10px !important;
                         </div>           
                        
                         <div class="tab-pane slide-left" id="slide7{{$file->id}}">
-                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
                                   <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -5600,7 +5605,7 @@ margin-bottom: 10px !important;
                         </div>                      
                        
                         <div class="tab-pane slide-left" id="slide8{{$file->id}}">
-                          <div class="card-header @if($file->frontend->id == 1) bg-primary-light @else bg-warning-light @endif">
+                          <div class="card-header @if($file->frontend->id@elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
                             <div class="text-center">
                               <div class="card-title">
                                   <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
