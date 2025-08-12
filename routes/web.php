@@ -55,7 +55,7 @@ use Twilio\Rest\Client;
 
 use SevenSpan\WhatsApp\WhatsApp;
 
-use Chatify\Facades\ChatifyMessenger as Chatify;
+// use Chatify\Facades\ChatifyMessenger as Chatify;
 // use Excel;
 
 /*
@@ -1283,85 +1283,85 @@ Route::post('/assigned_to_me', [App\Http\Controllers\FilesController::class, 'as
  *  Fetch info for specific id [user/group]
  */
 
-Route::post('chatify/idInfo', [MessagesController::class,'idFetchData']);
+// Route::post('chatify/idInfo', [MessagesController::class,'idFetchData']);
 
-/**
- * Send message route
- */
-Route::post('chatify/sendMessage', [MessagesController::class,'send'])->name('send.message');
+// /**
+//  * Send message route
+//  */
+// Route::post('chatify/sendMessage', [MessagesController::class,'send'])->name('send.message');
 
-/**
- * Fetch messages
- */
-Route::post('chatify/fetchMessages', [MessagesController::class, 'fetch'])->name('fetch.messages');
+// /**
+//  * Fetch messages
+//  */
+// Route::post('chatify/fetchMessages', [MessagesController::class, 'fetch'])->name('fetch.messages');
 
-/**
- * Download attachments route to create a downloadable links
- */
-Route::get('chatify/download/{fileName}/{type}', [MessagesController::class, 'download'])->name(config('chatify.attachments.download_route_name'));
+// /**
+//  * Download attachments route to create a downloadable links
+//  */
+// Route::get('chatify/download/{fileName}/{type}', [MessagesController::class, 'download'])->name(config('chatify.attachments.download_route_name'));
 
-/**
- * Authentication for pusher private channels
- */
-Route::post('chatify/chat/auth', [MessagesController::class, 'pusherAuth'])->name('pusher.auth');
+// /**
+//  * Authentication for pusher private channels
+//  */
+// Route::post('chatify/chat/auth', [MessagesController::class, 'pusherAuth'])->name('pusher.auth');
 
-/**
- * Make messages as seen
- */
-Route::post('chatify/makeSeen', [MessagesController::class, 'seen'])->name('messages.seen');
+// /**
+//  * Make messages as seen
+//  */
+// Route::post('chatify/makeSeen', [MessagesController::class, 'seen'])->name('messages.seen');
 
-/**
- * Get contacts
- */
-Route::get('chatify/getContacts', [MessagesController::class, 'getContacts'])->name('contacts.get');
+// /**
+//  * Get contacts
+//  */
+// Route::get('chatify/getContacts', [MessagesController::class, 'getContacts'])->name('contacts.get');
 
-Route::post('chatify/getContactsMain', [MessagesController::class, 'getContactsMain'])->name('contacts.get.main');
+// Route::post('chatify/getContactsMain', [MessagesController::class, 'getContactsMain'])->name('contacts.get.main');
 
-/**
- * Update contact item data
- */
-Route::post('chatify/updateContacts', [MessagesController::class,'updateContactItem'])->name('contacts.update');
+// /**
+//  * Update contact item data
+//  */
+// Route::post('chatify/updateContacts', [MessagesController::class,'updateContactItem'])->name('contacts.update');
 
 
-/**
- * Star in favorite list
- */
-Route::post('chatify/star', [MessagesController::class,'favorite'])->name('star');
+// /**
+//  * Star in favorite list
+//  */
+// Route::post('chatify/star', [MessagesController::class,'favorite'])->name('star');
 
-/**
- * get favorites list
- */
-Route::post('chatify/favorites', [MessagesController::class,'getFavorites'])->name('favorites');
+// /**
+//  * get favorites list
+//  */
+// Route::post('chatify/favorites', [MessagesController::class,'getFavorites'])->name('favorites');
 
-/**
- * Search in messenger
- */
-// Route::get('chatify/search', [MessagesController::class,'search'])->name('search');
+// /**
+//  * Search in messenger
+//  */
+// // Route::get('chatify/search', [MessagesController::class,'search'])->name('search');
 
-/**
- * Get shared photos
- */
-Route::post('chatify/shared', [MessagesController::class,'sharedPhotos'])->name('shared');
+// /**
+//  * Get shared photos
+//  */
+// Route::post('chatify/shared', [MessagesController::class,'sharedPhotos'])->name('shared');
 
-/**
- * Delete Conversation
- */
-Route::post('chatify/deleteConversation', [MessagesController::class,'deleteConversation'])->name('conversation.delete');
+// /**
+//  * Delete Conversation
+//  */
+// Route::post('chatify/deleteConversation', [MessagesController::class,'deleteConversation'])->name('conversation.delete');
 
-/**
- * Delete Message
- */
-Route::post('chatify/deleteMessage', [MessagesController::class,'deleteMessage'])->name('message.delete');
+// /**
+//  * Delete Message
+//  */
+// Route::post('chatify/deleteMessage', [MessagesController::class,'deleteMessage'])->name('message.delete');
 
-/**
- * Update setting
- */
-Route::post('chatify/updateSettings', [MessagesController::class,'updateSettings'])->name('avatar.update');
+// /**
+//  * Update setting
+//  */
+// Route::post('chatify/updateSettings', [MessagesController::class,'updateSettings'])->name('avatar.update');
 
-/**
- * Set active status
- */
-Route::post('chatify/setActiveStatus', [MessagesController::class, 'setActiveStatus'])->name('activeStatus.set');
+// /**
+//  * Set active status
+//  */
+// Route::post('chatify/setActiveStatus', [MessagesController::class, 'setActiveStatus'])->name('activeStatus.set');
 
 Route::get('myspace', function(){
     dd(User::get(['id', 'name'])->pluck('name','id')->toArray());
