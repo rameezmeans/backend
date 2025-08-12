@@ -535,6 +535,38 @@
 
               @if(isset($customer))
 
+              {{-- Display Ads Params as Labels --}}
+              @if($customer->ads_params)
+                <div class="m-b-20">
+                  <h6 class="m-b-10">Ads Parameters:</h6>
+                  <div class="ads-params-labels">
+                    @php
+                      $adsParams = json_decode($customer->ads_params, true);
+                    @endphp
+                    @if(is_array($adsParams))
+                      @foreach($adsParams as $key => $value)
+                        @if(is_string($value) || is_numeric($value))
+                          <span class="label label-info m-r-5 m-b-5" style="display: inline-block;">
+                            <strong>{{ $key }}:</strong> {{ $value }}
+                          </span>
+                        @elseif(is_array($value))
+                          <span class="label label-warning m-r-5 m-b-5" style="display: inline-block;">
+                            <strong>{{ $key }}:</strong> {{ json_encode($value) }}
+                          </span>
+                        @elseif(is_bool($value))
+                          <span class="label label-{{ $value ? 'success' : 'danger' }} m-r-5 m-b-5" style="display: inline-block;">
+                            <strong>{{ $key }}:</strong> {{ $value ? 'Yes' : 'No' }}
+                          </span>
+                        @endif
+                      @endforeach
+                    @else
+                      <span class="label label-default m-r-5 m-b-5">
+                        {{ $customer->ads_params }}
+                      </span>
+                    @endif
+                  </div>
+                </div>
+              @endif
 
               <h5 class="m-t-50">
                 Update Customer Tools

@@ -1378,7 +1378,6 @@ Route::get('token_request', [AlientechTestController::class, 'requestToken'])->n
 
 Route::get('subdealers_groups', [SubdealerGroupsController::class, 'groups'])->name('subdealer-groups');
 
-
 Route::get('subdealers_entity', [SubdealerGroupsController::class, 'index'])->name('subdealers-entity');
 Route::get('create_subdealer_entity', [SubdealerGroupsController::class, 'create'])->name('create-subdealer-entity');
 Route::post('delete_subdealer_entity', [SubdealerGroupsController::class, 'delete'])->name('delete-subdealer-entity');
@@ -1449,7 +1448,6 @@ Route::get('edit_payment_account/{id}', [PaymentAccountsController::class, 'edit
 Route::post('add_account', [PaymentAccountsController::class, 'store'])->name('add-account');
 Route::post('update_account', [PaymentAccountsController::class, 'update'])->name('update-account');
 Route::post('delete_payment_account', [PaymentAccountsController::class, 'destroy'])->name('delete-payment-account');
-
 
 Route::get('sample-messages', [SampleMessagesController::class, 'index'])->name('sample-messages.index');
 Route::get('sample-messages/create', [SampleMessagesController::class, 'create'])->name('sample-messages.create');
