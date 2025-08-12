@@ -2165,7 +2165,7 @@ margin-bottom: 10px !important;
           
                             @elseif($message['engineer'] == 0)
                               <div class="message clearfix">
-                                <div class="chat-bubble from-them bg-success">
+                                <div class="chat-bubble from-them bg-success upper-one">
                                   {{-- @php
                                     dd($message['request_file_id']);
                                   @endphp --}}
@@ -2183,7 +2183,7 @@ margin-bottom: 10px !important;
 										@if(is_text_english($message['egnineers_internal_notes']))
 										<button class="btn btn-default btn-xs translate" href="#" data-id="{{$message['id']}}"><i class="fa fa-language" aria-hidden="true"></i></button>
 										@endif
-										
+										<button class="btn btn-info btn-xs chatgpt-btn" href="#" data-message-id="{{$message['id']}}" data-notes="{{ $message['egnineers_internal_notes'] }}"><i class="fa fa-robot" aria-hidden="true"></i></button>
 									</small>
                                     <small class="m-t-20" style="font-size: 8px;float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
                                     {{-- <small class="m-t-20" style="font-size: 8px;float:left">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small> --}}
@@ -8346,12 +8346,163 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
     });
 
     @endif
+
+    // ChatGPT Modal Functionality
+    $(document).on('click', '.chatgpt-btn', function(e) {
+      e.preventDefault();
+      
+      const messageId = $(this).data('message-id');
+      const notes = $(this).data('notes');
+      
+      // Show the modal first
+      $('#chatgptModal').modal('show');
+      
+      // Populate the modal with the client's message
+      $('#modalEngineerNotes').text(notes);
+      
+      // Clear other fields and remove error styling
+      $('#modalChatGPTExplanation').text('').removeClass('text-danger');
+      $('#modalUserPrompt').val('');
+      $('#modalChatGPTResponse').val('').removeClass('text-danger');
+      
+      // Reset tone selection to default
+      $('#modalToneSelect').val('professional');
+      
+      // Show loading state in the explanation field
+      $('#modalChatGPTExplanation').html('<div class="text-center"><i class="fa fa-spinner fa-spin"></i> Analyzing client message...</div>');
+      
+      // Send client message to ChatGPT API for explanation
+      $.ajax({
+        url: "/api/chatgpt/explain-message",
+        type: "POST",
+        data: {
+          "_token": "{{ csrf_token() }}",
+          "message": notes,
+          "message_id": messageId
+        },
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        success: function(response) {
+          if (response.success) {
+            $('#modalChatGPTExplanation').text(response.explanation).removeClass('text-danger');
+          } else {
+            $('#modalChatGPTExplanation').text('Error: ' + (response.message || 'Failed to get explanation')).addClass('text-danger');
+          }
+        },
+        error: function(xhr, status, error) {
+          $('#modalChatGPTExplanation').text('Error: Failed to connect to ChatGPT API. Please try again.').addClass('text-danger');
+          console.error('ChatGPT API Error:', error);
+        }
+      });
+    });
+
+    // Handle Ask ChatGPT button click
+    $('#askChatGPTBtn').on('click', function() {
+      const clientMessage = $('#modalEngineerNotes').text();
+      const engineerReply = $('#modalUserPrompt').val();
+      const selectedTone = $('#modalToneSelect').val();
+      
+      if (!engineerReply.trim()) {
+        alert('Please write your reply to the client.');
+        return;
+      }
+      
+      // Show loading state
+      const $btn = $(this);
+      const originalText = $btn.html();
+      $btn.html('<i class="fa fa-spinner fa-spin"></i> Processing...');
+      $btn.prop('disabled', true);
+      
+      // Send engineer's reply to ChatGPT API for tone modification
+      $.ajax({
+        url: "/api/chatgpt/modify-reply",
+        type: "POST",
+        data: {
+          "_token": "{{ csrf_token() }}",
+          "client_message": clientMessage,
+          "engineer_reply": engineerReply,
+          "tone": selectedTone,
+          "message_id": $('.chatgpt-btn').data('message-id')
+        },
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        success: function(response) {
+          if (response.success) {
+            $('#modalChatGPTResponse').text(response.modified_reply).removeClass('text-danger');
+          } else {
+            $('#modalChatGPTResponse').text('Error: ' + (response.message || 'Failed to modify reply')).addClass('text-danger');
+          }
+        },
+        error: function(xhr, status, error) {
+          $('#modalChatGPTResponse').text('Error: Failed to connect to ChatGPT API. Please try again.').addClass('text-danger');
+          console.error('ChatGPT API Error:', error);
+        },
+        complete: function() {
+          // Reset button
+          $btn.html(originalText);
+          $btn.prop('disabled', false);
+        }
+      });
+    });
 	  
 	  });
 	  
 	  
 </script>
 
-
+<!-- ChatGPT Modal -->
+<div class="modal fade" id="chatgptModal" tabindex="-1" role="dialog" aria-labelledby="chatgptModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="chatgptModalLabel">
+          <i class="fa fa-robot"></i> ChatGPT Assistant
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <label><strong>Client's Message:</strong></label>
+            <div class="form-control" style="min-height: 100px; max-height: 150px; overflow-y: auto; background-color: #ffffff; color: #000000; border: 1px solid #ced4da;" id="modalEngineerNotes" readonly></div>
+          </div>
+          <div class="col-md-6">
+            <label><strong>ChatGPT Explanation:</strong></label>
+            <div class="form-control" style="min-height: 100px; max-height: 150px; overflow-y: auto; background-color: #f8f9fa;" id="modalChatGPTExplanation" readonly placeholder="ChatGPT will explain the client's message here..."></div>
+          </div>
+        </div>
+        <div class="row m-t-20">
+          <div class="col-12">
+            <label><strong>Engineer's Reply:</strong></label>
+            <textarea class="form-control" style="min-height: 80px;" id="modalUserPrompt" placeholder="Write your reply to the client here..."></textarea>
+          </div>
+        </div>
+        <div class="row m-t-20">
+          <div class="col-12">
+            <label><strong>Tone:</strong></label>
+            <select class="form-control" id="modalToneSelect">
+              <option value="professional">Professional</option>
+              <option value="aggressive">Aggressive</option>
+              <option value="friendly">Friendly</option>
+              <option value="casual">Casual</option>
+            </select>
+          </div>
+        </div>
+        <div class="row m-t-20">
+          <div class="col-12">
+            <label><strong>ChatGPT Modified Reply:</strong></label>
+            <textarea class="form-control" style="min-height: 200px;" id="modalChatGPTResponse" placeholder="ChatGPT will modify your reply according to the selected tone..." readonly></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="askChatGPTBtn">
+          <i class="fa fa-magic"></i> Modify Reply with ChatGPT
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection

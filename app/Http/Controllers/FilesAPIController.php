@@ -2409,4 +2409,116 @@ class FilesAPIController extends Controller
 
         return $tunningType;
     }
+
+    /**
+     * Explain client message using ChatGPT API
+     */
+    public function explainMessageWithChatGPT(Request $request)
+    {
+        try {
+            // Validate request
+            $validator = Validator::make($request->all(), [
+                'message' => 'required|string|max:5000',
+                'message_id' => 'required|integer'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors()
+                ], 400);
+            }
+
+            $clientMessage = $request->message;
+            $messageId = $request->message_id;
+
+            // Create prompt for ChatGPT
+            $prompt = "Please analyze and explain the following client message in a clear, professional manner. " .
+                     "Focus on understanding the client's needs, any technical requirements, and provide context " .
+                     "that would help an engineer respond appropriately.\n\n" .
+                     "Client Message: " . $clientMessage . "\n\n" .
+                     "Please provide a concise explanation that includes:\n" .
+                     "1. What the client is asking for\n" .
+                     "2. Any technical details mentioned\n" .
+                     "3. The urgency or priority level\n" .
+                     "4. Suggested approach for the engineer";
+
+            // ChatGPT API configuration
+            $apiKey = env('OPENAI_API_KEY');
+            $apiUrl = 'https://api.openai.com/v1/chat/completions';
+
+            if (!$apiKey) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'ChatGPT API key not configured'
+                ], 500);
+            }
+
+            // Make request to ChatGPT API
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $apiKey,
+                'Content-Type' => 'application/json'
+            ])->post($apiUrl, [
+                'model' => 'gpt-3.5-turbo',
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You are a helpful assistant that analyzes client messages and provides clear explanations for engineers.'
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $prompt
+                    ]
+                ],
+                'max_tokens' => 500,
+                'temperature' => 0.7
+            ]);
+
+            if ($response->successful()) {
+                $responseData = $response->json();
+                
+                if (isset($responseData['choices'][0]['message']['content'])) {
+                    $explanation = $responseData['choices'][0]['message']['content'];
+                    
+                    // Log the successful API call
+                    \Log::info('ChatGPT API call successful for message ID: ' . $messageId);
+                    
+                    return response()->json([
+                        'success' => true,
+                        'explanation' => $explanation,
+                        'message_id' => $messageId
+                    ]);
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid response format from ChatGPT API'
+                    ], 500);
+                }
+            } else {
+                $errorMessage = 'ChatGPT API request failed';
+                if ($response->json()) {
+                    $errorData = $response->json();
+                    if (isset($errorData['error']['message'])) {
+                        $errorMessage = 'ChatGPT API Error: ' . $errorData['error']['message'];
+                    }
+                }
+                
+                \Log::error('ChatGPT API call failed: ' . $errorMessage);
+                
+                return response()->json([
+                    'success' => false,
+                    'message' => $errorMessage
+                ], $response->status());
+            }
+
+        } catch (\Exception $e) {
+            \Log::error('ChatGPT API exception: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal server error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

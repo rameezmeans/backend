@@ -2157,3 +2157,6 @@ Route::post('add_auto_searched_file_stage_options', [App\Http\Controllers\FilesA
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// ChatGPT API Routes
+Route::post('chatgpt/explain-message', [App\Http\Controllers\FilesAPIController::class, 'explainMessageWithChatGPT']);
