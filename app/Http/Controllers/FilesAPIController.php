@@ -2466,7 +2466,7 @@ class FilesAPIController extends Controller
                 'Authorization' => 'Bearer ' . $apiKey,
                 'Content-Type' => 'application/json'
             ])->post($apiUrl, [
-                'model' => 'gpt-4o-mini',
+                'model' => env('MODEL'),
                 'messages' => [
                     [
                         'role' => 'system',
@@ -2605,7 +2605,7 @@ class FilesAPIController extends Controller
                 'Authorization' => 'Bearer ' . $apiKey,
                 'Content-Type' => 'application/json'
             ])->post($apiUrl, [
-                'model' => 'gpt-4o-mini',
+                'model' => env('MODEL'),
                 'messages' => [
                     [
                         'role' => 'system',
@@ -2738,7 +2738,7 @@ class FilesAPIController extends Controller
                 'Authorization' => 'Bearer ' . $apiKey,
                 'Content-Type' => 'application/json'
             ])->post($apiUrl, [
-                'model' => 'gpt-4o-mini',
+                'model' => env('MODEL'),
                 'messages' => [
                     [
                         'role' => 'system',
