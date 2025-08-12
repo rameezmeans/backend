@@ -501,9 +501,7 @@
                   <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">@if(isset($account)) Update @else Add @endif</span></button>
                   @if(isset($account))
 
-                    @if(Auth::user()->is_admin())
                       <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{$account->id}}" type="button"><i class="pg-minus_circle"></i> <span class="bold">Delete</span></button>
-                    @endif
 
                   @endif
                 </div>
@@ -532,8 +530,6 @@
 
 
 @section('pagespecificscripts')
-
-@if(Auth::user()->is_admin())
 
 <script type="text/javascript">
 
@@ -574,7 +570,5 @@
     });
 
 </script>
-
-@endif
 
 @endsection

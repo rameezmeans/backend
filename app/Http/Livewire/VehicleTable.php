@@ -46,8 +46,6 @@ class VehicleTable extends LivewireDatatable
 
     public function rowClasses($row, $loop)
     {
-        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-vehicles')){
-            return 'redirect-click-vehicle '.$row->id;
-        }
+        return 'redirect-click-vehicle '.$row->id;
     }
 }

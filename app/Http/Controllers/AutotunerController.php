@@ -10,7 +10,6 @@ class AutotunerController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('adminOnly');
     }
 
     public function makeAututunerLogEntry( $tempFileID, $type, $message, $call, $response, $fileID = 0 ){

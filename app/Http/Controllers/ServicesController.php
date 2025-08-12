@@ -563,47 +563,30 @@ class ServicesController extends Controller
     public function index()
     {
 
-        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-services')){
-
-            $options = Service::orderBy('created_at', 'desc')
+        $options = Service::orderBy('created_at', 'desc')
             ->where('type', 'option')
             ->whereNull('subdealer_group_id')->get();
 
-            $stages = Service::orderBy('created_at', 'desc')
+        $stages = Service::orderBy('created_at', 'desc')
             ->where('type', 'tunning')
             ->whereNull('subdealer_group_id')->get();
 
-            if(Auth::user()->is_admin()){
-
-                $sharedServices = Service::orderBy('sorting', 'asc')
-                
-                ->join('services_subdealer_groups', 'services_subdealer_groups.service_id', '=', 'services.id' )
-                
-                ->select('*','services.id AS id',
-                'services.credits AS credits',
-                'services.created_at AS created_at'
-                )
-                
-                ->get();
-
-                $servicesNotNull = Service::orderBy('sorting', 'asc')->whereNotNull('subdealer_group_id')->get();
-        
-                $sharedServices = $servicesNotNull->merge($sharedServices);
-
-            }
-
-                if(Auth::user()->is_admin()){
-                    return view('services.services', ['options' => $options, 'stages' => $stages, 'sharedServices' => $sharedServices]);
-                }
-                
-                
-                return view('services.services', ['options' => $options, 'stages' => $stages]);
+        $sharedServices = Service::orderBy('sorting', 'asc')
             
-            }
+            ->join('services_subdealer_groups', 'services_subdealer_groups.service_id', '=', 'services.id' )
+            
+            ->select('*','services.id AS id',
+            'services.credits AS credits',
+            'services.created_at AS created_at'
+            )
+            
+            ->get();
 
-            else{
-                abort(404);
-            }
+        $servicesNotNull = Service::orderBy('sorting', 'asc')->whereNotNull('subdealer_group_id')->get();
+
+        $sharedServices = $servicesNotNull->merge($sharedServices);
+
+        return view('services.services', ['options' => $options, 'stages' => $stages, 'sharedServices' => $sharedServices]);
     }
 
     /**
@@ -614,20 +597,12 @@ class ServicesController extends Controller
     public function create()
     {
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
-
         $frontends = FrontEnd::all();
 
         return view('services.services_add_edit_subdealer', ['frontends' => $frontends]);
     }
 
     public function setCustomersComments(Request $request){
-
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
         
         $service = Service::findOrFail($request->service_id);
 
@@ -661,10 +636,6 @@ class ServicesController extends Controller
     }
 
     public function setCreditPrice(Request $request){
-
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
 
         $allValues = $request->all();
 

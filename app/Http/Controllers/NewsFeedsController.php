@@ -22,7 +22,6 @@ class NewsFeedsController extends Controller
     {
         $this->translationObj = new TranslationController();
         $this->middleware('auth');
-        $this->middleware('adminOnly');
     }
 
     public function addResellersText(Request $request) {

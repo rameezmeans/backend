@@ -14,7 +14,6 @@ class ProcessingSoftwaresController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        // $this->middleware('adminOnly');
     }
 
     /**
@@ -56,10 +55,7 @@ class ProcessingSoftwaresController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
-    {   
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+    {
 
         $validated = $request->validate([
             'name' => 'required|unique:processing_softwares|max:255|min:3',
@@ -243,10 +239,7 @@ class ProcessingSoftwaresController extends Controller
     }
 
     public function update(Request $request)
-    {   
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+    {
 
         $validated = $request->validate([
             'name' => 'required|max:255|min:3',
@@ -261,10 +254,7 @@ class ProcessingSoftwaresController extends Controller
     }
 
     public function delete(Request $request)
-    {   
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
+    {
 
         $ps = ProcessingSoftware::findOrFail($request->id);
         $ps->delete();

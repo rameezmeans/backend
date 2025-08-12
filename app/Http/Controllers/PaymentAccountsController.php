@@ -17,7 +17,6 @@ class PaymentAccountsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        // $this->middleware('adminOnly');
     }
     
     /**
@@ -28,14 +27,8 @@ class PaymentAccountsController extends Controller
     public function index()
     {
 
-        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-payment-accounts')){
-            
-            $accounts = PaymentAccount::whereNull('subdealer_group_id')->get();
-            return view('payment_accounts.index', ['accounts' => $accounts]);
-        }
-        else{
-            abort(404);
-        }
+        $accounts = PaymentAccount::whereNull('subdealer_group_id')->get();
+        return view('payment_accounts.index', ['accounts' => $accounts]);
     }
 
     /**
@@ -45,11 +38,6 @@ class PaymentAccountsController extends Controller
      */
     public function create()
     {
-
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
-
         return view('payment_accounts.create');
 
     }
@@ -62,10 +50,6 @@ class PaymentAccountsController extends Controller
      */
     public function store(Request $request)
     {
-
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
 
         $account = new PaymentAccount();
         $account->name = $request->name;
@@ -96,16 +80,9 @@ class PaymentAccountsController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-payment-accounts')){
-        
-            $account = PaymentAccount::where('id',$id)
+        $account = PaymentAccount::where('id',$id)
             ->whereNull('subdealer_group_id')
             ->first();
-            }
-        
-        else{
-            return abort(404);
-        }
 
         return view('payment_accounts.create', ['account' => $account]);
     }
@@ -120,9 +97,7 @@ class PaymentAccountsController extends Controller
     public function update(Request $request)
     {   
 
-        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-payment-accounts')){
-            
-            $account = PaymentAccount::where('id',$request->id)
+        $account = PaymentAccount::where('id',$request->id)
             ->whereNull('subdealer_group_id')
             ->first();
 
@@ -173,10 +148,6 @@ class PaymentAccountsController extends Controller
             $account->save();
 
             return redirect()->route('payment-accounts')->with('success', 'Account updated, successfully.');
-        }
-        else{
-            abort(404);
-        }
     }
 
     /**
@@ -188,9 +159,7 @@ class PaymentAccountsController extends Controller
     public function destroy(Request $request)
     {
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
+
 
         $account = PaymentAccount::findOrFail($request->id);
         $account->delete();

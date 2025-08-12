@@ -1205,10 +1205,6 @@ class FilesController extends Controller
 
     public function deleteFiles(Request $request){
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
-
         $ids = $request->ids;
         $files = File::whereIn('id', $ids)->get();
         
@@ -1363,11 +1359,7 @@ class FilesController extends Controller
     }
 
     public function multiDelete(Request $request){
-
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
-
+        
         $files = File::orderBy('created_at', 'desc')->get();
 
         return view('files.multi_delete', [ 'files' => $files ]);
@@ -1541,10 +1533,6 @@ class FilesController extends Controller
 
     public function flipDecodedMode(Request $request){
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
-
         $file = File::findOrFail($request->file_id);
 
         if($file->decoded_mode == 1){
@@ -1570,10 +1558,6 @@ class FilesController extends Controller
     }
     public function support($id){
 
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
-
         $requestFile = RequestFile::findOrFail($id);
         $file = File::findOrFail($requestFile->file_id);
 
@@ -1590,10 +1574,6 @@ class FilesController extends Controller
     }
 
     public function changeCheckingStatus(Request $request){
-
-        if(!Auth::user()->is_admin()){
-            return abort(404);
-        }
 
         $file = File::findOrFail($request->file_id);
 

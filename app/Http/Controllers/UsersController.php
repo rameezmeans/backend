@@ -29,7 +29,6 @@ class UsersController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        // $this->middleware('adminOnly');
     }
 
     public function updateTools(Request $request){
@@ -76,10 +75,6 @@ class UsersController extends Controller
 
     public function changeEngineerPermission(Request $request){
 
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
-
         if($request->switchStatus == 'true'){
             $new = new EngineersPermission();
             $new->permission = $request->permission;
@@ -95,10 +90,6 @@ class UsersController extends Controller
     }
 
     public function engineersPermissions($id){
-
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
 
         $engineer = User::findOrFail($id);
         
@@ -430,18 +421,8 @@ class UsersController extends Controller
     }
 
     public function Customers(){
-
-        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-customers')){
-
-
         $customers = get_customers();
-
         return view('groups.customers', ['customers' => $customers]);
-        }
-        
-        else{
-            abort(404);
-        }
     } 
 
     public function addCustomer(Request $request){

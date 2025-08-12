@@ -45,8 +45,6 @@
           <span class="bg-success icon-thumbnail"><i class="pg-home"></i></span>
         </li>
         
-        @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files'))
-
         <li class="m-t-30 ">
           <a href="{{ route('files') }}" class="detailed">
             <span class="title" style="width: 80% !important;">Files</span>
@@ -55,10 +53,6 @@
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
         </li>
 
-        @endif
-
-        @if(!Auth::user()->is_admin())
-
         <li class="m-t-30 ">
           <a href="{{ route('my-files') }}" class="detailed">
             <span class="title" style="width: 80% !important;">My Files</span>
@@ -66,11 +60,7 @@
           </a>
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
         </li>
-
-        @endif
         
-        @if(Auth::user()->is_admin())
-       
         <li class="m-t-30 ">
           <a href="javascript:;">
             <span class="title">Reports</span>
@@ -113,16 +103,12 @@
               <a href="{{ route('download-terms') }}" class="detailed">
                 <span class="title">Download Terms Docs</span>
               </a>
-              <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
+              <span class="icon-thumbnail bg-success"><i class="fa file"></i></span>
             </li>
 
           </ul>
         </li>
 
-        @else
-
-
-        @if(get_engineers_permission(Auth::user()->id, 'engineers-report'))
 
         <li class="m-t-30 ">
           <a href="{{ route('reports') }}" class="detailed">
@@ -131,20 +117,12 @@
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
         </li>
 
-        @endif
-
-        @if(get_engineers_permission(Auth::user()->id, 'feedback-report'))
-
         <li class="m-t-30 ">
           <a href="{{ route('feedback-reports') }}" class="detailed">
             <span class="title">Feedback Reports</span>
           </a>
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
         </li>
-
-        @endif
-
-        @if(get_engineers_permission(Auth::user()->id, 'credit-report'))
 
         <li class="m-t-30 ">
           <a href="{{ route('credits-reports') }}" class="detailed">
@@ -181,13 +159,6 @@
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
         </li>
 
-        
-
-        @endif
-
-        @endif
-
-        @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-transaction'))
         <li class="m-t-30 ">
           <a href="{{ route('credits') }}" class="detailed">
             <span class="title">Transactions</span>
@@ -195,10 +166,6 @@
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
         </li>
 
-        @endif
-
-        @if(Auth::user()->is_admin())
-        
         <li class="m-t-30 ">
           <a href="{{ route('original-files') }}" class="detailed">
             <span class="title">Original Files</span>
@@ -231,13 +198,6 @@
           </ul>
         </li>
 
-        @endif
-
-        @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-customers'))
-
-
-        @if(Auth::user()->is_admin())
-
         <li class="m-t-30 ">
           <a href="javascript:;">
             <span class="title">Customers</span>
@@ -258,33 +218,12 @@
           </ul>
         </li>
 
-        @else
-
-        <li class="m-t-30 ">
-          <a href="{{ route('customers') }}" class="detailed">
-            <span class="title">Customers</span>
-          </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
-        </li>
-
-        
-
-        @endif
-        @endif
-
-        @if(get_engineers_permission(Auth::user()->id, 'view-groups'))
-
         <li class="m-t-30 ">
           <a href="{{ route('groups') }}" class="detailed">
             <span class="title">Customer Groups</span>
           </a>
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
         </li>
-
-        @endif
-
-        @if(Auth::user()->is_admin())
-
 
         <li class="m-t-30 ">
           <a href="javascript:;">
@@ -301,7 +240,6 @@
               <a href="{{ route('services') }}">Services</a>
               <span class="icon-thumbnail">Se</span>
             </li>
-            @if(Auth::user()->is_admin())
             <li class="">
               <a href="{{ route('sorting-services') }}">Sorting Services</a>
               <span class="icon-thumbnail">Sr</span>
@@ -318,31 +256,22 @@
               <a href="{{ route('options-comments') }}">Options Comments</a>
               <span class="icon-thumbnail">Oc</span>
             </li>
-            @endif
           </ul>
         </li>
 
-        @else
-
-        @if(get_engineers_permission(Auth::user()->id, 'view-vehicles'))
-           <li class="m-t-30 ">
+        <li class="m-t-30 ">
           <a href="{{ route('vehicles') }}" class="detailed">
             <span class="title">Vehicles</span>
           </a>
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
         </li>
-        @endif
 
-        @if(get_engineers_permission(Auth::user()->id, 'view-services'))
-           <li class="m-t-30 ">
+        <li class="m-t-30 ">
           <a href="{{ route('services') }}" class="detailed">
             <span class="title">Servcies</span>
           </a>
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
         </li>
-        @endif
-
-        @if(get_engineers_permission(Auth::user()->id, 'view-payment-accounts'))
 
         <li class="m-t-30 ">
           <a href="{{ route('payment-accounts') }}" class="detailed">
@@ -350,12 +279,6 @@
           </a>
           <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
         </li>
-
-        @endif
-
-        @endif
-
-        @if(Auth::user()->is_admin())
 
         <li class="m-t-30 ">
             <a href="javascript:;">
@@ -575,9 +498,6 @@
           <span class="bg-success icon-thumbnail"><i class="pg-save"></i></span>
         </li> --}}
 
-        @endif
-
-        
       </ul>
       <div class="clearfix"></div>
     </div>

@@ -13,101 +13,82 @@ class GroupsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        // $this->middleware('adminOnly');
     }
     
     public function index(){
 
-        if( Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-groups') ){
-            
-            $ecuTechGroups = Group::whereNull('subdealer_group_id')->get();
-            $tuningXGroups = Group::where('front_end_id',2)->whereNull('subdealer_group_id')->get();
-            $etfGroups = Group::where('front_end_id',3)->whereNull('subdealer_group_id')->get();
-            // $subdGroups = Group::all();
+        $ecuTechGroups = Group::whereNull('subdealer_group_id')->get();
+        $tuningXGroups = Group::where('front_end_id',2)->whereNull('subdealer_group_id')->get();
+        $etfGroups = Group::where('front_end_id',3)->whereNull('subdealer_group_id')->get();
+        // $subdGroups = Group::all();
 
-            return view('groups.groups', [
-                'ecuTechGroups' => $ecuTechGroups,
-                'tuningXGroups' => $tuningXGroups,
-                'etfGroups' => $etfGroups,
-            ]);
-        }
-        else{
-            abort(404);
-        }
+        return view('groups.groups', [
+            'ecuTechGroups' => $ecuTechGroups,
+            'tuningXGroups' => $tuningXGroups,
+            'etfGroups' => $etfGroups,
+        ]);
+        
     }
 
     public function create(){
-
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
 
         return view('groups.groups_create_edit', ['frontends' =>  FrontEnd::all()]);
     }
 
     public function edit($id){
 
-        if( Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-groups') ){
+        $group = Group::where('id',$id)->first();
 
-                $group = Group::where('id',$id)->first();
-
-                if(!$group){
-                    abort(404);
-                }
-
-                if($group->test == 1){
-                    
-                    $stripeAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','stripe')->get();
-                    $paypalAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','paypal')->get();
-                    $vivaAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','viva')->get();
-
-                }
-                else{
-
-                    $stripeAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('test', 0)->where('type','stripe')->get();
-                    $paypalAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('test', 0)->where('type','paypal')->get();
-                    $vivaAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('test', 0)->where('type','viva')->get();
-
-                    
-                }
-                
-                $stripePaymentAccount = null;
-                $paypalPaymentAccount = null;
-                $vivaPaymentAccount = null;
-
-                if($group->stripe_payment_account_id){
-                    $stripePaymentAccount = PaymentAccount::findOrFail($group->stripe_payment_account_id);
-                }
-                
-                if($group->paypal_payment_account_id){
-                    $paypalPaymentAccount = PaymentAccount::findOrFail($group->paypal_payment_account_id);
-                }
-
-                if($group->viva_payment_account_id){
-                    $vivaPaymentAccount = PaymentAccount::findOrFail($group->viva_payment_account_id);
-                }
-
-                return view('groups.groups_create_edit', [ 
-                    'stripePaymentAccount' => $stripePaymentAccount, 
-                    'paypalPaymentAccount' => $paypalPaymentAccount,
-                    'vivaPaymentAccount' => $vivaPaymentAccount,
-                    'group' => $group, 
-                    'stripeAccounts' => $stripeAccounts ,
-                    'paypalAccounts' => $paypalAccounts,
-                    'vivaAccounts' => $vivaAccounts,
-                    'frontends' =>  FrontEnd::all()
-                ]);
-        }
-        else{
+        if(!$group){
             abort(404);
         }
+
+        if($group->test == 1){
+            
+            $stripeAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','stripe')->get();
+            $paypalAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','paypal')->get();
+            $vivaAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('type','viva')->get();
+
+        }
+        else{
+
+            $stripeAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('test', 0)->where('type','stripe')->get();
+            $paypalAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('test', 0)->where('type','paypal')->get();
+            $vivaAccounts = PaymentAccount::whereNull('subdealer_group_id')->where('test', 0)->where('type','viva')->get();
+
+            
+        }
+        
+        $stripePaymentAccount = null;
+        $paypalPaymentAccount = null;
+        $vivaPaymentAccount = null;
+
+        if($group->stripe_payment_account_id){
+            $stripePaymentAccount = PaymentAccount::findOrFail($group->stripe_payment_account_id);
+        }
+        
+        if($group->paypal_payment_account_id){
+            $paypalPaymentAccount = PaymentAccount::findOrFail($group->paypal_payment_account_id);
+        }
+
+        if($group->viva_payment_account_id){
+            $vivaPaymentAccount = PaymentAccount::findOrFail($group->viva_payment_account_id);
+        }
+
+        return view('groups.groups_create_edit', [ 
+            'stripePaymentAccount' => $stripePaymentAccount, 
+            'paypalPaymentAccount' => $paypalPaymentAccount,
+            'vivaPaymentAccount' => $vivaPaymentAccount,
+            'group' => $group, 
+            'stripeAccounts' => $stripeAccounts ,
+            'paypalAccounts' => $paypalAccounts,
+            'vivaAccounts' => $vivaAccounts,
+            'frontends' =>  FrontEnd::all()
+        ]);
+        
     }
 
     public function add(Request $request){
-
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
 
         $validated = $request->validate([
             'name' => 'required|unique:groups|max:255|min:3',
@@ -132,7 +113,7 @@ class GroupsController extends Controller
 
     public function update(Request $request){
 
-        if( Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-groups') ){
+       
 
             $group = Group::findOrFail($request->id);
             $group->name = $request->name;
@@ -173,21 +154,19 @@ class GroupsController extends Controller
             $group->save();
             
             return redirect()->route('groups')->with(['success' => 'Group updated, successfully.']);
-        }
-        else{
-            abort(404);
-        }
+        
+        
 
     }
 
     public function delete(Request $request)
     {
 
-        if( Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'delete-groups') ){
+        
             $group = Group::findOrFail($request->id);
             $group->delete();
             $request->session()->put('success', 'Group deleted, successfully.');
-        }
+        
 
     }
 }

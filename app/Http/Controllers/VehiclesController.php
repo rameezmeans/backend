@@ -23,30 +23,15 @@ class VehiclesController extends Controller
     {
         $this->translationObj = new TranslationController();
         $this->middleware('auth');
-        // $this->middleware('adminOnly');
     }
 
     public function index(){
-
-        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-vehicles')){
-
         $vehicles = Vehicle::all();
         return view('vehicles.vehicles', ['vehicles' => $vehicles]);
-
-        }
-        else{
-            abort(404);
-        }
     }
 
     public function liveVehicles(){
-
-        if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'view-vehicles')){
-            return view('vehicles.vehicles-live');
-        }
-        else{
-            abort(404);
-        }
+        return view('vehicles.vehicles-live');
     }
 
     public function addEngineerComment(Request $request){
@@ -82,10 +67,6 @@ class VehiclesController extends Controller
     }
 
     public function create(){
-
-        if(!Auth::user()->is_admin()){
-            abort(404);
-        }
 
         return view('vehicles.vehicles_create_edit');
     }

@@ -74,18 +74,10 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            //check user is admin or not        
-            if (Auth::user()->is_admin() == true || Auth::user()->is_head() == true || Auth::user()->is_engineer() == true) {
-                
-                if(!Auth::user()->subdealer_group_id){
-                    return $this->sendLoginResponse($request);
-                }
-                else{
-                    $this->guard()->logout();
-                    return $this->notAdmin($request);
-                }
+            if(!Auth::user()->subdealer_group_id){
+                return $this->sendLoginResponse($request);
             }
-            else {
+            else{
                 $this->guard()->logout();
                 return $this->notAdmin($request);
             }
