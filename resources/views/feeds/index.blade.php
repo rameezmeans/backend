@@ -47,6 +47,9 @@
                     <li class="nav-item">
                         <a href="#" data-toggle="tab" data-target="#slide3"><span>E-Files</span></a>
                       </li>
+                      <li class="nav-item">
+                        <a href="#" data-toggle="tab" data-target="#slide4"><span>CTF</span></a>
+                      </li>
                 </ul>
 
                 <div class="tab-content">
@@ -319,6 +322,105 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($newsFeedsEfiles as $feed)
+                                            <tr role="row" class="redirect-click" data-redirect="{{ route('edit-feed', $feed->id) }}">
+                                                <td class="v-align-middle semi-bold sorting_1">
+                                                    <p>{{$feed->title}}</p>
+                                                </td>
+                                                
+                                                <td class="v-align-middle">
+                                                    <p>{{$feed->created_at->diffForHumans()}}</p>
+                                                </td>
+                                                <td class="v-align-middle">
+                                                    <p><input data-feed_id={{$feed->id}} class="active" type="checkbox" data-init-plugin="switchery" @if($feed->active == 1) checked="checked" @endif onclick="status_change()"/></p>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane slide-left" id="slide4">
+
+                        <p>CTF Online File Search Status:<input data-frontend_id="3" class="online_search_active" type="checkbox" data-init-plugin="switchery" @if($etfOnlineStatus) checked="checked" @endif/></p>
+                        <p>CTF Maintenance Mode: <input data-frontend_id="3" class="maintenance_mode_active" type="checkbox" data-init-plugin="switchery" @if($etfMaintenanceMode) checked="checked" @endif/></p>
+
+                        <form class="form" role="form" method="POST" action="{{route('add-resellers-text')}}">
+                            @csrf
+                            
+                              <input name="id" type="hidden" value="3">
+
+                              @php
+                                $etfObj = \App\Models\FrontEnd::findOrFail(4);
+                            @endphp
+                           
+                            <div>
+                              <label>Reseller Text</label>
+                                <div class="form-group">
+                                    <textarea type="text" name="resellers_text" class="form-control">{{$etfObj->resellers_text}}</textarea>
+                                </div>
+                                @error('resellers_text')
+                                    <span class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group form-group-default required ">
+                                <label>Type</label>
+                                <select class="full-width" data-init-plugin="select2" name="type">
+                               
+                                    <option @if($etfObj->type == 'danger') selected @endif value="danger">Danger</option>
+                                    <option @if($etfObj->type == 'success') selected @endif value="success">Success</option>
+                                    <option @if($etfObj->type == 'info') selected @endif value="info">Info</option>
+                                
+                                </select>
+                            </div>
+                            
+                            @error('type')
+                            <span class="text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                            <div class="text-center m-t-40">                    
+                                <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
+                            </div>
+                        </form>
+
+                        <form class="form" role="form" method="POST" action="{{route('add-caution-text')}}">
+                            @csrf
+                            
+                              <input name="id" type="hidden" value="3">
+
+                              <div>
+                                <label>Caution Text</label>
+                                  <div class="form-group">
+                                      <textarea type="text" name="caution_text" class="form-control">{{$etfObj->caution_text}}</textarea>
+                                  </div>
+                                  @error('resellers_text')
+                                      <span class="text-danger" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                      </span>
+                                  @enderror
+                              </div>
+                              <div class="text-center m-t-40">                    
+                                <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
+                            </div>
+                        </form>
+
+                        <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
+                            <div>
+                                <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending">Title</th>
+                                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Date Created</th>
+                                            <th class="sorting" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Update: activate to sort column ascending" style="width: 100px;">Active</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($newsFeedsCtf as $feed)
                                             <tr role="row" class="redirect-click" data-redirect="{{ route('edit-feed', $feed->id) }}">
                                                 <td class="v-align-middle semi-bold sorting_1">
                                                     <p>{{$feed->title}}</p>

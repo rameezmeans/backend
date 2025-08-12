@@ -36,10 +36,16 @@ class MessageTemplatesController extends Controller
         ->where('front_end_id', 1)
         ->get();
 
+         $ctfTemplates = MessageTemplate::
+        whereNull('subdealer_group_id')
+        ->where('front_end_id', 4)
+        ->get();
+
         return view('message_templates.index', [
             'ecutechTemplates' => $ecutechTemplates,
             'tuningxTemplates' => $tuningxTemplates,
             'efilesTemplates' => $efilesTemplates,
+            'ctfTemplates' => $ctfTemplates,
         ]);
 
     }

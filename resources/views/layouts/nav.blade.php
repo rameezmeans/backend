@@ -110,54 +110,7 @@
         </li>
 
 
-        <li class="m-t-30 ">
-          <a href="{{ route('reports') }}" class="detailed">
-            <span class="title">Engineer Reports</span>
-          </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
-        </li>
-
-        <li class="m-t-30 ">
-          <a href="{{ route('feedback-reports') }}" class="detailed">
-            <span class="title">Feedback Reports</span>
-          </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
-        </li>
-
-        <li class="m-t-30 ">
-          <a href="{{ route('credits-reports') }}" class="detailed">
-            <span class="title">Credits Reports</span>
-          </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
-        </li>
-
-        <li class="m-t-30 ">
-          <a href="{{ route('softwares-report') }}" class="detailed">
-            <span class="title">Software Reports</span>
-          </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
-        </li>
-
-        <li class="m-t-30 ">
-          <a href="{{ route('countries-report') }}" class="detailed">
-            <span class="title">Countries Reports</span>
-          </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
-        </li>
-
-        <li class="m-t-30 ">
-          <a href="{{ route('services-report') }}" class="detailed">
-            <span class="title">Services Reports</span>
-          </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
-        </li>
-
-        <li class="m-t-30 ">
-          <a href="{{ route('database-import') }}" class="detailed">
-            <span class="title">Database Import</span>
-          </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
-        </li>
+        
 
         <li class="m-t-30 ">
           <a href="{{ route('credits') }}" class="detailed">
@@ -218,12 +171,7 @@
           </ul>
         </li>
 
-        <li class="m-t-30 ">
-          <a href="{{ route('groups') }}" class="detailed">
-            <span class="title">Customer Groups</span>
-          </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
-        </li>
+       
 
         <li class="m-t-30 ">
           <a href="javascript:;">

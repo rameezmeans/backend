@@ -53,6 +53,7 @@ class NewsFeedsController extends Controller
 
         $ecutechOnlineStatus = IntegerMeta::where('key', 'ecutech_online_status')->first()->value;
         $ecutechMaintenanceMode = IntegerMeta::where('key', 'ecutech_maintenance_mode')->first()->value;
+        $ctfMaintenanceMode = IntegerMeta::where('key', 'ctf_maintenance_mode')->first()->value;
         
         $tuningXOnlineStatus = IntegerMeta::where('key', 'tuningx_online_status')->first()->value;
         $tuningxMaintenanceMode = IntegerMeta::where('key', 'tuningx_maintenance_mode')->first()->value;
@@ -60,23 +61,30 @@ class NewsFeedsController extends Controller
         $etfOnlineStatus     = IntegerMeta::where('key', 'etf_online_status')->first()->value;
         $etfMaintenanceMode = IntegerMeta::where('key', 'etf_maintenance_mode')->first()->value;
 
+        $ctfOnlineStatus     = IntegerMeta::where('key', 'ctf_online_status')->first()->value;
+        $ctfMaintenanceMode = IntegerMeta::where('key', 'ctf_maintenance_mode')->first()->value;
+
         $newsFeedsECUTech = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 1)->get();
         $newsFeedsTuningX = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 2)->get();
         $newsFeedsEfiles = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 3)->get();
+        $newsFeedsCtf = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 3)->get();
 
         return view( 'feeds.index', [ 
 
             'ecutechOnlineStatus' => $ecutechOnlineStatus, 
             'tuningXOnlineStatus' => $tuningXOnlineStatus, 
             'etfOnlineStatus' => $etfOnlineStatus, 
+            'ctfOnlineStatus' => $ctfOnlineStatus, 
 
             'ecutechMaintenanceMode' => $ecutechMaintenanceMode, 
             'tuningxMaintenanceMode' => $tuningxMaintenanceMode, 
             'etfMaintenanceMode' => $etfMaintenanceMode, 
+            'ctfMaintenanceMode' => $ctfMaintenanceMode, 
 
             'newsFeedsECUTech' => $newsFeedsECUTech, 
             'newsFeedsTuningX' => $newsFeedsTuningX, 
-            'newsFeedsEfiles' =>$newsFeedsEfiles 
+            'newsFeedsEfiles' =>$newsFeedsEfiles,
+            'newsFeedsCtf' =>$newsFeedsCtf 
             ] );
     }
 

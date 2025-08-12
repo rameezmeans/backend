@@ -336,6 +336,10 @@ class CreditsController extends Controller
         $creditPriceEfiles = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 3)->first();
         $etfOnlineStatus = IntegerMeta::where('key', 'etf_online_status')->first()->value;
         // $zohoItemIDForEfiles = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 3)->first();
+
+        $creditPriceCTF = Price::where('label', 'credit_price')->whereNull('subdealer_group_id')->where('front_end_id', 4)->first();
+        $ctfOnlineStatus = IntegerMeta::where('key', 'ctf_online_status')->first()->value;
+        // $zohoItemIDForEfiles = Price::where('label', 'zoho_item_id')->whereNull('subdealer_group_id')->where('front_end_id', 3)->first();
         
         $evcCreditPrice = Price::where('label', 'evc_credit_price')->whereNull('subdealer_group_id')->first();
         
@@ -344,10 +348,12 @@ class CreditsController extends Controller
             'creditPriceECUTech' => $creditPriceECUTech, 
             'creditPriceTuningX' => $creditPriceTuningX, 
             'creditPriceEfiles' => $creditPriceEfiles, 
+            'creditPriceCTF' => $creditPriceCTF, 
 
             'ecutechOnlineStatus' => $ecutechOnlineStatus, 
             'tuningXOnlineStatus' => $tuningXOnlineStatus, 
             'etfOnlineStatus' => $etfOnlineStatus, 
+            'ctfOnlineStatus' => $ctfOnlineStatus, 
             
             'evcCreditPrice' => $evcCreditPrice
 

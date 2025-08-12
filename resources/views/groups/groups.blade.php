@@ -76,7 +76,7 @@
                                                 <p>{{$group->tax}}%</p>
                                             </td>
                                             <td class="v-align-middle semi-bold sorting_1">
-                                                <p><label class="label @if($group->front_end_id == 1) text-white bg-primary @elseif($group->front_end_id == 3) text-white bg-info @else text-black bg-warning @endif">{{$group->frontend->name}}</label></p>
+                                                <p><label class="label @if($group->front_end_id == 1) text-white bg-primary @elseif($group->front_end_id == 3) text-white bg-info  @elseif($group->front_end_id == 4) text-white bg-success @else text-black bg-warning @endif">{{$group->frontend->name}}</label></p>
                                               </td>
                                             <td class="v-align-middle semi-bold sorting_1">
                                                 <p>{{$group->created_at->diffForHumans()}}</p>

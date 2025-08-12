@@ -23,7 +23,8 @@ class ReminderManagerController extends Controller
         $ecuTechManager = $this->getManager(1);
         $tuningxManager = $this->getManager(2);
         $efilsManager = $this->getManager(3);
-        return view('reminder_manager.index', ['efilsManager' => $efilsManager, 'ecuTechManager' => $ecuTechManager, 'tuningxManager' => $tuningxManager ]);
+        $ctfManager = $this->getManager(3);
+        return view('reminder_manager.index', ['efilsManager' => $efilsManager, 'ecuTechManager' => $ecuTechManager, 'tuningxManager' => $tuningxManager, 'ctfManager' => $ctfManager ]);
     }
 
     public function setStatus(Request $request){

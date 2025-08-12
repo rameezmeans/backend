@@ -167,6 +167,49 @@
                   </div>
                 </div>
 
+                <div class="card card-transparent m-t-20">
+                  <div class="card-header ">
+                      <div class="card-title">
+                       
+                        <h5>
+                          Unit Credit Price For EFT
+                        </h5>
+                      
+                      </div>
+                      
+                      <div class="clearfix"></div>
+                  </div>
+                  <div class="card-body">
+                    <form class="" role="form" method="POST" action="{{route('update-price-efiles')}}" enctype="multipart/form-data">
+                      @csrf
+                     
+                      <div class="form-group form-group-default required ">
+                        <label>Price in Euros</label>
+                        <input value="@if(isset($creditPriceCTF)){{ $creditPriceCTF->value }}@endif"  name="credit_price" type="text" class="form-control" required>
+                      </div>
+                      @error('credit_price')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+
+                      <div class="form-group form-group-default required ">
+                        <label>Zoho Item ID For EFT</label>
+                        <input value="@if(isset($creditPriceCTF)){{ $creditPriceCTF->zoho_item_id }}@endif"  name="zoho_item_id" type="text" class="form-control" required>
+                      </div>
+                      @error('zoho_item_id')
+                        <span class="text-danger" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+
+                      <div class="text-center m-t-20">                    
+                        <button class="btn btn-success btn-cons m-b-10" type="submit"><i class="pg-plus_circle"></i> <span class="bold">Update</span></button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+
               </div>
               {{-- <div class="tab-pane slide-left" id="slide3">
               

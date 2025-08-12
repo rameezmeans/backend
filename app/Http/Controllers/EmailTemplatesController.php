@@ -31,11 +31,16 @@ class EmailTemplatesController extends Controller
         ->where('front_end_id', 1)
         ->get();
 
+         $ctfhTemplates = EmailTemplate::whereNull('subdealer_group_id')
+        ->where('front_end_id', 4)
+        ->get();
+
         return view('email_templates.index',
         [
             'ecutechTemplates' => $ecutechTemplates,
             'tuningxTemplates' => $tuningxTemplates,
             'efilesTemplates' => $efilesTemplates,
+            'ctfhTemplates' => $ctfhTemplates,
         ]);
     }
 

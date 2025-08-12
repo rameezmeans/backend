@@ -2390,6 +2390,10 @@ class FilesController extends Controller
                     $btn = '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
                 }
 
+                else if($frontEndID == 4){
+                    $btn = '<span class="label bg-success text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+                }
+
                 return $btn;
 
             })

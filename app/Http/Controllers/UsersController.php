@@ -339,7 +339,8 @@ class UsersController extends Controller
 
         if ($request->filled('from_date') && $request->filled('to_date')) {
 
-            $data = $data->whereBetween('created_at', [$request->from_date, $request->to_date]);
+            $data = $data->whereDate('created_at', '>=', $request->from_date)
+            ->whereDate('created_at', '<=', $request->to_date);
 
         }
 
@@ -363,6 +364,9 @@ class UsersController extends Controller
             }
             else if($frontEndID == 3){
                 $btn = '<span class="label bg-info text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
+            }
+            else if($frontEndID == 4){
+                $btn = '<span class="label bg-success text-white">'.FrontEnd::findOrFail($frontEndID)->name.'</span>';
             }
 
             return $btn;
