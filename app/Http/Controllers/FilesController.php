@@ -671,6 +671,18 @@ class FilesController extends Controller
             }
 
         }
+        else if($file->front_end_id == 4){
+            
+            if($file->on_dev == 1){
+                $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
+            }
+            else{
+
+                
+                $attachment->move(public_path('/../../ctf/public'.$file->file_path),$newFileName);
+            }
+
+        }
 
         else{
 
@@ -1646,6 +1658,18 @@ class FilesController extends Controller
                 }
                 else{
                     $attachment->move(public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path),$fileName);
+                }
+
+            }
+            else if($file->front_end_id == 4){
+
+                // $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../stagingportaletuningfiles/public/'.$file->file_path),$fileName);
+                }
+                else{
+                    $attachment->move(public_path('/../../ctf/public/'.$file->file_path),$fileName);
                 }
 
             }
@@ -3088,6 +3112,21 @@ class FilesController extends Controller
             }
 
         }
+        else if($file->front_end_id == 4){
+
+            // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+
+            if($file->on_dev == 1){
+
+                $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$autoTunerEncryptedFile->name;
+
+            }
+            else{
+
+                $file_path = public_path('/../../ctf/public/'.$file->file_path).$autoTunerEncryptedFile->name;
+            }
+
+        }
         else{
 
             if($file->on_dev == 1){
@@ -3146,6 +3185,21 @@ class FilesController extends Controller
             else{
 
                 $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$magicEncryptedFile->name;
+            }
+
+        }
+        else if($file->front_end_id == 4){
+
+            // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+
+            if($file->on_dev == 1){
+
+                $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$magicEncryptedFile->name;
+
+            }
+            else{
+
+                $file_path = public_path('/../../ctf/public/'.$file->file_path).$magicEncryptedFile->name;
             }
 
         }
@@ -3216,6 +3270,21 @@ class FilesController extends Controller
                     else{
 
                         $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$fileNameEncoded;
+                    }
+
+                }
+                else if($file->front_end_id == 4){
+
+                    // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
+
+                    if($file->on_dev == 1){
+
+                        $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$fileNameEncoded;
+
+                    }
+                    else{
+
+                        $file_path = public_path('/../../ctf/public/'.$file->file_path).$fileNameEncoded;
                     }
 
                 }
@@ -3297,6 +3366,34 @@ class FilesController extends Controller
                 }
 
             }
+            else if($file->front_end_id == 4){
+
+                // dd($file->api);
+
+                // $file_path = public_path('/../../portal/public/'.$file->file_path).$finalFileName;
+
+                if($file->on_dev == 1){
+
+                    $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$finalFileName;
+
+                }
+                else{
+
+                    if($file->api == 0){
+
+                        $file_path = public_path('/../../ctf/public/'.$file->file_path).$finalFileName;
+                    }
+                    else if($file->api == 1){
+                        
+                        $file_path = public_path('/public/'.$file->file_path).$finalFileName;
+
+                        
+                    }
+
+                    // dd($file_path);
+                }
+
+            }
             else{
 
                 if($file->on_dev == 1){
@@ -3351,6 +3448,21 @@ class FilesController extends Controller
                 }
                 else{
                     $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path);
+                }
+            }
+        }
+        else if($file->front_end_id == 4){
+            if($file->subdealer_group_id){
+                $path = public_path('/../../subportal/public'.$file->file_path);
+            }
+            else{
+
+                if($file->on_dev == 1){
+                    $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path);
+                
+                }
+                else{
+                    $path = public_path('/../../ctf/public'.$file->file_path);
                 }
             }
         }
@@ -4058,6 +4170,21 @@ class FilesController extends Controller
                     }
                 }
             }
+            else if($file->front_end_id == 4){
+                
+                if($file->subdealer_group_id){
+                    $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName);
+                }
+                else{
+
+                    if($file->on_dev == 1){
+                        $attachment->move(public_path('/../../stagingportaletuningfiles/public/'.$file->file_path),$fileName);
+                    }
+                    else{
+                        $attachment->move(public_path('/../../ctf/public/'.$file->file_path),$fileName);
+                    }
+                }
+            }
             else{
 
                 if($file->on_dev == 1){
@@ -4348,6 +4475,17 @@ class FilesController extends Controller
                 }
 
             }
+            else if($file->front_end_id == 4){
+                // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+
+                if($file->on_dev == 1){
+                    $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
+                }
+                else{
+                    $attachment->move(public_path('/../../ctf/public'.$file->file_path),$newFileName);
+                }
+
+            }
             else if($file->front_end_id == 2){
 
                 if($file->on_dev == 1){
@@ -4392,6 +4530,17 @@ class FilesController extends Controller
                     }
     
                 }
+                else if($file->front_end_id == 4){
+                    $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
+    
+                    if($file->on_dev == 1){
+                        $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
+                    }
+                    else{
+                        $attachment->move(public_path('/../../ctf/public'.$file->file_path),$newFileName);
+                    }
+    
+                }
                 else if($file->front_end_id == 2){
     
                     if($file->on_dev == 1){
@@ -4432,6 +4581,19 @@ class FilesController extends Controller
                     }
                     else{
                         $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path).$newFileName;
+                    }
+
+                }
+                else if($file->front_end_id == 4){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../ctf/public'.$file->file_path).$newFileName;
                     }
 
                 }
@@ -4529,6 +4691,19 @@ class FilesController extends Controller
                     }
 
                 }
+                else if($file->front_end_id == 4){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../ctf/public'.$file->file_path).$newFileName;
+                    }
+
+                }
                 else{
 
                     if($file->on_dev == 1){
@@ -4581,6 +4756,19 @@ class FilesController extends Controller
                     }
                     else{
                         $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path).$newFileName;
+                    }
+
+                }
+                else if($file->front_end_id == 4){
+
+                    // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
+                    
+                    if($file->on_dev == 1){
+                        
+                        $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
+                    }
+                    else{
+                        $path = public_path('/../../ctf/public'.$file->file_path).$newFileName;
                     }
 
                 }
