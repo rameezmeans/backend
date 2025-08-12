@@ -8368,9 +8368,18 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       // Reset tone selection to default
       $('#modalToneSelect').val('professional');
       
+      // Disable the modify button initially
+      $('#askChatGPTBtn').prop('disabled', true);
+      
       // Show loading state in the explanation field
       $('#modalChatGPTExplanation').html('<div class="text-center"><i class="fa fa-spinner fa-spin"></i> Analyzing client message...</div>');
       
+      // Add input event handler for Engineer's Reply field
+      $('#modalUserPrompt').on('input', function() {
+        const hasText = $(this).val().trim().length > 0;
+        $('#askChatGPTBtn').prop('disabled', !hasText);
+      });
+
       // Send client message to ChatGPT API for explanation
       $.ajax({
         url: "/api/chatgpt/explain-message",
@@ -8412,6 +8421,9 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       $btn.html('<i class="fa fa-spinner fa-spin"></i> Processing...');
       $btn.prop('disabled', true);
       
+      // Show loading state in the response field
+      $('#modalChatGPTResponse').html('<div class="text-center"><i class="fa fa-spinner fa-spin"></i> Modifying reply with ChatGPT...</div>');
+      
       // Send engineer's reply to ChatGPT API for tone modification
       $.ajax({
         url: "/api/chatgpt/modify-reply",
@@ -8426,13 +8438,13 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         success: function(response) {
           if (response.success) {
-            $('#modalChatGPTResponse').text(response.modified_reply).removeClass('text-danger');
+            $('#modalChatGPTResponse').val(response.modified_reply).removeClass('text-danger');
           } else {
-            $('#modalChatGPTResponse').text('Error: ' + (response.message || 'Failed to modify reply')).addClass('text-danger');
+            $('#modalChatGPTResponse').val('Error: ' + (response.message || 'Failed to modify reply')).addClass('text-danger');
           }
         },
         error: function(xhr, status, error) {
-          $('#modalChatGPTResponse').text('Error: Failed to connect to ChatGPT API. Please try again.').addClass('text-danger');
+          $('#modalChatGPTResponse').val('Error: Failed to connect to ChatGPT API. Please try again.').addClass('text-danger');
           console.error('ChatGPT API Error:', error);
         },
         complete: function() {
@@ -8468,7 +8480,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
           </div>
           <div class="col-md-6">
             <label><strong>ChatGPT Explanation:</strong></label>
-            <div class="form-control" style="min-height: 100px; max-height: 150px; overflow-y: auto; background-color: #f8f9fa;" id="modalChatGPTExplanation" readonly placeholder="ChatGPT will explain the client's message here..."></div>
+            <div class="form-control" style="min-height: 100px; max-height: 150px; overflow-y: auto; background-color: #ffffff; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.5;" id="modalChatGPTExplanation" readonly placeholder="ChatGPT will explain the client's message here..."></div>
           </div>
         </div>
         <div class="row m-t-20">
@@ -8491,16 +8503,16 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         <div class="row m-t-20">
           <div class="col-12">
             <label><strong>ChatGPT Modified Reply:</strong></label>
-            <textarea class="form-control" style="min-height: 200px;" id="modalChatGPTResponse" placeholder="ChatGPT will modify your reply according to the selected tone..." readonly></textarea>
+            <textarea class="form-control" style="min-height: 200px; background-color: #ffffff; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.5;" id="modalChatGPTResponse" placeholder="ChatGPT will modify your reply according to the selected tone..." readonly></textarea>
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="askChatGPTBtn">
-          <i class="fa fa-magic"></i> Modify Reply with ChatGPT
-        </button>
-      </div>
+              <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="askChatGPTBtn" disabled>
+            <i class="fa fa-magic"></i> Modify Reply with ChatGPT
+          </button>
+        </div>
     </div>
   </div>
 </div>

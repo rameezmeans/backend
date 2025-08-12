@@ -2434,15 +2434,21 @@ class FilesAPIController extends Controller
             $messageId = $request->message_id;
 
             // Create prompt for ChatGPT
-            $prompt = "Please analyze and explain the following client message in a clear, professional manner. " .
+            $prompt = "IMPORTANT: You MUST provide a detailed explanation. Do not return empty responses.\n\n" .
+                     "Please analyze and explain the following client message in a clear, professional manner. " .
                      "Focus on understanding the client's needs, any technical requirements, and provide context " .
                      "that would help an engineer respond appropriately.\n\n" .
                      "Client Message: " . $clientMessage . "\n\n" .
-                     "Please provide a concise explanation that includes:\n" .
+                     "You MUST provide a detailed explanation that includes:\n" .
                      "1. What the client is asking for\n" .
                      "2. Any technical details mentioned\n" .
                      "3. The urgency or priority level\n" .
-                     "4. Suggested approach for the engineer";
+                     "4. Suggested approach for the engineer\n\n" .
+                     "If the client message is unclear, explain what additional information might be needed. " .
+                     "Always provide a helpful analysis regardless of the message content.";
+
+            // Log the prompt being sent
+            \Log::info('ChatGPT Prompt for message ID ' . $messageId . ': ' . $prompt);
 
             // ChatGPT API configuration
             $apiKey = env('OPENAI_API_KEY');
@@ -2460,29 +2466,40 @@ class FilesAPIController extends Controller
                 'Authorization' => 'Bearer ' . $apiKey,
                 'Content-Type' => 'application/json'
             ])->post($apiUrl, [
-                'model' => 'gpt-3.5-turbo',
+                'model' => 'gpt-4o-mini',
                 'messages' => [
                     [
                         'role' => 'system',
-                        'content' => 'You are a helpful assistant that analyzes client messages and provides clear explanations for engineers.'
+                        'content' => 'You are a helpful assistant that analyzes client messages and provides clear explanations for engineers. Always provide a detailed explanation.'
                     ],
                     [
                         'role' => 'user',
                         'content' => $prompt
                     ]
                 ],
-                'max_tokens' => 500,
-                'temperature' => 0.7
+                'max_tokens' => 500
             ]);
 
             if ($response->successful()) {
                 $responseData = $response->json();
                 
+                // Log the full response for debugging
+                \Log::info('ChatGPT API Response: ' . json_encode($responseData));
+                
                 if (isset($responseData['choices'][0]['message']['content'])) {
                     $explanation = $responseData['choices'][0]['message']['content'];
                     
+                    // Check if explanation is empty
+                    if (empty(trim($explanation))) {
+                        \Log::warning('ChatGPT returned empty explanation for message ID: ' . $messageId);
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'ChatGPT returned an empty explanation. Please try again.'
+                        ], 500);
+                    }
+                    
                     // Log the successful API call
-                    \Log::info('ChatGPT API call successful for message ID: ' . $messageId);
+                    \Log::info('ChatGPT API call successful for message ID: ' . $messageId . ', Explanation length: ' . strlen($explanation));
                     
                     return response()->json([
                         'success' => true,
@@ -2490,6 +2507,7 @@ class FilesAPIController extends Controller
                         'message_id' => $messageId
                     ]);
                 } else {
+                    \Log::error('Invalid ChatGPT response format: ' . json_encode($responseData));
                     return response()->json([
                         'success' => false,
                         'message' => 'Invalid response format from ChatGPT API'
@@ -2514,6 +2532,146 @@ class FilesAPIController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('ChatGPT API exception: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal server error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Modify engineer's reply using ChatGPT based on selected tone
+     */
+    public function modifyReplyWithChatGPT(Request $request)
+    {
+        try {
+            // Validate request
+            $validator = Validator::make($request->all(), [
+                'client_message' => 'required|string|max:5000',
+                'engineer_reply' => 'required|string|max:5000',
+                'tone' => 'required|string|in:professional,aggressive,friendly,casual',
+                'message_id' => 'required|integer'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors()
+                ], 400);
+            }
+
+            $clientMessage = $request->client_message;
+            $engineerReply = $request->engineer_reply;
+            $selectedTone = $request->tone;
+            $messageId = $request->message_id;
+
+            // Create prompt for ChatGPT to modify the reply
+            $prompt = "IMPORTANT: You MUST provide a modified version of the engineer's reply. Do not return empty responses.\n\n" .
+                      "Please modify the following engineer's reply to match the selected tone while maintaining the technical accuracy and professionalism.\n\n" .
+                      "Client's Message: " . $clientMessage . "\n\n" .
+                      "Engineer's Original Reply: " . $engineerReply . "\n\n" .
+                      "Desired Tone: " . ucfirst($selectedTone) . "\n\n" .
+                      "Tone Guidelines:\n" .
+                      "- Professional: Formal, respectful, business-like, clear and concise\n" .
+                      "- Aggressive: Direct, assertive, firm, but still professional and not rude\n" .
+                      "- Friendly: Warm, approachable, helpful, encouraging\n" .
+                      "- Casual: Relaxed, conversational, informal but still informative\n\n" .
+                      "You MUST provide a modified reply that:\n" .
+                      "1. Maintains the technical accuracy of the original reply\n" .
+                      "2. Adapts the tone to match the selected style\n" .
+                      "3. Keeps the same meaning and information\n" .
+                      "4. Is appropriate for client communication\n" .
+                      "5. Is clear and understandable\n\n" .
+                      "Return ONLY the modified reply text, nothing else.";
+
+            // Log the prompt being sent
+            \Log::info('ChatGPT Modify Reply Prompt for message ID ' . $messageId . ': ' . $prompt);
+
+            // ChatGPT API configuration
+            $apiKey = env('OPENAI_API_KEY');
+            $apiUrl = 'https://api.openai.com/v1/chat/completions';
+
+            if (!$apiKey) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'ChatGPT API key not configured'
+                ], 500);
+            }
+
+            // Make request to ChatGPT API
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $apiKey,
+                'Content-Type' => 'application/json'
+            ])->post($apiUrl, [
+                'model' => 'gpt-4o-mini',
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You are a professional communication assistant that helps engineers modify their replies to match different tones while maintaining technical accuracy and professionalism.'
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $prompt
+                    ]
+                ],
+                'max_tokens' => 800
+            ]);
+
+            if ($response->successful()) {
+                $responseData = $response->json();
+                
+                // Log the full response for debugging
+                \Log::info('ChatGPT Modify Reply API Response: ' . json_encode($responseData));
+                
+                if (isset($responseData['choices'][0]['message']['content'])) {
+                    $modifiedReply = $responseData['choices'][0]['message']['content'];
+                    
+                    // Check if modified reply is empty
+                    if (empty(trim($modifiedReply))) {
+                        \Log::warning('ChatGPT returned empty modified reply for message ID: ' . $messageId);
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'ChatGPT returned an empty modified reply. Please try again.'
+                        ], 500);
+                    }
+                    
+                    // Log the successful API call
+                    \Log::info('ChatGPT Modify Reply API call successful for message ID: ' . $messageId . ', Modified reply length: ' . strlen($modifiedReply));
+                    
+                    return response()->json([
+                        'success' => true,
+                        'modified_reply' => $modifiedReply,
+                        'message_id' => $messageId,
+                        'tone_used' => $selectedTone
+                    ]);
+                } else {
+                    \Log::error('Invalid ChatGPT modify reply response format: ' . json_encode($responseData));
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid response format from ChatGPT API'
+                    ], 500);
+                }
+            } else {
+                $errorMessage = 'ChatGPT API request failed';
+                if ($response->json()) {
+                    $errorData = $response->json();
+                    if (isset($errorData['error']['message'])) {
+                        $errorMessage = 'ChatGPT API Error: ' . $errorData['error']['message'];
+                    }
+                }
+                
+                \Log::error('ChatGPT Modify Reply API call failed: ' . $errorMessage);
+                
+                return response()->json([
+                    'success' => false,
+                    'message' => $errorMessage
+                ], $response->status());
+            }
+
+        } catch (\Exception $e) {
+            \Log::error('ChatGPT Modify Reply API exception: ' . $e->getMessage());
             
             return response()->json([
                 'success' => false,
