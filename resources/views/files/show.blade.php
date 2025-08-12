@@ -8371,6 +8371,13 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       // Disable the modify button initially
       $('#askChatGPTBtn').prop('disabled', true);
       
+      // Hide language dropdown and copy button initially
+      $('#modalLanguageSelect').hide();
+      $('#modalCopyButton').hide();
+      
+      // Ensure language dropdown and copy button are hidden
+      toggleLanguageDropdown();
+      
       // Show loading state in the explanation field
       $('#modalChatGPTExplanation').html('<div class="text-center"><i class="fa fa-spinner fa-spin"></i> Analyzing client message...</div>');
       
@@ -8379,6 +8386,20 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         const hasText = $(this).val().trim().length > 0;
         $('#askChatGPTBtn').prop('disabled', !hasText);
       });
+      
+      // Add input event handler for ChatGPT Response field to show/hide language dropdown
+      $('#modalChatGPTResponse').on('input', function() {
+        toggleLanguageDropdown();
+      });
+      
+      // Debug: Check if copy button exists
+      console.log('Copy button exists:', $('#modalCopyButton').length > 0);
+      console.log('Copy button display:', $('#modalCopyButton').css('display'));
+      
+      // Force check for copy button visibility after a short delay
+      setTimeout(function() {
+        toggleLanguageDropdown();
+      }, 100);
 
       // Send client message to ChatGPT API for explanation
       $.ajax({
@@ -8439,13 +8460,19 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         success: function(response) {
           if (response.success) {
             $('#modalChatGPTResponse').val(response.modified_reply).removeClass('text-danger');
+            // Call toggle function to show/hide both language dropdown and copy button
+            toggleLanguageDropdown();
           } else {
             $('#modalChatGPTResponse').val('Error: ' + (response.message || 'Failed to modify reply')).addClass('text-danger');
+            // Call toggle function to hide both language dropdown and copy button
+            toggleLanguageDropdown();
           }
         },
         error: function(xhr, status, error) {
           $('#modalChatGPTResponse').val('Error: Failed to connect to ChatGPT API. Please try again.').addClass('text-danger');
           console.error('ChatGPT API Error:', error);
+          // Call toggle function to hide both language dropdown and copy button
+          toggleLanguageDropdown();
         },
         complete: function() {
           // Reset button
@@ -8454,6 +8481,143 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         }
       });
     });
+    
+    // Function to check and show/hide language dropdown and copy button
+    function toggleLanguageDropdown() {
+      const responseText = $('#modalChatGPTResponse').val();
+      console.log('toggleLanguageDropdown called, responseText:', responseText);
+      if (responseText && responseText.trim() !== '' && !responseText.startsWith('Error:')) {
+        $('#modalLanguageSelect').show();
+        $('#modalCopyButton').show();
+        console.log('Showing language dropdown and copy button');
+      } else {
+        $('#modalLanguageSelect').hide();
+        $('#modalCopyButton').hide();
+        console.log('Hiding language dropdown and copy button');
+      }
+    }
+    
+    // Language change handler for translation
+    $('#modalLanguageSelect').on('change', function() {
+      const selectedLanguage = $(this).val();
+      const currentText = $('#modalChatGPTResponse').val();
+      
+      // Don't translate if English is selected or if there's no text
+      if (selectedLanguage === 'en' || !currentText || currentText.trim() === '') {
+        return;
+      }
+      
+      // Don't translate if it's an error message
+      if (currentText.startsWith('Error:')) {
+        return;
+      }
+      
+      // Show loading state
+      const originalText = currentText;
+      $('#modalChatGPTResponse').val('Translating...');
+      
+      // Get the language name for the prompt
+      const languageName = $(this).find('option:selected').text().split('(')[0].trim();
+      
+      // Send translation request
+      $.ajax({
+        url: "/api/chatgpt/translate",
+        type: "POST",
+        data: {
+          "_token": "{{ csrf_token() }}",
+          "text": originalText,
+          "target_language": selectedLanguage,
+          "language_name": languageName,
+          "message_id": $('.chatgpt-btn').data('message-id')
+        },
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        success: function(response) {
+          if (response.success) {
+            $('#modalChatGPTResponse').val(response.translated_text).removeClass('text-danger');
+            // Call toggle function to ensure copy button is visible
+            toggleLanguageDropdown();
+          } else {
+            $('#modalChatGPTResponse').val(originalText);
+            alert('Translation failed: ' + (response.message || 'Unknown error'));
+            // Call toggle function to ensure copy button is visible
+            toggleLanguageDropdown();
+          }
+        },
+        error: function(xhr, status, error) {
+          $('#modalChatGPTResponse').val(originalText);
+          alert('Translation failed: Failed to connect to ChatGPT API. Please try again.');
+          console.error('Translation API Error:', error);
+          // Call toggle function to ensure copy button is visible
+          toggleLanguageDropdown();
+        }
+      });
+    });
+    
+    // Copy button click handler
+    $('#modalCopyButton').on('click', function() {
+      console.log('Copy button clicked!');
+      const textToCopy = $('#modalChatGPTResponse').val();
+      console.log('Text to copy:', textToCopy);
+      
+      if (textToCopy && textToCopy.trim() !== '') {
+        // Use modern clipboard API if available
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(textToCopy).then(function() {
+            // Show success feedback
+            const $btn = $(this);
+            const originalText = $btn.html();
+            $btn.html('<i class="fa fa-check"></i> Copied!');
+            $btn.removeClass('btn-outline-secondary').addClass('btn-success');
+            
+            // Reset button after 2 seconds
+            setTimeout(function() {
+              $btn.html(originalText);
+              $btn.removeClass('btn-success').addClass('btn-outline-secondary');
+            }, 2000);
+          }.bind(this)).catch(function(err) {
+            console.error('Failed to copy: ', err);
+            fallbackCopyTextToClipboard(textToCopy);
+          });
+        } else {
+          // Fallback for older browsers
+          fallbackCopyTextToClipboard(textToCopy);
+        }
+      }
+    });
+    
+    // Fallback copy function for older browsers
+    function fallbackCopyTextToClipboard(text) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          // Show success feedback
+          const $btn = $('#modalCopyButton');
+          const originalText = $btn.html();
+          $btn.html('<i class="fa fa-check"></i> Copied!');
+          $btn.removeClass('btn-outline-secondary').addClass('btn-success');
+          
+          // Reset button after 2 seconds
+          setTimeout(function() {
+            $btn.html(originalText);
+            $btn.removeClass('btn-success').addClass('btn-outline-secondary');
+          }, 2000);
+        }
+      } catch (err) {
+        console.error('Fallback copy failed: ', err);
+        alert('Copy failed. Please select the text manually and copy it.');
+      }
+      
+      document.body.removeChild(textArea);
+    }
 	  
 	  });
 	  
@@ -8502,7 +8666,43 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         </div>
         <div class="row m-t-20">
           <div class="col-12">
-            <label><strong>ChatGPT Modified Reply:</strong></label>
+            <div class="d-flex align-items-center mb-2">
+              <label class="mb-0 mr-3"><strong>ChatGPT Modified Reply:</strong></label>
+              <select class="form-control" style="width: auto; min-width: 150px; display: none;" id="modalLanguageSelect">
+                <option value="en">English</option>
+                <option value="es">Spanish (Español)</option>
+                <option value="fr">French (Français)</option>
+                <option value="de">German (Deutsch)</option>
+                <option value="it">Italian (Italiano)</option>
+                <option value="pt">Portuguese (Português)</option>
+                <option value="nl">Dutch (Nederlands)</option>
+                <option value="pl">Polish (Polski)</option>
+                <option value="ru">Russian (Русский)</option>
+                <option value="ar">Arabic (العربية)</option>
+                <option value="zh">Chinese (中文)</option>
+                <option value="ja">Japanese (日本語)</option>
+                <option value="ko">Korean (한국어)</option>
+                <option value="hi">Hindi (हिन्दी)</option>
+                <option value="tr">Turkish (Türkçe)</option>
+                <option value="sv">Swedish (Svenska)</option>
+                <option value="da">Danish (Dansk)</option>
+                <option value="no">Norwegian (Norsk)</option>
+                <option value="fi">Finnish (Suomi)</option>
+                <option value="cs">Czech (Čeština)</option>
+                <option value="hu">Hungarian (Magyar)</option>
+                <option value="ro">Romanian (Română)</option>
+                <option value="bg">Bulgarian (Български)</option>
+                <option value="hr">Croatian (Hrvatski)</option>
+                <option value="sk">Slovak (Slovenčina)</option>
+                <option value="sl">Slovenian (Slovenščina)</option>
+                <option value="et">Estonian (Eesti)</option>
+                <option value="lv">Latvian (Latviešu)</option>
+                <option value="lt">Lithuanian (Lietuvių)</option>
+              </select>
+              <button type="button" class="btn btn-outline-secondary btn-sm ml-2" id="modalCopyButton" style="display: none; margin-left: 8px;" title="Copy to clipboard">
+                <i class="fa fa-copy"></i> Copy
+              </button>
+            </div>
             <textarea class="form-control" style="min-height: 200px; background-color: #ffffff; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.5;" id="modalChatGPTResponse" placeholder="ChatGPT will modify your reply according to the selected tone..." readonly></textarea>
           </div>
         </div>

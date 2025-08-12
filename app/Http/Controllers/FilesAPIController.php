@@ -2679,4 +2679,138 @@ class FilesAPIController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Translate text using ChatGPT API
+     */
+    public function translateWithChatGPT(Request $request)
+    {
+        try {
+            // Validate request
+            $validator = Validator::make($request->all(), [
+                'text' => 'required|string|max:5000',
+                'target_language' => 'required|string|max:10',
+                'language_name' => 'required|string|max:100',
+                'message_id' => 'required|integer'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Validation failed',
+                    'errors' => $validator->errors()
+                ], 400);
+            }
+
+            $textToTranslate = $request->text;
+            $targetLanguage = $request->target_language;
+            $languageName = $request->language_name;
+            $messageId = $request->message_id;
+
+            // Create prompt for ChatGPT to translate the text
+            $prompt = "IMPORTANT: You MUST provide a translation. Do not return empty responses.\n\n" .
+                      "Please translate the following text to " . $languageName . " (" . $targetLanguage . ").\n\n" .
+                      "Text to translate: " . $textToTranslate . "\n\n" .
+                      "Translation requirements:\n" .
+                      "1. Maintain the same meaning and technical accuracy\n" .
+                      "2. Keep the same tone and style\n" .
+                      "3. Ensure the translation is natural and fluent in the target language\n" .
+                      "4. Preserve any technical terms appropriately\n" .
+                      "5. Maintain the same level of formality\n\n" .
+                      "Return ONLY the translated text in " . $languageName . ", nothing else.";
+
+            // Log the prompt being sent
+            \Log::info('ChatGPT Translation Prompt for message ID ' . $messageId . ': ' . $prompt);
+
+            // ChatGPT API configuration
+            $apiKey = env('OPENAI_API_KEY');
+            $apiUrl = 'https://api.openai.com/v1/chat/completions';
+
+            if (!$apiKey) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'ChatGPT API key not configured'
+                ], 500);
+            }
+
+            // Make request to ChatGPT API
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $apiKey,
+                'Content-Type' => 'application/json'
+            ])->post($apiUrl, [
+                'model' => 'gpt-4o-mini',
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You are a professional translator that provides accurate and natural translations while maintaining the original meaning, tone, and technical accuracy.'
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $prompt
+                    ]
+                ],
+                'max_tokens' => 1000
+            ]);
+
+            if ($response->successful()) {
+                $responseData = $response->json();
+                
+                // Log the full response for debugging
+                \Log::info('ChatGPT Translation API Response: ' . json_encode($responseData));
+                
+                if (isset($responseData['choices'][0]['message']['content'])) {
+                    $translatedText = $responseData['choices'][0]['message']['content'];
+                    
+                    // Check if translation is empty
+                    if (empty(trim($translatedText))) {
+                        \Log::warning('ChatGPT returned empty translation for message ID: ' . $messageId);
+                        return response()->json([
+                            'success' => false,
+                            'message' => 'ChatGPT returned an empty translation. Please try again.'
+                        ], 500);
+                    }
+                    
+                    // Log the successful API call
+                    \Log::info('ChatGPT Translation API call successful for message ID: ' . $messageId . ', Translation length: ' . strlen($translatedText));
+                    
+                    return response()->json([
+                        'success' => true,
+                        'translated_text' => $translatedText,
+                        'message_id' => $messageId,
+                        'target_language' => $targetLanguage,
+                        'language_name' => $languageName
+                    ]);
+                } else {
+                    \Log::error('Invalid ChatGPT translation response format: ' . json_encode($responseData));
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid response format from ChatGPT API'
+                    ], 500);
+                }
+            } else {
+                $errorMessage = 'ChatGPT API request failed';
+                if ($response->json()) {
+                    $errorData = $response->json();
+                    if (isset($errorData['error']['message'])) {
+                        $errorMessage = 'ChatGPT API Error: ' . $errorData['error']['message'];
+                    }
+                }
+                
+                \Log::error('ChatGPT Translation API call failed: ' . $errorMessage);
+                
+                return response()->json([
+                    'success' => false,
+                    'message' => $errorMessage
+                ], $response->status());
+            }
+
+        } catch (\Exception $e) {
+            \Log::error('ChatGPT Translation API exception: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal server error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }
