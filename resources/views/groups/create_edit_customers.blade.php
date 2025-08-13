@@ -66,7 +66,51 @@
               <div class="m-b-20">
                 <span class="label @if($customer->front_end_id == 1) text-white bg-primary @elseif($customer->front_end_id == 3) text-white bg-info @else text-black bg-warning @endif">{{$customer->frontend->name}}<span>
               </div>
+              
+              <!-- Ads Parameters Section -->
+              @if($customer->channel || $customer->campaign || $customer->ad_set || $customer->ad)
+              <div class="row m-b-20">
+                <div class="col-md-12">
+                  <h6 class="text-muted">Ads Parameters</h6>
+                  <div class="row">
+                    @if($customer->channel)
+                    <div class="col-md-3">
+                      <div class="form-group form-group-default">
+                        <label>Channel</label>
+                        <input value="{{ $customer->channel }}" type="text" class="form-control" readonly>
+                      </div>
+                    </div>
+                    @endif
+                    @if($customer->campaign)
+                    <div class="col-md-3">
+                      <div class="form-group form-group-default">
+                        <label>Campaign</label>
+                        <input value="{{ $customer->campaign }}" type="text" class="form-control" readonly>
+                      </div>
+                    </div>
+                    @endif
+                    @if($customer->ad_set)
+                    <div class="col-md-3">
+                      <div class="form-group form-group-default">
+                        <label>Ad Set</label>
+                        <input value="{{ $customer->ad_set }}" type="text" class="form-control" readonly>
+                      </div>
+                    </div>
+                    @endif
+                    @if($customer->ad)
+                    <div class="col-md-3">
+                      <div class="form-group form-group-default">
+                        <label>Ad</label>
+                        <input value="{{ $customer->ad }}" type="text" class="form-control" readonly>
+                      </div>
+                    </div>
+                    @endif
+                  </div>
+                </div>
+              </div>
               @endif
+              @endif
+              
               <form class="" role="form" method="POST" action="@if(isset($customer)){{route('update-customer')}}@else{{ route('add-customer') }}@endif" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                 @if(isset($customer))
@@ -531,40 +575,7 @@
                 </div>
               </form>
 
-              @if(isset($customer))
-
-              {{-- Display Ads Params as Labels --}}
-              @if($customer->ads_params)
-                <div class="m-b-20">
-                  <h6 class="m-b-10">Ads Parameters:</h6>
-                  <div class="ads-params-labels">
-                    @php
-                      $adsParams = json_decode($customer->ads_params, true);
-                    @endphp
-                    @if(is_array($adsParams))
-                      @foreach($adsParams as $key => $value)
-                        @if(is_string($value) || is_numeric($value))
-                          <span class="label label-info m-r-5 m-b-5" style="display: inline-block;">
-                            <strong>{{ $key }}:</strong> {{ $value }}
-                          </span>
-                        @elseif(is_array($value))
-                          <span class="label label-warning m-r-5 m-b-5" style="display: inline-block;">
-                            <strong>{{ $key }}:</strong> {{ json_encode($value) }}
-                          </span>
-                        @elseif(is_bool($value))
-                          <span class="label label-{{ $value ? 'success' : 'danger' }} m-r-5 m-b-5" style="display: inline-block;">
-                            <strong>{{ $key }}:</strong> {{ $value ? 'Yes' : 'No' }}
-                          </span>
-                        @endif
-                      @endforeach
-                    @else
-                      <span class="label label-default m-r-5 m-b-5">
-                        {{ $customer->ads_params }}
-                      </span>
-                    @endif
-                  </div>
-                </div>
-              @endif
+              
 
               <h5 class="m-t-50">
                 Update Customer Tools
