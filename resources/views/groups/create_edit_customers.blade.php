@@ -100,7 +100,7 @@
                         <strong>{{ $message }}</strong>
                     </span>
                   @enderror
-                  @else
+                @else
                   <div class="form-group form-group-default required">
                     <label>Password</label>
                     <input value=""  name="password" type="password" class="form-control" required>
@@ -533,9 +533,57 @@
 
               
 
-              <h5 class="m-t-50">
-                Update Customer Tools
-              </h5>
+              @if(isset($customer))
+
+              <!-- Ads Parameters Section -->
+                @if($customer->channel || $customer->campaign || $customer->ad_set || $customer->ad)
+                <div class="row m-b-20">
+                  <div class="col-md-12">
+                    <h6 class="text-muted">Ads Parameters</h6>
+                    <div class="row">
+                      @if($customer->channel)
+                      <div class="col-md-3">
+                        <div class="form-group form-group-default">
+                          <label>Channel</label>
+                          <input value="{{ $customer->channel }}" type="text" class="form-control" readonly>
+                        </div>
+                      </div>
+                      @endif
+                      @if($customer->campaign)
+                      <div class="col-md-3">
+                        <div class="form-group form-group-default">
+                          <label>Campaign</label>
+                          <input value="{{ $customer->campaign }}" type="text" class="form-control" readonly>
+                        </div>
+                      </div>
+                      @endif
+                      @if($customer->ad_set)
+                      <div class="col-md-3">
+                        <div class="form-group form-group-default">
+                          <label>Ad Set</label>
+                          <input value="{{ $customer->ad_set }}" type="text" class="form-control" readonly>
+                        </div>
+                      </div>
+                      @endif
+                      @if($customer->ad)
+                      <div class="col-md-3">
+                        <div class="form-group form-group-default">
+                          <label>Ad</label>
+                          <input value="{{ $customer->ad }}" type="text" class="form-control" readonly>
+                        </div>
+                      </div>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+                @endif
+              
+
+                              <h5 class="m-t-50">
+                  Update Customer Tools
+                </h5>
+
+                
 
               <form method="POST" action="{{ route('update-tools') }}">
 
@@ -609,8 +657,9 @@
               </div>
     
             </form>
+              @endif
 
-            @endif
+            
     
                 
             </div>
