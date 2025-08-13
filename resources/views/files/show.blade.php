@@ -124,6 +124,8 @@ margin-bottom: 10px !important;
     background-color: #e2deef !important;
   }
 
+
+
   </style>
 @endsection
 @section('content')
@@ -7216,39 +7218,131 @@ margin-bottom: 10px !important;
     const messagesBoxEdit = $("#sampleMessagesBoxEdit");
 
     editModal.on("keyup", function (e) {
+        const value = editModal.val();
+        const cursorPos = editModal[0].selectionStart;
+        const textBeforeCursor = value.substring(0, cursorPos);
+        
+        // Check if user typed "/" to trigger sample messages
         if (e.key === "/") {
-            $.ajax({
-                url: "/sample-messages/fetch",
-                method: "GET",
-                success: function (response) {
-                    messagesBoxEdit.empty().removeClass("do-none");
-
-                    if (response.length > 0) {
-                        response.forEach(function (item) {
-                            messagesBoxEdit.append(`
-                                <div class="sample-message-item-edit p-2 mb-1 border rounded bg-white" style="cursor:pointer;">
-                                    <strong>${item.title}</strong><br>
-                                    <small>${item.message}</small>
-                                </div>
-                            `);
-                        });
-
-                        // Click to insert message
-                        $(".sample-message-item-edit").on("click", function () {
-                            const message = $(this).find("small").text();
-                            editModal.val(message);
-                            messagesBoxEdit.addClass("do-none");
-                        });
-                    } else {
-                        messagesBoxEdit.html('<em>No sample messages found.</em>');
-                    }
-                },
-                error: function () {
-                    messagesBoxEdit.removeClass("do-none").html('<em>Error fetching sample messages.</em>');
-                }
-            });
+            showAllSampleMessagesEdit(editModal);
+        }
+        // Check if user is typing after "/" to filter messages
+        else if (textBeforeCursor.includes('/')) {
+            const searchQuery = textBeforeCursor.substring(textBeforeCursor.lastIndexOf('/') + 1);
+            if (searchQuery.length > 0) {
+                filterSampleMessagesByTitleEdit(editModal, searchQuery);
+            } else {
+                showAllSampleMessagesEdit(editModal);
+            }
+        }
+        // Hide popup if user presses Escape
+        else if (e.key === 'Escape') {
+            messagesBoxEdit.addClass("do-none");
         }
     });
+    
+    // Function to show all sample messages for edit modal
+    function showAllSampleMessagesEdit(textarea) {
+        $.ajax({
+            url: "/sample-messages/fetch",
+            method: "GET",
+            success: function (response) {
+                messagesBoxEdit.empty().removeClass("do-none");
+
+                if (response.length > 0) {
+                    response.forEach(function (item) {
+                        messagesBoxEdit.append(`
+                            <div class="sample-message-item-edit p-2 mb-1 border rounded bg-white" style="cursor:pointer;" data-title="${item.title}" data-message="${item.message}">
+                                <strong>${item.title}</strong><br>
+                                <small>${item.message}</small>
+                            </div>
+                        `);
+                    });
+
+                    // Click to insert message
+                    $(".sample-message-item-edit").on("click", function () {
+                        const message = $(this).data('message');
+                        const currentValue = textarea.val();
+                        const cursorPos = textarea[0].selectionStart;
+                        const textBeforeCursor = currentValue.substring(0, cursorPos);
+                        const textAfterCursor = currentValue.substring(cursorPos);
+                        
+                        // Find the position of the last "/" and replace everything from there
+                        const lastSlashIndex = textBeforeCursor.lastIndexOf('/');
+                        if (lastSlashIndex !== -1) {
+                            const newValue = currentValue.substring(0, lastSlashIndex) + message + textAfterCursor;
+                            textarea.val(newValue);
+                            // Set cursor position after the inserted message
+                            const newCursorPos = lastSlashIndex + message.length;
+                            textarea[0].setSelectionRange(newCursorPos, newCursorPos);
+                        }
+                        
+                        messagesBoxEdit.addClass("do-none");
+                        textarea.focus();
+                    });
+                } else {
+                    messagesBoxEdit.html('<em>No sample messages found.</em>');
+                }
+            },
+            error: function () {
+                messagesBoxEdit.removeClass("do-none").html('<em>Error fetching sample messages.</em>');
+            }
+        });
+    }
+    
+    // Function to filter sample messages by title for edit modal
+    function filterSampleMessagesByTitleEdit(textarea, searchQuery) {
+        $.ajax({
+            url: "/sample-messages/fetch",
+            method: "GET",
+            success: function (response) {
+                messagesBoxEdit.empty().removeClass("do-none");
+
+                // Filter messages by title (case-insensitive)
+                const filteredMessages = response.filter(function(item) {
+                    return item.title.toLowerCase().includes(searchQuery.toLowerCase());
+                });
+
+                if (filteredMessages.length > 0) {
+                    filteredMessages.forEach(function (item) {
+                        messagesBoxEdit.append(`
+                            <div class="sample-message-item-edit p-2 mb-1 border rounded bg-white" style="cursor:pointer;" data-title="${item.title}" data-message="${item.message}">
+                                <strong>${item.title}</strong><br>
+                                <small>${item.message}</small>
+                            </div>
+                        `);
+                    });
+
+                    // Click to insert message
+                    $(".sample-message-item-edit").on("click", function () {
+                        const message = $(this).data('message');
+                        const currentValue = textarea.val();
+                        const cursorPos = textarea[0].selectionStart;
+                        const textBeforeCursor = currentValue.substring(0, cursorPos);
+                        const textAfterCursor = currentValue.substring(cursorPos);
+                        
+                        // Find the position of the last "/" and replace everything from there
+                        const lastSlashIndex = textBeforeCursor.lastIndexOf('/');
+                        if (lastSlashIndex !== -1) {
+                            const newValue = currentValue.substring(0, lastSlashIndex) + message + textAfterCursor;
+                            textarea.val(newValue);
+                            // Set cursor position after the inserted message
+                            const newCursorPos = lastSlashIndex + message.length;
+                            textarea[0].setSelectionRange(newCursorPos, newCursorPos);
+                        }
+                        
+                        messagesBoxEdit.addClass("do-none");
+                        textarea.focus();
+                    });
+                } else {
+                    messagesBoxEdit.html('<em>No messages found matching "' + searchQuery + '"</em>');
+                }
+            },
+            error: function () {
+                messagesBoxEdit.removeClass("do-none").html('<em>Error fetching sample messages.</em>');
+            }
+        });
+    }
 
     // Optional: Hide on outside click
     $(document).on("click", function (e) {
@@ -7263,39 +7357,131 @@ margin-bottom: 10px !important;
     const messagesBox = $("#sampleMessagesBox");
 
     textarea.on("keyup", function (e) {
+        const value = textarea.val();
+        const cursorPos = textarea[0].selectionStart;
+        const textBeforeCursor = value.substring(0, cursorPos);
+        
+        // Check if user typed "/" to trigger sample messages
         if (e.key === "/") {
-            $.ajax({
-                url: "/sample-messages/fetch", // Route must be defined in Laravel
-                method: "GET",
-                success: function (response) {
-                    messagesBox.empty().removeClass("do-none");
-
-                    if (response.length > 0) {
-                        response.forEach(function (item) {
-                            messagesBox.append(`
-                                <div class="sample-message-item p-2 mb-1 border rounded bg-white" style="cursor:pointer;">
-                                    <strong>${item.title}</strong><br>
-                                    <small>${item.message}</small>
-                                </div>
-                            `);
-                        });
-
-                        // Click to insert message
-                        $(".sample-message-item").on("click", function () {
-                            const message = $(this).find("small").text();
-                            textarea.val(message);
-                            messagesBox.addClass("do-none");
-                        });
-                    } else {
-                        messagesBox.html('<em>No sample messages found.</em>');
-                    }
-                },
-                error: function () {
-                    messagesBox.removeClass("do-none").html('<em>Error fetching sample messages.</em>');
-                }
-            });
+            showAllSampleMessages(textarea);
+        }
+        // Check if user is typing after "/" to filter messages
+        else if (textBeforeCursor.includes('/')) {
+            const searchQuery = textBeforeCursor.substring(textBeforeCursor.lastIndexOf('/') + 1);
+            if (searchQuery.length > 0) {
+                filterSampleMessagesByTitle(textarea, searchQuery);
+            } else {
+                showAllSampleMessages(textarea);
+            }
+        }
+        // Hide popup if user presses Escape
+        else if (e.key === 'Escape') {
+            messagesBox.addClass("do-none");
         }
     });
+    
+    // Function to show all sample messages
+    function showAllSampleMessages(textarea) {
+        $.ajax({
+            url: "/sample-messages/fetch",
+            method: "GET",
+            success: function (response) {
+                messagesBox.empty().removeClass("do-none");
+
+                if (response.length > 0) {
+                    response.forEach(function (item) {
+                        messagesBox.append(`
+                            <div class="sample-message-item p-2 mb-1 border rounded bg-white" style="cursor:pointer;" data-title="${item.title}" data-message="${item.message}">
+                                <strong>${item.title}</strong><br>
+                                <small>${item.message}</small>
+                            </div>
+                        `);
+                    });
+
+                    // Click to insert message
+                    $(".sample-message-item").on("click", function () {
+                        const message = $(this).data('message');
+                        const currentValue = textarea.val();
+                        const cursorPos = textarea[0].selectionStart;
+                        const textBeforeCursor = currentValue.substring(0, cursorPos);
+                        const textAfterCursor = currentValue.substring(cursorPos);
+                        
+                        // Find the position of the last "/" and replace everything from there
+                        const lastSlashIndex = textBeforeCursor.lastIndexOf('/');
+                        if (lastSlashIndex !== -1) {
+                            const newValue = currentValue.substring(0, lastSlashIndex) + message + textAfterCursor;
+                            textarea.val(newValue);
+                            // Set cursor position after the inserted message
+                            const newCursorPos = lastSlashIndex + message.length;
+                            textarea[0].setSelectionRange(newCursorPos, newCursorPos);
+                        }
+                        
+                        messagesBox.addClass("do-none");
+                        textarea.focus();
+                    });
+                } else {
+                    messagesBox.html('<em>No sample messages found.</em>');
+                }
+            },
+            error: function () {
+                messagesBox.removeClass("do-none").html('<em>Error fetching sample messages.</em>');
+            }
+        });
+    }
+    
+    // Function to filter sample messages by title
+    function filterSampleMessagesByTitle(textarea, searchQuery) {
+        $.ajax({
+            url: "/sample-messages/fetch",
+            method: "GET",
+            success: function (response) {
+                messagesBox.empty().removeClass("do-none");
+
+                // Filter messages by title (case-insensitive)
+                const filteredMessages = response.filter(function(item) {
+                    return item.title.toLowerCase().includes(searchQuery.toLowerCase());
+                });
+
+                if (filteredMessages.length > 0) {
+                    filteredMessages.forEach(function (item) {
+                        messagesBox.append(`
+                            <div class="sample-message-item p-2 mb-1 border rounded bg-white" style="cursor:pointer;" data-title="${item.title}" data-message="${item.message}">
+                                <strong>${item.title}</strong><br>
+                                <small>${item.message}</small>
+                            </div>
+                        `);
+                    });
+
+                    // Click to insert message
+                    $(".sample-message-item").on("click", function () {
+                        const message = $(this).data('message');
+                        const currentValue = textarea.val();
+                        const cursorPos = textarea[0].selectionStart;
+                        const textBeforeCursor = currentValue.substring(0, cursorPos);
+                        const textAfterCursor = currentValue.substring(cursorPos);
+                        
+                        // Find the position of the last "/" and replace everything from there
+                        const lastSlashIndex = textBeforeCursor.lastIndexOf('/');
+                        if (lastSlashIndex !== -1) {
+                            const newValue = currentValue.substring(0, lastSlashIndex) + message + textAfterCursor;
+                            textarea.val(newValue);
+                            // Set cursor position after the inserted message
+                            const newCursorPos = lastSlashIndex + message.length;
+                            textarea[0].setSelectionRange(newCursorPos, newCursorPos);
+                        }
+                        
+                        messagesBox.addClass("do-none");
+                        textarea.focus();
+                    });
+                } else {
+                    messagesBox.html('<em>No messages found matching "' + searchQuery + '"</em>');
+                }
+            },
+            error: function () {
+                messagesBox.removeClass("do-none").html('<em>Error fetching sample messages.</em>');
+            }
+        });
+    }
 
     // Optional: hide on outside click
     $(document).on("click", function (e) {
@@ -8387,6 +8573,8 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         $('#askChatGPTBtn').prop('disabled', !hasText);
       });
       
+
+      
       // Add input event handler for ChatGPT Response field to show/hide language dropdown
       $('#modalChatGPTResponse').on('input', function() {
         toggleLanguageDropdown();
@@ -8722,6 +8910,10 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         console.log('Scroll restored');
       }, 100);
     });
+    
+
+
+
 	  
 	  });
 	  
@@ -8857,5 +9049,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
     </div>
   </div>
 </div>
+
+
 
 @endsection

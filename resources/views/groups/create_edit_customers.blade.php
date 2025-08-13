@@ -530,12 +530,10 @@
                   @endif
                 </div>
               </form>
-
               
-
               @if(isset($customer))
 
-                              <!-- Ads Parameters Section -->
+                <!-- Ads Parameters Section -->
                 @if($customer->channel || $customer->campaign || $customer->ad_set || $customer->ad)
                 <div class="row m-b-20">
                   <div class="col-md-12">
