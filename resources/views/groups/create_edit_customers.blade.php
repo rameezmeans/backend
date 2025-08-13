@@ -535,41 +535,51 @@
 
               @if(isset($customer))
 
-              <!-- Ads Parameters Section -->
+                              <!-- Ads Parameters Section -->
                 @if($customer->channel || $customer->campaign || $customer->ad_set || $customer->ad)
                 <div class="row m-b-20">
                   <div class="col-md-12">
-                    <h6 class="text-muted">Ads Parameters</h6>
+                    <h5 class="text-primary m-b-20">
+                      <i class="fa fa-bullhorn m-r-10"></i>Ads Parameters
+                    </h5>
                     <div class="row">
                       @if($customer->channel)
                       <div class="col-md-3">
-                        <div class="form-group form-group-default">
-                          <label>Channel</label>
-                          <input value="{{ $customer->channel }}" type="text" class="form-control" readonly>
+                        <div class="form-group">
+                          <label class="text-muted" style="font-size: 12px; font-weight: 600; text-transform: uppercase;">Channel</label>
+                          <div class="form-control-static" style="font-size: 14px; font-weight: 500; color: #333; padding: 8px 0; border-bottom: 1px solid #e0e0e0;">
+                            {{ $customer->channel }}
+                          </div>
                         </div>
                       </div>
                       @endif
                       @if($customer->campaign)
                       <div class="col-md-3">
-                        <div class="form-group form-group-default">
-                          <label>Campaign</label>
-                          <input value="{{ $customer->campaign }}" type="text" class="form-control" readonly>
+                        <div class="form-group">
+                          <label class="text-muted" style="font-size: 12px; font-weight: 600; text-transform: uppercase;">Campaign</label>
+                          <div class="form-control-static" style="font-size: 14px; font-weight: 500; color: #333; padding: 8px 0; border-bottom: 1px solid #e0e0e0;">
+                            {{ $customer->campaign }}
+                          </div>
                         </div>
                       </div>
                       @endif
                       @if($customer->ad_set)
                       <div class="col-md-3">
-                        <div class="form-group form-group-default">
-                          <label>Ad Set</label>
-                          <input value="{{ $customer->ad_set }}" type="text" class="form-control" readonly>
+                        <div class="form-group">
+                          <label class="text-muted" style="font-size: 12px; font-weight: 600; text-transform: uppercase;">Ad Set</label>
+                          <div class="form-control-static" style="font-size: 14px; font-weight: 500; color: #333; padding: 8px 0; border-bottom: 1px solid #e0e0e0;">
+                            {{ $customer->ad_set }}
+                          </div>
                         </div>
                       </div>
                       @endif
                       @if($customer->ad)
                       <div class="col-md-3">
-                        <div class="form-group form-group-default">
-                          <label>Ad</label>
-                          <input value="{{ $customer->ad }}" type="text" class="form-control" readonly>
+                        <div class="form-group">
+                          <label class="text-muted" style="font-size: 12px; font-weight: 600; text-transform: uppercase;">Ad</label>
+                          <div class="form-control-static" style="font-size: 14px; font-weight: 500; color: #333; padding: 8px 0; border-bottom: 1px solid #e0e0e0;">
+                            {{ $customer->ad }}
+                          </div>
                         </div>
                       </div>
                       @endif
