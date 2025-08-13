@@ -8396,6 +8396,9 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       console.log('Copy button exists:', $('#modalCopyButton').length > 0);
       console.log('Copy button display:', $('#modalCopyButton').css('display'));
       
+      // Hide explanation view button initially
+      $('#explanationViewBtn').hide();
+      
       // Force check for copy button visibility after a short delay
       setTimeout(function() {
         toggleLanguageDropdown();
@@ -8414,13 +8417,21 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         success: function(response) {
           if (response.success) {
             $('#modalChatGPTExplanation').text(response.explanation).removeClass('text-danger');
+            // Show the explanation view button if there's content
+            if (response.explanation && response.explanation.trim() !== '') {
+              $('#explanationViewBtn').show();
+            } else {
+              $('#explanationViewBtn').hide();
+            }
           } else {
             $('#modalChatGPTExplanation').text('Error: ' + (response.message || 'Failed to get explanation')).addClass('text-danger');
+            $('#explanationViewBtn').hide();
           }
         },
         error: function(xhr, status, error) {
           $('#modalChatGPTExplanation').text('Error: Failed to connect to ChatGPT API. Please try again.').addClass('text-danger');
           console.error('ChatGPT API Error:', error);
+          $('#explanationViewBtn').hide();
         }
       });
     });
@@ -8618,6 +8629,88 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       
       document.body.removeChild(textArea);
     }
+    
+    // Explanation view button click handler
+    $('#explanationViewBtn').on('click', function() {
+      console.log('Explanation view button clicked!');
+      
+      // Get the content from the main modal
+      const clientMessage = $('#modalEngineerNotes').text();
+      const explanationText = $('#modalChatGPTExplanation').text();
+      
+      // Populate the full explanation modal
+      $('#fullExplanationClientMessage').text(clientMessage);
+      $('#fullExplanationText').text(explanationText);
+      
+      // Show the full explanation modal
+      $('#fullExplanationModal').modal('show');
+    });
+    
+    // Copy explanation button click handler
+    $('#copyExplanationBtn').on('click', function() {
+      console.log('Copy explanation button clicked!');
+      const textToCopy = $('#fullExplanationText').text();
+      console.log('Text to copy:', textToCopy);
+      
+      if (textToCopy && textToCopy.trim() !== '') {
+        // Use modern clipboard API if available
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(textToCopy).then(function() {
+            // Show success feedback
+            const $btn = $(this);
+            const originalText = $btn.html();
+            $btn.html('<i class="fa fa-check"></i> Copied!');
+            $btn.removeClass('btn-outline-info').addClass('btn-success');
+            
+            // Reset button after 2 seconds
+            setTimeout(function() {
+              $btn.html(originalText);
+              $btn.removeClass('btn-success').addClass('btn-outline-info');
+            }, 2000);
+          }.bind(this)).catch(function(err) {
+            console.error('Failed to copy: ', err);
+            fallbackCopyExplanationToClipboard(textToCopy);
+          });
+        } else {
+          // Fallback for older browsers
+          fallbackCopyExplanationToClipboard(textToCopy);
+        }
+      }
+    });
+    
+    // Fallback copy function for explanation
+    function fallbackCopyExplanationToClipboard(text) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          // Show success feedback
+          const $btn = $('#copyExplanationBtn');
+          const originalText = $btn.html();
+          $btn.html('<i class="fa fa-check"></i> Copied!');
+          $btn.removeClass('btn-outline-info').addClass('btn-success');
+          
+          // Reset button after 2 seconds
+          setTimeout(function() {
+            $btn.html(originalText);
+            $btn.removeClass('btn-success').addClass('btn-outline-info');
+          }, 2000);
+        }
+      } catch (err) {
+        console.error('Fallback copy failed: ', err);
+        alert('Copy failed. Please select the text manually and copy it.');
+      }
+      
+      document.body.removeChild(textArea);
+    }
 	  
 	  });
 	  
@@ -8643,7 +8736,12 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
             <div class="form-control" style="min-height: 100px; max-height: 150px; overflow-y: auto; background-color: #ffffff; color: #000000; border: 1px solid #ced4da;" id="modalEngineerNotes" readonly></div>
           </div>
           <div class="col-md-6">
-            <label><strong>ChatGPT Explanation:</strong></label>
+            <label>
+              <strong>ChatGPT Explanation:</strong>
+              <button type="button" class="btn btn-outline-info btn-sm ml-2" id="explanationViewBtn" style="display: none;" title="View full explanation">
+                <i class="fa fa-eye"></i> View
+              </button>
+            </label>
             <div class="form-control" style="min-height: 100px; max-height: 150px; overflow-y: auto; background-color: #ffffff; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.5;" id="modalChatGPTExplanation" readonly placeholder="ChatGPT will explain the client's message here..."></div>
           </div>
         </div>
@@ -8713,6 +8811,38 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
             <i class="fa fa-magic"></i> Modify Reply with ChatGPT
           </button>
         </div>
+    </div>
+  </div>
+</div>
+
+<!-- Full Explanation Modal -->
+<div class="modal fade" id="fullExplanationModal" tabindex="-1" role="dialog" aria-labelledby="fullExplanationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="fullExplanationModalLabel">
+          <i class="fa fa-info-circle"></i> Full ChatGPT Explanation
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label><strong>Client's Message:</strong></label>
+          <div class="form-control" style="min-height: 80px; max-height: 120px; overflow-y: auto; background-color: #f8f9fa; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.5;" id="fullExplanationClientMessage" readonly></div>
+        </div>
+        <div class="form-group mt-3">
+          <label><strong>ChatGPT Explanation:</strong></label>
+          <div class="form-control" style="min-height: 300px; max-height: 500px; overflow-y: auto; background-color: #ffffff; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.6;" id="fullExplanationText" readonly></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-info" id="copyExplanationBtn">
+          <i class="fa fa-copy"></i> Copy Explanation
+        </button>
+      </div>
     </div>
   </div>
 </div>
