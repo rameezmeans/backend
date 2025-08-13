@@ -1075,7 +1075,7 @@ class ZohoController extends Controller
             // 'reference_number' => 'Refund-' . uniqid(),
         ];
 
-        // dd($creditNoteData);
+        dd($creditNoteData);
 
         $response = $client->post("https://www.zohoapis.com/books/v3/creditnotes", [
             'headers' => [

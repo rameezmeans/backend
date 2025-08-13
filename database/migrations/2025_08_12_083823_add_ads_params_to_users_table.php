@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->longText('ads_params')->nullable()->after('remember_token');
+            $table->string('channel')->nullable();
+            $table->string('campaign')->nullable();
+            $table->string('ad_set')->nullable();
+            $table->string('ad')->nullable();
         });
     }
 
@@ -22,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('ads_params');
+            
         });
     }
 };
