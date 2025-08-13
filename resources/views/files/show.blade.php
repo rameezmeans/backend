@@ -8711,6 +8711,17 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       
       document.body.removeChild(textArea);
     }
+    
+    // Simple scroll restoration for full explanation modal
+    $('#fullExplanationModal').on('hidden.bs.modal', function() {
+      console.log('Full explanation modal hidden, restoring scroll');
+      
+      // Simple approach: just ensure the main modal body is scrollable
+      setTimeout(function() {
+        $('#chatgptModal .modal-body').css('overflow-y', 'auto');
+        console.log('Scroll restored');
+      }, 100);
+    });
 	  
 	  });
 	  
@@ -8729,7 +8740,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="overflow-y: auto; max-height: 70vh;">
         <div class="row">
           <div class="col-md-6">
             <label><strong>Client's Message:</strong></label>
