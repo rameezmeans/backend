@@ -74,7 +74,17 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            if((!Auth::user()->subdealer_group_id &&( Auth::user()->role_id == 3 || Auth::user()->role_id == 2)) || Auth::user()->id == 3 ){
+            if (
+                Auth::user()->role_id != 4 &&
+                (
+                    (
+                        in_array(Auth::user()->role_id, [2, 3]) 
+                        && is_null(Auth::user()->subdealer_group_id)
+                    )
+                    || Auth::user()->id == 3
+                )
+            )
+            {
                 return $this->sendLoginResponse($request);
             }
             else{
