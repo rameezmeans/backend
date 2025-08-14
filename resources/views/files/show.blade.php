@@ -8598,9 +8598,8 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       // Reset tone selection to default
       $('#modalToneSelect').val('professional');
       
-      // Reset prompt selection and hide display
+      // Reset prompt selection
       $('#modalPromptSelect').val('');
-      $('#selectedPromptDisplay').hide();
       
       // Disable the modify button initially
       $('#askChatGPTBtn').prop('disabled', true);
@@ -8736,15 +8735,10 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
           // Add new options from the response
           if (response.prompts && response.prompts.data) {
             response.prompts.data.forEach(function(prompt) {
-              // Truncate prompt text for display in dropdown (max 100 characters)
-              const displayText = prompt.prompt.length > 100 ? 
-                prompt.prompt.substring(0, 100) + '...' : 
-                prompt.prompt;
-              
               $('#modalPromptSelect').append(
                 $('<option></option>')
                   .val(prompt.id)
-                  .text(displayText)
+                  .text(prompt.title)
                   .data('prompt-text', prompt.prompt)
               );
             });
@@ -8755,49 +8749,6 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         }
       });
     }
-    
-    // Handle ChatGPT prompt selection
-    $('#modalPromptSelect').on('change', function() {
-      const selectedPromptId = $(this).val();
-      const $promptDisplay = $('#selectedPromptDisplay');
-      const $promptText = $('#promptText');
-      
-      if (selectedPromptId) {
-        const selectedOption = $(this).find('option:selected');
-        const promptText = selectedOption.data('prompt-text');
-        
-        if (promptText) {
-          $promptText.text(promptText);
-          $promptDisplay.show();
-        }
-      } else {
-        $promptDisplay.hide();
-      }
-    });
-    
-    // Handle Use Prompt button click
-    $('#usePromptBtn').on('click', function() {
-      const selectedPromptId = $('#modalPromptSelect').val();
-      
-      if (selectedPromptId) {
-        const selectedOption = $('#modalPromptSelect').find('option:selected');
-        const promptText = selectedOption.data('prompt-text');
-        
-        if (promptText) {
-          // Show success feedback that prompt is selected
-          const $btn = $(this);
-          const originalText = $btn.html();
-          $btn.html('<i class="fa fa-check"></i> Prompt Selected!');
-          $btn.removeClass('btn-primary').addClass('btn-success');
-          
-          // Reset button after 2 seconds
-          setTimeout(function() {
-            $btn.html(originalText);
-            $btn.removeClass('btn-success').addClass('btn-primary');
-          }, 2000);
-        }
-      }
-    });
     
     // Handle Translate to English button click
     $('#translateToEnglishBtn').on('click', function() {
@@ -9501,17 +9452,6 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
             <select class="form-control" id="modalPromptSelect">
               <option value="">-- Select a prompt template --</option>
             </select>
-            <div id="selectedPromptDisplay" class="mt-2" style="display: none;">
-              <div class="alert alert-info">
-                <strong>Selected Prompt:</strong>
-                <div id="promptText" class="mt-1" style="white-space: pre-wrap;"></div>
-                <div class="mt-2">
-                  <button type="button" class="btn btn-primary btn-sm" id="usePromptBtn">
-                    <i class="fa fa-magic"></i> Select This Prompt
-                  </button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <div class="row m-t-20">

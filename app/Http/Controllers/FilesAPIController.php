@@ -2569,8 +2569,7 @@ class FilesAPIController extends Controller
                     'errors' => $validator->errors()
                 ], 400);
             }
-
-            $clientMessage = $request->client_message;
+            
             $engineerReply = $request->engineer_reply;
             $selectedTone = $request->tone;
             $selectedPrompt = $request->prompt;
