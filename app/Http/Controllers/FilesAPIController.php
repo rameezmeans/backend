@@ -2444,6 +2444,13 @@ class FilesAPIController extends Controller
                      "2. Any technical details mentioned\n" .
                      "3. The urgency or priority level\n" .
                      "4. Suggested approach for the engineer\n\n" .
+                     "CRITICAL FORMATTING REQUIREMENTS:\n" .
+                     "- Use only standard ASCII characters (no special symbols, emojis, or Unicode characters)\n" .
+                     "- Use proper paragraph breaks with double line breaks\n" .
+                     "- Use standard punctuation marks only (., ! ? : ; -)\n" .
+                     "- Format lists with numbers and periods (1. 2. 3.)\n" .
+                     "- Use clear, readable formatting without any decorative elements\n" .
+                     "- Ensure all text is properly escaped and safe for web display\n\n" .
                      "If the client message is unclear, explain what additional information might be needed. " .
                      "Always provide a helpful analysis regardless of the message content.";
 
@@ -2470,7 +2477,7 @@ class FilesAPIController extends Controller
                 'messages' => [
                     [
                         'role' => 'system',
-                        'content' => 'You are a helpful assistant that analyzes client messages and provides clear explanations for engineers. Always provide a detailed explanation.'
+                        'content' => 'You are a helpful assistant that analyzes client messages and provides clear explanations for engineers. Always provide a detailed explanation. IMPORTANT: Use only standard ASCII characters, proper formatting, and ensure all text is safe for web display without any special characters or symbols.'
                     ],
                     [
                         'role' => 'user',
