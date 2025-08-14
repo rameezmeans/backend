@@ -207,26 +207,11 @@
           </ul>
         </li>
 
-        <li class="m-t-30 ">
-          <a href="{{ route('vehicles') }}" class="detailed">
-            <span class="title">Vehicles</span>
-          </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
-        </li>
+       
 
-        <li class="m-t-30 ">
-          <a href="{{ route('services') }}" class="detailed">
-            <span class="title">Servcies</span>
-          </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
-        </li>
+       
 
-        <li class="m-t-30 ">
-          <a href="{{ route('payment-accounts') }}" class="detailed">
-            <span class="title">Payment Methods</span>
-          </a>
-          <span class="bg-success icon-thumbnail"><i class="fa fa-file"></i></span>
-        </li>
+       
 
         <li class="m-t-30 ">
             <a href="javascript:;">

@@ -2580,15 +2580,22 @@ class FilesAPIController extends Controller
             if ($selectedPrompt && !empty(trim($selectedPrompt))) {
                 // Use the selected prompt template if provided
                 $prompt = $selectedPrompt;
-                
-                // Replace placeholders in the prompt if they exist
-                $prompt = str_replace('{text}', $engineerReply, $prompt);
-                $prompt = str_replace('{tone}', $selectedTone, $prompt);
-                $prompt = str_replace('{client_message}', $clientMessage, $prompt);
-                
                 // Add the engineer's reply as the content to work with
                 $prompt .= "\n\nContent to work with:\n" . $engineerReply . "\n\n" .
+                          "Return ONLY the reply text, nothing else"."Desired Tone: ". ucfirst($selectedTone) . "\n\n" .
+                          "Tone Guidelines:\n" .
+                          "- Professional: Formal, respectful, business-like, clear and concise\n" .
+                          "- Aggressive: Direct, assertive, firm, but still professional and not rude\n" .
+                          "- Friendly: Warm, approachable, helpful, encouraging\n" .
+                          "- Casual: Relaxed, conversational, informal but still informative\n\n" .
+                          "You MUST provide a reply that:\n" .
+                          "1. Addresses the engineer's question directly and comprehensively\n" .
+                          "2. Adapts the tone to match the selected style\n" .
+                          "3. Provides helpful and accurate information\n" .
+                          "4. Is appropriate for professional communication\n" .
+                          "5. Is clear and understandable\n\n" .
                           "Return ONLY the reply text, nothing else.";
+
             } else {
                 // Use default prompt if no custom prompt is selected
                 $prompt = "IMPORTANT: You MUST provide a reply based on the engineer's question. Do not return empty responses.\n\n" .
