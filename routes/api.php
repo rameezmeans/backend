@@ -2162,3 +2162,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('chatgpt/explain-message', [App\Http\Controllers\FilesAPIController::class, 'explainMessageWithChatGPT']);
 Route::post('chatgpt/modify-reply', [App\Http\Controllers\FilesAPIController::class, 'modifyReplyWithChatGPT']);
 Route::post('chatgpt/translate', [App\Http\Controllers\FilesAPIController::class, 'translateWithChatGPT']);
+Route::post('chatgpt/ask', [App\Http\Controllers\FilesAPIController::class, 'askChatGPT']);

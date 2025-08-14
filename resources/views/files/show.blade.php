@@ -2184,8 +2184,10 @@ margin-bottom: 10px !important;
 									<small class="m-t-20" style="font-size: 8px;float:left">
 										@if(is_text_english($message['egnineers_internal_notes']))
 										<button class="btn btn-default btn-xs translate" href="#" data-id="{{$message['id']}}"><i class="fa fa-language" aria-hidden="true"></i></button>
-										@endif
+										<button class="btn btn-warning btn-xs chatgpt-translate-btn" href="#" data-message-id="{{$message['id']}}" data-notes="{{ $message['egnineers_internal_notes'] }}"><i class="fa fa-language" aria-hidden="true"></i> Translate</button>
+                    @endif
 										<button class="btn btn-info btn-xs chatgpt-btn" href="#" data-message-id="{{$message['id']}}" data-notes="{{ $message['egnineers_internal_notes'] }}"><i class="fa fa-robot" aria-hidden="true"></i></button>
+										
 									</small>
                                     <small class="m-t-20" style="font-size: 8px;float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
                                     {{-- <small class="m-t-20" style="font-size: 8px;float:left">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small> --}}
@@ -2213,6 +2215,7 @@ margin-bottom: 10px !important;
 										@if(is_text_english($message['events_internal_notes']))
 										<button class="btn btn-default btn-xs translate" href="#" data-id="{{$message['id']}}"><i class="fa fa-language" aria-hidden="true"></i></button>
 										@endif
+										<button class="btn btn-warning btn-xs chatgpt-translate-btn" href="#" data-message-id="{{$message['id']}}" data-notes="{{ $message['events_internal_notes'] }}"><i class="fa fa-language" aria-hidden="true"></i> Translate</button>
 									</small>
                                     <small class="m-t-20" style="font-size: 8px;float:right">{{ date('H:i:s d/m/Y', strtotime( $message['created_at'] ) ) }}</small>
                                 </div>
@@ -2268,7 +2271,25 @@ margin-bottom: 10px !important;
                           <input type="hidden" value="{{$file->id}}" name="file_id">
                             <div class="row">
                                 <div class="col-6 no-padding m-t-10">
-                                  <textarea name="egnineers_internal_notes" class="form-control" placeholder="Reply to cusotmer." required></textarea>
+                                  <textarea name="egnineers_internal_notes" class="form-control" placeholder="Reply to cusotmer." required style="min-height: 300px; height: 300px; resize: vertical;"></textarea>
+                                  <div class="m-t-10">
+                                    <div class="row">
+                                      <div class="col-6">
+                                        <label class="mb-1"><strong>Tone:</strong></label>
+                                        <select class="form-control form-control-sm" id="toneSelect1">
+                                          <option value="professional">Professional</option>
+                                          <option value="aggressive">Aggressive</option>
+                                          <option value="friendly">Friendly</option>
+                                          <option value="casual">Casual</option>
+                                        </select>
+                                      </div>
+                                      <div class="col-6">
+                                        <button type="button" class="btn btn-primary btn-sm" id="rephraseButton1" data-note="" title="Rephrase with ChatGPT" style="margin-top: 25px;">
+                                          <i class="fa fa-magic"></i> Rephrase
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
                                   <div id="sampleMessagesBox" class="sample-messages-popup do-none"></div>
                                   @error('egnineers_internal_notes')
                                           <p class="text-danger" role="alert">
@@ -4943,7 +4964,25 @@ margin-bottom: 10px !important;
                           <input type="hidden" value="{{$file->id}}" name="file_id">
                         <div class="row">
                             <div class="col-6 no-padding">
-                              <textarea name="egnineers_internal_notes" class="form-control" placeholder="Reply to cusotmer." required></textarea>
+                              <textarea name="egnineers_internal_notes" class="form-control" placeholder="Reply to cusotmer." required style="min-height: 300px; height: 300px; resize: vertical;"></textarea>
+                              <div class="m-t-10">
+                                <div class="row">
+                                  <div class="col-6">
+                                    <label class="mb-1"><strong>Tone:</strong></label>
+                                    <select class="form-control form-control-sm" id="toneSelect2">
+                                      <option value="professional">Professional</option>
+                                      <option value="aggressive">Aggressive</option>
+                                      <option value="friendly">Friendly</option>
+                                      <option value="casual">Casual</option>
+                                    </select>
+                                  </div>
+                                  <div class="col-6">
+                                    <button type="button" class="btn btn-outline-info btn-sm" id="rephraseButton2" data-note="" title="Rephrase with ChatGPT" style="margin-top: 20px;">
+                                      <i class="fa fa-magic"></i> Rephrase
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
                               
                               @error('egnineers_internal_notes')
                                       <p class="text-danger" role="alert">
@@ -8564,16 +8603,14 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       // Ensure language dropdown and copy button are hidden
       toggleLanguageDropdown();
       
-      // Show loading state in the explanation field
-      $('#modalChatGPTExplanation').html('<div class="text-center"><i class="fa fa-spinner fa-spin"></i> Analyzing client message...</div>');
+      // Clear explanation field initially
+      $('#modalChatGPTExplanation').text('').removeClass('text-danger');
       
       // Add input event handler for Engineer's Reply field
       $('#modalUserPrompt').on('input', function() {
         const hasText = $(this).val().trim().length > 0;
         $('#askChatGPTBtn').prop('disabled', !hasText);
       });
-      
-
       
       // Add input event handler for ChatGPT Response field to show/hide language dropdown
       $('#modalChatGPTResponse').on('input', function() {
@@ -8584,14 +8621,31 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       console.log('Copy button exists:', $('#modalCopyButton').length > 0);
       console.log('Copy button display:', $('#modalCopyButton').css('display'));
       
-      // Hide explanation view button initially
-      $('#explanationViewBtn').hide();
-      
       // Force check for copy button visibility after a short delay
       setTimeout(function() {
         toggleLanguageDropdown();
       }, 100);
-
+    });
+    
+    // Handle Explanation button click
+    $('#explanationBtn').on('click', function() {
+      const notes = $('#modalEngineerNotes').text();
+      const messageId = $('.chatgpt-btn').data('message-id');
+      
+      if (!notes || notes.trim() === '') {
+        alert('No client message to explain.');
+        return;
+      }
+      
+      // Show loading state in the explanation field
+      $('#modalChatGPTExplanation').html('<div class="text-center"><i class="fa fa-spinner fa-spin"></i> Analyzing client message...</div>');
+      
+      // Disable the explanation button while processing
+      const $btn = $(this);
+      const originalText = $btn.html();
+      $btn.html('<i class="fa fa-spinner fa-spin"></i> Processing...');
+      $btn.prop('disabled', true);
+      
       // Send client message to ChatGPT API for explanation
       $.ajax({
         url: "/api/chatgpt/explain-message",
@@ -8604,26 +8658,212 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
         success: function(response) {
           if (response.success) {
-            $('#modalChatGPTExplanation').text(response.explanation).removeClass('text-danger');
-            // Show the explanation view button if there's content
-            if (response.explanation && response.explanation.trim() !== '') {
-              $('#explanationViewBtn').show();
-            } else {
-              $('#explanationViewBtn').hide();
-            }
+            // Populate the explanation modal with original text
+            $('#explanationClientMessage').text(notes);
+            $('#explanationText').text(response.explanation);
+            
+            // Show the explanation modal
+            $('#chatgptExplanationModal').modal('show');
           } else {
-            $('#modalChatGPTExplanation').text('Error: ' + (response.message || 'Failed to get explanation')).addClass('text-danger');
-            $('#explanationViewBtn').hide();
+            alert('Error: ' + (response.message || 'Failed to get explanation'));
+          }
+          
+          // Re-enable the explanation button
+          $btn.html(originalText);
+          $btn.prop('disabled', false);
+        },
+        error: function(xhr, status, error) {
+          alert('Error: Failed to connect to ChatGPT API. Please try again.');
+          console.error('ChatGPT API Error:', error);
+          
+          // Re-enable the explanation button
+          $btn.html(originalText);
+          $btn.prop('disabled', false);
+        }
+      });
+        });
+    
+
+    
+    // Copy explanation button click handler
+    $('#copyExplanationBtn').on('click', function() {
+      console.log('Copy explanation button clicked!');
+      const textToCopy = $('#explanationText').text();
+      console.log('Text to copy:', textToCopy);
+      
+      if (textToCopy && textToCopy.trim() !== '') {
+        // Use modern clipboard API if available
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(textToCopy).then(function() {
+            // Show success feedback
+            const $btn = $(this);
+            const originalText = $btn.html();
+            $btn.html('<i class="fa fa-check"></i> Copied!');
+            $btn.removeClass('btn-outline-info').addClass('btn-success');
+            
+            // Reset button after 2 seconds
+            setTimeout(function() {
+              $btn.html(originalText);
+              $btn.removeClass('btn-success').addClass('btn-outline-info');
+            }, 2000);
+          }.bind(this)).catch(function(err) {
+            console.error('Failed to copy: ', err);
+            fallbackCopyExplanationToClipboard(textToCopy);
+          });
+        } else {
+          // Fallback for older browsers
+          fallbackCopyExplanationToClipboard(textToCopy);
+        }
+      }
+    });
+    
+    // Fallback copy function for explanation
+    function fallbackCopyExplanationToClipboard(text) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          // Show success feedback
+          const $btn = $('#copyExplanationBtn');
+          const originalText = $btn.html();
+          $btn.html('<i class="fa fa-check"></i> Copied!');
+          $btn.removeClass('btn-outline-info').addClass('btn-success');
+          
+          // Reset button after 2 seconds
+          setTimeout(function() {
+            $btn.html(originalText);
+            $btn.removeClass('btn-success').addClass('btn-outline-info');
+          }, 2000);
+        }
+      } catch (err) {
+        console.error('Fallback copy failed: ', err);
+        alert('Copy failed. Please select the text manually and copy it.');
+      }
+      
+      document.body.removeChild(textArea);
+    }
+    
+    // Copy translation button click handler
+    $('#copyTranslationBtn').on('click', function() {
+      console.log('Copy translation button clicked!');
+      const textToCopy = $('#translationText').text();
+      console.log('Text to copy:', textToCopy);
+      
+      if (textToCopy && textToCopy.trim() !== '' && !textToCopy.startsWith('Error:')) {
+        // Use modern clipboard API if available
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(textToCopy).then(function() {
+            // Show success feedback
+            const $btn = $(this);
+            const originalText = $btn.html();
+            $btn.html('<i class="fa fa-check"></i> Copied!');
+            $btn.removeClass('btn-outline-info').addClass('btn-success');
+            
+            // Reset button after 2 seconds
+            setTimeout(function() {
+              $btn.html(originalText);
+              $btn.removeClass('btn-success').addClass('btn-outline-info');
+            }, 2000);
+          }.bind(this)).catch(function(err) {
+            console.error('Failed to copy: ', err);
+            fallbackCopyTranslationToClipboard(textToCopy);
+          });
+        } else {
+          // Fallback for older browsers
+          fallbackCopyTranslationToClipboard(textToCopy);
+        }
+      }
+    });
+    
+    // Fallback copy function for translation
+    function fallbackCopyTranslationToClipboard(text) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          // Show success feedback
+          const $btn = $('#copyTranslationBtn');
+          const originalText = $btn.html();
+          $btn.html('<i class="fa fa-check"></i> Copied!');
+          $btn.removeClass('btn-outline-info').addClass('btn-success');
+          
+          // Reset button after 2 seconds
+          setTimeout(function() {
+            $btn.html(originalText);
+            $btn.removeClass('btn-success').addClass('btn-outline-info');
+          }, 2000);
+        }
+      } catch (err) {
+        console.error('Fallback copy failed: ', err);
+        alert('Copy failed. Please select the text manually and copy it.');
+      }
+      
+      document.body.removeChild(textArea);
+    }
+    
+    // Handle ChatGPT Translation button click
+    $(document).on('click', '.chatgpt-translate-btn', function(e) {
+      e.preventDefault();
+      
+      const messageId = $(this).data('message-id');
+      const notes = $(this).data('notes');
+      
+      if (!notes || notes.trim() === '') {
+        alert('No message to translate.');
+        return;
+      }
+      
+      // Show loading state in the translation field
+      $('#translationText').html('<div class="text-center"><i class="fa fa-spinner fa-spin"></i> Translating message...</div>');
+      
+      // Populate the translation modal with the original message
+      $('#translationOriginalMessage').text(notes);
+      
+      // Show the translation modal
+      $('#chatgptTranslationModal').modal('show');
+      
+      // Send message to ChatGPT API for translation to English
+      $.ajax({
+        url: "/api/chatgpt/translate",
+        type: "POST",
+        data: {
+          "_token": "{{ csrf_token() }}",
+          "text": notes,
+          "target_language": "en",
+          "language_name": "English",
+          "message_id": messageId
+        },
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        success: function(response) {
+          if (response.success) {
+            $('#translationText').text(response.translated_text);
+          } else {
+            $('#translationText').text('Error: ' + (response.message || 'Failed to translate message')).addClass('text-danger');
           }
         },
         error: function(xhr, status, error) {
-          $('#modalChatGPTExplanation').text('Error: Failed to connect to ChatGPT API. Please try again.').addClass('text-danger');
-          console.error('ChatGPT API Error:', error);
-          $('#explanationViewBtn').hide();
+          $('#translationText').text('Error: Failed to connect to ChatGPT API. Please try again.').addClass('text-danger');
+          console.error('ChatGPT Translation API Error:', error);
         }
       });
     });
-
+    
     // Handle Ask ChatGPT button click
     $('#askChatGPTBtn').on('click', function() {
       const clientMessage = $('#modalEngineerNotes').text();
@@ -8688,6 +8928,11 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       if (responseText && responseText.trim() !== '' && !responseText.startsWith('Error:')) {
         $('#modalLanguageSelect').show();
         $('#modalCopyButton').show();
+        
+        // Set the data-note attribute with the client's message
+        const clientMessage = $('#modalEngineerNotes').text();
+        $('#modalCopyButton').attr('data-note', clientMessage);
+        
         console.log('Showing language dropdown and copy button');
       } else {
         $('#modalLanguageSelect').hide();
@@ -8752,56 +8997,28 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       });
     });
     
-    // Copy button click handler
+    // Add to engineers notes button click handler
     $('#modalCopyButton').on('click', function() {
-      console.log('Copy button clicked!');
-      const textToCopy = $('#modalChatGPTResponse').val();
-      console.log('Text to copy:', textToCopy);
+      console.log('Add to notes button clicked!');
+      const textToAdd = $('#modalChatGPTResponse').val();
+      console.log('Text to add:', textToAdd);
       
-      if (textToCopy && textToCopy.trim() !== '') {
-        // Use modern clipboard API if available
-        if (navigator.clipboard && window.isSecureContext) {
-          navigator.clipboard.writeText(textToCopy).then(function() {
-            // Show success feedback
-            const $btn = $(this);
-            const originalText = $btn.html();
-            $btn.html('<i class="fa fa-check"></i> Copied!');
-            $btn.removeClass('btn-outline-secondary').addClass('btn-success');
-            
-            // Reset button after 2 seconds
-            setTimeout(function() {
-              $btn.html(originalText);
-              $btn.removeClass('btn-success').addClass('btn-outline-secondary');
-            }, 2000);
-          }.bind(this)).catch(function(err) {
-            console.error('Failed to copy: ', err);
-            fallbackCopyTextToClipboard(textToCopy);
-          });
-        } else {
-          // Fallback for older browsers
-          fallbackCopyTextToClipboard(textToCopy);
-        }
-      }
-    });
-    
-    // Fallback copy function for older browsers
-    function fallbackCopyTextToClipboard(text) {
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      textArea.style.top = '-999999px';
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      
-      try {
-        const successful = document.execCommand('copy');
-        if (successful) {
+      if (textToAdd && textToAdd.trim() !== '') {
+        // Get the engineers notes textarea
+        const $engineersNotes = $('textarea[name="egnineers_internal_notes"]');
+        
+        if ($engineersNotes.length > 0) {
+          // Get current value and append new text
+          const currentValue = $engineersNotes.val();
+          const newValue = currentValue ? currentValue + '\n\n' + textToAdd : textToAdd;
+          
+          // Set the new value
+          $engineersNotes.val(newValue);
+          
           // Show success feedback
-          const $btn = $('#modalCopyButton');
+          const $btn = $(this);
           const originalText = $btn.html();
-          $btn.html('<i class="fa fa-check"></i> Copied!');
+          $btn.html('<i class="fa fa-check"></i> Added!');
           $btn.removeClass('btn-outline-secondary').addClass('btn-success');
           
           // Reset button after 2 seconds
@@ -8809,41 +9026,193 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
             $btn.html(originalText);
             $btn.removeClass('btn-success').addClass('btn-outline-secondary');
           }, 2000);
+          
+          // Scroll to the engineers notes textarea
+          $('html, body').animate({
+            scrollTop: $engineersNotes.offset().top - 100
+          }, 500);
+          
+          // Close the modal after a short delay to show the success feedback
+          setTimeout(function() {
+            $('#chatgptModal').modal('hide');
+          }, 1000);
+          
+          // Update the data-note attribute on both rephrase buttons with the client's message
+          const clientMessage = $('#modalEngineerNotes').text();
+          $('#rephraseButton1').attr('data-note', clientMessage);
+          $('#rephraseButton2').attr('data-note', clientMessage);
+          
+          // Update the rephrase button state after adding text
+          updateRephraseButtonState();
+        } else {
+          alert('Engineers notes textarea not found!');
         }
-      } catch (err) {
-        console.error('Fallback copy failed: ', err);
-        alert('Copy failed. Please select the text manually and copy it.');
+      } else {
+        alert('No text to add. Please generate a response first.');
       }
-      
-      document.body.removeChild(textArea);
-    }
-    
-    // Explanation view button click handler
-    $('#explanationViewBtn').on('click', function() {
-      console.log('Explanation view button clicked!');
-      
-      // Get the content from the main modal
-      const clientMessage = $('#modalEngineerNotes').text();
-      const explanationText = $('#modalChatGPTExplanation').text();
-      
-      // Populate the full explanation modal
-      $('#fullExplanationClientMessage').text(clientMessage);
-      $('#fullExplanationText').text(explanationText);
-      
-      // Show the full explanation modal
-      $('#fullExplanationModal').modal('show');
     });
     
-    // Copy explanation button click handler
-    $('#copyExplanationBtn').on('click', function() {
-      console.log('Copy explanation button clicked!');
-      const textToCopy = $('#fullExplanationText').text();
-      console.log('Text to copy:', textToCopy);
+    // Rephrase button click handlers
+    $('#rephraseButton1').on('click', function() {
+      const button = $(this);
+      const selectedTone = $('#toneSelect1').val();
+      const engineersNotes = $('textarea[name="egnineers_internal_notes"]').first().val();
       
-      if (textToCopy && textToCopy.trim() !== '') {
-        // Use modern clipboard API if available
-        if (navigator.clipboard && window.isSecureContext) {
-          navigator.clipboard.writeText(textToCopy).then(function() {
+      // Check if there's text to rephrase
+      if (!engineersNotes || engineersNotes.trim() === '') {
+        alert('Please enter some text in the engineers notes field to rephrase.');
+        return;
+      }
+      
+      // Disable button and show loading state
+      button.prop('disabled', true);
+      const originalText = button.html();
+      button.html('<i class="fa fa-spinner fa-spin"></i> Rephrasing...');
+      
+      // Prepare the prompt
+      let prompt = `Please rephrase the following engineer's response in a ${selectedTone} tone:\n\n${engineersNotes}`;
+      
+      // If there's a client message in data-note, include it for context
+      const clientMessage = button.attr('data-note');
+      if (clientMessage && clientMessage.trim() !== '') {
+        prompt = `Client's message: ${clientMessage}\n\nEngineer's response to rephrase:\n${engineersNotes}\n\nPlease rephrase the engineer's response in a ${selectedTone} tone.`;
+      }
+      
+      // Send API request to ChatGPT
+      $.ajax({
+        url: "/api/chatgpt/ask",
+        type: "POST",
+        data: {
+          "_token": "{{ csrf_token() }}",
+          "prompt": prompt,
+          "tone": selectedTone
+        },
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        success: function(response) {
+          if (response.success) {
+            // Populate the rephrase modal with results
+            $('#rephraseOriginalText').text(engineersNotes);
+            $('#rephraseResultText').text(response.response);
+            
+            // Update the modal title to show the tone
+            $('#chatgptRephraseModalLabel').html(`<i class="fa fa-magic"></i> Rephrased Response (${selectedTone} tone)`);
+            
+            // Show the modal
+            $('#chatgptRephraseModal').modal('show');
+            
+            // Reset button to normal state
+            button.html(originalText);
+            button.prop('disabled', false);
+          } else {
+            alert('Rephrasing failed: ' + (response.message || 'Unknown error'));
+            button.html(originalText);
+            button.prop('disabled', false);
+          }
+        },
+        error: function(xhr, status, error) {
+          alert('Rephrasing failed: Failed to connect to ChatGPT API. Please try again.');
+          console.error('Rephrase API Error:', error);
+          button.html(originalText);
+          button.prop('disabled', false);
+        }
+      });
+    });
+    
+    $('#rephraseButton2').on('click', function() {
+      const clientMessage = $(this).attr('data-note');
+      if (clientMessage && clientMessage.trim() !== '') {
+        // Open the ChatGPT modal and populate it with the client's message
+        $('#modalEngineerNotes').text(clientMessage);
+        $('#modalUserPrompt').val(''); // Clear any existing prompt
+        
+        // Set the tone in the modal based on which button was clicked
+        const selectedTone = $('#toneSelect2').val();
+        $('#modalToneSelect').val(selectedTone);
+        
+        $('#chatgptModal').modal('show');
+      } else {
+        alert('No client message available for rephrasing. Please use the "Add to Engineer\'s Reply" button first.');
+      }
+    });
+    
+    // Function to check and update rephrase button state
+    function updateRephraseButtonState() {
+      const textarea1 = $('textarea[name="egnineers_internal_notes"]').first();
+      const textarea2 = $('textarea[name="egnineers_internal_notes"]').last();
+      
+      // Check if first textarea has text and enable/disable rephraseButton1 accordingly
+      if (textarea1.length > 0) {
+        const hasText = textarea1.val() && textarea1.val().trim() !== '';
+        $('#rephraseButton1').prop('disabled', !hasText);
+        
+        // Update button appearance based on state
+        if (hasText) {
+          $('#rephraseButton1').removeClass('btn-secondary').addClass('btn-primary');
+        } else {
+          $('#rephraseButton1').removeClass('btn-primary').addClass('btn-secondary');
+        }
+      }
+    }
+    
+    // Monitor textarea content changes for the first instance
+    $('textarea[name="egnineers_internal_notes"]').first().on('input keyup paste', function() {
+      updateRephraseButtonState();
+    });
+    
+    // Initial state check
+    updateRephraseButtonState();
+    
+    // Rephrase modal button handlers
+    $('#useRephrasedBtn').on('click', function() {
+      const rephrasedText = $('#rephraseResultText').text();
+      $('textarea[name="egnineers_internal_notes"]').first().val(rephrasedText);
+      $('#chatgptRephraseModal').modal('hide');
+      
+      // Show success feedback
+      const $btn = $('#rephraseButton1');
+      const originalText = $btn.html();
+      $btn.removeClass('btn-primary').addClass('btn-success');
+      $btn.html('<i class="fa fa-check"></i> Applied!');
+      
+      // Reset button after 3 seconds
+      setTimeout(function() {
+        $btn.removeClass('btn-success').addClass('btn-primary');
+        $btn.html(originalText);
+      }, 3000);
+    });
+    
+    $('#copyRephrasedBtn').on('click', function() {
+      const rephrasedText = $('#rephraseResultText').text();
+      
+      // Use modern clipboard API if available
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(rephrasedText).then(function() {
+          // Show success feedback
+          const $btn = $(this);
+          const originalText = $btn.html();
+          $btn.html('<i class="fa fa-check"></i> Copied!');
+          $btn.removeClass('btn-outline-info').addClass('btn-success');
+          
+          // Reset button after 2 seconds
+          setTimeout(function() {
+            $btn.html(originalText);
+            $btn.removeClass('btn-success').addClass('btn-outline-info');
+          }, 2000);
+        }.bind(this));
+      } else {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = rephrasedText;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+          const successful = document.execCommand('copy');
+          if (successful) {
             // Show success feedback
             const $btn = $(this);
             const originalText = $btn.html();
@@ -8855,61 +9224,67 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
               $btn.html(originalText);
               $btn.removeClass('btn-success').addClass('btn-outline-info');
             }, 2000);
-          }.bind(this)).catch(function(err) {
-            console.error('Failed to copy: ', err);
-            fallbackCopyExplanationToClipboard(textToCopy);
-          });
-        } else {
-          // Fallback for older browsers
-          fallbackCopyExplanationToClipboard(textToCopy);
+          }
+        } catch (err) {
+          console.error('Fallback copy failed: ', err);
+          alert('Copy failed. Please select the text manually and copy it.');
         }
+        
+        document.body.removeChild(textArea);
       }
     });
     
-    // Fallback copy function for explanation
-    function fallbackCopyExplanationToClipboard(text) {
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      textArea.style.top = '-999999px';
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
+    // Language change handler for rephrase translation
+    $('#rephraseLanguageSelect').on('change', function() {
+      const selectedLanguage = $(this).val();
+      const currentText = $('#rephraseResultText').text();
       
-      try {
-        const successful = document.execCommand('copy');
-        if (successful) {
-          // Show success feedback
-          const $btn = $('#copyExplanationBtn');
-          const originalText = $btn.html();
-          $btn.html('<i class="fa fa-check"></i> Copied!');
-          $btn.removeClass('btn-outline-info').addClass('btn-success');
-          
-          // Reset button after 2 seconds
-          setTimeout(function() {
-            $btn.html(originalText);
-            $btn.removeClass('btn-success').addClass('btn-outline-info');
-          }, 2000);
-        }
-      } catch (err) {
-        console.error('Fallback copy failed: ', err);
-        alert('Copy failed. Please select the text manually and copy it.');
+      // Don't translate if English is selected or if there's no text
+      if (selectedLanguage === 'en' || !currentText || currentText.trim() === '') {
+        return;
       }
       
-      document.body.removeChild(textArea);
-    }
-    
-    // Simple scroll restoration for full explanation modal
-    $('#fullExplanationModal').on('hidden.bs.modal', function() {
-      console.log('Full explanation modal hidden, restoring scroll');
+      // Show loading state
+      const originalText = currentText;
+      $('#rephraseResultText').text('Translating...');
       
-      // Simple approach: just ensure the main modal body is scrollable
-      setTimeout(function() {
-        $('#chatgptModal .modal-body').css('overflow-y', 'auto');
-        console.log('Scroll restored');
-      }, 100);
+      // Get the language name for the prompt
+      const languageName = $(this).find('option:selected').text().split('(')[0].trim();
+      
+      // Send translation request
+      $.ajax({
+        url: "/api/chatgpt/translate",
+        type: "POST",
+        data: {
+          "_token": "{{ csrf_token() }}",
+          "text": originalText,
+          "target_language": selectedLanguage,
+          "language_name": languageName,
+          "message_id": 0 // Not needed for this translation
+        },
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        success: function(response) {
+          if (response.success) {
+            $('#rephraseResultText').text(response.translated_text);
+          } else {
+            $('#rephraseResultText').text(originalText);
+            alert('Translation failed: ' + (response.message || 'Unknown error'));
+          }
+        },
+        error: function(xhr, status, error) {
+          $('#rephraseResultText').text(originalText);
+          alert('Translation failed: Failed to connect to ChatGPT API. Please try again.');
+          console.error('Rephrase Translation API Error:', error);
+        }
+      });
     });
+    
+    
+
+    
+
+    
+
     
 
 
@@ -8934,23 +9309,20 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       </div>
       <div class="modal-body" style="overflow-y: auto; max-height: 70vh;">
         <div class="row">
-          <div class="col-md-6">
-            <label><strong>Client's Message:</strong></label>
-            <div class="form-control" style="min-height: 100px; max-height: 150px; overflow-y: auto; background-color: #ffffff; color: #000000; border: 1px solid #ced4da;" id="modalEngineerNotes" readonly></div>
-          </div>
-          <div class="col-md-6">
-            <label>
-              <strong>ChatGPT Explanation:</strong>
-              <button type="button" class="btn btn-outline-info btn-sm ml-2" id="explanationViewBtn" style="display: none;" title="View full explanation">
-                <i class="fa fa-eye"></i> View
+          <div class="col-12">
+            <div class="d-flex align-items-center mb-2">
+              <label class="mb-0 mr-3"><strong>Client's Message:</strong></label>
+              <button type="button" class="btn btn-primary btn-sm" id="explanationBtn" title="Get ChatGPT explanation">
+                <i class="fa fa-robot"></i> Explanation
               </button>
-            </label>
-            <div class="form-control" style="min-height: 100px; max-height: 150px; overflow-y: auto; background-color: #ffffff; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.5;" id="modalChatGPTExplanation" readonly placeholder="ChatGPT will explain the client's message here..."></div>
+            </div>
+            <div class="form-control" style="min-height: 150px; max-height: 300px; overflow-y: auto; background-color: #ffffff; color: #000000; border: 1px solid #ced4da;" id="modalEngineerNotes" readonly></div>
           </div>
         </div>
+
         <div class="row m-t-20">
           <div class="col-12">
-            <label><strong>Engineer's Reply:</strong></label>
+            <label><strong>Engineer's Question:</strong></label>
             <textarea class="form-control" style="min-height: 80px;" id="modalUserPrompt" placeholder="Write your reply to the client here..."></textarea>
           </div>
         </div>
@@ -8968,7 +9340,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         <div class="row m-t-20">
           <div class="col-12">
             <div class="d-flex align-items-center mb-2">
-              <label class="mb-0 mr-3"><strong>ChatGPT Modified Reply:</strong></label>
+              <label class="mb-0 mr-3"><strong>ChatGPT's Reply:</strong></label>
               <select class="form-control" style="width: auto; min-width: 150px; display: none;" id="modalLanguageSelect">
                 <option value="en">English</option>
                 <option value="es">Spanish (Español)</option>
@@ -9000,9 +9372,9 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
                 <option value="lv">Latvian (Latviešu)</option>
                 <option value="lt">Lithuanian (Lietuvių)</option>
               </select>
-              <button type="button" class="btn btn-outline-secondary btn-sm ml-2" id="modalCopyButton" style="display: none; margin-left: 8px;" title="Copy to clipboard">
-                <i class="fa fa-copy"></i> Copy
-              </button>
+                              <button type="button" class="btn btn-outline-secondary btn-sm ml-2" id="modalCopyButton" style="display: none; margin-left: 8px;" title="Add to engineers notes" data-note="">
+                  <i class="fa fa-plus"></i> Add to Engineer's Reply 
+                </button>
             </div>
             <textarea class="form-control" style="min-height: 200px; background-color: #ffffff; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.5;" id="modalChatGPTResponse" placeholder="ChatGPT will modify your reply according to the selected tone..." readonly></textarea>
           </div>
@@ -9011,20 +9383,20 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
               <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary" id="askChatGPTBtn" disabled>
-            <i class="fa fa-magic"></i> Modify Reply with ChatGPT
+            <i class="fa fa-magic"></i> Ask ChatGPT
           </button>
         </div>
     </div>
   </div>
 </div>
 
-<!-- Full Explanation Modal -->
-<div class="modal fade" id="fullExplanationModal" tabindex="-1" role="dialog" aria-labelledby="fullExplanationModalLabel" aria-hidden="true">
+<!-- ChatGPT Explanation Modal -->
+<div class="modal fade" id="chatgptExplanationModal" tabindex="-1" role="dialog" aria-labelledby="chatgptExplanationModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="fullExplanationModalLabel">
-          <i class="fa fa-info-circle"></i> Full ChatGPT Explanation
+        <h5 class="modal-title" id="chatgptExplanationModalLabel">
+          <i class="fa fa-robot"></i> ChatGPT Explanation
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -9033,11 +9405,11 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       <div class="modal-body">
         <div class="form-group">
           <label><strong>Client's Message:</strong></label>
-          <div class="form-control" style="min-height: 80px; max-height: 120px; overflow-y: auto; background-color: #f8f9fa; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.5;" id="fullExplanationClientMessage" readonly></div>
+          <div class="form-control" style="min-height: 80px; max-height: 120px; overflow-y: auto; background-color: #f8f9fa; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.5;" id="explanationClientMessage" readonly></div>
         </div>
         <div class="form-group mt-3">
           <label><strong>ChatGPT Explanation:</strong></label>
-          <div class="form-control" style="min-height: 300px; max-height: 500px; overflow-y: auto; background-color: #ffffff; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.6;" id="fullExplanationText" readonly></div>
+          <div class="form-control" style="min-height: 300px; max-height: 500px; overflow-y: auto; background-color: #ffffff; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.6;" id="explanationText" readonly></div>
         </div>
       </div>
       <div class="modal-footer">
@@ -9050,6 +9422,104 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
   </div>
 </div>
 
+<!-- ChatGPT Translation Modal -->
+<div class="modal fade" id="chatgptTranslationModal" tabindex="-1" role="dialog" aria-labelledby="chatgptTranslationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="chatgptTranslationModalLabel">
+          <i class="fa fa-language"></i> ChatGPT Translation
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label><strong>Original Message:</strong></label>
+          <div class="form-control" style="min-height: 80px; max-height: 120px; overflow-y: auto; background-color: #f8f9fa; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.5;" id="translationOriginalMessage" readonly></div>
+        </div>
+        <div class="form-group mt-3">
+          <label><strong>English Translation:</strong></label>
+          <div class="form-control" style="min-height: 300px; max-height: 500px; overflow-y: auto; background-color: #ffffff; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.6;" id="translationText" readonly></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-info" id="copyTranslationBtn">
+          <i class="fa fa-copy"></i> Copy Translation
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- ChatGPT Rephrase Result Modal -->
+<div class="modal fade" id="chatgptRephraseModal" tabindex="-1" role="dialog" aria-labelledby="chatgptRephraseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="chatgptRephraseModalLabel">
+          <i class="fa fa-magic"></i> Rephrased Response
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label><strong>Original Text:</strong></label>
+          <div class="form-control" style="min-height: 80px; max-height: 120px; overflow-y: auto; background-color: #f8f9fa; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.5;" id="rephraseOriginalText" readonly></div>
+        </div>
+        <div class="form-group mt-3">
+          <div class="d-flex align-items-center mb-2">
+            <label class="mb-0 mr-3"><strong>Rephrased Response (${selectedTone} tone):</strong></label>
+            <select class="form-control form-control-sm" style="width: auto; min-width: 150px;" id="rephraseLanguageSelect">
+              <option value="en">English</option>
+              <option value="es">Spanish (Español)</option>
+              <option value="fr">French (Français)</option>
+              <option value="de">German (Deutsch)</option>
+              <option value="it">Italian (Italiano)</option>
+              <option value="pt">Portuguese (Português)</option>
+              <option value="nl">Dutch (Nederlands)</option>
+              <option value="pl">Polish (Polski)</option>
+              <option value="ru">Russian (Русский)</option>
+              <option value="ar">Arabic (العربية)</option>
+              <option value="zh">Chinese (中文)</option>
+              <option value="ja">Japanese (日本語)</option>
+              <option value="ko">Korean (한국어)</option>
+              <option value="hi">Hindi (हिन्दी)</option>
+              <option value="tr">Turkish (Türkçe)</option>
+              <option value="sv">Swedish (Svenska)</option>
+              <option value="da">Danish (Dansk)</option>
+              <option value="no">Norwegian (Norsk)</option>
+              <option value="fi">Finnish (Suomi)</option>
+              <option value="cs">Czech (Čeština)</option>
+              <option value="hu">Hungarian (Magyar)</option>
+              <option value="ro">Romanian (Română)</option>
+              <option value="bg">Bulgarian (Български)</option>
+              <option value="hr">Croatian (Hrvatski)</option>
+              <option value="sk">Slovak (Slovenčina)</option>
+              <option value="sl">Slovenian (Slovenščina)</option>
+              <option value="et">Estonian (Eesti)</option>
+              <option value="lv">Latvian (Latviešu)</option>
+              <option value="lt">Lithuanian (Lietuvių)</option>
+            </select>
+          </div>
+          <div class="form-control" style="min-height: 300px; max-height: 500px; overflow-y: auto; background-color: #ffffff; color: #000000; border: 1px solid #ced4da; font-size: 14px; line-height: 1.6;" id="rephraseResultText" readonly></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" id="useRephrasedBtn">
+          <i class="fa fa-check"></i> Use This Response
+        </button>
+        <button type="button" class="btn btn-outline-info" id="copyRephrasedBtn">
+          <i class="fa fa-copy"></i> Copy Response
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
