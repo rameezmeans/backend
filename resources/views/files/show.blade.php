@@ -8584,6 +8584,9 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       // Populate the modal with the client's message
       $('#modalEngineerNotes').text(notes);
       
+      // Load ChatGPT prompts into the dropdown
+      loadChatGPTPrompts();
+      
       // Check and toggle translate button visibility based on text language
       checkAndToggleTranslateButton();
       
@@ -8594,6 +8597,10 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       
       // Reset tone selection to default
       $('#modalToneSelect').val('professional');
+      
+      // Reset prompt selection and hide display
+      $('#modalPromptSelect').val('');
+      $('#selectedPromptDisplay').hide();
       
       // Disable the modify button initially
       $('#askChatGPTBtn').prop('disabled', true);
@@ -8716,6 +8723,81 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         $translateBtn.hide();
       }
     }
+    
+    // Function to load ChatGPT prompts into the dropdown
+    function loadChatGPTPrompts() {
+      $.ajax({
+        url: "/chatgpt-prompts",
+        type: "GET",
+        success: function(response) {
+          // Clear existing options except the first one
+          $('#modalPromptSelect').find('option:not(:first)').remove();
+          
+          // Add new options from the response
+          if (response.prompts && response.prompts.data) {
+            response.prompts.data.forEach(function(prompt) {
+              // Truncate prompt text for display in dropdown (max 100 characters)
+              const displayText = prompt.prompt.length > 100 ? 
+                prompt.prompt.substring(0, 100) + '...' : 
+                prompt.prompt;
+              
+              $('#modalPromptSelect').append(
+                $('<option></option>')
+                  .val(prompt.id)
+                  .text(displayText)
+                  .data('prompt-text', prompt.prompt)
+              );
+            });
+          }
+        },
+        error: function() {
+          console.error('Failed to load ChatGPT prompts');
+        }
+      });
+    }
+    
+    // Handle ChatGPT prompt selection
+    $('#modalPromptSelect').on('change', function() {
+      const selectedPromptId = $(this).val();
+      const $promptDisplay = $('#selectedPromptDisplay');
+      const $promptText = $('#promptText');
+      
+      if (selectedPromptId) {
+        const selectedOption = $(this).find('option:selected');
+        const promptText = selectedOption.data('prompt-text');
+        
+        if (promptText) {
+          $promptText.text(promptText);
+          $promptDisplay.show();
+        }
+      } else {
+        $promptDisplay.hide();
+      }
+    });
+    
+    // Handle Use Prompt button click
+    $('#usePromptBtn').on('click', function() {
+      const selectedPromptId = $('#modalPromptSelect').val();
+      
+      if (selectedPromptId) {
+        const selectedOption = $('#modalPromptSelect').find('option:selected');
+        const promptText = selectedOption.data('prompt-text');
+        
+        if (promptText) {
+          // Show success feedback that prompt is selected
+          const $btn = $(this);
+          const originalText = $btn.html();
+          $btn.html('<i class="fa fa-check"></i> Prompt Selected!');
+          $btn.removeClass('btn-primary').addClass('btn-success');
+          
+          // Reset button after 2 seconds
+          setTimeout(function() {
+            $btn.html(originalText);
+            $btn.removeClass('btn-success').addClass('btn-primary');
+          }, 2000);
+        }
+      }
+    });
     
     // Handle Translate to English button click
     $('#translateToEnglishBtn').on('click', function() {
@@ -8961,6 +9043,8 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       const clientMessage = $('#modalEngineerNotes').text();
       const engineerReply = $('#modalUserPrompt').val();
       const selectedTone = $('#modalToneSelect').val();
+      const selectedPromptId = $('#modalPromptSelect').val();
+      const selectedPrompt = selectedPromptId ? $('#modalPromptSelect').find('option:selected').data('prompt-text') : '';
       
       if (!engineerReply.trim()) {
         alert('Please write your reply to the client.');
@@ -8985,6 +9069,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
           "client_message": clientMessage,
           "engineer_reply": engineerReply,
           "tone": selectedTone,
+          "prompt": selectedPrompt,
           "message_id": $('.chatgpt-btn').data('message-id')
         },
         headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
@@ -9370,19 +9455,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
         }
       });
     });
-    
-    
-
-    
-
-    
-
-    
-
-
-
-	  
-	  });
+  });
 	  
 	  
 </script>
@@ -9419,6 +9492,26 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
           <div class="col-12">
             <label><strong>Engineer's Question:</strong></label>
             <textarea class="form-control" style="min-height: 80px;" id="modalUserPrompt" placeholder="Write your reply to the client here..."></textarea>
+          </div>
+        </div>
+        
+        <div class="row m-t-20">
+          <div class="col-12">
+            <label><strong>ChatGPT Prompt Template:</strong></label>
+            <select class="form-control" id="modalPromptSelect">
+              <option value="">-- Select a prompt template --</option>
+            </select>
+            <div id="selectedPromptDisplay" class="mt-2" style="display: none;">
+              <div class="alert alert-info">
+                <strong>Selected Prompt:</strong>
+                <div id="promptText" class="mt-1" style="white-space: pre-wrap;"></div>
+                <div class="mt-2">
+                  <button type="button" class="btn btn-primary btn-sm" id="usePromptBtn">
+                    <i class="fa fa-magic"></i> Select This Prompt
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row m-t-20">

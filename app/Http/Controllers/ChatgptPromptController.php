@@ -11,9 +11,18 @@ class ChatgptPromptController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $prompts = ChatgptPrompt::orderBy('created_at', 'desc')->paginate(10);
+        
+        // If it's an AJAX request, return JSON
+        if ($request->ajax()) {
+            return response()->json([
+                'prompts' => $prompts
+            ]);
+        }
+        
+        // Otherwise return the view
         return view('chatgpt_prompts.index', compact('prompts'));
     }
 

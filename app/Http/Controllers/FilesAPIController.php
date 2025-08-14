@@ -2558,6 +2558,7 @@ class FilesAPIController extends Controller
                 'client_message' => 'required|string|max:5000',
                 'engineer_reply' => 'required|string|max:5000',
                 'tone' => 'required|string|in:professional,aggressive,friendly,casual',
+                'prompt' => 'nullable|string|max:10000',
                 'message_id' => 'required|integer'
             ]);
 
@@ -2572,28 +2573,48 @@ class FilesAPIController extends Controller
             $clientMessage = $request->client_message;
             $engineerReply = $request->engineer_reply;
             $selectedTone = $request->tone;
+            $selectedPrompt = $request->prompt;
             $messageId = $request->message_id;
 
             // Create prompt for ChatGPT to modify the reply
-            $prompt = "IMPORTANT: You MUST provide a reply based on the engineer's question. Do not return empty responses.\n\n" .
-                      "Please provide a reply to the following engineer's question in the selected tone while maintaining technical accuracy and professionalism.\n\n" .
-                      "Engineer's Question: " . $engineerReply . "\n\n" .
-                      "Desired Tone: " . ucfirst($selectedTone) . "\n\n" .
-                      "Tone Guidelines:\n" .
-                      "- Professional: Formal, respectful, business-like, clear and concise\n" .
-                      "- Aggressive: Direct, assertive, firm, but still professional and not rude\n" .
-                      "- Friendly: Warm, approachable, helpful, encouraging\n" .
-                      "- Casual: Relaxed, conversational, informal but still informative\n\n" .
-                      "You MUST provide a reply that:\n" .
-                      "1. Addresses the engineer's question directly and comprehensively\n" .
-                      "2. Adapts the tone to match the selected style\n" .
-                      "3. Provides helpful and accurate information\n" .
-                      "4. Is appropriate for professional communication\n" .
-                      "5. Is clear and understandable\n\n" .
-                      "Return ONLY the reply text, nothing else.";
+            if ($selectedPrompt && !empty(trim($selectedPrompt))) {
+                // Use the selected prompt template if provided
+                $prompt = $selectedPrompt;
+                
+                // Replace placeholders in the prompt if they exist
+                $prompt = str_replace('{text}', $engineerReply, $prompt);
+                $prompt = str_replace('{tone}', $selectedTone, $prompt);
+                $prompt = str_replace('{client_message}', $clientMessage, $prompt);
+                
+                // Add the engineer's reply as the content to work with
+                $prompt .= "\n\nContent to work with:\n" . $engineerReply . "\n\n" .
+                          "Return ONLY the reply text, nothing else.";
+            } else {
+                // Use default prompt if no custom prompt is selected
+                $prompt = "IMPORTANT: You MUST provide a reply based on the engineer's question. Do not return empty responses.\n\n" .
+                          "Please provide a reply to the following engineer's question in the selected tone while maintaining technical accuracy and professionalism.\n\n" .
+                          "Engineer's Question: " . $engineerReply . "\n\n" .
+                          "Desired Tone: " . ucfirst($selectedTone) . "\n\n" .
+                          "Tone Guidelines:\n" .
+                          "- Professional: Formal, respectful, business-like, clear and concise\n" .
+                          "- Aggressive: Direct, assertive, firm, but still professional and not rude\n" .
+                          "- Friendly: Warm, approachable, helpful, encouraging\n" .
+                          "- Casual: Relaxed, conversational, informal but still informative\n\n" .
+                          "You MUST provide a reply that:\n" .
+                          "1. Addresses the engineer's question directly and comprehensively\n" .
+                          "2. Adapts the tone to match the selected style\n" .
+                          "3. Provides helpful and accurate information\n" .
+                          "4. Is appropriate for professional communication\n" .
+                          "5. Is clear and understandable\n\n" .
+                          "Return ONLY the reply text, nothing else.";
+            }
 
             // Log the prompt being sent
-            \Log::info('ChatGPT Modify Reply Prompt for message ID ' . $messageId . ': ' . $prompt);
+            if ($selectedPrompt && !empty(trim($selectedPrompt))) {
+                \Log::info('ChatGPT Modify Reply using CUSTOM PROMPT for message ID ' . $messageId . ': ' . $prompt);
+            } else {
+                \Log::info('ChatGPT Modify Reply using DEFAULT PROMPT for message ID ' . $messageId . ': ' . $prompt);
+            }
 
             // ChatGPT API configuration
             $apiKey = env('OPENAI_API_KEY');
