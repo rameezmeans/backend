@@ -8584,6 +8584,9 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       // Populate the modal with the client's message
       $('#modalEngineerNotes').text(notes);
       
+      // Check and toggle translate button visibility based on text language
+      checkAndToggleTranslateButton();
+      
       // Clear other fields and remove error styling
       $('#modalChatGPTExplanation').text('').removeClass('text-danger');
       $('#modalUserPrompt').val('');
@@ -8682,7 +8685,39 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       });
         });
     
-         // Handle Translate to English button click
+    // Function to check if text is in English and show/hide translate button
+    function checkAndToggleTranslateButton() {
+      const notes = $('#modalEngineerNotes').text();
+      const $translateBtn = $('#translateToEnglishBtn');
+      
+      if (notes && notes.trim() !== '') {
+        // Make an AJAX call to check if text is in English
+        $.ajax({
+          url: "/api/chatgpt/check-language",
+          type: "POST",
+          data: {
+            "_token": "{{ csrf_token() }}",
+            "text": notes
+          },
+          headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+          success: function(response) {
+            if (response.success && !response.is_english) {
+              $translateBtn.show();
+            } else {
+              $translateBtn.hide();
+            }
+          },
+          error: function() {
+            // If API fails, hide the button by default
+            $translateBtn.hide();
+          }
+        });
+      } else {
+        $translateBtn.hide();
+      }
+    }
+    
+    // Handle Translate to English button click
     $('#translateToEnglishBtn').on('click', function() {
       const notes = $('#modalEngineerNotes').text();
       
@@ -9372,7 +9407,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
               <button type="button" class="btn btn-primary btn-sm" id="explanationBtn" title="Get ChatGPT explanation">
                 <i class="fa fa-robot"></i> Explanation
               </button>
-              <button type="button" class="btn btn-outline-info btn-sm ml-2" id="translateToEnglishBtn" title="Translate to English">
+              <button type="button" class="btn btn-outline-info btn-sm ml-2" id="translateToEnglishBtn" title="Translate to English" style="display: none;">
                 <i class="fa fa-language"></i> Translate to English
               </button>
             </div>

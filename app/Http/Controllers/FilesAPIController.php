@@ -2938,4 +2938,96 @@ class FilesAPIController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Check if the given text is in English
+     */
+    public function checkLanguage(Request $request)
+    {
+        try {
+            $request->validate([
+                'text' => 'required|string|max:5000'
+            ]);
+
+            $text = $request->input('text');
+
+            // Log the request
+            \Log::info('Language Check Request - Text length: ' . strlen($text));
+
+            // ChatGPT API configuration
+            $apiKey = env('OPENAI_API_KEY');
+            $apiUrl = 'https://api.openai.com/v1/chat/completions';
+
+            if (!$apiKey) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'ChatGPT API key not configured'
+                ], 500);
+            }
+
+            // Make request to ChatGPT API to check language
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $apiKey,
+                'Content-Type' => 'application/json'
+            ])->post($apiUrl, [
+                'model' => env('MODEL'),
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You are a language detection expert. Analyze the given text and determine if it is written in English. Respond with ONLY "true" if the text is in English, or "false" if it is not in English. Do not include any other text or explanation.'
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $text
+                    ]
+                ],
+                'max_tokens' => 10,
+                'temperature' => 0
+            ]);
+
+            if ($response->successful()) {
+                $responseData = $response->json();
+                
+                if (isset($responseData['choices'][0]['message']['content'])) {
+                    $isEnglish = trim(strtolower($responseData['choices'][0]['message']['content'])) === 'true';
+                    
+                    \Log::info('Language check result for text: ' . ($isEnglish ? 'English' : 'Non-English'));
+                    
+                    return response()->json([
+                        'success' => true,
+                        'is_english' => $isEnglish
+                    ]);
+                } else {
+                    \Log::error('Invalid ChatGPT language check response format');
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid response format from ChatGPT API'
+                    ], 500);
+                }
+            } else {
+                $errorMessage = 'ChatGPT API request failed';
+                if ($response->json()) {
+                    $errorData = $response->json();
+                    if (isset($errorData['error']['message'])) {
+                        $errorMessage = 'ChatGPT API Error: ' . $errorData['error']['message'];
+                    }
+                }
+                
+                \Log::error('ChatGPT language check API call failed: ' . $errorMessage);
+                
+                return response()->json([
+                    'success' => false,
+                    'message' => $errorMessage
+                ], $response->status());
+            }
+
+        } catch (\Exception $e) {
+            \Log::error('Language check API exception: ' . $e->getMessage());
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'Internal server error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

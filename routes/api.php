@@ -2163,3 +2163,4 @@ Route::post('chatgpt/explain-message', [App\Http\Controllers\FilesAPIController:
 Route::post('chatgpt/modify-reply', [App\Http\Controllers\FilesAPIController::class, 'modifyReplyWithChatGPT']);
 Route::post('chatgpt/translate', [App\Http\Controllers\FilesAPIController::class, 'translateWithChatGPT']);
 Route::post('chatgpt/ask', [App\Http\Controllers\FilesAPIController::class, 'askChatGPT']);
+Route::post('chatgpt/check-language', [App\Http\Controllers\FilesAPIController::class, 'checkLanguage']);

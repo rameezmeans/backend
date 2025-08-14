@@ -425,6 +425,11 @@
               <a href="{{ route('sample-messages.index') }}">Sample Messages</a>
               <span class="icon-thumbnail">SM</span>
             </li>
+
+            <li class="">
+              <a href="{{ route('chatgpt-prompts.index') }}">ChatGPT Prompts</a>
+              <span class="icon-thumbnail">CP</span>
+            </li>
             
             {{-- <li class="">
               <a href="{{ route('frontends') }}">Frontends</a>

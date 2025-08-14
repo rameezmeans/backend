@@ -35,5 +35,9 @@ class DatabaseSeeder extends Seeder
         //     'slave_tools' => 'active',
         //     'is_admin' => true,
         // ]);
+
+        $this->call([
+            ChatgptPromptSeeder::class,
+        ]);
     }
 }

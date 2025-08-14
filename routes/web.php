@@ -12,6 +12,7 @@ use App\Http\Controllers\PaymentAccountsController;
 use App\Http\Controllers\ReminderManagerController;
 use App\Http\Controllers\SampleMessagesController;
 use App\Http\Controllers\SubdealerGroupsController;
+use App\Http\Controllers\ChatgptPromptController;
 use App\Http\Controllers\WhatsappController;
 use App\Http\Controllers\ZohoController;
 use App\Http\Livewire\NewPaymentLog;
@@ -1457,3 +1458,6 @@ Route::put('sample-messages/{id}', [SampleMessagesController::class, 'update'])-
 Route::delete('sample-messages/{id}', [SampleMessagesController::class, 'destroy'])->name('sample-messages.destroy');
 
 Route::get('/sample-messages/fetch', [SampleMessagesController::class, 'fetch'])->name('sample-messages.fetch');
+
+// ChatGPT Prompts Routes
+Route::resource('chatgpt-prompts', ChatgptPromptController::class);
