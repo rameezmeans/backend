@@ -289,19 +289,30 @@ echo $response;
         dd($responseBody);
     }
 
-    public function closeAllSlots(){    
+    public function closeAllSlots(){  
+        
+        try {
+            $url = "https://encodingapi.alientech.to/api/kess3/file-slots";
 
-        $url = "https://encodingapi.alientech.to/api/kess3/file-slots";
+            $headers = [
+                'X-Alientech-ReCodAPI-LLC' => $this->token,
+            ];
 
-        $headers = [
-            // 'Content-Type' => 'multipart/form-data',
-            'X-Alientech-ReCodAPI-LLC' => $this->token,
-        ];
-  
-        $response = Http::withHeaders($headers)->get($url);
-        $responseBody = json_decode($response->getBody(), true);
+            $response = Http::withHeaders($headers)->get($url);
 
+            // Check HTTP status code first
+            if ($response->failed()) {
+                // This will dump the whole error response body
+                dd('HTTP Error', $response->status(), $response->body());
+            }
 
+            // If success, decode JSON
+            $responseBody = $response->json(); // no need to manually json_decode
+            dd($responseBody);
+
+        } catch (\Exception $e) {
+            dd('Exception', $e->getMessage());
+        }
 
         foreach($responseBody as $row){
             

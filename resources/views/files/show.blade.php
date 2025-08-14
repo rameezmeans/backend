@@ -3388,7 +3388,7 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
                         @endif
-                        <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
+                        <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Uploaded Time</p>
                           <div class="pull-right">
                             <span class="">{{\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A')}}<span>
@@ -4243,7 +4243,7 @@ margin-bottom: 10px !important;
                         @endif
                               
                                          
-                              <?php
+                              <?
 
                                 $madeproject = DB::table('lua_make_project')
                                 ->where('requestfile', $message['id'])
@@ -4752,9 +4752,9 @@ margin-bottom: 10px !important;
                               <a href="#" data-toggle="tab" data-target="#tab3Inspire">Three</a>
                             </li> --}}
                           {{-- </ul>
-                          <div class="tab-content bg-white full-width"> --}}
+                          <div class="tab-content bg-white full-width">
 
-                            {{-- @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
+                            @if($file->tool_type == 'slave' && $file->tool == 'Kess_V3')
                             @if($file->decoded_files) --}}
 
                             {{-- <div class="tab-pane active show" id="tab3hellowWorld">
@@ -5138,7 +5138,7 @@ margin-bottom: 10px !important;
             {{-- @endif --}}
            
             <div class="tab-pane slide-left" id="slide4{{$file->id}}">
-              <div class="card-header @if($file->frontend->id == 1) bg-primary-light @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
+              <div class="card-header @if($file->frontend->id == 1) bg-primary-light  @elseif($file->frontend->id == 3) bg-info-light @elseif($file->frontend->id == 4) bg-success-light @else bg-warning-light @endif">
                 <div class="text-center">
                   <div class="card-title">
                       <img style="width: 30%;" src="@if($file->vehicle()){{ $file->vehicle()->Brand_image_URL }}@endif" alt="{{$file->brand}}" class="">
@@ -6081,8 +6081,7 @@ margin-bottom: 10px !important;
       
     </div>
   </div>
-</div>
-							
+</div>							
 <div class="modal fade slide-up disable-scroll" style="z-index: 9999;" id="translateModal" tabindex="-1" role="dialog" aria-hidden="false">
   <div class="modal-dialog">
     <div class="modal-content-wrapper">
@@ -6250,7 +6249,7 @@ margin-bottom: 10px !important;
                 </div>
               </div>
             </div>
-         
+          
           <div class="row">
             <div class="col-md-8 m-t-10 sm-m-t-10 text-center">
               <button type="submit" class="btn btn-success btn-block m-t-5">Send Message To Customer</button>
@@ -8683,7 +8682,65 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       });
         });
     
-
+         // Handle Translate to English button click
+    $('#translateToEnglishBtn').on('click', function() {
+      const notes = $('#modalEngineerNotes').text();
+      
+      if (!notes || notes.trim() === '') {
+        alert('No client message to translate.');
+        return;
+      }
+      
+      // Show loading state
+      const $btn = $(this);
+      const originalText = $btn.html();
+      $btn.html('<i class="fa fa-spinner fa-spin"></i> Translating...');
+      $btn.prop('disabled', true);
+      
+      // Send translation request to ChatGPT API
+      $.ajax({
+        url: "/api/chatgpt/translate",
+        type: "POST",
+        data: {
+          "_token": "{{ csrf_token() }}",
+          "text": notes,
+          "target_language": "en",
+          "language_name": "English",
+          "message_id": 0
+        },
+        headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+        success: function(response) {
+          if (response.success) {
+            // Update modalEngineerNotes with the translated text
+            $('#modalEngineerNotes').text(response.translated_text);
+            
+            // Show success feedback
+            $btn.html('<i class="fa fa-check"></i> Translated!');
+            $btn.removeClass('btn-outline-info').addClass('btn-success');
+            
+            // Reset button after 2 seconds
+            setTimeout(function() {
+              $btn.html(originalText);
+              $btn.removeClass('btn-success').addClass('btn-outline-info');
+            }, 2000);
+          } else {
+            alert('Error: ' + (response.message || 'Failed to translate message'));
+          }
+          
+          // Re-enable the translate button
+          $btn.html(originalText);
+          $btn.prop('disabled', false);
+        },
+        error: function(xhr, status, error) {
+          alert('Error: Failed to connect to ChatGPT API. Please try again.');
+          console.error('ChatGPT API Error:', error);
+          
+          // Re-enable the translate button
+          $btn.html(originalText);
+          $btn.prop('disabled', false);
+        }
+      });
+    });
     
     // Copy explanation button click handler
     $('#copyExplanationBtn').on('click', function() {
@@ -9314,6 +9371,9 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
               <label class="mb-0 mr-3"><strong>Client's Message:</strong></label>
               <button type="button" class="btn btn-primary btn-sm" id="explanationBtn" title="Get ChatGPT explanation">
                 <i class="fa fa-robot"></i> Explanation
+              </button>
+              <button type="button" class="btn btn-outline-info btn-sm ml-2" id="translateToEnglishBtn" title="Translate to English">
+                <i class="fa fa-language"></i> Translate to English
               </button>
             </div>
             <div class="form-control" style="min-height: 150px; max-height: 300px; overflow-y: auto; background-color: #ffffff; color: #000000; border: 1px solid #ced4da;" id="modalEngineerNotes" readonly></div>
