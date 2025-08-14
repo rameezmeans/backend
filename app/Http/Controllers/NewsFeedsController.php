@@ -67,7 +67,7 @@ class NewsFeedsController extends Controller
         $newsFeedsECUTech = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 1)->get();
         $newsFeedsTuningX = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 2)->get();
         $newsFeedsEfiles = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 3)->get();
-        $newsFeedsCtf = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 3)->get();
+        $newsFeedsCtf = NewsFeed::whereNull('subdealer_group_id')->where('front_end_id', 4)->get();
 
         return view( 'feeds.index', [ 
 
