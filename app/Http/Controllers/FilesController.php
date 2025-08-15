@@ -2313,7 +2313,6 @@ class FilesController extends Controller
         }
 
         // if ($request->filled('options')) {
-            
         //     $data = $data->whereIn('file_services.service_id', [$request->options]);
             
         // }
@@ -2754,8 +2753,8 @@ class FilesController extends Controller
         $loggedInUser = Auth::user();
 
         // if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
-            
-            return view('files.live_files', ['loggedInUser' => $loggedInUser, 'allEngineers' => $allEngineers, 'stages' => $stages, 'options' => $options, 'engineers' => $engineers]);    
+        
+        return view('files.live_files', ['loggedInUser' => $loggedInUser, 'allEngineers' => $allEngineers, 'stages' => $stages, 'options' => $options, 'engineers' => $engineers]);    
         // }
         // else{
         //     return abort(404);

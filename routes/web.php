@@ -1158,6 +1158,7 @@ Route::post('/delete_tool', [App\Http\Controllers\ToolsController::class, 'delet
 // Route::post('/update_bosch_number', [App\Http\Controllers\BoschECUNumbersController::class, 'update'])->name('update-number');
 // Route::post('/delete_bosch_number', [App\Http\Controllers\BoschECUNumbersController::class, 'delete'])->name('delete-number');
 
+    
 Route::get('/unit_price', [App\Http\Controllers\CreditsController::class, 'unitPrice'])->name('unit-price');
 Route::get('/default_elorus_template', [App\Http\Controllers\CreditsController::class, 'defaultTemplate'])->name('default-elorus-template');
 Route::post('/udpate_default_elorus_template', [App\Http\Controllers\CreditsController::class, 'updateDefaultTemplate'])->name('update-default-eloru-template-id');
