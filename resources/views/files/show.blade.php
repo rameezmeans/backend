@@ -2769,18 +2769,34 @@ margin-bottom: 10px !important;
                             <div class="col-md-4">
                           
                           <?php 
-                            $servername = env('DB_HOST');
-                            $username = env('DB_USERNAME');
-                            $password = env('DB_PASSWORD');
-                            $dbname = env('DB_DATABASE');
-                            $socket = env('DB_SOCKET');
+
+                          if(env('APP_ENV') != 'live'){
+                              $servername = env('DB_HOST');
+                              $username = env('DB_USERNAME');
+                              $password = env('DB_PASSWORD');
+                              $dbname = env('DB_DATABASE');
+                              $socket = env('DB_SOCKET');
+                          }
+                          else{
+                              
+                              $username = env('DB_USERNAME');
+                              $password = env('DB_PASSWORD');
+                              $dbname = env('DB_DATABASE');
+                              $socket = env('DB_SOCKET');
+                          }
+                          
 
 
                             // $arrayversionlua = NULL;
                             
                             // Create a PDO instance
                             try {
-                                $conn = new PDO("mysql:host=$servername;dbname=$dbname;unix_socket=$socket", $username, $password);
+                                if(env('APP_ENV') != 'live'){
+                                  $conn = new PDO("mysql:host=$servername;dbname=$dbname;unix_socket=$socket", $username, $password);
+                                }
+                                else{
+                                  $conn = new PDO("mysql:dbname=$dbname;unix_socket=$socket", $username, $password);
+                                }
                                 // $conn = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             
@@ -5445,17 +5461,31 @@ margin-bottom: 10px !important;
                             </div>
                             <div class="col-md-4">
 <?php
-                            $servername = env('DB_HOST');
-                            $username = env('DB_USERNAME');
-                            $password = env('DB_PASSWORD');
-                            $dbname = env('DB_DATABASE');
-                            $socket = env('DB_SOCKET');
+                            if(env('APP_ENV') != 'live'){
+                              $servername = env('DB_HOST');
+                              $username = env('DB_USERNAME');
+                              $password = env('DB_PASSWORD');
+                              $dbname = env('DB_DATABASE');
+                              $socket = env('DB_SOCKET');
+                          }
+                          else{
+                              
+                              $username = env('DB_USERNAME');
+                              $password = env('DB_PASSWORD');
+                              $dbname = env('DB_DATABASE');
+                              $socket = env('DB_SOCKET');
+                          }
 
                             // dd($socket);
                             
                             // Create a PDO instance
                             try {
-                                $conn = new PDO("mysql:host=$servername;dbname=$dbname;unix_socket=$socket", $username, $password);
+                                if(env('APP_ENV') != 'live'){
+                                  $conn = new PDO("mysql:host=$servername;dbname=$dbname;unix_socket=$socket", $username, $password);
+                                }
+                                else{
+                                  $conn = new PDO("mysql:dbname=$dbname;unix_socket=$socket", $username, $password);
+                                }
                                 // $conn = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             
