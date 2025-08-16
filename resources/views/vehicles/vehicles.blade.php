@@ -49,7 +49,7 @@
                     <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                         
                             
-                            <table class="table table-hover demo-table-search table-responsive-block datat-table no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                            <table class="table table-hover demo-table-search table-responsive-block data-table no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                                 <thead>
                                     <tr role="row" >
                                         

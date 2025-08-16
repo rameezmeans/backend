@@ -37,19 +37,13 @@ class VehiclesController extends Controller
         return Datatables::of($data)
 
             ->addIndexColumn()
-            
-            
-            
             ->addColumn('edit', function($row){
 
                     $btn = '<a href="'.route('vehicle', $row->id).'" class="edit btn btn-primary btn-sm">Edit</a>';
                     return $btn;
 
             })
-            
-           
-            ->rawColumns(['id','Make','Name', 'Model', 'Generation', 'Make'])
-            
+            ->rawColumns(['id','Make','Name', 'Model', 'Generation', 'Make', 'edit'])
             ->make(true);
     }
 
