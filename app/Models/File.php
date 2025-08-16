@@ -215,6 +215,28 @@ class File extends Model
         return $this->hasOne(FileService::class, 'file_id', 'id')->where('type', 'stage');
     }
 
+    public function isOptionsType()
+    {
+        $stageService = $this->stage_services; // calls the relationship
+
+        if($stageService && $stageService->service_id == 1) {
+            return true; // It's options type
+        }
+
+        return false; // Not options type
+    }
+
+    public function isStageAndOptionsType()
+    {
+        return $this->options()->count() > 0;
+    }
+
+    public function isStageType()
+    {
+        // If file has no options type records, it's a stage type
+        return $this->options()->count() == 0;
+    }
+
     public function comments(){
         return $this->hasMany(CommentFileService::class, 'file_id', 'id');
     }

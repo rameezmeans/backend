@@ -111,10 +111,27 @@ class ActiveFeedCron extends Command
 
     }
 
-    function get_online()
-    {
+    function get_engineer_by_rule($file) {
+
+        if($file->isOptionsType()){
+            $engineer = User::findOrFail(Key::where('key','options_engineer')->first()->value);
+        }
+
+        else if($file->isStageType()){
+            $engineer = User::findOrFail(Key::where('key','stage_engineer')->first()->value);
+        }
+
+        else if($file->isStageAndOptionsType()){
+            $engineer = User::findOrFail(Key::where('key','stages_options_engineer')->first()->value);
+            
+        }
+
+        if($engineer->online == 1){
+            return $engineer;
+        }
+
         // Check for the first online user with role_id 2 or 3
-        $onlineUser = User::where(function ($query) {
+        $onlineEngineer = User::where(function ($query) {
         $query->whereIn('role_id', [2, 3])
               ->orWhere('id', 1); // explicitly include admin
         })
@@ -122,8 +139,8 @@ class ActiveFeedCron extends Command
         ->first();
 
         // If found, return them
-        if ($onlineUser) {
-            return $onlineUser;
+        if ($onlineEngineer) {
+            return $onlineEngineer;
         }
 
         // Otherwise, return the admin
@@ -139,13 +156,47 @@ class ActiveFeedCron extends Command
         ->where('created_at', '<', Carbon::now()->subMinutes(5))
         ->get();
 
-        // Step 2: Get one online user (or fallback to admin)
-        $onlineUser = $this->get_online(); // Make sure this function returns a User model
-
         // Step 3: Assign each file to the online user
         foreach ($unassignedFiles as $file) {
-            $file->assigned_to = $onlineUser->id;
+            $file->assigned_to = $this->get_engineer_by_rule($file);
             $file->save();
+        }
+
+        $supportFiles = File::whereHas('engineer_file_notes', function($query) {
+            $query->where('engineer', 0)
+                ->where('created_at', '<=', Carbon::now()->subMinutes(5));
+        })->get();
+
+        $supportMessageRecord = Key::where('key','support_messages_engineer')->first()->value;
+        
+        foreach($supportFiles as $f){
+        if($supportMessageRecord != -1){
+
+                $engineer = User::findOrFail($supportMessageRecord);
+
+                if($engineer->online == 1){
+                    $f->assigned_to = $engineer->id;
+                }
+                else{
+                    // Check for the first online user with role_id 2 or 3
+                    $onlineEngineer = User::where(function ($query) {
+                    $query->whereIn('role_id', [2, 3])
+                        ->orWhere('id', 1); // explicitly include admin
+                    })
+                    ->where('online', 1)
+                    ->first();
+
+                    // If found, return them
+                    if ($onlineEngineer) {
+                        $f->assigned_to = $onlineEngineer->id;
+                    }
+
+                    // Otherwise, return the admin
+                    $f->assigned_to = User::where('id', 1)->where('role_id', 1)->first()->id;
+                }
+
+                $f->save();
+            }
         }
 
         $reminders = EmailReminder::all();

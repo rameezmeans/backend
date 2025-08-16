@@ -2143,9 +2143,7 @@ margin-bottom: 10px !important;
 
                         
                         <!-- Tab panes -->
-
                         
-                         
                           @if(isset($message['egnineers_internal_notes']))
                            
                           @if($message['engineer'] == 1)
