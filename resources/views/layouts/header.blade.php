@@ -8,6 +8,17 @@
   white-space: nowrap;
 }
 
+.container-fluid {
+    margin-top: 50px;
+    padding-left: 15px; /* optional: reduce padding */
+    padding-right: 15px; /* optional: reduce padding */
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    max-width: 100%; /* ensures it can expand to full page width */
+    overflow-x: auto; /* optional: allows horizontal scroll if table is too wide */
+}
+
 .responsive-cards {
     padding-left: 320px; /* start cards 320px from the page edge */
     padding-right: 15px; /* normal right padding */
