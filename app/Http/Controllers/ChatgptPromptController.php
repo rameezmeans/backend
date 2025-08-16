@@ -23,7 +23,7 @@ class ChatgptPromptController extends Controller
         }
         
         // Otherwise return the view
-        return view('chatgpt_prompts.index', compact('prompts'));
+        return view('chatgpt_prompts.listings', compact('prompts'));
     }
 
     /**
@@ -56,13 +56,13 @@ class ChatgptPromptController extends Controller
             ->with('success', 'ChatGPT Prompt created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ChatgptPrompt $chatgptPrompt)
-    {
-        return view('chatgpt_prompts.show', compact('chatgptPrompt'));
-    }
+    // /**
+    //  * Display the specified resource.
+    //  */
+    // public function show(ChatgptPrompt $chatgptPrompt)
+    // {
+    //     return view('chatgpt_prompts.show', compact('chatgptPrompt'));
+    // }
 
     /**
      * Show the form for editing the specified resource.

@@ -1465,5 +1465,12 @@ Route::delete('sample-messages/{id}', [SampleMessagesController::class, 'destroy
 
 Route::get('/sample-messages/fetch', [SampleMessagesController::class, 'fetch'])->name('sample-messages.fetch');
 
+Route::get('chatgpt-prompts', [ChatgptPromptController::class, 'index'])->name('chatgpt-prompts.index');
+Route::get('chatgpt-prompts/create', [ChatgptPromptController::class, 'create'])->name('chatgpt-prompts.create');
+Route::post('chatgpt-prompts', [ChatgptPromptController::class, 'store'])->name('chatgpt-prompts.store');
+Route::get('chatgpt-prompts/{id}/edit', [ChatgptPromptController::class, 'edit'])->name('chatgpt-prompts.edit');
+Route::put('chatgpt-prompts/{id}', [ChatgptPromptController::class, 'update'])->name('chatgpt-prompts.update');
+Route::delete('chatgpt-prompts/{id}', [ChatgptPromptController::class, 'destroy'])->name('chatgpt-prompts.destroy');
+
 // ChatGPT Prompts Routes
-Route::resource('chatgpt-prompts', ChatgptPromptController::class);
+// Route::resource('chatgpt-prompts', ChatgptPromptController::class);
