@@ -20,8 +20,8 @@
         <img src="{{ url('assets/img/logo.png')}}" alt="logo" data-src="{{ url('assets/img/logo.png') }}" data-src-retina="{{ url('assets/img/logo_2x.png') }}" width="78" height="22">
       </div>
       <!-- START NOTIFICATION LIST -->
-      <ul class="d-lg-inline-block d-none notification-list no-margin d-lg-inline-block no-style p-l-50 p-r-20">
-        <li class="p-r-10 inline">
+      <ul class="list-unstyled d-flex flex-wrap justify-content-start gap-3 responsive-cards">
+        {{-- <li class="p-2"> --}}
 
           @php
           $loggedInUser = Auth::user();
@@ -154,11 +154,11 @@
             {{-- </div> --}}
             <!-- END Notification Dropdown -->
           {{-- </div> --}}
-        </li>
-        <li class="p-r-10 inline" style="margin-left: 290px;">
+        {{-- </li> --}}
+        <li class="p-2">
           @foreach($allEngineers as $engineer)
                     
-                <div style="width: 175px; margin-top: 30px;" class="card social-card share col1 @if($loggedInUser->id == $engineer->id) flip-status @endif" data-social="item" style="" data-id="{{$engineer->id}}">
+                <div class="card social-card share @if($loggedInUser->id == $engineer->id) flip-status @endif" style="width: 175px;" data-social="item" style="" data-id="{{$engineer->id}}">
                   <div class="circle" data-toggle="tooltip" title="" data-container="body" data-original-title="Label">
                   </div>
                   <div class="card-header clearfix">

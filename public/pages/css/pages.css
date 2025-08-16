@@ -220,6 +220,38 @@ body.menu-pin .overlay .overlay-brand {
     position: relative;
 }
 
+.responsive-cards {
+    padding-left: 320px; /* start cards 320px from the page edge */
+    padding-right: 15px; /* normal right padding */
+}
+
+.responsive-cards li {
+    flex: 0 0 auto; /* keep each card its own width */
+}
+
+.social-card {
+    width: 175px; /* can shrink on smaller screens if needed */
+}
+
+/* Optional: shrink cards on smaller screens */
+@media (max-width: 768px) {
+    .responsive-cards {
+        padding-left: 20px; /* reduce left spacing for tablet */
+    }
+    .social-card {
+        width: 140px;
+    }
+}
+
+@media (max-width: 480px) {
+    .responsive-cards {
+        padding-left: 15px; /* almost edge for mobile */
+    }
+    .social-card {
+        width: 100%;
+    }
+}
+
 .container-fluid {
     margin-top: 50px;
     padding-left: 15px; /* optional: reduce padding */
