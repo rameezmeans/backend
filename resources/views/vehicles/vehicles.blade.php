@@ -49,24 +49,21 @@
                     <div id="tableWithSearch_wrapper" class="dataTables_wrapper no-footer m-t-40">
                         
                             
-                            <table class="table table-hover demo-table-search table-responsive-block dataTable no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
+                            <table class="table table-hover demo-table-search table-responsive-block datat-table no-footer" id="tableWithSearch" role="grid" aria-describedby="tableWithSearch_info">
                                 <thead>
                                     <tr role="row" >
-                                        <th style="width: 5%;">
-                                            <div class="checkbox checkbox-circle check-success  ">
-                                                <input type="checkbox" value="1" id="select_all">
-                                                <label for="select_all"></label>
-                                            </div>
-                                        </th>
+                                        
+                                        <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column descending" style="width: 20px;">ID</th>
                                         <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column descending" style="width: 20px;">Engine</th>
                                         <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column descending" style="width: 20px;">Name</th>
                                         <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column descending" style="width: 20px;">Model</th>
                                         <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column descending" style="width: 20px;">Generation</th>
                                         <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column descending" style="width: 20px;">Make</th>
+                                        <th class="" tabindex="0" aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-sort="descending" aria-label="Title: activate to sort column descending" style="width: 20px;">Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody> 
-                                    @foreach($vehicles as $vehicle)
+                                    {{-- @foreach($vehicles as $vehicle)
                                         <tr class="redirect-click" data-redirect="{{ route('vehicle', $vehicle->id) }}">
                                             <td>
                                                 <div class="checkbox checkbox-circle check-info">
@@ -80,7 +77,7 @@
                                             <td>{{$vehicle->Generation}}</td>
                                             <td>{{$vehicle->Make}}</td>
                                         </tr>
-                                    @endforeach
+                                    @endforeach --}}
                                 </tbody>
                             </table>
                         </div>
@@ -97,6 +94,42 @@
 <script type="text/javascript">
 
     $( document ).ready(function(event) {
+
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+
+
+      var table = $('.data-table').DataTable({
+
+          processing: true,
+          serverSide: true,
+          order: [[0,'desc']],
+          ajax: {
+              url: "{{ route('vehicles-table') }}",
+              type: 'POST',
+              data:function (d) {
+
+                // d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                // d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
+                // d.frontend = $('#frontend').val();
+
+              }
+          },
+          columns: [
+              {data: 'id', name: 'id'},
+              {data: 'Engine', name: 'Engine'},
+              {data: 'Name', name: 'Name'},
+              {data: 'Model', name: 'Model'},
+              {data: 'Generation', name: 'Generation'},
+              {data: 'Make', name: 'Make'},
+              {data: 'edit', name: 'edit', orderable: false, searchable: false},
+              
+          ]
+
+      });
         
         $(document).on('click', '#delete' ,function(){
             var searchIDs = $("tbody input:checkbox:checked").map(function(){

@@ -1092,8 +1092,9 @@ Route::post('/get_credits_report', [App\Http\Controllers\CreditsController::clas
 Route::post('/change_online_search_status', [App\Http\Controllers\CreditsController::class,'changeOnlineStatus'])->name('change-online-search-status');
 Route::post('/change_maintenance_mode', [App\Http\Controllers\CreditsController::class,'changeMaintenanceMode'])->name('change-maintenance-mode');
 
-// Route::get('/vehicles', [ App\Http\Controllers\VehiclesController::class,'index'])->name('vehicles');
-Route::get('/vehicles', [ App\Http\Controllers\VehiclesController::class,'liveVehicles'])->name('vehicles');
+Route::get('/vehicles', [ App\Http\Controllers\VehiclesController::class,'index'])->name('vehicles');
+// Route::get('/vehicles', [ App\Http\Controllers\VehiclesController::class,'liveVehicles'])->name('vehicles');
+Route::post('/vehicles_table', [ App\Http\Controllers\VehiclesController::class,'vehiclesTable'])->name('vehicles-table');
 
 Route::get('/vehicle/{id}', [App\Http\Controllers\VehiclesController::class,'show'])->name('vehicle');
 Route::get('/create_vehicle', [App\Http\Controllers\VehiclesController::class,'create'])->name('create-vehicle');
