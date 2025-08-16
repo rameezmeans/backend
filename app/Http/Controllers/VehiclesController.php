@@ -470,7 +470,7 @@ class VehiclesController extends Controller
             //     $m->save();
             // }
 
-            return redirect()->route('vehicles')->with('success',  'Vehicle updated, successfully.');
+            return redirect()->route('vehicle', $vehicle->id)->with('success',  'Vehicle updated, successfully.');
         }
 
     }
