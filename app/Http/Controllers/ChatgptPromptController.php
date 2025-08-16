@@ -67,15 +67,16 @@ class ChatgptPromptController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ChatgptPrompt $chatgptPrompt)
+    public function edit($id)
     {
+        $chatgptPrompt = ChatgptPrompt::findOrFail($id);
         return view('chatgpt_prompts.edit', compact('chatgptPrompt'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ChatgptPrompt $chatgptPrompt)
+    public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
@@ -88,6 +89,8 @@ class ChatgptPromptController extends Controller
                 ->withInput();
         }
 
+        $chatgptPrompt = ChatgptPrompt::findOrFail($request->id);
+
         $chatgptPrompt->update($request->all());
 
         return redirect()->route('chatgpt-prompts.index')
@@ -97,11 +100,11 @@ class ChatgptPromptController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ChatgptPrompt $chatgptPrompt)
+    public function destroy($id)
     {
+        $chatgptPrompt = ChatgptPrompt::findOrFail($id);
         $chatgptPrompt->delete();
 
-        return redirect()->route('chatgpt-prompts.index')
-            ->with('success', 'ChatGPT Prompt deleted successfully.');
+        return response()->json(['success' => true, 'message' => 'Prompt deleted successfully.']);
     }
 }

@@ -9,7 +9,7 @@
                 <div class="card-header">
                     <div class="card-title">
                         <h5>
-                            @if(isset($prompt))
+                            @if(isset($chatgptPrompt))
                                 Edit ChatGPT Prompt
                             @else
                                 Add ChatGPT Prompt
@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="@if(isset($prompt)){{ route('chatgpt-prompts.update', $prompt->id) }}@else{{ route('chatgpt-prompts.store') }}@endif">
+                    <form method="POST" action="@if(isset($chatgptPrompt)){{ route('chatgpt-prompts.update', $prompt->id) }}@else{{ route('chatgpt-prompts.store') }}@endif">
                         @csrf
                         @if(isset($prompt))
                             @method('PUT')
