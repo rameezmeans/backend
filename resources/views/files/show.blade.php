@@ -518,10 +518,11 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
 
+                        
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Frontend</p>
                           <div class="pull-right">
-                            <span class="label @if($file->frontend->id == 1) text-white bg-primary @elseif($file->frontend->id == 3) @elseif($file->frontend->id == 4) bg-success-light text-white bg-info @else text-black bg-warning @endif">{{$file->frontend->name}}<span>
+                            <span class="label @if($file->frontend->id == 1) text-white bg-primary @elseif($file->frontend->id == 3) text-white bg-info @elseif($file->frontend->id == 4) bg-success-light @else text-black bg-warning @endif">{{$file->frontend->name}}<span>
                           </div>
                           <div class="clearfix"></div>
                         </div>
@@ -589,6 +590,12 @@ margin-bottom: 10px !important;
                           <div class="clearfix"></div>
                         </div>
 
+                        
+
+                        
+
+                        @endif
+
                         <div class="b-b b-grey p-l-20 p-r-20 p-b-10 p-t-10">
                           <p class="pull-left">Tool</p>
                           <div class="pull-right">
@@ -597,10 +604,6 @@ margin-bottom: 10px !important;
                           </div>
                           <div class="clearfix"></div>
                         </div>
-
-                        
-
-                        @endif
 
                         @if($file->additional_comments)
 
