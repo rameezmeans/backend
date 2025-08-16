@@ -215,10 +215,22 @@ body.menu-pin .overlay .overlay-brand {
 }
 /* Other overides */
 .container-fluid {
-    padding-left: 30px;
-    padding-right: 30px;
+    /* padding-left: 30px; */
+    /* padding-right: 30px; */
     position: relative;
 }
+
+.container-fluid {
+    margin-top: 50px;
+    padding-left: 15px; /* optional: reduce padding */
+    padding-right: 15px; /* optional: reduce padding */
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    max-width: 100%; /* ensures it can expand to full page width */
+    overflow-x: auto; /* optional: allows horizontal scroll if table is too wide */
+}
+
 .copyright {
     padding: 25px 0;
     border-top: 1px solid rgba(98, 98, 98, 0.07);

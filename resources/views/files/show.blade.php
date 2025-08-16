@@ -3,6 +3,8 @@
 @section('pagespecificstyles')
   <style>
 
+    
+
 .sample-messages-popup {
     position: absolute;
     top: 20px;
