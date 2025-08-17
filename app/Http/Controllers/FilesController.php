@@ -127,7 +127,7 @@ class FilesController extends Controller
                 
             }
             else if($supportMessageRecord == -1){
-                $latestEngineerUploader = $f->latestRequestFile?->user_id;
+                
                 if (($user = User::find($f->latestRequestFile?->user_id)) && $user->online) {
                     $f->assigned_to = $user->id;
                     $f->save();

@@ -196,9 +196,8 @@ class ActiveFeedCron extends Command
                 
             }
             else if($supportMessageRecord == -1){
-                $latestEngineerUploader = $f->latestRequestFile?->user_id;
-                if(User::findOrFail($latestEngineerUploader)->online){
-                    $f->assigned_to = $latestEngineerUploader;
+                if (($user = User::find($f->latestRequestFile?->user_id)) && $user->online) {
+                    $f->assigned_to = $user->id;
                     $f->save();
                 }
             }
