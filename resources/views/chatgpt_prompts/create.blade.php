@@ -27,15 +27,15 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="@if(isset($chatgptPrompt)){{ route('chatgpt-prompts.update', $prompt->id) }}@else{{ route('chatgpt-prompts.store') }}@endif">
+                    <form method="POST" action="@if(isset($chatgptPrompt)){{ route('chatgpt-prompts.update', $chatgptPrompt->id) }}@else{{ route('chatgpt-prompts.store') }}@endif">
                         @csrf
-                        @if(isset($prompt))
+                        @if(isset($chatgptPrompt))
                             @method('PUT')
                         @endif
 
                         <div class="form-group form-group-default required">
                             <label>Title</label>
-                            <input type="text" name="title" class="form-control" required value="{{ old('title', $prompt->title ?? '') }}">
+                            <input type="text" name="title" class="form-control" required value="{{ old('title', $chatgptPrompt->title ?? '') }}">
                         </div>
                         @error('title')
                             <span class="text-danger" role="alert">
@@ -45,7 +45,7 @@
 
                         <div class="form-group form-group-default required">
                             <label>Prompt</label>
-                            <textarea name="prompt" class="form-control" rows="5" required>{{ old('prompt', $prompt->prompt ?? '') }}</textarea>
+                            <textarea name="prompt" class="form-control" rows="5" required>{{ old('prompt', $chatgptPrompt->prompt ?? '') }}</textarea>
                         </div>
                         @error('prompt')
                             <span class="text-danger" role="alert">
@@ -56,11 +56,11 @@
                         <div class="text-center m-t-40">
                             <button class="btn btn-success btn-cons m-b-10" type="submit">
                                 <i class="pg-plus_circle"></i> 
-                                <span class="bold">@if(isset($prompt)) Update @else Add @endif</span>
+                                <span class="bold">@if(isset($chatgptPrompt)) Update @else Add @endif</span>
                             </button>
 
-                            @if(isset($prompt))
-                                <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{ $prompt->id }}" type="button">
+                            @if(isset($chatgptPrompt))
+                                <button class="btn btn-danger btn-cons btn-delete m-b-10" data-id="{{ $chatgptPrompt->id }}" type="button">
                                     <i class="pg-minus_circle"></i> 
                                     <span class="bold">Delete</span>
                                 </button>
@@ -75,7 +75,7 @@
 @endsection
 
 @section('pagespecificscripts')
-@if(isset($prompt))
+@if(isset($chatgptPrompt))
 <script type="text/javascript">
     $(document).ready(function() {
         $('.btn-delete').click(function() {
@@ -90,7 +90,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('chatgpt-prompts.destroy', $prompt->id) }}",
+                        url: "{{ route('chatgpt-prompts.destroy', $chatgptPrompt->id) }}",
                         type: "POST",
                         data: {
                             _method: 'DELETE'

@@ -177,25 +177,30 @@ class ActiveFeedCron extends Command
                     $f->assigned_to = $engineer->id;
                 }
                 else{
-                    // Check for the first online user with role_id 2 or 3
+                    
                     $onlineEngineer = User::where(function ($query) {
                     $query->whereIn('role_id', [2, 3])
-                        ->orWhere('id', 1); // explicitly include admin
+                        ->orWhere('id', 1); 
                     })
                     ->where('online', 1)
                     ->first();
 
-                    // If found, return them
+                    
                     if ($onlineEngineer) {
                         $f->assigned_to = $onlineEngineer->id;
                     }
 
-                    // // Otherwise, return the admin
+                    
                     // $f->assigned_to = User::where('id', 1)->where('role_id', 1)->first()->id;
                 }
 
-                $f->save();
+                
             }
+            else{
+
+            }
+
+            $f->save();
         }
 
         $reminders = EmailReminder::all();

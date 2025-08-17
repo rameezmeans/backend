@@ -70,7 +70,7 @@ class ChatgptPromptController extends Controller
     public function edit($id)
     {
         $chatgptPrompt = ChatgptPrompt::findOrFail($id);
-        return view('chatgpt_prompts.edit', compact('chatgptPrompt'));
+        return view('chatgpt_prompts.create', compact('chatgptPrompt'));
     }
 
     /**
