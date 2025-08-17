@@ -167,42 +167,44 @@ class ActiveFeedCron extends Command
 
         $supportMessageRecord = Key::where('key','support_messages_engineer')->first()->value;
         
-        // foreach($supportFiles as $f){
-        // if($supportMessageRecord != -1){
+        foreach($supportFiles as $f){
+        if($supportMessageRecord != -1){
 
-        //         $engineer = User::findOrFail($supportMessageRecord);
+                $engineer = User::findOrFail($supportMessageRecord);
 
-        //         if($engineer->online == 1){
-        //             $f->assigned_to = $engineer->id;
-        //         }
-        //         else{
+                if($engineer->online == 1){
+                    $f->assigned_to = $engineer->id;
+                }
+                else{
                     
-        //             $onlineEngineer = User::where(function ($query) {
-        //             $query->whereIn('role_id', [2, 3])
-        //                 ->orWhere('id', 1); 
-        //             })
-        //             ->where('online', 1)
-        //             ->first();
+                    $onlineEngineer = User::where(function ($query) {
+                    $query->whereIn('role_id', [2, 3])
+                        ->orWhere('id', 1); 
+                    })
+                    ->where('online', 1)
+                    ->first();
 
                     
-        //             if ($onlineEngineer) {
-        //                 $f->assigned_to = $onlineEngineer->id;
-        //             }
+                    if ($onlineEngineer) {
+                        $f->assigned_to = $onlineEngineer->id;
+                        $f->save();
+                    }
 
-        //             // $f->assigned_to = User::where('id', 1)->where('role_id', 1)->first()->id;
-        //         }
+                    // $f->assigned_to = User::where('id', 1)->where('role_id', 1)->first()->id;
+                }
 
                 
-        //     }
-        //     else if($supportMessageRecord == -1){
-        //         $latestEngineerUploader = $f->latestRequestFile?->user_id;
-        //         if(User::findOrFail($latestEngineerUploader)->online){
-        //             $f->assigned_to = $latestEngineerUploader;
-        //         }
-        //     }
+            }
+            else if($supportMessageRecord == -1){
+                $latestEngineerUploader = $f->latestRequestFile?->user_id;
+                if(User::findOrFail($latestEngineerUploader)->online){
+                    $f->assigned_to = $latestEngineerUploader;
+                    $f->save();
+                }
+            }
 
-        //     $f->save();
-        // }
+            
+        }
 
         $reminders = EmailReminder::all();
 
