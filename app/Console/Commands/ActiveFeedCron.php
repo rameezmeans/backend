@@ -143,8 +143,10 @@ class ActiveFeedCron extends Command
             return $onlineEngineer;
         }
 
-        // Otherwise, return the admin
-        return User::where('id', 1)->where('role_id', 1)->first();
+        return NULL;
+
+        // // Otherwise, return the admin
+        // return User::where('id', 1)->where('role_id', 1)->first();
     }
     
     public function handle()
@@ -191,8 +193,8 @@ class ActiveFeedCron extends Command
                         $f->assigned_to = $onlineEngineer->id;
                     }
 
-                    // Otherwise, return the admin
-                    $f->assigned_to = User::where('id', 1)->where('role_id', 1)->first()->id;
+                    // // Otherwise, return the admin
+                    // $f->assigned_to = User::where('id', 1)->where('role_id', 1)->first()->id;
                 }
 
                 $f->save();
