@@ -94,6 +94,8 @@ class FilesController extends Controller
         $supportFiles = File::withOldEngineerNotes(5)->get();
 
         $supportMessageRecord = Key::where('key','support_messages_engineer')->first()->value;
+
+        dd($supportMessageRecord);
         
         foreach($supportFiles as $f){
         if($supportMessageRecord != -1){
