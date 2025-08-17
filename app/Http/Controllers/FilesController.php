@@ -95,9 +95,10 @@ class FilesController extends Controller
 
         $supportMessageRecord = Key::where('key','support_messages_engineer')->first()->value;
 
-        dd($supportMessageRecord);
+        // dd($supportMessageRecord);
         
         foreach($supportFiles as $f){
+
         if($supportMessageRecord != -1){
 
                 $engineer = User::findOrFail($supportMessageRecord);
@@ -127,13 +128,11 @@ class FilesController extends Controller
             }
             else if($supportMessageRecord == -1){
                 $latestEngineerUploader = $f->latestRequestFile?->user_id;
-                if(User::findOrFail($latestEngineerUploader)->online){
-                    $f->assigned_to = $latestEngineerUploader;
+                if (($user = User::find($f->latestRequestFile?->user_id)) && $user->online) {
+                    $f->assigned_to = $user->id;
                     $f->save();
                 }
             }
-
-            
         }
     }
 
