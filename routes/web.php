@@ -1471,6 +1471,3 @@ Route::post('chatgpt-prompts', [ChatgptPromptController::class, 'store'])->name(
 Route::get('chatgpt-prompts/{id}/edit', [ChatgptPromptController::class, 'edit'])->name('chatgpt-prompts.edit');
 Route::put('chatgpt-prompts/{id}', [ChatgptPromptController::class, 'update'])->name('chatgpt-prompts.update');
 Route::delete('chatgpt-prompts/{id}', [ChatgptPromptController::class, 'destroy'])->name('chatgpt-prompts.destroy');
-
-// ChatGPT Prompts Routes
-// Route::resource('chatgpt-prompts', ChatgptPromptController::class);

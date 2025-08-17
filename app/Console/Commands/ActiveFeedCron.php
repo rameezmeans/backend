@@ -196,8 +196,9 @@ class ActiveFeedCron extends Command
 
                 
             }
-            else{
-
+            else if($supportMessageRecord == -1){
+                $latestEngineerUploader = $f->latestRequestFile?->user_id;
+                $f->assigned_to = $latestEngineerUploader;
             }
 
             $f->save();

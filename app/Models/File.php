@@ -36,6 +36,10 @@ class File extends Model
         return $this->hasMany(RequestFile::class); 
     }
 
+    public function latestRequestFile(){
+        return $this->hasOne(RequestFile::class)->latestOfMany();
+    }
+
     public function files_and_messages_sorted(){
         $withoutTypeArray = $this->files->toArray();
         $unsortedTimelineObjects = [];
@@ -389,7 +393,7 @@ class File extends Model
     public function options_services(){
         return $this->hasMany(FileService::class, 'file_id', 'id')->where('type', 'option');
     }
-    
+
     public function scopeWithOldEngineerNotes($query, $minutes = 5)
     {
         return $query->whereHas('engineer_file_notes', function($q) use ($minutes) {
