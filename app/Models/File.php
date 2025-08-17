@@ -390,4 +390,11 @@ class File extends Model
         return $this->hasMany(FileService::class, 'file_id', 'id')->where('type', 'option');
     }
     
+    public function scopeWithOldEngineerNotes($query, $minutes = 5)
+    {
+        return $query->whereHas('engineer_file_notes', function($q) use ($minutes) {
+            $q->where('engineer', 1)
+            ->where('created_at', '<=', Carbon::now()->subMinutes($minutes));
+        });
+    }
 }

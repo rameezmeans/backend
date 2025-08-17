@@ -164,10 +164,7 @@ class ActiveFeedCron extends Command
             $file->save();
         }
 
-        $supportFiles = File::whereHas('engineer_file_notes', function($query) {
-            $query->where('engineer', 0)
-                ->where('created_at', '<=', Carbon::now()->subMinutes(5));
-        })->get();
+        $supportFiles = File::withOldEngineerNotes(5)->get();
 
         $supportMessageRecord = Key::where('key','support_messages_engineer')->first()->value;
         
