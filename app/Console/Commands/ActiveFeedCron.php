@@ -190,7 +190,6 @@ class ActiveFeedCron extends Command
                         $f->assigned_to = $onlineEngineer->id;
                     }
 
-                    
                     // $f->assigned_to = User::where('id', 1)->where('role_id', 1)->first()->id;
                 }
 
@@ -198,7 +197,7 @@ class ActiveFeedCron extends Command
             }
             else if($supportMessageRecord == -1){
                 $latestEngineerUploader = $f->latestRequestFile?->user_id;
-                $f->assigned_to = $latestEngineerUploader;
+                $f->assigned_to = $latestEngineerUploader->id;
             }
 
             $f->save();
