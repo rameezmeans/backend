@@ -160,7 +160,7 @@ class ActiveFeedCron extends Command
 
         // Step 3: Assign each file to the online user
         foreach ($unassignedFiles as $file) {
-            $file->assigned_to = $this->get_engineer_by_rule($file);
+            $file->assigned_to = $this->get_engineer_by_rule($file)->id;
             $file->save();
         }
 
