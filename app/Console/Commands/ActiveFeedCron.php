@@ -157,15 +157,15 @@ class ActiveFeedCron extends Command
         $unassignedFiles = File::whereNull('assigned_to')
         ->where('created_at', '<', Carbon::now()->subMinutes(5))
         ->get();
-        
+
         foreach ($unassignedFiles as $file) {
             $file->assigned_to = $this->get_engineer_by_rule($file)->id;
             $file->save();
         }
 
-        // $supportFiles = File::withOldEngineerNotes(5)->get();
+        $supportFiles = File::withOldEngineerNotes(5)->get();
 
-        // $supportMessageRecord = Key::where('key','support_messages_engineer')->first()->value;
+        $supportMessageRecord = Key::where('key','support_messages_engineer')->first()->value;
         
         // foreach($supportFiles as $f){
         // if($supportMessageRecord != -1){
