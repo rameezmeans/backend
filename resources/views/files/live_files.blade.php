@@ -161,6 +161,7 @@
                       <select class="form-control full-width" id="status" data-init-plugin="select2" multiple>
                         
                         <option value="completed">Completed</option>
+                        <option value="ready_to_send">Ready To Send</option>
                         <option value="rejected">Canceled</option>
                         <option value="on_hold">On Hold</option>
                         <option value="submitted">Submitted</option>
