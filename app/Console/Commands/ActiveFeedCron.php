@@ -154,15 +154,14 @@ class ActiveFeedCron extends Command
         \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
         \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
 
-        // $unassignedFiles = File::whereNull('assigned_to')
-        // ->where('created_at', '<', Carbon::now()->subMinutes(5))
-        // ->get();
-
-        // // Step 3: Assign each file to the online user
-        // foreach ($unassignedFiles as $file) {
-        //     $file->assigned_to = $this->get_engineer_by_rule($file)->id;
-        //     $file->save();
-        // }
+        $unassignedFiles = File::whereNull('assigned_to')
+        ->where('created_at', '<', Carbon::now()->subMinutes(5))
+        ->get();
+        
+        foreach ($unassignedFiles as $file) {
+            $file->assigned_to = $this->get_engineer_by_rule($file)->id;
+            $file->save();
+        }
 
         // $supportFiles = File::withOldEngineerNotes(5)->get();
 
