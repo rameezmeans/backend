@@ -4016,11 +4016,13 @@ class FilesController extends Controller
 
                 // dd($request->all());
 
-                $reasons = implode(', ',$request->reasons);
-                $new = new FileReasonsToReject();
-                $new->file_id = $file->id;
-                $new->reasons_to_cancel = $reasons;
-                $new->save();
+                if(isset($request->reasons)){
+                    $reasons = implode(', ',$request->reasons);
+                    $new = new FileReasonsToReject();
+                    $new->file_id = $file->id;
+                    $new->reasons_to_cancel = $reasons;
+                    $new->save();
+                }
 
                 if($request->reason_to_reject){
                     $credit->message_to_credit = $request->reason_to_reject;
