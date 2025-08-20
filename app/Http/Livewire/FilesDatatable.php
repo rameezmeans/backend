@@ -137,8 +137,8 @@ class FilesDatatable extends LivewireDatatable
                             }
                         }
                         else if($file->status == 'on_hold'){
-                            if($file->on_hold_time != NULL){
-                                $returnStr .='<span class="label label-info text-white m-r-5 submission-stoped" id="s_'.$file->id.'" data-seconds="'.$file->on_hold_time.'"></span>';
+                            if($submissionTimeLeft > 0){
+                                $returnStr .='<span class="label label-info text-white m-r-5 submission-stoped" id="s_'.$file->id.'" data-seconds="'.$submissionTimeLeft.'"></span>';
                             }
                         }
                     }
