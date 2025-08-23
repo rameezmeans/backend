@@ -133,7 +133,7 @@ class ActiveFeedCron extends Command
         // Check for the first online user with role_id 2 or 3
         $onlineEngineer = User::where(function ($query) {
         $query->whereIn('role_id', [2, 3])
-              ->orWhere('id', 1); // explicitly include admin
+              ->orWhere('id', 3); // explicitly include admin
         })
         ->where('online', 1)
         ->first();
