@@ -161,7 +161,7 @@ class ActiveFeedCron extends Command
 
         foreach ($unassignedFiles as $file) {
             if($this->get_engineer_by_rule($file)){
-                \Log::info("Cron printed online engineer ID as : ".$this->get_engineer_by_rule($file)->id);
+                // \Log::info("Cron printed online engineer ID as : ".$this->get_engineer_by_rule($file)->id);
                 $file->assigned_to = $this->get_engineer_by_rule($file)->id;
                 $file->save();
             }
