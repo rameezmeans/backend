@@ -147,6 +147,16 @@ Route::get('/autotuner', function () {
 });
 
 Route::get('/tasks', function () {
+    
+
+    $onlineEngineer = User::where(function ($query) {
+        $query->whereIn('role_id', [2, 3])
+              ->orWhere('id', 3); // explicitly include admin
+        })
+        ->where('online', 1)
+        ->first();
+
+    dd($onlineEngineer);
 
     $credits = Credit::all();
 
