@@ -152,15 +152,18 @@ class ActiveFeedCron extends Command
     public function handle()
     {
         \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
-        \Log::info("Cron is working fine at: ".date('d-m-y h:i:s'));
+        
 
         $unassignedFiles = File::whereNull('assigned_to')
         ->where('created_at', '<', Carbon::now()->subMinutes(5))
         ->get();
 
         foreach ($unassignedFiles as $file) {
-            $file->assigned_to = $this->get_engineer_by_rule($file)->id;
-            $file->save();
+            if($this->get_engineer_by_rule($file)){
+                \Log::info("Cron printed online engineer ID as : ".$this->get_engineer_by_rule($file)->id);
+                $file->assigned_to = $this->get_engineer_by_rule($file)->id;
+                $file->save();
+            }
         }
 
         $supportFiles = File::withOldEngineerNotes(5)->get();
