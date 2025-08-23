@@ -147,7 +147,13 @@ Route::get('/autotuner', function () {
 });
 
 Route::get('/tasks', function () {
-    
+
+    $unassignedFiles = File::whereNull('assigned_to')
+        ->where('created_at', '<', Carbon::now()->subMinutes(5))
+        ->get();
+
+    dd($unassignedFiles);
+
 
     $onlineEngineer = User::where(function ($query) {
         $query->whereIn('role_id', [2, 3])
