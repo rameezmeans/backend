@@ -149,6 +149,7 @@ Route::get('/autotuner', function () {
 Route::get('/tasks', function () {
 
     $unassignedFiles = File::whereNull('assigned_to')
+         ->where('created_at', '>', Carbon::create(2025, 8, 1, 0, 0, 0))
         ->where('created_at', '<', Carbon::now()->subMinutes(5))
         ->get();
 
