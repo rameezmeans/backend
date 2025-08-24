@@ -680,7 +680,7 @@ class FilesController extends Controller
         // FileMessage::where('request_file_id', $request->request_file_id)->delete();
         UploadLater::where('request_file_id', $request->request_file_id)->delete();
 
-        if(false){
+        // if(false){
 
             $customer = User::findOrFail($file->user_id);
             $admin = get_admin();
@@ -793,7 +793,7 @@ class FilesController extends Controller
                 if($this->manager['eng_file_upload_cus_whatsapp'.$file->front_end_id]){
                     $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
                 }
-            }
+            // }
             
             // return redirect()->back()->with(['success' => 'File sent to customer!']);
             return redirect()->route('files')->with(['success' => 'File sent to customer!']);
