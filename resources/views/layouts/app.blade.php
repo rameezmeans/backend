@@ -314,6 +314,12 @@
         });
 
         $(document).on('click','.redirect-click',function(e) {
+          
+            // If the clicked element is a link, let it behave normally
+            if ($(e.target).closest('a').length) {
+                return true; // allow default anchor behavior
+            }
+
             if(!$(e.target).hasClass('switchery')){
                 
                 if( e.target.nodeName !== 'SMALL' && e.target.nodeName !== 'LABEL') {
