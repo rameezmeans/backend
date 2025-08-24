@@ -27,6 +27,10 @@
     background-color: rgb(254 202 202) !important;
 }
 
+.card-header a:not(.btn) {
+  opacity: 1 !important;
+}
+
 </style>
 @endsection
 

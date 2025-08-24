@@ -2772,6 +2772,26 @@ class FilesController extends Controller
                 return $returnStr;
 
             })
+            ->addColumn('id', function($row){
+
+                $frontEndID = $row->front_end_id;
+
+                if($frontEndID == 1){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-primary text-white">'.$row->id.'</span></a>';
+                }
+                else if($frontEndID == 2){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-warning">'.$row->id.'</span></a>';
+                }
+                else if($frontEndID == 3){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-info text-white">'.$row->id.'</span></a>';
+                }
+
+                else if($frontEndID == 4){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-success text-white">'.$row->id.'</span></a>';
+                }
+
+                return $btn;
+            })
             ->addColumn('frontend', function($row){
 
                 $frontEndID = $row->front_end_id;
@@ -2890,7 +2910,7 @@ class FilesController extends Controller
                     return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
                 }
             })
-            ->rawColumns(['timers','frontend','support_status','status','stage','options','engineer','response_time'])
+            ->rawColumns(['id','timers','frontend','support_status','status','stage','options','engineer','response_time'])
             ->setRowClass(function ($row) {
                 $classes = "";
 
