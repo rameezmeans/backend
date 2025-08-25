@@ -66,10 +66,15 @@
                   </div>
                   <div class="pull-right">
                     <div class="col-xs-12">
+                      <button id="filter-today" class="btn btn-primary">Show Today's Files</button>
+                      <button id="filter-open" class="btn btn-primary">Show Open Support</button>
+                      <button id="filter-ready" class="btn btn-primary">Show Ready to Send</button>
+                      <button id="filter-submitted" class="btn btn-primary">Show Submitted</button>
                       @if(Auth::user()->is_admin())
                         <button data-redirect="{{route('multi-delete')}}" class="btn btn-success redirect-click"><i class="pg-plus_circle"></i> <span class="bold">Multi Delete</span>
                         </button>
                       @endif
+                      
                     </div>
                   </div>
 
@@ -481,6 +486,41 @@
       $('#engineer').change(function(){
         table.draw();
       });
+
+      $('#filter-submitted').on('click', function() {
+            // Set the status dropdown to 'submitted'
+            $('#status').val('submitted');
+
+            // Redraw the DataTable with the new filter
+            table.draw();
+        });
+
+        $('#filter-ready').on('click', function() {
+            // Set the status dropdown to 'ready_to_send'
+            $('#status').val('ready_to_send');
+
+            // Redraw the DataTable to fetch filtered data
+            table.draw();
+        });
+        $('#filter-open').on('click', function() {
+            // Set the support_status filter to 'open'
+            $('#support_status').val('open');
+
+            // Redraw the DataTable to fetch filtered data
+            table.draw();
+        });
+
+        $('#filter-today').on('click', function() {
+            // Get today's date in YYYY-MM-DD format
+            var today = moment().format('YYYY-MM-DD');
+
+            // Set the from_date and to_date filters to today
+            $('input[name="daterange"]').data('daterangepicker').setStartDate(today);
+            $('input[name="daterange"]').data('daterangepicker').setEndDate(today);
+
+            // Redraw the table with this filter
+            table.draw();
+        });
         
         $('.parent-adjusted').parent().addClass('flex');
 
