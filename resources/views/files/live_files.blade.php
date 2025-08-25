@@ -488,6 +488,7 @@
       });
 
       $('#filter-submitted').on('click', function() {
+            clearDateRange(); // clear daterange first
             // Set the status dropdown to 'submitted'
             $('#status').val('submitted');
 
@@ -496,6 +497,7 @@
         });
 
         $('#filter-ready').on('click', function() {
+            clearDateRange(); // clear daterange first
             // Set the status dropdown to 'ready_to_send'
             $('#status').val('ready_to_send');
 
@@ -503,6 +505,7 @@
             table.draw();
         });
         $('#filter-open').on('click', function() {
+            clearDateRange(); // clear daterange first
             // Set the support_status filter to 'open'
             $('#support_status').val('open');
 
@@ -511,14 +514,15 @@
         });
 
         $('#filter-today').on('click', function() {
-            // Get today's date in YYYY-MM-DD format
-            var today = moment().format('YYYY-MM-DD');
+            // Get today's date as a moment object
+            var today = moment();
 
-            // Set the from_date and to_date filters to today
-            $('input[name="daterange"]').data('daterangepicker').setStartDate(today);
-            $('input[name="daterange"]').data('daterangepicker').setEndDate(today);
+            // Use the daterangepicker API to set start and end dates
+            var picker = $('input[name="daterange"]').data('daterangepicker');
+            picker.setStartDate(today);
+            picker.setEndDate(today);
 
-            // Redraw the table with this filter
+            // Redraw the DataTable
             table.draw();
         });
         
@@ -560,5 +564,18 @@
           });
     
         });
+
+        // Utility function to clear daterange
+        function clearDateRange() {
+            var picker = $('input[name="daterange"]').data('daterangepicker');
+
+            picker.setStartDate(moment().subtract(36, 'months')); // 36 months ago
+            picker.setEndDate(moment()); // today
+
+            // Update the input display
+            $('input[name="daterange"]').val(
+            picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY')
+          );
+        }
     </script>
 @endsection
