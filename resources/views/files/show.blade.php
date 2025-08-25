@@ -7566,6 +7566,7 @@ margin-bottom: 10px !important;
   $(document).ready(function(){
 
     @if($file->assigned_to != NULL && $file->assigned_to != Auth::user()->id)
+    @if($file->status != 'completed' && $file->support_status != 'open')
 
     const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
@@ -7595,6 +7596,7 @@ margin-bottom: 10px !important;
         }
       });
 
+      @endif
       @endif
 
     $(document).on('click', '.show-replied', function(e) {
