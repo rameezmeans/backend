@@ -488,6 +488,7 @@
       });
 
       $('#filter-submitted').on('click', function() {
+            $('#support_status').val('all');  
             clearDateRange(); // clear daterange first
             // Set the status dropdown to 'submitted'
             $('#status').val('submitted');
@@ -497,6 +498,7 @@
         });
 
         $('#filter-ready').on('click', function() {
+            $('#support_status').val('all');  
             clearDateRange(); // clear daterange first
             // Set the status dropdown to 'ready_to_send'
             $('#status').val('ready_to_send');
@@ -505,6 +507,7 @@
             table.draw();
         });
         $('#filter-open').on('click', function() {
+            $('#status').val('');  
             clearDateRange(); // clear daterange first
             // Set the support_status filter to 'open'
             $('#support_status').val('open');
@@ -514,6 +517,8 @@
         });
 
         $('#filter-today').on('click', function() {
+            $('#support_status').val('all'); 
+            $('#status').val('');    
             // Get today's date as a moment object
             var today = moment();
 
