@@ -31,6 +31,10 @@
   opacity: 1 !important;
 }
 
+.table-hover tbody tr:hover {
+  color: #000 !important;
+}
+
 </style>
 @endsection
 
