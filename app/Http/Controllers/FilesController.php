@@ -2641,11 +2641,10 @@ class FilesController extends Controller
         });
 
         if ($request->filled('from_date') && $request->filled('to_date')) {
-
             $data = $data->whereDate('created_at', '>=', $request->from_date)
-            ->whereDate('created_at', '<=', $request->to_date);
-
+                        ->whereDate('created_at', '<=', $request->to_date);
         }
+        // If no from_date/to_date, do nothing → all records shown
 
         if ($request->filled('late')) {
             if($request->late == 'late'){
