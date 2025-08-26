@@ -315,9 +315,23 @@
 
   $( document ).ready(function(event) {
 
+      // $('input[name="daterange"]').daterangepicker({
+      //   startDate: moment().subtract(36, 'M'),
+      //   endDate: moment()
+      // });
+
       $('input[name="daterange"]').daterangepicker({
-        startDate: moment().subtract(36, 'M'),
-        endDate: moment()
+          autoUpdateInput: false,
+          locale: { format: 'DD/MM/YYYY', cancelLabel: 'Clear' }
+      });
+
+     $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+    $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+});
+
+      // If user cancels, clear input
+      $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+          $(this).val('');
       });
 
       $.ajaxSetup({
@@ -336,8 +350,19 @@
               type: 'POST',
               data:function (d) {
 
-                d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
-                d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
+                // d.from_date = $('input[name="daterange"]').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                // d.to_date = $('input[name="daterange"]').data('daterangepicker').endDate.format('YYYY-MM-DD');
+                
+                d.from_date = '';
+                d.to_date = '';
+
+                var dateRangeInput = $('input[name="daterange"]').val();
+                if(dateRangeInput) {
+                    var picker = $('input[name="daterange"]').data('daterangepicker');
+                    d.from_date = picker.startDate.format('YYYY-MM-DD');
+                    d.to_date = picker.endDate.format('YYYY-MM-DD');
+                }
+                
                 d.late = $('#late').val();
                 d.automatic = $('#automatic').val();
                 d.frontend = $('#frontend').val();
