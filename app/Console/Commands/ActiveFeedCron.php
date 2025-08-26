@@ -161,9 +161,11 @@ class ActiveFeedCron extends Command
 
         foreach ($unassignedFiles as $file) {
             if($this->get_engineer_by_rule($file)){
-                // \Log::info("Cron printed online engineer ID as : ".$this->get_engineer_by_rule($file)->id);
-                $file->assigned_to = $this->get_engineer_by_rule($file)->id;
-                $file->save();
+                if($file->automatic == 0){
+                    // \Log::info("Cron printed online engineer ID as : ".$this->get_engineer_by_rule($file)->id);
+                    $file->assigned_to = $this->get_engineer_by_rule($file)->id;
+                    $file->save();
+                }
             }
         }
 
@@ -177,7 +179,12 @@ class ActiveFeedCron extends Command
                 $engineer = User::findOrFail($supportMessageRecord);
 
                 if($engineer->online == 1){
-                    $f->assigned_to = $engineer->id;
+                    
+                    // if($f->automatic == 0){
+                        $f->assigned_to = $engineer->id;
+                        $f->save();
+                    // }
+                    
                 }
                 else{
                     
@@ -190,8 +197,10 @@ class ActiveFeedCron extends Command
 
                     
                     if ($onlineEngineer) {
-                        $f->assigned_to = $onlineEngineer->id;
-                        $f->save();
+                        // if($f->automatic == 0){
+                            $f->assigned_to = $onlineEngineer->id;
+                            $f->save();
+                        // }
                     }
 
                     // $f->assigned_to = User::where('id', 1)->where('role_id', 1)->first()->id;
@@ -201,8 +210,10 @@ class ActiveFeedCron extends Command
             }
             else if($supportMessageRecord == -1){
                 if (($user = User::find($f->latestRequestFile?->user_id)) && $user->online) {
-                    $f->assigned_to = $user->id;
-                    $f->save();
+                    // if($f->automatic == 0){
+                        $f->assigned_to = $user->id;
+                        $f->save();
+                    // }
                 }
             }
 
