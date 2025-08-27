@@ -63,7 +63,7 @@
                     
                         <select id="services" @if(isset($combination)) disabled @endif name="services[]" class=" full-width" data-init-plugin="select2" multiple>
                             @foreach ($services as $service)
-                                <option @if(isset($selectedServices)) @if(in_array($service->id, $selectedServices)) selected @endif @endif data-credits="{{$service->credits}}" value="{{$service->id}}">{{$service->name}} - ({{$service->vehicle_type}}) - @if($service->front_end_id) @if($service->active == 1) (ECUTech) @elseif($service->tuningx_active == 1) (TuningX) @elseif($service->efiles_active == 1) (ETF) @endif @endif</option>
+                                <option @if(isset($selectedServices)) @if(in_array($service->id, $selectedServices)) selected @endif @endif data-credits="{{$service->credits}}" value="{{$service->id}}">{{$service->name}} - ({{$service->vehicle_type}}) - @if($service->type == 'option') @if($service->active == 1) (ECUTech) @elseif($service->tuningx_active == 1) (TuningX) @elseif($service->efiles_active == 1) (ETF) @endif @endif</option>
                             @endforeach
                         </select>
                     
