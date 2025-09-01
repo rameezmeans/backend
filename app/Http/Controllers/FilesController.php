@@ -2775,22 +2775,22 @@ class FilesController extends Controller
                 return $returnStr;
 
             })
-            ->addColumn('id', function($row){
+            ->addColumn('new_tab', function($row){
 
                 $frontEndID = $row->front_end_id;
 
                 if($frontEndID == 1){
-                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-primary text-white">'.$row->id.'</span></a>';
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-primary text-white">'.'Click'.'</span></a>';
                 }
                 else if($frontEndID == 2){
-                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-warning">'.$row->id.'</span></a>';
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-warning">'.'Click'.'</span></a>';
                 }
                 else if($frontEndID == 3){
-                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-info text-white">'.$row->id.'</span></a>';
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-info text-white">'.'Click'.'</span></a>';
                 }
 
                 else if($frontEndID == 4){
-                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-success text-white">'.$row->id.'</span></a>';
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-success text-white">'.'Click'.'</span></a>';
                 }
 
                 return $btn;
@@ -2913,7 +2913,7 @@ class FilesController extends Controller
                     return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
                 }
             })
-            ->rawColumns(['id','timers','frontend','support_status','status','stage','options','engineer','response_time'])
+            ->rawColumns(['new_tab','timers','frontend','support_status','status','stage','options','engineer','response_time'])
             ->setRowClass(function ($row) {
                 $classes = "";
 
