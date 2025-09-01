@@ -7292,22 +7292,19 @@ margin-bottom: 10px !important;
         const value = editModal.val();
         const cursorPos = editModal[0].selectionStart;
         const textBeforeCursor = value.substring(0, cursorPos);
-        
-        // Check if user typed "/" to trigger sample messages
-        if (e.key === "/") {
-            showAllSampleMessagesEdit(editModal);
+        const lastChar = textBeforeCursor.slice(-1);
+
+        if (lastChar === "/") {
+          showAllSampleMessagesEdit(editModal);
+          return;
         }
-        // Check if user is typing after "/" to filter messages
-        else if (textBeforeCursor.includes('/')) {
-            const searchQuery = textBeforeCursor.substring(textBeforeCursor.lastIndexOf('/') + 1);
-            if (searchQuery.length > 0) {
-                filterSampleMessagesByTitleEdit(editModal, searchQuery);
-            } else {
-                showAllSampleMessagesEdit(editModal);
-            }
+
+        if (textBeforeCursor.includes("/")) {
+          const q = textBeforeCursor.substring(textBeforeCursor.lastIndexOf("/") + 1);
+          q ? filterSampleMessagesByTitleEdit(editModal, q) : showAllSampleMessagesEdit(editModal);
         }
         // Hide popup if user presses Escape
-        else if (e.key === 'Escape') {
+        if (e.key === 'Escape') {
             messagesBoxEdit.addClass("do-none");
         }
     });
@@ -7429,24 +7426,22 @@ margin-bottom: 10px !important;
 
     textarea.on("keyup", function (e) {
         const value = textarea.val();
-        const cursorPos = textarea[0].selectionStart;
-        const textBeforeCursor = value.substring(0, cursorPos);
-        
-        // Check if user typed "/" to trigger sample messages
-        if (e.key === "/") {
-            showAllSampleMessages(textarea);
+  const cursorPos = textarea[0].selectionStart;
+  const textBeforeCursor = value.substring(0, cursorPos);
+  const lastChar = textBeforeCursor.slice(-1);
+
+        if (lastChar === "/") {
+          showAllSampleMessages(textarea);
+          return;
         }
-        // Check if user is typing after "/" to filter messages
-        else if (textBeforeCursor.includes('/')) {
-            const searchQuery = textBeforeCursor.substring(textBeforeCursor.lastIndexOf('/') + 1);
-            if (searchQuery.length > 0) {
-                filterSampleMessagesByTitle(textarea, searchQuery);
-            } else {
-                showAllSampleMessages(textarea);
-            }
+
+        if (textBeforeCursor.includes("/")) {
+          const q = textBeforeCursor.substring(textBeforeCursor.lastIndexOf("/") + 1);
+          q ? filterSampleMessagesByTitle(textarea, q) : showAllSampleMessages(textarea);
         }
+          
         // Hide popup if user presses Escape
-        else if (e.key === 'Escape') {
+        if (e.key === 'Escape') {
             messagesBox.addClass("do-none");
         }
     });
