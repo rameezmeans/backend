@@ -19,6 +19,7 @@ use App\Http\Livewire\NewPaymentLog;
 use App\Models\Comment;
 use App\Models\CommentFileService;
 use App\Models\Credit;
+use App\Models\EmailTemplate;
 use App\Models\File;
 use App\Models\FileFeedback;
 use App\Models\FileReplySoftwareService;
@@ -147,6 +148,34 @@ Route::get('/autotuner', function () {
 });
 
 Route::get('/tasks', function () {
+
+    $file = File::findOrFail(23997); 
+    $user = User::findOrFail($file->user_id);
+
+    $fileID = $file->id;
+    $userID = $file->user_id;
+    $requestFileID = 1232;
+
+    $feebdackTemplate = EmailTemplate::findOrFail(57);
+    $url = 'https://portal.e-tuningfiles.com/';
+    $subject = "E-TuningFiles: Feedback Request";
+
+    $html = $feebdackTemplate->html;
+    $fileName = $file->brand." ".$file->engine;
+
+    $html = str_replace('#file_name', $fileName, $html);
+    $html = str_replace('#angry_link', $url.'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/angry', $html);
+    $html = str_replace('#sad_link', $url.'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/sad', $html);
+    $html = str_replace('#ok_link', $url.'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/ok', $html);
+    $html = str_replace('#good_link', $url.'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/good', $html);
+    $html = str_replace('#happy_link', $url.'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
+    $html = str_replace('#happy_link', $url.'record_feedback/'.$fileID.'/'.$userID.'/'.$requestFileID.''.'/happy', $html);
+    $html = str_replace('#file_url', $url.'file/'.$fileID, $html);
+
+    
+    \Mail::to($user->email)->send(new \App\Mail\AllMails(['engineer' => [], 'html' => $html, 'subject' => $subject, 'front_end_id' => $user->front_end_id]));
+
+    dd('email sent');
 
     $unassignedFiles = File::whereNull('assigned_to')
          ->where('created_at', '>', Carbon::create(2025, 8, 1, 0, 0, 0))
