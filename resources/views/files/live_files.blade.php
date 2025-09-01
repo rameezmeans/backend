@@ -274,6 +274,7 @@
                       <tr>
           
                           <th>Task ID</th>
+                          <th>Open In New Tab</th>
                           <th>Submission Countdown / Reply Countdown</th>
                           <th>Frontend</th>
                           <th>Submission Date</th>
@@ -449,6 +450,7 @@
 
           columns: [
               {data: 'id', name: 'id', orderable: false},
+              {data: 'new_tab', name: 'new_tab', orderable: false},
               {data: 'timers', name: 'timers', orderable: false, searchable: false},
               {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
               {
