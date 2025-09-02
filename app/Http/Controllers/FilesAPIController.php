@@ -2581,6 +2581,7 @@ class FilesAPIController extends Controller
             }
             
             $engineerReply = $request->engineer_reply;
+            $clientMessage = $request->client_message;
             $selectedTone = $request->tone;
             $selectedPrompt = $request->prompt;
             $messageId = $request->message_id;
@@ -2590,7 +2591,13 @@ class FilesAPIController extends Controller
                 // Use the selected prompt template if provided
                 $prompt = $selectedPrompt;
                 // Add the engineer's reply as the content to work with
-                $prompt .= "\n\nContent to work with:\n" . $engineerReply . "\n\n" .
+                $prompt .= 
+                "IMPORTANT: You MUST provide a detailed explanation. Do not return empty responses.\n\n" .
+                     "Please analyze and explain the following client message in a clear, professional manner. " .
+                     "Focus on understanding the client's needs, any technical requirements, and provide context " .
+                     "that would help an engineer respond appropriately.\n\n" .
+                 "Client Message: " . $clientMessage . "\n\n" .
+                "\n\nContent to work with:\n" . $engineerReply . "\n\n" .
                           "Return ONLY the reply text, nothing else"."Desired Tone: ". ucfirst($selectedTone) . "\n\n" .
                           "Tone Guidelines:\n" .
                           "- Professional: Formal, respectful, business-like, clear and concise\n" .
@@ -2607,8 +2614,11 @@ class FilesAPIController extends Controller
 
             } else {
                 // Use default prompt if no custom prompt is selected
-                $prompt = "IMPORTANT: You MUST provide a reply based on the engineer's question. Do not return empty responses.\n\n" .
-                          "Please provide a reply to the following engineer's question in the selected tone while maintaining technical accuracy and professionalism.\n\n" .
+                $prompt = "IMPORTANT: You MUST provide a detailed explanation. Do not return empty responses.\n\n" .
+                     "Please analyze and explain the following client message in a clear, professional manner. " .
+                     "Focus on understanding the client's needs, any technical requirements, and provide context " .
+                     "that would help an engineer respond appropriately.\n\n" .
+                        "Client Message: " . $clientMessage . "\n\n" .
                           "Engineer's Question: " . $engineerReply . "\n\n" .
                           "Desired Tone: " . ucfirst($selectedTone) . "\n\n" .
                           "Tone Guidelines:\n" .
