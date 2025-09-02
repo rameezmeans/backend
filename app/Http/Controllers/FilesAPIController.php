@@ -1996,14 +1996,14 @@ class FilesAPIController extends Controller
                         }
                     }
 
-                    if($file->response_time == NULL){
-                        if($file->no_longer_auto == 0){
+                    // if($file->response_time == NULL){
+                    //     if($file->no_longer_auto == 0){
                             $file->reupload_time = Carbon::now();
                             $file->response_time = (new FilesController)->getResponseTimeAuto($file);
-                            $file->save();
-                        }
+                            // $file->save();
+                        // }
             
-                    }
+                    // }
 
                     $file->automatic = 1;
                     $file->save();
