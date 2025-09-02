@@ -406,8 +406,8 @@ class FilesAPIController extends Controller
         }
 
         $head =  get_head();
-        // $creditsInAccount = $this->getUserCreditsInAccount($user);
-        $creditsInAccount = 17;
+        $creditsInAccount = $this->getUserCreditsInAccount($user);
+        // $creditsInAccount = 17;
         
         if($creditsInAccount >= $creditsToFile){
 
@@ -590,6 +590,16 @@ class FilesAPIController extends Controller
             'message' => 'file is saved finally.',
             'file' => $file,
         ], 201);
+    }
+
+    public function getResponseTimeAuto($file){
+        
+        $fileAssignmentDateTime = Carbon::parse($file->created_at);
+        $carbonUploadDateTime = Carbon::parse($file->reupload_time);
+
+        $responseTime = $carbonUploadDateTime->diffInSeconds( $fileAssignmentDateTime );
+
+        return $responseTime;
     }
 
     public function saveFileStages(Request $request){
@@ -1996,14 +2006,14 @@ class FilesAPIController extends Controller
                         }
                     }
 
-                    // if($file->response_time == NULL){
-                    //     if($file->no_longer_auto == 0){
+                    if($file->response_time == NULL){
+                        if($file->no_longer_auto == 0){
                             $file->reupload_time = Carbon::now();
-                            $file->response_time = (new FilesController)->getResponseTimeAuto($file);
-                            // $file->save();
-                        // }
+                            $file->response_time = $this->getResponseTimeAuto($file);
+                            $file->save();
+                        }
             
-                    // }
+                    }
 
                     $file->automatic = 1;
                     $file->save();
