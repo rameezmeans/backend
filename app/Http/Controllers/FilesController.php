@@ -278,6 +278,26 @@ class FilesController extends Controller
         return Datatables::of($data)
 
             ->addIndexColumn()
+            ->addColumn('new_tab', function($row){
+
+                $frontEndID = $row->front_end_id;
+
+                if($frontEndID == 1){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-primary text-white">'.'Click'.'</span></a>';
+                }
+                else if($frontEndID == 2){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-warning">'.'Click'.'</span></a>';
+                }
+                else if($frontEndID == 3){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-info text-white">'.'Click'.'</span></a>';
+                }
+
+                else if($frontEndID == 4){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-success text-white">'.'Click'.'</span></a>';
+                }
+
+                return $btn;
+            })
             ->addColumn('frontend', function($row){
 
                 $frontEndID = $row->front_end_id;
@@ -396,7 +416,7 @@ class FilesController extends Controller
                     return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
                 }
             })
-            ->rawColumns(['timers','frontend','support_status','status','stage','options','engineer','response_time'])
+            ->rawColumns(['new_tab','timers','frontend','support_status','status','stage','options','engineer','response_time'])
             ->setRowClass(function ($row) {
                 $classes = "";
 
@@ -440,6 +460,26 @@ class FilesController extends Controller
         return Datatables::of($data)
 
             ->addIndexColumn()
+            ->addColumn('new_tab', function($row){
+
+                $frontEndID = $row->front_end_id;
+
+                if($frontEndID == 1){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-primary text-white">'.'Click'.'</span></a>';
+                }
+                else if($frontEndID == 2){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-warning">'.'Click'.'</span></a>';
+                }
+                else if($frontEndID == 3){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-info text-white">'.'Click'.'</span></a>';
+                }
+
+                else if($frontEndID == 4){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-success text-white">'.'Click'.'</span></a>';
+                }
+
+                return $btn;
+            })
             ->addColumn('frontend', function($row){
 
                 $frontEndID = $row->front_end_id;
@@ -558,7 +598,7 @@ class FilesController extends Controller
                     return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
                 }
             })
-            ->rawColumns(['timers','frontend','support_status','status','stage','options','engineer','response_time'])
+            ->rawColumns(['new_tab','timers','frontend','support_status','status','stage','options','engineer','response_time'])
             ->setRowClass(function ($row) {
                 $classes = "";
 
@@ -2418,6 +2458,26 @@ class FilesController extends Controller
         return Datatables::of($data)
 
             ->addIndexColumn()
+            ->addColumn('new_tab', function($row){
+
+                $frontEndID = $row->front_end_id;
+
+                if($frontEndID == 1){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-primary text-white">'.'Click'.'</span></a>';
+                }
+                else if($frontEndID == 2){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-warning">'.'Click'.'</span></a>';
+                }
+                else if($frontEndID == 3){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-info text-white">'.'Click'.'</span></a>';
+                }
+
+                else if($frontEndID == 4){
+                    $btn = '<a target="_blank" href="'.route('file', $row->id).'"><span class="label bg-success text-white">'.'Click'.'</span></a>';
+                }
+
+                return $btn;
+            })
             ->addColumn('timers', function($row){
 
                 $file = File::findOrFail($row->row_id);
@@ -2600,7 +2660,7 @@ class FilesController extends Controller
                     return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
                 }
             })
-            ->rawColumns(['timers','frontend','support_status','status','stage','options','engineer','response_time'])
+            ->rawColumns(['new_tab','timers','frontend','support_status','status','stage','options','engineer','response_time'])
             ->setRowClass(function ($row) {
                 $classes = "";
 

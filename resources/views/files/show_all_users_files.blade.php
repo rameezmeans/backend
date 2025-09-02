@@ -53,6 +53,7 @@
                       <tr>
           
                           <th>Task ID</th>
+                          <th>Open in New Tab</th>
                           <th>Frontend</th>
                           <th>Submission Date</th>
                           <th>Submission Time</th>
@@ -126,6 +127,7 @@
 
           columns: [
               {data: 'id', name: 'id', orderable: false},
+              {data: 'new_tab', name: 'new_tab', orderable: false},
               {data: 'frontend', name: 'frontend', orderable: false, searchable: false},
               {
                 data: 'created_at',
