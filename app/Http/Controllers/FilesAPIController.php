@@ -592,7 +592,7 @@ class FilesAPIController extends Controller
         ], 201);
     }
 
-    public function getResponseTimeAuto($file){
+    public function getResponseTimeAutoAPI($file){
         
         $fileAssignmentDateTime = Carbon::parse($file->created_at);
         $carbonUploadDateTime = Carbon::parse($file->reupload_time);
@@ -2009,7 +2009,7 @@ class FilesAPIController extends Controller
                     if($file->response_time == NULL){
                         if($file->no_longer_auto == 0){
                             $file->reupload_time = Carbon::now();
-                            $file->response_time = $this->getResponseTimeAuto($file);
+                            $file->response_time = $this->getResponseTimeAutoAPI($file);
                             $file->save();
                         }
             
@@ -2390,7 +2390,7 @@ class FilesAPIController extends Controller
             $file->reupload_time = Carbon::now();
             $file->save();
 
-            $file->response_time = (new FilesController)->getResponseTimeAuto($file);
+            $file->response_time = $this->getResponseTimeAutoAPI($file);
             $file->save();
 
         }
