@@ -7288,26 +7288,26 @@ margin-bottom: 10px !important;
     const editModal = $("#message-later");
     const messagesBoxEdit = $("#sampleMessagesBoxEdit");
 
-    editModal.on("keyup", function (e) {
-        const value = editModal.val();
-        const cursorPos = editModal[0].selectionStart;
-        const textBeforeCursor = value.substring(0, cursorPos);
-        const lastChar = textBeforeCursor.slice(-1);
+   editModal.on("keyup", function (e) {
+  const value = editModal.val();
+  const cursorPos = editModal[0].selectionStart;
+  const textBeforeCursor = value.substring(0, cursorPos);
 
-        if (lastChar === "/") {
-          showAllSampleMessagesEdit(editModal);
-          return;
-        }
+  const boundaryMatch = textBeforeCursor.match(/[\.\?\!\n]\s*$/);
+  const startIdx = boundaryMatch ? boundaryMatch.index + boundaryMatch[0].length : 0;
 
-        if (textBeforeCursor.includes("/")) {
-          const q = textBeforeCursor.substring(textBeforeCursor.lastIndexOf("/") + 1);
-          q ? filterSampleMessagesByTitleEdit(editModal, q) : showAllSampleMessagesEdit(editModal);
-        }
-        // Hide popup if user presses Escape
-        if (e.key === 'Escape') {
-            messagesBoxEdit.addClass("do-none");
-        }
-    });
+  const isSlashAtSentenceStart = textBeforeCursor.charAt(startIdx) === "/";
+
+  if (isSlashAtSentenceStart) {
+    const q = textBeforeCursor.slice(startIdx + 1);
+    q ? filterSampleMessagesByTitleEdit(editModal, q)
+      : showAllSampleMessagesEdit(editModal);
+  } else {
+    messagesBoxEdit.addClass("do-none");
+  }
+
+  if (e.key === "Escape") messagesBoxEdit.addClass("do-none");
+});
     
     // Function to show all sample messages for edit modal
     function showAllSampleMessagesEdit(textarea) {
@@ -7424,27 +7424,29 @@ margin-bottom: 10px !important;
     const textarea = $("textarea[name='egnineers_internal_notes']");
     const messagesBox = $("#sampleMessagesBox");
 
-    textarea.on("keyup", function (e) {
-        const value = textarea.val();
+   textarea.on("keyup", function (e) {
+  const value = textarea.val();
   const cursorPos = textarea[0].selectionStart;
   const textBeforeCursor = value.substring(0, cursorPos);
-  const lastChar = textBeforeCursor.slice(-1);
 
-        if (lastChar === "/") {
-          showAllSampleMessages(textarea);
-          return;
-        }
+  // Find start of current sentence: last ., ?, !, or newline (allow spaces after)
+  const boundaryMatch = textBeforeCursor.match(/[\.\?\!\n]\s*$/);
+  const startIdx = boundaryMatch ? boundaryMatch.index + boundaryMatch[0].length : 0;
 
-        if (textBeforeCursor.includes("/")) {
-          const q = textBeforeCursor.substring(textBeforeCursor.lastIndexOf("/") + 1);
-          q ? filterSampleMessagesByTitle(textarea, q) : showAllSampleMessages(textarea);
-        }
-          
-        // Hide popup if user presses Escape
-        if (e.key === 'Escape') {
-            messagesBox.addClass("do-none");
-        }
-    });
+  // Only trigger if the very first char after the boundary is "/"
+  const isSlashAtSentenceStart = textBeforeCursor.charAt(startIdx) === "/";
+
+  if (isSlashAtSentenceStart) {
+    const q = textBeforeCursor.slice(startIdx + 1); // what user typed after "/"
+    q ? filterSampleMessagesByTitle(textarea, q)
+      : showAllSampleMessages(textarea);
+  } else {
+    // Slash not at sentence start → don't trigger
+    messagesBox.addClass("do-none");
+  }
+
+  if (e.key === "Escape") messagesBox.addClass("do-none");
+});
     
     // Function to show all sample messages
     function showAllSampleMessages(textarea) {
