@@ -53,32 +53,14 @@
                 <div>
                   <label>Brand</label>
                     <div class="form-group">
-                        <select disabled name="brand" id="brand" class="select full-width" data-init-plugin="select2">
-                            @foreach ($brands as $brand)
-                                <option @if($file->brand==$brand) selected @endif value="{{ $brand }}">{{$brand}}</option>
-                            @endforeach
-                        </select>
+                        <label>$file->brand</label>
                     </div>
-                    @error('brand')
-                        <span class="text-danger" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
                 </div>
                 <div>
                  <label>Model</label>
                     <div class="form-group">
-                        <select disabled name="model" id="model" class="select full-width" data-init-plugin="select2">
-                            @foreach ($models as $model)
-                                <option @if($file->model==$model) selected @endif value="{{ $model }}">{{$model}}</option>
-                            @endforeach
-                        </select>
+                        <label>$file->model</label>
                     </div>
-                    @error('model')
-                    <span class="text-danger" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
                 </div>
                 <div>
                     <label>Version</label>
