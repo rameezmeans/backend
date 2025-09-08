@@ -53,13 +53,13 @@
                 <div>
                   <label>Brand</label>
                     <div class="form-group">
-                        <label>$file->brand</label>
+                        <label>{{$file->brand}}</label>
                     </div>
                 </div>
                 <div>
                  <label>Model</label>
                     <div class="form-group">
-                        <label>$file->model</label>
+                        <label>{{$file->model}}</label>
                     </div>
                 </div>
                 <div>
