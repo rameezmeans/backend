@@ -161,11 +161,12 @@ class ActiveFeedCron extends Command
 
         foreach ($unassignedFiles as $file) {
             if($this->get_engineer_by_rule($file)){
-                if($file->automatic == 0){
+                // if($file->automatic == 0){
                     // \Log::info("Cron printed online engineer ID as : ".$this->get_engineer_by_rule($file)->id);
                     $file->assigned_to = $this->get_engineer_by_rule($file)->id;
+                    $file->automatic = 0;
                     $file->save();
-                }
+                // }
             }
         }
 
@@ -182,6 +183,7 @@ class ActiveFeedCron extends Command
                     
                     // if($f->automatic == 0){
                         $f->assigned_to = $engineer->id;
+                        $f->automatic = 0;
                         $f->save();
                     // }
                     
@@ -199,6 +201,7 @@ class ActiveFeedCron extends Command
                     if ($onlineEngineer) {
                         // if($f->automatic == 0){
                             $f->assigned_to = $onlineEngineer->id;
+                            $f->automatic = 0;
                             $f->save();
                         // }
                     }
@@ -212,6 +215,7 @@ class ActiveFeedCron extends Command
                 if (($user = User::find($f->latestRequestFile?->user_id)) && $user->online) {
                     // if($f->automatic == 0){
                         $f->assigned_to = $user->id;
+                        $f->automatic = 0;
                         $f->save();
                     // }
                 }
