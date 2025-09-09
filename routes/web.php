@@ -153,7 +153,7 @@ Route::get('/tasks', function () {
 
     foreach($files as $f){
         if($f->automatic == 1){
-            $f->assgined_to = NULL;
+            $f->assigned_to = NULL;
             $f->save();
         }
     }
