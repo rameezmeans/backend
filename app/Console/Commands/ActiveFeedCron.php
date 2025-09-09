@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Credit;
 use App\Models\EmailReminder;
 use App\Models\EmailTemplate;
+use App\Models\EngineerAssignmentLog;
 use App\Models\File;
 use App\Models\Key;
 use App\Models\NewsFeed;
@@ -148,6 +149,23 @@ class ActiveFeedCron extends Command
         // // Otherwise, return the admin
         // return User::where('id', 1)->where('role_id', 1)->first();
     }
+
+    public function assignEngineer($file, $assignedTo){
+
+        $assign = new EngineerAssignmentLog();
+
+        if($file->assigned_to){
+            $assign->assigned_from = User::findOrFail($file->assigned_to)->name;
+        }
+        else{
+            $assign->assigned_from = "None";
+        }
+        
+        $assign->assigned_to = User::findOrFail($assignedTo)->name;
+        $assign->assigned_by = "Cron";
+        $assign->file_id = $file->id;
+        $assign->save();
+    }
     
     public function handle()
     {
@@ -164,6 +182,7 @@ class ActiveFeedCron extends Command
                 // if($file->automatic == 0){
                     // \Log::info("Cron printed online engineer ID as : ".$this->get_engineer_by_rule($file)->id);
                     $file->assigned_to = $this->get_engineer_by_rule($file)->id;
+                    $this->assignEngineer($file, $this->get_engineer_by_rule($file)->id);
                     $file->automatic = 0;
                     $file->save();
                 // }
@@ -183,6 +202,7 @@ class ActiveFeedCron extends Command
                     
                     // if($f->automatic == 0){
                         $f->assigned_to = $engineer->id;
+                        $this->assignEngineer($f, $engineer->id);
                         $f->automatic = 0;
                         $f->save();
                     // }
@@ -201,6 +221,7 @@ class ActiveFeedCron extends Command
                     if ($onlineEngineer) {
                         // if($f->automatic == 0){
                             $f->assigned_to = $onlineEngineer->id;
+                            $this->assignEngineer($f, $engineer->id);
                             $f->automatic = 0;
                             $f->save();
                         // }
@@ -215,6 +236,7 @@ class ActiveFeedCron extends Command
                 if (($user = User::find($f->latestRequestFile?->user_id)) && $user->online) {
                     // if($f->automatic == 0){
                         $f->assigned_to = $user->id;
+                        $this->assignEngineer($f, $user->id);
                         $f->automatic = 0;
                         $f->save();
                     // }
