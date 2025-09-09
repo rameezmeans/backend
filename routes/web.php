@@ -149,6 +149,17 @@ Route::get('/autotuner', function () {
 
 Route::get('/tasks', function () {
 
+    $files = File::all();
+
+    foreach($files as $f){
+        if($f->automatic == 1){
+            $f->assgined_to = NULL;
+            $f->save();
+        }
+    }
+
+    dd('dd');
+
     $file = File::findOrFail(23997); 
     $user = User::findOrFail($file->user_id);
 
