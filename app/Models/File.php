@@ -190,19 +190,19 @@ class File extends Model
         return $this->hasMany(EngineerOptionsOffer::class, 'file_id', 'id')->where('type', 'option');
     }
 
-    public function vehicle(){
-        return Vehicle::where('Make', '=', $this->brand)
-        ->where('Model', '=', $this->model)
-        ->where('Generation', '=', $this->version)
-        ->where('Engine', '=', $this->engine)
-        ->whereNotNull('Brand_image_url')
-        ->first();
-    }
-
     // public function vehicle(){
     //     return Vehicle::where('Make', '=', $this->brand)
-    //     ->first(); // removing image for time being
+    //     ->where('Model', '=', $this->model)
+    //     ->where('Generation', '=', $this->version)
+    //     ->where('Engine', '=', $this->engine)
+    //     ->whereNotNull('Brand_image_url')
+    //     ->first();
     // }
+
+    public function vehicle(){
+        return Vehicle::where('Make', '=', $this->brand)
+        ->first(); // removing image for time being
+    }
 
     public function getECUComment(){
         
