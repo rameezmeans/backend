@@ -5986,10 +5986,12 @@ class FilesController extends Controller
         }
         
         $vehicle = Vehicle::where('Make', $file->brand)
-        ->where('Model', $file->model)
-        ->where('Generation', $file->version)
-        ->where('Engine', $file->engine)
+        // ->where('Model', $file->model)
+        // ->where('Generation', $file->version)
+        // ->where('Engine', $file->engine)
         ->first();
+
+        dd($file);
         
         $engineers = get_engineers();
 
