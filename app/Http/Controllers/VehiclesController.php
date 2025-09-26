@@ -223,7 +223,7 @@ class VehiclesController extends Controller
         $texts['english'] =  $request->comments;
         $texts['greek'] =  $request->greek_comments;
 
-        $this->translationObj->store($comment->id, 'Comment', $texts);
+        // $this->translationObj->store($comment->id, 'Comment', $texts);
 
         return redirect()->route('add-comments', $request->vehicle_id)->with('success',  'Comment updated, successfully.');
 
