@@ -332,7 +332,7 @@ class NewsFeedsController extends Controller
         $texts['english'] = $request->feed;;
         $texts['greek']   = $request->feed_in_greek;
 
-        $this->translationObj->store($request->id, 'Feed', $texts); 
+        // $this->translationObj->store($request->id, 'Feed', $texts); 
 
         return redirect()->route('feeds')->with(['success' => 'Feed Updated, successfully.']);
 

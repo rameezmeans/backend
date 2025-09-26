@@ -797,7 +797,7 @@ class ServicesController extends Controller
         $texts['english'] =  $validated['description'];
         $texts['greek'] =  $validated['greek_description'];
 
-        $this->translationObj->store($created->id, 'Service', $texts);
+        // $this->translationObj->store($created->id, 'Service', $texts);
 
 
 
@@ -856,7 +856,7 @@ class ServicesController extends Controller
         $texts['english'] = $request->description;;
         $texts['greek'] = $request->greek_description;
 
-        $this->translationObj->store($request->id, 'Service', $texts);
+        // $this->translationObj->store($request->id, 'Service', $texts);
         
         if($request->file('icon')){
             $file = $request->file('icon');
