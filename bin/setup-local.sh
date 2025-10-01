@@ -7,8 +7,10 @@ fi
 # Run from repo root or anywhere:
 cd "$(dirname "$0")/.."
 
+#composer require filament/filament:^3 filament/forms:^3 filament/notifications:^3 livewire/livewire:^3
+
 echo "→ composer install"
-composer install --no-dev -o
+composer install --no-dev --prefer-dist --no-interaction
 
 echo "→ Filament v2→v4 adapter shims"
 FORMS_DIR="vendor/filament/forms/dist"
