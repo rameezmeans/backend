@@ -8,27 +8,7 @@ fi
 cd "$(dirname "$0")/.."
 
 echo "→ composer install"
-composer install --no-dev -o
-
-echo "→ Filament v2→v4 adapter shims"
-FORMS_DIR="vendor/filament/forms/dist"
-NOTIF_DIR="vendor/filament/notifications/dist"
-
-if [ -d "$FORMS_DIR" ]; then
-  cat > "$FORMS_DIR/module.esm" <<'EOF'
-import './index.js';
-export default function () {}
-EOF
-  ln -sf index.css "$FORMS_DIR/module.esm.css"
-fi
-
-if [ -d "$NOTIF_DIR" ]; then
-  cat > "$NOTIF_DIR/module.esm" <<'EOF'
-import './index.js';
-export default function () {}
-EOF
-  ln -sf index.css "$NOTIF_DIR/module.esm.css"
-fi
+composer install --no-dev --prefer-dist --no-interaction
 
 echo "→ npm deps & build"
 npm ci
