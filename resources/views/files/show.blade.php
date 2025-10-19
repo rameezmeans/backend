@@ -1,3 +1,6 @@
+@php
+    if (!isset($arrayversionslua) || !is_array($arrayversionslua)) { $arrayversionslua = []; }
+@endphp
 @extends('layouts.app')
 
 @section('pagespecificstyles')
@@ -2819,7 +2822,7 @@ margin-bottom: 10px !important;
                             
                                 // Display the result
                                 if ($latestVersion) {
-                                    $arrayversionslua = json_decode($latestVersion['Respons'], true);
+                                    $arrayversionslua = json_decode($latestVersion['Respons'] ?? '[]', true) ?: [];
                                     $jsonError = json_last_error();
                                     $jsonErrorMsg = json_last_error_msg();
                             
@@ -2830,7 +2833,7 @@ margin-bottom: 10px !important;
                                     if ($arrayversionslua === null) {
                                         echo 'error decoding';
                                     } else {
-                                        foreach ($arrayversionslua as $arrayversionlua) {
+                                        foreach (( $arrayversionslua ?? [] ) as $arrayversionlua ) {
 
                                           // dd($arrayversionlua);
                                             
@@ -2843,7 +2846,7 @@ margin-bottom: 10px !important;
                             
                                                 </h5>
                                                 <?php
-                                                foreach ($arrayversionlua as $key => $value) {
+                                                foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
                                                     if (is_numeric($key) && $value !== 'Original') {
                                                         ?>
                                                         <p class="pull-left"><?php echo $value; ?></p>
@@ -2896,7 +2899,7 @@ margin-bottom: 10px !important;
                                         <select name="makelua[]" class="form-select">
                                           <option value="">Nothing</option>
                                           <?
-                                          foreach ($arrayversionslua as $arrayversionlua){
+                                          foreach (( $arrayversionslua ?? [] ) as $arrayversionlua ){
 
                                             // dd($arrayversionlua);
                                             ?>
@@ -2905,7 +2908,7 @@ margin-bottom: 10px !important;
                                               <?
 
                                               // dd($arrayversionlua);
-                                              foreach ($arrayversionlua as $key => $value) {
+                                              foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
                                                   if (is_numeric($key) && $value !== 'Original') {
                                                     $modifiedString = str_replace('/', '-', $value);
                                                       ?>
@@ -3136,7 +3139,7 @@ margin-bottom: 10px !important;
                                                 
                                               <?
                                               // dd($arrayversionlua);
-                                              foreach ($arrayversionlua as $key => $value) {
+                                              foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
                                                   if (is_numeric($key) && $value !== 'Original') {
                                                     $modifiedString = str_replace('/', '-', $value);
                                                       ?>
@@ -5506,7 +5509,7 @@ margin-bottom: 10px !important;
                             
                                 // Display the result
                                 if ($latestVersion) {
-                                    $arrayversionslua = json_decode($latestVersion['Respons'], true);
+                                    $arrayversionslua = json_decode($latestVersion['Respons'] ?? '[]', true) ?: [];
                                     $jsonError = json_last_error();
                                     $jsonErrorMsg = json_last_error_msg();
                             
@@ -5517,7 +5520,7 @@ margin-bottom: 10px !important;
                                     if ($arrayversionslua === null) {
                                         echo 'error decoding';
                                     } else {
-                                        foreach ($arrayversionslua as $arrayversionlua) {
+                                        foreach (( $arrayversionslua ?? [] ) as $arrayversionlua ) {
 
                                           // dd($arrayversionlua);
                                             
@@ -5532,7 +5535,7 @@ margin-bottom: 10px !important;
                                                 <?php
 
                                                 // dd($arrayversionlua);
-                                                foreach ($arrayversionlua as $key => $value) {
+                                                foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
                                                     if (is_numeric($key) && $value !== 'Original') {
                                                         ?>
                                                         <p class="pull-left"><?php echo $value; ?></p>
@@ -5585,14 +5588,14 @@ margin-bottom: 10px !important;
                                         <select name="makelua[]" class="form-select">
                                           <option value="">Nothing</option>
                                           <?
-                                          foreach ($arrayversionslua as $arrayversionlua){
+                                          foreach (( $arrayversionslua ?? [] ) as $arrayversionlua ){
                                             // dd($arrayversionlua);
                                             ?>
                                                 
                                                 
                                               <?
                                               // dd($arrayversionlua);
-                                              foreach ($arrayversionlua as $key => $value) {
+                                              foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
                                                   if (is_numeric($key) && $value !== 'Original') {
                                                     $modifiedString = str_replace('/', '-', $value);
                                                     // dd($arrayversionlua);
@@ -5800,7 +5803,7 @@ margin-bottom: 10px !important;
                                                 
                                                 
                                               <?
-                                              foreach ($arrayversionlua as $key => $value) {
+                                              foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
                                                   if (is_numeric($key) && $value !== 'Original') {
                                                     $modifiedString = str_replace('/', '-', $value);
                                                     // dd($arrayversionlua);
