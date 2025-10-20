@@ -3928,6 +3928,7 @@ class FilesController extends Controller
             
             }
             else{
+                // $path = public_path('/mnt/portal.tuning-x.com'.$file->file_path);
                 $path = public_path('/../../tuningX/public'.$file->file_path);
             }
         }
