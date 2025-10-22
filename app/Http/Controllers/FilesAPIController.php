@@ -1925,12 +1925,11 @@ class FilesAPIController extends Controller
 
                     if($file->front_end_id == 1){
 
-                        copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
-                        public_path('/../../portal/public'.$file->file_path.$fileToSave) );
+                        copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
+                        '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave);
 
-                        unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
-
-                        $path = public_path('/../../portal/public'.$file->file_path.$fileToSave);
+                        unlink('/mnt/portal.ecutech.gr/uploads'.'/'.$file->tunned_files->file);
+                        $path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave;
                 
                     }
 
@@ -1941,12 +1940,12 @@ class FilesAPIController extends Controller
 
                         // unlink( public_path('/../../e-tuningfiles/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                        copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
-                        public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path.$fileToSave) );
+                        copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
+                        '/mnt/portal.e-tuningfiles.com'.$file->file_path.$fileToSave);
 
-                        unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
+                        unlink('/mnt/portal.ecutech.gr/uploads'.'/'.$file->tunned_files->file);
 
-                        $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path.$fileToSave);
+                        $path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave;
                 
                     }
 
@@ -1957,12 +1956,12 @@ class FilesAPIController extends Controller
 
                         // unlink( public_path('/../../tuningX/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                        copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
-                        public_path('/../../tuningX/public'.$file->file_path.$fileToSave) );
+                        copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
+                        '/mnt/portal.tuning-x.com'.$file->file_path.$fileToSave);
 
-                        unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
+                        unlink('/mnt/portal.ecutech.gr/uploads').'/'.$file->tunned_files->file;
 
-                        $path = public_path('/../../tuningX/public'.$file->file_path.$fileToSave);
+                        $path = '/mnt/portal.tuning-x.com'.$file->file_path.$fileToSave;
 
                     }
 
