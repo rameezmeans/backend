@@ -298,7 +298,11 @@ echo $response;
                 'X-Alientech-ReCodAPI-LLC' => $this->token,
             ];
 
+            // dd($this->token);
+
             $response = Http::withHeaders($headers)->get($url);
+
+            // dd($response);
 
             // Check HTTP status code first
             if ($response->failed()) {
@@ -308,7 +312,7 @@ echo $response;
 
             // If success, decode JSON
             $responseBody = $response->json(); // no need to manually json_decode
-            dd($responseBody);
+            // dd($responseBody);
 
         } catch (\Exception $e) {
             dd('Exception', $e->getMessage());
