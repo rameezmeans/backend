@@ -143,7 +143,7 @@ class AlientechController extends Controller
                     }
                     else{
                         // Save to production environment path
-                        $flag = file_put_contents(public_path('/../../portal/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                        $flag = file_put_contents('/mnt/portal.ecutech.gr/uploads'.$pathAndNameArrayEncoded['path'], $contents);
                     }
                 }
                 else if($file->front_end_id == 3){
@@ -157,7 +157,7 @@ class AlientechController extends Controller
                     }
                     else{
                         // Save to production environment path
-                        $flag = file_put_contents(public_path('/../../portal.e-tuningfiles.com/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                        $flag = file_put_contents('/mnt/portal.e-tuningfiles.com'.$pathAndNameArrayEncoded['path'], $contents);
                     }
                 }
                 else{
@@ -171,7 +171,7 @@ class AlientechController extends Controller
                     }
                     else{
                         // Save to production environment path
-                        $flag = file_put_contents(public_path('/../../TuningXV2/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                        $flag = file_put_contents(public_path('/mnt/portal.tuning-x.com/uploads'.$pathAndNameArrayEncoded['path']), $contents);
                     }
                 }
 
