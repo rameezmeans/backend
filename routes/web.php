@@ -72,7 +72,8 @@ use SevenSpan\WhatsApp\WhatsApp;
 */
 
 Route::get('/env', function () {
-    dd(env('DB_HOST'), env('DB_USERNAME'), env('DB_PASSWORD'), env('DB_DATABASE'), env('DB_SOCKET'));
+    // dd(env('DB_HOST'), env('DB_USERNAME'), env('DB_PASSWORD'), env('DB_DATABASE'), env('DB_SOCKET'));
+    dd(env('APP_ENV'));
 });
 
 Route::get('/', function () {
