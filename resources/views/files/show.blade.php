@@ -276,6 +276,7 @@ margin-bottom: 10px !important;
                           
                           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'download-client-file'))
                           
+
                           @if($file->original_file_id)
                               
                                 <a href="{{ route('download', [$file->original_file_id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
@@ -359,6 +360,9 @@ margin-bottom: 10px !important;
                           </form>
                             @endif
                           @endif
+
+                          <button class="btn btn-info btn-cons m-b-10 m-t-20" id="processBtn">Process in DAVINCI</button>
+
 
                         </div>
                       </div>
@@ -6930,6 +6934,41 @@ margin-bottom: 10px !important;
 @endsection
 
 @section('pagespecificscripts')
+
+<script>
+(() => {
+  // Build URLs from Blade
+  const fallbackUrl = @json(route('download', [$file->id, $file->file_attached, 0]));
+  const decodedUrls = @json(
+    ($file->decoded_files ?? collect()).map(function(df) use ($file) {
+      $name = ($df->extension && $df->extension !== '')
+        ? ($df->name . '.' . $df->extension)
+        : $df->name;
+      return route('download', [$file->id, $name, 0]);
+    })->values()
+  );
+
+  // Choose URL: prefer decoded file
+  const fileUrl = (decodedUrls && decodedUrls.length) ? decodedUrls[0] : fallbackUrl;
+
+  // Wire the button
+  const btn = document.getElementById('processBtn');
+  if (!btn) return;
+
+  btn.addEventListener('click', async () => {
+    try {
+      const endpoint = 'http://127.0.0.1:8765/process?url=' + encodeURIComponent(fileUrl);
+      const r = await fetch(endpoint);
+      const data = await r.json();
+      alert(data.ok
+        ? 'Done. See C:\\\\ecu_files\\\\modified\\n' + (data.output_file || '')
+        : 'Failed. Check C:\\\\davinci_automation\\\\davinci_automation.log\\n' + (data.stderr_tail || data.stdout_tail));
+    } catch (e) {
+      alert('Local agent not running. Start it first.');
+    }
+  });
+})();
+</script>
 
 
 
