@@ -6935,40 +6935,7 @@ margin-bottom: 10px !important;
 
 @section('pagespecificscripts')
 
-<script>
-(() => {
-  // Build URLs from Blade
-  const fallbackUrl = @json(route('download', [$file->id, $file->file_attached, 0]));
-  const decodedUrls = @json(
-    ($file->decoded_files ?? collect()).map(function(df) use ($file) {
-      $name = ($df->extension && $df->extension !== '')
-        ? ($df->name . '.' . $df->extension)
-        : $df->name;
-      return route('download', [$file->id, $name, 0]);
-    })->values()
-  );
 
-  // Choose URL: prefer decoded file
-  const fileUrl = (decodedUrls && decodedUrls.length) ? decodedUrls[0] : fallbackUrl;
-
-  // Wire the button
-  const btn = document.getElementById('processBtn');
-  if (!btn) return;
-
-  btn.addEventListener('click', async () => {
-    try {
-      const endpoint = 'http://127.0.0.1:8765/process?url=' + encodeURIComponent(fileUrl);
-      const r = await fetch(endpoint);
-      const data = await r.json();
-      alert(data.ok
-        ? 'Done. See C:\\\\ecu_files\\\\modified\\n' + (data.output_file || '')
-        : 'Failed. Check C:\\\\davinci_automation\\\\davinci_automation.log\\n' + (data.stderr_tail || data.stdout_tail));
-    } catch (e) {
-      alert('Local agent not running. Start it first.');
-    }
-  });
-})();
-</script>
 
 
 
@@ -9483,6 +9450,46 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
   });
 	  
 	  
+</script>
+
+@php
+    // Build candidate URLs in PHP
+    $decodedUrls = [];
+    if (!empty($file->decoded_files)) {
+        foreach ($file->decoded_files as $df) {
+            $name = ($df->extension && $df->extension !== '')
+                ? ($df->name . '.' . $df->extension)
+                : $df->name;
+            $decodedUrls[] = route('download', [$file->id, $name, 0]);
+        }
+    }
+    $fallbackUrl = route('download', [$file->id, $file->file_attached, 0]);
+@endphp
+
+{{-- <button id="processBtn" type="button" class="btn btn-primary">Process in DAVINCI</button> --}}
+
+<script>
+(() => {
+  const decodedUrls = @json($decodedUrls);
+  const fallbackUrl = @json($fallbackUrl);
+  const fileUrl = (decodedUrls && decodedUrls.length) ? decodedUrls[0] : fallbackUrl;
+
+  const btn = document.getElementById('processBtn');
+  if (!btn) return;
+
+  btn.addEventListener('click', async () => {
+    try {
+      const endpoint = 'http://127.0.0.1:8765/process?url=' + encodeURIComponent(fileUrl);
+      const r = await fetch(endpoint);
+      const data = await r.json();
+      alert(data.ok
+        ? 'Done. See C:\\\\ecu_files\\\\modified\\n' + (data.output_file || '')
+        : 'Failed. See C:\\\\davinci_automation\\\\davinci_automation.log\\n' + (data.stderr_tail || data.stdout_tail));
+    } catch (e) {
+      alert('Local agent not running on this PC.');
+    }
+  });
+})();
 </script>
 
 <!-- ChatGPT Modal -->
