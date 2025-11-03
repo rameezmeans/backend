@@ -9469,24 +9469,29 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
 {{-- <button id="processBtn" type="button" class="btn btn-primary">Process in DAVINCI</button> --}}
 
 <script>
-(() => {
+(async () => {
   const decodedUrls = @json($decodedUrls);
   const fallbackUrl = @json($fallbackUrl);
   const fileUrl = (decodedUrls && decodedUrls.length) ? decodedUrls[0] : fallbackUrl;
 
-  const btn = document.getElementById('processBtn');
-  if (!btn) return;
-
-  btn.addEventListener('click', async () => {
+  document.getElementById('processBtn')?.addEventListener('click', async () => {
     try {
-      const endpoint = 'http://127.0.0.1:8765/process?url=' + encodeURIComponent(fileUrl);
-      const r = await fetch(endpoint);
+      // 1) Fetch file from YOUR backend (cookies/permissions apply automatically)
+      const res = await fetch(fileUrl, { credentials: 'include' });
+      if (!res.ok) throw new Error('Download failed: ' + res.status);
+      const blob = await res.blob();
+
+      // 2) Send file to local agent
+      const form = new FormData();
+      form.append('file', blob, 'input.bin');
+      const r = await fetch('http://127.0.0.1:8765/process_upload', { method: 'POST', body: form });
       const data = await r.json();
+
       alert(data.ok
-        ? 'Done. See C:\\\\ecu_files\\\\modified\\n' + (data.output_file || '')
-        : 'Failed. See C:\\\\davinci_automation\\\\davinci_automation.log\\n' + (data.stderr_tail || data.stdout_tail));
+        ? ('Done. See C:\\\\ecu_files\\\\modified\\n' + (data.output_file || ''))
+        : ('Failed. See C:\\\\davinci_automation\\\\davinci_automation.log\\n' + (data.stderr_tail || data.stdout_tail)));
     } catch (e) {
-      alert('Local agent not running on this PC.');
+      alert('Local run failed: ' + (e && e.message ? e.message : e));
     }
   });
 })();
