@@ -16,24 +16,24 @@ class File extends Model
 
     protected $fillable = [
 
-        'tool_id', 'tool_type', 'file_attached', 
+        'tool_id', 'tool_type', 'file_attached',
         'file_type', 'name', 'email', 'username',
-        'phone', 'model_year', 'license_plate', 
-        'vin_number', 'brand', 'model','version', 
+        'phone', 'model_year', 'license_plate',
+        'vin_number', 'brand', 'model','version',
         'gear_box', 'ecu', 'engine', 'credits', 'status', 'gearbox_ecu',
         'is_credited',
-        'user_id','original_file_id', 
+        'user_id','original_file_id',
         'modification', 'mention_modification',
         'checked_by','assigned_to', 'dtc_off_comments',
         'request_type', 'additional_comments', 'credit_id','vmax_off_comments','is_original', 'acm_file'
     ];
 
     public function reasons(){
-        return $this->hasOne(FileReasonsToReject::class); 
+        return $this->hasOne(FileReasonsToReject::class);
     }
 
     public function files(){
-        return $this->hasMany(RequestFile::class); 
+        return $this->hasMany(RequestFile::class);
     }
 
     public function latestRequestFile(){
@@ -50,28 +50,28 @@ class File extends Model
                 $r['type'] = $fileReq->file_feedback->type;
             }
             $unsortedTimelineObjects []= $r;
-        } 
-        
+        }
+
         $createdTimes = [];
 
         foreach($this->files->toArray() as $t) {
             $createdTimes []= $t['created_at'];
-        } 
-    
+        }
+
         foreach($this->engineer_file_notes->toArray() as $a) {
             $unsortedTimelineObjects []= $a;
             $createdTimes []= $a['created_at'];
-        }   
+        }
 
         foreach($this->file_internel_events->toArray() as $b) {
             $unsortedTimelineObjects []= $b;
             $createdTimes []= $b['created_at'];
-        } 
+        }
 
         foreach($this->file_urls->toArray() as $b) {
             $unsortedTimelineObjects []= $b;
             $createdTimes []= $b['created_at'];
-        } 
+        }
 
         // dd( $unsortedTimelineObjects );
 
@@ -81,47 +81,47 @@ class File extends Model
     }
 
     public function logs(){
-        return $this->hasMany(Log::class); 
+        return $this->hasMany(Log::class);
     }
 
     public function customer_message(){
-        return $this->hasOne(FileMessage::class); 
+        return $this->hasOne(FileMessage::class);
     }
 
     public function upload_later(){
-        return $this->hasOne(UploadLater::class); 
+        return $this->hasOne(UploadLater::class);
     }
 
     public function assignment_log(){
-        return $this->hasMany(EngineerAssignmentLog::class)->orderBy('created_at', 'desc'); 
+        return $this->hasMany(EngineerAssignmentLog::class)->orderBy('created_at', 'desc');
     }
 
 
     public function status_logs(){
-        return $this->hasMany(FilesStatusLog::class)->orderBy('created_at', 'desc'); 
+        return $this->hasMany(FilesStatusLog::class)->orderBy('created_at', 'desc');
     }
 
     public function new_requests(){
-        return $this->hasMany(File::class, 'original_file_id', 'id'); 
+        return $this->hasMany(File::class, 'original_file_id', 'id');
     }
 
     public function tunned_files(){
-        return $this->hasOne(TunnedFile::class); 
+        return $this->hasOne(TunnedFile::class);
     }
 
     public function alientech_files(){
-        return $this->hasMany(AlientechFile::class)->where('purpose', 'download'); 
+        return $this->hasMany(AlientechFile::class)->where('purpose', 'download');
     }
 
     public function frontend(){
-        return $this->belongsTo(FrontEnd::class,'front_end_id', 'id'); 
+        return $this->belongsTo(FrontEnd::class,'front_end_id', 'id');
     }
-    
+
     public function first_engineer_file(){
         return RequestFile::orderBy('created_at', 'desc')
         ->where('file_id', $this->id)
         ->where('engineer', 1)
-        ->first(); 
+        ->first();
     }
 
     public function assigned(){
@@ -146,7 +146,7 @@ class File extends Model
             }
             return $difference->m . ' Month(s) ' . $difference->d . ' Day(s)';
         }
-        
+
         return $difference->y . ' Year(s) ' . $difference->m . ' Month(s) ' . $difference->d . ' Day(s)';
 
         // $user = User::findOrFail($this->user_id);
@@ -156,7 +156,7 @@ class File extends Model
         // $difference = ($created->diff($now)->days < 1)
         //     ? 'today'
         //     : $created->diffForHumans();
-            
+
         // return $difference;
     }
 
@@ -171,9 +171,9 @@ class File extends Model
     }
 
     public function engineer_file_notes(){
-        return $this->hasMany(EngineerFileNote::class); 
+        return $this->hasMany(EngineerFileNote::class);
     }
-    
+
     public function file_internel_events(){
         return $this->hasMany(FileInternalEvent::class);
     }
@@ -205,9 +205,9 @@ class File extends Model
     // }
 
     public function getECUComment(){
-        
+
         $note = null;
-        
+
         if($this->ecu){
             $note = VehiclesNote::where('make', $this->brand)->where('ecu', $this->ecu)->first();
         }
@@ -260,7 +260,7 @@ class File extends Model
     public function downloadLuaFiles(){
         return $this->hasMany(DownloadLuaFile::class, 'file_id', 'id');
     }
-    
+
     public function decoded_files(){
         return $this->hasMany(ProcessedFile::class, 'file_id', 'id')->where('type', 'decoded');
     }
@@ -293,7 +293,7 @@ class File extends Model
                 else{
                     $path = public_path('/mnt/portal.tuning-x.com'.$this->file_path.$name);
                 }
-                
+
                 if (file_exists($path)) {
                     $temp ['size']= filesize($path);
                     $temp ['file_name']= $name;
@@ -310,16 +310,16 @@ class File extends Model
                 return $sizeArray[0]['file_name'];
             }
             else{
-    
+
                 usort($sizeArray, array($this,'sortById'));
                 return $sizeArray[0]['file_name'];
-    
+
             }
 
         }
 
         return null;
-        
+
     }
 
     public function final_magic_decoded_file(){
@@ -330,20 +330,24 @@ class File extends Model
 
             foreach($this->magic_decrypted_files as $d){
 
-                
+
                 $name = $d->name;
-                
+
 
                 if($this->front_end_id == 1){
-                    $path = public_path('/../../portal/public'.$this->file_path.$name);
+                    //$path = public_path('/../../portal/public'.$this->file_path.$name);
+                    $path = public_path('/mnt/portal.ecutech.gr'.$this->file_path.$name);
+
                 }
                 else if($this->front_end_id == 3){
-                    $path = public_path('/../../portal.e-tuningfiles.com/public'.$this->file_path.$name);
+                    //$path = public_path('/../../portal.e-tuningfiles.com/public'.$this->file_path.$name);
+                    $path = public_path('/mnt/portal.e-tuningfiles.com'.$this->file_path.$name);
                 }
                 else{
-                    $path = public_path('/../../tuningX/public'.$this->file_path.$name);
+                    //$path = public_path('/../../tuningX/public'.$this->file_path.$name);
+                    $path = public_path('/mnt/portal.tuning-x.com'.$this->file_path.$name);
                 }
-                
+
                 $temp ['size']= filesize($path);
                 $temp ['file_name']= $name;
                 $sizeArray []= $temp;
@@ -355,16 +359,16 @@ class File extends Model
                 return $sizeArray[0]['file_name'];
             }
             else{
-    
+
                 usort($sizeArray, array($this,'sortById'));
                 return $sizeArray[0]['file_name'];
-    
+
             }
 
         }
 
         return null;
-        
+
     }
 
     public function sortById($x, $y) {
