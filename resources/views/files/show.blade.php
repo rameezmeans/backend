@@ -276,6 +276,7 @@ margin-bottom: 10px !important;
                           
                           @if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'download-client-file'))
                           
+
                           @if($file->original_file_id)
                               
                                 <a href="{{ route('download', [$file->original_file_id, $file->file_attached, 0]) }}" class="btn btn-success btn-cons m-b-10"><i class="pg-download"></i> <span class="bold">Download Client's File</span>
@@ -359,6 +360,9 @@ margin-bottom: 10px !important;
                           </form>
                             @endif
                           @endif
+
+                          <button class="btn btn-info btn-cons m-b-10 m-t-20" id="processBtn">Process in DAVINCI</button>
+
 
                         </div>
                       </div>
@@ -6933,6 +6937,8 @@ margin-bottom: 10px !important;
 
 
 
+
+
 <script>
     document.getElementById("submitButtonFDB").addEventListener("click", function () {
         var selectElements = document.querySelectorAll('select[name="makelua2[]"]');
@@ -9444,6 +9450,51 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
   });
 	  
 	  
+</script>
+
+@php
+    // Build candidate URLs in PHP
+    $decodedUrls = [];
+    if (!empty($file->decoded_files)) {
+        foreach ($file->decoded_files as $df) {
+            $name = ($df->extension && $df->extension !== '')
+                ? ($df->name . '.' . $df->extension)
+                : $df->name;
+            $decodedUrls[] = route('download', [$file->id, $name, 0]);
+        }
+    }
+    $fallbackUrl = route('download', [$file->id, $file->file_attached, 0]);
+@endphp
+
+{{-- <button id="processBtn" type="button" class="btn btn-primary">Process in DAVINCI</button> --}}
+
+<script>
+(async () => {
+  const decodedUrls = @json($decodedUrls);
+  const fallbackUrl = @json($fallbackUrl);
+  const fileUrl = (decodedUrls && decodedUrls.length) ? decodedUrls[0] : fallbackUrl;
+
+  document.getElementById('processBtn')?.addEventListener('click', async () => {
+    try {
+      // 1) Fetch file from YOUR backend (cookies/permissions apply automatically)
+      const res = await fetch(fileUrl, { credentials: 'include' });
+      if (!res.ok) throw new Error('Download failed: ' + res.status);
+      const blob = await res.blob();
+
+      // 2) Send file to local agent
+      const form = new FormData();
+      form.append('file', blob, 'input.bin');
+      const r = await fetch('http://127.0.0.1:8765/process_upload', { method: 'POST', body: form });
+      const data = await r.json();
+
+      alert(data.ok
+        ? ('Done. See C:\\\\ecu_files\\\\modified\\n' + (data.output_file || ''))
+        : ('Failed. See C:\\\\davinci_automation\\\\davinci_automation.log\\n' + (data.stderr_tail || data.stdout_tail)));
+    } catch (e) {
+      alert('Local run failed: ' + (e && e.message ? e.message : e));
+    }
+  });
+})();
 </script>
 
 <!-- ChatGPT Modal -->
