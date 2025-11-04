@@ -335,17 +335,16 @@ class File extends Model
 
 
                 if($this->front_end_id == 1){
-                    //$path = public_path('/../../portal/public'.$this->file_path.$name);
+                    // $path = public_path('/../../portal/public'.$this->file_path.$name);
                     $path = public_path('/mnt/portal.ecutech.gr'.$this->file_path.$name);
-
                 }
                 else if($this->front_end_id == 3){
-                    //$path = public_path('/../../portal.e-tuningfiles.com/public'.$this->file_path.$name);
+                    // $path = public_path('/../../portal.e-tuningfiles.com/public'.$this->file_path.$name);
                     $path = public_path('/mnt/portal.e-tuningfiles.com'.$this->file_path.$name);
                 }
                 else{
-                    //$path = public_path('/../../tuningX/public'.$this->file_path.$name);
                     $path = public_path('/mnt/portal.tuning-x.com'.$this->file_path.$name);
+                    // $path = public_path('/../../tuningX/public'.$this->file_path.$name);
                 }
 
                 $temp ['size']= filesize($path);
