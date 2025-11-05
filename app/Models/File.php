@@ -215,6 +215,18 @@ class File extends Model
         return $note;
     }
 
+    public function services_array(){
+        $services = $this->hasMany(FileService::class, 'file_id', 'id')->get();
+        
+        $servicesArray = [];
+
+        foreach($services as $s){
+            $servicesArray []= Service::findOrFail($s->service_id)->name;
+        }
+
+        return $servicesArray;
+    }
+
     public function stage_services(){
         return $this->hasOne(FileService::class, 'file_id', 'id')->where('type', 'stage');
     }

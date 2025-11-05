@@ -76,6 +76,13 @@ Route::get('/env', function () {
     dd(env('APP_ENV'));
 });
 
+Route::get('/test', function () {
+
+    $file = File::findOrFail(9889);
+    dd($file->services_array());
+
+});
+
 Route::get('/', function () {
     if(Auth::user()){
         return redirect()->route('home');
