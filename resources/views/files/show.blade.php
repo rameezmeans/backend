@@ -9453,46 +9453,54 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
 </script>
 
 @php
-    // Build candidate URLs in PHP
+    // Build candidate URLs and filename
     $decodedUrls = [];
+    $filenamedec = null;
+
     if (!empty($file->decoded_files)) {
         foreach ($file->decoded_files as $df) {
             $name = ($df->extension && $df->extension !== '')
                 ? ($df->name . '.' . $df->extension)
                 : $df->name;
             $decodedUrls[] = route('download', [$file->id, $name, 0]);
-            $filename = $name;
+            $filenamedec = $name; // last decoded file name
         }
-    } else {
-        $fallbackUrl = route('download', [$file->id, $file->file_attached, 0]);
-        $filename = $file->file_attached;
     }
+
+    $fallbackUrl = route('download', [$file->id, $file->file_attached, 0]);
+    $filename = $filenamedec ?: $file->file_attached; // choose decoded or original
 @endphp
 
 <script>
 (async () => {
-  const services = @json($file->services_array());
-  const brand = @json($file->brand);
-  const ecu = @json($file->ecu);
-  const decodedUrls = @json($decodedUrls);
-  const fallbackUrl = @json($fallbackUrl);
-  const filename = @json($filename);
+  // Extract PHP values
+  const services = @json($file->services_array() ?? []);
+  const brand = @json(is_string($file->brand ?? null) ? $file->brand : ($file->brand->name ?? $file->brand_name ?? ""));
+  const ecu = @json(is_string($file->ecu ?? null) ? $file->ecu : ($file->ecu->name ?? $file->ecu_code ?? ""));
+  const decodedUrls = @json($decodedUrls ?? []);
+  const fallbackUrl = @json($fallbackUrl ?? "");
+  const filename = @json($filename ?? "input.bin");
+
+  // Pick file URL (decoded preferred, else fallback)
   const fileUrl = (decodedUrls && decodedUrls.length) ? decodedUrls[0] : fallbackUrl;
 
   document.getElementById('processBtn')?.addEventListener('click', async () => {
     try {
-      // 1) Fetch file from your backend (preserves auth cookies)
+      // 1) Fetch the BIN from your backend
       const res = await fetch(fileUrl, { credentials: 'include' });
       if (!res.ok) throw new Error('Download failed: ' + res.status);
       const blob = await res.blob();
 
       // 2) Send file + metadata to local agent
       const form = new FormData();
-      form.append('file', blob, filename || 'input.bin');
+      form.append('file', blob, filename || 'input.bin');  // keep exact filename
       form.append('filename', filename || '');
       form.append('brand', brand || '');
       form.append('ecu', ecu || '');
       form.append('services', JSON.stringify(services || []));
+
+      // Debug (optional)
+      // console.log({ fileUrl, filename, brand, ecu, services });
 
       const r = await fetch('http://127.0.0.1:8765/process_upload', {
         method: 'POST',
