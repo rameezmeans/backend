@@ -78,8 +78,8 @@ Route::get('/env', function () {
 
 Route::get('/test', function () {
 
-    $file = File::findOrFail(9889);
-    dd($file->services_array());
+    $file = File::findOrFail(9864);
+    dd($file->services_array(), $file->brand, $file->ecu);
 
 });
 
