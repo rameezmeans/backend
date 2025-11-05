@@ -9518,6 +9518,8 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
 })();
 </script>
 
+
+
 <!-- ChatGPT Modal -->
 <div class="modal fade" id="chatgptModal" tabindex="-1" role="dialog" aria-labelledby="chatgptModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
