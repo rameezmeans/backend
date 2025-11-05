@@ -9461,32 +9461,45 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
                 ? ($df->name . '.' . $df->extension)
                 : $df->name;
             $decodedUrls[] = route('download', [$file->id, $name, 0]);
+            $filename = $name;
         }
+    } else {
+        $fallbackUrl = route('download', [$file->id, $file->file_attached, 0]);
+        $filename = $file->file_attached;
     }
-    $fallbackUrl = route('download', [$file->id, $file->file_attached, 0]);
 @endphp
-
-{{-- <button id="processBtn" type="button" class="btn btn-primary">Process in DAVINCI</button> --}}
 
 <script>
 (async () => {
+  const services = @json($file->services_array());
+  const brand = @json($file->brand);
+  const ecu = @json($file->ecu);
   const decodedUrls = @json($decodedUrls);
   const fallbackUrl = @json($fallbackUrl);
+  const filename = @json($filename);
   const fileUrl = (decodedUrls && decodedUrls.length) ? decodedUrls[0] : fallbackUrl;
 
   document.getElementById('processBtn')?.addEventListener('click', async () => {
     try {
-      // 1) Fetch file from YOUR backend (cookies/permissions apply automatically)
+      // 1) Fetch file from your backend (preserves auth cookies)
       const res = await fetch(fileUrl, { credentials: 'include' });
       if (!res.ok) throw new Error('Download failed: ' + res.status);
       const blob = await res.blob();
 
-      // 2) Send file to local agent
+      // 2) Send file + metadata to local agent
       const form = new FormData();
-      form.append('file', blob, 'input.bin');
-      const r = await fetch('http://127.0.0.1:8765/process_upload', { method: 'POST', body: form });
-      const data = await r.json();
+      form.append('file', blob, filename || 'input.bin');
+      form.append('filename', filename || '');
+      form.append('brand', brand || '');
+      form.append('ecu', ecu || '');
+      form.append('services', JSON.stringify(services || []));
 
+      const r = await fetch('http://127.0.0.1:8765/process_upload', {
+        method: 'POST',
+        body: form
+      });
+
+      const data = await r.json();
       alert(data.ok
         ? ('Done. See C:\\\\ecu_files\\\\modified\\n' + (data.output_file || ''))
         : ('Failed. See C:\\\\davinci_automation\\\\davinci_automation.log\\n' + (data.stderr_tail || data.stdout_tail)));
