@@ -52,7 +52,7 @@ class FilesAPIController extends Controller
 
         return response()->json([
             'file_stage_options' => $record,
-            
+
         ], 200);
 
     }
@@ -72,7 +72,7 @@ class FilesAPIController extends Controller
 
         return response()->json([
             'file_info' => $record,
-            
+
         ], 200);
     }
 
@@ -100,7 +100,7 @@ class FilesAPIController extends Controller
                 'TIMEOUT' => $timeout,
                 'LOOP' => $loop,
             ]);
-        
+
             if ($response->successful()) {
                 // Success! Handle response
                 $data = $response->json();
@@ -145,7 +145,7 @@ class FilesAPIController extends Controller
                 'TIMEOUT' => $timeout,
                 'FILE_SIZE_FILTER' => $fileSizeFilter,
             ]);
-        
+
             if ($response->successful()) {
                 // Success! Handle response
                 $data = $response->json();
@@ -204,16 +204,16 @@ class FilesAPIController extends Controller
 
         $count = [];
         $countYear = [];
-        
+
         foreach ($items as $key => $value) {
             $count[(int)$key] = count($value);
         }
-        
+
         for($i = 1; $i <= 12; $i++){
             if(!empty($count[$i])){
-                $countYear[$i] = $count[$i];    
+                $countYear[$i] = $count[$i];
             }else{
-                $countYear[$i] = 0;    
+                $countYear[$i] = 0;
             }
         }
 
@@ -258,15 +258,15 @@ class FilesAPIController extends Controller
     public function createDateRangeArray($strDateFrom,$strDateTo){
         // takes two dates formatted as YYYY-MM-DD and creates an
         // inclusive array of the dates between the from and to dates.
-    
+
         // could test validity of dates here but I'm already doing
         // that in the main script
-    
+
         $aryRange = [];
-    
+
         $iDateFrom = mktime(1, 0, 0, substr($strDateFrom, 5, 2), substr($strDateFrom, 8, 2), substr($strDateFrom, 0, 4));
         $iDateTo = mktime(1, 0, 0, substr($strDateTo, 5, 2), substr($strDateTo, 8, 2), substr($strDateTo, 0, 4));
-    
+
         if ($iDateTo >= $iDateFrom) {
             array_push($aryRange, date('d/m/y', $iDateFrom)); // first entry
             while ($iDateFrom<$iDateTo) {
@@ -305,9 +305,9 @@ class FilesAPIController extends Controller
 
                     $servieCredits += $optionService->credits;
                     $fileOption->credits = $optionService->credits;
-                    
+
                     $serviceIDs []= $optionService->id;
-                
+
                 }
                 else{
 
@@ -325,7 +325,7 @@ class FilesAPIController extends Controller
                 $fileOption->service_id = $optionService->id;
                 $fileOption->temporary_file_id = $file->id;
                 $fileOption->save();
-            } 
+            }
         }
 
         $combination = $this->getCombination($serviceIDs);
@@ -344,7 +344,7 @@ class FilesAPIController extends Controller
     public function getCombination($serviceIDs){
 
         $combinations = Combination::all();
-        
+
         $recordServiceIDs = [];
 
         $found = false;
@@ -362,9 +362,9 @@ class FilesAPIController extends Controller
             $recordsCount = count($serviceIDs);
 
             $count = 0;
-            
+
             if($recordsCount == $serviceCount){
-            
+
                 foreach($recordServiceIDs as $id){
 
                     if( !in_array($id, $serviceIDs) ){
@@ -382,19 +382,19 @@ class FilesAPIController extends Controller
                     }
                 }
             }
-        
+
         }
 
         return $combinationFound;
     }
 
     public function saveFile(Request $request){
-        
+
         $user = User::findOrFail($request->user_id);
         $type = 'stripe';
         $fileID = $request->file_id;
         $creditsToFile = $request->credits;
-        
+
         if($type == 'stripe'){
             $account = $user->stripe_payment_account();
         }
@@ -408,11 +408,11 @@ class FilesAPIController extends Controller
         $head =  get_head();
         $creditsInAccount = $this->getUserCreditsInAccount($user);
         // $creditsInAccount = 17;
-        
+
         if($creditsInAccount >= $creditsToFile){
 
             $tempFileObj = TemporaryFile::findOrFail($fileID);
-            
+
             $tempFile = TemporaryFile::findOrFail($fileID)->toArray();
 
             // $credit = new Credit();
@@ -422,10 +422,10 @@ class FilesAPIController extends Controller
             // $credit->front_end_id = $user->front_end_id;
             // $credit->invoice_id = 'SPENT-'.$account->prefix.mt_rand(100,999);
             // $credit->user_id = $user->id;
-            
+
             // $credit->created_at = Carbon::now()->addSecond(2);
             // $credit->updated_at = Carbon::now()->addSecond(2);
-            
+
             // if($user->test == 1){
             //     $credit->test = 1;
             // }
@@ -434,7 +434,7 @@ class FilesAPIController extends Controller
 
             $tempFile['credit_id'] = 0;
             $tempFile['checked_by'] = "customer";
-            
+
             $tempFile['user_id'] = $user->id;
             $tempFile['username'] =  $user->name;
 
@@ -461,10 +461,10 @@ class FilesAPIController extends Controller
             else{
                 $file->on_dev = 1;
             }
-            
-            
+
+
             $file->assignment_time = Carbon::now();
-            
+
             $modelToAdd = str_replace( '/', '', $file->model );
 
             if($file->original_file_id == NULL){
@@ -473,13 +473,13 @@ class FilesAPIController extends Controller
             else{
                 $directoryToMake = public_path('uploads/ETF'.'/'.$file->brand.'/'.$modelToAdd.'/'.$file->original_file_id.'/');
             }
-            
+
             if($file->original_file_id == NULL){
-            
+
                 if (!file_exists($directoryToMake)) {
                     $oldmask = umask(000);
                     mkdir( $directoryToMake , 0777, true);
-                    umask($oldmask);        
+                    umask($oldmask);
                 }
             }
 
@@ -487,7 +487,7 @@ class FilesAPIController extends Controller
                 rename(public_path('uploads').'/'.$file->file_attached, $directoryToMake.$file->file_attached);
                 // unlink(public_path('uploads').'/'.$file->file_attached);
             }
-            
+
             if($file->acm_file){
 
                 if(file_exists(public_path('uploads').'/'.$file->acm_file)){
@@ -514,7 +514,7 @@ class FilesAPIController extends Controller
 
             $logs = Log::where('temporary_file_id', $fileID)->update( ['file_id' => $file->id, 'temporary_file_id' => 0 ]);
             $services = FileService::where('temporary_file_id', $fileID)->update( ['file_id' => $file->id, 'temporary_file_id' => 0 ]);
-            
+
             $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
 
             if($file->tool_type == 'slave' && $file->tool_id == $flexLabel->id){
@@ -528,14 +528,14 @@ class FilesAPIController extends Controller
 
                 (new AutotunerMainController)->process($tempFile, $file, $directoryToMake);
             }
-            
+
             $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
             if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id){
 
             $alientechFileFlag = AlientechFile::where('temporary_file_id', $fileID)->update( ['file_id' => $file->id, 'temporary_file_id' => 0 ]);
 
                 if( $alientechFileFlag ){
-                    
+
                     $alientechFile = AlientechFile::where('file_id', $file->id)->first();
                     $fileName = (new AlientechMainController)->process( $alientechFile->guid );
                     if($fileName){
@@ -553,9 +553,9 @@ class FilesAPIController extends Controller
 
                 }
             }
-            
+
             $temporaryFileDelete = TemporaryFile::findOrFail($fileID)->delete();
-            
+
             $credit = new Credit();
 
             $credit->credits = -1*$creditsToFile;
@@ -563,26 +563,26 @@ class FilesAPIController extends Controller
             $credit->front_end_id = $user->front_end_id;
             $credit->invoice_id = 'SPENT-'.$account->prefix.mt_rand(100,999);
             $credit->user_id = $user->id;
-            
+
             $credit->created_at = Carbon::now()->addSecond(2);
             $credit->updated_at = Carbon::now()->addSecond(2);
-            
+
             if($user->test == 1){
                 $credit->test = 1;
             }
-            
+
             $credit->file_id = $file->id;
             $credit->save();
-                
+
             // }
             // else{
-            //     return view('505');   
+            //     return view('505');
             // }
 
             $file->credit_id = $credit->id;
             $file->api = 1;
             $file->stage = Service::findOrFail($file->stages_services->service_id)->name;
-            $file->is_credited = 1; // finally is_credited now ... 
+            $file->is_credited = 1; // finally is_credited now ...
             $file->save();
         }
 
@@ -593,7 +593,7 @@ class FilesAPIController extends Controller
     }
 
     public function getResponseTimeAutoAPI($file){
-        
+
         $fileAssignmentDateTime = Carbon::parse($file->created_at);
         $carbonUploadDateTime = Carbon::parse($file->reupload_time);
 
@@ -639,7 +639,7 @@ class FilesAPIController extends Controller
                 $fileService->credits = $stage->tuningx_slave_credits;
             }
         }
-        
+
         $fileService->service_id = $stage->id;
         $fileService->temporary_file_id = $file->id;
         $fileService->save();
@@ -710,9 +710,9 @@ class FilesAPIController extends Controller
         }
 
         $file->additional_comments = $data['additional_comments'];
-        
+
         $file['credits'] = 0;
-        
+
         // if($fileUploaded){
         //     $fileName = $fileUploaded->getClientOriginalName();
         //     $fileName = $this->getFilename($fileName);
@@ -767,44 +767,44 @@ class FilesAPIController extends Controller
         // Path to the file you want to upload
         // $filePath = '/Users/polybit/Downloads/24587';
         $filePath = public_path('uploads').'/'.$tempFile->file_attached;
-        
+
         // Ensure the file exists before proceeding
         if (!file_exists($filePath)) {
             die('File not found: ' . $filePath);
         }
-        
+
         // Prepare the file for uploading
         $fileContents = file_get_contents($filePath);
 
         $threshold = $request->threshold;
         $timeout = $request->timeout;
         $fileSizeFilter = $request->file_size_filter;
-        
+
         // Prepare the POST data (Multipart)
         $boundary = uniqid('---', true);
         $delimiter = '--' . $boundary;
         $eol = "\r\n";
-        
+
         $postData = "";
         $postData .= $delimiter . $eol;
         $postData .= 'Content-Disposition: form-data; name="input_file"; filename="24587"' . $eol;
         $postData .= 'Content-Type: application/octet-stream' . $eol . $eol;
         $postData .= $fileContents . $eol;
-        
+
         $postData .= $delimiter . $eol;
         $postData .= 'Content-Disposition: form-data; name="FILE_MATCHING_THRESHOLD"' . $eol . $eol;
         $postData .= $threshold . $eol;
-        
+
         $postData .= $delimiter . $eol;
         $postData .= 'Content-Disposition: form-data; name="TIMEOUT"' . $eol . $eol;
         $postData .= $timeout . $eol;
-        
+
         $postData .= $delimiter . $eol;
         $postData .= 'Content-Disposition: form-data; name="FILE_SIZE_FILTER"' . $eol . $eol;
         $postData .= $fileSizeFilter . $eol;
-        
+
         $postData .= '--' . $boundary . '--' . $eol; // End boundary
-        
+
         // Create a stream context
         $options = [
             'http' => [
@@ -815,18 +815,18 @@ class FilesAPIController extends Controller
                 'timeout' => 10 // Timeout in seconds
             ]
         ];
-        
+
         $context = stream_context_create($options);
-        
+
         // Send the request and get the response
         $response = file_get_contents('http://212.205.214.152:5000/external-api1', false, $context);
-        
+
         // dd($response);
         // Check if the request was successful
         if ($response === FALSE) {
             $apiResponse = json_decode('Request failed');
         }
-        
+
         // Output the response
         $apiResponse = json_decode($response);
 
@@ -851,7 +851,7 @@ class FilesAPIController extends Controller
             'python_response' => "file not found",
         ], 201);
         }
-        
+
         // $vehicleInformation['ecu_build'] = $apiResponse->FILES[0]->ecu_build;
         // $vehicleInformation['ecu_producer'] = $apiResponse->FILES[0]->ecu_producer;
         // $vehicleInformation['engine_displacement'] = $apiResponse->FILES[0]->engine_displacement;
@@ -866,7 +866,7 @@ class FilesAPIController extends Controller
         // // File to upload
         // $filePath = public_path('uploads').'/'.$tempFile->file_attached;
         // // /mnt/HC_Volume_102303063/stagingbackend/public/uploads/15909___15899___24585___ori_074906018c
-        
+
 
         // // Initialize cURL session
         // $ch = curl_init();
@@ -915,7 +915,7 @@ class FilesAPIController extends Controller
         //         'TIMEOUT' => $timeout,
         //         'FILE_SIZE_FILTER' => $fileSizeFilter,
         //     ]);
-        
+
         //     if ($response->successful()) {
         //         // Success! Handle response
         //         $data = $response->json();
@@ -947,18 +947,18 @@ class FilesAPIController extends Controller
     public function getPythonFiles($fileAttached){
         $path = public_path('uploads').'/'.$fileAttached;
 
-        
+
     }
 
     public function getFilename($fileName){
 
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
-        
+
         $fileName = str_replace('#', '_', $fileName);
         $fileName = str_replace('.', '_', $fileName);
         $fileName = str_replace(' ', '_', $fileName);
 
-        $fileName = preg_replace('/[^a-z0-9_ ]/i', '', $fileName); 
+        $fileName = preg_replace('/[^a-z0-9_ ]/i', '', $fileName);
 
         $serialNumber = Carbon::now()->format('YmdHis');
 
@@ -973,7 +973,7 @@ class FilesAPIController extends Controller
     public function submitFile( Request $request ) {
 
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
-        
+
         $tool = Tool::findOrFail($request->tool_id);
 
         $file = $request->file('file');
@@ -984,8 +984,8 @@ class FilesAPIController extends Controller
         $fileName = str_replace('.', '_', $fileName);
         $fileName = str_replace(' ', '_', $fileName);
 
-        $fileName = preg_replace('/[^a-z0-9_ ]/i', '', $fileName); 
-        
+        $fileName = preg_replace('/[^a-z0-9_ ]/i', '', $fileName);
+
         $file = new File();
         $file->tool_id = $tool->id;
         $file->tool_type = $tool->type;
@@ -1045,20 +1045,20 @@ class FilesAPIController extends Controller
             $file->assigned_to =  $head->id; // assigned to Nick
 
             if(File::where('credit_id', $credit->id)->first() === NULL){
-                
+
                 $file->credit_id = $credit->id;
-                
+
                 $file->assignment_time = Carbon::now();
-                
+
                 $modelToAdd = str_replace( '/', '', $file->model );
                 $directoryToMake = public_path('uploads'.'/'.$file->brand.'/'.$modelToAdd.'/'.$file->id.'/');
 
                 if (!file_exists($directoryToMake)) {
                     $oldmask = umask(000);
                     mkdir( $directoryToMake , 0777, true);
-                    umask($oldmask);        
+                    umask($oldmask);
                 }
-                
+
                 $file->file_path = '/uploads/'.$file->brand.'/'.$modelToAdd.'/'.$file->id.'/';
                 $file->credits = 0;
                 $file->save();
@@ -1082,13 +1082,13 @@ class FilesAPIController extends Controller
                             $fileOption->service_id = $optionService->id;
                             $fileOption->file_id = $file->id;
                             $fileOption->save();
-                        } 
+                        }
                     }
 
                     $totalCredits = 0;
 
                     if($request->subdealer_group_id){
-            
+
                     $stage = Service::findOrFail($file->stage_services->service_id);
 
                     if($stage->subdealerGroup){
@@ -1117,11 +1117,11 @@ class FilesAPIController extends Controller
 
                 $credit->file_id = $file->id;
                 $credit->save();
-                
+
             }
-            
+
             $file->stage = Service::findOrFail($file->stage_services->service_id)->name;
-            $file->is_credited = 1; // finally is_credited now ... 
+            $file->is_credited = 1; // finally is_credited now ...
             $file->save();
 
             $count = File::where('checked_by', 'customer')->where('is_credited', 1)->count();
@@ -1131,7 +1131,7 @@ class FilesAPIController extends Controller
             ]);
 
             $admin = get_admin();
-            
+
             $template = EmailTemplate::findOrFail(1);
 
             $html1 = $template->html;
@@ -1139,18 +1139,18 @@ class FilesAPIController extends Controller
             $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
             $html1 = str_replace("#customer_name", $customer->name ,$html1);
             $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
-            
+
             $tunningType = $this->emailStagesAndOption($file);
-            
+
             $html1 = str_replace("#tuning_type", $tunningType,$html1);
             $html1 = str_replace("#status", $file->status,$html1);
             $html1 = str_replace("#file_url",env('BACKEND_URL').'file/'.$file->id,$html1);
 
             $messageTemplate = MessageTemplate::findOrFail(1);
-            
+
             $message = $messageTemplate->text;
             $message = str_replace("#customer", $customer->name,$message);
-            
+
             $subject = "ECU Tech: Task Assigned!";
 
             if($manager['eng_assign_eng_email']){
@@ -1159,7 +1159,7 @@ class FilesAPIController extends Controller
             if($manager['eng_assign_eng_sms']){
                 $this->sendMessage($head->phone, $message, $file->front_end_id);
             }
-            
+
             $template = EmailTemplate::findOrFail(2);
 
             $html = $template->html;
@@ -1169,9 +1169,9 @@ class FilesAPIController extends Controller
             $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
             $html = str_replace("#customer_name", $uploader->name ,$html);
             $html = str_replace("#vehicle_name", $file->brand." ".$file->engine." " ,$html);
-            
+
             $tunningType = $this->emailStagesAndOption($file);
-            
+
             $html1 = str_replace("#tuning_type", $tunningType,$html1);
             $html1 = str_replace("#status", $file->status,$html1);
             $html1 = str_replace("#file_url",env('BACKEND_URL').'file/'.$file->id,$html1);
@@ -1179,9 +1179,9 @@ class FilesAPIController extends Controller
             $messageTemplate = MessageTemplate::findOrFail(2);
 
             $message = $messageTemplate->text;
-            
+
             $message = str_replace("#customer", $uploader->name,$message);
-            
+
             $subject = "ECU Tech: File Uploaded!";
 
             if($manager['file_upload_admin_email']){
@@ -1231,8 +1231,8 @@ class FilesAPIController extends Controller
         $versions = [];
         foreach($versionsObjects as $v){
             if($v->generation != '')
-            $versions []= $v->generation;   
-        }  
+            $versions []= $v->generation;
+        }
 
         return response()->json($versions);
     }
@@ -1249,8 +1249,8 @@ class FilesAPIController extends Controller
         $engines = [];
         foreach($enginesObjects as $e){
             if($e->engine != '')
-            $engines []= $e->engine;   
-        }   
+            $engines []= $e->engine;
+        }
 
         return response()->json($engines);
     }
@@ -1259,7 +1259,7 @@ class FilesAPIController extends Controller
 
         $user = User::findOrFail($request->user_id);
         $evcCredits = Credit::orderBy('created_at', 'desc')->where('is_evc', 1)->where('user_id', $user->id)->get();
-        
+
         $creditsArr = [];
 
         foreach($evcCredits as $credit){
@@ -1329,7 +1329,7 @@ class FilesAPIController extends Controller
 
     //     $user = User::findOrFail($request->user_id);
     //     $credits = Credit::orderBy('created_at', 'desc')->where('is_evc', 0)->where('user_id', $user->id)->get();
-        
+
     //     $creditsArr = [];
 
     //     foreach($credits as $credit){
@@ -1338,7 +1338,7 @@ class FilesAPIController extends Controller
     //         $row []= date('Y - m - d', strtotime( $credit->created_at));
     //         $row []= $credit->credits;
     //         $row []= $credit->running_total($user);
-            
+
     //         if(!$credit->file_id){
     //             $row []= $credit->message_to_credit;
     //         }
@@ -1357,7 +1357,7 @@ class FilesAPIController extends Controller
     //                     }
     //                 }
     //             }
-                
+
     //             if($credit->credits > 0){
     //                 $row []=  $credit->invoice_id;
     //             }
@@ -1374,12 +1374,12 @@ class FilesAPIController extends Controller
 
     //    return response()->json(['credits_log' => $creditsObj], 200);
     // }
-    
+
 
     public function editAccount(Request $request){
 
         $user = User::findOrFail($request->user_id);
-        
+
         $validator = Validator::make($request->all(),[
             'name' => 'required|max:255',
             'phone' => 'required|max:255',
@@ -1398,7 +1398,7 @@ class FilesAPIController extends Controller
             $user->zip = $request->zip;
             $user->city = $request->city;
             $user->country = $request->country;
-            
+
             $user->evc_customer_id = $request->evc_customer_id;
             $user->save();
 
@@ -1422,14 +1422,14 @@ class FilesAPIController extends Controller
 
         $user = User::findOrFail($request->user_id);
         $user->delete();
-        
+
         return response()->json(['message' => 'user deleted.'], 201);
     }
 
     public function changePasswordAPI(Request $request){
 
         $user = User::findOrFail($request->user_id);
-        
+
         $validator = Validator::make($request->all(),[
             'current_password' => 'required|min:8',
             'new_password' => 'required|min:8',
@@ -1440,7 +1440,7 @@ class FilesAPIController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
         else{
-            
+
             if (Hash::check($request->current_password, $user->password)) {
 
                 if($request->new_password == $request->new_password_confirm){
@@ -1452,7 +1452,7 @@ class FilesAPIController extends Controller
                 else{
                     return response()->json(['error' => 'new Password does not match'], 400);
                 }
-                
+
 
             } else {
                 return response()->json(['error' => 'Password does not match'], 400);
@@ -1484,12 +1484,12 @@ class FilesAPIController extends Controller
         $files = File::where('user_id', $request->user_id)
         ->where('is_credited', 1)
         ->get();
-        
+
         return response()->json($files);
     }
 
     public function usersCredits(Request $request){
-        
+
         $credits = Credit::where('user_id', $request->user_id)->sum('credits');
         return response()->json($credits);
     }
@@ -1500,7 +1500,7 @@ class FilesAPIController extends Controller
     }
 
     public function usersInvoices(Request $request){
-        
+
         $invoices = Credit::where('user_id', $request->user_id)->orderBy('created_at', 'desc')->where('price_payed', '>', 0)->get();
         return response()->json($invoices);
     }
@@ -1508,11 +1508,11 @@ class FilesAPIController extends Controller
     public function tools(Request $request){
 
         $toolUsers = UserTool::where('user_id', $request->user_id)->get();
-        
+
         $tools = [];
 
         foreach($toolUsers as $t){
-            
+
             $tool = Tool::findOrFail($t->tool_id);
 
             if($tool->type == 'master'){
@@ -1560,8 +1560,8 @@ class FilesAPIController extends Controller
         $count = Credit::where('user_id', $subdlear->id)->sum('credits');
         return response()->json($count);
     }
-    
-    
+
+
 
     public function files($frontendID){
 
@@ -1613,13 +1613,13 @@ class FilesAPIController extends Controller
                     $options = rtrim($options, ",");
                 }
                 else{
-                    
+
                     $options = "";
                 }
             }
-            
+
             if($stage != NULL){
-                
+
                 $temp['file_id'] = $file->id;
                 $temp['inner_search'] = $file->inner_search;
                 $temp['frontend'] = $file->front_end_id;
@@ -1633,7 +1633,7 @@ class FilesAPIController extends Controller
                         $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_decoded_file();
                     }
                     else if($file->front_end_id == 3){
-                    
+
                         $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->final_decoded_file();
                     }
                     else if($file->front_end_id == 2){
@@ -1647,7 +1647,7 @@ class FilesAPIController extends Controller
                         $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_magic_decoded_file();
                     }
                     else if($file->front_end_id == 3){
-                    
+
                         $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->final_magic_decoded_file();
                     }
                     else if($file->front_end_id == 2){
@@ -1659,11 +1659,11 @@ class FilesAPIController extends Controller
                 else{
 
                     if($file->front_end_id == 1){
-                    
+
                         $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->file_attached;
                     }
                     else if($file->front_end_id == 3){
-                    
+
                         $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->file_attached;
                     }
                     else if($file->front_end_id == 2){
@@ -1675,7 +1675,7 @@ class FilesAPIController extends Controller
                 $temp['checked'] = $file->checking_status;
 
             }
-            
+
             $arrFiles []= $temp;
         }
 
@@ -1683,25 +1683,25 @@ class FilesAPIController extends Controller
     }
 
     public function filesversions(){
-    
+
         $files = File::where('checking_status_versions', '0')
         ->get();
-    
+
         $arrFiles = [];
-    
+
         foreach($files as $file){
-    
+
             if($file->stage_services){
                 $stage = \App\Models\Service::FindOrFail( $file->stage_services->service_id )->label;
             }
             else{
                 $stage = $file->stages;
             }
-    
+
             $options = NULL;
-    
+
             if($file->custom_options == NULL){
-    
+
                 if($file->options_services){
                     foreach($file->options_services as $o){
                         $options .= \App\Models\Service::FindOrFail( $o->service_id )->label.',';
@@ -1723,26 +1723,28 @@ class FilesAPIController extends Controller
                     $options = rtrim($options, ",");
                 }
             }
-                
+
                 $temp = [];
                 $temp['file_id'] = $file->id;
                 $temp['temporary_file_id'] = 0;
                 $temp['stage'] = $stage;
                 $temp['options'] = $options;
-    
+
                 if($file->decoded_files->count() > 0){
                     if($file->front_end_id == 1){
                         $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_decoded_file();
                     }
 
                     else if($file->front_end_id == 2){
-                        $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_decoded_file();
+                        //$temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_decoded_file();
+                        $temp['location'] = 'https://portal.tuning-x.com'.$file->file_path.$file->final_decoded_file();
+
                     }
-                    
+
                     else if($file->front_end_id == 3){
                         $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->final_decoded_file();
-                    }                    
-                    
+                    }
+
                 }
                 else if ($file->magic_decrypted_files->count() > 0){
 
@@ -1750,7 +1752,7 @@ class FilesAPIController extends Controller
                         $temp['location'] = 'https://portal.ecutech.gr'.$file->file_path.$file->final_magic_decoded_file();
                     }
                     else if($file->front_end_id == 3){
-                    
+
                         $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->final_magic_decoded_file();
                     }
                     else if($file->front_end_id == 2){
@@ -1770,10 +1772,10 @@ class FilesAPIController extends Controller
                         $temp['location'] = 'https://portal.e-tuningfiles.com'.$file->file_path.$file->file_attached;
                     }
                 }
-    
+
                 $temp['checked'] = $file->checking_status;
                 $temp['checked-versions'] = $file->checking_status_versions;
-            
+
             $arrFiles []= $temp;
         }
 
@@ -1794,7 +1796,7 @@ class FilesAPIController extends Controller
 
             $arrFiles []= $temp;
         }
-    
+
         return response()->json($arrFiles);
     }
 
@@ -1858,7 +1860,7 @@ class FilesAPIController extends Controller
                     $engineerFile->save();
                 }
                 else{
-                    
+
                     $engineerFile = new RequestFile();
                     $engineerFile->request_file = $fileToSave;
                     $engineerFile->file_type = 'engineer_file';
@@ -1869,7 +1871,7 @@ class FilesAPIController extends Controller
                     $engineerFile->olsname = $request->olsname;
                     $engineerFile->engineer = true;
                     $engineerFile->save();
-                
+
 
                     if($file->stage_services->service_id != 1){
                         $newRecord = new FileReplySoftwareService();
@@ -1879,7 +1881,7 @@ class FilesAPIController extends Controller
                         $newRecord->reply_id = $engineerFile->id;
                         $newRecord->save();
                     }
-                    
+
                     if(!$file->options_services()->get()->isEmpty()){
 
                         foreach($file->options_services()->get() as $option){
@@ -1890,7 +1892,7 @@ class FilesAPIController extends Controller
                             $newRecord->software_id = 9;
                             $newRecord->reply_id = $engineerFile->id;
                             $newRecord->save();
-                
+
                         }
 
                     }
@@ -1898,7 +1900,7 @@ class FilesAPIController extends Controller
 
                     $middleName = $file->id;
                     $middleName .= date("dmy");
-                    
+
                     foreach($file->softwares as $s){
                         if($s->service_id != 1){
                             if($s->reply_id == $engineerFile->id){
@@ -1925,44 +1927,63 @@ class FilesAPIController extends Controller
 
                     if($file->front_end_id == 1){
 
-                        copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
+                       /*p copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file,
                         '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave);
 
                         unlink('/mnt/portal.ecutech.gr/uploads'.'/'.$file->tunned_files->file);
-                        $path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave;
-                
+                        $path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave;*/
+
+                        copy(env('MNT_ECUTECH').'/uploads'.'/'.$request->tuned_file,
+                        env('MNT_ECUTECH').$file->file_path.$fileToSave);
+
+                        unlink(env('MNT_ECUTECH').'/uploads'.'/'.$file->tunned_files->file);
+                        $path = env('MNT_ECUTECH').$file->file_path.$fileToSave;
+
                     }
 
                     else if($file->front_end_id == 3){
 
-                        // copy( public_path('/../../e-tuningfiles/public/uploads/filesready'.'/'.$request->tuned_file), 
+                        // copy( public_path('/../../e-tuningfiles/public/uploads/filesready'.'/'.$request->tuned_file),
                         // public_path('/../../e-tuningfiles/public'.$file->file_path.$fileName) );
 
                         // unlink( public_path('/../../e-tuningfiles/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                        copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
+                        /*p copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file,
                         '/mnt/portal.e-tuningfiles.com'.$file->file_path.$fileToSave);
 
                         unlink('/mnt/portal.ecutech.gr/uploads'.'/'.$file->tunned_files->file);
 
-                        $path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave;
-                
+                        $path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave;*/
+
+                        copy(env('MNT_ETUNINGFILES').'/uploads'.'/'.$request->tuned_file,
+                        env('MNT_ETUNINGFILES').$file->file_path.$fileToSave);
+
+                        unlink(env('MNT_ETUNINGFILES').'/uploads'.'/'.$file->tunned_files->file);
+
+                        $path = env('MNT_ETUNINGFILES').$file->file_path.$fileToSave;
+
                     }
 
                     else if($file->front_end_id == 2){
 
-                        // copy( public_path('/../../tuningX/public/uploads/filesready'.'/'.$request->tuned_file), 
+                        // copy( public_path('/../../tuningX/public/uploads/filesready'.'/'.$request->tuned_file),
                         // public_path('/../../tuningX/public'.$file->file_path.$fileName) );
 
                         // unlink( public_path('/../../tuningX/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                        copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
+                       /*p copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file,
                         '/mnt/portal.tuning-x.com'.$file->file_path.$fileToSave);
 
                         unlink('/mnt/portal.ecutech.gr/uploads').'/'.$file->tunned_files->file;
 
-                        $path = '/mnt/portal.tuning-x.com'.$file->file_path.$fileToSave;
+                        $path = '/mnt/portal.tuning-x.com'.$file->file_path.$fileToSave;*/
 
+                        copy(env('MNT_TUNINGX').'/uploads'.'/'.$request->tuned_file,
+                        env('MNT_TUNINGX').$file->file_path.$fileToSave);
+
+                        unlink(env('MNT_TUNINGX').'/uploads').'/'.$file->tunned_files->file;
+
+                        $path = env('MNT_TUNINGX').$file->file_path.$fileToSave;
                     }
 
                     if($file->tool_type == 'slave' && $file->tool_id == $flexLabel->id){
@@ -1973,7 +1994,7 @@ class FilesAPIController extends Controller
                     }
 
                     if($file->tool_type == 'slave' && $file->tool_id == $autotunerLabel->id){
-                        
+
                         (new AutotunerController)->encrypt( $path, $file, $fileToSave, $engineerFile );
                     }
 
@@ -2001,7 +2022,7 @@ class FilesAPIController extends Controller
                             $file->support_status = "closed";
                             $file->checked_by = 'engineer';
                             $file->save();
-                            
+
                         }
                     }
 
@@ -2011,12 +2032,12 @@ class FilesAPIController extends Controller
                             $file->response_time = $this->getResponseTimeAutoAPI($file);
                             $file->save();
                         }
-            
+
                     }
 
                     $file->automatic = 1;
                     $file->save();
-                    
+
                     if($flag){
 
                         if($file->front_end_id == 1){
@@ -2025,7 +2046,7 @@ class FilesAPIController extends Controller
                                 'status' => 'download',
                                 'file_id' => $file->id
                             ]);
-                
+
                         }
 
                         else if($file->front_end_id == 3){
@@ -2034,16 +2055,16 @@ class FilesAPIController extends Controller
                                 'status' => 'download',
                                 'file_id' => $file->id
                             ]);
-                
+
                         }
 
                         else if($file->front_end_id == 2){
-                            
+
                             Chatify::push("private-chatify-download-tuningx-".$chatID, 'download-button', [
                                 'status' => 'download',
                                 'file_id' => $file->id
                             ]);
-        
+
                         }
 
                         $this->sendMail($file);
@@ -2053,14 +2074,14 @@ class FilesAPIController extends Controller
                 }
 
                 else{
-            
+
                     if($file->front_end_id == 1){
 
                         Chatify::push("private-chatify-download-portal-".$chatID, 'download-button', [
                             'status' => 'fail',
                             'file_id' => $file->id
                         ]);
-        
+
                     }
 
                     else if($file->front_end_id == 3){
@@ -2069,24 +2090,24 @@ class FilesAPIController extends Controller
                             'status' => 'fail',
                             'file_id' => $file->id
                         ]);
-            
+
                     }
 
                     else{
-                        
+
                         Chatify::push("private-chatify-download-tuningx-".$chatID, 'download-button', [
                             'status' => 'fail',
                             'file_id' => $file->id
                         ]);
                     }
-                    
+
                     return response()->json('search failed.');
                 }
 
             }
 
             else{
-        
+
             if($file->front_end_id == 1){
 
                 Chatify::push("private-chatify-download-portal-".$chatID, 'download-button', [
@@ -2102,27 +2123,27 @@ class FilesAPIController extends Controller
                     'status' => 'fail',
                     'file_id' => $file->id
                 ]);
-    
+
             }
 
             else{
-                
+
                 Chatify::push("private-chatify-download-tuningx-".$chatID, 'download-button', [
                     'status' => 'fail',
                     'file_id' => $file->id
                 ]);
             }
-            
+
             return response()->json('search failed.');
         }
-        
+
     }
 
     public function sendMail($file){
 
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
-    
+
         // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
         $template = EmailTemplate::findOrFail(6);
 
@@ -2131,9 +2152,9 @@ class FilesAPIController extends Controller
         $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
         $html1 = str_replace("#customer_name", $customer->name ,$html1);
         $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine." " ,$html1);
-        
+
         $tunningType = $this->emailStagesAndOption($file);
-        
+
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
         $html1 = str_replace("#file_url", route('file', $file->id),$html1);
@@ -2143,12 +2164,12 @@ class FilesAPIController extends Controller
         $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
         $html2 = str_replace("#customer_name", $file->name ,$html2);
         $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine." " ,$html2);
-        
+
         $tunningType = $this->emailStagesAndOption($file);
 
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html2);
-        
+
         if($file->front_end_id == 1){
             $html2 = str_replace("#file_url",  env('PORTAL_URL')."file/".$file->id,$html2);
         }
@@ -2194,13 +2215,13 @@ class FilesAPIController extends Controller
         if($manager['eng_file_upload_admin_email'.$file->front_end_id]){
             \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
         }
-        
+
         if($manager['eng_file_upload_admin_sms'.$file->front_end_id]){
             $this->sendMessage($admin->phone, $message2, $file->front_end_id);
         }
 
         if($manager['eng_file_upload_admin_sms'.$file->front_end_id]){
-        
+
             $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
         }
 
@@ -2235,7 +2256,7 @@ class FilesAPIController extends Controller
         $customer = 'Task Customer';
 
         if($file->name){
-            $customer = $file->name; 
+            $customer = $file->name;
         }
 
         if($file->front_end_id == 1){
@@ -2249,7 +2270,7 @@ class FilesAPIController extends Controller
         }
 
         if($supportMessage){
-            $components  = 
+            $components  =
             [
                 [
                     "type" => "header",
@@ -2270,7 +2291,7 @@ class FilesAPIController extends Controller
             ];
         }
         else{
-            $components  = 
+            $components  =
             [
                 [
                     "type" => "header",
@@ -2294,19 +2315,19 @@ class FilesAPIController extends Controller
 
         try {
             $response = $whatappObj->sendTemplateMessage($number,$template, 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'messages');
-            
+
         }
         catch(Exception $e){
             \Log::info($e->getMessage());
         }
 
-        
+
     }
 
     public function sendMessage($receiver, $message, $frontendID)
     {
         try {
-            
+
             $accountSid = Key::whereNull('subdealer_group_id')
             ->where('key', 'twilio_sid')->first()->value;
 
@@ -2348,14 +2369,14 @@ class FilesAPIController extends Controller
             \Log::info($e->getMessage());
         }
     }
-    
+
     public function getEncodingType($file){
 
         $e = '';
 
         $extensionArr = [];
         foreach($file->decoded_files as $d){
-            $extensionArr []= $d->extension; 
+            $extensionArr []= $d->extension;
         }
 
         foreach($extensionArr as $ex){
@@ -2365,7 +2386,7 @@ class FilesAPIController extends Controller
             else if($ex == 'mpc'){
                 $e = 'micro';
             }
-            
+
             else if($ex == 'fls'){
                 $e = 'fls';
             }
@@ -2406,7 +2427,7 @@ class FilesAPIController extends Controller
             $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
             $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
         }
-        
+
         if($file->options_services){
 
             foreach($file->options_services as $option) {
@@ -2498,13 +2519,13 @@ class FilesAPIController extends Controller
 
             if ($response->successful()) {
                 $responseData = $response->json();
-                
+
                 // Log the full response for debugging
                 \Log::info('ChatGPT API Response: ' . json_encode($responseData));
-                
+
                 if (isset($responseData['choices'][0]['message']['content'])) {
                     $explanation = $responseData['choices'][0]['message']['content'];
-                    
+
                     // Check if explanation is empty
                     if (empty(trim($explanation))) {
                         \Log::warning('ChatGPT returned empty explanation for message ID: ' . $messageId);
@@ -2513,10 +2534,10 @@ class FilesAPIController extends Controller
                             'message' => 'ChatGPT returned an empty explanation. Please try again.'
                         ], 500);
                     }
-                    
+
                     // Log the successful API call
                     \Log::info('ChatGPT API call successful for message ID: ' . $messageId . ', Explanation length: ' . strlen($explanation));
-                    
+
                     return response()->json([
                         'success' => true,
                         'explanation' => $explanation,
@@ -2537,9 +2558,9 @@ class FilesAPIController extends Controller
                         $errorMessage = 'ChatGPT API Error: ' . $errorData['error']['message'];
                     }
                 }
-                
+
                 \Log::error('ChatGPT API call failed: ' . $errorMessage);
-                
+
                 return response()->json([
                     'success' => false,
                     'message' => $errorMessage
@@ -2548,7 +2569,7 @@ class FilesAPIController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('ChatGPT API exception: ' . $e->getMessage());
-            
+
             return response()->json([
                 'success' => false,
                 'message' => 'Internal server error: ' . $e->getMessage()
@@ -2578,7 +2599,7 @@ class FilesAPIController extends Controller
                     'errors' => $validator->errors()
                 ], 400);
             }
-            
+
             $engineerReply = $request->engineer_reply;
             $clientMessage = $request->client_message;
             $selectedTone = $request->tone;
@@ -2590,7 +2611,7 @@ class FilesAPIController extends Controller
                 // Use the selected prompt template if provided
                 $prompt = $selectedPrompt;
                 // Add the engineer's reply as the content to work with
-                $prompt .= 
+                $prompt .=
                 "IMPORTANT: You MUST provide a detailed explanation. Do not return empty responses.\n\n" .
                      "Please analyze and explain the following client message in a clear, professional manner. " .
                      "Focus on understanding the client's needs, any technical requirements, and provide context " .
@@ -2673,13 +2694,13 @@ class FilesAPIController extends Controller
 
             if ($response->successful()) {
                 $responseData = $response->json();
-                
+
                 // Log the full response for debugging
                 \Log::info('ChatGPT Modify Reply API Response: ' . json_encode($responseData));
-                
+
                 if (isset($responseData['choices'][0]['message']['content'])) {
                     $modifiedReply = $responseData['choices'][0]['message']['content'];
-                    
+
                     // Check if modified reply is empty
                     if (empty(trim($modifiedReply))) {
                         \Log::warning('ChatGPT returned empty modified reply for message ID: ' . $messageId);
@@ -2688,10 +2709,10 @@ class FilesAPIController extends Controller
                             'message' => 'ChatGPT returned an empty modified reply. Please try again.'
                         ], 500);
                     }
-                    
+
                     // Log the successful API call
                     \Log::info('ChatGPT Modify Reply API call successful for message ID: ' . $messageId . ', Modified reply length: ' . strlen($modifiedReply));
-                    
+
                     return response()->json([
                         'success' => true,
                         'modified_reply' => $modifiedReply,
@@ -2713,9 +2734,9 @@ class FilesAPIController extends Controller
                         $errorMessage = 'ChatGPT API Error: ' . $errorData['error']['message'];
                     }
                 }
-                
+
                 \Log::error('ChatGPT Modify Reply API call failed: ' . $errorMessage);
-                
+
                 return response()->json([
                     'success' => false,
                     'message' => $errorMessage
@@ -2724,7 +2745,7 @@ class FilesAPIController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('ChatGPT Modify Reply API exception: ' . $e->getMessage());
-            
+
             return response()->json([
                 'success' => false,
                 'message' => 'Internal server error: ' . $e->getMessage()
@@ -2806,13 +2827,13 @@ class FilesAPIController extends Controller
 
             if ($response->successful()) {
                 $responseData = $response->json();
-                
+
                 // Log the full response for debugging
                 \Log::info('ChatGPT Translation API Response: ' . json_encode($responseData));
-                
+
                 if (isset($responseData['choices'][0]['message']['content'])) {
                     $translatedText = $responseData['choices'][0]['message']['content'];
-                    
+
                     // Check if translation is empty
                     if (empty(trim($translatedText))) {
                         \Log::warning('ChatGPT returned empty translation for message ID: ' . $messageId);
@@ -2821,10 +2842,10 @@ class FilesAPIController extends Controller
                             'message' => 'ChatGPT returned an empty translation. Please try again.'
                         ], 500);
                     }
-                    
+
                     // Log the successful API call
                     \Log::info('ChatGPT Translation API call successful for message ID: ' . $messageId . ', Translation length: ' . strlen($translatedText));
-                    
+
                     return response()->json([
                         'success' => true,
                         'translated_text' => $translatedText,
@@ -2847,9 +2868,9 @@ class FilesAPIController extends Controller
                         $errorMessage = 'ChatGPT API Error: ' . $errorData['error']['message'];
                     }
                 }
-                
+
                 \Log::error('ChatGPT Translation API call failed: ' . $errorMessage);
-                
+
                 return response()->json([
                     'success' => false,
                     'message' => $errorMessage
@@ -2858,7 +2879,7 @@ class FilesAPIController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('ChatGPT Translation API exception: ' . $e->getMessage());
-            
+
             return response()->json([
                 'success' => false,
                 'message' => 'Internal server error: ' . $e->getMessage()
@@ -2927,13 +2948,13 @@ class FilesAPIController extends Controller
 
             if ($response->successful()) {
                 $responseData = $response->json();
-                
+
                 // Log the full response for debugging
                 \Log::info('ChatGPT Ask API Response: ' . json_encode($responseData));
-                
+
                 if (isset($responseData['choices'][0]['message']['content'])) {
                     $rephrasedResponse = $responseData['choices'][0]['message']['content'];
-                    
+
                     // Check if response is empty
                     if (empty(trim($rephrasedResponse))) {
                         \Log::warning('ChatGPT returned empty rephrased response');
@@ -2942,10 +2963,10 @@ class FilesAPIController extends Controller
                             'message' => 'ChatGPT returned an empty response. Please try again.'
                         ], 500);
                     }
-                    
+
                     // Log the successful API call
                     \Log::info('ChatGPT Ask API call successful, Response length: ' . strlen($rephrasedResponse));
-                    
+
                     return response()->json([
                         'success' => true,
                         'response' => $rephrasedResponse,
@@ -2966,9 +2987,9 @@ class FilesAPIController extends Controller
                         $errorMessage = 'ChatGPT API Error: ' . $errorData['error']['message'];
                     }
                 }
-                
+
                 \Log::error('ChatGPT Ask API call failed: ' . $errorMessage);
-                
+
                 return response()->json([
                     'success' => false,
                     'message' => $errorMessage
@@ -2977,7 +2998,7 @@ class FilesAPIController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('ChatGPT Ask API exception: ' . $e->getMessage());
-            
+
             return response()->json([
                 'success' => false,
                 'message' => 'Internal server error: ' . $e->getMessage()
@@ -3033,12 +3054,12 @@ class FilesAPIController extends Controller
 
             if ($response->successful()) {
                 $responseData = $response->json();
-                
+
                 if (isset($responseData['choices'][0]['message']['content'])) {
                     $isEnglish = trim(strtolower($responseData['choices'][0]['message']['content'])) === 'true';
-                    
+
                     \Log::info('Language check result for text: ' . ($isEnglish ? 'English' : 'Non-English'));
-                    
+
                     return response()->json([
                         'success' => true,
                         'is_english' => $isEnglish
@@ -3058,9 +3079,9 @@ class FilesAPIController extends Controller
                         $errorMessage = 'ChatGPT API Error: ' . $errorData['error']['message'];
                     }
                 }
-                
+
                 \Log::error('ChatGPT language check API call failed: ' . $errorMessage);
-                
+
                 return response()->json([
                     'success' => false,
                     'message' => $errorMessage
@@ -3069,7 +3090,7 @@ class FilesAPIController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('Language check API exception: ' . $e->getMessage());
-            
+
             return response()->json([
                 'success' => false,
                 'message' => 'Internal server error: ' . $e->getMessage()

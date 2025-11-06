@@ -96,7 +96,7 @@ class FilesController extends Controller
         $supportMessageRecord = Key::where('key','support_messages_engineer')->first()->value;
 
         // dd($supportMessageRecord);
-        
+
         foreach($supportFiles as $f){
 
         if($supportMessageRecord != -1){
@@ -107,15 +107,15 @@ class FilesController extends Controller
                     $f->assigned_to = $engineer->id;
                 }
                 else{
-                    
+
                     $onlineEngineer = User::where(function ($query) {
                     $query->whereIn('role_id', [2, 3])
-                        ->orWhere('id', 1); 
+                        ->orWhere('id', 1);
                     })
                     ->where('online', 1)
                     ->first();
 
-                    
+
                     if ($onlineEngineer) {
                         $f->assigned_to = $onlineEngineer->id;
                         $f->save();
@@ -124,10 +124,10 @@ class FilesController extends Controller
                     // $f->assigned_to = User::where('id', 1)->where('role_id', 1)->first()->id;
                 }
 
-                
+
             }
             else if($supportMessageRecord == -1){
-                
+
                 if (($user = User::find($f->latestRequestFile?->user_id)) && $user->online) {
                     $f->assigned_to = $user->id;
                     $f->save();
@@ -161,7 +161,7 @@ class FilesController extends Controller
         $log->save();
 
     }
-	
+
 	public function assignedToMe(Request $request){
         $file = File::findOrFail($request->file_id);
         $file->assigned_to = Auth::user()->id;
@@ -189,7 +189,7 @@ class FilesController extends Controller
             $file->on_hold_time = $onHoldTime;
             $file->save();
         }
-        
+
         $this->changeStatusLog($file, 'on_hold', 'status', 'File is set on hold by engineer or admin.');
 
         $file->updated_at = Carbon::now();
@@ -200,21 +200,21 @@ class FilesController extends Controller
 
 	public function translateMessage(Request $request){
         $record = EngineerFileNote::findOrFail($request->id);
-		
+
         $text = $record->egnineers_internal_notes;
         $tr = new GoogleTranslate();
         $tr->setTarget('en');
         $translation = $tr->translate($text);
-		
+
         return response($translation, 200);
     }
-    
+
     public function getSearchResults(Request $request){
         $keyword = $request->keyword;
 
         if($keyword != ''){
             $results = EngineerFileNote::where('egnineers_internal_notes', 'like', '%'.$keyword.'%')->paginate(10);
-        }   
+        }
         else{
             $results = NULL;
         }
@@ -231,7 +231,7 @@ class FilesController extends Controller
         $existingRecord = NewRequestComment::where('new_request_id', $request->new_request_id)->first();
 
         if($request->comment != NULL){
-            
+
             if($existingRecord == NULL){
                 $newRecord = new NewRequestComment();
                 $newRecord->comment = $request->comment;
@@ -349,7 +349,7 @@ class FilesController extends Controller
             ->addColumn('stage', function($row){
 
                 $file = File::findOrFail($row->id);
-                
+
                 if($file->stage_services){
                 return '<img alt="'.$file->stage.'" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
                                         <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
@@ -361,11 +361,11 @@ class FilesController extends Controller
 
                 $options = '';
                 $file = File::findOrFail($row->id);
-                
+
                 foreach($file->options_services as $option){
                     $service = \App\Models\Service::where('id',$option->service_id)->first();
                     if($service != null){
-                        
+
 
                             if($service){
                                 $options .= '<img class="parent-adjusted" alt="'.$service->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.$service->icon .'" data-src="'.url('icons').'/'.$service->icon .'" src="'.url('icons').'/'.$service->icon.'">';
@@ -375,7 +375,7 @@ class FilesController extends Controller
                             }
                         }
                     }
-                
+
                 return $options;
 
             })
@@ -389,7 +389,7 @@ class FilesController extends Controller
             ->filterColumn('created_at', function ($query, $keyword) {
                 $query->whereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') LIKE ?", ["%$keyword%"]);
             })
-    
+
             ->addColumn('created_time', function ($credit) {
                     return $credit->created_at->format('h:i A');
             })
@@ -412,7 +412,7 @@ class FilesController extends Controller
                     return '<label class="label label-success">Not Responsed<label>';
                 }
                 else{
-                    
+
                     return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
                 }
             })
@@ -436,7 +436,7 @@ class FilesController extends Controller
                 'data-redirect' => function($row) {
                     return route('file', $row->id);
                 },
-                
+
             ])
             ->make(true);
     }
@@ -531,7 +531,7 @@ class FilesController extends Controller
             ->addColumn('stage', function($row){
 
                 $file = File::findOrFail($row->id);
-                
+
                 if($file->stage_services){
                 return '<img alt="'.$file->stage.'" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
                                         <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
@@ -543,11 +543,11 @@ class FilesController extends Controller
 
                 $options = '';
                 $file = File::findOrFail($row->id);
-                
+
                 foreach($file->options_services as $option){
                     $service = \App\Models\Service::where('id',$option->service_id)->first();
                     if($service != null){
-                        
+
 
                             if($service){
                                 $options .= '<img class="parent-adjusted" alt="'.$service->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.$service->icon .'" data-src="'.url('icons').'/'.$service->icon .'" src="'.url('icons').'/'.$service->icon.'">';
@@ -557,7 +557,7 @@ class FilesController extends Controller
                             }
                         }
                     }
-                
+
                 return $options;
 
             })
@@ -571,7 +571,7 @@ class FilesController extends Controller
             ->filterColumn('created_at', function ($query, $keyword) {
                 $query->whereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') LIKE ?", ["%$keyword%"]);
             })
-    
+
             ->addColumn('created_time', function ($credit) {
                     return $credit->created_at->format('h:i A');
             })
@@ -594,7 +594,7 @@ class FilesController extends Controller
                     return '<label class="label label-success">Not Responsed<label>';
                 }
                 else{
-                    
+
                     return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
                 }
             })
@@ -618,7 +618,7 @@ class FilesController extends Controller
                 'data-redirect' => function($row) {
                     return route('file', $row->id);
                 },
-                
+
             ])
             ->make(true);
 
@@ -626,14 +626,14 @@ class FilesController extends Controller
     }
 
     public function showFiles($userID){
-        
+
         return view('files.show_all_users_files', ['userID' => $userID]);
     }
 
     public function downloadTermsTable(Request $request){
 
         $data = File::select('*')->where('is_credited', 1)->orderBy('created_at', 'desc');
-        
+
         if ($request->filled('from_date') && $request->filled('to_date')) {
 
             $data = $data->where('created_at', '>=', $request->from_date)
@@ -645,7 +645,7 @@ class FilesController extends Controller
 
         return DataTables::of($data)
             ->addIndexColumn()
-            
+
             ->editColumn('created_at', function ($credit) {
                 return [
                     'display' => e($credit->created_at->format('d-m-Y')),
@@ -666,7 +666,7 @@ class FilesController extends Controller
     }
 
     public function downloadTerms(){
-        
+
         return view('files.download_terms');
     }
 
@@ -714,7 +714,7 @@ class FilesController extends Controller
         // $reply->file_id = $file->id;
         // $reply->user_id = Auth::user()->id;
         // $reply->request_file_id = $requestFile->id;
-        
+
         // $reply->save();
 
         // FileMessage::where('request_file_id', $request->request_file_id)->delete();
@@ -724,7 +724,7 @@ class FilesController extends Controller
 
             $customer = User::findOrFail($file->user_id);
             $admin = get_admin();
-        
+
             // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
             $template = EmailTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
 
@@ -733,9 +733,9 @@ class FilesController extends Controller
             $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
             $html1 = str_replace("#customer_name", $customer->name ,$html1);
             $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
-            
+
             $tunningType = $this->emailStagesAndOption($file);
-            
+
             $html1 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html1);
             $html1 = str_replace("#tuning_type", $tunningType,$html1);
             $html1 = str_replace("#status", $file->status,$html1);
@@ -746,7 +746,7 @@ class FilesController extends Controller
             $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
             $html2 = str_replace("#customer_name", $file->name ,$html2);
             $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
-            
+
             $tunningType = $this->emailStagesAndOption($file);
 
             $html2 = str_replace("#tuning_type", $tunningType,$html2);
@@ -777,7 +777,7 @@ class FilesController extends Controller
 
             $message1 = str_replace("#customer", $customer->name ,$message);
             $message2 = str_replace("#customer", $file->name ,$message);
-            
+
             if($file->front_end_id == 1){
                 $subject = "ECU Tech: Engineer uploaded a file in reply.";
             }
@@ -791,14 +791,14 @@ class FilesController extends Controller
             $reminderManager = new ReminderManagerController();
             $this->manager = $reminderManager->getAllManager();
 
-            
+
 
                 if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
 
                     try{
                         \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
                         $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
-                        
+
                     }
                     catch(TransportException $e){
                         \Log::info($e->getMessage());
@@ -817,7 +817,7 @@ class FilesController extends Controller
                         $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
                     }
                 }
-                
+
                 if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
                     $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
                 }
@@ -834,7 +834,7 @@ class FilesController extends Controller
                     $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
                 }
             // }
-            
+
             // return redirect()->back()->with(['success' => 'File sent to customer!']);
             return redirect()->route('files')->with(['success' => 'File sent to customer!']);
 
@@ -843,7 +843,7 @@ class FilesController extends Controller
     public function sendMessageToCustomer(Request $request){
 
         $noteItself = $request->message;
-        
+
         $file = File::findOrFail($request->file_id);
 
         $reply = new EngineerFileNote();
@@ -856,7 +856,7 @@ class FilesController extends Controller
         $reply->user_id = Auth::user()->id;
 
         $latest = RequestFile::where('file_id', $request->file_id)->where('show_later', 0)->latest()->first();
-        
+
         if($latest != NULL){
             $reply->request_file_id = $latest->id;
         }
@@ -877,7 +877,7 @@ class FilesController extends Controller
             $ofile->save();
         }
         $this->changeStatusLog($file, 'closed', 'support_status', 'Chat reply was sent from engineer.');
-        
+
         $file->support_status = "closed";
 
         if($file->rejected){
@@ -893,7 +893,7 @@ class FilesController extends Controller
         $file->save();
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
-    
+
         // $template = EmailTemplate::where('name', 'Message To Client')->first();
         $template = EmailTemplate::where('slug', 'mess-to-client')->where('front_end_id', $file->front_end_id)->first();
 
@@ -902,7 +902,7 @@ class FilesController extends Controller
         $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
         $html1 = str_replace("#customer_name", $customer->name ,$html1);
         $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
-        
+
         $tunningType = $this->emailStagesAndOption($file);
 
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
@@ -915,10 +915,10 @@ class FilesController extends Controller
         $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
         $html2 = str_replace("#customer_name", $file->name ,$html2);
         $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
-        
+
 
         $tunningType = $this->emailStagesAndOption($file);
-        
+
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html2);
         $html2 = str_replace("#note", $request->egnineers_internal_notes,$html2);
@@ -988,14 +988,14 @@ class FilesController extends Controller
                 $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
             }
         }
-        
+
         if($this->manager['msg_eng_admin_sms'.$file->front_end_id]){
-            
+
             $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
         }
 
         if($this->manager['msg_eng_admin_whatsapp'.$file->front_end_id]){
-            
+
             $this->sendWhatsappforEng($admin->name, $admin->phone, 'support_message_from_engineer', $file, $noteItself);
         }
 
@@ -1004,7 +1004,7 @@ class FilesController extends Controller
         }
 
         if($this->manager['msg_eng_cus_whatsapp'.$file->front_end_id]){
-            
+
             $this->sendWhatsapp($customer->name, $customer->phone, 'support_message_from_engineer', $file, $noteItself);
         }
 
@@ -1015,7 +1015,7 @@ class FilesController extends Controller
         return redirect()->route('files')
         ->with('success', 'Engineer message successfully Added!')
         ->with('tab','chat');
-        
+
     }
 
     public function getCustomerMessage(Request $request){
@@ -1036,7 +1036,7 @@ class FilesController extends Controller
     }
 
     public function uploadACMReply(Request $request){
-        
+
         $attachment = $request->file('acm_file');
         $fileName = $attachment->getClientOriginalName();
 
@@ -1044,7 +1044,7 @@ class FilesController extends Controller
 
         $middleName = $file->id;
         $middleName .= date("dmy");
-        
+
         foreach($file->softwares as $s){
             if($s->service_id != 1){
                 // if($s->reply_id == $engineerFile->id){
@@ -1052,9 +1052,9 @@ class FilesController extends Controller
                 // }
             }
         }
-        
+
         $newFileName = $file->brand.'_'.$file->model.'_'.$middleName.'_acm_v'.$file->files->count();
-        
+
         $newFileName = str_replace('/', '', $newFileName);
         $newFileName = str_replace('\\', '', $newFileName);
         $newFileName = str_replace('#', '', $newFileName);
@@ -1064,39 +1064,40 @@ class FilesController extends Controller
         $acmFile->acm_file = $newFileName;
         $acmFile->request_file_id = $request->request_file_id;
         $acmFile->save();
-        
+
         if($file->front_end_id == 1){
-            
+
             if($file->on_dev == 1){
                 $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
             }
             else{
-                $attachment->move('/mnt/portal.ecutech.gr'.$file->file_path,$newFileName);
+                $attachment->move(env('MNT_ECUTECH').$file->file_path,$newFileName);
+                //p $attachment->move('/mnt/portal.ecutech.gr'.$file->file_path,$newFileName);
                 // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
             }
 
         }
 
         else if($file->front_end_id == 3){
-            
+
             if($file->on_dev == 1){
                 $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
             }
             else{
-
-                $attachment->move('/mnt/portal.e-tuningfiles.com'.$file->file_path,$newFileName);
+                $attachment->move(env('MNT_ETUNINGFILES').$file->file_path,$newFileName);
+                //p $attachment->move('/mnt/portal.e-tuningfiles.com'.$file->file_path,$newFileName);
                 // $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
             }
 
         }
         else if($file->front_end_id == 4){
-            
+
             if($file->on_dev == 1){
                 $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
             }
             else{
 
-                
+
                 $attachment->move(public_path('/../../ctf/public'.$file->file_path),$newFileName);
             }
 
@@ -1108,11 +1109,13 @@ class FilesController extends Controller
                 $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
             }
             else{
-                $attachment->move('/mnt/portal.tuning-x.com/uploads'.$file->file_path,$newFileName);
+                $attachment->move(env('MNT_TUNINGX').$file->file_path,$newFileName);
+                //p $attachment->move('/mnt/portal.tuning-x.com'.$file->file_path,$newFileName);
+                //$attachment->move('/mnt/portal.tuning-x.com/uploads'.$file->file_path,$newFileName);
                 // $attachment->move(public_path('/../../tuningX/public'.$file->file_path),$newFileName);
             }
         }
-        
+
         return redirect()->back()->with(['success' => 'Engineers ACM file is uploaded successfully!']);
 
     }
@@ -1127,7 +1130,7 @@ class FilesController extends Controller
     public function addUploadLaterRecord(Request $request){
 
         $newMessage = new UploadLater();
-        $newMessage->file_id = $request->file_id; 
+        $newMessage->file_id = $request->file_id;
         $newMessage->save();
 
         return  response()->json( ['msg' => 'upload later record added.']);
@@ -1161,13 +1164,13 @@ class FilesController extends Controller
             if($d->name == 'exclude_service[]'){
                 $exclude []= $d->value;
             }
-            
+
             if($d->name == 'file_id'){
                 $fileID = $d->value;
             }
 
             if($d->name == 'service_id'){
-                
+
                 $nowService = $d->value;
 
                 foreach($data as $in){
@@ -1176,7 +1179,7 @@ class FilesController extends Controller
 
                         $finalArray[$nowService] = $in->value;
                     }
-    
+
                 }
             }
 
@@ -1222,20 +1225,20 @@ class FilesController extends Controller
         $file->red = 0;
         $file->submission_timer = NULL;
         $file->timer = NULL;
-        
+
         $file->support_status = "closed";
         $this->changeStatusLog($file, 'closed', 'support_status', 'File is enabled to download.');
         $file->checked_by = 'engineer';
-        
+
         $file->reupload_time = Carbon::now();
         $file->updated_at = Carbon::now();
-        
+
         $file->response_time = $this->getResponseTime($file);
         $file->save();
 
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
-    
+
         // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
         $template = EmailTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
 
@@ -1244,9 +1247,9 @@ class FilesController extends Controller
         $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
         $html1 = str_replace("#customer_name", $customer->name ,$html1);
         $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
-        
+
         $tunningType = $this->emailStagesAndOption($file);
-        
+
         $html1 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html1);
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
@@ -1257,7 +1260,7 @@ class FilesController extends Controller
         $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
         $html2 = str_replace("#customer_name", $file->name ,$html2);
         $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
-        
+
         $tunningType = $this->emailStagesAndOption($file);
 
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
@@ -1288,7 +1291,7 @@ class FilesController extends Controller
 
         $message1 = str_replace("#customer", $customer->name ,$message);
         $message2 = str_replace("#customer", $file->name ,$message);
-        
+
         if($file->front_end_id == 1){
             $subject = "ECU Tech: Engineer uploaded a file in reply.";
         }
@@ -1302,7 +1305,7 @@ class FilesController extends Controller
         $reminderManager = new ReminderManagerController();
         $this->manager = $reminderManager->getAllManager();
 
-        
+
 
         if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
 
@@ -1328,7 +1331,7 @@ class FilesController extends Controller
                 $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
             }
         }
-        
+
         if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
             $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
         }
@@ -1345,8 +1348,8 @@ class FilesController extends Controller
             $this->sendWhatsapp($customer->name,$customer->phone, 'eng_file_upload', $file);
         }
 
-    
-        
+
+
         return redirect()->back()->with(['success' => 'Now Engineers can download files which are in revision section!']);
     }
 
@@ -1392,7 +1395,7 @@ class FilesController extends Controller
             if($count == 1){
 
                 $service = Service::findOrFail($fs->service_id);
-                
+
                 if($service->type == 'tunning'){
 
                     foreach($psArray as $k=>$ps){
@@ -1413,7 +1416,7 @@ class FilesController extends Controller
 
                     if($fs->software_id == $k){
                         $temp .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
-                        
+
                     }
                     else{
                         $temp .= '<option value="'.$k.'">'.$ps.'</option>';
@@ -1434,7 +1437,7 @@ class FilesController extends Controller
 
                     if($fs->software_id == $k){
                         $temp .= '<option selected="selected" value="'.$k.'">'.$ps.'</option>';
-                        
+
                     }
                     else{
                         $temp .= '<option value="'.$k.'">'.$ps.'</option>';
@@ -1450,7 +1453,7 @@ class FilesController extends Controller
         }
 
         return response(['strStage' => $strStage, 'opArr' => $opArr], 200);
-        
+
     }
 
     public function updateProcessingSoftware(Request $request){
@@ -1496,7 +1499,7 @@ class FilesController extends Controller
     }
 
     public function flipShowFile(Request $request){
-        
+
         $reqfile = RequestFile::findOrFail($request->id);
         $reqfile->is_kess3_slave = ($request->showFile == 'false') ? 1 : 0;
         $reqfile->show_file_denied = 0;
@@ -1516,10 +1519,10 @@ class FilesController extends Controller
             $file->response_time = $this->getResponseTime($file);
 
             $file->save();
-            
+
             $customer = User::findOrFail($file->user_id);
             $admin = get_admin();
-        
+
             // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
             $template = EmailTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
 
@@ -1528,9 +1531,9 @@ class FilesController extends Controller
             $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
             $html1 = str_replace("#customer_name", $customer->name ,$html1);
             $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
-            
+
             $tunningType = $this->emailStagesAndOption($file);
-            
+
             $html1 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html1);
             $html1 = str_replace("#tuning_type", $tunningType,$html1);
             $html1 = str_replace("#status", $file->status,$html1);
@@ -1541,7 +1544,7 @@ class FilesController extends Controller
             $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
             $html2 = str_replace("#customer_name", $file->name ,$html2);
             $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
-            
+
             $tunningType = $this->emailStagesAndOption($file);
 
             $html2 = str_replace("#tuning_type", $tunningType,$html2);
@@ -1572,7 +1575,7 @@ class FilesController extends Controller
 
             $message1 = str_replace("#customer", $customer->name ,$message);
             $message2 = str_replace("#customer", $file->name ,$message);
-            
+
             if($file->front_end_id == 1){
                 $subject = "ECU Tech: Engineer uploaded a file in reply.";
             }
@@ -1586,7 +1589,7 @@ class FilesController extends Controller
             $reminderManager = new ReminderManagerController();
             $this->manager = $reminderManager->getAllManager();
 
-        
+
 
             if($this->manager['eng_file_upload_cus_email'.$file->front_end_id]){
 
@@ -1612,7 +1615,7 @@ class FilesController extends Controller
                     $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
                 }
             }
-            
+
             if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
                 $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
             }
@@ -1630,7 +1633,7 @@ class FilesController extends Controller
             }
 
         }
-        
+
         return response('file flipped', 200);
 
     }
@@ -1639,7 +1642,7 @@ class FilesController extends Controller
 
         $ids = $request->ids;
         $files = File::whereIn('id', $ids)->get();
-        
+
         foreach($files as $file){
 
             FileService::where('file_id', $file->id)->delete();
@@ -1653,7 +1656,7 @@ class FilesController extends Controller
             FileUrl::where('file_id', $file->id)->delete();
             Log::where('file_id', $file->id)->delete();
             FileReplySoftwareService::where('file_id', $file->id)->delete();
-            
+
             $file->delete();
         }
 
@@ -1661,7 +1664,7 @@ class FilesController extends Controller
     }
 
     public function forceOptionsOffer(Request $request){
-        
+
         $fileID = $request->file_id;
         $forceProposedOptions = $request->force_proposed_options;
 
@@ -1706,8 +1709,8 @@ class FilesController extends Controller
             foreach($forceProposedOptions as $offer){
 
                     $option = new FileService();
-                    $option->service_id = $offer; 
-                    $option->type = 'option'; 
+                    $option->service_id = $offer;
+                    $option->type = 'option';
 
                     if($file->front_end_id == 1){
 
@@ -1723,7 +1726,7 @@ class FilesController extends Controller
 
                             $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
                             $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
-        
+
                         }
                         else{
 
@@ -1733,7 +1736,7 @@ class FilesController extends Controller
 
                     }
                     else if($file->front_end_id == 3){
-                        
+
                         $service = Service::findOrFail($offer);
 
                         // code is same because we have different service IDs for different frontends when it comes to options
@@ -1742,7 +1745,7 @@ class FilesController extends Controller
 
                             $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
                             $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
-        
+
                         }
                         else{
 
@@ -1776,22 +1779,22 @@ class FilesController extends Controller
 
             $credit->gifted = 1;
             $credit->price_payed = 0;
-            
+
             $credit->message_to_credit = 'File options accepted and credits returned!';
-            
+
             $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
             $credit->save();
         }
 
         $file->credits = $proposedCredits;
-        
+
         $file->save();
 
         return redirect()->back()->with(['success' => 'options adjusted and credits returned!']);
     }
 
     public function multiDelete(Request $request){
-        
+
         $files = File::orderBy('created_at', 'desc')->get();
 
         return view('files.multi_delete', [ 'files' => $files ]);
@@ -1848,8 +1851,8 @@ class FilesController extends Controller
             foreach($forceProposedOptions as $offer){
 
                     $option = new FileService();
-                    $option->service_id = $offer; 
-                    $option->type = 'option'; 
+                    $option->service_id = $offer;
+                    $option->type = 'option';
 
                     if($file->front_end_id == 1){
 
@@ -1865,7 +1868,7 @@ class FilesController extends Controller
 
                             $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
                             $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
-        
+
                         }
                         else{
 
@@ -1875,7 +1878,7 @@ class FilesController extends Controller
 
                     }
                     else if($file->front_end_id == 3){
-                        
+
                         $service = Service::findOrFail($offer);
 
                         // code is same because we have different service IDs for different frontends when it comes to options
@@ -1884,7 +1887,7 @@ class FilesController extends Controller
 
                             $proposedCredits += $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
                             $option->credits = $service->optios_stage($file->stage_services->service_id)->first()->master_credits;
-        
+
                         }
                         else{
 
@@ -1918,15 +1921,15 @@ class FilesController extends Controller
 
                 $credit->gifted = 1;
                 $credit->price_payed = 0;
-                
+
                 $credit->message_to_credit = 'File options updated and credits returned!';
-                
+
                 $credit->invoice_id = 'Admin-'.mt_rand(1000,9999);
                 $credit->save();
-            
+
 
             $file->credits = $proposedCredits;
-            
+
             $file->save();
 
             return redirect()->back()->with(['success' => 'Options updated!']);
@@ -1935,7 +1938,7 @@ class FilesController extends Controller
         else{
 
             $file = File::findOrFail($request->file_id);
-            
+
             $proposed = new EngineerOptionsOffer();
             $proposed->file_id = $request->file_id;
             $proposed->type = 'stage';
@@ -1943,7 +1946,7 @@ class FilesController extends Controller
             $proposed->save();
 
             $proposedOptions = $request->proposed_options;
-            
+
             if($proposedOptions){
                 foreach($proposedOptions as $o){
                     $proposed = new EngineerOptionsOffer();
@@ -1958,7 +1961,7 @@ class FilesController extends Controller
             $this->changeStatusLog($file, 'on_hold', 'status', 'File is set on hold after offering options to customer.');
             $file->updated_at = Carbon::now();
             $file->save();
-        
+
             return redirect()->back()->with(['success' => 'New stages and options proposed!']);
         }
     }
@@ -1968,7 +1971,7 @@ class FilesController extends Controller
         $file = File::findOrFail($request->file_id);
 
         if($file->decoded_mode == 1){
-            
+
             $file->file_attached = $file->file_attached_backup;
             $file->file_attached_backup = null;
             $file->decoded_mode = 0;
@@ -2027,9 +2030,9 @@ class FilesController extends Controller
         }
 
         $file = File::findOrFail($request->file_id);
-        
+
         if($request->download_directly == 'download' && $request->custom_stage ){
-            
+
             $file->custom_stage = $request->custom_stage;
             $file->save();
         }
@@ -2037,9 +2040,9 @@ class FilesController extends Controller
             $file->custom_stage = NULL;
             $file->save();
         }
-        
+
         if($request->download_directly == 'download' && $request->custom_options ){
-            
+
             $file->custom_options = implode(',', $request->custom_options);
             $file->save();
         }
@@ -2047,14 +2050,14 @@ class FilesController extends Controller
             $file->custom_options = '';
             $file->save();
         }
-        
+
         if($request->file('decrypted_file')){
 
             $attachment = $request->file('decrypted_file');
             $fileName = $attachment->getClientOriginalName();
 
             // $file->file_attached = $fileName;
-            
+
             $file->save();
 
             if($file->front_end_id == 1){
@@ -2065,7 +2068,8 @@ class FilesController extends Controller
                     $attachment->move(public_path('/../../stagingportalecutech/public/'.$file->file_path),$fileName);
                 }
                 else{
-                    $attachment->move('/mnt/portal.ecutech.gr'.$file->file_path,$fileName);
+                    $attachment->move(env('MNT_ECUTECH').$file->file_path,$fileName);
+                    //p $attachment->move('/mnt/portal.ecutech.gr'.$file->file_path,$fileName);
                     // $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
                 }
 
@@ -2078,8 +2082,8 @@ class FilesController extends Controller
                     $attachment->move(public_path('/../../stagingportaletuningfiles/public/'.$file->file_path),$fileName);
                 }
                 else{
-
-                    $attachment->move('/mnt/portal.e-tuningfiles.com'.$file->file_path,$fileName);
+                    $attachment->move(env('MNT_ETUNINGFILES').$file->file_path,$fileName);
+                    //p $attachment->move('/mnt/portal.e-tuningfiles.com'.$file->file_path,$fileName);
                     // $attachment->move(public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path),$fileName);
                 }
 
@@ -2102,11 +2106,13 @@ class FilesController extends Controller
                     $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
                 }
                 else{
-                    $attachment->move('/mnt/portal.tuning-x.com/uploads'.$file->file_path,$fileName);
+                    $attachment->move(env('MNT_TUNINGX').$file->file_path,$fileName);
+                    //p $attachment->move('/mnt/portal.tuning-x.com'.$file->file_path,$fileName);
+                    //$attachment->move('/mnt/portal.tuning-x.com/uploads'.$file->file_path,$fileName);
                     // $attachment->move(public_path('/../../tuningX/public/'.$file->file_path),$fileName);
                 }
             }
-            
+
         }
 
         $processFile = new ProcessedFile();
@@ -2130,11 +2136,11 @@ class FilesController extends Controller
         return view('files.search', ['file' => $file]);
 
     }
-    
+
     public function delete(Request $request){
 
         if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'delete-file')) {
-            
+
             $file = File::findOrFail($request->id);
 
             FileService::where('file_id', $file->id)->delete();
@@ -2148,7 +2154,7 @@ class FilesController extends Controller
             FileUrl::where('file_id', $file->id)->delete();
             Log::where('file_id', $file->id)->delete();
             FileReplySoftwareService::where('file_id', $file->id)->delete();
-            
+
             $file->delete();
 
             return response()->json( 'deleted' );
@@ -2166,16 +2172,16 @@ class FilesController extends Controller
     //         'clientApplicationGUID' => 'f8b0f518-8de7-4528-b8db-3995e1b787e9',
     //         'secretKey' => "#5!/ThmmM*?;D\\jvjQ6%9/",
     //     ];
-  
+
     //     $headers = [
     //         'Content-Type' => 'application/json'
     //     ];
-  
+
     //     $response = Http::withHeaders($headers)->post($apiURL, $postInput);
-  
+
     //     $statusCode = $response->status();
     //     $responseBody = json_decode($response->getBody(), true);
-     
+
     //     if(isset($responseBody['accessToken'])){
     //         $key = new Key();
     //         $key->key = 'alientech_access_token';
@@ -2209,7 +2215,7 @@ class FilesController extends Controller
         $headers = [
             'X-Alientech-ReCodAPI-LLC' => $token,
         ];
-  
+
         $response = Http::withHeaders($headers)->get($url);
         $responseBody = json_decode($response->getBody(), true);
 
@@ -2231,9 +2237,9 @@ class FilesController extends Controller
         dd('all_closed');
         exit;
     }
-    
+
     public function deactivateAllExceptThisFeed($ThatFeed) {
-        
+
         $allOtherFeed = NewsFeed::where('id', '!=', $ThatFeed->id)->get();
 
         foreach($allOtherFeed as $feed){
@@ -2270,7 +2276,7 @@ class FilesController extends Controller
                             // \Log::info("activating feed:".$feed->title);
                             $feed->active = 1;
                             $feed->save();
-    
+
                             $deactiveAll = true;
                             $thatFeed = $feed;
                         // }
@@ -2289,11 +2295,11 @@ class FilesController extends Controller
                 if($feed->activate_at == null &&  $feed->deactivate_at == null) {
 
                     if($this->getDayNumber($dateCheck) >= $this->getDayNumber($feed->activation_weekday) && $this->getDayNumber($dateCheck) <= $this->getDayNumber($feed->deactivation_weekday) ) {
-                        
+
                         if ( strtotime($timeCheck) > strtotime($feed->daily_activation_time) && strtotime($timeCheck) < strtotime($feed->daily_deactivation_time) ) {
 
                             if($feed->active == 0){
-                                
+
                                 // \Log::info("activating feed at:".date('l').$feed->title);
                                 $feed->active = 1;
                                 $feed->save();
@@ -2301,9 +2307,9 @@ class FilesController extends Controller
                         }
 
                         else {
-                            
+
                             if($feed->active == 1){
-                                
+
                                 // \Log::info("deactivating feed at:".date('l').$feed->title);
                                 $feed->active = 0;
                                 $feed->save();
@@ -2319,7 +2325,7 @@ class FilesController extends Controller
                                 $feed->active = 0;
                                 $feed->save();
                             }
-                        
+
                         }
                     }
                 }
@@ -2334,30 +2340,30 @@ class FilesController extends Controller
         if (!file_exists($path)) {
             return(false);
         }
- 
+
         // See whether this is a file
         if (is_file($path)) {
             // Chmod the file with our given filepermissions
             chmod($path, $filePerm);
- 
+
         // If this is a directory...
         } elseif (is_dir($path)) {
             // Then get an array of the contents
             $foldersAndFiles = scandir($path);
- 
+
             // Remove "." and ".." from the list
             $entries = array_slice($foldersAndFiles, 2);
- 
+
             // Parse every result...
             foreach ($entries as $entry) {
                 // And call this function again recursively, with the same permissions
                 $this->recursiveChmod($path."/".$entry, $filePerm, $dirPerm);
             }
- 
+
             // When we are done with the contents of the directory, we chmod the directory itself
             chmod($path, $dirPerm);
         }
- 
+
         // Everything seemed to work out well, return true
         return(true);
     }
@@ -2380,7 +2386,7 @@ class FilesController extends Controller
         }
 
     }
-    
+
     public function myAjaxFiles(Request $request){
         $data = File::select('*', 'files.id as row_id')
         ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "processing" THEN 2 WHEN status = "ready_to_send" THEN 3 ELSE 4 END AS s'))
@@ -2446,9 +2452,9 @@ class FilesController extends Controller
         }
 
         // if ($request->filled('options')) {
-            
+
         //     $data = $data->whereIn('file_services.service_id', [$request->options]);
-            
+
         // }
 
         if ($request->filled('engineer')) {
@@ -2511,15 +2517,15 @@ class FilesController extends Controller
                             $returnStr .='<lable class="label label-danger text-white m-r-5 open" id="o_'.$file->id.'" data-seconds="'.$openTimeLeft.'"></lable>';
                         }
                     }
-                    
-                    
+
+
                 }
 
                 if($file->submission_timer != NULL){
 
                     $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
                     $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
-                    
+
 
                     if($file->status == 'submitted'){
                         $submissionTimeLeft = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
@@ -2547,7 +2553,7 @@ class FilesController extends Controller
                             }
                         }
                     }
-                    
+
                 }
 
                 return $returnStr;
@@ -2600,7 +2606,7 @@ class FilesController extends Controller
             ->addColumn('stage', function($row){
 
                 $file = File::findOrFail($row->id);
-                
+
                 if($file->stage_services){
                 return '<img alt="'.$file->stage.'" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
                                         <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
@@ -2612,11 +2618,11 @@ class FilesController extends Controller
 
                 $options = '';
                 $file = File::findOrFail($row->id);
-                
+
                 foreach($file->options_services as $option){
                     $service = \App\Models\Service::where('id',$option->service_id)->first();
                     if($service != null){
-                        
+
 
                             if($service){
                                 $options .= '<img class="parent-adjusted" alt="'.$service->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.$service->icon .'" data-src="'.url('icons').'/'.$service->icon .'" src="'.url('icons').'/'.$service->icon.'">';
@@ -2626,7 +2632,7 @@ class FilesController extends Controller
                             }
                         }
                     }
-                
+
                 return $options;
 
             })
@@ -2640,7 +2646,7 @@ class FilesController extends Controller
             ->filterColumn('created_at', function ($query, $keyword) {
                 $query->whereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') LIKE ?", ["%$keyword%"]);
             })
-    
+
             ->addColumn('created_time', function ($credit) {
                     return $credit->created_at->format('h:i A');
             })
@@ -2663,7 +2669,7 @@ class FilesController extends Controller
                     return '<label class="label label-success">Not Responsed<label>';
                 }
                 else{
-                    
+
                     return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
                 }
             })
@@ -2687,7 +2693,7 @@ class FilesController extends Controller
                 'data-redirect' => function($row) {
                     return route('file', $row->id);
                 },
-                
+
             ])
             ->make(true);
     }
@@ -2757,7 +2763,7 @@ class FilesController extends Controller
 
         // if ($request->filled('options')) {
         //     $data = $data->whereIn('file_services.service_id', [$request->options]);
-            
+
         // }
 
         if ($request->filled('engineer')) {
@@ -2800,15 +2806,15 @@ class FilesController extends Controller
                             $returnStr .='<lable class="label label-danger text-white m-r-5 open" id="o_'.$file->id.'" data-seconds="'.$openTimeLeft.'"></lable>';
                         }
                     }
-                    
-                    
+
+
                 }
 
                 if($file->submission_timer != NULL){
 
                     $fsdt = Key::where('key', 'file_submitted_delay_time')->first()->value;
                     $fodt = Key::where('key', 'file_open_delay_time')->first()->value;
-                    
+
 
                     if($file->status == 'submitted'){
                         $submissionTimeLeft = (strtotime($file->submission_timer)+($fsdt*60)) - strtotime(now());
@@ -2836,7 +2842,7 @@ class FilesController extends Controller
                             }
                         }
                     }
-                    
+
                 }
 
                 return $returnStr;
@@ -2913,7 +2919,7 @@ class FilesController extends Controller
             ->addColumn('stage', function($row){
 
                 $file = File::findOrFail($row->id);
-                
+
                 if($file->stage_services){
                 return '<img alt="'.$file->stage.'" width="33" height="33" data-src-retina="'. url("icons").'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon .'" data-src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'" src="'.url('icons').'/'.\App\Models\Service::findOrFail($file->stage_services->service_id)->icon.'">
                                         <span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::findOrFail($file->stage_services->service_id)->name.'</span>';
@@ -2925,11 +2931,11 @@ class FilesController extends Controller
 
                 $options = '';
                 $file = File::findOrFail($row->id);
-                
+
                 foreach($file->options_services as $option){
                     $service = \App\Models\Service::where('id',$option->service_id)->first();
                     if($service != null){
-                        
+
 
                             if($service){
                                 $options .= '<img class="parent-adjusted" alt="'.$service->name.'" width="30" height="30" data-src-retina="'.url('icons').'/'.$service->icon .'" data-src="'.url('icons').'/'.$service->icon .'" src="'.url('icons').'/'.$service->icon.'">';
@@ -2939,7 +2945,7 @@ class FilesController extends Controller
                             }
                         }
                     }
-                
+
                 return $options;
 
             })
@@ -2953,7 +2959,7 @@ class FilesController extends Controller
             ->filterColumn('created_at', function ($query, $keyword) {
                 $query->whereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') LIKE ?", ["%$keyword%"]);
             })
-    
+
             ->addColumn('created_time', function ($credit) {
                     return $credit->created_at->format('h:i A');
             })
@@ -2976,7 +2982,7 @@ class FilesController extends Controller
                     return '<label class="label label-success">Not Responsed<label>';
                 }
                 else{
-                    
+
                     return '<label class="label label-success">'.\Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans().'<label>';
                 }
             })
@@ -3000,7 +3006,7 @@ class FilesController extends Controller
                 'data-redirect' => function($row) {
                     return route('file', $row->id);
                 },
-                
+
             ])
             ->make(true);
     }
@@ -3055,7 +3061,7 @@ class FilesController extends Controller
                 return $btn;
 
             })
-    
+
             ->editColumn('created_at', function ($credit) {
                 return [
                     'display' => e($credit->created_at->format('d-m-Y')),
@@ -3078,10 +3084,10 @@ class FilesController extends Controller
                 $file = File::findOrFail($row->id);
 
                 $all = "";
-                        
+
                 foreach($file->options_services as $option){
                     if(\App\Models\Service::where('id', $option->service_id)->first() != null){
-                        $all .= \App\Models\Service::where('id', $option->service_id)->first()->name.',';    
+                        $all .= \App\Models\Service::where('id', $option->service_id)->first()->name.',';
                     }
                 }
 
@@ -3112,11 +3118,11 @@ class FilesController extends Controller
                 else{
                     return \Carbon\CarbonInterval::seconds($rt)->cascade()->forHumans();
                 }
-            
-            
+
+
 
             })
-            
+
             ->rawColumns(['frontend','vehicle','options', 'engineer','response_time'])
 
             ->make(true);
@@ -3154,7 +3160,7 @@ class FilesController extends Controller
         $stagesOptionsEngineer = Key::where('key','stages_options_engineer')->first();
         $stagesOptionsEngineer->value = $request->stages_options_engineer;
         $stagesOptionsEngineer->save();
-        
+
         $supportMessagesEngineer = Key::where('key','support_messages_engineer')->first();
         $supportMessagesEngineer->value = $request->support_messages_engineer;
         $supportMessagesEngineer->save();
@@ -3168,9 +3174,9 @@ class FilesController extends Controller
         $optionsEngineer = Key::where('key','options_engineer')->first()->value;
         $stagesOptionsEngineer = Key::where('key','stages_options_engineer')->first()->value;
         $supportMessagesEngineer = Key::where('key','support_messages_engineer')->first()->value;
-        
+
         $allEngineers = User::whereIn('role_id', [2,3])->where('test', 0)->whereNull('subdealer_group_id')->orWhere('id', 3)->get();
-        return view('files.engineers_assignment', ['supportMessagesEngineer' => $supportMessagesEngineer,'allEngineers' => $allEngineers, 'stageEngineer' => $stageEngineer, 'optionsEngineer' => $optionsEngineer, 'stagesOptionsEngineer' => $stagesOptionsEngineer]); 
+        return view('files.engineers_assignment', ['supportMessagesEngineer' => $supportMessagesEngineer,'allEngineers' => $allEngineers, 'stageEngineer' => $stageEngineer, 'optionsEngineer' => $optionsEngineer, 'stagesOptionsEngineer' => $stagesOptionsEngineer]);
     }
 
     public function flipEngineerStatus(Request $request){
@@ -3201,8 +3207,8 @@ class FilesController extends Controller
         $loggedInUser = Auth::user();
 
         // if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
-            
-            return view('files.my_live_files', ['loggedInUser' => $loggedInUser, 'allEngineers' => $allEngineers, 'stages' => $stages, 'options' => $options, 'engineers' => $engineers]); 
+
+            return view('files.my_live_files', ['loggedInUser' => $loggedInUser, 'allEngineers' => $allEngineers, 'stages' => $stages, 'options' => $options, 'engineers' => $engineers]);
     }
 
     public function liveFiles(){
@@ -3216,18 +3222,18 @@ class FilesController extends Controller
         $loggedInUser = Auth::user();
 
         // if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
-        
-        return view('files.live_files', ['loggedInUser' => $loggedInUser, 'allEngineers' => $allEngineers, 'stages' => $stages, 'options' => $options, 'engineers' => $engineers]);    
+
+        return view('files.live_files', ['loggedInUser' => $loggedInUser, 'allEngineers' => $allEngineers, 'stages' => $stages, 'options' => $options, 'engineers' => $engineers]);
         // }
         // else{
         //     return abort(404);
         // }
     }
-    
+
     public function updateFileVehicle(Request $request) {
 
     if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-file')){
-        
+
         $this->validate($request, [
             'engine' => 'required',
             'version' => 'required'
@@ -3264,9 +3270,9 @@ class FilesController extends Controller
         }
 
         $brand = $request->brand;
-        
+
         $models = Vehicle::OrderBy('model', 'asc')->select('model')->whereNotNull('model')->distinct()->where('make', '=', $brand)->get();
-        
+
         return response()->json( [ 'models' => $models ] );
     }
 
@@ -3334,7 +3340,7 @@ class FilesController extends Controller
         $brand = $request->brand;
         $version = $request->version;
         $engine = $request->engine;
-       
+
         $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->whereNotNull('Engine_ECU')->select('Engine_ECU')->distinct()
         ->where('Make', '=', $brand)
         ->where('Model', '=', $model)
@@ -3357,7 +3363,7 @@ class FilesController extends Controller
     public function editFile($id) {
 
         if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'edit-file')){
-        
+
             $file = File::findOrFail($id);
 
             $brandsObjects = Vehicle::OrderBy('make', 'asc')->select('make')->distinct()->get();
@@ -3384,8 +3390,8 @@ class FilesController extends Controller
             $versions = [];
             foreach($versionsObjects as $v){
                 if($v->generation != '')
-                $versions []= $v->generation;   
-            }        
+                $versions []= $v->generation;
+            }
 
             $enginesObjects = Vehicle::OrderBy('engine', 'asc')->whereNotNull('engine')->select('engine')->distinct()
             ->where('Make', '=', $file->brand)
@@ -3396,8 +3402,8 @@ class FilesController extends Controller
             $engines = [];
             foreach($enginesObjects as $e){
                 if($e->engine != '')
-                $engines []= $e->engine;   
-            }   
+                $engines []= $e->engine;
+            }
 
             $ecus = Vehicle::OrderBy('Engine_ECU', 'asc')->whereNotNull('Engine_ECU')->select('Engine_ECU')->distinct()
             ->where('Make', '=', $file->brand)
@@ -3415,9 +3421,9 @@ class FilesController extends Controller
 
             $ecusArray = array_values(array_unique($ecusArray));
 
-                return view('files.edit', [ 'file' => $file, 
-                'brands' => $brands, 
-                'models' => $models, 
+                return view('files.edit', [ 'file' => $file,
+                'brands' => $brands,
+                'models' => $models,
                 'versions' => $versions,
                 'engines' => $engines,
                 'ecus' => $ecusArray
@@ -3445,17 +3451,17 @@ class FilesController extends Controller
 
         if( !$schedual ) {
             $new = new Schedualer();
-            $new->days = $request->days; 
-            $new->time_of_day = $request->time_of_day; 
-            $new->cycle = $request->cycle; 
-            $new->save(); 
+            $new->days = $request->days;
+            $new->time_of_day = $request->time_of_day;
+            $new->cycle = $request->cycle;
+            $new->save();
         }
         else{
-           
-            $schedual->days = $request->days; 
-            $schedual->time_of_day = $request->time_of_day; 
+
+            $schedual->days = $request->days;
+            $schedual->time_of_day = $request->time_of_day;
             $schedual->cycle = $request->cycle;
-            $schedual->save(); 
+            $schedual->save();
         }
 
         $filesObject = File::Orderby('files.created_at', 'desc')
@@ -3465,7 +3471,7 @@ class FilesController extends Controller
         $filesObject = $filesObject->join('request_files', 'files.id', '=' , 'request_files.file_id');
         $filesObject = $filesObject->join('file_feedback', 'request_files.id', '=' , 'file_feedback.request_file_id', 'left outer')->whereNull('type');
         $reminderFiles = $filesObject->get();
-        
+
         foreach($reminderFiles as $file){
 
             $alreadyadded = EmailReminder::where('file_id', $file->id)
@@ -3527,15 +3533,15 @@ class FilesController extends Controller
         $message = EngineerFileNote::findOrFail($request->id);
         $message->egnineers_internal_notes = $request->message;
         $message->save();
-        
+
         return redirect()->back()
         ->with('success', 'Engineer note successfully Edited!')
         ->with('tab','chat');
     }
-    
+
     public function downloadAutotuner( $id,$requestFileID ) {
 
-        $file = File::findOrFail($id); 
+        $file = File::findOrFail($id);
 
         $autoTunerEncryptedFile = AutotunerEncrypted::where('file_id', $id)
         ->where('request_file_id', $requestFileID)
@@ -3554,8 +3560,8 @@ class FilesController extends Controller
 
             }
             else{
-
-                $file_path = '/mnt/portal.ecutech.gr'.$file->file_path.$autoTunerEncryptedFile->name;
+                $file_path = env('MNT_ECUTECH').$file->file_path.$autoTunerEncryptedFile->name;
+                //p $file_path = '/mnt/portal.ecutech.gr'.$file->file_path.$autoTunerEncryptedFile->name;
                 // $file_path = public_path('/../../portal/public/'.$file->file_path).$autoTunerEncryptedFile->name;
             }
 
@@ -3570,8 +3576,8 @@ class FilesController extends Controller
 
             }
             else{
-
-                $file_path = '/mnt/portal.e-tuningfiles.com'.$file->file_path.$autoTunerEncryptedFile->name;
+                $file_path = env('MNT_ETUNINGFILES').$file->file_path.$autoTunerEncryptedFile->name;
+                //p $file_path = '/mnt/portal.e-tuningfiles.com'.$file->file_path.$autoTunerEncryptedFile->name;
                 // $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$autoTunerEncryptedFile->name;
             }
 
@@ -3599,12 +3605,13 @@ class FilesController extends Controller
 
             }
             else{
-
-                $file_path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$autoTunerEncryptedFile->name;
+                $file_path = env('MNT_TUNINGX').$file->file_path.$autoTunerEncryptedFile->name;
+                //p $file_path = '/mnt/portal.tuning-x.com'.$file->file_path.$autoTunerEncryptedFile->name;
+                //$file_path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$autoTunerEncryptedFile->name;
                 // $file_path = public_path('/../../tuningX/public/'.$file->file_path).$autoTunerEncryptedFile->name;
             }
         }
-        
+
         return response()->download($file_path);
 
     }
@@ -3615,7 +3622,7 @@ class FilesController extends Controller
         //     return abort(404);
         // }
 
-        $file = File::findOrFail($id); 
+        $file = File::findOrFail($id);
 
         $magicEncryptedFile = MagicEncryptedFile::where('file_id', $id)
         ->where('request_file_id', $requestFileID)
@@ -3633,8 +3640,8 @@ class FilesController extends Controller
 
             }
             else{
-
-                $file_path = '/mnt/portal.ecutech.gr'.$file->file_path.$magicEncryptedFile->name;
+                $file_path = env('MNT_ECUTECH').$file->file_path.$magicEncryptedFile->name;
+                //p $file_path = '/mnt/portal.ecutech.gr'.$file->file_path.$magicEncryptedFile->name;
                 // $file_path = public_path('/../../portal/public/'.$file->file_path).$magicEncryptedFile->name;
             }
 
@@ -3649,8 +3656,8 @@ class FilesController extends Controller
 
             }
             else{
-
-                $file_path = '/mnt/portal.e-tuningfiles.com'.$file->file_path.$magicEncryptedFile->name;
+                $file_path = env('MNT_ETUNINGFILES').$file->file_path.$magicEncryptedFile->name;
+                //p $file_path = '/mnt/portal.e-tuningfiles.com'.$file->file_path.$magicEncryptedFile->name;
                 // $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$magicEncryptedFile->name;
             }
 
@@ -3678,12 +3685,13 @@ class FilesController extends Controller
 
             }
             else{
-
-                $file_path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$magicEncryptedFile->name;
+                $file_path = env('MNT_TUNINGX').$file->file_path.$magicEncryptedFile->name;
+                //p $file_path = '/mnt/portal.tuning-x.com'.$file->file_path.$magicEncryptedFile->name;
+                //$file_path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$magicEncryptedFile->name;
                 // $file_path = public_path('/../../tuningX/public/'.$file->file_path).$magicEncryptedFile->name;
             }
         }
-        
+
         return response()->download($file_path);
     }
 
@@ -3693,10 +3701,10 @@ class FilesController extends Controller
             return abort(404);
         }
 
-        $file = File::findOrFail($id); 
+        $file = File::findOrFail($id);
 
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
-        
+
         if($file->tool_type == 'slave' && $file->tool_id == $kess3Label->id){
 
             $notProcessedAlientechFile = AlientechFile::where('file_id', $file->id)
@@ -3706,7 +3714,7 @@ class FilesController extends Controller
             ->first();
 
             if($notProcessedAlientechFile){
-               
+
                 $fileNameEncoded = $this->alientechObj->downloadEncodedFile($id, $notProcessedAlientechFile, $fileName);
                 $notProcessedAlientechFile->processed = 1;
                 $notProcessedAlientechFile->save();
@@ -3721,8 +3729,8 @@ class FilesController extends Controller
 
                     }
                     else{
-
-                        $file_path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileNameEncoded;
+                        $file_path = env('MNT_ECUTECH').$file->file_path.$fileNameEncoded;
+                        //p $file_path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileNameEncoded;
                         // $file_path = public_path('/../../portal/public/'.$file->file_path).$fileNameEncoded;
                     }
 
@@ -3737,8 +3745,8 @@ class FilesController extends Controller
 
                     }
                     else{
-
-                        $file_path = '/mnt/portal.e-tuningfiles.com'.$file->file_path.$fileNameEncoded;
+                        $file_path = env('MNT_ETUNINGFILES').$file->file_path.$fileNameEncoded;
+                        //p $file_path = '/mnt/portal.e-tuningfiles.com'.$file->file_path.$fileNameEncoded;
                         // $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$fileNameEncoded;
                     }
 
@@ -3766,13 +3774,14 @@ class FilesController extends Controller
 
                     }
                     else{
-
-                        $file_path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$fileNameEncoded;
+                        $file_path = env('MNT_TUNINGX').$file->file_path.$fileNameEncoded;
+                        //p $file_path = '/mnt/portal.tuning-x.com'.$file->file_path.$fileNameEncoded;
+                        //$file_path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$fileNameEncoded;
                         // $file_path = public_path('/../../tuningX/public/'.$file->file_path).$fileNameEncoded;
                     }
                 }
-                
-                
+
+
                 return response()->download($file_path);
             }
             else{
@@ -3784,7 +3793,7 @@ class FilesController extends Controller
                 if($processedFile->extension != ''){
                     $finalFileName = $processedFile->name;
                     // $finalFileName = $processedFile->name.'.'.$processedFile->extension;
-                    
+
 
                 }
                 else{
@@ -3804,8 +3813,8 @@ class FilesController extends Controller
 
                 }
                 else{
-
-                    $file_path = '/mnt/portal.ecutech.gr'.$file->file_path.$finalFileName;
+                    $file_path = env('MNT_ECUTECH').$file->file_path.$finalFileName;
+                    //p $file_path = '/mnt/portal.ecutech.gr'.$file->file_path.$finalFileName;
                     // $file_path = public_path('/../../portal/public/'.$file->file_path).$finalFileName;
                 }
 
@@ -3824,15 +3833,15 @@ class FilesController extends Controller
                 else{
 
                     if($file->api == 0){
-
-                        $file_path = '/mnt/portal.e-tuningfiles.com'.$file->file_path.$finalFileName;
+                        $file_path = env('MNT_ETUNINGFILES').$file->file_path.$finalFileName;
+                        //p $file_path = '/mnt/portal.e-tuningfiles.com'.$file->file_path.$finalFileName;
                         // $file_path = public_path('/../../portal.e-tuningfiles.com/public/'.$file->file_path).$finalFileName;
                     }
                     else if($file->api == 1){
-                        
+
                         $file_path = public_path('/public/'.$file->file_path).$finalFileName;
 
-                        
+
                     }
 
                     // dd($file_path);
@@ -3857,10 +3866,10 @@ class FilesController extends Controller
                         $file_path = public_path('/../../ctf/public/'.$file->file_path).$finalFileName;
                     }
                     else if($file->api == 1){
-                        
+
                         $file_path = public_path('/public/'.$file->file_path).$finalFileName;
 
-                        
+
                     }
 
                     // dd($file_path);
@@ -3875,8 +3884,8 @@ class FilesController extends Controller
 
                 }
                 else{
-
-                    $file_path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$finalFileName;
+                    $file_path = '/mnt/portal.tuning-x.com'.$file->file_path.$finalFileName;
+                    //$file_path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$finalFileName;
                     // $file_path = public_path('/../../tuningX/public/'.$file->file_path).$finalFileName;
                 }
             }
@@ -3904,7 +3913,7 @@ class FilesController extends Controller
 
                 if($file->on_dev == 1){
                     $path = public_path('/../../stagingportalecutech/public'.$file->file_path);
-                
+
                 }
                 else{
                     $path = '/mnt/portal.ecutech.gr'.$file->file_path;
@@ -3920,7 +3929,7 @@ class FilesController extends Controller
 
                 if($file->on_dev == 1){
                     $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path);
-                
+
                 }
                 else{
                     $path = '/mnt/portal.e-tuningfiles.com'.$file->file_path;
@@ -3936,7 +3945,7 @@ class FilesController extends Controller
 
                 if($file->on_dev == 1){
                     $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path);
-                
+
                 }
                 else{
                     $path = public_path('/../../ctf/public'.$file->file_path);
@@ -3947,7 +3956,7 @@ class FilesController extends Controller
 
             if($file->on_dev == 1){
                 $path = public_path('/../../TuningXV2/public'.$file->file_path);
-            
+
             }
             else{
                 $path = '/mnt/portal.tuning-x.com'.$file->file_path;
@@ -3972,7 +3981,7 @@ class FilesController extends Controller
         // if(!Auth::user()->is_admin()){
         //     return abort(404);
         // }
-        
+
         $note = EngineerFileNote::findOrFail($request->note_id);
         $note->delete();
         return response('Note deleted', 200);
@@ -4004,7 +4013,7 @@ class FilesController extends Controller
         try {
 
             // dd('message');
-            
+
             $accountSid = Key::whereNull('subdealer_group_id')
             ->where('key', 'twilio_sid')->first()->value;
 
@@ -4017,12 +4026,12 @@ class FilesController extends Controller
 
             $client = new Client($accountSid, $authToken);
 
-            
+
             $message = $client->messages
                 ->create('+923218612198', // to
                         ["body" => 'Test Message', "from" => "E-TuningFiles"]
             );
-            
+
 
             \Log::info('message sent to:'.'+923218612198');
 
@@ -4035,7 +4044,7 @@ class FilesController extends Controller
     public function sendMessage($receiver, $message, $frontendID, $fileID)
     {
         try {
-            
+
             $accountSid = Key::whereNull('subdealer_group_id')
             ->where('key', 'twilio_sid')->first()->value;
 
@@ -4101,7 +4110,7 @@ class FilesController extends Controller
         // if(!Auth::user()->is_admin()){
         //     return abort(404);
         // }
-    
+
         $file = File::findOrFail($request->file_id);
 
         // dd($file);
@@ -4113,7 +4122,7 @@ class FilesController extends Controller
         else{
             $assign->assigned_from = "None";
         }
-        
+
         $assign->assigned_to = User::findOrFail($request->assigned_to)->name;
         $assign->assigned_by = Auth::user()->name;
         $assign->file_id = $file->id;
@@ -4125,14 +4134,14 @@ class FilesController extends Controller
 
         $file->save();
 
-        
+
 
         $engineer = User::findOrFail($request->assigned_to);
 
         // dd($engineer);
 
         $customer = User::findOrFail($file->user_id);
-        
+
         //    $template = EmailTemplate::where('name', 'Engineer Assignment Email')->first();
         $template = EmailTemplate::where('slug', 'eng-assign')->where('front_end_id', $file->front_end_id)->first();
 
@@ -4141,10 +4150,10 @@ class FilesController extends Controller
         $html = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html);
         $html = str_replace("#customer_name", $customer->name ,$html);
         $html = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html);
-       
+
 
         $tunningType = $this->emailStagesAndOption($file);
-        
+
         $html = str_replace("#tuning_type", $tunningType,$html);
         $html = str_replace("#status", $file->status,$html);
         $html = str_replace("#file_url", route('file', $file->id),$html);
@@ -4183,25 +4192,25 @@ class FilesController extends Controller
 
                 \Mail::to($engineer->email)->send(new \App\Mail\AllMails(['engineer' => $engineer, 'html' => $html, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
                 $this->makeLogEntry('success', 'email sent to:'.$engineer->email, 'email', $file->id);
-            
+
             }
             catch(TransportException $e){
                 \Log::info($e->getMessage());
                 $this->makeLogEntry('error', 'email not sent to:'.$engineer->email.$e->getMessage(), 'email', $file->id);
-                
+
             }
         }
 
         if($this->manager['eng_assign_eng_sms'.$file->front_end_id]){
-        
+
             $this->sendMessage($engineer->phone, $message, $file->front_end_id, $file->id);
         }
 
         if($this->manager['eng_assign_eng_whatsapp'.$file->front_end_id]){
-        
+
             $this->sendWhatsappforEng($engineer->name,$engineer->phone, 'admin_assign', $file);
         }
-        
+
         return Redirect::to('files')->with(['success' => 'Engineer Assigned to File.']);
 
     }
@@ -4233,7 +4242,7 @@ class FilesController extends Controller
         }
 
         if($supportMessage){
-            $components  = 
+            $components  =
             [
                 [
                     "type" => "header",
@@ -4254,7 +4263,7 @@ class FilesController extends Controller
             ];
         }
         else{
-            $components  = 
+            $components  =
             [
                 [
                     "type" => "header",
@@ -4278,7 +4287,7 @@ class FilesController extends Controller
 
         try {
             $response = $whatappObj->sendTemplateMessage($number,$template, 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'messages');
-            
+
         }
         catch(Exception $e){
             \Log::info($e->getMessage());
@@ -4303,7 +4312,7 @@ class FilesController extends Controller
         $customer = 'Task Customer';
 
         if($file->name){
-            $customer = $file->name; 
+            $customer = $file->name;
         }
 
         if($file->front_end_id == 1){
@@ -4317,7 +4326,7 @@ class FilesController extends Controller
         }
 
         if($supportMessage){
-            $components  = 
+            $components  =
             [
                 [
                     "type" => "header",
@@ -4338,7 +4347,7 @@ class FilesController extends Controller
             ];
         }
         else{
-            $components  = 
+            $components  =
             [
                 [
                     "type" => "header",
@@ -4362,13 +4371,13 @@ class FilesController extends Controller
 
         try {
             $response = $whatappObj->sendTemplateMessage($number,$template, 'en', $accessToken, $fromPhoneNumberId, $components, $messages = 'messages');
-            
+
         }
         catch(Exception $e){
             \Log::info($e->getMessage());
         }
 
-        
+
     }
 
     public function changSupportStatus(Request $request){
@@ -4401,15 +4410,15 @@ class FilesController extends Controller
         // if(!Auth::user()->is_admin()){
         //     return abort(404);
         // }
-        
+
         $file = File::findOrFail($request->file_id);
-        
+
         $this->changeStatusLog($file, $request->status, 'status', 'File status changed by engineer from Admin Task panel.');
 
         $file->status = $request->status;
-        
+
         $file->updated_at = Carbon::now();
-        
+
         $customer = User::findOrFail($file->user_id);
 
         if($file->status == 'completed'){
@@ -4430,7 +4439,7 @@ class FilesController extends Controller
         }
 
         if($request->status == 'rejected'){
-            
+
             if($file->rejected == 0){
 
                 $credit = new Credit();
@@ -4474,11 +4483,11 @@ class FilesController extends Controller
             }
 
         }
-        
+
         $file->save();
 
         $admin = get_admin();
-    
+
         // $template = EmailTemplate::where('name', 'Status Change')->first();
         $template = EmailTemplate::where('slug', 'sta-cha')->where('front_end_id', $file->front_end_id)->first();
 
@@ -4487,10 +4496,10 @@ class FilesController extends Controller
         $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
         $html1 = str_replace("#customer_name", $customer->name ,$html1);
         $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
-        
+
 
         $tunningType = $this->emailStagesAndOption($file);
-        
+
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
         $html1 = str_replace("#file_url", route('file', $file->id),$html1);
@@ -4500,10 +4509,10 @@ class FilesController extends Controller
         $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
         $html2 = str_replace("#customer_name", $file->name ,$html2);
         $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
-        
+
 
         $tunningType = $this->emailStagesAndOption($file);
-        
+
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html2);
 
@@ -4534,7 +4543,7 @@ class FilesController extends Controller
 
         $message2 = str_replace("#customer", $file->name ,$message);
         $message2 = str_replace("#status", $file->status ,$message2);
-        
+
         if($file->front_end_id == 1){
             $subject = "ECU Tech: File Status Changed!";
         }
@@ -4551,7 +4560,7 @@ class FilesController extends Controller
         if($this->manager['status_change_cus_email'.$file->front_end_id]){
 
             try{
-                
+
                 \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
                 $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
 
@@ -4580,7 +4589,7 @@ class FilesController extends Controller
         }
 
         if($this->manager['status_change_admin_whatsapp'.$file->front_end_id]){
-        
+
             $this->sendWhatsappforEng($admin->name,$admin->phone, 'status_change', $file);
         }
 
@@ -4589,7 +4598,7 @@ class FilesController extends Controller
         }
 
         if($this->manager['status_change_cus_whatsapp'.$file->front_end_id]){
-        
+
             $this->sendWhatsapp($customer->name,$customer->phone, 'admin_assign', $file);
         }
 
@@ -4597,9 +4606,9 @@ class FilesController extends Controller
     }
 
     public function fileEngineersNotes(Request $request)
-    {   
+    {
         $noteItself = $request->egnineers_internal_notes;
-        
+
         $file = File::findOrFail($request->file_id);
 
         $reply = new EngineerFileNote();
@@ -4620,7 +4629,7 @@ class FilesController extends Controller
             $fileName = str_replace(' ', '_', $fileName);
 
             if($file->front_end_id == 1){
-                
+
                 if($file->subdealer_group_id){
                     $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName);
                 }
@@ -4634,11 +4643,11 @@ class FilesController extends Controller
                         // $attachment->move(public_path('/../../portal/public/'.$file->file_path),$fileName);
                     }
 
-                    
+
                 }
             }
             else if($file->front_end_id == 3){
-                
+
                 if($file->subdealer_group_id){
                     $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName);
                 }
@@ -4655,7 +4664,7 @@ class FilesController extends Controller
                 }
             }
             else if($file->front_end_id == 4){
-                
+
                 if($file->subdealer_group_id){
                     $attachment->move(public_path('/../../subportal/public/'.$file->file_path),$fileName);
                 }
@@ -4674,9 +4683,10 @@ class FilesController extends Controller
                 if($file->on_dev == 1){
                     $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
                 }
-                
+
                 else{
-                    $attachment->move('/mnt/portal.tuning-x.com/uploads'.$file->file_path,$fileName);
+                    $attachment->move('/mnt/portal.tuning-x.com'.$file->file_path,$fileName);
+                    //$attachment->move('/mnt/portal.tuning-x.com/uploads'.$file->file_path,$fileName);
                     // $attachment->move(public_path('/../../tuningX/public/'.$file->file_path),$fileName);
                 }
 
@@ -4690,7 +4700,7 @@ class FilesController extends Controller
         $reply->user_id = Auth::user()->id;
 
         $latest = RequestFile::where('file_id', $request->file_id)->where('show_later', 0)->latest()->first();
-        
+
         if($latest != NULL){
             $reply->request_file_id = $latest->id;
         }
@@ -4711,7 +4721,7 @@ class FilesController extends Controller
         $file->save();
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
-    
+
         // $template = EmailTemplate::where('name', 'Message To Client')->first();
         $template = EmailTemplate::where('slug', 'mess-to-client')->where('front_end_id', $file->front_end_id)->first();
 
@@ -4720,7 +4730,7 @@ class FilesController extends Controller
         $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
         $html1 = str_replace("#customer_name", $customer->name ,$html1);
         $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine,$html1);
-        
+
         $tunningType = $this->emailStagesAndOption($file);
 
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
@@ -4733,10 +4743,10 @@ class FilesController extends Controller
         $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
         $html2 = str_replace("#customer_name", $file->name ,$html2);
         $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine,$html2);
-        
+
 
         $tunningType = $this->emailStagesAndOption($file);
-        
+
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
         $html2 = str_replace("#status", $file->status,$html2);
         $html2 = str_replace("#note", $request->egnineers_internal_notes,$html2);
@@ -4806,14 +4816,14 @@ class FilesController extends Controller
                 $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
             }
         }
-        
+
         if($this->manager['msg_eng_admin_sms'.$file->front_end_id]){
-            
+
             $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
         }
 
         if($this->manager['msg_eng_admin_whatsapp'.$file->front_end_id]){
-            
+
             $this->sendWhatsappforEng($admin->name, $admin->phone, 'support_message_from_engineer', $file, $noteItself);
         }
 
@@ -4822,7 +4832,7 @@ class FilesController extends Controller
         }
 
         if($this->manager['msg_eng_cus_whatsapp'.$file->front_end_id]){
-            
+
             $this->sendWhatsapp($customer->name, $customer->phone, 'support_message_from_engineer', $file, $noteItself);
         }
 
@@ -4858,16 +4868,16 @@ class FilesController extends Controller
 
         \Log::info( $request->all() );
     }
-    
+
     public function uploadFileFromEngineer(Request $request) {
 
         $attachment = $request->file('file');
         $oldName = $attachment->getClientOriginalName();
         $encode = (boolean) $request->encode;
         $magic = (boolean) $request->magic;
-        
+
         $file = File::findOrFail($request->file_id);
-        
+
         $engineerFile = new RequestFile();
         $engineerFile->request_file = $oldName;
         $engineerFile->old_name = $oldName;
@@ -4910,7 +4920,7 @@ class FilesController extends Controller
 
         $middleName = $file->id;
         $middleName .= date("dmy");
-        
+
         foreach($file->softwares as $s){
             if($s->service_id != 1){
                 if($s->reply_id == $engineerFile->id){
@@ -4918,9 +4928,9 @@ class FilesController extends Controller
                 }
             }
         }
-        
+
         $newFileName = $file->brand.'_'.$file->model.'_'.$middleName.'_v'.$file->files->count();
-        
+
         $newFileName = str_replace('/', '', $newFileName);
         $newFileName = str_replace('\\', '', $newFileName);
         $newFileName = str_replace('#', '', $newFileName);
@@ -4935,7 +4945,7 @@ class FilesController extends Controller
             $attachment->move(public_path('/../../subportal/public'.$file->file_path),$newFileName);
 
         }
-        
+
         else{
 
             if($file->front_end_id == 1){
@@ -4987,19 +4997,19 @@ class FilesController extends Controller
         }
 
         }
-        
+
         else if($encode == 1){
 
             if($file->subdealer_group_id){
                 $attachment->move(public_path('/../../subportal/public'.$file->file_path),$newFileName);
-    
+
             }
-            
+
             else{
-    
+
                 if($file->front_end_id == 1){
                     // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
-    
+
                     if($file->on_dev == 1){
                         $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
                     }
@@ -5007,11 +5017,11 @@ class FilesController extends Controller
                         $attachment->move('/mnt/portal.ecutech.gr'.$file->file_path,$newFileName);
                         // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
                     }
-    
+
                 }
                 else if($file->front_end_id == 3){
                     // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
-    
+
                     if($file->on_dev == 1){
                         $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
                     }
@@ -5019,21 +5029,21 @@ class FilesController extends Controller
                         $attachment->move('/mnt/portal.e-tuningfiles.com'.$file->file_path,$newFileName);
                         // $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
                     }
-    
+
                 }
                 else if($file->front_end_id == 4){
                     // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
-    
+
                     if($file->on_dev == 1){
                         $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
                     }
                     else{
                         $attachment->move(public_path('/../../ctf/public'.$file->file_path),$newFileName);
                     }
-    
+
                 }
                 else if($file->front_end_id == 2){
-    
+
                     if($file->on_dev == 1){
                         $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
                     }
@@ -5052,9 +5062,9 @@ class FilesController extends Controller
                 if($file->front_end_id == 1){
 
                     // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
-                    
+
                     if($file->on_dev == 1){
-                        
+
                         $path = public_path('/../../stagingportalecutech/public'.$file->file_path).$newFileName;
                     }
                     else{
@@ -5067,9 +5077,9 @@ class FilesController extends Controller
                 else if($file->front_end_id == 3){
 
                     // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
-                    
+
                     if($file->on_dev == 1){
-                        
+
                         $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
                     }
                     else{
@@ -5081,9 +5091,9 @@ class FilesController extends Controller
                 else if($file->front_end_id == 4){
 
                     // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
-                    
+
                     if($file->on_dev == 1){
-                        
+
                         $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
                     }
                     else{
@@ -5094,11 +5104,12 @@ class FilesController extends Controller
                 else if($file->front_end_id == 2){
 
                     if($file->on_dev == 1){
-                        
+
                         $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
                     }
                     else{
-                        $path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$newFileName;
+                        $path = '/mnt/portal.tuning-x.com'.$file->file_path.$newFileName;
+                        //$path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$newFileName;
                         // $path = public_path('/../../tuningX/public'.$file->file_path).$newFileName;
                     }
                 }
@@ -5115,35 +5126,35 @@ class FilesController extends Controller
 
             // if($file->subdealer_group_id){
             //     $attachment->move(public_path('/../../subportal/public'.$file->file_path),$newFileName);
-    
+
             // }
-            
+
             // else{
-    
+
             //     if($file->front_end_id == 1){
             //         // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
-    
+
             //         if($file->on_dev == 1){
             //             $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
             //         }
             //         else{
             //             $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
             //         }
-    
+
             //     }
             //     else if($file->front_end_id == 3){
             //         // $attachment->move(public_path('/../../portal/public'.$file->file_path),$newFileName);
-    
+
             //         // if($file->on_dev == 1){
             //         //     $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
             //         // }
             //         // else{
             //             $attachment->move(public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path),$newFileName);
             //         // }
-    
+
             //     }
             //     else if($file->front_end_id == 2){
-    
+
             //         if($file->on_dev == 1){
             //             $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
             //         }
@@ -5163,9 +5174,9 @@ class FilesController extends Controller
                 if($file->front_end_id == 1){
 
                     // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
-                    
+
                     if($file->on_dev == 1){
-                        
+
                         $path = public_path('/../../stagingportalecutech/public'.$file->file_path).$newFileName;
                     }
                     else{
@@ -5177,9 +5188,9 @@ class FilesController extends Controller
                 else if($file->front_end_id == 3){
 
                     // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
-                    
+
                     if($file->on_dev == 1){
-                        
+
                         $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
                     }
                     else{
@@ -5190,9 +5201,9 @@ class FilesController extends Controller
                 else if($file->front_end_id == 4){
 
                     // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
-                    
+
                     if($file->on_dev == 1){
-                        
+
                         $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
                     }
                     else{
@@ -5203,11 +5214,12 @@ class FilesController extends Controller
                 else{
 
                     if($file->on_dev == 1){
-                        
+
                         $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
                     }
                     else{
-                        $path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$newFileName;
+                        $path = '/mnt/portal.tuning-x.com'.$file->file_path.$newFileName;
+                        //$path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$newFileName;
                         // $path = public_path('/../../tuningX/public'.$file->file_path).$newFileName;
                     }
                 }
@@ -5233,9 +5245,9 @@ class FilesController extends Controller
                 if($file->front_end_id == 1){
 
                     // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
-                    
+
                     if($file->on_dev == 1){
-                        
+
                         $path = public_path('/../../stagingportalecutech/public'.$file->file_path).$newFileName;
                     }
                     else{
@@ -5247,9 +5259,9 @@ class FilesController extends Controller
                 else if($file->front_end_id == 3){
 
                     // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
-                    
+
                     if($file->on_dev == 1){
-                        
+
                         $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
                     }
                     else{
@@ -5261,9 +5273,9 @@ class FilesController extends Controller
                 else if($file->front_end_id == 4){
 
                     // $path = public_path('/../../portal/public'.$file->file_path).$newFileName;
-                    
+
                     if($file->on_dev == 1){
-                        
+
                         $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
                     }
                     else{
@@ -5274,11 +5286,12 @@ class FilesController extends Controller
                 else{
 
                     if($file->on_dev == 1){
-                        
+
                         $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
                     }
                     else{
-                        $path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$newFileName;
+                        $path = '/mnt/portal.tuning-x.com'.$file->file_path.$newFileName;
+                        //$path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$newFileName;
                         // $path = public_path('/../../tuningX/public'.$file->file_path).$newFileName;
                     }
                 }
@@ -5287,7 +5300,7 @@ class FilesController extends Controller
 
             $this->autotunerObj->encrypt( $path, $file, $newFileName, $engineerFile);
         }
-        
+
         $allEearlierReminders = EmailReminder::where('user_id', $file->user_id)
         ->where('file_id', $file->id)->get();
 
@@ -5328,13 +5341,13 @@ class FilesController extends Controller
                     $this->changeStatusLog($file, 'completed', 'status', 'Engineer uploaded the file.');
                     $file->status = 'completed';
                 }
-                
+
                 $file->red = 0;
                 $file->submission_timer = NULL;
                 $file->updated_at = Carbon::now();
                 $file->save();
             }
-            
+
             if(!$file->response_time){
 
                 $file->reupload_time = Carbon::now();
@@ -5354,7 +5367,7 @@ class FilesController extends Controller
                 }
 
                 $old->support_status = "closed";
-                
+
                 $old->red = 0;
                 $old->timer = NULL;
                 $old->save();
@@ -5366,7 +5379,7 @@ class FilesController extends Controller
                     $this->changeStatusLog($file, 'closed', 'support_status', 'Engineer uploaded the file.');
                 }
                 $file->support_status = "closed";
-                
+
                 $file->red = 0;
                 $file->timer = NULL;
                 $file->checked_by = 'engineer';
@@ -5381,7 +5394,7 @@ class FilesController extends Controller
 
         $customer = User::findOrFail($file->user_id);
         $admin = get_admin();
-    
+
         // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
         $template = EmailTemplate::where('slug', 'file-up-from-eng')->where('front_end_id', $file->front_end_id)->first();
 
@@ -5390,9 +5403,9 @@ class FilesController extends Controller
         $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
         $html1 = str_replace("#customer_name", $customer->name ,$html1);
         $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
-        
+
         $tunningType = $this->emailStagesAndOption($file);
-        
+
         $html1 = str_replace("#response_time", \Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans(),$html1);
         $html1 = str_replace("#tuning_type", $tunningType,$html1);
         $html1 = str_replace("#status", $file->status,$html1);
@@ -5403,7 +5416,7 @@ class FilesController extends Controller
         $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
         $html2 = str_replace("#customer_name", $file->name ,$html2);
         $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
-        
+
         $tunningType = $this->emailStagesAndOption($file);
 
         $html2 = str_replace("#tuning_type", $tunningType,$html2);
@@ -5434,7 +5447,7 @@ class FilesController extends Controller
 
         $message1 = str_replace("#customer", $customer->name ,$message);
         $message2 = str_replace("#customer", $file->name ,$message);
-        
+
         if($file->front_end_id == 1){
             $subject = "ECU Tech: Engineer uploaded a file in reply.";
         }
@@ -5455,7 +5468,7 @@ class FilesController extends Controller
                 try{
                     \Mail::to($customer->email)->send(new \App\Mail\AllMails([ 'html' => $html2, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
                     $this->makeLogEntry('success', 'email sent to:'.$customer->email, 'email', $file->id);
-                    
+
                 }
                 catch(TransportException $e){
                     \Log::info($e->getMessage());
@@ -5474,7 +5487,7 @@ class FilesController extends Controller
                     $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
                 }
             }
-            
+
             if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
                 $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
             }
@@ -5493,7 +5506,7 @@ class FilesController extends Controller
 
         }
     }
-        
+
         return response('file uploaded', 200);
     }
 
@@ -5536,7 +5549,7 @@ class FilesController extends Controller
         if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'engineers-report')){
 
             $stages = Service::where('type', 'tunning')->get();
-        
+
             $engineers = User::whereIn('role_id', [2,3])->orWhere('id', 3)->get();
 
             return view('files.report-engineers-live', ['stages' => $stages, 'engineers' => $engineers]);
@@ -5578,7 +5591,7 @@ class FilesController extends Controller
             'name' => $fileName,
         );
     }
-    
+
     public function getFeedbackReport(Request $request){
 
         $files = $this->getReportFilesWithFeedback($request->engineer, $request->feedback);
@@ -5589,7 +5602,7 @@ class FilesController extends Controller
         foreach($files as $file){
 
             $hasFiles = true;
-            
+
             if($file->assigned){
                 $assigned = $file->assigned->name;
             }
@@ -5608,22 +5621,22 @@ class FilesController extends Controller
             $html .= '<td>'. $count .'</td>';
             $html .= '<td>'.$file->brand.'</td>';
             $html .= '<td>'.$file->model.'</td>';
-            $html .= '<td>'.$file->ecu.'</td>';   
+            $html .= '<td>'.$file->ecu.'</td>';
             $html .= '<td><img class="p-r-5" alt="'.$file->stages.'" width="33" height="33" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'">'.$file->stages
-            
+
             .$options.'</td>';
             if($file->type == 'happy' || $file->type == 'good'){
-                $html .= '<td><span class="label label-success">'.ucfirst($file->type).'</span></td>'; 
+                $html .= '<td><span class="label label-success">'.ucfirst($file->type).'</span></td>';
             }
             else if ($file->type == 'ok'){
-                $html .= '<td><span class="label label-info">'.ucfirst($file->type).'</span></td>'; 
+                $html .= '<td><span class="label label-info">'.ucfirst($file->type).'</span></td>';
             }
             else{
                 if($file->type){
-                    $html .= '<td><span class="label label-danger">'.ucfirst($file->type).'</span></td>'; 
+                    $html .= '<td><span class="label label-danger">'.ucfirst($file->type).'</span></td>';
                 }
                 else{
-                    $html .= '<td><span class="label label-danger">'.'No Feedback'.'</span></td>'; 
+                    $html .= '<td><span class="label label-danger">'.'No Feedback'.'</span></td>';
                 }
             }
             $html .= '<td>'.$assigned.'</td>';
@@ -5644,7 +5657,7 @@ class FilesController extends Controller
         foreach($files as $file){
 
             $hasFiles = true;
-            
+
             if($file->assigned){
                 $assigned = $file->assigned->name;
             }
@@ -5662,9 +5675,9 @@ class FilesController extends Controller
             $html .= '<tr class="redirect-click" data-redirect="'.route('file', $file->id).'" role="row">';
             $html .= '<td>'. $count .'</td>';
             $html .= '<td>'.$file->brand .$file->engine  .'</td>';
-            $html .= '<td>'.$assigned.'</td>';    
+            $html .= '<td>'.$assigned.'</td>';
             $html .= '<td><img class="p-r-5" alt="'.$file->stages.'" width="33" height="33" data-src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" data-src-retina="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'" src="'.url('icons').'/'.\App\Models\Service::where('name', $file->stages)->first()->icon.'">'.$file->stages
-            
+
             .$options.'</td>';
             $html .= '<td>'.\Carbon\CarbonInterval::seconds( $file->response_time )->cascade()->forHumans().'</td>';
             $html .= '<td>'.\Carbon\Carbon::parse($file->created_at)->format('d/m/Y H:i: A').'</td>';
@@ -5732,7 +5745,7 @@ class FilesController extends Controller
             $endDate = date('Y-m-d', strtotime($date));
             $filesObject = $filesObject->whereDate('created_at', '<=' , $endDate);
         }
-        
+
         return $filesObject->get();
     }
 
@@ -5761,12 +5774,12 @@ class FilesController extends Controller
         // }
 
         $commentObj->whereNull('subdealer_group_id');
-        
+
         return $commentObj->get();
     }
 
     public function getResponseTimeAuto($file){
-        
+
         $fileAssignmentDateTime = Carbon::parse($file->assignment_time);
         $carbonUploadDateTime = Carbon::parse($file->reupload_time);
 
@@ -5776,12 +5789,12 @@ class FilesController extends Controller
     }
 
     public function getResponseTime($file){
-        
+
         $fileAssignmentDateTime = Carbon::parse($file->created_at);
         $carbonUploadDateTime = Carbon::parse($file->reupload_time);
 
         $feed = NewsFeed::findOrFail(1);
-        
+
         $dailyActivationTimeCarbon = Carbon::parse($feed->daily_activation_time);
         $dailyDeactivationTimeCarbon = Carbon::parse($feed->daily_deactivation_time);
 
@@ -5794,10 +5807,10 @@ class FilesController extends Controller
         $uploadBackToDate =  Carbon::parse( $fileUploadDay );
 
         $daysDiff =  $uploadBackToDate->diffInDays($assignmentBackToDate);
-        
+
         $fileAssignmentDayWorkHourStart = Carbon::parse( $fileAssignmentDay.' '.$feed->daily_activation_time );
         $fileAssignmentDayWorkHourEnd = Carbon::parse( $fileAssignmentDay.' '.$feed->daily_deactivation_time );
-        
+
         $fileUploadDayWorkHourStart = Carbon::parse( $fileUploadDay.' '.$feed->daily_activation_time );
         $fileUploadDayWorkHourEnd = Carbon::parse( $fileUploadDay.' '.$feed->daily_deactivation_time );
 
@@ -5814,12 +5827,12 @@ class FilesController extends Controller
         $differnceOfSecondsForFileAssingmentDay = 0;
 
         if( $fileAssignmentDateTime->between($fileAssignmentDayWorkHourStart, $fileAssignmentDayWorkHourEnd, true) ) {
-            
+
             $differnceOfSecondsForFileAssingmentDay = $fileAssignmentDateTime->diffInSeconds( $fileAssignmentDayWorkHourStart );
-            
+
         }
         else{
-            
+
             if($fileAssignmentDateTime->greaterThan($fileAssignmentDayWorkHourEnd)){
 
                 $totalTimeWihoutSubtraction -= $timeDiff;
@@ -5827,13 +5840,13 @@ class FilesController extends Controller
         }
 
         $responseTime = $totalTimeWihoutSubtraction - $differnceOfSecondsForFileAssingmentDay;
-        
+
         $differnceOfSecondsForFileUploadDay = 0;
-        
+
         if( $carbonUploadDateTime->between($fileUploadDayWorkHourStart, $fileUploadDayWorkHourEnd, true) ) {
-            
+
             $differnceOfSecondsForFileUploadDay = $carbonUploadDateTime->diffInSeconds( $fileUploadDayWorkHourEnd );
-            
+
         }
         else{
             if($fileUploadDayWorkHourStart->greaterThan($carbonUploadDateTime)){
@@ -5882,7 +5895,7 @@ class FilesController extends Controller
                         \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
                         \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
                         \Log::info("here new submission time: ".'file:'.$file->id.' --- '.$file->submission_timer);
-                        
+
                     }
 
                     if($file->timer != NULL){
@@ -5894,18 +5907,18 @@ class FilesController extends Controller
                                 if( (strtotime($file->timer)+($foat*60))  <= strtotime(now())){
                                     $file->red = 1;
                                     $file->save();
-                                }   
+                                }
                             }
-                            
+
                             if($file->status == 'submitted') {
-                                
+
                                 if( (strtotime($file->submission_timer)+($fsat*60))  <= strtotime(now())){
                                     $file->red = 1;
                                     $file->save();
-                                } 
+                                }
                             }
 
-                            
+
                         }
 
                         if($file->delay == 0){
@@ -5915,18 +5928,18 @@ class FilesController extends Controller
                                 if( (strtotime($file->timer)+($fodt*60))  <= strtotime(now())){
                                     $file->delayed = 1;
                                     $file->save();
-                                }   
+                                }
                             }
 
                             if($file->status == 'on_hold') {
-                                
+
                                 if( (strtotime($file->submission_timer)+($fsat*60))  > strtotime(now())){
                                     $file->delayed = 1;
                                     $file->save();
-                                } 
+                                }
                             }
 
-                            
+
 
                         }
 
@@ -5954,21 +5967,21 @@ class FilesController extends Controller
             $file = File::where('id',$id)->where(function($q){
 
                 $q->where('type', 'master');
-                
+
 
             })->where('is_credited', 1)
             // ->whereNull('original_file_id')
             ->orWhere(function($q){
-                
+
                 $q->where('type', 'subdealer');
                 $q->whereNotNull('assigned_from');
-                
+
             })->where('id',$id)
             ->where('is_credited', 1)
             // ->whereNull('original_file_id')
             ->first();
 
-            
+
         }
         else{
 
@@ -5977,15 +5990,15 @@ class FilesController extends Controller
                 $file = File::where('id',$id)->where(function($q){
 
                     $q->where('type', 'master');
-                    
-    
+
+
                 })->where('is_credited', 1)
                 // ->whereNull('original_file_id')
                 ->orWhere(function($q){
-                    
+
                     $q->where('type', 'subdealer');
                     $q->whereNotNull('assigned_from');
-                    
+
                 })->where('id',$id)
                 // ->whereNull('original_file_id')
                 ->where('is_credited', 1)->first();
@@ -5996,8 +6009,8 @@ class FilesController extends Controller
                 $file = File::where('id',$id)->where(function($q){
 
                     $q->where('type', 'master');
-                    
-    
+
+
                 })
                 ->where('id',$id)
                 ->where('is_credited', 1)
@@ -6015,19 +6028,19 @@ class FilesController extends Controller
         // dd($file);
 
         // dd($file->options_services);
-        
+
         if($file->checked_by == 'customer'){
             $file->checked_by = 'seen';
             $file->save();
         }
-        
+
         foreach($file->new_requests as $new){
             if($new->checked_by == 'customer'){
                 $new->checked_by = 'seen';
                 $new->save();
             }
         }
-        
+
         $vehicle = Vehicle::where('Make', $file->brand)
         ->where('Model', $file->model)
         ->where('Generation', $file->version)
@@ -6035,7 +6048,7 @@ class FilesController extends Controller
         ->first();
 
         // dd($vehicle);
-        
+
         $engineers = get_engineers();
 
         $activeFeed = NewsFeed::where('active', 1)->where('front_end_id', $file->front_end_id)->first();
@@ -6046,7 +6059,7 @@ class FilesController extends Controller
         else{
             $activeFeedType = 'danger';
         }
-        
+
         // $withoutTypeArray = $file->files->toArray();
         // $unsortedTimelineObjects = [];
 
@@ -6056,28 +6069,28 @@ class FilesController extends Controller
         //         $r['type'] = $fileReq->file_feedback->type;
         //     }
         //     $unsortedTimelineObjects []= $r;
-        // } 
-        
+        // }
+
         // $createdTimes = [];
 
         // foreach($file->files->toArray() as $t) {
         //     $createdTimes []= $t['created_at'];
-        // } 
-    
+        // }
+
         // foreach($file->engineer_file_notes->toArray() as $a) {
         //     $unsortedTimelineObjects []= $a;
         //     $createdTimes []= $a['created_at'];
-        // }   
+        // }
 
         // foreach($file->file_internel_events->toArray() as $b) {
         //     $unsortedTimelineObjects []= $b;
         //     $createdTimes []= $b['created_at'];
-        // } 
+        // }
 
         // foreach($file->file_urls->toArray() as $b) {
         //     $unsortedTimelineObjects []= $b;
         //     $createdTimes []= $b['created_at'];
-        // } 
+        // }
 
         // array_multisort($createdTimes, SORT_ASC, $unsortedTimelineObjects);
 
@@ -6087,7 +6100,7 @@ class FilesController extends Controller
         else{
             $comments = null;
         }
-        
+
         $showComments = false;
 
         $selectedStageOptionsLabels = [];
@@ -6135,7 +6148,7 @@ class FilesController extends Controller
         ->whereNull('subdealer_group_id')
         ->where('active', 1)
         ->orWhere('tuningx_active', 1)->whereNull('subdealer_group_id')->where('type', 'tunning')->get();
-        
+
         $kess3Label = Tool::where('label', 'Kess_V3')->where('type', 'slave')->first();
         $flexLabel = Tool::where('label', 'Flex')->where('type', 'slave')->first();
         $autotunerLabel = Tool::where('label', 'Autotuner')->where('type', 'slave')->first();
@@ -6164,10 +6177,10 @@ class FilesController extends Controller
 
         //     // Query to get the latest version from the table 'lua_versions' where file_id = 1
         //     $query = "SELECT * FROM lua_versions WHERE File_Id = " . $file->id . " ORDER BY Id DESC LIMIT 1";
-                            
+
         //     // Execute the query
         //     $result = $conn->query($query);
-        
+
         //     // Fetch the result as an associative array
         //     $latestVersion = $result->fetch(PDO::FETCH_ASSOC);
 
@@ -6177,7 +6190,7 @@ class FilesController extends Controller
         // catch (PDOException $e) {
         //     echo "Connection failed: " . $e->getMessage();
         // }
-        
+
         // // Close the connection
         // $conn = null;
 
@@ -6197,7 +6210,7 @@ class FilesController extends Controller
         else{
             abort(404);
         }
-    
+
     }
 
     public function saveMoreFiles($id, $alientechFileID){
@@ -6211,13 +6224,13 @@ class FilesController extends Controller
         // $alientechGUID = AlientechFile::where('purpose', 'download_encoded')->where('key', 'guid')->where('file_id', $id)->first()->value;
         $alientechObj = AlientechFile::findOrFail($alientechFileID);
         $alientechGUID = $alientechObj->value;
-        
+
         $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechGUID;
 
         $headers = [
             'X-Alientech-ReCodAPI-LLC' => $token,
         ];
-  
+
         $response = Http::withHeaders($headers)->get($getsyncOpURL);
         $responseBody = json_decode($response->getBody(), true);
 
@@ -6232,19 +6245,19 @@ class FilesController extends Controller
         $fileName = substr($var, strrpos($var, '/') + 1);
         $fileName = str_replace('#', '', $fileName);
         $fileName = $fileName.'_'.$file->id;
-        
+
         $slotGuid = $responseBody['slotGUID'];
-        
+
         $result = $responseBody['result'];
 
         if( isset($result['encodedFileURL']) ){
-            
+
             $url = $result['encodedFileURL'];
 
             $headers = [
                 'X-Alientech-ReCodAPI-LLC' => $token,
             ];
-    
+
             $response = Http::withHeaders($headers)->get($url);
             $responseBody = json_decode($response->getBody(), true);
 
@@ -6256,7 +6269,7 @@ class FilesController extends Controller
             $filepath = $responseBody['name'];
 
             $pathAndNameArrayEncoded = $this->getFileName($filepath, $file, 'encoded');
-            
+
             // save the decoded string to a file
             $flag = file_put_contents($pathAndNameArrayEncoded['path'], $contents);
 
@@ -6269,14 +6282,14 @@ class FilesController extends Controller
             $response = Http::withHeaders($headers)->post($url, []);
 
             $extension = pathinfo($responseBody['name'], PATHINFO_EXTENSION);
-            
+
             $obj = new AlientechFile();
             $obj->key = $extension;
             $obj->value = $pathAndNameArrayEncoded['name'];
             $obj->purpose = "encoded";
             $obj->file_id = $file->id;
             $obj->save();
-        
+
             //// this is repetitive code.
 
             $engineerFile = new RequestFile();
@@ -6330,7 +6343,7 @@ class FilesController extends Controller
                 $old->checked_by = 'engineer';
                 $this->changeStatusLog($old, 'closed', 'support_status', 'Engineer uploaded the file.');
                 $old->support_status = "closed";
-                
+
                 $old->red = 0;
                 $old->timer = NULL;
                 $old->save();
@@ -6338,7 +6351,7 @@ class FilesController extends Controller
 
             $this->changeStatusLog($file, 'closed', 'support_status', 'Engineer uploaded the file.');
                 $file->support_status = "closed";
-                
+
                 $file->red = 0;
                 $file->timer = NULL;
                 $file->checked_by = 'engineer';
@@ -6346,7 +6359,7 @@ class FilesController extends Controller
 
             $customer = User::findOrFail($file->user_id);
             $admin = get_admin();
-        
+
             // $template = EmailTemplate::where('name', 'File Uploaded from Engineer')->first();
             $template = EmailTemplate::where('slug', 'file-up-from-eng')
             ->where('front_end_id', $file->front_end_id)
@@ -6357,9 +6370,9 @@ class FilesController extends Controller
             $html1 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html1);
             $html1 = str_replace("#customer_name", $customer->name ,$html1);
             $html1 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html1);
-            
+
             $tunningType = $this->emailStagesAndOption($file);
-            
+
             $html1 = str_replace("#tuning_type", $tunningType,$html1);
             $html1 = str_replace("#status", $file->status,$html1);
             $html1 = str_replace("#file_url", route('file', $file->id),$html1);
@@ -6369,7 +6382,7 @@ class FilesController extends Controller
             $html2 = str_replace("#brand_logo", get_image_from_brand($file->brand) ,$html2);
             $html2 = str_replace("#customer_name", $file->name ,$html2);
             $html2 = str_replace("#vehicle_name", $file->brand." ".$file->engine ,$html2);
-            
+
             $tunningType = $this->emailStagesAndOption($file);
 
             $html2 = str_replace("#tuning_type", $tunningType,$html2);
@@ -6400,7 +6413,7 @@ class FilesController extends Controller
 
             $message1 = str_replace("#customer", $customer->name ,$message);
             $message2 = str_replace("#customer", $file->name ,$message);
-            
+
             if($file->front_end_id == 1){
                 $subject = "ECU Tech: Engineer uploaded a file in reply.";
             }
@@ -6422,7 +6435,7 @@ class FilesController extends Controller
                 }
             }
             if($this->manager['eng_file_upload_admin_email'.$file->front_end_id]){
-                
+
                 try{
                     \Mail::to($admin->email)->send(new \App\Mail\AllMails([ 'html' => $html1, 'subject' => $subject, 'front_end_id' => $file->front_end_id]));
                     $this->makeLogEntry('success', 'email sent to:'.$admin->email, 'email', $file->id);
@@ -6433,7 +6446,7 @@ class FilesController extends Controller
                     $this->makeLogEntry('error', 'email not sent to:'.$admin->email.$e->getMessage(), 'email', $file->id);
                 }
             }
-            
+
             if($this->manager['eng_file_upload_admin_sms'.$file->front_end_id]){
                 $this->sendMessage($admin->phone, $message1, $file->front_end_id, $file->id);
             }
@@ -6451,7 +6464,7 @@ class FilesController extends Controller
             }
 
             }
-        } 
+        }
     }
 
     public function changeStatusLog($file, $to, $type, $desc){
@@ -6479,7 +6492,7 @@ class FilesController extends Controller
             $tunningType = '<img alt=".'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->name.'" width="33" height="33" src="'.url('icons').'/'.\App\Models\Service::FindOrFail( $file->stage_services->service_id )->icon .'">';
             $tunningType .= '<span class="text-black" style="top: 2px; position:relative;">'.\App\Models\Service::FindOrFail( $file->stage_services->service_id)->name.'</span>';
         }
-        
+
         if($file->options_services){
 
             foreach($file->options_services as $option) {
