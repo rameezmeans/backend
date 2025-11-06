@@ -1108,7 +1108,7 @@ class FilesController extends Controller
                 $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
             }
             else{
-                $attachment->move('/mnt/portal.tuning-x.com/uploads'.$file->file_path,$newFileName);
+                $attachment->move('/mnt/portal.tuning-x.com'.$file->file_path,$newFileName);
                 // $attachment->move(public_path('/../../tuningX/public'.$file->file_path),$newFileName);
             }
         }
@@ -2102,7 +2102,7 @@ class FilesController extends Controller
                     $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
                 }
                 else{
-                    $attachment->move('/mnt/portal.tuning-x.com/uploads'.$file->file_path,$fileName);
+                    $attachment->move('/mnt/portal.tuning-x.com'.$file->file_path,$fileName);
                     // $attachment->move(public_path('/../../tuningX/public/'.$file->file_path),$fileName);
                 }
             }
@@ -3600,7 +3600,7 @@ class FilesController extends Controller
             }
             else{
 
-                $file_path = '/mnt/portal.tuning-x.com/uploads'.$file->file_path.$autoTunerEncryptedFile->name;
+                $file_path = '/mnt/portal.tuning-x.com'.$file->file_path.$autoTunerEncryptedFile->name;
                 // $file_path = public_path('/../../tuningX/public/'.$file->file_path).$autoTunerEncryptedFile->name;
             }
         }
