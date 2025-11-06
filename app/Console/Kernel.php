@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\ActiveFeedCron::class,
+        Commands\SetUserPassword::class,
     ];
     /**
      * Define the application's command schedule.
