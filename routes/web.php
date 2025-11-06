@@ -73,6 +73,7 @@ use SevenSpan\WhatsApp\WhatsApp;
 
 Route::get('/env', function () {
     // dd(env('DB_HOST'), env('DB_USERNAME'), env('DB_PASSWORD'), env('DB_DATABASE'), env('DB_SOCKET'));
+    // dd(env('APP_ENV'));
     dd(env('APP_ENV'));
 });
 
@@ -97,11 +98,7 @@ Route::get('/', function () {
 Route::get('/refund_zoho', function () {
 
     $credit = Credit::findOrFail(16966);
-
-    // dd($credit);
-
     $user = User::findOrFail($credit->user_id);
-
     (new ZohoController)->refundZohoInvoice($credit, $user);
 
 });

@@ -297,13 +297,43 @@ class File extends Model
                 }
 
                 if($this->front_end_id == 1){
-                    $path = public_path('/mnt/portal.ecutech.gr'.$this->file_path.$name);
+                    if(env('APP_ENV') == 'local'){
+                        $path = public_path('/../../portal/public'.$this->file_path.$name);
+                    }
+                    else{
+                        if($this->on_dev == 1){
+                            $path = public_path('/../../stagingportal/public'.$this->file_path.$name);
+                        }
+                        else{
+                            $path = '/mnt/portal.ecutech.gr'.$this->file_path.$name;
+                        }
+                    }
                 }
                 else if($this->front_end_id == 3){
-                    $path = public_path('/mnt/portal.e-tuningfiles.com'.$this->file_path.$name);
+                    if(env('APP_ENV') == 'local'){
+                        $path = public_path('/../../e-tuningfiles/public'.$this->file_path.$name);
+                    }
+                    else{
+                        if($this->on_dev == 1){
+                            $path = public_path('/../../stagingportaletuningfiles/public'.$this->file_path.$name);
+                        }
+                        else{
+                            $path = '/mnt/portal.e-tuningfiles.com'.$this->file_path.$name;
+                        }
+                    }
                 }
                 else{
-                    $path = public_path('/mnt/portal.tuning-x.com'.$this->file_path.$name);
+                    if(env('APP_ENV') == 'local'){
+                        $path = public_path('/../../tuningX/public'.$this->file_path.$name);
+                    }
+                    else{
+                        if($this->on_dev == 1){
+                            $path = public_path('/../../TuningXV2/public'.$this->file_path.$name);
+                        }
+                        else{
+                            $path = '/mnt/portal.tuning-x.com'.$this->file_path.$name;
+                        }
+                    }
                 }
 
                 if (file_exists($path)) {
@@ -344,22 +374,48 @@ class File extends Model
 
 
                 $name = $d->name;
-
-
+              
                 if($this->front_end_id == 1){
-                    // $path = public_path('/../../portal/public'.$this->file_path.$name);
-                    //$path = public_path('/mnt/portal.ecutech.gr'.$this->file_path.$name);
-                    $path = '/mnt/portal.ecutech.gr'.$this->file_path.$name;
+                    if(env('APP_ENV') == 'local'){
+                        $path = public_path('/../../portal/public'.$this->file_path.$name);
+                    }
+                    else{
+                        if($this->on_dev == 1){
+                            $path = public_path('/../../stagingportal/public'.$this->file_path.$name);
+                        }
+                        else{
+                            $path = '/mnt/portal.ecutech.gr'.$this->file_path.$name;
+                        }
+                    }
                 }
                 else if($this->front_end_id == 3){
-                    // $path = public_path('/../../portal.e-tuningfiles.com/public'.$this->file_path.$name);
-                    //$path = public_path('/mnt/portal.e-tuningfiles.com'.$this->file_path.$name);
-                    $path = '/mnt/portal.e-tuningfiles.com'.$this->file_path.$name;
+                    if(env('APP_ENV') == 'local'){
+                        $path = public_path('/../../e-tuningfiles/public'.$this->file_path.$name);
+                    }
+                    else{
+                        if($this->on_dev == 1){
+                            $path = public_path('/../../stagingportaletuningfiles/public'.$this->file_path.$name);
+                        }
+                        else{
+                            $path = '/mnt/portal.e-tuningfiles.com'.$this->file_path.$name;
+                        }
+                    }
+                    
                 }
                 else{
-                    //$path = public_path('/mnt/portal.tuning-x.com'.$this->file_path.$name);
-                    // $path = public_path('/../../tuningX/public'.$this->file_path.$name);
-                    $path = '/mnt/portal.tuning-x.com'.$this->file_path.$name;
+
+                    if(env('APP_ENV') == 'local'){
+                        $path = public_path('/../../tuningX/public'.$this->file_path.$name);
+                    }
+                    else{
+                        if($this->on_dev == 1){
+                            $path = public_path('/../../TuningXV2/public'.$this->file_path.$name);
+                        }
+                        else{
+                            $path = '/mnt/portal.tuning-x.com'.$this->file_path.$name;
+                        }
+                    }
+
                 }
 
                 $temp ['size']= filesize($path);
