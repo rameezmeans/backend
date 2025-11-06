@@ -9,30 +9,34 @@ use Illuminate\Support\Facades\Log;
 class SetUserPassword extends Command
 {
     protected $signature = 'user:set-password {email} {password}';
-    protected $description = 'Set a user password by email (admin only, CLI).';
+    protected $description = 'Set the given password for every user record with the specified email.';
 
     public function handle()
     {
         $email = $this->argument('email');
         $password = $this->argument('password');
 
-        $user = User::where('email', $email)->first();
+        $users = User::where('email', $email)->get();
 
-        if (! $user) {
-            $this->error("User not found: {$email}");
+        if ($users->isEmpty()) {
+            $this->error("No users found for {$email}");
             return 1;
         }
 
-        $user->password = Hash::make($password);
-        $user->save();
+        $hashed = Hash::make($password);
 
-        Log::info('Admin set user password via CLI', [
-            'user_id' => $user->id,
-            'by' => get_current_user(),
-            'time' => now()->toDateTimeString(),
-        ]);
+        foreach ($users as $user) {
+            $user->password = $hashed;
+            $user->save();
+            Log::info('Password updated via CLI', [
+                'user_id' => $user->id,
+                'email'   => $user->email,
+                'by'      => get_current_user(),
+                'time'    => now()->toDateTimeString(),
+            ]);
+        }
 
-        $this->info("Password set for {$email}");
+        $this->info("Password updated for {$users->count()} user(s) with {$email}");
         return 0;
     }
 }
