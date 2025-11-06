@@ -159,7 +159,7 @@ class AlientechController extends Controller
                     else{
                         // Save to production environment path
                         //$flag = file_put_contents('/mnt/portal.e-tuningfiles.com'.$pathAndNameArrayEncoded['path'], $contents);
-                        $flag = file_put_contents(env('MNT_EFILE').$pathAndNameArrayEncoded['path'], $contents);
+                        $flag = file_put_contents(env('MNT_ETUNINGFILES').$pathAndNameArrayEncoded['path'], $contents);
                     }
                 }
                 else{
