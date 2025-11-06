@@ -9453,40 +9453,61 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
 </script>
 
 @php
-    // Build candidate URLs in PHP
+    // Build candidate URLs and filename
     $decodedUrls = [];
+    $filenamedec = null;
+
     if (!empty($file->decoded_files)) {
         foreach ($file->decoded_files as $df) {
             $name = ($df->extension && $df->extension !== '')
                 ? ($df->name . '.' . $df->extension)
                 : $df->name;
             $decodedUrls[] = route('download', [$file->id, $name, 0]);
+            $filenamedec = $name; // last decoded file name
         }
     }
-    $fallbackUrl = route('download', [$file->id, $file->file_attached, 0]);
-@endphp
 
-{{-- <button id="processBtn" type="button" class="btn btn-primary">Process in DAVINCI</button> --}}
+    $fallbackUrl = route('download', [$file->id, $file->file_attached, 0]);
+    $filename = $filenamedec ?: $file->file_attached; // choose decoded or original
+@endphp
 
 <script>
 (async () => {
-  const decodedUrls = @json($decodedUrls);
-  const fallbackUrl = @json($fallbackUrl);
+  // Extract PHP values
+  const services = @json($file->services_array() ?? []);
+  const brand = @json(is_string($file->brand ?? null) ? $file->brand : ($file->brand->name ?? $file->brand_name ?? ""));
+  const ecu = @json(is_string($file->ecu ?? null) ? $file->ecu : ($file->ecu->name ?? $file->ecu_code ?? ""));
+  const decodedUrls = @json($decodedUrls ?? []);
+  const fallbackUrl = @json($fallbackUrl ?? "");
+  const filename = @json($filename ?? "input.bin");
+
+  // Pick file URL (decoded preferred, else fallback)
   const fileUrl = (decodedUrls && decodedUrls.length) ? decodedUrls[0] : fallbackUrl;
 
   document.getElementById('processBtn')?.addEventListener('click', async () => {
     try {
-      // 1) Fetch file from YOUR backend (cookies/permissions apply automatically)
+      // 1) Fetch the BIN from your backend
       const res = await fetch(fileUrl, { credentials: 'include' });
       if (!res.ok) throw new Error('Download failed: ' + res.status);
       const blob = await res.blob();
 
-      // 2) Send file to local agent
+      // 2) Send file + metadata to local agent
       const form = new FormData();
-      form.append('file', blob, 'input.bin');
-      const r = await fetch('http://127.0.0.1:8765/process_upload', { method: 'POST', body: form });
-      const data = await r.json();
+      form.append('file', blob, filename || 'input.bin');  // keep exact filename
+      form.append('filename', filename || '');
+      form.append('brand', brand || '');
+      form.append('ecu', ecu || '');
+      form.append('services', JSON.stringify(services || []));
 
+      // Debug (optional)
+      // console.log({ fileUrl, filename, brand, ecu, services });
+
+      const r = await fetch('http://127.0.0.1:8765/process_upload', {
+        method: 'POST',
+        body: form
+      });
+
+      const data = await r.json();
       alert(data.ok
         ? ('Done. See C:\\\\ecu_files\\\\modified\\n' + (data.output_file || ''))
         : ('Failed. See C:\\\\davinci_automation\\\\davinci_automation.log\\n' + (data.stderr_tail || data.stdout_tail)));
@@ -9496,6 +9517,8 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
   });
 })();
 </script>
+
+
 
 <!-- ChatGPT Modal -->
 <div class="modal fade" id="chatgptModal" tabindex="-1" role="dialog" aria-labelledby="chatgptModalLabel" aria-hidden="true">
