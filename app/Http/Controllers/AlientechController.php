@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Http; // Laravel HTTP client for making API calls
  * for ECU file processing and encoding operations
  */
 class AlientechController extends Controller
-{   
+{
 
     // Private property to store the Alientech API access token
     private $token;
@@ -36,21 +36,21 @@ class AlientechController extends Controller
 
     /**
      * Downloads and processes an encoded file from the Alientech API
-     * 
+     *
      * @param int $id The file ID from the database
      * @param object $notProcessedAlientechFile The Alientech file object containing processing details
      * @param string $modifiedfileName The modified filename to use for the encoded file
      * @return string Returns the filename of the processed encoded file
      */
     public function downloadEncodedFile($id, $notProcessedAlientechFile, $modifiedfileName) {
-        
+
         // Retrieve the file record from the database using the provided ID
         // findOrFail will throw a 404 exception if the file is not found
         $file = File::findOrFail($id);
-        
+
         // Store the Alientech file object in a local variable for easier access
         $alientechObj = $notProcessedAlientechFile;
-        
+
         // Construct the URL to check the status of the async operation using the GUID
         $getsyncOpURL = "https://encodingapi.alientech.to/api/async-operations/".$alientechObj->guid;
 
@@ -58,7 +58,7 @@ class AlientechController extends Controller
         $headers = [
             'X-Alientech-ReCodAPI-LLC' => $this->token, // Alientech API authentication header
         ];
-  
+
         // Make an HTTP GET request to check the operation status
         $response = Http::withHeaders($headers)->get($getsyncOpURL);
         // Decode the JSON response body into a PHP array
@@ -68,7 +68,7 @@ class AlientechController extends Controller
         if(!isset($responseBody['result']['name'])){
             // Log the error if the file upload was not successful
             $this->makeAlientechLogEntry( $file->id, 'error', 'line 41; file is not uploaded successfully.', $alientechObj, $response->getBody());
-            
+
             // Update the file status to indicate it's no longer available for customer download
             $file->disable_customers_download = 1;
             // Mark the file as no longer eligible for automatic processing
@@ -96,13 +96,13 @@ class AlientechController extends Controller
 
             // Extract the slot GUID from the response for later cleanup
             $slotGuid = $responseBody['slotGUID'];
-            
+
             // Store the result object for easier access
             $result = $responseBody['result'];
-            
+
             // Check if the encoded file URL is available in the response
             if( isset($result['encodedFileURL']) ){
-                
+
                 // Get the URL for downloading the encoded file
                 $url = $result['encodedFileURL'];
 
@@ -110,7 +110,7 @@ class AlientechController extends Controller
                 $headers = [
                     'X-Alientech-ReCodAPI-LLC' => $this->token, // Alientech API authentication header
                 ];
-        
+
                 // Make an HTTP GET request to download the encoded file
                 $response = Http::withHeaders($headers)->get($url);
                 // Decode the JSON response body into a PHP array
@@ -125,12 +125,12 @@ class AlientechController extends Controller
                 // Get the original filepath from the response
                 // specify the path and filename for the downloaded file
                 $filepath = $responseBody['name'];
-                
+
                 // Create the encoded filename by appending '_encoded_api' to the modified filename
                 $encodedFileNameToBe = $modifiedfileName.'_encoded_api';
                 // Get the file path and name information using the helper method
                 $pathAndNameArrayEncoded = $this->getFileNameEncoded($filepath, $file, $encodedFileNameToBe);
-                
+
                 // Handle different frontend configurations for file storage
                 if($file->front_end_id == 1){
                     // For frontend ID 1 (portal), save the decoded string to a file
@@ -191,25 +191,25 @@ class AlientechController extends Controller
                 // if($pathAndNameArrayEncoded['extension'] != '') // Commented out extension check
                 //     return $pathAndNameArrayEncoded['name'].'.'.$pathAndNameArrayEncoded['extension']; // Commented out return with extension
                 // else // Commented out else clause
-                    
+
                     return $pathAndNameArrayEncoded['name']; // Return just the filename without extension
 
 
                 }
             }
         }
-    
-    
+
+
     /**
      * Helper method to generate file path and name information for encoded files
-     * 
+     *
      * @param string $path The original file path from the API response
      * @param object $file The file object from the database
      * @param string $fileNameToBe The desired filename for the encoded file
      * @return array Returns an array containing path, name, and extension information
      */
     public function getFileNameEncoded($path, $file, $fileNameToBe){
-        
+
         // Extract the file extension from the original path using PHP's pathinfo function
         $extension = pathinfo($path, PATHINFO_EXTENSION);
 
@@ -232,7 +232,7 @@ class AlientechController extends Controller
             'extension' => $extension // Original file extension (if any)
         );
     }
-    
+
     /**
      * Process a file using the Alientech API based on the provided GUID
      * This method handles both OBD and KESS3 modes for file processing
@@ -241,7 +241,7 @@ class AlientechController extends Controller
      * @return void
      */
     public function process( $guid )
-    {   
+    {
         // Find the Alientech file record using the provided GUID
         $alientTechFile = AlientechFile::where('guid', $guid)->first();
         // Extract the slot ID for later cleanup
@@ -256,7 +256,7 @@ class AlientechController extends Controller
         $headers = [
             'X-Alientech-ReCodAPI-LLC' => $this->token, // Alientech API authentication header
         ];
-  
+
         // Make an HTTP GET request to check the operation status
         $response = Http::withHeaders($headers)->get($getsyncOpURL);
         // Decode the JSON response body into a PHP array
@@ -286,7 +286,7 @@ class AlientechController extends Controller
 
             // Check if the OBD decoded file URL is available in the response
             if( isset($result['obdDecodedFileURL']) ){
-                
+
                 // Get the URL for downloading the OBD decoded file
                 $url = $result['obdDecodedFileURL'];
 
@@ -294,7 +294,7 @@ class AlientechController extends Controller
                 $headers = [
                     'X-Alientech-ReCodAPI-LLC' => $this->token, // Alientech API authentication header
                 ];
-        
+
                 // Make an HTTP GET request to download the OBD decoded file
                 $response = Http::withHeaders($headers)->get($url);
                 // Decode the JSON response body into a PHP array
@@ -313,7 +313,7 @@ class AlientechController extends Controller
                 $filepath = $responseBody['name'];
                 // Get the file path and name information using the helper method
                 $savedInformation = $this->getFileName($filepath, $file);
-                
+
                 // Save the decoded string to a file in the public directory
                 $flag = file_put_contents( public_path($savedInformation['path']) , $contents );
 
@@ -342,7 +342,7 @@ class AlientechController extends Controller
                 $headers = [
                     'X-Alientech-ReCodAPI-LLC' => $this->token, // Alientech API authentication header
                 ];
-        
+
                 // Make an HTTP GET request to download the decoded file for this component
                 $response = Http::withHeaders($headers)->get($url);
                 // Decode the JSON response body into a PHP array
@@ -358,7 +358,7 @@ class AlientechController extends Controller
                 $filepath = $responseBody['name'];
                 // Get the file path and name information using the helper method
                 $savedInformation = $this->getFileName($filepath, $file);
-                
+
                 // Save the decoded string to a file in the public directory
                 $flag = file_put_contents( public_path($savedInformation['path']) , $contents );
 
@@ -378,15 +378,15 @@ class AlientechController extends Controller
         // Close the slot in the Alientech system to free up resources
         $this->closeOneSlot($slotGuid);
         // Mark the Alientech file as processed
-        $alientTechFile->processed = 1;   
+        $alientTechFile->processed = 1;
         // Save the changes to the database
         $alientTechFile->save();
-        
+
     }
 
     /**
      * Helper method to generate file path and name information for decoded files
-     * 
+     *
      * @param string $path The original file path from the API response
      * @param object $file The file object from the database
      * @return array Returns an array containing path, name, and extension information
@@ -410,7 +410,7 @@ class AlientechController extends Controller
 
     /**
      * Closes a slot in the Alientech system to free up resources
-     * 
+     *
      * @param string $slotGuid The unique identifier of the slot to close
      * @return void
      */
@@ -437,8 +437,8 @@ class AlientechController extends Controller
     {
         $fileToSave = $request->file('file');
         $fileName = $fileToSave->getClientOriginalName();
-        $fileToSave->move( public_path('uploads'), $fileName );  
-        
+        $fileToSave->move( public_path('uploads'), $fileName );
+
         $file = new File();
         $file->path = 'uploads/';
         $file->name = $fileName;
@@ -446,7 +446,7 @@ class AlientechController extends Controller
 
         // $alienTechInformation = $this->saveGUIDandSlotIDToDownloadLater($file);
         $alienTechInformation = $this->uploadFixFile();
-        
+
         $alientTechFile = new AlientechFile();
         $alientTechFile->guid = $alienTechInformation->guid;
         $alientTechFile->slot_id = $alienTechInformation->slotGUID;
@@ -462,14 +462,14 @@ class AlientechController extends Controller
     }
 
     public function decodeFix()
-    {   
+    {
         $file = new File();
         $file->path = 'uploads/';
         $file->name = 'original';
         $file->save();
 
         $alienTechInformation = $this->uploadFixFile();
-        
+
         $alientTechFile = new AlientechFile();
         $alientTechFile->guid = $alienTechInformation->guid;
         $alientTechFile->slot_id = $alienTechInformation->slotGUID;
@@ -485,21 +485,21 @@ class AlientechController extends Controller
     }
 
     public function showAllSlots(){
-        
+
         $url = "https://encodingapi.alientech.to/api/kess3/file-slots";
 
         $headers = [
             // 'Content-Type' => 'multipart/form-data',
             'X-Alientech-ReCodAPI-LLC' => $this->token,
         ];
-  
+
         $response = Http::withHeaders($headers)->get($url);
         $responseBody = json_decode($response->getBody(), true);
 
         dd($responseBody);
     }
 
-    public function clossAllSlots(){    
+    public function clossAllSlots(){
 
         $url = "https://encodingapi.alientech.to/api/kess3/file-slots";
 
@@ -507,12 +507,12 @@ class AlientechController extends Controller
             // 'Content-Type' => 'multipart/form-data',
             'X-Alientech-ReCodAPI-LLC' => $this->token,
         ];
-  
+
         $response = Http::withHeaders($headers)->get($url);
         $responseBody = json_decode($response->getBody(), true);
 
         foreach($responseBody as $row){
-            
+
             if($row['isClosed'] == false){
 
                 $url = "https://encodingapi.alientech.to/api/kess3/file-slots/".$row['guid']."/close";
@@ -533,19 +533,19 @@ class AlientechController extends Controller
         $responseBodyAgain = json_decode($responseAgian->getBody(), true);
 
         dd($responseBodyAgain);
-        
+
     }
 
     public function uploadFixFile(){
 
         $target_url = 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3';
 
-        if (function_exists('curl_file_create')) { 
+        if (function_exists('curl_file_create')) {
             $cFile = curl_file_create(public_path('uploads/original'));
-          } else { 
+          } else {
             $cFile = '@' . realpath(public_path('uploads/original'));
           }
-    
+
           $post = array('readFile'=> $cFile);
           $ch = curl_init();
           curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -564,10 +564,10 @@ class AlientechController extends Controller
     public function saveGUIDandSlotIDToDownloadLater( $path, $tempFileID ){
 
         $target_url = 'https://encodingapi.alientech.to/api/kess3/decode-read-file/user1?callbackURL=https://backend.ecutech.gr/callback/kess3';
-    
-        if (function_exists('curl_file_create')) { 
+
+        if (function_exists('curl_file_create')) {
             $cFile = curl_file_create($path);
-        } else { 
+        } else {
             $cFile = '@' . realpath($path);
         }
 
@@ -588,7 +588,7 @@ class AlientechController extends Controller
         dd($response);
 
         if($response == NULL){
-            
+
             $this->makeAlientechLogEntry( 0, 'error', 'too much slots opened.', $post, $response->getBody(), $tempFileID);
         }
         else{
@@ -627,7 +627,7 @@ class AlientechController extends Controller
             // $engineerFile->save();
 
             $target_url = '';
-            
+
             if($encodingType == 'dec'){
                 $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/OBDModified';
             }
@@ -637,13 +637,13 @@ class AlientechController extends Controller
             else {
                 $target_url = 'https://encodingapi.alientech.to/api/kess3/upload-modified-file/user01/'.$slotID.'/BootBenchModifiedMicro';
             }
-            
-            if (function_exists('curl_file_create')) { 
+
+            if (function_exists('curl_file_create')) {
                 $cFile = curl_file_create($path);
-            } else { 
+            } else {
                 $cFile = '@' . realpath($path);
             }
-    
+
             $post = array('file'=> $cFile);
             $ch = curl_init();
 
@@ -662,78 +662,76 @@ class AlientechController extends Controller
             // dd($response);
             if( isset($response->guid) ){
 
-            if($encodingType == 'dec'){
-                $url = "https://encodingapi.alientech.to/api/kess3/encode-obd-file";
-            }
-            else if($encodingType == 'micro'){
-                $url = "https://encodingapi.alientech.to/api/kess3/encode-boot-bench-file";
-            }
+                if($encodingType == 'dec'){
+                    $url = "https://encodingapi.alientech.to/api/kess3/encode-obd-file";
+                }
+                else if($encodingType == 'micro'){
+                    $url = "https://encodingapi.alientech.to/api/kess3/encode-boot-bench-file";
+                }
+                else {
+                    $url = "https://encodingapi.alientech.to/api/kess3/encode-boot-bench-file";
+                }
 
-            else {
-                $url = "https://encodingapi.alientech.to/api/kess3/encode-boot-bench-file";
-            }
-
-            $headers = [
-            'X-Alientech-ReCodAPI-LLC' => $this->token,
-            ];
-
-            if($encodingType == 'dec'){
-                $postInput = [
-                    'userCustomerCode' => 'user1',
-                    'kess3FileSlotGUID' => $slotID,
-                    'modifiedFileGUID' => $response->guid,
+                $headers = [
+                    'X-Alientech-ReCodAPI-LLC' => $this->token,
                 ];
-            }
-            else if($encodingType == 'micro'){
-                $postInput = [
-                    'userCustomerCode' => 'user1',
-                    'kess3FileSlotGUID' => $slotID,
-                    'microFileGUID' => $response->guid,
-                ];
-            }
-            else{
-                
-                $postInput = [
-                    'userCustomerCode' => 'user1',
-                    'kess3FileSlotGUID' => $slotID,
-                    'microFileGUID' => $response->guid,
-                ];
-            }
 
-            $syncResponse = Http::withHeaders($headers)->post($url, $postInput);                
-            $syncResponseBody = json_decode($syncResponse->getBody(), true);
+                if($encodingType == 'dec'){
+                    $postInput = [
+                        'userCustomerCode' => 'user1',
+                        'kess3FileSlotGUID' => $slotID,
+                        'modifiedFileGUID' => $response->guid,
+                    ];
+                }
+                else if($encodingType == 'micro'){
+                    $postInput = [
+                        'userCustomerCode' => 'user1',
+                        'kess3FileSlotGUID' => $slotID,
+                        'microFileGUID' => $response->guid,
+                    ];
+                }
+                else{
 
-            if($syncResponseBody == NULL){
-                
-                $this->makeAlientechLogEntry( $file->id, 'error', $syncResponse, $postInput, $syncResponse);
+                    $postInput = [
+                        'userCustomerCode' => 'user1',
+                        'kess3FileSlotGUID' => $slotID,
+                        'microFileGUID' => $response->guid,
+                    ];
+                }
+
+                $syncResponse = Http::withHeaders($headers)->post($url, $postInput);
+                $syncResponseBody = json_decode($syncResponse->getBody(), true);
+
+                if($syncResponseBody == NULL){
+
+                    $this->makeAlientechLogEntry( $file->id, 'error', $syncResponse, $postInput, $syncResponse);
+                }
+                else{
+
+                    $this->makeAlientechLogEntry( $file->id, 'success', 'File Upload success.', $postInput, $syncResponse);
+
+                    $alientTechFile = new AlientechFile();
+                    $alientTechFile->guid = $syncResponseBody['guid'];
+                    $alientTechFile->slot_id = $slotID;
+                    $alientTechFile->type = "download";
+                    $alientTechFile->purpose = "decoded";
+                    $alientTechFile->file_id = $file->id;
+                    $alientTechFile->desc = "File is uploaded to be encoded and we have guid and slot ID for the first time to encode file.";
+                    $alientTechFile->save();
+
+                    $engineerFile->uploaded_successfully = 1;
+                    $engineerFile->encoded = 0;
+                    $engineerFile->is_kess3_slave = 1;
+                    $engineerFile->save();
+                }
             }
-            else{
-            
-                $this->makeAlientechLogEntry( $file->id, 'success', 'File Upload success.', $postInput, $syncResponse);
-
-                $alientTechFile = new AlientechFile();
-                $alientTechFile->guid = $syncResponseBody['guid'];
-                $alientTechFile->slot_id = $slotID;
-                $alientTechFile->type = "download";
-                $alientTechFile->purpose = "decoded";
-                $alientTechFile->file_id = $file->id;
-                $alientTechFile->desc = "File is uploaded to be encoded and we have guid and slot ID for the first time to encode file.";
-                $alientTechFile->save();
-
-                $engineerFile->uploaded_successfully = 1;
-                $engineerFile->encoded = 0;
-                $engineerFile->is_kess3_slave = 1;
-                $engineerFile->save();
-            }
-
-        }
-        else{
+            else{ // If the response does not contain a GUID, log an error
 
             $this->makeAlientechLogEntry( $file->id, 'error', "file is not uploaded.", $post, $response);
 
             // $file->disable_customers_download = 1;
             $file->no_longer_auto = 1;
-            
+
             $file->status = 'submitted';
             $file->checked_by == 'customer';
             $file->save();
@@ -743,7 +741,7 @@ class AlientechController extends Controller
             $engineerFile->is_kess3_slave = 1;
             $engineerFile->save();
         }
-        
+
         $this->closeOneSlot($slotID);
     }
 
