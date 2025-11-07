@@ -6144,9 +6144,6 @@ class FilesController extends Controller
      */
     public function show($id)
     {
-
-
-
         if(Auth::user()->is_admin() || get_engineers_permission(Auth::user()->id, 'show-files')){
 
         if(Auth::user()->is_admin()){
@@ -6213,7 +6210,6 @@ class FilesController extends Controller
         }
 
         // dd($file);
-
         // dd($file->options_services);
         
         if($file->checked_by == 'customer'){
