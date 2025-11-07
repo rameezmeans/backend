@@ -5246,7 +5246,7 @@ class FilesController extends Controller
                             $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
                         }
                         else{
-                            $path = env('MNT_ETUNINGFILES').$file->file_path.$newFileName;
+                             $path = env('MNT_ETUNINGFILES').$file->file_path.$newFileName;
                             //p $path = '/mnt/portal.e-tuningfiles.com'.$file->file_path.$newFileName;
                             // $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path).$newFileName;
                         }
