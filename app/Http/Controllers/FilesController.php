@@ -1072,7 +1072,8 @@ class FilesController extends Controller
             }
             else{
                 if($file->on_dev == 1){
-                    $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
+                    //p $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
+                    $attachment->move(env('MNT_STAGING_ECUTECH').$file->file_path,$newFileName);
                 }
                 else{
                     $attachment->move(env('MNT_ECUTECH').$file->file_path,$newFileName);
@@ -1091,7 +1092,8 @@ class FilesController extends Controller
             else{
 
                 if($file->on_dev == 1){
-                    $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
+                    //p $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
+                    $attachment->move(env('MNT_STAGING_ETUNINGFILES').$file->file_path,$newFileName);
                 }
                 else{
                     $attachment->move(env('MNT_ETUNINGFILES').$file->file_path,$newFileName);
@@ -1121,7 +1123,8 @@ class FilesController extends Controller
             else{
 
                 if($file->on_dev == 1){
-                    $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
+                    //p $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
+                    $attachment->move(env('MNT_STAGING_TUNINGX').$file->file_path,$newFileName);
                 }
                 else{
                     $attachment->move(env('MNT_TUNINGX').$file->file_path,$newFileName);
@@ -2082,7 +2085,8 @@ class FilesController extends Controller
                 }
                 else{
                     if($file->on_dev == 1){
-                        $attachment->move(public_path('/../../stagingportalecutech/public/'.$file->file_path),$fileName);
+                        //p $attachment->move(public_path('/../../stagingportalecutech/public/'.$file->file_path),$fileName);
+                        $attachment->move(env('MNT_STAGING_ECUTECH').$file->file_path,$fileName);
                     }
                     else{
                         $attachment->move(env('MNT_ECUTECH').$file->file_path,$fileName);
@@ -2099,7 +2103,8 @@ class FilesController extends Controller
                 }
                 else{
                     if($file->on_dev == 1){
-                        $attachment->move(public_path('/../../stagingportaletuningfiles/public/'.$file->file_path),$fileName);
+                       // $attachment->move(public_path('/../../stagingportaletuningfiles/public/'.$file->file_path),$fileName);
+                          $attachment->move(env('MNT_STAGING_ETUNINGFILES').$file->file_path,$fileName);
                     }
                     else{
                         $attachment->move(env('MNT_ETUNINGFILES').$file->file_path,$fileName);
@@ -2115,6 +2120,7 @@ class FilesController extends Controller
 
                 if($file->on_dev == 1){
                     $attachment->move(public_path('/../../stagingportaletuningfiles/public/'.$file->file_path),$fileName);
+
                 }
                 else{
                     $attachment->move(public_path('/../../ctf/public/'.$file->file_path),$fileName);
@@ -2129,7 +2135,8 @@ class FilesController extends Controller
                 else{
 
                     if($file->on_dev == 1){
-                        $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
+                        //p $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
+                        $attachment->move(env('MNT_STAGING_TUNINGX').$file->file_path,$fileName);
                     }
                     else{
                         $attachment->move(env('MNT_TUNINGX').$file->file_path,$fileName);
@@ -3584,8 +3591,8 @@ class FilesController extends Controller
 
                 if($file->on_dev == 1){
 
-                    $file_path = public_path('/../../stagingportalecutech/public/'.$file->file_path).$autoTunerEncryptedFile->name;
-
+                    //$file_path = public_path('/../../stagingportalecutech/public/'.$file->file_path).$autoTunerEncryptedFile->name;
+                    $file_path = env('MNT_STAGING_ECUTECH').$file->file_path.$autoTunerEncryptedFile->name;
                 }
                 else{
                     $file_path = env('MNT_ECUTECH').$file->file_path.$autoTunerEncryptedFile->name;
@@ -3606,8 +3613,8 @@ class FilesController extends Controller
 
                 if($file->on_dev == 1){
 
-                    $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$autoTunerEncryptedFile->name;
-
+                   //p $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$autoTunerEncryptedFile->name;
+                    $file_path = env('MNT_STAGING_ETUNINGFILES').$file->file_path.$autoTunerEncryptedFile->name;
                 }
                 else{
                     $file_path = env('MNT_ETUNINGFILES').$file->file_path.$autoTunerEncryptedFile->name;
@@ -3641,8 +3648,8 @@ class FilesController extends Controller
 
                 if($file->on_dev == 1){
 
-                    $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$autoTunerEncryptedFile->name;
-
+                    //p $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$autoTunerEncryptedFile->name;
+                    $file_path = env('MNT_STAGING_TUNINGX').$file->file_path.$autoTunerEncryptedFile->name;
                 }
                 else{
                     $file_path = env('MNT_TUNINGX').$file->file_path.$autoTunerEncryptedFile->name;
@@ -3681,8 +3688,8 @@ class FilesController extends Controller
 
                 if($file->on_dev == 1){
 
-                    $file_path = public_path('/../../stagingportalecutech/public/'.$file->file_path).$magicEncryptedFile->name;
-
+                   //p  $file_path = public_path('/../../stagingportalecutech/public/'.$file->file_path).$magicEncryptedFile->name;
+                    $file_path = env('MNT_STAGING_ECUTECH').$file->file_path.$magicEncryptedFile->name;
                 }
                 else{
                     $file_path = env('MNT_ECUTECH').$file->file_path.$magicEncryptedFile->name;
@@ -3703,8 +3710,8 @@ class FilesController extends Controller
 
                 if($file->on_dev == 1){
 
-                    $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$magicEncryptedFile->name;
-
+                    //p $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$magicEncryptedFile->name;
+                    $file_path = env('MNT_STAGING_ETUNINGFILES').$file->file_path.$magicEncryptedFile->name;
                 }
                 else{
                     $file_path = env('MNT_ETUNINGFILES').$file->file_path.$magicEncryptedFile->name;
@@ -3738,8 +3745,8 @@ class FilesController extends Controller
 
                 if($file->on_dev == 1){
 
-                    $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$magicEncryptedFile->name;
-
+                   //p $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$magicEncryptedFile->name;
+                    $file_path = env('MNT_STAGING_TUNINGX').$file->file_path.$magicEncryptedFile->name;
                 }
                 else{
                     $file_path = env('MNT_TUNINGX').$file->file_path.$magicEncryptedFile->name;
@@ -3785,8 +3792,8 @@ class FilesController extends Controller
 
                         if($file->on_dev == 1){
 
-                            $file_path = public_path('/../../stagingportalecutech/public/'.$file->file_path).$fileNameEncoded;
-
+                           //p $file_path = public_path('/../../stagingportalecutech/public/'.$file->file_path).$fileNameEncoded;
+                            $file_path = env('MNT_STAGING_ECUTECH').$file->file_path.$fileNameEncoded;
                         }
                         else{
                             $file_path = env('MNT_ECUTECH').$file->file_path.$fileNameEncoded;
@@ -3805,8 +3812,8 @@ class FilesController extends Controller
 
                         if($file->on_dev == 1){
 
-                            $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$fileNameEncoded;
-
+                            //p $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$fileNameEncoded;
+                            $file_path = env('MNT_STAGING_ETUNINGFILES').$file->file_path.$fileNameEncoded;
                         }
                         else{
                             $file_path = env('MNT_ETUNINGFILES').$file->file_path.$fileNameEncoded;
@@ -3840,8 +3847,8 @@ class FilesController extends Controller
 
                         if($file->on_dev == 1){
 
-                            $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$fileNameEncoded;
-
+                           //p $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$fileNameEncoded;
+                            $file_path = env('MNT_STAGING_TUNINGX').$file->file_path.$fileNameEncoded;
                         }
                         else{
                             $file_path = env('MNT_TUNINGX').$file->file_path.$fileNameEncoded;
@@ -3882,8 +3889,8 @@ class FilesController extends Controller
 
                     if($file->on_dev == 1){
 
-                        $file_path = public_path('/../../stagingportalecutech/public/'.$file->file_path).$finalFileName;
-
+                       //p $file_path = public_path('/../../stagingportalecutech/public/'.$file->file_path).$finalFileName;
+                        $file_path = env('MNT_STAGING_ECUTECH').$file->file_path.$finalFileName;
                     }
                     else{
                         $file_path = env('MNT_ECUTECH').$file->file_path.$finalFileName;
@@ -3902,8 +3909,8 @@ class FilesController extends Controller
 
                     if($file->on_dev == 1){
 
-                        $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$finalFileName;
-
+                       //p $file_path = public_path('/../../stagingportaletuningfiles/public/'.$file->file_path).$finalFileName;
+                        $file_path = env('MNT_STAGING_ETUNINGFILES').$file->file_path.$finalFileName;
                     }
                     else{
 
@@ -3956,8 +3963,8 @@ class FilesController extends Controller
 
                     if($file->on_dev == 1){
 
-                        $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$finalFileName;
-
+                        //p $file_path = public_path('/../../TuningXV2/public/'.$file->file_path).$finalFileName;
+                        $file_path = env('MNT_STAGING_TUNINGX').$file->file_path.$finalFileName;
                     }
                     else{
                         $file_path = env('MNT_TUNINGX').$file->file_path.$finalFileName;
@@ -4000,8 +4007,8 @@ class FilesController extends Controller
                 else{
 
                     if($file->on_dev == 1){
-                        $path = public_path('/../../stagingportalecutech/public'.$file->file_path);
-
+                        //p $path = public_path('/../../stagingportalecutech/public'.$file->file_path);
+                        $path = env('MNT_STAGING_ECUTECH').$file->file_path;
                     }
                     else{
                         $path = env('MNT_ECUTECH').$file->file_path;
@@ -4022,8 +4029,8 @@ class FilesController extends Controller
                 else{
 
                     if($file->on_dev == 1){
-                        $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path);
-
+                        //p $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path);
+                        $path = env('MNT_STAGING_ETUNINGFILES').$file->file_path;
                     }
                     else{
                         $path = env('MNT_ETUNINGFILES').$file->file_path;
@@ -4056,8 +4063,8 @@ class FilesController extends Controller
             else{
 
                 if($file->on_dev == 1){
-                    $path = public_path('/../../TuningXV2/public'.$file->file_path);
-
+                    //p $path = public_path('/../../TuningXV2/public'.$file->file_path);
+                    $path = env('MNT_STAGING_TUNINGX').$file->file_path;
                 }
                 else{
                     $path = env('MNT_TUNINGX').$file->file_path;
@@ -4744,7 +4751,8 @@ class FilesController extends Controller
                     else{
 
                         if($file->on_dev == 1){
-                            $attachment->move(public_path('/../../stagingportalecutech/public/'.$file->file_path),$fileName);
+                           //p $attachment->move(public_path('/../../stagingportalecutech/public/'.$file->file_path),$fileName);
+                            $attachment->move(env('MNT_STAGING_ECUTECH').$file->file_path,$fileName);
                         }
                         else{
                             $attachment->move(env('MNT_ECUTECH').$file->file_path,$fileName);
@@ -4767,7 +4775,8 @@ class FilesController extends Controller
                     else{
 
                         if($file->on_dev == 1){
-                            $attachment->move(public_path('/../../stagingportaletuningfiles/public/'.$file->file_path),$fileName);
+                            //p $attachment->move(public_path('/../../stagingportaletuningfiles/public/'.$file->file_path),$fileName);
+                            $attachment->move(env('MNT_STAGING_ETUNINGFILES').$file->file_path,$fileName);
                         }
                         else{
                             $attachment->move(env('MNT_ETUNINGFILES').$file->file_path,$fileName);
@@ -4801,7 +4810,8 @@ class FilesController extends Controller
                 else{
 
                     if($file->on_dev == 1){
-                        $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
+                        //p $attachment->move(public_path('/../../TuningXV2/public/'.$file->file_path),$fileName);
+                        $attachment->move(env('MNT_STAGING_TUNINGX').$file->file_path,$fileName);
                     }
 
                     else{
@@ -5077,7 +5087,8 @@ class FilesController extends Controller
                 else{
 
                     if($file->on_dev == 1){
-                        $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
+                       //p $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
+                        $attachment->move(env('MNT_STAGING_ECUTECH').$file->file_path,$newFileName);
                     }
                     else{
                         $attachment->move(env('MNT_ECUTECH').$file->file_path,$newFileName);
@@ -5094,7 +5105,8 @@ class FilesController extends Controller
                 else{
 
                     if($file->on_dev == 1){
-                        $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
+                        //p $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
+                        $attachment->move(env('MNT_STAGING_ETUNINGFILES').$file->file_path,$newFileName);
                     }
                     else{
                         $attachment->move(env('MNT_ETUNINGFILES').$file->file_path,$newFileName);
@@ -5124,7 +5136,8 @@ class FilesController extends Controller
                 else{
 
                     if($file->on_dev == 1){
-                        $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
+                       //p  $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
+                        $attachment->move(env('MNT_STAGING_TUNINGX').$file->file_path,$newFileName);
                     }
                     else{
                         $attachment->move(env('MNT_TUNINGX').$file->file_path,$newFileName);
@@ -5153,7 +5166,8 @@ class FilesController extends Controller
                     else{
 
                         if($file->on_dev == 1){
-                            $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
+                           //p $attachment->move(public_path('/../../stagingportalecutech/public'.$file->file_path),$newFileName);
+                        $attachment->move(env('MNT_STAGING_ECUTECH').$file->file_path,$newFileName);
                         }
                         else{
                             $attachment->move(env('MNT_ECUTECH').$file->file_path,$newFileName);
@@ -5170,7 +5184,8 @@ class FilesController extends Controller
                     }
                     else{
                         if($file->on_dev == 1){
-                            $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
+                           //p $attachment->move(public_path('/../../stagingportaletuningfiles/public'.$file->file_path),$newFileName);
+                            $attachment->move(env('MNT_STAGING_ETUNINGFILES').$file->file_path,$newFileName);
                         }
                         else{
                             $attachment->move(env('MNT_ETUNINGFILES').$file->file_path,$newFileName);
@@ -5199,7 +5214,8 @@ class FilesController extends Controller
                     else{
 
                         if($file->on_dev == 1){
-                            $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
+                            //p $attachment->move(public_path('/../../TuningXV2/public'.$file->file_path),$newFileName);
+                            $attachment->move(env('MNT_STAGING_TUNINGX').$file->file_path,$newFileName);
                         }
                         else{
                             $attachment->move(env('MNT_TUNINGX').$file->file_path,$newFileName);
@@ -5224,7 +5240,8 @@ class FilesController extends Controller
 
                         if($file->on_dev == 1){
 
-                            $path = public_path('/../../stagingportalecutech/public'.$file->file_path).$newFileName;
+                            //p $path = public_path('/../../stagingportalecutech/public'.$file->file_path).$newFileName;
+                            $path = env('MNT_STAGING_ECUTECH').$file->file_path.$newFileName;
                         }
                         else{
                             $path = env('MNT_ECUTECH').$file->file_path.$newFileName;
@@ -5243,7 +5260,8 @@ class FilesController extends Controller
 
                         if($file->on_dev == 1){
 
-                            $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
+                           //p $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
+                            $path = env('MNT_STAGING_ETUNINGFILES').$file->file_path.$newFileName;
                         }
                         else{
                              $path = env('MNT_ETUNINGFILES').$file->file_path.$newFileName;
@@ -5275,7 +5293,8 @@ class FilesController extends Controller
 
                         if($file->on_dev == 1){
 
-                            $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
+                            //p $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
+                            $path = env('MNT_STAGING_TUNINGX').$file->file_path.$newFileName;
                         }
                         else{
                             $path = env('MNT_TUNINGX').$file->file_path.$newFileName;
@@ -5351,7 +5370,8 @@ class FilesController extends Controller
 
                         if($file->on_dev == 1){
 
-                            $path = public_path('/../../stagingportalecutech/public'.$file->file_path).$newFileName;
+                            //p $path = public_path('/../../stagingportalecutech/public'.$file->file_path).$newFileName;
+                            $path = env('MNT_STAGING_ECUTECH').$file->file_path.$newFileName;
                         }
                         else{
                             $path = env('MNT_ECUTECH').$file->file_path.$newFileName;
@@ -5369,7 +5389,8 @@ class FilesController extends Controller
                     else{
                         if($file->on_dev == 1){
 
-                            $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
+                            //p $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
+                            $path = env('MNT_STAGING_ETUNINGFILES').$file->file_path.$newFileName;
                         }
                         else{
                             $path = env('MNT_ETUNINGFILES').$file->file_path.$newFileName;
@@ -5384,7 +5405,8 @@ class FilesController extends Controller
 
                     if($file->on_dev == 1){
 
-                        $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
+                       //p $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
+                        $path = env('MNT_STAGING_ETUNINGFILES').$file->file_path.$newFileName;
                     }
                     else{
                         $path = public_path('/../../ctf/public'.$file->file_path).$newFileName;
@@ -5400,7 +5422,8 @@ class FilesController extends Controller
 
                         if($file->on_dev == 1){
 
-                            $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
+                           //p $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
+                            $path = env('MNT_STAGING_TUNINGX').$file->file_path.$newFileName;
                         }
                         else{
                             $path = env('MNT_TUNINGX').$file->file_path.$newFileName;
@@ -5437,7 +5460,8 @@ class FilesController extends Controller
 
                         if($file->on_dev == 1){
 
-                            $path = public_path('/../../stagingportalecutech/public'.$file->file_path).$newFileName;
+                            //p $path = public_path('/../../stagingportalecutech/public'.$file->file_path).$newFileName;
+                            $path = env('MNT_STAGING_ECUTECH').$file->file_path.$newFileName;
                         }
                         else{
                             $path = env('MNT_ECUTECH').$file->file_path.$newFileName;
@@ -5456,7 +5480,8 @@ class FilesController extends Controller
 
                         if($file->on_dev == 1){
 
-                            $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
+                           //p $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path).$newFileName;
+                            $path = env('MNT_STAGING_ETUNINGFILES').$file->file_path.$newFileName;
                         }
                         else{
                             $path = env('MNT_ETUNINGFILES').$file->file_path.$newFileName;
@@ -5488,7 +5513,8 @@ class FilesController extends Controller
 
                         if($file->on_dev == 1){
 
-                            $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
+                           //p $path = public_path('/../../TuningXV2/public'.$file->file_path).$newFileName;
+                            $path = env('MNT_STAGING_TUNINGX').$file->file_path.$newFileName;
                         }
                         else{
                             $path = env('MNT_TUNINGX').$file->file_path.$newFileName;
@@ -5790,7 +5816,8 @@ class FilesController extends Controller
         }
         else{
             if($file->on_dev == 1){
-                $savingPath = public_path('/../../stagingportalecutech/public'.$file->file_path.$fileName);
+               //p $savingPath = public_path('/../../stagingportalecutech/public'.$file->file_path.$fileName);
+                $savingPath = env('MNT_STAGING_ECUTECH').$file->file_path.$fileName;
             }
             else{
                 $savingPath = env('MNT_ECUTECH').$file->file_path.$fileName;

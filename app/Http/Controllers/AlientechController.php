@@ -139,7 +139,8 @@ class AlientechController extends Controller
                     // Check if the file is in development mode
                     if($file->on_dev == 1){
                         // Save to development environment path
-                        $flag = file_put_contents(public_path('/../../EcuTechV2/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                        //p $flag = file_put_contents(public_path('/../../EcuTechV2/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                        $flag = file_put_contents(env('MNT_STAGING_ECUTECH').$pathAndNameArrayEncoded['path'], $contents);
                     }
                     else{
                         // Save to production environment path
@@ -154,7 +155,8 @@ class AlientechController extends Controller
                     // Check if the file is in development mode
                     if($file->on_dev == 1){
                         // Save to development environment path
-                        $flag = file_put_contents(public_path('/../../EcuTechV2/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                        //p $flag = file_put_contents(public_path('/../../EcuTechV2/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                        $flag = file_put_contents(env('MNT_STAGING_ETUNINGFILES').$pathAndNameArrayEncoded['path'], $contents);
                     }
                     else{
                         // Save to production environment path
@@ -169,7 +171,8 @@ class AlientechController extends Controller
                     // Check if the file is in development mode
                     if($file->on_dev == 1){
                         // Save to development environment path
-                        $flag = file_put_contents(public_path('/../../TuningXV2/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                        //p $flag = file_put_contents(public_path('/../../TuningXV2/public/'.$pathAndNameArrayEncoded['path']), $contents);
+                        $flag = file_put_contents(env('MNT_STAGING_TUNINGX').$pathAndNameArrayEncoded['path'], $contents);
                     }
                     else{
                         // Save to production environment path

@@ -302,7 +302,8 @@ class File extends Model
                     }
                     else{
                         if($this->on_dev == 1){
-                            $path = public_path('/../../stagingportal/public'.$this->file_path.$name);
+                            //p $path = public_path('/../../stagingportal/public'.$this->file_path.$name);
+                            $path = env('MNT_STAGING_ECUTECH').$this->file_path.$name;
                         }
                         else{
                             //p $path = '/mnt/portal.ecutech.gr'.$this->file_path.$name;
@@ -316,7 +317,8 @@ class File extends Model
                     }
                     else{
                         if($this->on_dev == 1){
-                            $path = public_path('/../../stagingportaletuningfiles/public'.$this->file_path.$name);
+                            //p $path = public_path('/../../stagingportaletuningfiles/public'.$this->file_path.$name);
+                             $path = env('MNT_STAGING_ETUNINGFILES').$this->file_path.$name;
                         }
                         else{
                             //p $path = '/mnt/portal.e-tuningfiles.com'.$this->file_path.$name;
@@ -330,7 +332,8 @@ class File extends Model
                     }
                     else{
                         if($this->on_dev == 1){
-                            $path = public_path('/../../TuningXV2/public'.$this->file_path.$name);
+                            //p $path = public_path('/../../TuningXV2/public'.$this->file_path.$name);
+                             $path = env('MNT_STAGING_TUNINGX').$this->file_path.$name;
                         }
                         else{
                             //p $path = '/mnt/portal.tuning-x.com'.$this->file_path.$name;
@@ -383,7 +386,8 @@ class File extends Model
                     }
                     else{
                         if($this->on_dev == 1){
-                            $path = public_path('/../../stagingportal/public'.$this->file_path.$name);
+                            //p $path = public_path('/../../stagingportal/public'.$this->file_path.$name);
+                             $path = env('MNT_STAGING_ECUTECH').$this->file_path.$name;
                         }
                         else{
                             //p $path = '/mnt/portal.ecutech.gr'.$this->file_path.$name;
@@ -397,7 +401,8 @@ class File extends Model
                     }
                     else{
                         if($this->on_dev == 1){
-                            $path = public_path('/../../stagingportaletuningfiles/public'.$this->file_path.$name);
+                            //p $path = public_path('/../../stagingportaletuningfiles/public'.$this->file_path.$name);
+                            $path = env('MNT_STAGING_ETUNINGFILES').$this->file_path.$name;
                         }
                         else{
                             //p $path = '/mnt/portal.e-tuningfiles.com'.$this->file_path.$name;
@@ -413,7 +418,8 @@ class File extends Model
                     }
                     else{
                         if($this->on_dev == 1){
-                            $path = public_path('/../../TuningXV2/public'.$this->file_path.$name);
+                           //p  $path = public_path('/../../TuningXV2/public'.$this->file_path.$name);
+                           $path = env('MNT_STAGING_TUNINGX').$this->file_path.$name;
                         }
                         else{
                             //p $path = '/mnt/portal.tuning-x.com'.$this->file_path.$name;
