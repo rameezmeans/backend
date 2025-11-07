@@ -1925,43 +1925,87 @@ class FilesAPIController extends Controller
 
                     if($file->front_end_id == 1){
 
-                        copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
-                        '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave);
+                        if(env('APP_ENV') == 'local'){
 
-                        unlink('/mnt/portal.ecutech.gr/uploads'.'/'.$file->tunned_files->file);
-                        $path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave;
+                            copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                            public_path('/../../portal/public'.$file->file_path.$fileName) );
+                            unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
+
+                        }
+                        else{
+
+                            if($file->on_dev == 1){
+
+                                copy( public_path('/../../stagingportal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                                public_path('/../../stagingportal/public'.$file->file_path.$fileName) );
+                                unlink( public_path('/../../stagingportal/public/uploads/filesready').'/'.$file->tunned_files->file );
+
+                            }
+                            else{
+
+                                copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
+                                '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave);
+                                unlink('/mnt/portal.ecutech.gr/uploads'.'/'.$file->tunned_files->file);
+                                $path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave;
+
+                            }
+                        }
                 
                     }
 
                     else if($file->front_end_id == 3){
 
-                        // copy( public_path('/../../e-tuningfiles/public/uploads/filesready'.'/'.$request->tuned_file), 
-                        // public_path('/../../e-tuningfiles/public'.$file->file_path.$fileName) );
+                        if(env('APP_ENV') == 'local'){
 
-                        // unlink( public_path('/../../e-tuningfiles/public/uploads/filesready').'/'.$file->tunned_files->file );
+                            copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                            public_path('/../../e-tuningfiles/public'.$file->file_path.$fileName) );
+                            unlink( public_path('/../../e-tuningfiles/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                        copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
-                        '/mnt/portal.e-tuningfiles.com'.$file->file_path.$fileToSave);
+                        }
+                        else{
 
-                        unlink('/mnt/portal.ecutech.gr/uploads'.'/'.$file->tunned_files->file);
+                            if($file->on_dev == 1){
 
-                        $path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave;
-                
+                                copy( public_path('/../../stagingportal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                                public_path('/../../staginge-tuningfiles/public'.$file->file_path.$fileName) );
+                                unlink( public_path('/../../staginge-tuningfiles/public/uploads/filesready').'/'.$file->tunned_files->file );
+
+                            }
+                            else{
+
+                                copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
+                                '/mnt/portal.e-tuningfiles.com'.$file->file_path.$fileToSave);
+                                unlink('/mnt/portal.ecutech.gr/uploads'.'/'.$file->tunned_files->file);
+                                $path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave;
+                            }
+                        }
                     }
 
                     else if($file->front_end_id == 2){
 
-                        // copy( public_path('/../../tuningX/public/uploads/filesready'.'/'.$request->tuned_file), 
-                        // public_path('/../../tuningX/public'.$file->file_path.$fileName) );
+                        if(env('APP_ENV') == 'local'){
 
-                        // unlink( public_path('/../../tuningX/public/uploads/filesready').'/'.$file->tunned_files->file );
+                            copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                            public_path('/../../tuningX/public'.$file->file_path.$fileName) );
+                            unlink( public_path('/../../tuningX/public/uploads/filesready').'/'.$file->tunned_files->file );
+                        }
+                        else{
 
-                        copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
-                        '/mnt/portal.tuning-x.com'.$file->file_path.$fileToSave);
+                            if($file->on_dev == 1){
 
-                        unlink('/mnt/portal.ecutech.gr/uploads').'/'.$file->tunned_files->file;
+                                copy( public_path('/../../stagingportal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                                public_path('/../../TuningXV2/public'.$file->file_path.$fileName) );
+                                unlink( public_path('/../../TuningXV2/public/uploads/filesready').'/'.$file->tunned_files->file );
 
-                        $path = '/mnt/portal.tuning-x.com'.$file->file_path.$fileToSave;
+                            }
+                            else{
+
+                                copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
+                                '/mnt/portal.tuning-x.com'.$file->file_path.$fileToSave);
+                                unlink('/mnt/portal.ecutech.gr/uploads').'/'.$file->tunned_files->file;
+                                $path = '/mnt/portal.tuning-x.com'.$file->file_path.$fileToSave;
+                            }
+                        }
 
                     }
 
