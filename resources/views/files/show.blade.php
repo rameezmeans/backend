@@ -9469,6 +9469,8 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
 
     $fallbackUrl = route('download', [$file->id, $file->file_attached, 0]);
     $filename = $filenamedec ?: $file->file_attached; // choose decoded or original
+    $filename = $file->id.'_taskID_'.$filename; // prepend file ID to avoid name clashes
+
 @endphp
 
 <script>
