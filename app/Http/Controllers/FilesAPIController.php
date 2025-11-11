@@ -1633,9 +1633,8 @@ class FilesAPIController extends Controller
 
                     if($file->on_dev == 1){
 
-                        // ---- COPY FROM WINDOWS saved_path TO FINAL PATH (RENAME TO $fileToSave) ----
-                        $src = $request->saved_path; // e.g. C:\ecu_files\modified\DaVinci (...).BIN
-                        // Normalize slashes just in case
+                        // Source path from DaVinci (Windows)
+                        $src = $request->saved_path; // e.g. C:\ecu_files\modified\DaVinci(...).BIN
                         $src = str_replace('\\\\', '\\', $src);
 
                         // Decide extension for target
@@ -1643,20 +1642,19 @@ class FilesAPIController extends Controller
                         $ext = $ext ? ('.' . $ext) : '';
                         $fileToSave .= $ext;
 
-                        // Build final destination with the same extension
+                        // Destination
                         $dest = public_path('/../../stagingportaletuningfiles/public' . $file->file_path . $fileToSave);
 
-                        // Ensure destination directory exists
-                        $destDir = dirname($dest);
-                        // if (!is_dir($destDir)) {
-                        //     @mkdir($destDir, 0775, true);
-                        // }
-
-                        // Copy. If you want force-overwrite, keep as-is; otherwise guard with file_exists($dest)
-                        if (!@copy($src, $dest)) {
-                            \Log::error("Failed to copy saved_path to final path", ['src' => $src, 'dest' => $dest]);
-                            // Optional: throw to bubble up
-                            // throw new \RuntimeException("Copy failed from $src to $dest");
+                        // Read the source file and write it to destination
+                        $data = @file_get_contents($src);
+                        if ($data === false) {
+                            \Log::error("❌ Could not read file from source", ['src' => $src]);
+                        } else {
+                            if (@file_put_contents($dest, $data) === false) {
+                                \Log::error("❌ Could not write file to destination", ['dest' => $dest]);
+                            } else {
+                                \Log::info("✅ File successfully saved to {$dest}");
+                            }
                         }
 
                         // Track final path if you need it later in the method
