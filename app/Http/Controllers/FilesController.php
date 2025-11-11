@@ -4010,10 +4010,10 @@ class FilesController extends Controller
                 $path = public_path('/../../e-tuningfiles/public'.$file->file_path);
             }
             else{
-                if($file->subdealer_group_id){
-                    $path = public_path('/../../subportal/public'.$file->file_path);
-                }
-                else{
+                // if($file->subdealer_group_id){
+                //     $path = public_path('/../../subportal/public'.$file->file_path);
+                // }
+                // else{
 
                     if($file->on_dev == 1){
                         $path = public_path('/../../stagingportaletuningfiles/public'.$file->file_path);
@@ -4023,7 +4023,7 @@ class FilesController extends Controller
                         $path = '/mnt/portal.e-tuningfiles.com'.$file->file_path;
                         // $path = public_path('/../../portal.e-tuningfiles.com/public'.$file->file_path);
                     }
-                }
+                // }
             }
         }
         else if($file->front_end_id == 4){
