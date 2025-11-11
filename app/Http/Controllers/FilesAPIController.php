@@ -1565,9 +1565,152 @@ class FilesAPIController extends Controller
 
     public function saveReply(Request $request){
         
-        // dd($request->all());
-        return response()->json($request->all());
+        
+        /*
+            ={"task_id":"9869","saved_path":"C:\\ecu_files\\modified\\DaVinci (9869_taskID_16387___test_lua_dec___20251106210014.dec(_EGR_))__noCHK.BIN"}
+        */
 
+        $file = File::findOrFail($request->task_id);
+
+        dd($file);
+
+        $optionsMessage = '';
+
+        if($file->options){
+            foreach($file->options()->get() as $option) {
+                $optionName = Service::findOrFail($option->service_id)->name;
+                $optionsMessage .= "".$optionName."_";
+            }
+        }
+
+        $fileToSave = $file->brand.'_'.$file->model.'_'.$file->ecu.'_'.$file->stage.'_'.$optionsMessage.'_v'.$file->files->count()+1;
+
+        $fileToSave = str_replace('/', '', $fileToSave);
+        $fileToSave = str_replace('\\', '', $fileToSave);
+        $fileToSave = str_replace('#', '', $fileToSave);
+        $fileToSave = str_replace(' ', '_', $fileToSave);
+
+        if($file->front_end_id == 1){
+
+                if(env('APP_ENV') == 'local'){
+
+                    copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                    public_path('/../../portal/public'.$file->file_path.$fileName) );
+                    unlink( public_path('/../../portal/public/uploads/filesready').'/'.$file->tunned_files->file );
+
+                }
+                else{
+
+                    if($file->on_dev == 1){
+
+                        copy( public_path('/../../stagingportal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                        public_path('/../../stagingportal/public'.$file->file_path.$fileName) );
+                        unlink( public_path('/../../stagingportal/public/uploads/filesready').'/'.$file->tunned_files->file );
+
+                    }
+                    else{
+
+                        copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
+                        '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave);
+                        unlink('/mnt/portal.ecutech.gr/uploads'.'/'.$file->tunned_files->file);
+                        $path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave;
+
+                    }
+                }
+        
+            }
+
+            else if($file->front_end_id == 3){
+
+                if(env('APP_ENV') == 'local'){
+
+                    copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                    public_path('/../../e-tuningfiles/public'.$file->file_path.$fileName) );
+                    unlink( public_path('/../../e-tuningfiles/public/uploads/filesready').'/'.$file->tunned_files->file );
+
+                }
+                else{
+
+                    if($file->on_dev == 1){
+
+                        copy( public_path('/../../stagingportal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                        public_path('/../../staginge-tuningfiles/public'.$file->file_path.$fileName) );
+                        unlink( public_path('/../../staginge-tuningfiles/public/uploads/filesready').'/'.$file->tunned_files->file );
+
+                    }
+                    else{
+
+                        copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
+                        '/mnt/portal.e-tuningfiles.com'.$file->file_path.$fileToSave);
+                        unlink('/mnt/portal.ecutech.gr/uploads'.'/'.$file->tunned_files->file);
+                        $path = '/mnt/portal.ecutech.gr'.$file->file_path.$fileToSave;
+                    }
+                }
+            }
+
+            else if($file->front_end_id == 2){
+
+                if(env('APP_ENV') == 'local'){
+
+                    copy( public_path('/../../portal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                    public_path('/../../tuningX/public'.$file->file_path.$fileName) );
+                    unlink( public_path('/../../tuningX/public/uploads/filesready').'/'.$file->tunned_files->file );
+                }
+                else{
+
+                    if($file->on_dev == 1){
+
+                        copy( public_path('/../../stagingportal/public/uploads/filesready'.'/'.$request->tuned_file), 
+                        public_path('/../../TuningXV2/public'.$file->file_path.$fileName) );
+                        unlink( public_path('/../../TuningXV2/public/uploads/filesready').'/'.$file->tunned_files->file );
+
+                    }
+                    else{
+
+                        copy('/mnt/portal.ecutech.gr/uploads'.'/'.$request->tuned_file, 
+                        '/mnt/portal.tuning-x.com'.$file->file_path.$fileToSave);
+                        unlink('/mnt/portal.ecutech.gr/uploads').'/'.$file->tunned_files->file;
+                        $path = '/mnt/portal.tuning-x.com'.$file->file_path.$fileToSave;
+                    }
+                }
+
+            }
+
+        $engineerFile = new RequestFile();
+        $engineerFile->request_file = $fileToSave;
+        $engineerFile->file_type = 'engineer_file';
+        $engineerFile->tool_type = 'not_relevant';
+        $engineerFile->master_tools = 'not_relevant';
+        $engineerFile->lua_command = $request->lua_command;
+        $engineerFile->file_id = $file->id;
+        $engineerFile->olsname = $request->olsname;
+        $engineerFile->engineer = true;
+        $engineerFile->save();
+    
+
+        if($file->stage_services->service_id != 1){
+            $newRecord = new FileReplySoftwareService();
+            $newRecord->file_id = $file->id;
+            $newRecord->service_id = $file->stage_services->service_id;
+            $newRecord->software_id = 9;
+            $newRecord->reply_id = $engineerFile->id;
+            $newRecord->save();
+        }
+        
+        if(!$file->options_services()->get()->isEmpty()){
+
+            foreach($file->options_services()->get() as $option){
+
+                $newRecord = new FileReplySoftwareService();
+                $newRecord->file_id = $file->id;
+                $newRecord->service_id = $option->service_id;
+                $newRecord->software_id = 9;
+                $newRecord->reply_id = $engineerFile->id;
+                $newRecord->save();
+    
+            }
+
+        }
     }
 
     public function files($frontendID){
