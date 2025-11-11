@@ -1563,6 +1563,13 @@ class FilesAPIController extends Controller
     
     
 
+    public function saveReply(Request $request){
+        
+        // dd($request->all());
+        return response()->json($request->all());
+
+    }
+
     public function files($frontendID){
 
         $files = File::where('checking_status', 'unchecked')
