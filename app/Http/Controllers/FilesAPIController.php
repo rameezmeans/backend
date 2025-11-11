@@ -1645,18 +1645,36 @@ class FilesAPIController extends Controller
                         // Destination
                         $dest = public_path('/../../stagingportaletuningfiles/public' . $file->file_path . $fileToSave);
 
-                        // Read the source file and write it to destination
+                        // Ensure spaces, parentheses, and Unicode paths are handled properly
+                        $src = trim($src, "\"'"); // remove accidental quotes if any
+
+                        // Read the Windows file content (binary-safe)
                         $data = @file_get_contents($src);
                         if ($data === false) {
-                            \Log::error("❌ Could not read file from source", ['src' => $src]);
-                        } else {
-                            if (@file_put_contents($dest, $data) === false) {
-                                \Log::error("❌ Could not write file to destination", ['dest' => $dest]);
-                            } else {
-                                \Log::info("✅ File successfully saved to {$dest}");
-                            }
+                            \Log::error('Unable to read file from Windows path', [
+                                'src' => $src,
+                                'realpath' => realpath($src),
+                                'error' => error_get_last()
+                            ]);
+                            return response()->json(['error' => 'Could not read source file', 'src' => $src], 500);
                         }
 
+                        // Write to Laravel destination (binary-safe)
+                        $bytes = @file_put_contents($dest, $data);
+                        if ($bytes === false) {
+                            \Log::error('Unable to write file to destination', [
+                                'dest' => $dest,
+                                'error' => error_get_last()
+                            ]);
+                            return response()->json(['error' => 'Could not write destination file', 'dest' => $dest], 500);
+                        }
+
+                        \Log::info('File successfully uploaded via DaVinci agent', [
+                            'from' => $src,
+                            'to'   => $dest,
+                            'bytes' => $bytes
+                        ]);
+                        
                         // Track final path if you need it later in the method
                         // $path = $dest;
 
