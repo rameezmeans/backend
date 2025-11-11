@@ -1644,7 +1644,7 @@ class FilesAPIController extends Controller
                         $fileToSave .= $ext;
 
                         // Build final destination with the same extension
-                        $dest = public_path('/../../staginge-tuningfiles/public' . $file->file_path . $fileToSave);
+                        $dest = public_path('/../../stagingportaletuningfiles/public' . $file->file_path . $fileToSave);
 
                         // Ensure destination directory exists
                         $destDir = dirname($dest);
