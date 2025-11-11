@@ -1635,7 +1635,8 @@ class FilesAPIController extends Controller
 
                         // FINAL DESTINATION (with extension from source)
                         $ext = pathinfo((string) $request->saved_path, PATHINFO_EXTENSION) ?: 'BIN';
-                        $finalName = $file->file_path . $fileToSave . '.' . $ext;
+                        $fileToSave = $fileToSave.'.'.$ext;
+                        $finalName = $file->file_path . $fileToSave;
                         $dest      = public_path('/../../stagingportaletuningfiles/public' . $finalName);
 
                         // // Ensure destination directory exists
