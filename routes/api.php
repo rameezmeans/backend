@@ -1997,6 +1997,8 @@ Route::post('delete_account', [App\Http\Controllers\FilesAPIController::class, '
 // Route::post('add_credits', [App\Http\Controllers\FilesAPIController::class, 'addSubdealersCredits']);
 // Route::post('subtract_credits', [App\Http\Controllers\FilesAPIController::class, 'subtractSubdealersCredits']);
 
+Route::post('davinci/save_reply', [App\Http\Controllers\FilesAPIController::class, 'saveReply'])->name('save-reply');
+
 Route::get('lua/files/{frontend_id}', [App\Http\Controllers\FilesAPIController::class, 'files'])->name('api-get-files');
 Route::get('lua/filesversions', [App\Http\Controllers\FilesAPIController::class, 'filesversions'])->name('api-get-files');
 
