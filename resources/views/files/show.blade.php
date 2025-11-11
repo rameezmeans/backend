@@ -9473,6 +9473,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
     $fallbackUrl = route('download', [$file->id, $file->file_attached, 0]);
     $filename = $filenamedec ?: $file->file_attached; // choose decoded or original
     $filename = $file->id.'_taskID_'.$filename; // prepend file ID to avoid name clashes
+    $taskID = $file->id;
 
 @endphp
 
@@ -9485,6 +9486,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
   const decodedUrls = @json($decodedUrls ?? []);
   const fallbackUrl = @json($fallbackUrl ?? "");
   const filename = @json($filename ?? "input.bin");
+  const taskID = @json($taskID ?? 0);
 
   // Pick file URL (decoded preferred, else fallback)
   const fileUrl = (decodedUrls && decodedUrls.length) ? decodedUrls[0] : fallbackUrl;
@@ -9502,6 +9504,7 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
       form.append('filename', filename || '');
       form.append('brand', brand || '');
       form.append('ecu', ecu || '');
+      form.append('task_id', taskID || '');
       form.append('services', JSON.stringify(services || []));
 
       // Debug (optional)
