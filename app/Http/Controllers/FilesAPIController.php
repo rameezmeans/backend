@@ -1633,46 +1633,58 @@ class FilesAPIController extends Controller
 
                     if($file->on_dev == 1){
 
-                        // Source path from DaVinci (Windows)
-                        $src = $request->saved_path; // e.g. C:\ecu_files\modified\DaVinci(...).BIN
-                        $src = str_replace('\\\\', '\\', $src);
+                        // FINAL DESTINATION (with extension from source)
+                        $ext = pathinfo((string) $request->saved_path, PATHINFO_EXTENSION) ?: 'BIN';
+                        $finalName = $file->file_path . $fileToSave . '.' . $ext;
+                        $dest      = public_path('/../../stagingportaletuningfiles/public' . $finalName);
 
-                        // Decide extension for target
-                        $ext = pathinfo($src, PATHINFO_EXTENSION);
-                        $ext = $ext ? ('.' . $ext) : '';
-                        $fileToSave .= $ext;
+                        // // Ensure destination directory exists
+                        // $destDir = dirname($dest);
+                        // if (!is_dir($destDir)) {
+                        //     @mkdir($destDir, 0777, true);
+                        // }
 
-                        // Destination
-                        $dest = public_path('/../../stagingportaletuningfiles/public' . $file->file_path . $fileToSave);
+                        $data = null;
 
-                        // Ensure spaces, parentheses, and Unicode paths are handled properly
-                        $src = trim($src, "\"'"); // remove accidental quotes if any
-
-                        // Read the Windows file content (binary-safe)
-                        $data = @file_get_contents($src);
-                        if ($data === false) {
-                            \Log::error('Unable to read file from Windows path', [
-                                'src' => $src,
-                                'realpath' => realpath($src),
-                                'error' => error_get_last()
-                            ]);
-                            return response()->json(['error' => 'Could not read source file', 'src' => $src], 500);
+                        // 1) Prefer multipart file upload from agent
+                        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+                            $data = @file_get_contents($request->file('file')->getRealPath());
                         }
 
-                        // Write to Laravel destination (binary-safe)
+                        // 2) Or accept base64 payload
+                        if ($data === null && $request->filled('file_b64')) {
+                            $data = base64_decode($request->input('file_b64'), true);
+                            if ($data === false) {
+                                return response()->json(['error' => 'Invalid base64'], 400);
+                            }
+                        }
+
+                        // 3) As a last resort (dev-only when PHP can see the same disk), try saved_path
+                        if ($data === null && $request->filled('saved_path')) {
+                            $src = trim(stripslashes($request->saved_path), "\"'");
+                            $data = @file_get_contents($src);
+                            if ($data === false) {
+                                \Log::error('Could not read saved_path on server (likely remote C:)', [
+                                    'src' => $src, 'err' => error_get_last(),
+                                ]);
+                                return response()->json(['error' => 'Could not read source file'], 500);
+                            }
+                        }
+
+                        // Must have data by now
+                        if ($data === null) {
+                            return response()->json(['error' => 'No file bytes received'], 400);
+                        }
+
+                        // Write the file
                         $bytes = @file_put_contents($dest, $data);
                         if ($bytes === false) {
-                            \Log::error('Unable to write file to destination', [
-                                'dest' => $dest,
-                                'error' => error_get_last()
-                            ]);
-                            return response()->json(['error' => 'Could not write destination file', 'dest' => $dest], 500);
+                            \Log::error('Write failed', ['dest' => $dest, 'err' => error_get_last()]);
+                            return response()->json(['error' => 'Could not write destination file'], 500);
                         }
 
-                        \Log::info('File successfully uploaded via DaVinci agent', [
-                            'from' => $src,
-                            'to'   => $dest,
-                            'bytes' => $bytes
+                        \Log::info('File saved to staginge-tuningfiles', [
+                            'dest' => $dest, 'bytes' => $bytes, 'task' => $file->id,
                         ]);
                         
                         // Track final path if you need it later in the method
