@@ -1,7 +1,10 @@
-@php
-    if (!isset($arrayversionslua) || !is_array($arrayversionslua)) { $arrayversionslua = []; }
-@endphp
+// @php
+//     if (!isset($arrayversionslua) || !is_array($arrayversionslua)) { $arrayversionslua = []; }
+// @endphp
 @extends('layouts.app')
+{{-- 
+    Any $arrayversionslua or DB connection code below is commented out for safety.
+--}}
 
 @section('pagespecificstyles')
   <style>
@@ -2776,169 +2779,169 @@ margin-bottom: 10px !important;
                                   
                                   
                             </div>
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4"> --}}
                           
                           <?php 
 
-                          if(env('APP_ENV') != 'live'){
-                              $servername = env('DB_HOST');
-                              $username = env('DB_USERNAME');
-                              $password = env('DB_PASSWORD');
-                              $dbname = env('DB_DATABASE');
-                              $socket = env('DB_SOCKET');
-                          }
-                          else{
+                          // if(env('APP_ENV') != 'live'){
+                          //     $servername = env('DB_HOST');
+                          //     $username = env('DB_USERNAME');
+                          //     $password = env('DB_PASSWORD');
+                          //     $dbname = env('DB_DATABASE');
+                          //     $socket = env('DB_SOCKET');
+                          // }
+                          // else{
                               
-                              $username = env('DB_USERNAME');
-                              $password = env('DB_PASSWORD');
-                              $dbname = env('DB_DATABASE');
-                              $socket = env('DB_SOCKET');
-                          }
+                          //     $username = env('DB_USERNAME');
+                          //     $password = env('DB_PASSWORD');
+                          //     $dbname = env('DB_DATABASE');
+                          //     $socket = env('DB_SOCKET');
+                          // }
                           
 
 
                             // $arrayversionlua = NULL;
                             
-                            // Create a PDO instance
-                            try {
-                                if(env('APP_ENV') != 'live'){
-                                  $conn = new PDO("mysql:host=$servername;dbname=$dbname;unix_socket=$socket", $username, $password);
-                                }
-                                else{
-                                  $conn = new PDO("mysql:dbname=$dbname;unix_socket=$socket", $username, $password);
-                                }
-                                // $conn = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
-                                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            // // Create a PDO instance
+                            // try {
+                            //     if(env('APP_ENV') != 'live'){
+                            //       $conn = new PDO("mysql:host=$servername;dbname=$dbname;unix_socket=$socket", $username, $password);
+                            //     }
+                            //     else{
+                            //       $conn = new PDO("mysql:dbname=$dbname;unix_socket=$socket", $username, $password);
+                            //     }
+                            //     // $conn = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
+                            //     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             
-                                // Query to get the latest version from the table 'lua_versions' where file_id = 1
-                                $query = "SELECT * FROM lua_versions WHERE File_Id = " . $file->id . " ORDER BY Id DESC LIMIT 1";
+                            //     // Query to get the latest version from the table 'lua_versions' where file_id = 1
+                            //     $query = "SELECT * FROM lua_versions WHERE File_Id = " . $file->id . " ORDER BY Id DESC LIMIT 1";
                             
-                                // Execute the query
-                                $result = $conn->query($query);
+                            //     // Execute the query
+                            //     $result = $conn->query($query);
                             
-                                // Fetch the result as an associative array
-                                $latestVersion = $result->fetch(PDO::FETCH_ASSOC);
+                            //     // Fetch the result as an associative array
+                            //     $latestVersion = $result->fetch(PDO::FETCH_ASSOC);
                             
-                                // Declare and initialize the $arrayversionslua variable as an empty array
-                                $arrayversionslua = [];
+                            //     // Declare and initialize the $arrayversionslua variable as an empty array
+                            //     $arrayversionslua = [];
 
-                                // dd($latestVersion);
+                            //     // dd($latestVersion);
                             
-                                // Display the result
-                                if ($latestVersion) {
-                                    $arrayversionslua = json_decode($latestVersion['Respons'] ?? '[]', true) ?: [];
-                                    $jsonError = json_last_error();
-                                    $jsonErrorMsg = json_last_error_msg();
+                            //     // Display the result
+                            //     if ($latestVersion) {
+                            //         $arrayversionslua = json_decode($latestVersion['Respons'] ?? '[]', true) ?: [];
+                            //         $jsonError = json_last_error();
+                            //         $jsonErrorMsg = json_last_error_msg();
                             
-                                    if ($jsonError !== JSON_ERROR_NONE) {
-                                        echo "JSON Error: $jsonErrorMsg (Code: $jsonError)";
-                                    }
+                            //         if ($jsonError !== JSON_ERROR_NONE) {
+                            //             echo "JSON Error: $jsonErrorMsg (Code: $jsonError)";
+                            //         }
                             
-                                    if ($arrayversionslua === null) {
-                                        echo 'error decoding';
-                                    } else {
-                                        foreach (( $arrayversionslua ?? [] ) as $arrayversionlua ) {
+                            //         if ($arrayversionslua === null) {
+                            //             echo 'error decoding';
+                            //         } else {
+                            //             foreach (( $arrayversionslua ?? [] ) as $arrayversionlua ) {
 
-                                          // dd($arrayversionlua);
+                            //               // dd($arrayversionlua);
                                             
-                                            ?>
-                                            <div class="col-lg-12">
-                                                <h5>
-                                                    <?php
-                                                    echo $arrayversionlua['name'] . ' // ' . $arrayversionlua['percentage'];
-                                                    ?>
+                            //                 ?>
+                                             {{-- <div class="col-lg-12"> --}}
+                                                {{-- <h5> --}}
+                                                   <?php
+                            //                         echo $arrayversionlua['name'] . ' // ' . $arrayversionlua['percentage'];
+                            //                         ?>
                             
-                                                </h5>
+                                                 {{-- </h5> --}}
                                                 <?php
-                                                foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
-                                                    if (is_numeric($key) && $value !== 'Original') {
-                                                        ?>
-                                                        <p class="pull-left"><?php echo $value; ?></p>
-                                                        <div class="clearfix lijn"></div>
-                                                        <?php
-                                                    }
-                                                }
+                            //                     foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
+                            //                         if (is_numeric($key) && $value !== 'Original') {
+                            //                             ?>
+                                                       {{-- <p class="pull-left"><?php //echo $value; ?></p> --}}
+                                                      {{-- <div class="clearfix lijn"></div> --}}
+                                                    <?php
+                            //                         }
+                            //                     }
                                                 ?>
                             
-                                            </div>
+                                            {{-- </div> --}}
                             
                                             <?php
                             
-                                        }
-                                    }
-                                } else {
-                                    echo "No Lua versions found with file_id 1.";
-                                }
-                            } catch (PDOException $e) {
-                                echo "Connection failed: " . $e->getMessage();
-                            }
+                            //             }
+                            //         }
+                            //     } else {
+                            //         echo "No Lua versions found with file_id 1.";
+                            //     }
+                            // } catch (PDOException $e) {
+                            //     echo "Connection failed: " . $e->getMessage();
+                            // }
                             
-                            // Close the connection
-                            $conn = null;
+                            // // Close the connection
+                            // $conn = null;
                             ?>
 
                               
                               
                               
                               
-                            </div>
-                            <div class="col-md-5">
+                            {{-- </div> --}}
+                            {{-- <div class="col-md-5">
                               <h4>Make new version</h4>
                                   <?
-                                  foreach ($mods as $mod){
+                                  // foreach ($mods as $mod){
                                     ?>
                                       <div class="col-md-12">
-                                        <h5>
+                                        <h5> --}}
                                       <?
-                                      print($mod);
+                                      // print($mod);
                                       ?>
-                                        </h5>
+                                        {{-- </h5> --}}
             
                                     <?
             
-                                    if ($arrayversionslua === null) {
-                                          // Handle JSON decoding error
-                                      } else {
+                                    // if ($arrayversionslua === null) {
+                                    //       // Handle JSON decoding error
+                                    //   } else {
                                         ?>
-                                        <select name="makelua[]" class="form-select">
-                                          <option value="">Nothing</option>
+                                        {{-- <select name="makelua[]" class="form-select">
+                                          <option value="">Nothing</option> --}}
                                           <?
-                                          foreach (( $arrayversionslua ?? [] ) as $arrayversionlua ){
+                                          // foreach (( $arrayversionslua ?? [] ) as $arrayversionlua ){
 
-                                            // dd($arrayversionlua);
+                                          //   // dd($arrayversionlua);
                                             ?>
                                                 
                                                 
                                               <?
 
-                                              // dd($arrayversionlua);
-                                              foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
-                                                  if (is_numeric($key) && $value !== 'Original') {
-                                                    $modifiedString = str_replace('/', '-', $value);
-                                                      ?>
-                                                      <option value="<? echo $mod;?> // <? echo $arrayversionlua['name'];?> // <? echo $key;?>">
-                                                      <?php echo $arrayversionlua['name'].' // '.$arrayversionlua['percentage'].'% // '.$modifiedString;?>
-                                                      </option>
+                                              // // dd($arrayversionlua);
+                                              // foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
+                                              //     if (is_numeric($key) && $value !== 'Original') {
+                                              //       $modifiedString = str_replace('/', '-', $value);
+                                              //         ?>
+                                                     {{-- <option value="<? //echo $mod;?> // <? // echo $arrayversionlua['name'];?> // <? // echo $key;?>"> --}}
+                                                     {{-- <?php // echo $arrayversionlua['name'].' // '.$arrayversionlua['percentage'].'% // '.$modifiedString;?> --}}
+                                                     {{-- </option> --}}
                                                       <?
-                                                  }
-                                              }                                
+                                              //     }
+                                              // }                                
                                               ?>
                                               
                                             
                                             <?
                                             
-                                          }
+                                      //     }
                                           
-                                      }                        
+                                      // }                        
                                       ?>
-                                        </select>
+                                        {{-- </select> --}}
                                       
-                                      </div>
+                                      {{-- </div> --}}
             
                                     <?
-                                  }
+                                  // }
                                   ?>
-                                  <div class="col-md-12">
+                                  {{-- <div class="col-md-12">
                                     <h5>Send as version</h5>
                                     <input type="radio" name="sendversion" value="1" id="sendversion">
                                     <label>Yes</label>
@@ -2950,9 +2953,9 @@ margin-bottom: 10px !important;
                                     <input type="text" name="nameforluacreation" id="nameforluacreation" value=""/><br/>
                                     <button id="submitButton" class="btn btn-success m-t-20">Submit</button>
                                     
-                                  </div>
+                                  </div> --}}
 
-                                  <div class="col-md-12" style="margin-top: 100px;">
+                                  {{-- <div class="col-md-12" style="margin-top: 100px;">
                                     <div class="clearfix"></div>
                                       @foreach($file->downloadLuaFiles as $df)
                                       <div class="b-b b-t b-grey p-l-20 p-r-20 p-b-10 p-t-10">
@@ -2969,10 +2972,10 @@ margin-bottom: 10px !important;
 
                                       @endforeach
                                       
-                                  </div>
+                                  </div> --}}
                               
-                            </div>
-                          </div>
+                            {{-- </div> --}}
+                          {{-- </div> --}}
                         </div>           
                        
                         <div class="tab-pane slide-left" id="slide7">
@@ -3043,65 +3046,65 @@ margin-bottom: 10px !important;
                             <div class="col-md-12">
                               <h2>Make version FDB</h2>
             <?
-                              $uncheckedRecords2 = DB::table('lua_versions_others')
-                                  ->where('dbname', 'Filesdatabase')
-                                  ->where('File_id', $file->id) // Replace $file->id with the actual file ID you're searching for
-                                  ->orderBy('id', 'desc') // Order the results by id in descending order
-                                  ->select('id', 'dbname', 'File_id', 'Respons')
-                                  ->first();
+                              // $uncheckedRecords2 = DB::table('lua_versions_others')
+                              //     ->where('dbname', 'Filesdatabase')
+                              //     ->where('File_id', $file->id) // Replace $file->id with the actual file ID you're searching for
+                              //     ->orderBy('id', 'desc') // Order the results by id in descending order
+                              //     ->select('id', 'dbname', 'File_id', 'Respons')
+                              //     ->first();
                               
-                              if ($uncheckedRecords2) {
-                                  $jsonResponse = $uncheckedRecords2->Respons; // Access the 'Respons' property
+                              // if ($uncheckedRecords2) {
+                              //     $jsonResponse = $uncheckedRecords2->Respons; // Access the 'Respons' property
                               
-                                  // Parse the JSON response
-                                  $data = json_decode($jsonResponse, true);
+                              //     // Parse the JSON response
+                              //     $data = json_decode($jsonResponse, true);
                               
-                                  // Initialize the maximum dynamic field index
-                                  $maxIndex = 0;
+                              //     // Initialize the maximum dynamic field index
+                              //     $maxIndex = 0;
                                   
-                                  // Determine the maximum dynamic field index from the JSON data
-                                  foreach ($data as $row) {
-                                      foreach ($row as $key => $value) {
-                                          if (is_numeric($key) && $key > $maxIndex) {
-                                              $maxIndex = $key;
-                                          }
-                                      }
-                                  }
+                              //     // Determine the maximum dynamic field index from the JSON data
+                              //     foreach ($data as $row) {
+                              //         foreach ($row as $key => $value) {
+                              //             if (is_numeric($key) && $key > $maxIndex) {
+                              //                 $maxIndex = $key;
+                              //             }
+                              //         }
+                              //     }
                               
-                                  // Start generating HTML table
-                                  echo '<table>';
-                                  echo '<tr><th>Name</th><th>Percentage</th>';
+                              //     // Start generating HTML table
+                              //     echo '<table>';
+                              //     echo '<tr><th>Name</th><th>Percentage</th>';
                               
-                                  // Generate headers for dynamic fields
-                                  for ($i = 0; $i <= $maxIndex; $i++) {
-                                      echo '<th>Version ' . $i . '</th>';
-                                  }
+                              //     // Generate headers for dynamic fields
+                              //     for ($i = 0; $i <= $maxIndex; $i++) {
+                              //         echo '<th>Version ' . $i . '</th>';
+                              //     }
                               
-                                  echo '</tr>';
+                              //     echo '</tr>';
                               
-                                  // Iterate through the data and populate table rows
-                                  foreach ($data as $row) {
-                                      echo '<tr>';
-                                      echo '<td>' . htmlspecialchars($row['name']) . '</td>';
-                                      echo '<td>' . htmlspecialchars($row['percentage']) . '</td>';
+                              //     // Iterate through the data and populate table rows
+                              //     foreach ($data as $row) {
+                              //         echo '<tr>';
+                              //         echo '<td>' . htmlspecialchars($row['name']) . '</td>';
+                              //         echo '<td>' . htmlspecialchars($row['percentage']) . '</td>';
                               
-                                      // Populate dynamic fields
-                                      for ($i = 0; $i <= $maxIndex; $i++) {
-                                          if (isset($row[$i])) {
-                                              echo '<td>' . htmlspecialchars($row[$i]) . '</td>';
-                                          } else {
-                                              echo '<td></td>';
-                                          }
-                                      }
+                              //         // Populate dynamic fields
+                              //         for ($i = 0; $i <= $maxIndex; $i++) {
+                              //             if (isset($row[$i])) {
+                              //                 echo '<td>' . htmlspecialchars($row[$i]) . '</td>';
+                              //             } else {
+                              //                 echo '<td></td>';
+                              //             }
+                              //         }
                               
-                                      echo '</tr>';
-                                  }
+                              //         echo '</tr>';
+                              //     }
                               
-                                  // Close the table
-                                  echo '</table>';
-                              } else {
-                                  echo "No records found.";
-                              }
+                              //     // Close the table
+                              //     echo '</table>';
+                              // } else {
+                              //     echo "No records found.";
+                              // }
                               ?>
                                   
                                   
@@ -3117,58 +3120,58 @@ margin-bottom: 10px !important;
                             <div class="col-md-12">
                               <h4>Make new version</h4>
                                   <?
-                                  if ($uncheckedRecords2){
-                                    foreach ($mods as $mod){
+                                  // if ($uncheckedRecords2){
+                                  //   foreach ($mods as $mod){
                                     ?>
                                       <div class="col-md-12">
                                         <h5>
                                       <?
-                                      print($mod);
+                                      // print($mod);
                                       ?>
                                         </h5>
                             
                                     <?
                             
-                                    if ($data === null) {
+                                    // if ($data === null) {
                                           // Handle JSON decoding error
-                                      } else {
+                                      // } else {
                                         ?>
-                                        <select name="makelua2[]" class="form-select">
-                                          <option value="">Nothing</option>
+                                        {{-- <select name="makelua2[]" class="form-select"> --}}
+                                          {{-- <option value="">Nothing</option> --}}
                                           <?
-                                          foreach ($data as $arrayversionlua){
+                                          // foreach ($data as $arrayversionlua){
                                             // dd($arrayversionlua);
                                             ?>
                                                 
                                                 
                                               <?
                                               // dd($arrayversionlua);
-                                              foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
-                                                  if (is_numeric($key) && $value !== 'Original') {
-                                                    $modifiedString = str_replace('/', '-', $value);
-                                                      ?>
-                                                      <option value="<? echo $mod;?> // <? echo $arrayversionlua['name'];?> // <? echo $key;?>">
-                                                      <?php echo $arrayversionlua['name'].' // '.$arrayversionlua['percentage'].'% // '.$modifiedString;?>
-                                                      </option>
-                                                      <?
-                                                  }
-                                              }                                
+                                              // foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
+                                              //     if (is_numeric($key) && $value !== 'Original') {
+                                              //       $modifiedString = str_replace('/', '-', $value);
+                                              //         ?>
+                                                      {{-- <option value="<? // echo $mod;?> // <? //echo $arrayversionlua['name'];?> // <? // echo $key;?>"> --}}
+                                                      <?php //echo $arrayversionlua['name'].' // '.$arrayversionlua['percentage'].'% // '.$modifiedString;?>
+                                                      {{-- </option> --}}
+                                                       <?
+                                              //     }
+                                              // }                                
                                               ?>
                                               
                                             
                                             <?
                                             
-                                          }
+                                      //     }
                                           
-                                      }                        
+                                      // }                        
                                       ?>
-                                        </select>
+                                        {{-- </select> --}}
                                       
                                       </div>
                             
                                     <?
-                                    }
-                                  }
+                                  //   }
+                                  // }
                                   ?>
                                   <div class="col-md-12">
                                     <h5>Send as version</h5>
@@ -5471,99 +5474,99 @@ margin-bottom: 10px !important;
                             </div>
                             <div class="col-md-4">
 <?php
-                            if(env('APP_ENV') != 'live'){
-                              $servername = env('DB_HOST');
-                              $username = env('DB_USERNAME');
-                              $password = env('DB_PASSWORD');
-                              $dbname = env('DB_DATABASE');
-                              $socket = env('DB_SOCKET');
-                          }
-                          else{
+                          //   if(env('APP_ENV') != 'live'){
+                          //     $servername = env('DB_HOST');
+                          //     $username = env('DB_USERNAME');
+                          //     $password = env('DB_PASSWORD');
+                          //     $dbname = env('DB_DATABASE');
+                          //     $socket = env('DB_SOCKET');
+                          // }
+                          // else{
                               
-                              $username = env('DB_USERNAME');
-                              $password = env('DB_PASSWORD');
-                              $dbname = env('DB_DATABASE');
-                              $socket = env('DB_SOCKET');
-                          }
+                          //     $username = env('DB_USERNAME');
+                          //     $password = env('DB_PASSWORD');
+                          //     $dbname = env('DB_DATABASE');
+                          //     $socket = env('DB_SOCKET');
+                          // }
 
                             // dd($socket);
                             
                             // Create a PDO instance
-                            try {
-                                if(env('APP_ENV') != 'live'){
-                                  $conn = new PDO("mysql:host=$servername;dbname=$dbname;unix_socket=$socket", $username, $password);
-                                }
-                                else{
-                                  $conn = new PDO("mysql:dbname=$dbname;unix_socket=$socket", $username, $password);
-                                }
-                                // $conn = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
-                                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            // try {
+                            //     if(env('APP_ENV') != 'live'){
+                            //       $conn = new PDO("mysql:host=$servername;dbname=$dbname;unix_socket=$socket", $username, $password);
+                            //     }
+                            //     else{
+                            //       $conn = new PDO("mysql:dbname=$dbname;unix_socket=$socket", $username, $password);
+                            //     }
+                            //     // $conn = new PDO("mysql:host=$servername;dbname=$dbname;", $username, $password);
+                            //     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             
-                                // Query to get the latest version from the table 'lua_versions' where file_id = 1
-                                $query = "SELECT * FROM lua_versions WHERE File_Id = " . $file->id . " ORDER BY Id DESC LIMIT 1";
+                            //     // Query to get the latest version from the table 'lua_versions' where file_id = 1
+                            //     $query = "SELECT * FROM lua_versions WHERE File_Id = " . $file->id . " ORDER BY Id DESC LIMIT 1";
                             
-                                // Execute the query
-                                $result = $conn->query($query);
+                            //     // Execute the query
+                            //     $result = $conn->query($query);
                             
-                                // Fetch the result as an associative array
-                                $latestVersion = $result->fetch(PDO::FETCH_ASSOC);
+                            //     // Fetch the result as an associative array
+                            //     $latestVersion = $result->fetch(PDO::FETCH_ASSOC);
                             
-                                // Declare and initialize the $arrayversionslua variable as an empty array
-                                $arrayversionslua = [];
+                            //     // Declare and initialize the $arrayversionslua variable as an empty array
+                            //     $arrayversionslua = [];
                             
-                                // Display the result
-                                if ($latestVersion) {
-                                    $arrayversionslua = json_decode($latestVersion['Respons'] ?? '[]', true) ?: [];
-                                    $jsonError = json_last_error();
-                                    $jsonErrorMsg = json_last_error_msg();
+                            //     // Display the result
+                            //     if ($latestVersion) {
+                            //         $arrayversionslua = json_decode($latestVersion['Respons'] ?? '[]', true) ?: [];
+                            //         $jsonError = json_last_error();
+                            //         $jsonErrorMsg = json_last_error_msg();
                             
-                                    if ($jsonError !== JSON_ERROR_NONE) {
-                                        echo "JSON Error: $jsonErrorMsg (Code: $jsonError)";
-                                    }
+                            //         if ($jsonError !== JSON_ERROR_NONE) {
+                            //             echo "JSON Error: $jsonErrorMsg (Code: $jsonError)";
+                            //         }
                             
-                                    if ($arrayversionslua === null) {
-                                        echo 'error decoding';
-                                    } else {
-                                        foreach (( $arrayversionslua ?? [] ) as $arrayversionlua ) {
+                            //         if ($arrayversionslua === null) {
+                            //             echo 'error decoding';
+                            //         } else {
+                            //             foreach (( $arrayversionslua ?? [] ) as $arrayversionlua ) {
 
-                                          // dd($arrayversionlua);
+                            //               // dd($arrayversionlua);
                                             
-                                            ?>
-                                            <div class="col-lg-12">
-                                                <h5>
-                                                    <?php
-                                                    echo $arrayversionlua['name'] . ' // ' . $arrayversionlua['percentage'];
-                                                    ?>
+                            //                 ?>
+                            //                 <div class="col-lg-12">
+                            //                     <h5>
+                            //                         <?php
+                            //                         echo $arrayversionlua['name'] . ' // ' . $arrayversionlua['percentage'];
+                            //                         ?>
                             
-                                                </h5>
-                                                <?php
+                            //                     </h5>
+                            //                     <?php
 
-                                                // dd($arrayversionlua);
-                                                foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
-                                                    if (is_numeric($key) && $value !== 'Original') {
-                                                        ?>
-                                                        <p class="pull-left"><?php echo $value; ?></p>
-                                                        <div class="clearfix lijn"></div>
-                                                        <?php
-                                                    }
-                                                }
+                            //                     // dd($arrayversionlua);
+                            //                     foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
+                            //                         if (is_numeric($key) && $value !== 'Original') {
+                            //                             ?>
+                            //                             <p class="pull-left"><?php echo $value; ?></p>
+                            //                             <div class="clearfix lijn"></div>
+                            //                             <?php
+                            //                         }
+                            //                     }
                                                 ?>
                             
                                             </div>
                             
                                             <?php
                             
-                                        }
-                                    }
-                                } else {
-                                    echo "No Lua versions found with file_id 1.";
-                                }
-                            } catch (PDOException $e) {
-                                echo "Connection failed: " . $e->getMessage();
-                            }
+                            //             }
+                            //         }
+                            //     } else {
+                            //         echo "No Lua versions found with file_id 1.";
+                            //     }
+                            // } catch (PDOException $e) {
+                            //     echo "Connection failed: " . $e->getMessage();
+                            // }
                             
-                            // Close the connection
-                            $conn = null;
+                            // // Close the connection
+                            // $conn = null;
                             ?>
 
                               
@@ -5574,57 +5577,57 @@ margin-bottom: 10px !important;
                             <div class="col-md-5">
                               <h4>Make new version</h4>
                                   <?
-                                  foreach ($mods as $mod){
+                                  // foreach ($mods as $mod){
                                     ?>
                                       <div class="col-md-12">
                                         <h5>
                                       <?
-                                      print($mod);
+                                      // print($mod);
                                       ?>
                                         </h5>
             
                                     <?
             
-                                    if ($arrayversionslua === null) {
-                                          // Handle JSON decoding error
-                                      } else {
+                                    // if ($arrayversionslua === null) {
+                                    //       // Handle JSON decoding error
+                                    //   } else {
                                         ?>
-                                        <select name="makelua[]" class="form-select">
-                                          <option value="">Nothing</option>
+                                        {{-- <select name="makelua[]" class="form-select"> --}}
+                                          {{-- <option value="">Nothing</option> --}}
                                           <?
-                                          foreach (( $arrayversionslua ?? [] ) as $arrayversionlua ){
+                                          // foreach (( $arrayversionslua ?? [] ) as $arrayversionlua ){
                                             // dd($arrayversionlua);
                                             ?>
                                                 
                                                 
                                               <?
                                               // dd($arrayversionlua);
-                                              foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
-                                                  if (is_numeric($key) && $value !== 'Original') {
-                                                    $modifiedString = str_replace('/', '-', $value);
-                                                    // dd($arrayversionlua);
+                                              // foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
+                                              //     if (is_numeric($key) && $value !== 'Original') {
+                                              //       $modifiedString = str_replace('/', '-', $value);
+                                              //       // dd($arrayversionlua);
                                                       ?>
-                                                      <option value="<? echo $mod;?> // <? echo $arrayversionlua['name'];?> // <? echo $key;?>">
-                                                      <?php echo $arrayversionlua['name'].' // '.$arrayversionlua['percentage'].'% // '.$modifiedString;?>
+                                                      {{-- <option value="<? // echo $mod;?> // <? // echo $arrayversionlua['name'];?> // <? // echo $key;?>"> --}}
+                                                      <?php // echo $arrayversionlua['name'].' // '.$arrayversionlua['percentage'].'% // '.$modifiedString;?>
                                                       </option>
                                                       <?
-                                                  }
-                                              }                                
+                                              //     }
+                                              // }                                
                                               ?>
                                               
                                             
                                             <?
                                             
-                                          }
+                                      //     }
                                           
-                                      }                        
+                                      // }                        
                                       ?>
-                                        </select>
+                                        {{-- </select> --}}
                                       
                                       </div>
             
                                     <?
-                                  }
+                                  // }
                                   ?>
                                   <div class="col-md-12">
                                     <h5>Send as version</h5>
@@ -5709,65 +5712,65 @@ margin-bottom: 10px !important;
                             <div class="col-md-12">
                               <h2>Make version FDB</h2>
             <?
-                              $uncheckedRecords2 = DB::table('lua_versions_others')
-                                  ->where('dbname', 'Filesdatabase')
-                                  ->where('File_id', $file->id) // Replace $file->id with the actual file ID you're searching for
-                                  ->orderBy('id', 'desc') // Order the results by id in descending order
-                                  ->select('id', 'dbname', 'File_id', 'Respons')
-                                  ->first();
+                              // $uncheckedRecords2 = DB::table('lua_versions_others')
+                              //     ->where('dbname', 'Filesdatabase')
+                              //     ->where('File_id', $file->id) // Replace $file->id with the actual file ID you're searching for
+                              //     ->orderBy('id', 'desc') // Order the results by id in descending order
+                              //     ->select('id', 'dbname', 'File_id', 'Respons')
+                              //     ->first();
                               
-                              if ($uncheckedRecords2) {
-                                  $jsonResponse = $uncheckedRecords2->Respons; // Access the 'Respons' property
+                              // if ($uncheckedRecords2) {
+                              //     $jsonResponse = $uncheckedRecords2->Respons; // Access the 'Respons' property
                               
-                                  // Parse the JSON response
-                                  $data = json_decode($jsonResponse, true);
+                              //     // Parse the JSON response
+                              //     $data = json_decode($jsonResponse, true);
                               
-                                  // Initialize the maximum dynamic field index
-                                  $maxIndex = 0;
+                              //     // Initialize the maximum dynamic field index
+                              //     $maxIndex = 0;
                                   
-                                  // Determine the maximum dynamic field index from the JSON data
-                                  foreach ($data as $row) {
-                                      foreach ($row as $key => $value) {
-                                          if (is_numeric($key) && $key > $maxIndex) {
-                                              $maxIndex = $key;
-                                          }
-                                      }
-                                  }
+                              //     // Determine the maximum dynamic field index from the JSON data
+                              //     foreach ($data as $row) {
+                              //         foreach ($row as $key => $value) {
+                              //             if (is_numeric($key) && $key > $maxIndex) {
+                              //                 $maxIndex = $key;
+                              //             }
+                              //         }
+                              //     }
                               
                                   // Start generating HTML table
-                                  echo '<table>';
-                                  echo '<tr><th>Name</th><th>Percentage</th>';
+                                  // echo '<table>';
+                                  // echo '<tr><th>Name</th><th>Percentage</th>';
                               
                                   // Generate headers for dynamic fields
-                                  for ($i = 0; $i <= $maxIndex; $i++) {
-                                      echo '<th>Version ' . $i . '</th>';
-                                  }
+                                  // for ($i = 0; $i <= $maxIndex; $i++) {
+                                      // echo '<th>Version ' . $i . '</th>';
+                                  // }
                               
-                                  echo '</tr>';
+                                  // echo '</tr>';
                               
                                   // Iterate through the data and populate table rows
-                                  foreach ($data as $row) {
-                                      echo '<tr>';
-                                      echo '<td>' . htmlspecialchars($row['name']) . '</td>';
-                                      echo '<td>' . htmlspecialchars($row['percentage']) . '</td>';
+                                  // foreach ($data as $row) {
+                                  //     echo '<tr>';
+                                  //     echo '<td>' . htmlspecialchars($row['name']) . '</td>';
+                                  //     echo '<td>' . htmlspecialchars($row['percentage']) . '</td>';
                               
                                       // Populate dynamic fields
-                                      for ($i = 0; $i <= $maxIndex; $i++) {
-                                          if (isset($row[$i])) {
-                                              echo '<td>' . htmlspecialchars($row[$i]) . '</td>';
-                                          } else {
-                                              echo '<td></td>';
-                                          }
-                                      }
+                                  //     for ($i = 0; $i <= $maxIndex; $i++) {
+                                  //         if (isset($row[$i])) {
+                                  //             echo '<td>' . htmlspecialchars($row[$i]) . '</td>';
+                                  //         } else {
+                                  //             echo '<td></td>';
+                                  //         }
+                                  //     }
                               
-                                      echo '</tr>';
-                                  }
+                                  //     echo '</tr>';
+                                  // }
                               
-                                  // Close the table
-                                  echo '</table>';
-                              } else {
-                                  echo "No records found.";
-                              }
+                              //     // Close the table
+                              //     echo '</table>';
+                              // } else {
+                              //     echo "No records found.";
+                              // }
                               ?>
                                   
                                   
@@ -5783,57 +5786,57 @@ margin-bottom: 10px !important;
                             <div class="col-md-12">
                               <h4>Make new version</h4>
                                   <?
-                                  if ($uncheckedRecords2){
-                                    foreach ($mods as $mod){
-                                    ?>
-                                      <div class="col-md-12">
-                                        <h5>
-                                      <?
-                                      print($mod);
-                                      ?>
-                                        </h5>
+                                  // if ($uncheckedRecords2){
+                                  //   foreach ($mods as $mod){
+                                  //   ?>
+                                  //     <div class="col-md-12">
+                                  //       <h5>
+                                  //     <?
+                                  //     print($mod);
+                                  //     ?>
+                                  //       </h5>
                             
-                                    <?
+                                  //   <?
                             
-                                    if ($data === null) {
-                                          // Handle JSON decoding error
-                                      } else {
-                                        ?>
-                                        <select name="makelua2[]" class="form-select">
-                                          <option value="">Nothing</option>
-                                          <?
-                                          foreach ($data as $arrayversionlua){
-                                            ?>
+                                  //   if ($data === null) {
+                                  //         // Handle JSON decoding error
+                                  //     } else {
+                                  //       ?>
+                                  //       <select name="makelua2[]" class="form-select">
+                                  //         <option value="">Nothing</option>
+                                  //         <?
+                                  //         foreach ($data as $arrayversionlua){
+                                  //           ?>
                                                 
                                                 
-                                              <?
-                                              foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
-                                                  if (is_numeric($key) && $value !== 'Original') {
-                                                    $modifiedString = str_replace('/', '-', $value);
-                                                    // dd($arrayversionlua);
-                                                      ?>
-                                                      <option value="<? echo $mod;?> // <? echo $arrayversionlua['name'];?> // <? echo $key;?>">
-                                                      <?php echo $arrayversionlua['name'].' // '.$arrayversionlua['percentage'].'% // '.$modifiedString;?>
-                                                      </option>
-                                                      <?
-                                                  }
-                                              }                                
+                                  //             <?
+                                  //             foreach (( is_array($arrayversionlua ?? null) ? $arrayversionlua : [] ) as $key => $value ) {
+                                  //                 if (is_numeric($key) && $value !== 'Original') {
+                                  //                   $modifiedString = str_replace('/', '-', $value);
+                                  //                   // dd($arrayversionlua);
+                                  //                     ?>
+                                  //                     <option value="<? // echo $mod;?> // <? // echo $arrayversionlua['name'];?> // <? // echo $key;?>">
+                                  //                     <?php //echo $arrayversionlua['name'].' // '.$arrayversionlua['percentage'].'% // '.$modifiedString;?>
+                                  //                     </option>
+                                  //                     <?
+                                  //                 }
+                                  //             }                                
                                               ?>
                                               
                                             
                                             <?
                                             
-                                          }
+                                      //     }
                                           
-                                      }                        
+                                      // }                        
                                       ?>
-                                        </select>
+                                        // </select>
                                       
-                                      </div>
+                                      // </div>
                             
                                     <?
-                                    }
-                                  }
+                                  //   }
+                                  // }
                                   ?>
                                   <div class="col-md-12">
                                     <h5>Send as version</h5>
