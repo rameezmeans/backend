@@ -9488,38 +9488,42 @@ let engineerFileDrop= new Dropzone(".encoded-dropzone", {
   const filename = @json($filename ?? "input.bin");
   const taskID = @json($taskID ?? 0);
 
-  // Pick file URL (decoded preferred, else fallback)
   const fileUrl = (decodedUrls && decodedUrls.length) ? decodedUrls[0] : fallbackUrl;
 
   document.getElementById('processBtn')?.addEventListener('click', async () => {
     try {
-      // 1) Fetch the BIN from your backend
       const res = await fetch(fileUrl, { credentials: 'include' });
+
+      // Session timeout or redirect to login → refresh page
+      if (res.status === 401 || res.redirected && res.url.includes('/login')) {
+        console.warn('Session expired. Reloading...');
+        location.reload();
+        return;
+      }
+
       if (!res.ok) throw new Error('Download failed: ' + res.status);
       const blob = await res.blob();
 
-      // 2) Send file + metadata to local agent
       const form = new FormData();
-      form.append('file', blob, filename || 'input.bin');  // keep exact filename
+      form.append('file', blob, filename || 'input.bin');
       form.append('filename', filename || '');
       form.append('brand', brand || '');
       form.append('ecu', ecu || '');
       form.append('task_id', taskID || '');
       form.append('services', JSON.stringify(services || []));
 
-      // Debug (optional)
-      // console.log({ fileUrl, filename, brand, ecu, services });
-
-      const r = await fetch('http://127.0.0.1:8765/process_upload', {
-        method: 'POST',
-        body: form
-      });
+      const r = await fetch('http://127.0.0.1:8765/process_upload', { method: 'POST', body: form });
 
       const data = await r.json();
       alert(data.ok
-        ? ('Done. See C:\\\\ecu_files\\\\modified\\n' + (data.output_file || ''))
-        : ('Failed. See C:\\\\davinci_automation\\\\davinci_automation.log\\n' + (data.stderr_tail || data.stdout_tail)));
+        ? ('Done. File: ' + (data.output_file || ''))
+        : ('Failed.\nSee C:\\davinci_automation\\davinci_automation.log\n' + (data.stderr_tail || data.stdout_tail)));
     } catch (e) {
+      // If network call fails completely (like session gone)
+      if (String(e).includes('Unexpected token') || String(e).includes('JSON')) {
+        location.reload();
+        return;
+      }
       alert('Local run failed: ' + (e && e.message ? e.message : e));
     }
   });
