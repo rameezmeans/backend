@@ -2603,7 +2603,7 @@ margin-bottom: 10px !important;
                     <h5>
                       Upload New File
                     </h5>
-                    <form method="POST" action="{{route('search')}}" enctype="multipart/form-data" class="" role="form">
+                    <form method="POST" action="{{route('files.search')}}" enctype="multipart/form-data" class="" role="form">
                       @csrf
                       <input type="hidden" name="file_id" value="{{$file->id}}">
                       <div class="form-group form-group-default required ">
@@ -5301,7 +5301,7 @@ margin-bottom: 10px !important;
                     <h5>
                       Upload New File
                     </h5>
-                    <form method="POST" action="{{route('search')}}" enctype="multipart/form-data" class="" role="form">
+                    <form method="POST" action="{{route('files.search')}}" enctype="multipart/form-data" class="" role="form">
                       @csrf
                       <input type="hidden" name="file_id" value="{{$file->id}}">
                       <div class="form-group form-group-default required ">

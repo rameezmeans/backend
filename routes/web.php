@@ -1004,15 +1004,12 @@ Route::get('/edit_processing_softwares/{id}', [App\Http\Controllers\ProcessingSo
 Route::post('/delete_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'delete'])->name('delete-processing-softwares');
 Route::post('/create_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'create'])->name('create-processing-softwares');
 Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
-Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
 Route::get('/softwares_report', [App\Http\Controllers\ProcessingSoftwaresController::class, 'softwareReport'])->name('softwares-report');
 
 Route::get('/database_import', [App\Http\Controllers\ProcessingSoftwaresController::class, 'databaseImport'])->name('database-import');
-Route::post('/database_import', [App\Http\Controllers\ProcessingSoftwaresController::class, 'databaseImport'])->name('database-import');
 Route::post('/get_external_sourced', [App\Http\Controllers\ProcessingSoftwaresController::class, 'getExternalSourced'])->name('get-external-sourced');
 Route::post('/change_ps_external_source', [App\Http\Controllers\ProcessingSoftwaresController::class, 'changePsExternalSource'])->name('change-ps-external-source');
 Route::post('/change_ps_external_source_software', [App\Http\Controllers\ProcessingSoftwaresController::class, 'changePsExternalSourceSoftware'])->name('change-ps-external-source-software');
-Route::post('/update_processing_softwares', [App\Http\Controllers\ProcessingSoftwaresController::class, 'update'])->name('update-processing-softwares');
 
 Route::get('/countires_report', [App\Http\Controllers\UsersController::class, 'countriesReport'])->name('countries-report');
 Route::get('/services_report', [App\Http\Controllers\ServicesController::class, 'servicesReport'])->name('services-report');
@@ -1053,7 +1050,7 @@ Route::get('/testing', [App\Http\Controllers\FilesController::class, 'testing'])
 
 Route::get('/file/{id}', [App\Http\Controllers\FilesController::class, 'show'])->name('file');
 Route::post('/get_download_button', [App\Http\Controllers\FilesController::class, 'getDownloadButton'])->name('get-download-button');
-Route::post('/search', [App\Http\Controllers\FilesController::class, 'search'])->name('search');
+Route::post('/search', [App\Http\Controllers\FilesController::class, 'search'])->name('files.search');
 Route::post('get_change_status', [App\Http\Controllers\FilesController::class, 'changeCheckingStatus'])->name('get-change-status');
 Route::post('flip_decoded_mode', [App\Http\Controllers\FilesController::class, 'flipDecodedMode'])->name('flip-decoded-mode');
 Route::post('add_options_offer', [App\Http\Controllers\FilesController::class, 'addOptionsOffer'])->name('add-options-offer');
@@ -1078,7 +1075,7 @@ Route::get('download_original_file/{id}', [App\Http\Controllers\OriginalFilesCon
 Route::get('renaming', [App\Http\Controllers\OriginalFilesController::class, 'renaming'])->name('renaming-original-files');
 Route::post('/get_series', [App\Http\Controllers\OriginalFilesController::class, 'getSeries'])->name('get-series');
 Route::post('/get_models_orignal_files', [App\Http\Controllers\OriginalFilesController::class, 'getModels'])->name('get-models-original-files');
-Route::post('delete_original_files', [App\Http\Controllers\OriginalFilesController::class, 'deleteOriginalFiles'])->name('delete-files');
+Route::post('delete_original_files', [App\Http\Controllers\OriginalFilesController::class, 'deleteOriginalFiles'])->name('delete-original-files');
 Route::get('edit_original_file/{id}', [App\Http\Controllers\OriginalFilesController::class, 'edit'])->name('edit-original-file');
 Route::post('update_original_file', [App\Http\Controllers\OriginalFilesController::class, 'update'])->name('update-original-file');
 Route::post('delete_original_file', [App\Http\Controllers\OriginalFilesController::class, 'delete'])->name('delete-original-file');
@@ -1184,7 +1181,7 @@ Route::post('/update_work_hour', [App\Http\Controllers\WorkHoursController::clas
 // Route::get('/groups', [App\Http\Controllers\GroupsController::class,'index'])->name('customer.groups');
 
 Route::get('/groups', [App\Http\Controllers\GroupsController::class,'index'])->name('groups');
-Route::get('/group/{id}', [App\Http\Controllers\GroupsController::class,'show'])->name('group');
+Route::get('/group/{id}', [App\Http\Controllers\GroupsController::class,'show'])->name('groups.show');
 Route::get('/create_group', [App\Http\Controllers\GroupsController::class,'create'])->name('create-group');
 Route::get('/edit-group/{id}', [App\Http\Controllers\GroupsController::class,'edit'])->name('edit-group');
 Route::post('/add-group', [App\Http\Controllers\GroupsController::class,'add'])->name('add-group');
@@ -1249,7 +1246,6 @@ Route::get('/feeds', [App\Http\Controllers\NewsFeedsController::class, 'index'])
 Route::get('/add-feeds', [App\Http\Controllers\NewsFeedsController::class, 'add'])->name('add-feed');
 Route::post('/post-feeds', [App\Http\Controllers\NewsFeedsController::class, 'post'])->name('post-feed');
 Route::post('/update-feeds', [App\Http\Controllers\NewsFeedsController::class, 'update'])->name('update-feed');
-Route::post('/delete-feeds', [App\Http\Controllers\NewsFeedsController::class, 'delete'])->name('delete-feed');
 Route::get('/edit-feeds/{id}', [App\Http\Controllers\NewsFeedsController::class, 'edit'])->name('edit-feed');
 Route::post('/change_status_feeds', [App\Http\Controllers\NewsFeedsController::class, 'changeStatus'])->name('change-status-feeds');
 Route::post('/delete_feed', [App\Http\Controllers\NewsFeedsController::class, 'delete'])->name('delete-feed');
@@ -1407,9 +1403,6 @@ Route::post('/assigned_to_me', [App\Http\Controllers\FilesController::class, 'as
 // Route::post('chatify/favorites', [MessagesController::class,'getFavorites'])->name('favorites');
 
 // /**
-//  * Search in messenger
-//  */
-// // Route::get('chatify/search', [MessagesController::class,'search'])->name('search');
 
 // /**
 //  * Get shared photos
@@ -1449,7 +1442,7 @@ Route::get('close_all', [AlientechTestController::class, 'closeAllSlots'])->name
 Route::get('show_all', [AlientechTestController::class, 'showAllSlots'])->name('show-all');
 Route::get('token_request', [AlientechTestController::class, 'requestToken'])->name('token-request');
 
-Route::get('subdealers_groups', [SubdealerGroupsController::class, 'groups'])->name('subdealer-groups');
+// Route::get('subdealers_groups', [SubdealerGroupsController::class, 'groups'])->name('subdealer-groups');
 
 Route::get('subdealers_entity', [SubdealerGroupsController::class, 'index'])->name('subdealers-entity');
 Route::get('create_subdealer_entity', [SubdealerGroupsController::class, 'create'])->name('create-subdealer-entity');
@@ -1473,7 +1466,7 @@ Route::get('edit_subdealer_customer/{id}', [SubdealerGroupsController::class, 'e
 Route::post('update_subdealer_customer', [SubdealerGroupsController::class, 'updateCustomer'])->name('update-subdealer-customer');
 Route::post('delete_subdealer_customer', [SubdealerGroupsController::class, 'deleteUser'])->name('delete-subdealer-customer');
 
-Route::get('create_subdealer_engineer/{id}', [SubdealerGroupsController::class, 'createEngineer'])->name('create-subdealer-engineer');
+// Route::get('create_subdealer_engineer/{id}', [SubdealerGroupsController::class, 'createEngineer'])->name('create-subdealer-engineer');
 Route::post('add_subdealer_engineer', [SubdealerGroupsController::class, 'addEngineer'])->name('add-subdealer-engineer');
 Route::get('edit_subdealer_engineer/{id}', [SubdealerGroupsController::class, 'editEngineer'])->name('edit-subdealer-engineer');
 Route::post('update_subdealer_engineer', [SubdealerGroupsController::class, 'updateEngineer'])->name('update-subdealer-engineer');

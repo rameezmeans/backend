@@ -2000,7 +2000,7 @@ Route::post('delete_account', [App\Http\Controllers\FilesAPIController::class, '
 Route::post('davinci/save_reply', [App\Http\Controllers\FilesAPIController::class, 'saveReply'])->name('save-reply');
 
 Route::get('lua/files/{frontend_id}', [App\Http\Controllers\FilesAPIController::class, 'files'])->name('api-get-files');
-Route::get('lua/filesversions', [App\Http\Controllers\FilesAPIController::class, 'filesversions'])->name('api-get-files');
+// Route::get('lua/filesversions', [App\Http\Controllers\FilesAPIController::class, 'filesversions'])->name('api-get-files-versions');
 
 Route::post('lua/file/set_checking_status', [App\Http\Controllers\FilesAPIController::class, 'setCheckingStatus'])->name('api-set-checking-status');
 Route::post('lua/file/set_status_and_email', [App\Http\Controllers\FilesAPIController::class, 'setStatusAndEmail'])->name('set-status-and-email');
