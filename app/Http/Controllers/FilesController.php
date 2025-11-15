@@ -259,6 +259,15 @@ class FilesController extends Controller
         $file->delete();
     }
 
+    public function processInDavinci(Request $request){
+
+        $file = File::findOrFail($request->file_id);
+        $file->is_davinci = 1;
+        $file->save();
+
+        return redirect()->back()->with(['success' => 'File marked to process in Davinci. In next few minutes, file will be uploaded here to decide.']);
+    }
+
     public function ajaxAllUsersRejectedFiles($userID, Request $request){
          $data = File::select('*', 'files.id as row_id')
         ->addSelect(DB::raw('CASE WHEN status = "submitted" THEN 1 WHEN status = "processing" THEN 2 WHEN status = "ready_to_send" THEN 3 ELSE 4 END AS s'))

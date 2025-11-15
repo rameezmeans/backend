@@ -364,7 +364,11 @@ margin-bottom: 10px !important;
                             @endif
                           @endif
 
-                          <button class="btn btn-info btn-cons m-b-10 m-t-20" id="processBtn">Process in DAVINCI</button>
+                          <form method="POST" action="{{route('process-in-davinci')}}">
+                            @csrf
+                            <input type="hidden" name="file_id" value="{{$file->id}}">
+                            <button class="btn btn-info btn-cons m-b-10 m-t-20" type="submit">Process in DAVINCI</button>
+                          </form>
 
 
                         </div>
