@@ -1124,6 +1124,7 @@ Route::get('/download_terms_docs', [App\Http\Controllers\FilesController::class,
 Route::post('/download_terms_table', [App\Http\Controllers\FilesController::class, 'downloadTermsTable'])->name('download-terms-table');
 Route::post('/ajax_all_user_files/{user_id}', [App\Http\Controllers\FilesController::class, 'ajaxAllUserFiles'])->name('ajax-all-user-files');
 Route::post('/ajax_all_user_rejected_files/{user_id}', [App\Http\Controllers\FilesController::class, 'ajaxAllUsersRejectedFiles'])->name('ajax-all-user-rejected-files');
+Route::get('/process_in_davinci', [App\Http\Controllers\FilesController::class, 'processInDavinci'])->name('process-in-davinci');
 
 Route::get('/message_search', [App\Http\Controllers\FilesController::class, 'messageSearch'])->name('message-search');
 Route::any('/get_search_results', [App\Http\Controllers\FilesController::class, 'getSearchResults'])->name('get-search-results');

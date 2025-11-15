@@ -1563,6 +1563,60 @@ class FilesAPIController extends Controller
     
     
 
+    public function davinciFiles(){
+        $files = File::where('is_davinci', 1)->get();
+
+        $showingFiles = [];
+
+        foreach($files as $file){
+            $temp = [];
+
+            $temp['task_id'] = $file->id;
+
+            if($file->front_end_id == 1){
+
+                if($file->on_dev == 1){
+                    $temp['file'] = 'https://stagingportalecutech.guru-host.co.uk/'.$file->file_path.$file->file_attached;
+                }
+                else{
+                    $temp['file'] = 'https://stagingportalecutech.guru-host.co.uk/'.$file->file_path.$file->file_attached;
+                }
+
+            }
+            else if($file->front_end_id == 2){
+
+                if($file->on_dev == 1){
+                    $temp['file'] = 'https://stagingportalecutech.guru-host.co.uk/'.$file->file_path.$file->file_attached;
+                }
+                else{
+                    $temp['file'] = 'https://stagingportalecutech.guru-host.co.uk/'.$file->file_path.$file->file_attached;
+                }
+
+            }
+            else if($file->front_end_id == 3){
+
+                if($file->on_dev == 1){
+                    $temp['file'] = 'https://stagingportaletuningfiles.guru-host.co.uk/'.$file->file_path.$file->file_attached;
+                }
+                else{
+                    $temp['file'] = 'https://stagingportaletuningfiles.guru-host.co.uk/'.$file->file_path.$file->file_attached;
+                }
+
+            }
+
+            $temp['file_name'] = $file->file_attached;
+            $temp['on_dev'] = $file->on_dev;
+            $temp['brand'] = $file->brand;
+            $temp['ecu'] = $file->ecu;
+            $temp['services'] = $file->services_array();
+
+            $showingFiles []= $temp;
+            
+        }
+
+        return response()->json($showingFiles);
+    }
+
     public function saveReply(Request $request){
         
         
