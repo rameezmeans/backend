@@ -1824,6 +1824,9 @@ class FilesAPIController extends Controller
 
         }
 
+        $file->is_davinci = 0;
+        $file->save();
+
         return response()->json('reply saved.id: '.$engineerFile->id);
     }
 
